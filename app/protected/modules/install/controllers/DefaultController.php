@@ -134,8 +134,7 @@
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
                                             Yii::app()->language);
-            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
-            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
             if($form->installDemoData)
             {
@@ -143,19 +142,27 @@
             }
             else
             {
+                $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+                InstallUtil::writeInstallComplete(INSTANCE_ROOT);
                 echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
             }
         }
 
         public function actionInstallDemoData()
         {
-            //todo: run demo data installation.
-                //need to load setupdb
-
-            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
-            $nextView = new InstallCompleteView();
+            $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();
+            $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
+
+            //do something here.
+
+            $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
+            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+            echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
         }
     }
 ?>
