@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateDateAttribute</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateDateAttribute</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=designer/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Custom Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Functestdatefield</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>DateAttributeForm_displayName</td>
+	<td>functestdatefield${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>DateAttributeForm_attributeName</td>
+	<td>functestdatefield${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: Functestdatefield${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DateAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DateAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>functestdatefield${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//*[@id=&quot;DateAttributeForm_isRequired&quot;]</td>
+	<td>off</td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateModifyRole</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateModifyRole</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix2</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/app/index.php?r=configuration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Manage Roles</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Roles</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Role_name</td>
+	<td>testRole${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>testRole${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=testRole${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>Role_name</td>
+	<td>testRole${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Cancel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Roles: Home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Role_name</td>
+	<td>testRole${randomSuffix2}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Role_role_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Select a Parent Role</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=testRole${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>Role_role_name</td>
+	<td>testRole${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Roles: Home </td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=testRole${randomSuffix2}</td>
+	<td>testRole${randomSuffix2}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=testRole${randomSuffix2}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>Role_name</td>
+	<td>testRole${randomSuffix2}</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>Role_role_name</td>
+	<td>testRole${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=users/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=John Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
+	<td>Role</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>User_role_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Select a Role</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=testRole${randomSuffix2}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>User_role_name</td>
+	<td>testRole${randomSuffix2}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='UserDetailsView']/table.0.3</td>
+	<td>testRole${randomSuffix2}</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/app/index.php?r=zurmo/role</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>John Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=testRole${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Delete Role</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to remove this role?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>chooseOkOnNextConfirmationAndWait</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Roles: Home </td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>John Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>link=testRole${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=testRole${randomSuffix2}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>Role_role_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Delete Role</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to remove this role?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>chooseOkOnNextConfirmationAndWait</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Roles: Home </td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>John Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>link=testRole${randomSuffix2}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=users/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=John Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
+	<td>Role</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

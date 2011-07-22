@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>ConvertSelectAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ConvertSelectAccount</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=leads/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_firstName</td>
+	<td>Sizzy</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_lastName</td>
+	<td>Sanny</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_state_id</td>
+	<td>label=In Progress</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_jobTitle</td>
+	<td>President</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_source_value</td>
+	<td>label=Inbound Call</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_companyName</td>
+	<td>Frog Technology</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_phoneOffice</td>
+	<td>456-777-6654</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_phoneMobile</td>
+	<td>888999887</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Contact_owner_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>User Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sally Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Sally Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>Contact_owner_name</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>assertNotValue</td>
+	<td>Contact_owner_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryAddress_street1</td>
+	<td>124 Main Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryAddress_street2</td>
+	<td>Suite 500</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryAddress_city</td>
+	<td>Chicago</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryAddress_state</td>
+	<td>IL</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryAddress_postalCode</td>
+	<td>60614</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_secondaryAddress_street1</td>
+	<td>457 Bee Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_secondaryAddress_street2</td>
+	<td>Suite 400</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_secondaryAddress_city</td>
+	<td>Gary</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_secondaryAddress_state</td>
+	<td>Indiana</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_secondaryAddress_postalCode</td>
+	<td>67898</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_secondaryAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_industry_value</td>
+	<td>label=Adult Entertainment</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_website</td>
+	<td>http://www.rabbit.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_description</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_title_value</td>
+	<td>label=Mrs</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_phoneFax</td>
+	<td>5679076543</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_primaryEmail_emailAddress</td>
+	<td>sizzy@rabbit.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
+	<td>exact:Leads: Sizzy Sanny</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+	<td>Mrs Sizzy Sanny</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+	<td>In Progress</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+	<td>Frog Technology</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
+	<td>456-777-6654</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
+	<td>888999887</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[2]</td>
+	<td>457 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=exact:http://www.rabbit.com</td>
+	<td>exact:http://www.rabbit.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[8]/td[1]</td>
+	<td>Adult Entertainment</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[1]</td>
+	<td>124 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=sizzy@rabbit.com</td>
+	<td>sizzy@rabbit.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Sally Smith</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
+	<td>Inbound Call</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[10]/td</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[2]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LeadsSearchForm_phoneOffice</td>
+	<td>456-777-6654</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=Sizzy Sanny</td>
+	<td>Sizzy Sanny</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Sizzy Sanny</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Convert</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Select Account</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>AccountSelectForm_accounts_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=Foodland</td>
+	<td>Foodland</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Foodland</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>AccountSelectForm_accountName</td>
+	<td>Foodland</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Complete Conversion']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Lead successfully converted.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
+	<td>Contacts: Sizzy Sanny</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Foodland</td>
+	<td>Foodland</td>
+</tr>
+</tbody></table>
+</body>
+</html>

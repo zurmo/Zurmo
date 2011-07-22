@@ -1,0 +1,171 @@
+body
+{
+    background: #white;
+    color: #555;
+    font: normal 10pt Arial,Helvetica,sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a:link, a:visited, a:hover, a:active
+{
+  color: #202070;
+  text-decoration:none;
+}
+
+a:hover
+{
+  text-decoration: underline;
+}
+
+.sticky
+{
+  background-color: #fff;
+  -moz-border-radius: 0.5ex;
+  -webkit-border-radius: 0.5ex;
+  border-radius: 0.5ex;
+  color: #000;
+  font-size: 1em;
+  padding: 0.5ex;
+  width: 98%;
+}
+
+.sticky.stick
+{
+  -moz-border-radius: 0 0 0.5em 0.5em;
+  -webkit-border-radius: 0 0 0.5em 0.5em;
+  border-radius: 0 0 0.5em 0.5em;
+  position: fixed;
+  z-index: 1000;
+}
+
+#TreeMenuView
+{
+    margin-right: 10px;
+}
+
+.FlashMessageBar {
+    overflow: auto;
+}
+
+/* Begin Sortable Styling */
+.sortable
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.sortable li
+{
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 1.4em;
+    height: 18px;
+}
+.sortable li span
+{
+    position: absolute;
+    margin-left: -1.3em;
+}
+.remove-sortable-item-link
+{
+    font-size: 1.0em;
+}
+/* End Sortable Styling */
+
+/* Begin Jnotify Styling */
+.jnotify-item
+{
+    height: auto;
+    padding: 4px 4px 4px 4px;
+     margin: 5px;
+    display: block;
+    position: relative;
+}
+
+.jnotify-item-close
+{
+    float: right;
+    margin-left: 2px;
+}
+/* End Jnotify Styling */
+/* Begin Header Menu Classes */
+#HeaderLinksView
+{
+    margin-top: 35px;
+    text-align: right;
+}
+/* End Header Menu Classes */
+
+/* Begin Misc Classes */
+#ZurmoDefaultView > .GridView > div + div + div > .GridView
+{
+    margin-left: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+#AboutView
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#AboutView
+{
+    width: 32em;
+}
+
+/*
+Jquery UI datepicker trigger icon.  This style is not declared
+in the jquery-ui.css file.  The margin-bottom value causes the
+icon to shift down to center it.
+*/
+.ui-datepicker-trigger
+{
+    margin-left:5px;
+    margin-top: 8px;
+    margin-bottom: -3px;
+}
+
+/*
+Jquery UI autocomplete loading icon.
+*/
+.ui-autocomplete-loading
+{
+    background:url('../images/loading.gif') no-repeat right center;
+}
+
+/*
+Modal Select Link.  Show loading icon after click
+*/
+.modal-model-select-link
+{
+    padding-right: 20px;
+    background:url('../images/loading.gif') no-repeat right center;
+}
+
+/*
+Multiple file upload element in user interface.
+*/
+div.multiple-file-upload table
+{
+    width: auto;
+}
+
+div.multiple-file-upload .file_upload_progress
+{
+    width: 200px;
+}
+div.multiple-file-upload table th, div.multiple-file-upload table td
+{
+    border: 0px;
+}
+
+div.multiple-file-upload .file_upload_progress div {
+  width: 150px;
+  height: 15px;
+}
+/* End Misc Classes */

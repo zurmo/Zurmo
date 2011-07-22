@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>EditConfigAndSave</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EditConfigAddAndSave</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=accounts/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/div/div/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>HomeDashboard1_2_EditLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>ui-dialog-title-modalContainer</td>
+	<td>Edit Portlet</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>BogusForm_title</td>
+	<td>TestTitle${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//li[@id='HomeDashboard1_2']/div[1]/h3</td>
+	<td>TestTitle${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>AddPortletLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Add Portlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>yt0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Dashboard </td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

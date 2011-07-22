@@ -1,0 +1,16 @@
+app/assets
+developer/api/html
+error_log
+protected/data
+protected/runtime
+redbean
+yii
+syntax: glob
+app/protected/tests/unit/timeit.dat
+app/protected/tests/unit/results.txt
+glob:testresults/functional/
+app/protected/tests/unit/update
+glob:demodata.sql
+.buildpath
+.project
+.settings/org.eclipse.php.core.prefs

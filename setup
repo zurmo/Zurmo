@@ -1,0 +1,148 @@
+
+##### Default Settings ########################################################
+
+YII_DOWNLOAD=http://yii.googlecode.com/files/yii-1.1.7.r3135.tar.gz
+REDBEAN_DOWNLOAD=http://www.redbeanphp.com/downloads/RedBean132.tar.gz
+
+APACHE_DOCUMENT_ROOT=/var/www
+
+DB_ADMIN_USERNAME=root
+DB_ADMIN_PASSWORD=password
+DB_ZURMO_DATABASE=zurmo
+DB_ZURMO_USERNAME=zurmo
+DB_ZURMO_PASSWORD=zurmo
+
+##### Setup Directories and Permissions #######################################
+
+clear
+echo Setting up Zurmo.
+
+zurmo_root="$(pwd)"
+echo Zurmo root is: $zurmo_root
+
+echo Creating directories.
+mkdir app/assets             2> /dev/null
+mkdir app/protected/data     2> /dev/null
+mkdir app/protected/runtime  2> /dev/null
+
+echo Setting write permissions for Apache.
+chmod o+w app/assets
+chmod o+w app/protected/data
+chmod o+w app/protected/runtime
+
+##### Download And Unpack Yii #################################################
+
+if [ ! -d yii ]
+then
+	if [ ! -f yii-1.1.*.*.tar.gz ]
+	then
+		echo Downloading Yii.
+		wget $YII_DOWNLOAD
+	else
+		echo Found Yii.
+		ls yii-1.1.*.*.tar.gz
+	fi
+	echo Unpacking Yii.
+	tar xzf yii-1.1.*.*.tar.gz
+	rm yii-1.1.*.*.tar.gz
+	mv yii-1.1.*.* yii
+	echo Done.
+else
+	echo Directory yii already exists.
+fi
+
+##### Download, Unpack, and Patch RedBean #####################################
+
+if [ ! -d redbean ]
+then
+	if [ ! -f RedBean*.tar.gz ]
+	then
+		echo Downloading RedBean.
+		wget $REDBEAN_DOWNLOAD
+	else
+		echo Found RedBean.
+		ls RedBean*.tar.gz
+	fi
+	echo Unpacking RedBean.
+	mkdir redbean
+	cd redbean
+	tar xzf ../RedBean*.tar.gz
+	echo Patching RedBean.
+	sed -i -r "s/(\tpublic function __call.*)/\1\n\t\treturn null;/" rb.php
+	cd ..
+	rm RedBean*.tar.gz
+	echo Done.
+else
+	echo Directory redbean already exists.
+fi
+
+##### (Re)create Softlink Into Apache Document Root ###############################
+
+echo -ne "Apache document root [$APACHE_DOCUMENT_ROOT] > "
+read apache_document_root
+if [ -z $apache_document_root ]
+then
+	apache_document_root=$APACHE_DOCUMENT_ROOT
+fi
+
+echo \(Re\)creating $apache_document_root/app "->" $zurmo_root/app
+sudo rm $apache_document_root/app 2> /dev/null
+sudo ln -s $zurmo_root/app $apache_document_root/app
+
+##### Create Database And Database User #######################################
+
+echo -ne "Database admin username [$DB_ADMIN_USERNAME] > "
+read db_admin_username
+if [ -z $db_admin_username ]
+then
+	db_admin_username=$DB_ADMIN_USERNAME
+fi
+
+echo -ne "Database admin password [$DB_ADMIN_PASSWORD] > "
+read db_admin_password
+if [ -z $db_admin_password ]
+then
+	db_admin_password=$DB_ADMIN_PASSWORD
+fi
+
+echo -ne "Zurmo database name [$DB_ZURMO_DATABASE] > "
+read db_zurmo_database
+if [ -z $db_zurmo_database ]
+then
+	db_zurmo_database=$DB_ZURMO_DATABASE
+fi
+
+echo -ne "Zurmo database username [$DB_ZURMO_USERNAME] > "
+read db_zurmo_username
+if [ -z $db_zurmo_username ]
+then
+	db_zurmo_username=$DB_ZURMO_USERNAME
+fi
+
+echo -ne "Zurmo database password [$DB_ZURMO_PASSWORD] > "
+read db_zurmo_password
+if [ -z $db_zurmo_password ]
+then
+	db_zurmo_password=$DB_ZURMO_PASSWORD
+fi
+
+echo \(Re\)creating database \'$db_zurmo_database\'.
+$(mysql -u$db_admin_username -p$db_admin_password -e "drop database $db_zurmo_database;" 2> /dev/null)
+$(mysql -u$db_admin_username -p$db_admin_password -e "create database $db_zurmo_database;")
+
+echo \(Re\)creating user \'$db_zurmo_username\'.
+$(mysql -u$db_admin_username -p$db_admin_password -e "drop user $db_zurmo_username;" 2> /dev/null)
+$(mysql -u$db_admin_username -p$db_admin_password -e "create user $db_zurmo_username;")
+
+echo Setting password for user \'$db_zurmo_username\' to \'$db_zurmo_password\'.
+$(mysql -u$db_admin_username -p$db_admin_password -e "set password for $db_zurmo_username = password('$db_zurmo_password');")
+
+echo Granting all to user \'$db_zurmo_username\'.
+$(mysql -u$db_admin_username -p$db_admin_password -e "grant all on $db_zurmo_database.* to $db_zurmo_username;")
+
+echo Setting database name, username, and password in the Zurmo configuration.
+sed -i -r "s/dbname=zurmo/dbname=$db_zurmo_database/"                           app/protected/config/perInstance.php
+sed -i -r "s/'username'\s+=> 'zurmo'/'username'       => '$db_zurmo_username'/" app/protected/config/perInstance.php
+sed -i -r "s/'password'\s+=> 'zurmo'/'password'       => '$db_zurmo_password'/" app/protected/config/perInstance.php
+
+echo Done.

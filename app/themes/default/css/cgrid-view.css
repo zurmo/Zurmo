@@ -1,0 +1,229 @@
+.border{border:1px solid #ccc}
+.rounded {-moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;}
+/* GridView */
+.cgrid-view-loading
+{
+	background:url('../images/loading.gif') no-repeat;
+}
+
+li.page, li.next, li.previous
+{
+	margin:
+}
+
+.cgrid-view table.items
+{
+	border-collapse: collapse;
+	width: 100%;
+	border: 0 none !important;
+}
+
+.cgrid-view table.items th
+{
+	border-bottom:1px solid #ddd;
+	background:transparent;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+}
+
+.cgrid-view table.items th, .cgrid-view table.items td
+{
+	font-size: 0.9em;
+	padding: 0.3em;
+}
+
+.cgrid-view table.items th a
+{
+	color: #555;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.cgrid-view table.items th a:hover
+{
+	/*color: #fff;*/
+}
+
+.cgrid-view table.items th a.asc
+{
+	background:url(../images/cgridview/up.gif) right center no-repeat;
+	padding-right: 10px;
+}
+
+.cgrid-view table.items th a.desc
+{
+	background:url(../images/cgridview/down.gif) right center no-repeat;
+	padding-right: 10px;
+}
+
+/*.cgrid-view table.items tr.even*/
+tr.even
+{
+	background: #fff;
+}
+
+/*.cgrid-view table.items tr.odd*/
+tr.odd
+{
+	background: #f3f3f3;
+}
+
+.cgrid-view table.items tr.selected
+{
+	background:#9eec55;
+}
+
+.cgrid-view table.items tr:hover td, .cgrid-view table.items tr:hover td a
+{
+	background:#e58616;
+	color:#fff;
+	font-weight: 700;
+}
+
+
+/*.cgrid-view .link-column img
+{
+    border: 0;
+}*/
+
+/*.cgrid-view .button-column img
+{
+    border: 0;
+}*/
+
+
+.cgrid-view .button-column
+{
+	text-align: center;
+	width: 60px;
+}
+
+.cgrid-view .checkbox-column
+{
+	width: 15px;
+}
+
+/*.cgrid-view .summary*/
+div.summary
+{
+	margin: 0 0 5px 0;
+	text-align: right;
+	font-size:0.8em
+}
+
+/*.cgrid-view .select-all-options*/
+div.select-all-options
+{
+	margin: 0 0 5px 0;
+	text-align: right;
+	font-size:0.8em;
+	float:left;
+}
+
+/*.cgrid-view .mass-action*/
+div.mass-action
+{
+	margin: 0 0 5px 0;
+	text-align: right;
+	font-size:0.8em;
+	float:left;
+
+}
+
+/*.cgrid-view .pager*/
+div.pager
+{
+	margin: 5px 0 0 0;
+	text-align: right;
+	padding:0;
+	height:30px;
+}
+
+.cgrid-view .empty
+{
+	font-style: italic;
+}
+
+.cgrid-view .filters input,
+.cgrid-view .filters select
+{
+	width: 100%;
+	border: 1px solid #ccc;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+
+
+/* Styles for ClinkPager */
+ul.yiiPager
+{
+	font-size:.9em;
+	border:0;
+	margin:0;
+	padding:0;
+	line-height:100%;
+	display:inline;
+}
+
+ul.yiiPager li
+{
+	display:inline;
+}
+
+ul.yiiPager a:link,
+ul.yiiPager a:visited
+{
+	border:solid 1px #ccc;
+	color:inherit;
+	font-weight:bold;
+	padding:2px 8px;
+	text-decoration:none;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius: 3px;
+}
+
+ul.yiiPager .page a
+{
+	font-weight: 600;
+}
+
+ul.yiiPager a:hover
+{
+	background:#e58616;
+	color:#fff;
+}
+
+ul.yiiPager .selected a
+{
+	background:#e58616;
+	color:#fff;
+	font-weight:bold;
+	font-size:1.3em;
+}
+
+ul.yiiPager .hidden a
+{
+	border:1px solid #ccc;
+	color:inherit;
+}
+
+/**
+ * Hide first and last buttons by default.
+ */
+ul.yiiPager .first,
+ul.yiiPager .last
+{
+	display:none;
+}
+
+div.cgrid-view {
+	background:#f3f3f3;
+	border:1px solid #ccc;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	padding:5px;
+}

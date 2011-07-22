@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Account_owner_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>User Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sally Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Sally Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>Account_owner_name</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>assertNotValue</td>
+	<td>Account_owner_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_employees</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_phoneFax</td>
+	<td>123555</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_phoneOffice</td>
+	<td>456777</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_annualRevenue</td>
+	<td>500</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_primaryEmail_emailAddress</td>
+	<td>test@testcompany.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_secondaryEmail_emailAddress</td>
+	<td>test2@testcompany.com</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Account_industry_value</td>
+	<td>label=Financial Services</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Account_type_value</td>
+	<td>label=Customer</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_billingAddress_street1</td>
+	<td>123 ABC Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_billingAddress_street2</td>
+	<td>suite 100</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_billingAddress_city</td>
+	<td>Chicago</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_billingAddress_state</td>
+	<td>IL</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_billingAddress_postalCode</td>
+	<td>60611</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_billingAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_shippingAddress_street1</td>
+	<td>456 Main Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_shippingAddress_street2</td>
+	<td>Suite 200</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_shippingAddress_city</td>
+	<td>New York</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_shippingAddress_state</td>
+	<td>NY</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_shippingAddress_postalCode</td>
+	<td>12133</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_shippingAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_description</td>
+	<td>This is a test account</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Go to Details</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_name</td>
+	<td>my account</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_owner_name</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>verifySelectedLabel</td>
+	<td>Account_industry_value</td>
+	<td>Financial Services</td>
+</tr>
+<tr>
+	<td>verifySelectedLabel</td>
+	<td>Account_type_value</td>
+	<td>Customer</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_primaryEmail_emailAddress</td>
+	<td>test@testcompany.com</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_street1</td>
+	<td>123 ABC Street</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_street2</td>
+	<td>suite 100</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_city</td>
+	<td>Chicago</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_state</td>
+	<td>IL</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_description</td>
+	<td>This is a test account</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_phoneOffice</td>
+	<td>456777</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_phoneFax</td>
+	<td>123555</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_annualRevenue</td>
+	<td>500</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_secondaryEmail_emailAddress</td>
+	<td>test2@testcompany.com</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_street1</td>
+	<td>456 Main Street</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_street2</td>
+	<td>Suite 200</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_city</td>
+	<td>New York</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_state</td>
+	<td>NY</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_postalCode</td>
+	<td>12133</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>Changing The Account</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Return to List</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

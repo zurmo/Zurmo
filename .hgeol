@@ -1,0 +1,11 @@
+[patterns]
+**.js  = native
+**.css = native
+**.php = native
+**.txt = native
+
+[repository]
+native = LF
+
+[eol]
+only-consistent = False

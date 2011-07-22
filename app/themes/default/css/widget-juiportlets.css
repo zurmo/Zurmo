@@ -1,0 +1,149 @@
+/* Columns section */
+.juiportlet-columns .juiportlet-column
+{
+    float: left;
+    /* Min-height: */
+    min-height: 400px;
+    height: auto !important;
+    height: 400px;
+}
+
+/* remove indents on ul/li */
+.juiportlet-widget-column1
+{
+
+    margin:0px 10px;
+    padding:0;
+    list-style:none;
+}
+.juiportlet-widget-column2
+{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.juiportlet-column-split-even-2
+{
+    width:48%;
+}
+
+.juiportlet-column-no-split
+{
+    width:99%;
+}
+
+.juiportlet-column-split-left-75
+{
+    width:74%;
+}
+
+.juiportlet-column-split-right-25
+{
+    width:24%;
+}
+
+.juiportlet-columns .juiportlet-widget
+{
+    margin: 5px 0px 0px 0px;
+    padding: 2px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background:#EEE;
+}
+
+.juiportlet-columns .juiportlet-widget h3
+{
+    color:#000;
+}
+
+.juiportlet-columns .juiportlet-widget .juiportlet-widget-head
+{
+    color: #000;
+    overflow: hidden;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+
+.juiportlet-columns .juiportlet-widget .juiportlet-widget-head h3
+{
+    padding: 5px 5px;
+    float: left;
+}
+
+.juiportlet-columns .juiportlet-widget .juiportlet-widget-content
+{
+    /*
+    background: #333 url(../images/juiportlets/widget-content-bg.png) repeat-x;
+    */
+    padding: 2px;   //modified from 5px
+    color: #DDD;
+    -moz-border-radius-bottomleft: 2px;
+    -moz-border-radius-bottomright: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -webkit-border-bottom-right-radius: 2px;
+    line-height: 1.2em;
+    overflow: hidden;
+}
+
+/* End Columns section */
+.juiportlet-widget-head a.remove
+{
+    float: right;
+    display: inline;
+    background: url(../images/juiportlets/buttons.gif) no-repeat -24px 0;
+    width: 14px;
+    height: 14px;
+    margin: 8px 4px 8px 0;
+    text-indent: -9999em;
+    outline: none;
+}
+
+.juiportlet-widget-head a.edit
+{
+    float: right;
+    display: inline;
+    background: url(../images/juiportlets/buttons.gif) no-repeat;
+    width: 24px;
+    height: 14px;
+    text-indent: -9999em;
+    margin: 8px 4px 8px 4px;
+    outline: none;
+}
+
+.juiportlet-widget-head a.collapse
+{
+    float: left;
+    display: inline;
+    background: url(../images/juiportlets/buttons.gif) no-repeat -52px 0;
+    width: 14px;
+    height: 14px;
+    text-indent: -9999em;
+    margin: 8px 0 8px 4px;
+    outline: none;
+}
+
+.juiportlet-widget-placeholder
+{
+    border: 2px dashed #999;
+}
+
+.juiportlet-widget-column1 .juiportlet-widget-placeholder
+{
+    margin: 30px 2px 0 2px;
+}
+
+.juiportlet-widget-column2 .juiportlet-widget-placeholder
+{
+    margin: 30px 2px 0 2px;
+}
+
+.juiportlet-widget-column3 .juiportlet-widget-placeholder
+{
+    margin: 30px 2px 0 2px;
+}
+.juiportlet-widget-column4 .juiportlet-widget-placeholder
+{
+    margin: 30px 2px 0 2px;
+}

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateEditOpportunity</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateEditOpportunity</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=opportunities/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Opportunity_name</td>
+	<td>Test Opportunity</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Opportunity_amount</td>
+	<td>500.34</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Opportunity_account_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Account Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Foodland</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Foodland</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>Opportunity_account_name</td>
+	<td>Foodland</td>
+</tr>
+<tr>
+	<td>assertNotValue</td>
+	<td>Opportunity_account_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Opportunity_closeDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='ui-datepicker-div']/div/a[2]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Opportunity_stage_value</td>
+	<td>label=Negotiating</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Opportunity_source_value</td>
+	<td>label=Tradeshow</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Opportunity_owner_SelectLink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>User Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Jim Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Jim Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>Opportunity_owner_name</td>
+	<td>Jim Smith</td>
+</tr>
+<tr>
+	<td>assertNotValue</td>
+	<td>Opportunity_owner_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Opportunities: Test Opportunity</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Test Opportunity</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>500.34</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Tradeshow</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Negotiating</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>//div[@id='OpportunityEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Foodland</td>
+	<td>Foodland</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Opportunity_stage_value</td>
+	<td>label=Closed Won</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Opportunities: Test Opportunity</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Closed Won</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

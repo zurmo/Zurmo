@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateUser</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateUser</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+    <td>store</td>
+    <td>javascript{Math.floor(Math.random()*11000)}</td>
+    <td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=configuration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_firstName</td>
+	<td>Janny${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_lastName</td>
+	<td>Jingo${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_username</td>
+	<td>janny${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_newPassword</td>
+	<td>abc123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_newPassword_repeat</td>
+	<td>abc123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_jobTitle</td>
+	<td>Jingo Factory</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_phoneOffice</td>
+	<td>123456789</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_phoneMobile</td>
+	<td>123455555</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_department</td>
+	<td>Mail</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_primaryEmail_emailAddress</td>
+	<td>janny@jingo.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_primaryAddress_street1</td>
+	<td>123 Jingo Street</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_primaryAddress_state</td>
+	<td>IL</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_primaryAddress_city</td>
+	<td>Chicago</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_primaryAddress_postalCode</td>
+	<td>60614</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User_primaryAddress_country</td>
+	<td>USA</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
+	<td>Janny${randomSuffix} Jingo${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[2]/td[1]</td>
+	<td>janny${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[4]/td[1]</td>
+	<td>Mail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=janny@jingo.com</td>
+	<td>janny@jingo.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[6]/td[1]</td>
+	<td>123 Jingo Street<br /> Chicago IL, 60614<br /> USA</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[2]/td[2]</td>
+	<td>123456789</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[3]/td[2]</td>
+	<td>123455555</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[4]/td[2]</td>
+	<td>Jingo Factory</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Username</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LoginForm_username</td>
+	<td>janny${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LoginForm_password</td>
+	<td>abc123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Welcome, Janny${randomSuffix}</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
