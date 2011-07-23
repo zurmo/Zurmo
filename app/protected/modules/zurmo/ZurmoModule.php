@@ -146,5 +146,10 @@
             }
             return $s;
         }
+
+        public static function getDefaultDataMakerClassName()
+        {
+            return 'ZurmoDefaultDataMaker';
+        }
     }
 ?>

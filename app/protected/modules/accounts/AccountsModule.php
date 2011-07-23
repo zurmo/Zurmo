@@ -89,5 +89,15 @@
         {
             return self::RIGHT_CREATE_ACCOUNTS;
         }
+
+        public static function getDefaultDataMakerClassName()
+        {
+            return 'AccountsDefaultDataMaker';
+        }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'AccountsDemoDataMaker';
+        }
     }
 ?>

@@ -67,5 +67,10 @@
         {
             return self::RIGHT_CREATE_NOTES;
         }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'NotesDemoDataMaker';
+        }
     }
 ?>

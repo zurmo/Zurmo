@@ -501,5 +501,19 @@
         {
             //add checks as needed.
         }
+
+        /**
+         * Override in modules that create default data during an installation.
+         */
+        public static function getDefaultDataMakerClassName()
+        {
+        }
+
+        /**
+         * Override in modules that create demo data during an installation.
+         */
+        public static function getDemoDataMakerClassName()
+        {
+        }
     }
 ?>

@@ -145,5 +145,15 @@
                      LeadsModule::getModuleLabelByTypeAndLanguage('Plural');
             return $label;
         }
+
+        public static function getDefaultDataMakerClassName()
+        {
+            return 'ContactsDefaultDataMaker';
+        }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'ContactsDemoDataMaker';
+        }
     }
 ?>
