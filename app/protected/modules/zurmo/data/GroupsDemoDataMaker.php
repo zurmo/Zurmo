@@ -8,7 +8,7 @@
 
         public static function getDependencies()
         {
-            return array();
+            return array('zurmo');
         }
 
         public function makeAll(& $demoDataByModelClassName)

@@ -147,6 +147,11 @@
             return $s;
         }
 
+        public static function getDemoDataMakerClassName()
+        {
+            return 'ZurmoDemoDataMaker';
+        }
+
         public static function getDefaultDataMakerClassName()
         {
             return 'ZurmoDefaultDataMaker';

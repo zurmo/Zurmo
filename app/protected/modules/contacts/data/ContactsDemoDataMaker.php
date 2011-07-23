@@ -1,10 +1,10 @@
 <?php
     /**
-     * Class that builds demo users.
+     * Class that builds demo contacts.
      */
     class ContactsDemoDataMaker extends PersonDemoDataMaker
     {
-        protected $quantity = 20;
+        protected $quantity = 40;
 
         public static function getDependencies()
         {
@@ -18,12 +18,15 @@
             assert('isset($demoDataByModelClassName["Account"])');
 
             $demoDataByModelClassName['ContactState'] = ContactState::getAll();
+            $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState(
+                                                    $demoDataByModelClassName['ContactState']);
             for ($i = 0; $i < $this->quantity; $i++)
             {
-                $contact = new Contact();
+                $contact          = new Contact();
+                $contact->owner   = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
                 $contact->account = RandomDataUtil::
-                                        getRandomValueFromArray($demoDataByModelClassName["accounts"]);
-                $state = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['ContactState']);
+                                        getRandomValueFromArray($demoDataByModelClassName["Account"]);
+                $state = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
                 static::resolveModelAttributeValue($model, 'state', $state);
 
                 $this->populateModel($contact);
@@ -58,7 +61,7 @@
             assert('$model instanceof Contact');
 
             $emailAddress = new EmailAddress();
-            $emailAddress->emailAddress = $model->firstName . '.' . $model->lastName . static::resolveDomainName($model);
+            $emailAddress->emailAddress = $model->firstName . '.' . $model->lastName . '@' . static::resolveDomainName($model);
             return $emailAddress;
         }
 
@@ -78,6 +81,26 @@
                 $domainName = '@company.com';
             }
             return $domainName;
+        }
+
+        public static function getStatesBeforeOrStartingWithStartingState($states)
+        {
+            assert('is_array($states');
+            $startingStateOrder = ContactsUtil::getStartingStateOrder($states);
+            $statesAfterStartingState = array();
+            foreach ($states as $state)
+            {
+                if ($this->shouldIncludeState($state->order, $startingStateOrder))
+                {
+                    $statesAfterStartingState[] = $state;
+                }
+            }
+            return $statesAfterStartingState;
+        }
+
+        protected function shouldIncludeState($stateOrder, $startingStateOrder)
+        {
+            return $stateOrder >= $startingStateOrder;
         }
     }
 ?>

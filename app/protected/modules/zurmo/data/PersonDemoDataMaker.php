@@ -27,14 +27,13 @@
             static::resolveModelAttributeValue($model, 'lastName',
                         RandomDataUtil::getRandomValueFromArray($personRandomData['lastNames']));
             $jobTitlesAndDepartments = RandomDataUtil::getRandomValueFromArray($personRandomData['jobTitlesAndDepartments']);
-            static::resolveModelAttributeValue($model, 'jobTitles', $jobTitlesAndDepartments[0]);
-            static::resolveModelAttributeValue($model, 'departments', $jobTitlesAndDepartments[1]);
-            static::resolveModelAttributeValue($model, 'officePhone', RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'officeFax',   RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'mobilePhone', RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'primaryEmail', static::makeEmailAddressByPerson(& $model));
-            static::resolveModelAttributeValue($model, 'primaryEmail', static::makeEmailAddressByPerson(& $model));
-            static::resolveModelAttributeValue($model, 'primaryAddress', ZurmoRandomDataUtil::makeRandomAddress());
+            static::resolveModelAttributeValue($model, 'jobTitles',       $jobTitlesAndDepartments[0]);
+            static::resolveModelAttributeValue($model, 'departments',     $jobTitlesAndDepartments[1]);
+            static::resolveModelAttributeValue($model, 'officePhone',     RandomDataUtil::makeRandomPhoneNumber());
+            static::resolveModelAttributeValue($model, 'officeFax',       RandomDataUtil::makeRandomPhoneNumber());
+            static::resolveModelAttributeValue($model, 'mobilePhone',     RandomDataUtil::makeRandomPhoneNumber());
+            static::resolveModelAttributeValue($model, 'primaryEmail',    static::makeEmailAddressByPerson($model));
+            static::resolveModelAttributeValue($model, 'primaryAddress',  ZurmoRandomDataUtil::makeRandomAddress());
         }
 
         protected static function makeEmailAddressByPerson(& $model)

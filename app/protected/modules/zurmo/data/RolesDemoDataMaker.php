@@ -1,20 +1,19 @@
 <?php
     /**
-     * Class that builds demo roles.
+     * Class that builds base zurmo demo data models.
      */
-    class RolesDemoDataMaker extends DemoDataMaker
+    class ZurmoDemoDataMaker extends DemoDataMaker
     {
         protected $quantity;
 
         public static function getDependencies()
         {
-            return array();
+            return array('zurmo');
         }
 
         public function makeAll(& $demoDataByModelClassName)
         {
             assert('is_array($demoDataByModelClassName)');
-
             $executive = new Role();
             $executive->name = 'Executive';
             $saved = $executive->save();
