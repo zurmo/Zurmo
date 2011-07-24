@@ -109,7 +109,19 @@
             if (!empty($file_contents) &&
                 false !== $xml = @simplexml_load_string($file_contents))
             {
-                return $xml[0];
+                if(is_object($xml) && $xml instanceof SimpleXMLElement)
+                {
+                    $xmlAsArray = (array)$xml;
+                    return $xmlAsArray[0];
+                }
+                elseif(is_array($xml))
+                {
+                    return $xml[0];
+                }
+                else
+                {
+                    return null; //todo: throw exception
+                }
             }
             $this->webServiceErrorMessage = Yii::t('Default', 'Invalid currency code.');
             $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_INVALID_CODE;
@@ -153,6 +165,7 @@
                     if ($currency->code != $this->getBaseCode())
                     {
                         $currency->rateToBase = $this->getConversionRateToBase($currency->code);
+                        assert('$currency->rateToBase == null || is_numeric($currency->rateToBase)');
                         $currency->save();
                         //todo: add error message if save fails for some reason.
                     }
