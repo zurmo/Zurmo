@@ -210,7 +210,7 @@
             {
                 // When the first user is created there can be no
                 // current user. Log the first user as creating themselves.
-                if (!isset(Yii::app()->user->userModel))
+                if (Yii::app()->user->userModel == null || !Yii::app()->user->userModel->id > 0)
                 {
                     Yii::app()->user->userModel = $this;
                 }
