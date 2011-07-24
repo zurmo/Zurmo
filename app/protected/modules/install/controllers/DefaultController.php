@@ -100,6 +100,7 @@
         protected function actionRunInstallation($form)
         {
             assert('$form instanceof InstallSettingsForm');
+            ZurmoGeneralCache::forgetAll();
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();
@@ -163,7 +164,7 @@
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);
-            DemoDataUtil::load($messageLogger, 3);
+            DemoDataUtil::load($messageLogger, 100);
             $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
