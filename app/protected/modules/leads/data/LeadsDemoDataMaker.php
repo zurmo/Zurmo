@@ -4,11 +4,11 @@
      */
     class LeadsDemoDataMaker extends ContactsDemoDataMaker
     {
-        protected $quantity = 40;
+        protected $ratioToLoad = 2;
 
         public static function getDependencies()
         {
-            return array('contacts');
+            return array('accounts');
         }
 
         public function makeAll(& $demoDataByModelClassName)
@@ -19,15 +19,13 @@
             $demoDataByModelClassName['ContactState'] = ContactState::getAll();
             $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState(
                                                     $demoDataByModelClassName['ContactState']);
-            for ($i = 0; $i < $this->quantity; $i++)
+            for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $contact          = new Contact();
                 $contact->owner   = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
-                $state = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
-                static::resolveModelAttributeValue($model, 'state', $state);
-
+                $contact->state   = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
                 $this->populateModel($contact);
-                $saved = $contact->saved();
+                $saved = $contact->save();
                 assert('$saved');
                 $demoDataByModelClassName['ContactsThatAreLeads'][] = $contact;
             }
@@ -39,17 +37,10 @@
             parent::populateModel($model);
             $accountRandomData = ZurmoRandomDataUtil::getRandomDataByModuleAndModelClassNames('AccountsModule', 'Account');
             $name = RandomDataUtil::getRandomValueFromArray($accountRandomData['names']);
-            static::resolveModelAttributeValue($model, 'companyName', $name);
+            $model->companyName = $name;
         }
 
-        public function setQuantity($quantity)
-        {
-            assert('is_int($quantity)');
-            throw notImplementedException();
-
-        }
-
-        protected function shouldIncludeState($stateOrder, $startingStateOrder)
+        protected static function shouldIncludeState($stateOrder, $startingStateOrder)
         {
             return $stateOrder < $startingStateOrder;
         }

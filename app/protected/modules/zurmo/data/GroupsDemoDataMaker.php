@@ -4,8 +4,6 @@
      */
     class GroupsDemoDataMaker extends DemoDataMaker
     {
-        protected $quantity;
-
         public static function getDependencies()
         {
             return array('zurmo');
@@ -58,11 +56,6 @@
         }
 
         public function populateModel(& $model)
-        {
-            throw notImplementedException();
-        }
-
-        public function setQuantity($quantity)
         {
             throw notImplementedException();
         }

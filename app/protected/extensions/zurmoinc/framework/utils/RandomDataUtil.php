@@ -14,19 +14,20 @@
          */
         public static function getRandomDataByModuleAndModelClassNames($moduleClassName, $modelClassName)
         {
-            assert('is_string($moduleClassName');
-            assert('is_string($modelClassName');
-            if(self::$randomData[$modelClassName] == null)
+            assert('is_string($moduleClassName)');
+            assert('is_string($modelClassName)');
+            if(!isset(self::$randomData[$modelClassName]))
             {
                 $directoryName = $moduleClassName::getDirectoryName();
                 $moduleName    = $moduleClassName::getPluralCamelCasedName();
-                $filePath = Yii::getPathOfAlias('modules.' . $directoryName . '.data.') . $modelClassName . 'RandomData.php';
+                $filePath      = Yii::getPathOfAlias('application.modules.' . $directoryName . '.data.' .
+                                 $modelClassName . 'RandomData') . '.php';
                 if(file_exists($filePath))
                 {
                     self::$randomData[$modelClassName] = require($filePath);
                 }
             }
-            return $randomData[$modelClassName];
+            return self::$randomData[$modelClassName];
         }
 
         /**

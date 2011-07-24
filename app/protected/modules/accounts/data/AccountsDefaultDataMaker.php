@@ -8,9 +8,14 @@
         {
             $values = array(
                 'Automotive',
-                'Adult Entertainment',
+                'Banking',
+                'Business Services',
+                'Energy',
                 'Financial Services',
-                'Mercenaries & Armaments',
+                'Insurance',
+                'Manufacturing',
+                'Retail',
+                'Technology',
             );
             static::makeCustomFieldDataByValuesAndDefault('Industries', $values);
 

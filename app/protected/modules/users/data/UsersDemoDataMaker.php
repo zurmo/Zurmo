@@ -2,10 +2,9 @@
     /**
      * Class that builds demo users.
      */
+    Yii::import('application.modules.zurmo.data.PersonDemoDataMaker');
     class UsersDemoDataMaker extends PersonDemoDataMaker
     {
-        protected $quantity;
-
         public static function getDependencies()
         {
             return array('groups', 'roles');
@@ -39,11 +38,12 @@
                            'sam'   => 'Mr') as $username => $title)
             {
                 $user = new User();
+                $this->populateModel($user);
                 $user->username           = $username;
+                $user->setPassword($user->username);
                 $user->title->value       = $title;
                 $user->firstName          = ucfirst($username);
                 $user->lastName           = 'Smith';
-                $this->populateModel($user);
                 $saved = $user->save();
                 assert('$saved');
                 $demoDataByModelClassName["Role"][1]->users->add($user);
@@ -57,18 +57,10 @@
         {
             assert('$model instanceof User');
             parent::populateModel($model);
-            static::resolveModelAttributeValue($model, 'language', Yii::app()->language);
-            static::resolveModelAttributeValue($model, 'timeZone', Yii::app()->timeZoneHelper->getGlobalValue());
-            $currencies = Currency::getAll();
-            static::resolveModelAttributeValue($model, 'currency', $currencies[0]);
-            static::resolveModelAttributeValue($model, 'username', strtolower($user->firstName . $user->lastName));
-            assert('$username != null');
-            $model->setPassword($model->username);
-        }
-
-        public function setQuantity($quantity)
-        {
-            throw notImplementedException();
+            $model->language = Yii::app()->language;
+            $model->timeZone = Yii::app()->timeZoneHelper->getGlobalValue();
+            $currencies      = Currency::getAll();
+            $model->currency = $currencies[0];
         }
     }
 ?>

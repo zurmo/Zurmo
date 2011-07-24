@@ -4,7 +4,7 @@
      */
     class AccountsDemoDataMaker extends DemoDataMaker
     {
-        protected $quantity = 20;
+        protected $ratioToLoad = 1;
 
         public static function getDependencies()
         {
@@ -15,13 +15,12 @@
         {
             assert('is_array($demoDataByModelClassName)');
             assert('isset($demoDataByModelClassName["User"])');
-            assert('$this->quantity < 123'); //our random seeder only supports 123 at the moment
-            for ($i = 0; $i < $this->quantity; $i++)
+            for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $account = new Account();
                 $account->owner = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
                 $this->populateModel($account);
-                $saved = $account->saved();
+                $saved = $account->save();
                 assert('$saved');
                 $demoDataByModelClassName['Account'][] = $account;
             }
@@ -33,37 +32,29 @@
             parent::populateModel($model);
             $accountRandomData = ZurmoRandomDataUtil::getRandomDataByModuleAndModelClassNames('AccountsModule', 'Account');
             $name = RandomDataUtil::getRandomValueFromArray($accountRandomData['names']);
-            static::resolveModelAttributeValue($model, 'name', $name);
+            $model->name = $name;
 
             $domainName = static::makeDomainByName(strval($model));
-            $type     = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('AccountTypes'));
+            $type       = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('AccountTypes'));
             $industry   = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('Industries'));
 
-            static::resolveModelAttributeValue($model,                   'website',
-                                                                         static::makeUrlByDomainName($domainName));
-            static::resolveModelAttributeValue($model->type,             'value', $type);
-            static::resolveModelAttributeValue($model->industry,         'value', $industry);
-            static::resolveModelAttributeValue($model, 'officePhone',    RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'officeFax',      RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'primaryEmail',   static::makeEmailAddressByAccount($model));
-            static::resolveModelAttributeValue($model, 'billingAddress', ZurmoRandomDataUtil::makeRandomAddress());
-            static::resolveModelAttributeValue($model, 'employees',      mt_rand(1, 95) * 10);
-            static::resolveModelAttributeValue($model, 'annualRevenue',  mt_rand(1, 780) * 1000000);
-        }
-
-        public function setQuantity($quantity)
-        {
-            assert('is_int($quantity)');
-            throw notImplementedException();
-
+            $model->website         = static::makeUrlByDomainName($domainName);
+            $model->type->value     =  $type;
+            $model->industry->value = $industry;
+            $model->officePhone     = RandomDataUtil::makeRandomPhoneNumber();
+            $model->officeFax       = RandomDataUtil::makeRandomPhoneNumber();
+            $model->primaryEmail    = static::makeEmailAddressByAccount($model);
+            $model->billingAddress  = ZurmoRandomDataUtil::makeRandomAddress();
+            $model->employees       = mt_rand(1, 95) * 10;
+            $model->annualRevenue   = mt_rand(1, 780) * 1000000;
         }
 
         protected static function makeEmailAddressByAccount(& $model)
         {
             assert('$model instanceof Account');
-            $emailAddress = new EmailAddress();
-            $emailAddress->emailAddress = 'info@' . static::resolveDomainName(strval($model));
-            return $emailAddress;
+            $email = new Email();
+            $email->emailAddress = 'info@' . static::makeDomainByName(strval($model));
+            return $email;
         }
     }
 ?>

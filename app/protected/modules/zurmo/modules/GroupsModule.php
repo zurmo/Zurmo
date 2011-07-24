@@ -94,5 +94,15 @@
         {
             return self::RIGHT_CREATE_GROUPS;
         }
+
+        public static function getDefaultDataMakerClassName()
+        {
+            return 'GroupsDefaultDataMaker';
+        }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'GroupsDemoDataMaker';
+        }
     }
 ?>

@@ -7,16 +7,24 @@
         public static function load(& $messageLogger)
         {
             assert('$messageLogger instanceof MessageLogger');
-            Yii::import('ext.framework.data.*');
+            Yii::import('application.extensions.zurmoinc.framework.data.*');
             $modules = Module::getModuleObjects();
             foreach($modules as $module)
             {
-                Yii::import('modules.' . $module::getDirectoryName() . '.data.*');
+                $parentModule = $module->getParentModule();
+                if($parentModule != null)
+                {
+                    Yii::import('application.modules.' . $parentModule::getDirectoryName() . '.data.*');
+                }
+                else
+                {
+                    Yii::import('application.modules.' . $module::getDirectoryName() . '.data.*');
+                }
                 $defaultDataMakerClassName = $module::getDefaultDataMakerClassName();
                 if($defaultDataMakerClassName != null)
                 {
                     $dataMaker = new $defaultDataMakerClassName();
-                    $defaultDataMakerClassName->make();
+                    $dataMaker->make();
                     $messageLogger->addInfoMessage(Yii::t('Default', 'Default data loaded for ' .
                                                    $module::getModuleLabelByTypeAndLanguage('Plural')));
                 }

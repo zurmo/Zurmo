@@ -4,7 +4,7 @@
      */
     class OpportunitiesDemoDataMaker extends DemoDataMaker
     {
-        protected $quantity = 20;
+        protected $ratioToLoad = 2;
 
         public static function getDependencies()
         {
@@ -19,7 +19,7 @@
             assert('isset($demoDataByModelClassName["Account"])');
             assert('isset($demoDataByModelClassName["Contact"])');
 
-            for ($i = 0; $i < $this->quantity; $i++)
+            for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $opportunity = new Opportunity();
                 $opportunity->owner = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
@@ -31,7 +31,7 @@
                                             getRandomValueFromArray($demoDataByModelClassName["Currency"]);
                 $opportunity->amount = $currencyValue;
                 $this->populateModel($opportunity);
-                $saved = $opportunity->saved();
+                $saved = $opportunity->save();
                 assert('$saved');
                 $demoDataByModelClassName['Opportunity'][] = $opportunity;
             }
@@ -40,36 +40,21 @@
         public function populateModel(& $model)
         {
             assert('$model instanceof Opportunity');
-            assert('is_int($quantity)');
             $opportunityRandomData = ZurmoRandomDataUtil::
-                                     getRandomDataByModuleAndModelClassNames('OpportunitiesModule', 'Account');
+                                     getRandomDataByModuleAndModelClassNames('OpportunitiesModule', 'Opportunity');
 
             parent::populateModel($model);
-            $name = RandomDataUtil::getRandomValueFromArray($opportunityRandomData['names']);
-            static::resolveModelAttributeValue($model, 'name', $name);
-            $stage      = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('SalesStages'));
-            $source     = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
-            static::resolveModelAttributeValue($model->stage,  'value', $stage);
-            static::resolveModelAttributeValue($model->source, 'value', $source);
-            $futureTimeStamp = time() + (mt_rand(1,200) * 60 * 60 * 24);
-            $closeDate = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(), $futureTimeStamp);
-            static::resolveModelAttributeValue($model, 'closeDate',     $closeDate);
-            static::resolveModelAttributeValue($model->amount, 'value', mt_rand(5, 350) * 1000);
-        }
-
-        public function setQuantity($quantity)
-        {
-            assert('is_int($quantity)');
-            throw notImplementedException();
-
-        }
-
-        protected static function makeEmailAddressByAccount(& $model)
-        {
-            assert('$model instanceof Account');
-            $emailAddress = new EmailAddress();
-            $emailAddress->emailAddress = 'info@' . static::resolveDomainName(strval($model));
-            return $emailAddress;
+            $name        = RandomDataUtil::getRandomValueFromArray($opportunityRandomData['names']);
+            $model->name = $name;
+            $stage       = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('SalesStages'));
+            $source      = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
+            $model->stage->value  = $stage;
+            $model->source->value = $source;
+            $futureTimeStamp      = time() + (mt_rand(1,200) * 60 * 60 * 24);
+            $closeDate            = Yii::app()->dateFormatter->format(
+                                    DatabaseCompatibilityUtil::getDateFormat(), $futureTimeStamp);
+            $model->closeDate     = $closeDate;
+            $model->amount->value = mt_rand(5, 350) * 1000;
         }
     }
 ?>

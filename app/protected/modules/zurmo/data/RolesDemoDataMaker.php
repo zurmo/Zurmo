@@ -1,11 +1,9 @@
 <?php
     /**
-     * Class that builds base zurmo demo data models.
+     * Class that builds base demo roles.
      */
-    class ZurmoDemoDataMaker extends DemoDataMaker
+    class RolesDemoDataMaker extends DemoDataMaker
     {
-        protected $quantity;
-
         public static function getDependencies()
         {
             return array('zurmo');
@@ -36,11 +34,6 @@
         }
 
         public function populateModel(& $model)
-        {
-            throw notImplementedException();
-        }
-
-        public function setQuantity($quantity)
         {
             throw notImplementedException();
         }

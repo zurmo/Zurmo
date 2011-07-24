@@ -8,39 +8,37 @@
         {
             //todo: assert instanceof Person or mixes in Person.
             parent::populateModel($model);
-            $personRandomData = ZurmoRandomDataUtil::getRandomDataByModuleAndModelClassNames('ZurmoModule', 'Person');
-
-            $title = new Title();
+            $personRandomData        = ZurmoRandomDataUtil::
+                                       getRandomDataByModuleAndModelClassNames('ZurmoModule', 'Person');
+            $jobTitlesAndDepartments = RandomDataUtil::
+                                       getRandomValueFromArray($personRandomData['jobTitlesAndDepartments']);
+            $lastName                = RandomDataUtil::getRandomValueFromArray($personRandomData['lastNames']);
             if(RandomDataUtil::getRandomBooleanValue())
             {
-                static::resolveModelAttributeValue($model, 'firstName',
-                            RandomDataUtil::getRandomValueFromArray($personRandomData['femaleFirstNames']));
-                $title->value = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleTitles']);
+                $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleFirstNames']);
+                $title = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleTitles']);
             }
             else
             {
-                static::resolveModelAttributeValue($model, 'firstName',
-                            RandomDataUtil::getRandomValueFromArray($personRandomData['maleFirstNames']));
-                $title->value = RandomDataUtil::getRandomValueFromArray($personRandomData['maleTitles']);
+                $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['maleFirstNames']);
+                $title = RandomDataUtil::getRandomValueFromArray($personRandomData['maleTitles']);
             }
-            static::resolveModelAttributeValue($model, 'title', $title);
-            static::resolveModelAttributeValue($model, 'lastName',
-                        RandomDataUtil::getRandomValueFromArray($personRandomData['lastNames']));
-            $jobTitlesAndDepartments = RandomDataUtil::getRandomValueFromArray($personRandomData['jobTitlesAndDepartments']);
-            static::resolveModelAttributeValue($model, 'jobTitles',       $jobTitlesAndDepartments[0]);
-            static::resolveModelAttributeValue($model, 'departments',     $jobTitlesAndDepartments[1]);
-            static::resolveModelAttributeValue($model, 'officePhone',     RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'officeFax',       RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'mobilePhone',     RandomDataUtil::makeRandomPhoneNumber());
-            static::resolveModelAttributeValue($model, 'primaryEmail',    static::makeEmailAddressByPerson($model));
-            static::resolveModelAttributeValue($model, 'primaryAddress',  ZurmoRandomDataUtil::makeRandomAddress());
+            $model->title->value   = $title;
+            $model->lastName       = $lastName;
+            $model->jobTitle       = $jobTitlesAndDepartments[0];
+            $model->department     = $jobTitlesAndDepartments[1];
+            $model->officePhone    = RandomDataUtil::makeRandomPhoneNumber();
+            $model->officeFax      = RandomDataUtil::makeRandomPhoneNumber();
+            $model->mobilePhone    = RandomDataUtil::makeRandomPhoneNumber();
+            $model->primaryEmail   = static::makeEmailAddressByPerson($model);
+            $model->primaryAddress = ZurmoRandomDataUtil::makeRandomAddress();
         }
 
         protected static function makeEmailAddressByPerson(& $model)
         {
-            $emailAddress = new EmailAddress();
-            $emailAddress->emailAddress = $model->firstName . '.' . $model->lastName . '@company.com';
-            return $emailAddress;
+            $email = new Email();
+            $email->emailAddress = $model->firstName . '.' . $model->lastName . '@company.com';
+            return $email;
         }
     }
 ?>

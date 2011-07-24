@@ -134,7 +134,8 @@
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
                                             Yii::app()->language);
-
+            $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
+            DefaultDataUtil::load($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
             if($form->installDemoData)
             {
@@ -156,9 +157,8 @@
             $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
-
-            //do something here.
-
+            $messageLogger = new MessageLogger($messageStreamer);
+            DemoDataUtil::load($messageLogger, 3);
             $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);

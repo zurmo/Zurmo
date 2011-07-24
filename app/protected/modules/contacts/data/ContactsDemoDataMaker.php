@@ -2,9 +2,10 @@
     /**
      * Class that builds demo contacts.
      */
+    Yii::import('application.modules.zurmo.data.PersonDemoDataMaker');
     class ContactsDemoDataMaker extends PersonDemoDataMaker
     {
-        protected $quantity = 40;
+        protected $ratioToLoad = 2;
 
         public static function getDependencies()
         {
@@ -20,17 +21,15 @@
             $demoDataByModelClassName['ContactState'] = ContactState::getAll();
             $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState(
                                                     $demoDataByModelClassName['ContactState']);
-            for ($i = 0; $i < $this->quantity; $i++)
+            for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $contact          = new Contact();
                 $contact->owner   = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
                 $contact->account = RandomDataUtil::
                                         getRandomValueFromArray($demoDataByModelClassName["Account"]);
-                $state = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
-                static::resolveModelAttributeValue($model, 'state', $state);
-
+                $contact->state   = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
                 $this->populateModel($contact);
-                $saved = $contact->saved();
+                $saved = $contact->save();
                 assert('$saved');
                 $demoDataByModelClassName['Contact'][] = $contact;
             }
@@ -44,31 +43,24 @@
             $source     = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
             $industry   = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('Industries'));
 
-            static::resolveModelAttributeValue($model, 'website', static::makeUrlByDomainName($domainName));
-            static::resolveModelAttributeValue($model->source, 'value', $source);
-            static::resolveModelAttributeValue($model->industry, 'value', $industry);
-        }
-
-        public function setQuantity($quantity)
-        {
-            assert('is_int($quantity)');
-            throw notImplementedException();
-
+            $model->website          = static::makeUrlByDomainName($domainName);
+            $model->source->value    = $source;
+            $model->industry->value  = $industry;
         }
 
         protected static function makeEmailAddressByPerson(& $model)
         {
             assert('$model instanceof Contact');
 
-            $emailAddress = new EmailAddress();
-            $emailAddress->emailAddress = $model->firstName . '.' . $model->lastName . '@' . static::resolveDomainName($model);
-            return $emailAddress;
+            $email = new Email();
+            $email->emailAddress = $model->firstName . '.' . $model->lastName . '@' . static::resolveDomainName($model);
+            return $email;
         }
 
         protected static function resolveDomainName(& $model)
         {
             assert('$model instanceof Contact');
-            if($model->account != null)
+            if($model->account->id > 0)
             {
                 $domainName = static::makeDomainByName(strval($model->account));
             }
@@ -78,19 +70,19 @@
             }
             else
             {
-                $domainName = '@company.com';
+                $domainName = 'company.com';
             }
             return $domainName;
         }
 
         public static function getStatesBeforeOrStartingWithStartingState($states)
         {
-            assert('is_array($states');
+            assert('is_array($states)');
             $startingStateOrder = ContactsUtil::getStartingStateOrder($states);
             $statesAfterStartingState = array();
             foreach ($states as $state)
             {
-                if ($this->shouldIncludeState($state->order, $startingStateOrder))
+                if (static::shouldIncludeState($state->order, $startingStateOrder))
                 {
                     $statesAfterStartingState[] = $state;
                 }
@@ -98,7 +90,7 @@
             return $statesAfterStartingState;
         }
 
-        protected function shouldIncludeState($stateOrder, $startingStateOrder)
+        protected static function shouldIncludeState($stateOrder, $startingStateOrder)
         {
             return $stateOrder >= $startingStateOrder;
         }

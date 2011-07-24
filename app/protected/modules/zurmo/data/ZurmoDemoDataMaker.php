@@ -1,16 +1,9 @@
 <?php
     /**
-     * Class that builds demo roles.
+     * Class that builds zurmo demo data models.
      */
-    class RolesDemoDataMaker extends DemoDataMaker
+    class ZurmoDemoDataMaker extends DemoDataMaker
     {
-        protected $quantity;
-
-        public static function getDependencies()
-        {
-            return array('zurmo');
-        }
-
         public function makeAll(& $demoDataByModelClassName)
         {
             assert('is_array($demoDataByModelClassName)');
@@ -19,26 +12,21 @@
             $currency->code       = 'EUR';
             $currency->rateToBase = 1.5;
             $saved = $currency->save();
-            $this->assertTrue($saved);
+            assert('$saved');
             $currency = new Currency();
             $currency->code       = 'CAD';
             $currency->rateToBase = 1.1;
             $saved = $currency->save();
-            $this->assertTrue($saved);
+            assert('$saved');
             $currency = new Currency();
             $currency->code       = 'YEN';
             $currency->rateToBase = .75;
             $saved = $currency->save();
-            $this->assertTrue($saved);
-            $demoDataByModelClassName['Currency'] = Currencies::getAll();
+            assert('$saved');
+            $demoDataByModelClassName['Currency'] = Currency::getAll();
         }
 
         public function populateModel(& $model)
-        {
-            throw notImplementedException();
-        }
-
-        public function setQuantity($quantity)
         {
             throw notImplementedException();
         }

@@ -5,11 +5,22 @@
     abstract class DemoDataMaker
     {
         private static $customFieldData;
+
         /**
-         * Defines how many of a particular model to make.
+         * Defines the ratio of a models quantity to the load size. 1 is the baseline.  If you set the quantity to 100
+         * and the ratioToLoad is 1.5, then 150 models will be created for that particular module's demo data.
+         * @see $loadMagnitude
          * @var integer
          */
-        abstract protected $quantity;
+        protected $ratioToLoad = 1;
+
+        /**
+         * Load magnitude defines the quantity to load. If you set this 100 and the ratioToLoad is 2 for a module
+         * then that module will create 200 demo data models.
+         * @see $ratioToLoad;
+         * @var integer
+         */
+        protected $loadMagnitude = 10;
 
         /**
          * Given an array of existing data models, make all the demo data for this module.
@@ -29,26 +40,15 @@
         /**
          * Returns an array of module class names. These modules must have their demo data built first.
          */
-        public function getDependencies()
+        public static function getDependencies()
         {
             return array();
         }
 
-        public function setQuantity($quantity)
+        public function setLoadMagnitude($loadMagnitude)
         {
-            assert('is_int($quantity)');
-            $this->quantity = $quantity;
-        }
-
-        protected static function resolveModelAttributeValue(& $model, $attributeName, $value)
-        {
-            assert('$model instanceof RedBeanModel');
-            assert('is_string($attributeName)');
-            assert('$value != null');
-            if($model->$attributeName == null)
-            {
-                $model->$attributeName = $value;
-            }
+            assert('is_int($loadMagnitude) && $loadMagnitude > 0');
+            $this->loadMagnitude = $loadMagnitude;
         }
 
         protected static function makeDomainByName($name)
@@ -59,25 +59,32 @@
             {
                 $name = substr($name, 0, 15);
             }
-            return $name . 'com';
+            return $name . '.com';
         }
 
         protected static function makeUrlByDomainName($domainName)
         {
             assert('is_string($domainName)');
-            return 'http://' . $domainName;
+            return 'http://www.' . $domainName;
         }
 
         public function getCustomFieldDataByName($name)
         {
             assert('is_string($name)');
-            if(self::$customFieldData[$name] == null)
+            if(!isset(self::$customFieldData[$name]))
             {
                 $data = CustomFieldData::getByName('AccountTypes');
-                $values = unserializeserialize($data->serializedData);
+                $values = unserialize($data->serializedData);
                 self::$customFieldData[$name] = $values;
             }
-            return $customFieldData[$name];
+            return self::$customFieldData[$name];
+        }
+
+        protected function resolveQuantityToLoad()
+        {
+            $quantity = round($this->ratioToLoad * $this->loadMagnitude);
+            assert('$quantity > 0');
+            return $quantity;
         }
     }
 ?>
