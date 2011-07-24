@@ -42,7 +42,6 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
-                //$owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadBodgyData'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
             }
         }
@@ -151,11 +150,6 @@
             {
                 throw new NotSupportedException();
             }
-        }
-
-        public function handleLoadBodgyData($event)
-        {
-            BodgySampleDataUtil::makeBodgyTestDataIfItDoesntLookLikeItIsAlreadyThere();
         }
 
         public function handleLoadLanguage($event)
