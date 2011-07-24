@@ -18,9 +18,9 @@
             assert('isset($demoDataByModelClassName["Opportunity"])');
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
-                $note        = new Note();
-                $note->owner = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
+                $note           = new Note();
                 $opportunity    = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName["Opportunity"]);
+                $note->owner    = $opportunity->owner;
                 $note->activityItems->add($opportunity);
                 $note->activityItems->add($opportunity->contacts[0]);
                 $note->activityItems->add($opportunity->account);

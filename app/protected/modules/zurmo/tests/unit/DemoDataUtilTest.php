@@ -41,7 +41,7 @@
 
         public function testLoad()
         {
-            $this->assertEquals(1, Group::getCount());
+            $this->assertEquals(2, Group::getCount());
             $this->assertEquals(0, Role::getCount());
             $this->assertEquals(0, Account::getCount());
             $this->assertEquals(0, Contact::getCount());
@@ -52,14 +52,14 @@
             $this->assertEquals(1, User::getCount());
             $messageLogger   = new MessageLogger();
             DemoDataUtil::load($messageLogger, 3);
-            $this->assertEquals(7, Group::getCount());
+            $this->assertEquals(8, Group::getCount());
             $this->assertEquals(3, Role::getCount());
-            $this->assertEquals(1, Account::getCount());
-            $this->assertEquals(4, Contact::getCount());
-            $this->assertEquals(2, Opportunity::getCount());
-            $this->assertEquals(3, Meeting::getCount());
-            $this->assertEquals(3, Note::getCount());
-            $this->assertEquals(3, Task::getCount());
+            $this->assertEquals(3, Account::getCount());
+            $this->assertEquals(12, Contact::getCount());
+            $this->assertEquals(6, Opportunity::getCount());
+            $this->assertEquals(9, Meeting::getCount());
+            $this->assertEquals(9, Note::getCount());
+            $this->assertEquals(9, Task::getCount());
             $this->assertEquals(9, User::getCount());
         }
     }

@@ -22,10 +22,10 @@
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $opportunity = new Opportunity();
-                $opportunity->owner = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
                 $opportunity->contacts->add(RandomDataUtil::
                                             getRandomValueFromArray($demoDataByModelClassName["Contact"]));
                 $opportunity->account = $opportunity->contacts[0]->account;
+                $opportunity->owner   = $opportunity->contacts[0]->owner;
                 $currencyValue = new CurrencyValue();
                 $currencyValue->currency = RandomDataUtil::
                                             getRandomValueFromArray($demoDataByModelClassName["Currency"]);
@@ -46,8 +46,8 @@
             parent::populateModel($model);
             $name        = RandomDataUtil::getRandomValueFromArray($opportunityRandomData['names']);
             $model->name = $name;
-            $stage       = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('SalesStages'));
-            $source      = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
+            $source    = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('SalesStages'));
+            $stage     = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
             $model->stage->value  = $stage;
             $model->source->value = $source;
             $futureTimeStamp      = time() + (mt_rand(1,200) * 60 * 60 * 24);

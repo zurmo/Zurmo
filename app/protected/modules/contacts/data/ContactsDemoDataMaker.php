@@ -24,10 +24,10 @@
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $contact          = new Contact();
-                $contact->owner   = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
                 $contact->account = RandomDataUtil::
                                         getRandomValueFromArray($demoDataByModelClassName["Account"]);
                 $contact->state   = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
+                $contact->owner   = $contact->account->owner;
                 $this->populateModel($contact);
                 $saved = $contact->save();
                 assert('$saved');

@@ -19,8 +19,8 @@
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $meeting        = new Meeting();
-                $meeting->owner = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
                 $opportunity    = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName["Opportunity"]);
+                $meeting->owner = $opportunity->owner;
                 $meeting->activityItems->add($opportunity);
                 $meeting->activityItems->add($opportunity->contacts[0]);
                 $meeting->activityItems->add($opportunity->account);

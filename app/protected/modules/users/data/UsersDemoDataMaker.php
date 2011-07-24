@@ -17,18 +17,18 @@
             assert('isset($demoDataByModelClassName["Role"])');
 
             $user = new User();
+            $this->populateModel($user);
             $user->username           = 'admin';
             $user->title->value       = 'Sir';
             $user->firstName          = 'Jason';
             $user->lastName           = 'Blue';
-            $this->populateModel($user);
+            $user->setPassword($user->username);
             $saved = $user->save();
             assert('$saved');
             $demoDataByModelClassName["Role"][0]->users->add($user);
             $saved = $demoDataByModelClassName["Role"][0]->save();
             assert('$saved');
             $demoDataByModelClassName['User'][] = $user;
-
             foreach (array('jim'   => 'Mr',
                            'john'  => 'Mr',
                            'sally' => 'Dr',

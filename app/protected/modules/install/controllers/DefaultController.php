@@ -151,6 +151,11 @@
 
         public function actionInstallDemoData()
         {
+            RedBeanDatabase::setup(Yii::app()->db->connectionString,
+                                   Yii::app()->db->username,
+                                   Yii::app()->db->password);
+            InstallUtil::freezeDatabase();
+            Yii::app()->user->userModel = User::getByUsername('super');
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();

@@ -32,12 +32,12 @@
             parent::populateModel($model);
             $accountRandomData = ZurmoRandomDataUtil::getRandomDataByModuleAndModelClassNames('AccountsModule', 'Account');
             $name = RandomDataUtil::getRandomValueFromArray($accountRandomData['names']);
-            $model->name = $name;
 
             $domainName = static::makeDomainByName(strval($model));
             $type       = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('AccountTypes'));
             $industry   = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('Industries'));
 
+            $model->name            = $name;
             $model->website         = static::makeUrlByDomainName($domainName);
             $model->type->value     =  $type;
             $model->industry->value = $industry;
