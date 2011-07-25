@@ -50,15 +50,6 @@
                                    Yii::app()->db->password);
         }
 
-        try
-        {
-            Yii::app()->user->userModel = User::getByUsername('super');
-        }
-        catch (NotFoundException $e)
-        {
-            Yii::app()->user->userModel = InstallUtil::createSuperUser('super', 'super');
-        }
-
         echo "Checking message file consistency...\n";
 
         $messagesDirectoryNamesToModuleNames = array("$basePath/extensions/zurmoinc/framework/messages" => 'framework');
