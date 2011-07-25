@@ -285,8 +285,7 @@
             {
                 return;
             }
-            $message = Yii::t('Default', 'Some values cannot be removed because they are currently in use. ' .
-                                         'Try changing the records that use them first.');
+            $message = Yii::t('Default', 'Some values cannot be removed because they are currently in use. Try changing the records that use them first.');
             $content  = HtmlNotifyUtil::renderHighlightBoxByMessage($message);
             return $content;
         }
