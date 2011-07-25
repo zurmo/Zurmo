@@ -38,9 +38,10 @@
         $yiit   = "$basePath/../../yii/framework/yiit.php";
         $config = "$basePath/config/main.php";
 
-        define('MEMCACHE_ON', false);   //Manually define this as false otherwise a warning about this being undefined
-                                        //appears
-
+        //Manually define these otherwise a warning about this being undefined appears
+        define('PHP_CACHING_ON', false);
+        define('MEMCACHE_ON', false);
+        define('AUDITING_OPTIMIZED', false);
         //Setup database
         if (!RedBeanDatabase::isSetup())
         {
@@ -49,8 +50,14 @@
                                    Yii::app()->db->password);
         }
 
-        $super = User::getByUsername('super');
-        Yii::app()->user->userModel = $super;
+        try
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+        }
+        catch (NotFoundException $e)
+        {
+            Yii::app()->user->userModel = InstallUtil::createSuperUser('super', 'super');
+        }
 
         echo "Checking message file consistency...\n";
 
