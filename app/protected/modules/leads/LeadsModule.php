@@ -113,5 +113,10 @@
         {
             return self::RIGHT_CREATE_LEADS;
         }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'LeadsDemoDataMaker';
+        }
     }
 ?>

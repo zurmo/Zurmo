@@ -99,5 +99,15 @@
         {
             return self::RIGHT_CREATE_OPPORTUNITIES;
         }
+
+        public static function getDefaultDataMakerClassName()
+        {
+            return 'OpportunitiesDefaultDataMaker';
+        }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'OpportunitiesDemoDataMaker';
+        }
     }
 ?>

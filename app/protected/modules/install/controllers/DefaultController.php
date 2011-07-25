@@ -100,6 +100,7 @@
         protected function actionRunInstallation($form)
         {
             assert('$form instanceof InstallSettingsForm');
+            ZurmoGeneralCache::forgetAll();
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();
@@ -134,8 +135,8 @@
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
                                             Yii::app()->language);
-            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
-            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+            $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
+            DefaultDataUtil::load($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
             if($form->installDemoData)
             {
@@ -143,19 +144,31 @@
             }
             else
             {
+                $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+                InstallUtil::writeInstallComplete(INSTANCE_ROOT);
                 echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
             }
         }
 
         public function actionInstallDemoData()
         {
-            //todo: run demo data installation.
-                //need to load setupdb
-
-            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
-            $nextView = new InstallCompleteView();
+            RedBeanDatabase::setup(Yii::app()->db->connectionString,
+                                   Yii::app()->db->username,
+                                   Yii::app()->db->password);
+            InstallUtil::freezeDatabase();
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();
+            $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
+            $messageLogger = new MessageLogger($messageStreamer);
+            DemoDataUtil::load($messageLogger, 100);
+            $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
+            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+            echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
         }
     }
 ?>

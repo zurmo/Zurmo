@@ -182,5 +182,10 @@
             }
             return $s;
         }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'UsersDemoDataMaker';
+        }
     }
 ?>

@@ -43,12 +43,35 @@
 
         protected function renderContent()
         {
-            $nextPageUrl = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/installDemoData/');
+            $imagePath = Yii::app()->baseUrl . '/themes/default/images/pbar-ani.gif';
+            $progressBarImageContent = CHtml::image($imagePath, 'Progress Bar');
+            $cs = Yii::app()->getClientScript();
+            $cs->registerScriptFile($cs->getCoreScriptUrl() . '/jquery.min.js', CClientScript::POS_END);
+            $loginUrl = Yii::app()->createUrl('zurmo/default');
+
             $content  = '<div class="MetadataView">';
             $content .= '<table><tr><td>';
-            $content .= Yii::t('Default', 'The next step is to install the demo data.');
+            $content .= '<div id="complete-table" style="display:none;">';
+            $content .= '<table><tr><td>';
+            $content .= Yii::t('Default', 'Congratulations! The demo data has been successfully loaded.');
+            $content .= '<br/>';
+            $content .= '<br/>';
+            $content .= Yii::t('Default', 'Click below to go to the login page. The username is <b>super</b>');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Click Here to install the demo data'), $nextPageUrl);
+            $content .= CHtml::link(Yii::t('Default', 'Login'), $loginUrl);
+            $content .= '</td></tr></table>';
+            $content .= '</div>';
+            $content .= '<div id="progress-table">';
+            $content .= '<table><tr><td>';
+            $content .= Yii::t('Default', 'Loading demo data. Please wait.');
+            $content .= '<br/>';
+            $content .= $progressBarImageContent;
+            $content .= '<br/>';
+            $content .= '</td></tr></table>';
+            $content .= '</div>';
+            $content .= Yii::t('Default', 'Installation Output:');
+            $content .= '<div id="logging-table" style="height: 300px; overflow: auto;">';
+            $content .= '</div>';
             $content .= '</td></tr></table>';
             $content .= '</div>';
             return $content;

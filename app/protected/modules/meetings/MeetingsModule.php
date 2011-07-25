@@ -71,5 +71,15 @@
         {
             return self::RIGHT_CREATE_MEETINGS;
         }
+
+        public static function getDefaultDataMakerClassName()
+        {
+            return 'MeetingsDefaultDataMaker';
+        }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'MeetingsDemoDataMaker';
+        }
     }
 ?>

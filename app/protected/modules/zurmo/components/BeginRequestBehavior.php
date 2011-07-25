@@ -142,6 +142,15 @@
             RedBeanDatabase::setup(Yii::app()->db->connectionString,
                                    Yii::app()->db->username,
                                    Yii::app()->db->password);
+
+            if(Yii::app()->isApplicationInstalled())
+            {
+                InstallUtil::freezeDatabase();
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         public function handleLoadBodgyData($event)

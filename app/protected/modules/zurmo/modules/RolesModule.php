@@ -94,5 +94,10 @@
         {
             return self::RIGHT_CREATE_ROLES;
         }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'RolesDemoDataMaker';
+        }
     }
 ?>

@@ -69,5 +69,10 @@
         {
             return self::RIGHT_CREATE_TASKS;
         }
+
+        public static function getDemoDataMakerClassName()
+        {
+            return 'TasksDemoDataMaker';
+        }
     }
 ?>

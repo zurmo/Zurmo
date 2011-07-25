@@ -583,7 +583,7 @@
                                 'port'   => $memcachePort,",
                                      $contents);
             $contents = preg_replace('/\s+\/\/ REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.*?>/s', // Not Coding Standard
-                                     "\n>?",
+                                     "\n?>",
                                      $contents);
             file_put_contents($perInstanceConfigFile, $contents);
         }

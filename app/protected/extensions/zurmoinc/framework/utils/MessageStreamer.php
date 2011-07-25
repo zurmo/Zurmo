@@ -26,6 +26,12 @@
             }
         }
 
+        public function setExtraRenderBytes($extraRenderBytes)
+        {
+            assert('is_int($extraRenderBytes) && $extraRenderBytes >= 0');
+            $this->extraRenderBytes = $extraRenderBytes;
+        }
+
         /**
          * Add a message to be streamed.
          * @param string $message
