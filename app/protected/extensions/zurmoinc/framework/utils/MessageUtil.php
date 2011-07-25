@@ -129,7 +129,6 @@
     {
         $messagesDirectoryName = "$basePath/protected/modules/$moduleName/messages/$language";
         $messageFileName = "$messagesDirectoryName/Default.php";
-        echo $messageFileName . "\n";
         if (file_exists($messageFileName))
         {
             return require($messageFileName);
@@ -257,7 +256,7 @@
                 $yiiMessages        = require("$basePath/../../yii/framework/messages/$firstLanguage/yii.php");
                 foreach ($messagesToFileNames as $message => $fileNames)
                 {
-                    $fileNames = join(' & ', $fileNames);
+                    $fileNames = join(', ', $fileNames);
                     if (!in_array($message, $existingMessages) &&
                         !in_array($message, $yiiMessages))
                     {
