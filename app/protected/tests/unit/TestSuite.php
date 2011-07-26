@@ -24,7 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('../../config/debug.php');
+    $cwd = getcwd();
+    require_once('../roots.php');
+    require_once(INSTANCE_ROOT . '/protected/config/debug.php');
     require_once('../bootstrap.php');
 
     $freeze = true; // TODO - figure out the correct was to pass information like this into tests.

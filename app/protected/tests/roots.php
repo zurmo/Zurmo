@@ -24,15 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('roots.php');
-
-    chdir(COMMON_ROOT);
-
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
-
-    require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+    // $cwd is set in TestSuite.php so that it is the
+    // real cwd when the script is run as a symlink.
+    define('COMMON_ROOT',   realpath(dirname(__FILE__) . '/../..'));
+    define('INSTANCE_ROOT', realpath($cwd . '/../../..'));
 ?>
