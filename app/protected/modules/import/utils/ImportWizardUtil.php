@@ -79,6 +79,13 @@
             $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow']));
         }
 
+        public static function setFormByPostForStep3(& $importWizardForm, $postData)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('is_array($postData) && isset($postData["modelPermissions"])');
+            $importWizardForm->setAttributes(array('modelPermissions' => $postData['modelPermissions']));
+        }
+
         /**
          * Given an array of file upload data, set the form from this.  Keep the existing modelImportRulesType value
          * but clear out any other form attributes since with a new file uploaded, those other attribute values will

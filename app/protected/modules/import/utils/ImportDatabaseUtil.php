@@ -12,6 +12,7 @@
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
             }
+            R::exec("drop table $tableName");
             while (($data = fgetcsv($fileHandle, 0, ',')) !== false)
             {
                 $newBean = R::dispense($tableName);
