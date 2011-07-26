@@ -144,7 +144,10 @@
 
             if(Yii::app()->isApplicationInstalled())
             {
-                InstallUtil::freezeDatabase();
+                if (!FORCE_NO_FREEZE)
+                {
+                    RedBeanDatabase::freeze();
+                }
             }
             else
             {
