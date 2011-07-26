@@ -358,6 +358,10 @@
             $debugConfigFile       = "$instanceRoot/protected/config/debug.php";
             $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
             $originalDebugConfiguration       = file_get_contents($debugConfigFile);
+            $this->assertRegExp   ('/\$debugOn = true;/',
+                                   $originalDebugConfiguration);
+            $this->assertRegExp   ('/\$forceNoFreeze = true;/',
+                                   $originalDebugConfiguration);
             $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
             try
             {
@@ -368,6 +372,8 @@
                 $debugConfiguration       = file_get_contents($debugConfigFile);
                 $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
                 $this->assertRegExp   ('/\$debugOn = false;/',
+                                       $debugConfiguration);
+                $this->assertRegExp   ('/\$forceNoFreeze = false;/',
                                        $debugConfiguration);
                 $this->assertRegExp   ('/\$language         = \'es\';/',
                                        $perInstanceConfiguration);

@@ -561,6 +561,9 @@
             $contents = preg_replace('/\$debugOn\s*=\s*true;/',
                                      '$debugOn = false;',
                                      $contents);
+            $contents = preg_replace('/\$forceNoFreeze\s*=\s*true;/',
+                                     '$forceNoFreeze = false;',
+                                     $contents);
             file_put_contents($debugConfigFile, $contents);
 
             $contents = file_get_contents($perInstanceConfigFile);
