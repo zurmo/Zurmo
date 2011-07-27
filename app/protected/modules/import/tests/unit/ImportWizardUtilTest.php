@@ -38,15 +38,15 @@
             $import = new Import();
             $form   = ImportWizardUtil::makeFormByImport($import);
             $this->assertTrue  ($form instanceof ImportWizardForm);
-            $this->assertEquals(null, $form->modelImportRulesType);
+            $this->assertEquals(null, $form->importRulesType);
 
             //Test an import object with existing data and a data element that does not go into the form.
             $import                 = new Import();
-            $dataToSerialize        = array('modelImportRulesType' => 'test', 'anElementToIgnore' => 'something');
+            $dataToSerialize        = array('importRulesType' => 'test', 'anElementToIgnore' => 'something');
             $import->serializedData = serialize($dataToSerialize);
             $form                   = ImportWizardUtil::makeFormByImport($import);
             $this->assertTrue  ($form instanceof ImportWizardForm);
-            $this->assertEquals('test',  $form->modelImportRulesType);
+            $this->assertEquals('test',  $form->importRulesType);
             $this->assertEquals(null,    $form->fileUploadData);
             $this->assertEquals(null,    $form->firstRowIsHeaderRow);
             $this->assertEquals(null,    $form->modelPermissions);
@@ -60,20 +60,20 @@
         public function testSetImportSerializedDataFromForm()
         {
             $import = new Import();
-                            $dataToSerialize        = array('modelImportRulesType' => 'x',
+                            $dataToSerialize        = array('importRulesType' => 'x',
                                                             'fileUploadData'       => array('a' => 'b'),
                                                             'firstRowIsHeaderRow'  => false,
                                                             'modelPermissions'     => 'z',
                                                             'mappingData'          => array('x' => 'y'));
             $import->serializedData                 = serialize($dataToSerialize);
             $importWizardForm                       = new ImportWizardForm();
-            $importWizardForm->modelImportRulesType = 'xx';
+            $importWizardForm->importRulesType = 'xx';
             $importWizardForm->fileUploadData       = array('aa' => 'bb');
             $importWizardForm->firstRowIsHeaderRow  = true;
             $importWizardForm->modelPermissions     = 'zz';
             $importWizardForm->mappingData          = array('xx' => 'yy');
             ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
-            $compareDataToSerialize                 = array( 'modelImportRulesType' => 'xx',
+            $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
                                                             'fileUploadData'       => array('aa' => 'ba'),
                                                             'firstRowIsHeaderRow'  => true,
                                                             'modelPermissions'     => 'zz',
@@ -86,23 +86,23 @@
          */
         public function testSetFormByPostForStep1()
         {
-            //Test without an existing value for modelImportRulesType
-            $fakePostData = array('modelImportRulesType' => 'xyz');
+            //Test without an existing value for importRulesType
+            $fakePostData = array('importRulesType' => 'xyz');
             $importWizardForm = new ImportWizardForm();
-            $this-assertEquals(null, $importWizardForm->modelImportRulesType);
+            $this-assertEquals(null, $importWizardForm->importRulesType);
             ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
-            $this-assertEquals('xyz', $importWizardForm->modelImportRulesType);
+            $this-assertEquals('xyz', $importWizardForm->importRulesType);
 
-            //Test with an existing value for modelImportRulesType but it is the same as the way we are populating with
+            //Test with an existing value for importRulesType but it is the same as the way we are populating with
             $importWizardForm->fileUploadData = 'test';
             ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
-            $this-assertEquals('xyz', $importWizardForm->modelImportRulesType);
-            $this-assertEquals('test', $importWizardForm->modelImportRulesType);
+            $this-assertEquals('xyz', $importWizardForm->importRulesType);
+            $this-assertEquals('test', $importWizardForm->importRulesType);
 
-            //Test with an existing value for modelImportRulesType and we are changing it.
-            $fakePostData = array('modelImportRulesType' => 'abc');
-            $this-assertEquals('abc', $importWizardForm->modelImportRulesType);
-            $this-assertEquals(null,  $importWizardForm->modelImportRulesType);
+            //Test with an existing value for importRulesType and we are changing it.
+            $fakePostData = array('importRulesType' => 'abc');
+            $this-assertEquals('abc', $importWizardForm->importRulesType);
+            $this-assertEquals(null,  $importWizardForm->importRulesType);
         }
 
 
@@ -115,11 +115,11 @@
             $testTableName = 'testimporttable';
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $importWizardForm = new ImportWizardForm();
-            $importWizardForm->modelImportRulesType = 'testAbc';
+            $importWizardForm->importRulesType = 'testAbc';
             $importWizardForm->modelPermissions     = 'somePermissions';
             ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $testTableName);
             $this->assertEquals(array('a','b'),  $importWizardForm->fileUploadData);
-            $this->assertEquals('testAbc',       $importWizardForm->modelImportRulesType);
+            $this->assertEquals('testAbc',       $importWizardForm->importRulesType);
             $this->assertEquals(null,            $importWizardForm->modelPermissions);
             $compareData = array(
                 'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),

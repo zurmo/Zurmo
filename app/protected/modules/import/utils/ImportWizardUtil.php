@@ -34,7 +34,7 @@
          * import wizard form.
          * @var array
          */
-        private static $importToFormAttributeMap = array('modelImportRulesType',
+        private static $importToFormAttributeMap = array('importRulesType',
                                                          'fileUploadData',
                                                          'firstRowIsHeaderRow',
                                                          'modelPermissions',
@@ -59,25 +59,25 @@
         }
 
         /**
-         * Given a form and an array of post data, set the form for the step 1 process. If the modelImportRulesType
+         * Given a form and an array of post data, set the form for the step 1 process. If the importRulesType
          * is already set and the new value is different, all other form attribute values should be emptied since this
-         * means the modelImportRulesType is different and for the next steps, we can't use existing saved data.
+         * means the importRulesType is different and for the next steps, we can't use existing saved data.
          * @param object $importWizardForm
          * @param array $postData
          */
         public static function setFormByPostForStep1(& $importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["modelImportRulesType"])');
-            if($importWizardForm->modelImportRulesType != null &&
-               $importWizardForm->modelImportRulesType != $postData["modelImportRulesType"])
+            assert('is_array($postData) && isset($postData["importRulesType"])');
+            if($importWizardForm->importRulesType != null &&
+               $importWizardForm->importRulesType != $postData["importRulesType"])
             {
                 foreach(self::$importToFormAttributeMap as $attributeName)
                 {
                     $importWizardForm->$attributeName = null;
                 }
             }
-            $importWizardForm->modelImportRulesType = $postData['modelImportRulesType'];
+            $importWizardForm->importRulesType = $postData['importRulesType'];
         }
 
         public static function setFormByPostForStep2(& $importWizardForm, $postData)
@@ -95,7 +95,7 @@
         }
 
         /**
-         * Given an array of file upload data, set the form from this.  Keep the existing modelImportRulesType value
+         * Given an array of file upload data, set the form from this.  Keep the existing importRulesType value
          * but clear out any other form attributes since with a new file uploaded, those other attribute values will
          * need to be redone.
          * @param object $importWizardForm
@@ -108,7 +108,7 @@
             assert('is_string($tableName');
             foreach(self::$importToFormAttributeMap as $attributeName)
             {
-                if($attributeName != 'modelImportRulesType')
+                if($attributeName != 'importRulesType')
                 {
                     $importWizardForm->$attributeName = null;
                 }

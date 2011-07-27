@@ -1,7 +1,7 @@
 <?php
     class ImportColumnDataSanitizationAnalyzer
     {
-        public function __construct($modelImportRules, $dataProvider)
+        public function __construct($importRules, $dataProvider)
         {
             assert('$dataProvider instanceof XXDataProvider');
         }
@@ -34,7 +34,7 @@
  //ACTUALLY - if we move the below logics into               $importAcceptableAttributeValuesCheckResults
  //then we can also move dataProvider in here too and then we dont have to pass Dataprovider into ImportColumnsSanitizerUtil
                             $sqlBulkAttributeValuesSanitizer = $attributeValueSanitizerUtilName::
-                                                                    makeSqlBulkAttributeValuesSanitizerByModelAndAttributeImportRules($modelImportRules, $attributeImportRules);
+                                                                    makeSqlBulkAttributeValuesSanitizerByModelAndAttributeImportRules($importRules, $attributeImportRules);
                             assert('$sqlBulkAttributeValuesSanitizer != null');
                             $clean = $sqlBulkAttributeValuesSanitizer->getAreAllValuesAcceptableByDataProvider($dataProvider);
                             //??? importAcceptableAttributeValuesCheckResults seems like a strange name.
@@ -45,7 +45,7 @@
                         else
                         {
                             $attributeValueSanitizer = $attributeValueSanitizerUtilName::
-                                                                    makeAttributeValueSanitizerByModelAndAttributeImportRules($modelImportRules, $attributeImportRules);
+                                                                    makeAttributeValueSanitizerByModelAndAttributeImportRules($importRules, $attributeImportRules);
                             assert('$attributeValueSanitizer != null');
                             $clean = $attributeValueSanitizer::isValueAcceptable();
                             //if this is owner, and we selected username, how do we pass that info here? - i think this is answered above.

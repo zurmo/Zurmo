@@ -24,21 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ModelImportRulesTest extends BaseTest
+    class ImportModelTestItemImportRules extends ImportRules
     {
-        public static function setUpBeforeClass()
+        public static function getModelClassName()
         {
-            parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
-        }
-        public function testGetMappableAttributeNamesAndDerivedTypes()
-        {
-            $modelImportRules = new ImportModelTestItemModelImportRules(new ImportModelTestItem());
-            $data = $modelImportRules->getMappableAttributeNamesAndDerivedTypes();
-            $compareData = array(
-
-            );
-            $this->assertEquals($compareData, $data);
+            return 'ImportModelTestItem';
         }
     }
 ?>

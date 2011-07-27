@@ -35,7 +35,7 @@
         public function testImportColumnDataSanitizationAnalyzerResults()
         {
             $import = new Import();
-            $import->modelImportRulesType = 'xx';
+            $import->importRulesType = 'xx';
             $this->assertTrue($import->save());
             $this->createTempTableByFileNameAndTableName('importAnalyzerTest.csv',
                                                          ImportUtil::getDataTableNameByImport($import));
@@ -45,9 +45,9 @@
                 'column_2' => array('attributeNameOrDerivedType' => 'xx'),
             );
             ImportUtil::SetMappingDataToImportAndSave($mappingData, $import);
-            $modelImportRules = ImportUtil::makeModelImportRulesByImportModel($import);
+            $importRules = ImportUtil::makeImportRulesByImportModel($import);
             $dataProvider     = ImportDataProviderUtil::makeDataProviderByImportModel($import);
-            $importColumnDataSanitizationAnalyzer = new ImportColumnDataSanitizationAnalyzer($modelImportRules, $dataProvider);
+            $importColumnDataSanitizationAnalyzer = new ImportColumnDataSanitizationAnalyzer($importRules, $dataProvider);
             foreach($mappingData as $importColumnName => $columnMappingData)
             {
                 $importColumnDataSanitizationAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);

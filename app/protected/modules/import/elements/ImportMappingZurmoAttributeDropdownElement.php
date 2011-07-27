@@ -32,7 +32,7 @@
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
             assert('$model instanceof ImportWizardForm');
-            assert('$model->modelImportRulesType != null');
+            assert('$model->importRulesType != null');
             parent::__construct($model, $attribute, $form, $params);
         }
 
@@ -56,9 +56,9 @@
 
         protected function getDropDownArray()
         {
-            $modelImportRulesClassName = $model->modelImportRulesType . 'ModelImportRules';
-            $modelImportRules = new $modelImportRulesClassName();
-            return $modelImportRules->getMappableAttributeNamesAndDerivedTypes();
+            $importRulesClassName = $model->importRulesType . 'ImportRules';
+            $importRules = new $importRulesClassName();
+            return $importRules->getMappableAttributeNamesAndDerivedTypes();
         }
 
         protected function getIdForSelectInput()

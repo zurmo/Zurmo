@@ -28,7 +28,7 @@
      * Class to help the import module understand
      * how to parse and handle the import file it is importing based on what module(s) it is being imported into.
      */
-    abstract class ModelImportRules
+    abstract class ImportRules
     {
         public static function getModelClassName()
         {
