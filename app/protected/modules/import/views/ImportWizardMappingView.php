@@ -24,14 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * View for mapping import columns to zurmo attributes. Also has user interface to fill in rules such as attribute
+     * defaults and other attribute specific rules.
+     */
     class ImportWizardMappingView extends ImportWizardView
     {
+        /**
+         * The import's mapping data is massaged by adding sample column values and header values if available. This
+         * property is set from the constructor and passed from the controller into this view.
+         * @var array
+         */
         protected $mappingDataMetadata;
 
-        /**
-         * Constructs a module permissions view specifying the controller as
-         * well as the model that will have its details displayed.
-         */
         public function __construct($controllerId, $moduleId, ImportWizardForm $model, $importId, $mappingDataMetadata)
         {
             assert('is_string($controllerId)');

@@ -1,4 +1,7 @@
 <?php
+    /**
+     * Helper class for working with import data tables.
+     */
     class ImportDatabaseUtil
     {
         public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName)

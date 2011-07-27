@@ -24,8 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper utility for import mapping logic.
+     */
     class ImportMappingUtil
     {
+        /**
+         * Given an import data's table name, create a basic mapping data array that has the correct starting
+         * elements set as null.  This will ensure the mapping data array is always structured correctly.  Each key
+         * will be a column name from the table.
+         * @param string $tableName
+         * @return array $mappingData or null if the table does not have any rows.
+         */
         public static function makeMappingDataByTableName($tableName)
         {
             assert('is_string($tableName)');

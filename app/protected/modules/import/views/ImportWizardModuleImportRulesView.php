@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * First view in the import wizard. Allows user to select a module to import data into.
+     */
     class ImportWizardModuleImportRulesView extends ImportWizardView
     {
         public function __construct($controllerId, $moduleId, SelectModuleImportRulesForm $model, $importId)

@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base View for import wizard user interfaces.  Supports previous and next links in the bottom of each view.
+     */
     abstract class ImportWizardView extends EditView
     {
+        /**
+         * Given a form, render the content for the action links at the bottom of the view and return the content as
+         * a string.
+         * @param object $form
+         */
         protected function renderActionLinksContent($form)
         {
             $previousPageLinkContent = $this->renderPreviousPageLinkContent($form);
@@ -43,11 +51,19 @@
             return $content;
         }
 
+        /**
+         * Override if the view should show a previous link.
+         * @param object $form
+         */
         protected function renderPreviousPageLinkContent($form)
         {
             return null;
         }
 
+        /**
+         * Override if the view should show a next link.
+         * @param object $form
+         */
         protected function renderNextPageLinkContent($form)
         {
             return null;

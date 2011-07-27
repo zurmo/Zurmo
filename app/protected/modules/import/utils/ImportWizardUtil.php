@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class with import wizard related functions.
+     */
     class ImportWizardUtil
     {
+        /**
+         * Mapping array to map the serialized data elements from the import object back and forth from the
+         * import wizard form.
+         * @var array
+         */
         private static $importToFormAttributeMap = array('modelImportRulesType',
                                                          'fileUploadData',
                                                          'firstRowIsHeaderRow',
@@ -109,6 +117,12 @@
             $importWizardForm->mappingData    = ImportMappingUtil::makeMappingDataByTableName($tableName);
         }
 
+        /**
+         * Based on the self::$importToFormAttributeMap, create an array of elements from the
+         * import wizard form.  Serialize the array and set the import serializedData attribute.
+         * @param object $importWizardForm
+         * @param object $import
+         */
         public static function setImportSerializedDataFromForm($importWizardForm, & $import)
         {
             $dataToSerialize = array();

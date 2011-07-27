@@ -24,8 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Utility class for adapting mappingData from the import into a mapping view ready array. This would include
+     * sample values and header values if specified.
+     */
     class ImportWizardMappingViewUtil
     {
+        /**
+         * @param array   $mappingData
+         * @param string  $tableName
+         * @param boolean $firstRowIsHeaderRow
+         */
         public static function resolveMappingDataForView($mappingData, $tableName, $firstRowIsHeaderRow)
         {
             assert('is_array($mappingData)');
@@ -51,7 +60,7 @@
             {
                 if($firstRowIsHeaderRow)
                 {
-                    $mappingData[$columnName]['headerValue']      = $rowData[0][$columnName];
+                    $mappingData[$columnName]['headerValue'] = $rowData[0][$columnName];
                     $mappingData[$columnName]['sampleValue'] = $rowData[1][$columnName];
                 }
                 else

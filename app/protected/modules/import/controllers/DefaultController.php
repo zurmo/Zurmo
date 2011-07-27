@@ -148,11 +148,8 @@
             $import           = Import::getById($_GET['id']);
             $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
             $tempTableName    = $import->getTempTableName();
-            //todo: ajax validation for mapping? probably makes good sense?
 
-            //todo: the adapter, data -> metadata stuff like GroupController -> EditModulePermissions
-            //going to need to do tests i think first.... tests to show the metadata is as expected either new
-            //or coming back here....
+            //todo: ajax validation for mapping? probably makes good sense?
 
             if (isset($_POST[get_class($importStep1Form)]))
             {
