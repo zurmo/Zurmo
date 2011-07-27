@@ -56,7 +56,7 @@
             {
                 return $this->getFormattedAttributeLabel();
             }
-            return $this->form->labelEx($this->model, $this->attribute);
+            return $this->form->labelEx($this->model, $this->attribute, array('for' => $this->getEditableInputId()));
         }
 
         protected function renderControlNonEditable()
