@@ -86,7 +86,23 @@
          */
         public function testSetFormByPostForStep1()
         {
+            //Test without an existing value for modelImportRulesType
+            $fakePostData = array('modelImportRulesType' => 'xyz');
+            $importWizardForm = new ImportWizardForm();
+            $this-assertEquals(null, $importWizardForm->modelImportRulesType);
+            ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
+            $this-assertEquals('xyz', $importWizardForm->modelImportRulesType);
 
+            //Test with an existing value for modelImportRulesType but it is the same as the way we are populating with
+            $importWizardForm->fileUploadData = 'test';
+            ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
+            $this-assertEquals('xyz', $importWizardForm->modelImportRulesType);
+            $this-assertEquals('test', $importWizardForm->modelImportRulesType);
+
+            //Test with an existing value for modelImportRulesType and we are changing it.
+            $fakePostData = array('modelImportRulesType' => 'abc');
+            $this-assertEquals('abc', $importWizardForm->modelImportRulesType);
+            $this-assertEquals(null,  $importWizardForm->modelImportRulesType);
         }
 
 
@@ -95,7 +111,22 @@
          */
         public function testSetFormByFileUploadData()
         {
-
+            $fileUploadData   = array('a','b');
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
+            $importWizardForm = new ImportWizardForm();
+            $importWizardForm->modelImportRulesType = 'testAbc';
+            $importWizardForm->modelPermissions     = 'somePermissions';
+            ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $testTableName);
+            $this->assertEquals(array('a','b'),  $importWizardForm->fileUploadData);
+            $this->assertEquals('testAbc',       $importWizardForm->modelImportRulesType);
+            $this->assertEquals(null,            $importWizardForm->modelPermissions);
+            $compareData = array(
+                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+            );
+            $this->assertEquals($compareData,    $importWizardForm->mappingData);
         }
 
         /**
@@ -103,7 +134,10 @@
          */
         public function testSetFormByPostForStep2()
         {
-
+            $fakePostData = array('firstRowIsHeaderRow' => 'xyz');
+            $importWizardForm = new ImportWizardForm();
+            ImportWizardUtil::setFormByPostForStep2($importWizardForm, $fakePostData);
+            $this-assertEquals('xyz', $importWizardForm->firstRowIsHeaderRow);
         }
 
         /**
@@ -111,15 +145,33 @@
          */
         public function testSetFormByPostForStep3()
         {
-
+            $fakePostData = array('modelPermissions' => 'abc');
+            $importWizardForm = new ImportWizardForm();
+            ImportWizardUtil::setFormByPostForStep3($importWizardForm, $fakePostData);
+            $this-assertEquals('abc', $importWizardForm->modelPermissions);
         }
+
+
 
         /**
          * @depends testSetFormByPostForStep3
          */
         public function testSetMappingDataByForm()
         {
+            //change the name of this test method since it wont be accurate based on things we will be testing
+            //so we might want to break this test apart a bit.
+           // ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
             //todo
+            //this will be setting into form not into $import directly... we need to validate this is why....
+           // if (ModulePermissionsFormUtil::setPermissionsFromCastedPost($readyToSetPostData, $group))
+        }
+
+        /**
+         * @depends testSetMappingDataByForm
+         */
+        public function testSetFormByPostForStep4()
+        {
+            //ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
         }
     }
 ?>

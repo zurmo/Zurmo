@@ -24,42 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportWizardModuleImportRulesView extends ImportWizardView
+    class ImportMappingUtil
     {
-        public function __construct($controllerId, $moduleId, SelectModuleImportRulesForm $model, $importId)
+        public static function makeMappingDataByTableName($tableName)
         {
-            assert('is_string($controllerId)');
-            assert('is_string($moduleId)');
-            assert('is_int($importId)');
-            $this->controllerId = $controllerId;
-            $this->moduleId     = $moduleId;
-            $this->model        = $model;
-            $this->modelId      = $importId;
-        }
-
-        /**
-         * Override to handle the form layout for this view.
-         * @param $form If the layout is editable, then pass a $form otherwise it can
-         * be null.
-         * @return A string containing the element's content.
-          */
-        protected function renderFormLayout($form = null)
-        {
-            assert('$form instanceof ZurmoActiveForm');
-            $content .= '<table>';
-            $content .= '<tr>';
-            $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = $this->model->getAttributeLabel('type') . '<br/>{content}{error}';
-            $content .= $element->render();
-            $content .= '</tr>';
-            $content .= '</tbody>';
-            $content .= '</table>';
-            $content .= $this->renderActionLinksContent($form);
-        }
-
-        protected function renderNextPageLinkContent($form)
-        {
-
+            assert('is_string($tableName)');
+            $firstRowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
+            if(count($firstRowData) == 1)
+            {
+                return null;
+            }
+            $mappingData = array();
+            foreach($firstRowData as $columnName => $notUsed)
+            {
+                if($columnName != 'id')
+                {
+                    $mappingData[$columnName] = array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null);
+                }
+            }
+            return $mappingData;
         }
     }
 ?>

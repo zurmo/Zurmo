@@ -24,42 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportWizardModuleImportRulesView extends ImportWizardView
+    class ImportWizardMappingViewUtil
     {
-        public function __construct($controllerId, $moduleId, SelectModuleImportRulesForm $model, $importId)
+        public static function resolveMappingDataForView($mappingData, $tableName, $firstRowIsHeaderRow)
         {
-            assert('is_string($controllerId)');
-            assert('is_string($moduleId)');
-            assert('is_int($importId)');
-            $this->controllerId = $controllerId;
-            $this->moduleId     = $moduleId;
-            $this->model        = $model;
-            $this->modelId      = $importId;
-        }
-
-        /**
-         * Override to handle the form layout for this view.
-         * @param $form If the layout is editable, then pass a $form otherwise it can
-         * be null.
-         * @return A string containing the element's content.
-          */
-        protected function renderFormLayout($form = null)
-        {
-            assert('$form instanceof ZurmoActiveForm');
-            $content .= '<table>';
-            $content .= '<tr>';
-            $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = $this->model->getAttributeLabel('type') . '<br/>{content}{error}';
-            $content .= $element->render();
-            $content .= '</tr>';
-            $content .= '</tbody>';
-            $content .= '</table>';
-            $content .= $this->renderActionLinksContent($form);
-        }
-
-        protected function renderNextPageLinkContent($form)
-        {
-
+            assert('is_array($mappingData)');
+            assert('is_string($tableName)');
+            assert('is_bool($firstRowIsHeaderRow)');
+            if($firstRowIsHeaderRow)
+            {
+                $rowData = ImportDatabaseUtil::getRowsByTableNameAndCount($tableName, 2, 0);
+                if(count($rowData) <= 1)
+                {
+                    throw new notSupportedException();
+                }
+            }
+            else
+            {
+                $rowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
+                if($rowData == null)
+                {
+                    throw new notSupportedException();
+                }
+            }
+            foreach($mappingData as $columnName => $columnData)
+            {
+                if($firstRowIsHeaderRow)
+                {
+                    $mappingData[$columnName]['headerValue']      = $rowData[0][$columnName];
+                    $mappingData[$columnName]['firstSampleValue'] = $rowData[1][$columnName];
+                }
+                else
+                {
+                    $mappingData[$columnName]['firstSampleValue'] = $rowData[$columnName];
+                }
+            }
+            return $mappingData;
         }
     }
 ?>

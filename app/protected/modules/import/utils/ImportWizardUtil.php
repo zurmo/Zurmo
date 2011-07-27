@@ -93,15 +93,20 @@
          * @param object $importWizardForm
          * @param array $fileUploadData
          */
-        public static function setFormByFileUploadData(& $importWizardForm, $fileUploadData)
+        public static function setFormByFileUploadDataAndTableName(& $importWizardForm, $fileUploadData, $tableName)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($fileUploadData)');
+            assert('is_string($tableName');
             foreach(self::$importToFormAttributeMap as $attributeName)
             {
-                $importWizardForm->$attributeName = null;
+                if($attributeName != 'modelImportRulesType')
+                {
+                    $importWizardForm->$attributeName = null;
+                }
             }
             $importWizardForm->fileUploadData = $fileUploadData;
+            $importWizardForm->mappingData    = ImportMappingUtil::makeMappingDataByTableName($tableName);
         }
 
         public static function setImportSerializedDataFromForm($importWizardForm, & $import)

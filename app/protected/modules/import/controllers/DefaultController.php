@@ -51,7 +51,7 @@
                 ImportWizardUtil::setFormByPostForStep1($importWizardForm, $_POST[get_class($importWizardForm)]);
                 if($importWizardForm->validate())
                 {
-                    ImportWizardUtil::setImportFromForm($import, $importWizardForm);
+                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step2', array('id' => $import->id)));
@@ -85,7 +85,7 @@
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
                 if($importWizardForm->validate())
                 {
-                    ImportWizardUtil::setImportFromForm($import, $importWizardForm);
+                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step3', array('id' => $import->id)));
@@ -119,7 +119,7 @@
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
                 if($importWizardForm->validate())
                 {
-                    ImportWizardUtil::setImportFromForm($import, $importWizardForm);
+                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step4', array('id' => $import->id)));
@@ -159,7 +159,7 @@
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
                 if($importWizardForm->validate())
                 {
-                    ImportWizardUtil::setImportFromForm($import, $importWizardForm);
+                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step5', array('id' => $import->id)));
@@ -201,8 +201,8 @@
                         'type' => $uploadedFile->getType(),
                         'size' => $uploadedFile->getSize(),
                     );
-                    ImportWizardUtil::setFormByFileUploadData($importWizardForm, $fileUpload);
-                    ImportWizardUtil::setImportFromForm($import, $importWizardForm);
+                    ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUpload, $tableName);
+                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if(!$import->save())
                     {
                         throw new FailedFileUploadException(Yii::t('Default', 'Import model failed to save.'));

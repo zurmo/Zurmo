@@ -53,6 +53,9 @@
             return null;
         }
 
-
+        public function isUniqueToAPage()
+        {
+            return true;
+        }
     }
 ?>

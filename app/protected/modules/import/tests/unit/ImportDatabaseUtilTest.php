@@ -34,7 +34,6 @@
 
         public function testMakeDatabaseTableByFileHandleAndTableName()
         {
-            Yii::app()->user->userModel = User::getByUsername('super');
             $testTableName = 'testimporttable';
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $sql = 'select * from ' . $testTableName;
@@ -99,6 +98,46 @@
                 ),
             );
             $this->assertEquals($compareData, $tempTableData);
+
+
+        }
+
+        /**
+         * @depends testMakeDatabaseTableByFileHandleAndTableName
+         */
+        public function testGetColumnCountByTableName()
+        {
+            $this->assertEquals(3, ImportDatabaseUtil::getColumnCountByTableName('testimporttable'));
+        }
+
+        /**
+         * @depends testGetColumnCountByTableName
+         */
+        public function testGetFirstRowByTableName()
+        {
+            $firstRowData = ImportDatabaseUtil::getFirstRowByTableName('testimporttable');
+            $compareData   = array(
+                    'id' => 1,
+                    'column_0' => 'def',
+                    'column_1' => '563',
+                    'column_2' => 'b',
+            );
+            $this->assertEquals($compareData, $firstRowData);
+        }
+
+        /**
+         * @depends testGetFirstRowByTableName
+         */
+        public function TestGetRowsByTableNameAndCount($tableName, $count, $offset = null)
+        {
+            $firstRowData = ImportDatabaseUtil::getRowsByTableNameAndCount('testimporttable', 1, 1);
+            $compareData   = array(
+                    'id' => 2,
+                    'column_0' => 'efg',
+                    'column_1' => '456',
+                    'column_2' => 'a',
+            );
+            $this->assertEquals($compareData, $firstRowData);
         }
     }
 ?>

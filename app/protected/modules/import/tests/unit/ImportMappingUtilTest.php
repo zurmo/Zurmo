@@ -24,42 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportWizardModuleImportRulesView extends ImportWizardView
+    class ImportMappingUtilTest extends BaseTest
     {
-        public function __construct($controllerId, $moduleId, SelectModuleImportRulesForm $model, $importId)
+        public static function setUpBeforeClass()
         {
-            assert('is_string($controllerId)');
-            assert('is_string($moduleId)');
-            assert('is_int($importId)');
-            $this->controllerId = $controllerId;
-            $this->moduleId     = $moduleId;
-            $this->model        = $model;
-            $this->modelId      = $importId;
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
 
-        /**
-         * Override to handle the form layout for this view.
-         * @param $form If the layout is editable, then pass a $form otherwise it can
-         * be null.
-         * @return A string containing the element's content.
-          */
-        protected function renderFormLayout($form = null)
+        public function testMakeMappingDataByTableName()
         {
-            assert('$form instanceof ZurmoActiveForm');
-            $content .= '<table>';
-            $content .= '<tr>';
-            $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = $this->model->getAttributeLabel('type') . '<br/>{content}{error}';
-            $content .= $element->render();
-            $content .= '</tr>';
-            $content .= '</tbody>';
-            $content .= '</table>';
-            $content .= $this->renderActionLinksContent($form);
-        }
-
-        protected function renderNextPageLinkContent($form)
-        {
-
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
+            $mappingData = ImportMappingUtil::makeMappingDataByTableName($testTableName);
+            $compareData = array(
+                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+            );
+            $this->assertEquals($compareData, $mappingData);
         }
     }
 ?>
