@@ -81,7 +81,6 @@
             foreach ($this->mappingDataMetadata as $columnName => $row)
             {
                 assert('isset($row["attributeNameOrDerivedType"])');
-                assert('isset($row["mappingDataRules"])');
                 assert('isset($row["sampleValue"])');
                 $content .= '<tr>';
                 $content .= $this->renderAttributeDropDownElement($columnName);
@@ -91,7 +90,7 @@
                     $content .= $this->renderHeaderColumnElement($columnName, $row['headerValue']);
                 }
                 $content .= $this->renderImportColumnElement($columnName, $row['sampleValue']);
-                $content .= $this->renderMappingRulesElements($columnName, $row['mappingDataRules']);
+                $content .= $this->renderMappingRulesElements($columnName);
 
                 $content .= '</tr>';
             }
@@ -150,27 +149,31 @@
             return $content;
         }
 
-        protected function renderMappingRulesElements($columnName, $columnMappingRulesData)
+        protected function renderMappingRulesElements($columnName)
         {
             assert('is_string($columnName)');
-            assert('is_array($columnMappingRulesData) || $columnMappingRulesData == null');
             $content = '<td>';
-            if($columnMappingRulesData != null)
+            $mappingRuleForms = $this->model->getMappingRuleFormsByMappingDataColumnName($columnName);
+            foreach($mappingRuleForms as $mappingRuleForm)
             {
-                foreach($columnMappingRulesData as $mappingRulesType => $mappingRulesValue)
-                {
-                    $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                                 $columnName,
-                                                 ImportWizardForm::MAPPING_COLUMN_IMPORT);
-                    $elementClassName          = $mappingRulesType . 'Element';
-                    $element                   = new $elementClassName(
-                                                    $this->model,
-                                                    $attributeName,
-                                                    $form);
-                    $content .= '<table><tbody><tr>';
-                    $content .= $element->render();
-                    $content .= '</tr></tbody></table>';
-                }
+                $elementType        = $mappingRuleForm::getElementType();
+                $elementClassName   = $elementType . 'Element';
+                $attributeName      = $mappingRuleForm::getAttributeName();
+                $modelAttributeName = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
+                                      $columnName,
+                                      ImportWizardForm::MAPPING_COLUMN_RULES);
+                $htmlOptions        = array('id' =>   ImportMappingUtil::getMappingRuleElementIdByColumnNameAndForms(
+                                                      get_class($this->model), $modelAttributeName, $mappingRuleForm),
+                                            'name' => ImportMappingUtil::getMappingRuleElementNameByColumnNameAndForms(
+                                                      get_class($this->model), $modelAttributeName, $mappingRuleForm));
+                $element            = new $elementClassName(
+                                          $mappingRuleForm,
+                                          $attributeName,
+                                          $form,
+                                          $htmlOptions);
+                $content .= '<table><tbody><tr>';
+                $content .= $element->render();
+                $content .= '</tr></tbody></table>';
             }
             $content .= '</td>';
             return $content;

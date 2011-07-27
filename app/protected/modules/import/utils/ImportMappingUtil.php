@@ -54,5 +54,27 @@
             }
             return $mappingData;
         }
+
+        public static function getMappingRuleElementIdByColumnNameAndForms($importFormClassName,
+                                                                           $importFormAttributeName,
+                                                                           $mappingRuleForm)
+        {
+            assert('is_string($importFormClassName)');
+            assert('is_string($importFormAttributeName)');
+            assert('$mappingRuleForm instanceof mappingRuleForm');
+            return $importFormClassName . '_' . $importFormAttributeName . '_' .
+                   get_class($mappingRuleForm) . '_' . $mappingRuleForm::getAttributeName();
+        }
+
+        public static function getMappingRuleElementNameByColumnNameAndForms($importFormClassName,
+                                                                             $importFormAttributeName,
+                                                                             $mappingRuleForm)
+        {
+            assert('is_string($importFormClassName)');
+            assert('is_string($importFormAttributeName)');
+            assert('$mappingRuleForm instanceof mappingRuleForm');
+            return '[' . $importFormClassName . '][' . $importFormAttributeName . '][' .
+                   get_class($mappingRuleForm) . '][' . $mappingRuleForm::getAttributeName() . ']';
+        }
     }
 ?>
