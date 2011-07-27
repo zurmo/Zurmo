@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     $cwd = getcwd();
-    require_once('../roots.php');
+    require_once('../testRoots.php');
     require_once(INSTANCE_ROOT . '/protected/config/debug.php');
     require_once('../bootstrap.php');
 

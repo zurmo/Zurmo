@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('roots.php');
+    require_once('testRoots.php');
 
     chdir(COMMON_ROOT);
 
