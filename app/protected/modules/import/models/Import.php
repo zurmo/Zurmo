@@ -78,5 +78,10 @@
         {
             return true;
         }
+
+        public function getTempTableName()
+        {
+            return 'importtable' . $this->id;
+        }
     }
 ?>

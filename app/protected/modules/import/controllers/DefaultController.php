@@ -147,7 +147,7 @@
         {
             $import           = Import::getById($_GET['id']);
             $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
-
+            $tempTableName    = $import->getTempTableName();
             //todo: ajax validation for mapping? probably makes good sense?
 
             //todo: the adapter, data -> metadata stuff like GroupController -> EditModulePermissions
@@ -170,12 +170,17 @@
                     }
                 }
             }
+            $mappingDataMetadata = ImportWizardMappingViewUtil::
+                                   resolveMappingDataForView($importWizardForm->mappingData,
+                                                             $tempTableName,
+                                                             $importWizardForm->firstRowIsHeaderRow);
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 4 of 6')), 0, 0);
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
                                                              $importWizardForm,
-                                                             (int)$import->id), 1, 0);
+                                                             (int)$import->id,
+                                                             $mappingDataMetadata), 1, 0);
             $view       = new ImportPageView($this, $importView);
             echo $view->render();
         }
@@ -191,8 +196,8 @@
                 $fileHandle  = fopen($uploadedFile->getTempName(), 'r');
                 if ($fileHandle !== false)
                 {
-                    $tableName = 'importtable' . $import->id;
-                    if(!ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName))
+                    $tempTableName = $import->getTempTableName();
+                    if(!ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName))
                     {
                         throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
                     }
@@ -201,7 +206,7 @@
                         'type' => $uploadedFile->getType(),
                         'size' => $uploadedFile->getSize(),
                     );
-                    ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUpload, $tableName);
+                    ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUpload, $tempTableName);
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if(!$import->save())
                     {

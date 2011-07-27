@@ -52,11 +52,11 @@
                 if($firstRowIsHeaderRow)
                 {
                     $mappingData[$columnName]['headerValue']      = $rowData[0][$columnName];
-                    $mappingData[$columnName]['firstSampleValue'] = $rowData[1][$columnName];
+                    $mappingData[$columnName]['sampleValue'] = $rowData[1][$columnName];
                 }
                 else
                 {
-                    $mappingData[$columnName]['firstSampleValue'] = $rowData[$columnName];
+                    $mappingData[$columnName]['sampleValue'] = $rowData[$columnName];
                 }
             }
             return $mappingData;

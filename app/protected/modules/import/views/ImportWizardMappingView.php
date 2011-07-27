@@ -53,15 +53,14 @@
         protected function renderFormLayout($form = null)
         {
             $content       = '';
-            $mappingData   = $this->model->mappingData;
-            $headerColumns  = $this->getFormLayoutHeaderColumns();
+            $headerColumns  = $this->getFormLayoutHeaderColumnsContent();
             assert('count($permissions) > 0');
 
             $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:20%" />';
             $width = 80 / count($headerColumns);
-            foreach ($headerColumns as $headerColumnLabel)
+            foreach ($headerColumns as $notUsed)
             {
                 $content .= '<col style="width:' . $width . '%" />';
             }
@@ -69,22 +68,24 @@
             $content .= '<tbody>';
             $content .= '<tr>';
             $content .= '<th>&#160;</th>';
-            foreach ($headerColumns as $headerColumnLabel)
+            foreach ($headerColumns as $headerColumnContent)
             {
-                $content .= '<th>' . $headerColumnLabel . '</th>';
+                $content .= '<th>' . $headerColumnContent . '</th>';
             }
             $content .= '</tr>';
-            foreach ($mappingData as $columnName => $row)
+            foreach ($this->mappingDataMetadata as $columnName => $row)
             {
                 assert('isset($row["attributeNameOrDerivedType"])');
                 assert('isset($row["mappingDataRules"])');
+                assert('isset($row["sampleValue"])');
                 $content .= '<tr>';
                 $content .= $this->renderAttributeDropDownElement($columnName);
                 if($this->model->firstRowIsHeaderRow)
                 {
-                    $content .= $this->renderHeaderColumnElement($columnName);
+                    assert('isset($row["headerValue"])');
+                    $content .= $this->renderHeaderColumnElement($columnName, $row['headerValue']);
                 }
-                $content .= $this->renderImportColumnElement($columnName);
+                $content .= $this->renderImportColumnElement($columnName, $row['sampleValue']);
                 $content .= $this->renderMappingRulesElements($columnName, $row['mappingDataRules']);
 
                 $content .= '</tr>';
@@ -92,6 +93,19 @@
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
+        }
+
+        protected function getFormLayoutHeaderColumnsContent()
+        {
+            $headerColumns = array();
+            $headerColumns[] = Yii::t('Default', 'Zurmo Field');
+            if($this->model->firstRowIsHeaderRow)
+            {
+                $headerColumns[] = Yii::t('Default', 'Import Field');
+            }
+            $headerColumns[] = Yii::t('Default', 'Sample Value');
+            $headerColumns[] = Yii::t('Default', 'Rules');
+            return $headerColumns;
         }
 
         protected function renderAttributeDropDownElement($columnName)
@@ -108,32 +122,27 @@
             return $element->render();
         }
 
-        protected function renderHeaderColumnElement($columnName)
+        protected function renderHeaderColumnElement($columnName, $headerValue)
         {
             assert('is_string($columnName)');
-            $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                         $columnName,
-                                         ImportWizardForm::MAPPING_COLUMN_HEADER);
-            $element                   = new ImportMappingHeaderColumnElement(
-                                            $this->model,
-                                            $attributeName,
-                                            $form);
-            $element->editableTemplate = '<td>{content}{error}</td>';
-            return $element->render();
+            assert('is_string($headerValue)');
+            $content  = '<td>';
+            $contentt = $headerValue;
+            $content .= '</td>';
+            return $content;
         }
 
-        protected function renderImportColumnElement($columnName)
+        protected function renderImportColumnElement($columnName, $sampleValue)
         {
             assert('is_string($columnName)');
+            assert('is_string($sampleValue) || $sampleValue == null');
             $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
                                          $columnName,
                                          ImportWizardForm::MAPPING_COLUMN_IMPORT);
-            $element                   = new ImportMappingImportColumnElement(
-                                            $this->model,
-                                            $attributeName,
-                                            $form);
-            $element->editableTemplate = '<td>{content}{error}</td>';
-            return $element->render();
+            $content  = '<td>';
+            $contentt = '<div id="{$attributeName}">' . $sampleValue . '</div>';
+            $content .= '</td>';
+            return $content;
         }
 
         protected function renderMappingRulesElements($columnName, $columnMappingRulesData)
