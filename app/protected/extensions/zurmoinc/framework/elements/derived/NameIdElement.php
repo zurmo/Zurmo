@@ -65,27 +65,27 @@
 
         protected function getIdForHiddenField()
         {
-            return get_class($this->model) . '_' . $this->idAttributeId;
+            return $this->getEditableInputId($this->idAttributeId);
         }
 
         protected function getNameForHiddenField()
         {
-                return get_class($this->model) . '[' . $this->idAttributeId . ']';
+            return $this->getEditableInputName($this->idAttributeId);
         }
 
         protected function getIdForTextField()
         {
-            return get_class($this->model) . '_' . $this->nameAttributeName;
+            return $this->getEditableInputId($this->nameAttributeName);
         }
 
         protected function getNameForTextField()
         {
-                return get_class($this->model) . '[' .  $this->nameAttributeName . ']';
+            return $this->getEditableInputName($this->nameAttributeName);
         }
 
         protected function getIdForSelectLink()
         {
-            return get_class($this->model) . '_' . static::$moduleId . '_SelectLink';
+            return $this->getEditableInputId(static::$moduleId, 'SelectLink');
         }
 
         /**

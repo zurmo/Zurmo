@@ -57,12 +57,12 @@
 
         protected function getIdForSelectInput()
         {
-            return get_class($this->model) . '_' . $this->attribute . '_id';
+            return $this->getEditableInputId($this->attribute, 'id');
         }
 
         protected function getNameForSelectInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . '][id]';
+            return $this->getEditableInputName($this->attribute, 'id');
         }
 
         protected function getDropDownArray()

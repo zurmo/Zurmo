@@ -50,7 +50,12 @@
         protected function renderControlEditable()
         {
             assert('empty($this->model->{$this->attribute}) || is_string($this->model->{$this->attribute}) || is_integer($this->model->{$this->attribute})');
-            return $this->form->textArea($this->model, $this->attribute, array('rows' => 6, 'cols' => 50));
+            $htmlOptions             = array();
+            $htmlOptions['id']       = $this->getEditableInputId();
+            $htmlOptions['name']     = $this->getEditableInputName();
+            $htmlOptions['rows']     = 6;
+            $htmlOptions['cols']     = 50;
+            return $this->form->textArea($this->model, $this->attribute, $htmlOptions);
         }
 
         /**

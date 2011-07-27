@@ -63,12 +63,12 @@
 
         protected function getIdForSelectInput()
         {
-            return get_class($this->model) . '_' . $this->attribute;
+            return $this->getEditableInputId();
         }
 
         protected function getNameForSelectInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . ']';
+            return $this->getEditableInputName();
         }
     }
 ?>

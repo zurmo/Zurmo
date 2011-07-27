@@ -46,8 +46,8 @@
                 'model'               => $this->model,
                 'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
                 'htmlOptions'         => array(
-                    'id'              => $this->getIdForInput(),
-                    'name'            => $this->getNameForInput(),
+                    'id'              => $this->getEditableInputId(),
+                    'name'            => $this->getEditableInputName(),
                     'value'           => $value,
                 ),
                 'options'             => array(
@@ -71,16 +71,6 @@
         {
             return DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
                         $this->model->{$this->attribute});
-        }
-
-        protected function getIdForInput()
-        {
-            return get_class($this->model) . '_' . $this->attribute;
-        }
-
-        protected function getNameForInput()
-        {
-            return get_class($this->model) . '[' . $this->attribute . ']';
         }
     }
 ?>

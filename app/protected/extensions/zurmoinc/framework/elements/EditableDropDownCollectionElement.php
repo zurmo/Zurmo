@@ -53,7 +53,7 @@
                     'stop'      => 'js:function(event, ui){' .
                                         $this->renderScriptCallToRebuildSelectInputFromInputs() . '}',
                 ),
-                'baseInputNameForSortableCollection' => get_class($this->model) . '[' . $this->attribute . ']',
+                'baseInputNameForSortableCollection' => $this->resolveInputPrefix() . '[' . $this->attribute . ']',
                 'htmlOptions' =>
                 array(
                     'id'    => $this->attribute . '_ul',
@@ -157,7 +157,7 @@
                     ),
                 CClientScript::POS_END
             );
-            $inputIdPrefix = get_class($this->model) . '_' . $this->attribute . '_';
+            $inputIdPrefix = $this->resolveInputPrefix() . '_' . $this->attribute . '_';
             Yii::app()->clientScript->registerScript('editableDropDown', "
                 " . $this->renderItemsOnChangeScript() . "
                 $('.remove-sortable-item-link').live('click', function()
@@ -205,7 +205,7 @@
         {
             assert('$this->getSpecificValueFromDropDownAttributeName() != null');
             return "rebuildSelectInputFromInputs(
-                        '" . get_class($this->model) . "_" .
+                        '" . $this->resolveInputPrefix() . "_" .
                         $this->getSpecificValueFromDropDownAttributeName() . "', '" .
                         $this->getNameForInputField() . "')";
         }
@@ -240,17 +240,17 @@
 
         protected function getIdForInputField($suffix)
         {
-            return get_class($this->model) . '_' . $this->attribute . '_'. $suffix;
+            return $this->resolveInputPrefix() . '_' . $this->attribute . '_'. $suffix;
         }
 
         protected function getNameForInputField()
         {
-            return get_class($this->model) . '[' . $this->attribute . '][]';
+            return $this->resolveInputPrefix() . '[' . $this->attribute . '][]';
         }
 
         protected function getNameForExistingValueHiddenField()
         {
-            return get_class($this->model) . '[' . $this->attribute . 'ExistingValues][]';
+            return $this->resolveInputPrefix() . '[' . $this->attribute . 'ExistingValues][]';
         }
 
         protected function getDropDownArray()

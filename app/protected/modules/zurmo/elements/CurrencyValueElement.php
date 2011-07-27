@@ -39,9 +39,11 @@
         protected function renderControlEditable()
         {
             assert('$this->model->{$this->attribute} instanceof CurrencyValue');
-            $currencyValueModel = $this->model->{$this->attribute};
-            $activeCurrenciesElement                   = new CurrencyIdForAModelsRelatedCurrencyValueDropDownElement(
-                                                                $this->model, $this->attribute, $this->form);
+            $currencyValueModel        = $this->model->{$this->attribute};
+            $params                    = array();
+            $params['inputPrefix']     = $this->resolveInputPrefix();
+            $activeCurrenciesElement   = new CurrencyIdForAModelsRelatedCurrencyValueDropDownElement(
+                                                                $this->model, $this->attribute, $this->form, $params);
             $activeCurrenciesElement->editableTemplate = '{content}{error}';
             $content  = $activeCurrenciesElement->render() . '&#160;';
             $content .= $this->renderEditableValueTextField($currencyValueModel, $this->form, $this->attribute, 'value');
@@ -51,8 +53,8 @@
         protected function renderEditableValueTextField($model, $form, $inputNameIdPrefix, $attribute)
         {
             $htmlOptions = array(
-                'name' => get_class($this->model) . '[' . $inputNameIdPrefix . '][' . $attribute . ']',
-                'id'   => get_class($this->model) . '_' . $inputNameIdPrefix . '_' . $attribute,
+                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
+                'id'   => $this->getEditableInputId($inputNameIdPrefix, $attribute),
             );
             $textField = $form->textField($model, $attribute, $htmlOptions);
             $error     = $form->error    ($model, $attribute);
@@ -82,7 +84,7 @@
             {
                 return $this->getFormattedAttributeLabel();
             }
-            $id = get_class($this->model) . '_' . $this->attribute . '_' . 'value';
+            $id = $this->getEditableInputId($this->attribute, 'value');
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $id));
         }
     }

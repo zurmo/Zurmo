@@ -37,14 +37,16 @@
          */
         protected function renderControlEditable()
         {
-            $dropDownArray = $this->getDropDownArray();
-            $htmlOptions = array();
+            $dropDownArray            = $this->getDropDownArray();
+            $htmlOptions              = array();
+            $htmlOptions['id']        = $this->getEditableInputId();
+            $htmlOptions['name']      = $this->getEditableInputName();
             if ($this->getAddBlank())
             {
                 $htmlOptions['empty'] = Yii::t('Default', 'None');
             }
-            $htmlOptions['disabled'] = $this->getDisabledValue();
-            $htmlOptions['encode']   = false;
+            $htmlOptions['disabled']  = $this->getDisabledValue();
+            $htmlOptions['encode']    = false;
             return $this->form->dropDownList($this->model, $this->attribute, $dropDownArray, $htmlOptions);
         }
 

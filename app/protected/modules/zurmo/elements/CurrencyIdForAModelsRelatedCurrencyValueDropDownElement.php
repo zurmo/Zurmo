@@ -46,12 +46,12 @@
 
         protected function getIdForSelectInput()
         {
-            return get_class($this->model) . '_' . $this->attribute . '_currency_id';
+            return $this->resolveInputPrefix() . '_' . $this->attribute . '_currency_id';
         }
 
         protected function getNameForSelectInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . '][currency][id]';
+            return $this->resolveInputPrefix() . '[' . $this->attribute . '][currency][id]';
         }
 
         protected function getDropDownArray()

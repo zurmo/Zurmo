@@ -67,8 +67,8 @@
         public function getEditableHtmlOptions()
         {
             $htmlOptions = array(
-                'name' => $this->getNameForSelectInput(),
-                'id'   => $this->getIdForSelectInput(),
+                'name' => $this->getEditableInputName(),
+                'id'   => $this->getEditableInputId(),
             );
             $htmlOptions['template'] =  '{label} {input}';
             return $htmlOptions;
@@ -80,16 +80,6 @@
                 LeadsModule::CONVERT_NO_ACCOUNT           => yii::t('Default', 'Do not show Account'),
                 LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED => yii::t('Default', 'Account Optional'),
                 LeadsModule::CONVERT_ACCOUNT_REQUIRED     => yii::t('Default', 'Account Required'));
-        }
-
-        protected function getIdForSelectInput()
-        {
-            return get_class($this->model) . '_' . $this->attribute;
-        }
-
-        protected function getNameForSelectInput()
-        {
-            return get_class($this->model) . '[' . $this->attribute . ']';
         }
     }
 ?>

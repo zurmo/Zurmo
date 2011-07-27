@@ -200,5 +200,69 @@
         {
             return $this->attribute;
         }
+
+        /**
+         * An input Id is typically formed like: modelClassName_attributeName or
+         * modelClassName_attributeName_relationAttributeName.  This method resolves the input Id string.
+         * @param string $attributeName
+         * @param string $relationAttributeName
+         * @return string representing the content of the input id.
+         */
+        protected function getEditableInputId($attributeName = null, $relationAttributeName = null)
+        {
+            assert('$attributeName == null || is_string($attributeName)');
+            assert('$relationAttributeName == null || is_string($relationAttributeName)');
+            if($attributeName == null)
+            {
+                $attributeName = $this->attribute;
+            }
+            $inputPrefix = $this->resolveInputPrefix();
+            $id          = $inputPrefix . '_' . $attributeName;
+            if($relationAttributeName != null)
+            {
+                $id .= '_' . $relationAttributeName;
+            }
+            return $id;
+        }
+
+        /**
+         * An input name is typically formed like: modelClassName[attributeName] or
+         * modelClassName[attributeName][relationAttributeName].  This method resolves the input name string.
+         * @param string $attributeName
+         * @param string $relationAttributeName
+         * @return string representing the content of the input name.
+         */
+        protected function getEditableInputName($attributeName = null, $relationAttributeName = null)
+        {
+            assert('$attributeName == null || is_string($attributeName)');
+            assert('$relationAttributeName == null || is_string($relationAttributeName)');
+            if($attributeName == null)
+            {
+                $attributeName = $this->attribute;
+            }
+            $inputPrefix = $this->resolveInputPrefix();
+            $name        = $inputPrefix . '[' . $attributeName . ']';
+            if($relationAttributeName != null)
+            {
+                $name .= '[' . $relationAttributeName . ']';
+            }
+            return $name;
+        }
+
+        /**
+         * An input Id or name is typically constructed like: modelClassName[attributeName].  The 'modelClassName'
+         * is considered the prefix of the input.  Any inputPrefix specified in the parameters coming into the element
+         * will be used, otherwise the model class name will be utilized.
+         * @return string representing the content of the input prefix.
+         */
+        protected function resolveInputPrefix()
+        {
+            if (isset($this->params['inputPrefix']) && $this->params['inputPrefix'])
+            {
+                assert('is_string($this->params["inputPrefix"]) && $this->params["inputPrefix"] != ""');
+                return $this->params['inputPrefix'];
+            }
+            return get_class($this->model);
+        }
     }
 ?>

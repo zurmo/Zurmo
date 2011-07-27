@@ -35,12 +35,13 @@
             $editableTemplate = '{label}<br/>{content}{error}<br/>';
             foreach ($this->getElementViewMetadata() as $elementInformation)
             {
-                $elementclassname = $elementInformation['type'] . 'Element';
-                $element  = new $elementclassname($this->model,
-                    $elementInformation['attributeName'],
-                    $this->form,
-                    array_slice($elementInformation, 2)
-                );
+                $elementclassname      = $elementInformation['type'] . 'Element';
+                $params                = array_slice($elementInformation, 2);
+                $params['inputPrefix'] = $this->resolveInputPrefix();
+                $element               = new $elementclassname($this->model,
+                                                               $elementInformation['attributeName'],
+                                                               $this->form,
+                                                               $params);
                 $element->editableTemplate = $editableTemplate;
                 $content .= $element->render();
             }

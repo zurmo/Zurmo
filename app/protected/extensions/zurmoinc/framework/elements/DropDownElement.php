@@ -93,12 +93,12 @@
 
         protected function getIdForSelectInput()
         {
-            return get_class($this->model) . '_' . $this->attribute . '_value';
+            return $this->getEditableInputId($this->attribute, 'value');
         }
 
         protected function getNameForSelectInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . '][value]';
+            return $this->getEditableInputName($this->attribute, 'value');
         }
 
         public function getEditableNameIds()
