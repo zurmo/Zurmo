@@ -30,22 +30,21 @@
      */
     abstract class ModelImportRules
     {
-        protected function getAttributeNames()
+        public static function getModelClassName()
         {
-
         }
 
-        protected function getDerivedAttributeTypes()
-        {
-            return array();
-        }
-
-        protected function getNonImportableAttributeNames()
+        public static function getDerivedAttributeTypes()
         {
             return array();
         }
 
-        protected function getNonImportableAttributeTypes()
+        public static function getNonImportableAttributeNames()
+        {
+            return array();
+        }
+
+        public static function getNonImportableAttributeTypes()
         {
             return array();
         }
@@ -53,21 +52,28 @@
         public function getMappableAttributeNamesAndDerivedTypes()
         {
             $mappableAttributeNamesAndDerivedTypes = array();
+            $modelClassName                        = static::getModelClassName();
+            assert('$modelClassName != null');
+            $modelAttributesAdapter                = new ModelAttributesImportMappingAdapter(new $modelClassName(false));
+            $attributesCollection                  = $modelAttributesAdapter->getAttributes();
 
-            //what hapens if 2 attribute names are the same because cross module? like to address or something.
-            /**
-             * Account_name
-             * Account_address_street1
-             * Account_address_state
-             * Account_officePhone
-             */
-            $modelAttributesAdapter = new ModelAttributesAdapter(new Contact());
-echo "<pre>";
-print_r($modelAttributesAdapter->getAttributes());
-echo "</pre>";
-
-            exit;
+            foreach($attributesCollection as $attributeIndex => $attributeData)
+            {
+                if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
+                    !in_array($attributeData['mappingType'], static::getNonImportableAttributeTypes()))
+                {
+                    $mappableAttributeNamesAndDerivedTypes[$attributeIndex] = $attributeData['attributeLabel'];
+                }
+            }
+            foreach(static::getDerivedAttributeTypes() as $derivedType)
+            {
+                $attributeImportRulesClassName = $derivedType . 'AttributeImportRules';
+                $mappableAttributeNamesAndDerivedTypes[$derivedType] = $attributeImportRulesClassName::getDisplayLabel();
+            }
             return $mappableAttributeNamesAndDerivedTypes;
         }
+
+
+
     }
 ?>

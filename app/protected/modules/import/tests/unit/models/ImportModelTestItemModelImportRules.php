@@ -26,6 +26,9 @@
 
     class ImportModelTestItemModelImportRules extends ModelImportRules
     {
-
+        public static function getModelClassName()
+        {
+            return 'ImportModelTestItem';
+        }
     }
 ?>
