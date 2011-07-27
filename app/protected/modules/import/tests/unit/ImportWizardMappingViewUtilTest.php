@@ -46,17 +46,32 @@
             $mappingDataMetadata = ImportWizardMappingViewUtil::
                                    resolveMappingDataForView($mappingData, $testTableName, true);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_0' => array('attributeNameOrDerivedType' => null,
+                                    'mappingRulesData'           => null,
+                                    'headerValue'                => 'name',
+                                    'firstSampleValue' 			 => 'abc'),
+                'column_1' => array('attributeNameOrDerivedType' => null,
+                                    'mappingRulesData'           => null,
+                                    'headerValue'                => 'phone',
+                                    'firstSampleValue' 			 => '123'),
+                'column_2' => array('attributeNameOrDerivedType' => null,
+                                    'mappingRulesData'           => null,
+                                    'headerValue'                => 'industry',
+                                    'firstSampleValue' 			 => 'a'),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
             $mappingDataMetadata = ImportWizardMappingViewUtil::
                                    resolveMappingDataForView($mappingData, $testTableName, false);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_0' => array('attributeNameOrDerivedType' => null,
+                                    'mappingRulesData'           => null,
+                                    'firstSampleValue' 			 => 'name'),
+                'column_1' => array('attributeNameOrDerivedType' => null,
+                                    'mappingRulesData'           => null,
+                                    'firstSampleValue' 			 => 'phone'),
+                'column_2' => array('attributeNameOrDerivedType' => null,
+                                    'mappingRulesData'           => null,
+                                    'firstSampleValue' 			 => 'industry'),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
         }
