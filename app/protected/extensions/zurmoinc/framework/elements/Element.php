@@ -216,7 +216,7 @@
             {
                 $attributeName = $this->attribute;
             }
-            $inputPrefix = $this->resolveInputPrefix();
+            $inputPrefix = $this->resolveInputIdPrefix();
             $id          = $inputPrefix . '_' . $attributeName;
             if($relationAttributeName != null)
             {
@@ -240,7 +240,7 @@
             {
                 $attributeName = $this->attribute;
             }
-            $inputPrefix = $this->resolveInputPrefix();
+            $inputPrefix = $this->resolveInputNamePrefix();
             $name        = $inputPrefix . '[' . $attributeName . ']';
             if($relationAttributeName != null)
             {
@@ -259,10 +259,68 @@
         {
             if (isset($this->params['inputPrefix']) && $this->params['inputPrefix'])
             {
-                assert('is_string($this->params["inputPrefix"]) && $this->params["inputPrefix"] != ""');
+                assert('(is_array($this->params["inputPrefix"]) && count($this->params["inputPrefix"]) > 0)
+                        || (is_string($this->params["inputPrefix"]) && $this->params["inputPrefix"] != "")');
                 return $this->params['inputPrefix'];
             }
             return get_class($this->model);
+        }
+
+        protected function resolveInputIdPrefix()
+        {
+            $inputIdPrefix = $this->resolveInputPrefix();
+            if(is_array($inputIdPrefix))
+            {
+                if(count($inputIdPrefix) > 1)
+                {
+                    $inputPrefixContent = null;
+                    foreach($inputIdPrefix as $value)
+                    {
+                        if($inputPrefixContent != null)
+                        {
+                            $inputPrefixContent .= '_';
+                        }
+                        $inputPrefixContent .= $value;
+                    }
+                    return $inputPrefixContent;
+                }
+            }
+            elseif(!is_string($inputIdPrefix))
+            {
+                throw notSupportedException();
+            }
+            return $inputIdPrefix;
+        }
+        protected function resolveInputNamePrefix()
+        {
+            $inputIdPrefix = $this->resolveInputPrefix();
+            if(is_array($inputIdPrefix))
+            {
+                if(count($inputIdPrefix) > 1)
+                {
+                    $inputPrefixContent = null;
+                    $firstPrefixPlaced  = false;
+                    foreach($inputIdPrefix as $value)
+                    {
+                        if(!$firstPrefixPlaced)
+                        {
+                            $inputPrefixContent .= $value;
+                            $firstPrefixPlaced   = true;
+                        }
+                        else
+                        {
+                            $inputPrefixContent .= '[' . $value . ']';
+                        }
+
+                    }
+                    return $inputPrefixContent;
+                }
+            }
+            elseif(!is_string($inputIdPrefix))
+            {
+                throw notSupportedException();
+            }
+            return $inputIdPrefix;
         }
     }
 ?>

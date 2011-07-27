@@ -156,21 +156,21 @@
             $mappingRuleForms = $this->model->getMappingRuleFormsByMappingDataColumnName($columnName);
             foreach($mappingRuleForms as $mappingRuleForm)
             {
-                $elementType        = $mappingRuleForm::getElementType();
-                $elementClassName   = $elementType . 'Element';
-                $attributeName      = $mappingRuleForm::getAttributeName();
-                $modelAttributeName = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                      $columnName,
-                                      ImportWizardForm::MAPPING_COLUMN_RULES);
-                $htmlOptions        = array('id' =>   ImportMappingUtil::getMappingRuleElementIdByColumnNameAndForms(
-                                                      get_class($this->model), $modelAttributeName, $mappingRuleForm),
-                                            'name' => ImportMappingUtil::getMappingRuleElementNameByColumnNameAndForms(
-                                                      get_class($this->model), $modelAttributeName, $mappingRuleForm));
-                $element            = new $elementClassName(
-                                          $mappingRuleForm,
-                                          $attributeName,
-                                          $form,
-                                          $htmlOptions);
+                $elementType          = $mappingRuleForm::getElementType();
+                $elementClassName     = $elementType . 'Element';
+                $attributeName        = $mappingRuleForm::getAttributeName();
+                $modelAttributeName   = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
+                                        $columnName,
+                                        ImportWizardForm::MAPPING_COLUMN_RULES);
+                $params                = array();
+                $params['inputPrefix'] = array(get_class($this->model),
+                                               $modelAttributeName,
+                                               get_class($mappingRuleForm));
+                $element               = new $elementClassName(
+                                              $mappingRuleForm,
+                                              $attributeName,
+                                              $form,
+                                              $htmlOptions);
                 $content .= '<table><tbody><tr>';
                 $content .= $element->render();
                 $content .= '</tr></tbody></table>';

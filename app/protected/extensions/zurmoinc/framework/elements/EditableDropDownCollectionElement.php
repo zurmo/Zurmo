@@ -53,7 +53,7 @@
                     'stop'      => 'js:function(event, ui){' .
                                         $this->renderScriptCallToRebuildSelectInputFromInputs() . '}',
                 ),
-                'baseInputNameForSortableCollection' => $this->resolveInputPrefix() . '[' . $this->attribute . ']',
+                'baseInputNameForSortableCollection' => $this->resolveInputNamePrefix() . '[' . $this->attribute . ']',
                 'htmlOptions' =>
                 array(
                     'id'    => $this->attribute . '_ul',
@@ -157,7 +157,7 @@
                     ),
                 CClientScript::POS_END
             );
-            $inputIdPrefix = $this->resolveInputPrefix() . '_' . $this->attribute . '_';
+            $inputIdPrefix = $this->resolveInputIdPrefix() . '_' . $this->attribute . '_';
             Yii::app()->clientScript->registerScript('editableDropDown', "
                 " . $this->renderItemsOnChangeScript() . "
                 $('.remove-sortable-item-link').live('click', function()
@@ -205,7 +205,7 @@
         {
             assert('$this->getSpecificValueFromDropDownAttributeName() != null');
             return "rebuildSelectInputFromInputs(
-                        '" . $this->resolveInputPrefix() . "_" .
+                        '" . $this->resolveInputIdPrefix() . "_" .
                         $this->getSpecificValueFromDropDownAttributeName() . "', '" .
                         $this->getNameForInputField() . "')";
         }
@@ -240,17 +240,17 @@
 
         protected function getIdForInputField($suffix)
         {
-            return $this->resolveInputPrefix() . '_' . $this->attribute . '_'. $suffix;
+            return $this->resolveInputIdPrefix() . '_' . $this->attribute . '_'. $suffix;
         }
 
         protected function getNameForInputField()
         {
-            return $this->resolveInputPrefix() . '[' . $this->attribute . '][]';
+            return $this->resolveInputNamePrefix() . '[' . $this->attribute . '][]';
         }
 
         protected function getNameForExistingValueHiddenField()
         {
-            return $this->resolveInputPrefix() . '[' . $this->attribute . 'ExistingValues][]';
+            return $this->resolveInputNamePrefix() . '[' . $this->attribute . 'ExistingValues][]';
         }
 
         protected function getDropDownArray()
