@@ -24,29 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportModelTestItem extends Item
+    class ImportModelTestItemModelImportRules extends ModelImportRules
     {
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'memberText',
-                ),
-                'relations' => array(
-                    'primaryEmail'     => array(RedBeanModel::HAS_ONE, 'Email', RedBeanModel::OWNED),
-                ),
-                'rules' => array(
-                    array('memberText', 'type',  'type' => 'string'),
-                    array('memberText', 'length',  'min'  => 3, 'max' => 64),
-                ),
-            );
-            return $metadata;
-        }
 
-        public static function isTypeDeletable()
-        {
-            return true;
-        }
     }
 ?>

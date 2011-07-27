@@ -151,23 +151,8 @@
             $this-assertEquals('abc', $importWizardForm->modelPermissions);
         }
 
-
-
         /**
          * @depends testSetFormByPostForStep3
-         */
-        public function testSetMappingDataByForm()
-        {
-            //change the name of this test method since it wont be accurate based on things we will be testing
-            //so we might want to break this test apart a bit.
-           // ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
-            //todo
-            //this will be setting into form not into $import directly... we need to validate this is why....
-           // if (ModulePermissionsFormUtil::setPermissionsFromCastedPost($readyToSetPostData, $group))
-        }
-
-        /**
-         * @depends testSetMappingDataByForm
          */
         public function testSetFormByPostForStep4()
         {

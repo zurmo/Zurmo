@@ -24,29 +24,50 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportModelTestItem extends Item
+    /**
+     * Class to help the import module understand
+     * how to parse and handle the import file it is importing based on what module(s) it is being imported into.
+     */
+    abstract class ModelImportRules
     {
-        public static function getDefaultMetadata()
+        protected function getAttributeNames()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'memberText',
-                ),
-                'relations' => array(
-                    'primaryEmail'     => array(RedBeanModel::HAS_ONE, 'Email', RedBeanModel::OWNED),
-                ),
-                'rules' => array(
-                    array('memberText', 'type',  'type' => 'string'),
-                    array('memberText', 'length',  'min'  => 3, 'max' => 64),
-                ),
-            );
-            return $metadata;
+
         }
 
-        public static function isTypeDeletable()
+        protected function getDerivedAttributeTypes()
         {
-            return true;
+            return array();
+        }
+
+        protected function getNonImportableAttributeNames()
+        {
+            return array();
+        }
+
+        protected function getNonImportableAttributeTypes()
+        {
+            return array();
+        }
+
+        public function getMappableAttributeNamesAndDerivedTypes()
+        {
+            $mappableAttributeNamesAndDerivedTypes = array();
+
+            //what hapens if 2 attribute names are the same because cross module? like to address or something.
+            /**
+             * Account_name
+             * Account_address_street1
+             * Account_address_state
+             * Account_officePhone
+             */
+            $modelAttributesAdapter = new ModelAttributesAdapter(new Contact());
+echo "<pre>";
+print_r($modelAttributesAdapter->getAttributes());
+echo "</pre>";
+
+            exit;
+            return $mappableAttributeNamesAndDerivedTypes;
         }
     }
 ?>
