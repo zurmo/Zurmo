@@ -28,7 +28,7 @@
      * Helper functionality for finding the element or
      * form type associated with a model's attribute.
      */
-    class ModelAttributeToDesignerTypeUtil
+    class ModelAttributeToDesignerTypeUtil extends ModelAttributeToMixedTypeUtil
     {
         /**
          * Returns the element or attribute form type
@@ -38,66 +38,7 @@
          */
         public static function getDesignerType($model, $attributeName)
         {
-            assert('$model instanceof RedBeanModel || $model instanceof ModelForm');
-            assert('is_string($attributeName) && $attributeName != ""');
-            $metadata = $model->getMetadata();
-            foreach ($metadata as $className => $perClassMetadata)
-            {
-                if (isset($perClassMetadata['elements'][$attributeName]))
-                {
-                    return $perClassMetadata['elements'][$attributeName];
-                }
-            }
-            if ($model->isRelation($attributeName))
-            {
-                if ($model->getRelationModelClassName($attributeName) == 'User')
-                {
-                    return 'User';
-                }
-                return 'DropDown';
-            }
-            else
-            {
-                $validators = $model->getValidators($attributeName);
-                foreach ($validators as $validator)
-                {
-                    switch(get_class($validator))
-                    {
-                        case 'CBooleanValidator':
-                            return 'CheckBox';
-
-                        case 'CEmailValidator':
-                            return 'Email';
-
-                        case 'RedBeanModelTypeValidator':
-                            switch ($validator->type)
-                            {
-                                case 'date':
-                                    return 'Date';
-
-                                case 'datetime':
-                                    return 'DateTime';
-
-                                case 'integer':
-                                    return 'Integer';
-
-                                case 'float':
-                                    return 'Decimal';
-
-                                case 'time':
-                                    return 'Time';
-
-                                case 'array':
-                                    throw new NotSupportedException();
-                            }
-                            break;
-
-                        case 'CUrlValidator':
-                            return 'Url';
-                    }
-                }
-            }
-            return 'Text';
+            return ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
         }
 
         /**
