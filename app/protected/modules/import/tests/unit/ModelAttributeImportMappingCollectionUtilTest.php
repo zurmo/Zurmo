@@ -24,26 +24,35 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * This form is used for mapping a default value for an attribute during an import.  If the row does not have a
-     * value for the mapped attribute, then an alternative default value can be specified and used.  This form has
-     * one attribute $defaultValue that gets its rules directly from the attribute on the model that is specified.
-     */
-    class DefaultValueModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
+    class ModelAttributeImportMappingCollectionUtilTest extends BaseTest
     {
-        public $defaultValue;
-
-        public function rules()
+        public static function setUpBeforeClass()
         {
-            $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                                                         getApplicableRulesByModelClassNameAndAttributeName(
-                                                         $this->modelClassName, $this->attributeName);
-            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
-
-        public function attributeLabels()
+        public function testGetAttributes()
         {
-            return array('defaultValue'   => Yii::t('Default', 'Default Value'));
+            $collection = array();
+            ModelAttributeImportMappingCollectionUtil::populateCollection(
+                $collection,
+                'abc',
+                'def',
+                'xyz',
+                'try',
+                'qqq',
+                true
+            );
+            $compareData = array(
+                'abc' => array(
+                    'attributeLabel'        => 'def',
+                    'attributeName'         => 'xyz',
+                    'relationAttributeName' => 'qqq',
+                    'mappingType'           => 'try',
+                    'isRequired'            => true,
+                )
+            );
+            $this->assertEquals($compareData, $collection);
         }
     }
 ?>

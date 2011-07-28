@@ -24,7 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    abstract class ModelAttributeMappingRuleForm extends ConfigurableMetadataModel
+    /**
+     * Base class for mapping rule forms that are not derived but have a specific attribute on a model.
+     */
+    abstract class ModelAttributeMappingRuleForm extends MappingRuleForm
     {
         protected $modelClassName;
 
@@ -36,16 +39,6 @@
             assert('is_string($attributeName)');
             $this->modelClassName = $modelClassName;
             $this->attributeName  = $attributeName;
-        }
-
-        public function rules()
-        {
-            return array();
-        }
-
-        public function attributeLabels()
-        {
-            return array();
         }
     }
 ?>

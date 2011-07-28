@@ -24,13 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base class for defining an attribute or derived attribute's import rules.
+     */
     abstract class AttributeImportRules
     {
         protected $model;
 
         protected $attributeName;
 
-        public function __construct($model, $attributeName)
+        public function __construct($model, $attributeName = null)
         {
             assert('$model instanceof RedBeanModel');
             assert('is_string($attributeName)');
@@ -48,11 +51,19 @@
             return array($attributeName);
         }
 
-        public static function getModelAttributeMappingRuleFormNamesAndElements()
+        /**
+         * Returns mapping rule form and the associated element to use.  Override to specify as many
+         * pairings as needed.
+         * @return array of MappingRuleForm/Element pairings.
+         */
+        public static function getModelAttributemappingRuleFormTypesAndElementTypes()
         {
             return array();
         }
 
+        /**
+         * @return array of sanitizer util names.
+         */
         public static function getSanitizerUtilNames()
         {
             return array();

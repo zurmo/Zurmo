@@ -36,7 +36,28 @@
             $importRules = new ImportModelTestItemImportRules(new ImportModelTestItem());
             $data = $importRules->getMappableAttributeNamesAndDerivedTypes();
             $compareData = array(
-
+                'boolean'                     => 'Boolean',
+                'createdDateTime'             => 'Created Date Time',
+                'currencyValue__rateToBase'   => 'Rate To Base',
+                'currencyValue__value'        => 'Value',
+                'dropDown'                    => 'Drop Down',
+                'float'                       => 'Float',
+                'id'                          => 'Id',
+                'integer'                     => 'Integer',
+                'modifiedDateTime'            => 'Modified Date Time',
+                'phone'                       => 'Phone',
+                'primaryAddress__city'        => 'City',
+                'primaryAddress__country'     => 'Country',
+                'primaryAddress__postalCode'  => 'Postal Code',
+                'primaryAddress__state'       => 'State',
+                'primaryAddress__street1'     => 'Street 1',
+                'primaryAddress__street2'     => 'Street 2',
+                'primaryEmail__emailAddress'  => 'Email Address',
+                'primaryEmail__isInvalid'     => 'Is Invalid',
+                'primaryEmail__optOut'        => 'Opt Out',
+                'string'                      => 'String',
+                'textArea'                    => 'Text Area',
+                'url'                         => 'Url',
             );
             $this->assertEquals($compareData, $data);
         }

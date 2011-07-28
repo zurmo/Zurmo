@@ -49,7 +49,7 @@
             return array();
         }
 
-        public function getMappableAttributeNamesAndDerivedTypes()
+        public static function getMappableAttributeNamesAndDerivedTypes()
         {
             $mappableAttributeNamesAndDerivedTypes = array();
             $modelClassName                        = static::getModelClassName();

@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * The DefaultValueModelAttributeMappingRuleForm needs to get its rules from the associated model based on
+     * an attribute.  This utility provides that information.
+     */
     class ModelAttributeRulesToDefaultValueMappingRuleUtil
     {
         public static function getApplicableRulesByModelClassNameAndAttributeName($modelClassName, $attributeName)
@@ -34,15 +38,13 @@
             assert('$model->isAttribute($attributeName)');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
+            $applicableRules = array();
             if ($attributeName == 'id')
             {
-                $modelAttributeClassName = $modelClassName;
+                return $applicableRules;
             }
-            else
-            {
-                $modelAttributeClassName = $model->getAttributeModelClassName($attributeName);
-            }
-            $applicableRules = array();
+
+            $modelAttributeClassName = $model->getAttributeModelClassName($attributeName);
             if (isset($metadata[$modelAttributeClassName]['rules']))
             {
                 $i = 0;
@@ -53,10 +55,11 @@
                     {
                         switch ($rule[1])
                         {
-                            case 'length':
-                            case 'numerical':
-                            case 'type':
-                            case 'url':
+                            case 'default':
+                            case 'safe':
+                            case 'required':
+                               continue;
+                            default:
                                 $rule[0] = 'defaultValue';
                                 $applicableRules[] = $rule;
                         }

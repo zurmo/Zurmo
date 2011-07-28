@@ -24,9 +24,12 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Import rules for any attributes that are type Phone.
+     */
     class PhoneAttributeImportRules extends AttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormNamesAndElements()
+        public static function getModelAttributemappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValue' => 'Phone');
         }

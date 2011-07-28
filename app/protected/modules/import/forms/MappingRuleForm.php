@@ -25,25 +25,21 @@
      ********************************************************************************/
 
     /**
-     * This form is used for mapping a default value for an attribute during an import.  If the row does not have a
-     * value for the mapped attribute, then an alternative default value can be specified and used.  This form has
-     * one attribute $defaultValue that gets its rules directly from the attribute on the model that is specified.
+     * The import process includes a view for mapping import columns to attributes or derived attribute types
+     * in a model. When a column is selected to be mapped against an attribute or derived attribute type, there is the
+     * potentially for mapping rules to accompany that mapping. An example of a rule would be a default value rule
+     * or in the case of something like owner, is the value the owner's username or actuay user id.
      */
-    class DefaultValueModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
+    abstract class MappingRuleForm extends ConfigurableMetadataModel
     {
-        public $defaultValue;
-
         public function rules()
         {
-            $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                                                         getApplicableRulesByModelClassNameAndAttributeName(
-                                                         $this->modelClassName, $this->attributeName);
-            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+            return array();
         }
 
         public function attributeLabels()
         {
-            return array('defaultValue'   => Yii::t('Default', 'Default Value'));
+            return array();
         }
     }
 ?>

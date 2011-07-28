@@ -57,8 +57,7 @@
         protected function getDropDownArray()
         {
             $importRulesClassName = $model->importRulesType . 'ImportRules';
-            $importRules = new $importRulesClassName();
-            return $importRules->getMappableAttributeNamesAndDerivedTypes();
+            return $importRulesClassName::getMappableAttributeNamesAndDerivedTypes();
         }
 
         protected function getIdForSelectInput()

@@ -47,8 +47,9 @@
             $this->controllerId        = $controllerId;
             $this->moduleId            = $moduleId;
             $this->model               = $model;
-            $this->modelId             = $importId;
-            $this->mappingDataMetadata = $mappingDataMetadata;
+            $this->modelId                                    = $importId;
+            $this->mappingDataMetadata                        = $mappingDataMetadata;
+            $this->mappingDataModelAttributeMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
         }
 
         /**
@@ -149,32 +150,50 @@
             return $content;
         }
 
-        protected function renderMappingRulesElements($columnName)
+        protected function renderMappingRulesElements($columnName,
+                                                      $attributeNameOrDerivedType,
+                                                      $importRulesType,
+                                                      $mappingRuleFormsAndElementTypes)
         {
             assert('is_string($columnName)');
+            assert('is_string($attributeNameOrDerivedType)');
+            assert('is_string($importRulesType)');
+            assert('is_array($mappingRuleFormsAndElementTypes) || $mappingRuleFormsAndElementTypes == null');
             $content = '<td>';
-            $mappingRuleForms = $this->model->getMappingRuleFormsByMappingDataColumnName($columnName);
-            foreach($mappingRuleForms as $mappingRuleForm)
+            if($attributeNameOrDerivedType != null)
             {
-                $elementType          = $mappingRuleForm::getElementType();
-                $elementClassName     = $elementType . 'Element';
-                $attributeName        = $mappingRuleForm::getAttributeName();
-                $modelAttributeName   = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                        $columnName,
-                                        ImportWizardForm::MAPPING_COLUMN_RULES);
-                $params                = array();
-                $params['inputPrefix'] = array(get_class($this->model),
-                                               $modelAttributeName,
-                                               get_class($mappingRuleForm));
-                $element               = new $elementClassName(
-                                              $mappingRuleForm,
-                                              $attributeName,
-                                              $form,
-                                              $htmlOptions);
-                $content .= '<table><tbody><tr>';
-                $content .= $element->render();
-                $content .= '</tr></tbody></table>';
-            }
+                if($mappingRuleFormsAndElementTypes == null)
+                {
+                    $attributeImportRules            = AttributeImportRulesFactory::
+                                                       makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                                           $importRulesType,
+                                                           $attributeNameOrDerivedType);
+                    $mappingRuleFormsAndElementTypes = ModelAttributeMappingRuleFormAndElementTypeUtil::
+                                                       makeByAttributeImportRules($attributeImportRules);
+                                                       //how do we know what to instantiate the derived or the modelattribute form?
+                                                       //the attributeimportrules is going to ahve a method that says whether it isa derived attribute or not
+                                                       //thus allowing us to effectively split things up.
+                }
+                foreach($mappingRuleFormsAndElementTypes as $mappingRuleForm => $elementType)
+                {
+                    $elementClassName      = $elementType . 'Element';
+                    $attributeName         = $mappingRuleForm::getAttributeName();
+                    $modelAttributeName    = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
+                                             $columnName,
+                                             ImportWizardForm::MAPPING_COLUMN_RULES);
+                    $params                = array();
+                    $params['inputPrefix'] = array(get_class($this->model),
+                                                   $modelAttributeName,
+                                                   get_class($mappingRuleForm));
+                    $element               = new $elementClassName(
+                                                  $mappingRuleForm,
+                                                  $attributeName,
+                                                  $form,
+                                                  $htmlOptions);
+                    $content .= '<table><tbody><tr>';
+                    $content .= $element->render();
+                    $content .= '</tr></tbody></table>';
+                }
             $content .= '</td>';
             return $content;
         }

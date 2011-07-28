@@ -24,21 +24,59 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportModelTestItem extends Item
+    class ImportModelTestItem extends OwnedSecurableItem
     {
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'memberText',
-                ),
+                    'boolean',
+                    'date',
+                    'dateTime',
+                    'float',
+                    'integer',
+                    'phone',
+                    'string',
+                    'textArea',
+                    'url',
+            ),
                 'relations' => array(
-                    'primaryEmail'     => array(RedBeanModel::HAS_ONE, 'Email', RedBeanModel::OWNED),
+                    'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
+                    'dropDown'         => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
+                    'hasOne'           => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem2'),
+                    'hasMany'          => array(RedBeanModel::MANY_MANY, 'ImportModelTestItem3'),
+                    'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
+                    'primaryAddress'   => array(RedBeanModel::HAS_ONE,   'Address', RedBeanModel::OWNED),
+
                 ),
                 'rules' => array(
-                    array('memberText', 'type',  'type' => 'string'),
-                    array('memberText', 'length',  'min'  => 3, 'max' => 64),
+                    array('boolean',  'boolean'),
+                    array('date',     'type', 'type' => 'date'),
+                    array('dateTime', 'type', 'type' => 'datetime'),
+                    array('float',    'type',    'type' => 'float'),
+                    array('integer',  'type',    'type' => 'integer'),
+                    array('phone',    'type',    'type' => 'string'),
+                    array('phone',    'length',  'min'  => 1, 'max' => 14),
+                    array('string',   'required'),
+                    array('string',   'type',  'type' => 'string'),
+                    array('string',   'length',  'min'  => 3, 'max' => 64),
+                    array('textArea', 'type',    'type' => 'string'),
+                    array('url',      'url'),
+
+                    ),
+                'elements' => array(
+                    'currencyValue'    => 'CurrencyValue',
+                    'date'             => 'Date',
+                    'DateTime'         => 'DateTime',
+                    'hasOne'           => 'ImportModelTestItem2',
+                    'phone'            => 'Phone',
+                    'primaryEmail'     => 'EmailAddressInformation',
+                    'primaryAddress'   => 'Address',
+                    'textArea'         => 'TextArea',
+                ),
+                'customFields' => array(
+                    'dropDown'   => 'ImportTestDropDown',
                 ),
             );
             return $metadata;

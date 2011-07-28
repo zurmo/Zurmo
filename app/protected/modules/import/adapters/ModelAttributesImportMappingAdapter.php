@@ -57,7 +57,9 @@
             foreach ($this->model->getAttributes() as $attributeName => $notUsed)
             {
                 if (!$this->model->isRelation($attributeName) ||
-                     $this->isAttributeAnOwnedCustomFieldRelation($attributeName))
+                     $this->isAttributeAnOwnedCustomFieldRelation($attributeName) ||
+                     $this->isAttributeAHasOneNotOwnedRelation($attributeName) ||
+                     $this->isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation($attributeName))
                 {
                     ModelAttributeImportMappingCollectionUtil::populateCollection(
                         $attributes,
@@ -104,6 +106,18 @@
             return false;
         }
 
+        protected function isAttributeAHasOneNotOwnedRelation($attributeName)
+        {
+            assert('is_string($attributeName)');
+            if($this->model->isRelation($attributeName) &&
+                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
+                       !$this->model->isOwnedRelation($attributeName))
+            {
+                return true;
+            }
+            return false;
+        }
+
         protected function isAttributeAnOwnedCustomFieldRelation($attributeName)
         {
             assert('is_string($attributeName)');
@@ -117,5 +131,35 @@
             return false;
         }
 
+        /**
+         * There are some HAS_ONE owned relations that should be treated as non owned relations.
+         * @param string $attributeName
+         * @return true/false
+         */
+        protected function isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation($attributeName)
+        {
+            assert('is_string($attributeName)');
+            if($this->model->isRelation($attributeName) &&
+                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
+                       $this->model->isOwnedRelation($attributeName) &&
+                       in_array($this->model->getRelationModelClassName($attributeName),
+                       static::getRelationModelClassNamesToTreatAsNonOwnedRelations()))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * CurrencyValue while usually owned and HAS_ONE, should be treated as a non-owned relation.
+         * This is because the rateToBase, currency, and value attributes of currencyValue will be handled as
+         * mappingRules for this attribute instead of individually selectable attributes to map to the import columns.
+         * @see self::isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation();
+         * @return array
+         */
+        protected static function getRelationModelClassNamesToTreatAsNonOwnedRelations()
+        {
+            return array('CurrencyValue');
+        }
     }
 ?>
