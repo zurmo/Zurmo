@@ -55,6 +55,7 @@
                 'relations' => array(
                     'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
                     'dropDown'         => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
+                    'radioDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
                     'hasOne'           => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem2'),
                     'hasMany'          => array(RedBeanModel::MANY_MANY, 'ImportModelTestItem3'),
                     'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
@@ -92,7 +93,8 @@
                     'textArea'         => 'TextArea',
                 ),
                 'customFields' => array(
-                    'dropDown'   => 'ImportTestDropDown',
+                    'dropDown'        => 'ImportTestDropDown',
+                    'radioDropDown'   => 'ImportTestRadioDropDown',
                 ),
             );
             return $metadata;

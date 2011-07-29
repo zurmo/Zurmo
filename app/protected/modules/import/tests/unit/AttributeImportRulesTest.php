@@ -86,6 +86,10 @@
             $this->assertTrue($attributeImportRules instanceof DropDownAttributeImportRules);
 
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                    'ImportModelTestItem', 'radioDropDown');
+            $this->assertTrue($attributeImportRules instanceof RadioDropDownAttributeImportRules);
+
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
                                     'ImportModelTestItem', 'primaryEmail__emailAddress');
             $this->assertTrue($attributeImportRules instanceof EmailAttributeImportRules);
 

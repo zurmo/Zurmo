@@ -188,6 +188,14 @@
                     'attributeImportRulesType' => 'DropDown',
                     'isRequired' => false,
                   ),
+              'radioDropDown' =>
+                  array (
+                    'attributeLabel' => 'Radio Drop Down',
+                    'attributeName' => 'radioDropDown',
+                    'relationAttributeName' => null,
+                    'attributeImportRulesType' => 'RadioDropDown',
+                    'isRequired' => false,
+                  ),
               'hasOne' =>
                   array (
                     'attributeLabel' => 'Has One',
