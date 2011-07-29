@@ -69,8 +69,7 @@
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData) && isset($postData["importRulesType"])');
-            if($importWizardForm->importRulesType != null &&
-               $importWizardForm->importRulesType != $postData["importRulesType"])
+            if($importWizardForm->importRulesType != $postData["importRulesType"])
             {
                 foreach(self::$importToFormAttributeMap as $attributeName)
                 {
@@ -105,7 +104,7 @@
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($fileUploadData)');
-            assert('is_string($tableName');
+            assert('is_string($tableName)');
             foreach(self::$importToFormAttributeMap as $attributeName)
             {
                 if($attributeName != 'importRulesType')

@@ -25,32 +25,49 @@
      ********************************************************************************/
 
     /**
-     * This form is used for mapping a user model.  The options for importing a user against a model is to either map
-     * the zurmo user id, another system user id, or a zurmo username.
+     * This form works with the import wizard views to collect data from the user interface and validate it.
      */
-    class UserValueTypeModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
+    class ImportWizardForm extends ConfigurableMetadataModel
     {
-        const ZURMO_USER_ID  = 1;
 
-        const OTHER_USER_ID  = 2;
+        const MAPPING_COLUMN_ATTRIBUTE = 1;
 
-        const ZURMO_USERNAME = 3;
+        const MAPPING_COLUMN_TYPE      = 2;
 
-        public $type;
+        const MAPPING_COLUMN_IMPORT    = 3;
+
+        const MAPPING_COLUMN_RULES     = 4;
+
+        public $importRulesType;
+
+        public $fileUploadData;
+
+        public $firstRowIsHeaderRow;
+
+        public $modelPermissions;
+
+        public $mappingData;
 
         public function rules()
         {
-            return array('type' => 'required');
+            return array(
+                array('importRulesType',     'required'),
+                array('fileUploadData', 	 'type', 'type' => 'string'),
+                array('firstRowIsHeaderRow', 'boolean'),
+                array('modelPermissions',    'type', 'type' => 'string'),
+                array('mappingData', 		 'type', 'type' => 'string'),
+            );
         }
 
         public function attributeLabels()
         {
-            return array('type'   => Yii::t('Default', 'Type of Value'));
-        }
-
-        public static function getAttributeName()
-        {
-            return 'type';
+            return array(
+                'importRulesType'      => Yii::t('Default', 'Module To Import To'),
+                'fileUploadData'       => Yii::t('Default', 'File Upload Data'),
+                'firstRowIsHeaderRow'  => Yii::t('Default', 'First Row is Header Row'),
+                'modelPermissions'     => Yii::t('Default', 'Model Permissions'),
+                'mappingData'          => Yii::t('Default', 'Mapping Data'),
+            );
         }
     }
 ?>

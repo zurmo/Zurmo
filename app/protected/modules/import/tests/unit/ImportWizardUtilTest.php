@@ -51,7 +51,7 @@
             $this->assertEquals(null,    $form->firstRowIsHeaderRow);
             $this->assertEquals(null,    $form->modelPermissions);
             $this->assertEquals(null,    $form->mappingData);
-            $this->assertTrue  ($form->anElementToIgnore == null);
+            $this->assertFalse ($form->isAttribute('anElementToIgnore'));
         }
 
         /**
@@ -74,7 +74,7 @@
             $importWizardForm->mappingData          = array('xx' => 'yy');
             ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
             $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
-                                                            'fileUploadData'       => array('aa' => 'ba'),
+                                                            'fileUploadData'       => array('aa' => 'bb'),
                                                             'firstRowIsHeaderRow'  => true,
                                                             'modelPermissions'     => 'zz',
                                                             'mappingData'          => array('xx' => 'yy'));
@@ -89,20 +89,24 @@
             //Test without an existing value for importRulesType
             $fakePostData = array('importRulesType' => 'xyz');
             $importWizardForm = new ImportWizardForm();
-            $this-assertEquals(null, $importWizardForm->importRulesType);
+            $this->assertEquals(null, $importWizardForm->importRulesType);
+            $this->assertEquals(null, $importWizardForm->fileUploadData);
+            $importWizardForm->fileUploadData = 'something';
             ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
-            $this-assertEquals('xyz', $importWizardForm->importRulesType);
+            $this->assertEquals('xyz', $importWizardForm->importRulesType);
+            $this->assertEquals(null,  $importWizardForm->fileUploadData);
 
-            //Test with an existing value for importRulesType but it is the same as the way we are populating with
-            $importWizardForm->fileUploadData = 'test';
+            //Test with an existing value for importRulesType but it is the same value we are populating it with
+            $importWizardForm->fileUploadData = 'abc';
             ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
-            $this-assertEquals('xyz', $importWizardForm->importRulesType);
-            $this-assertEquals('test', $importWizardForm->importRulesType);
+            $this->assertEquals('xyz', $importWizardForm->importRulesType);
+            $this->assertEquals('abc',  $importWizardForm->fileUploadData);
 
             //Test with an existing value for importRulesType and we are changing it.
-            $fakePostData = array('importRulesType' => 'abc');
-            $this-assertEquals('abc', $importWizardForm->importRulesType);
-            $this-assertEquals(null,  $importWizardForm->importRulesType);
+            $fakePostData = array('importRulesType' => 'def');
+            ImportWizardUtil::setFormByPostForStep1($importWizardForm, $fakePostData);
+            $this->assertEquals('def', $importWizardForm->importRulesType);
+            $this->assertEquals(null,  $importWizardForm->fileUploadData);
         }
 
 
@@ -140,7 +144,7 @@
             $fakePostData = array('firstRowIsHeaderRow' => 'xyz');
             $importWizardForm = new ImportWizardForm();
             ImportWizardUtil::setFormByPostForStep2($importWizardForm, $fakePostData);
-            $this-assertEquals('xyz', $importWizardForm->firstRowIsHeaderRow);
+            $this->assertEquals('xyz', $importWizardForm->firstRowIsHeaderRow);
         }
 
         /**
@@ -151,7 +155,7 @@
             $fakePostData = array('modelPermissions' => 'abc');
             $importWizardForm = new ImportWizardForm();
             ImportWizardUtil::setFormByPostForStep3($importWizardForm, $fakePostData);
-            $this-assertEquals('abc', $importWizardForm->modelPermissions);
+            $this->assertEquals('abc', $importWizardForm->modelPermissions);
         }
 
         /**

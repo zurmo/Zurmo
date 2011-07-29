@@ -64,7 +64,7 @@
             }
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 1 of 6')), 0, 0);
-            $importView->setView(new ImportWizardModuleImportRulesView($this->getId(),
+            $importView->setView(new ImportWizardImportRulesView($this->getId(),
                                                                        $this->getModule()->getId(),
                                                                        $importWizardForm,
                                                                        (int)$import->id), 1, 0);

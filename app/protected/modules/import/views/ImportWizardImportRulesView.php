@@ -27,9 +27,9 @@
     /**
      * First view in the import wizard. Allows user to select a module to import data into.
      */
-    class ImportWizardModuleImportRulesView extends ImportWizardView
+    class ImportWizardImportRulesView extends ImportWizardView
     {
-        public function __construct($controllerId, $moduleId, SelectModuleImportRulesForm $model, $importId)
+        public function __construct($controllerId, $moduleId, ImportForm $model, $importId)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -51,8 +51,8 @@
             assert('$form instanceof ZurmoActiveForm');
             $content .= '<table>';
             $content .= '<tr>';
-            $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = $this->model->getAttributeLabel('type') . '<br/>{content}{error}';
+            $element  = new ImportRulesTypeRadioDropDownElement($this->model, 'importRulesType', $form);
+            $element->editableTemplate = '{label}<br/>{content}{error}';
             $content .= $element->render();
             $content .= '</tr>';
             $content .= '</tbody>';

@@ -24,64 +24,60 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class Import extends Item
+    /**
+     * Display radio buttons for selecting the import rules type in the import wizard.  This is done in
+     * step 1.
+     * @see ImportWizardImportRulesView
+     */
+    class ImportRulesTypeRadioDropDownElement extends Element
     {
-        public function __toString()
-        {
-            return yii::t('Default', '(Unnamed)');
-        }
-
-        public static function getModuleClassName()
-        {
-            return 'ImportModule';
-        }
-
         /**
-         * Returns the display name for the model class.
-         * @return dynamic label name based on module.
+         * Renders the setting as a radio list.
+         * @return A string containing the element's content.
          */
-        protected static function getLabel()
+        protected function renderControlEditable()
         {
-            return 'ImportsModuleSingularLabel';
-        }
-
-        /**
-         * Returns the display name for plural of the model class.
-         * @return dynamic label name based on module.
-         */
-        protected static function getPluralLabel()
-        {
-            return 'ImportModulePluralLabel';
-        }
-
-        public static function canSaveMetadata()
-        {
-            return false;
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'serializedData',
-                ),
-                'rules' => array(
-                    array('serializedData',  'required'),
-                    array('serializedData',  'type', 'type' => 'string'),
-                )
+            $content = $this->form->radioButtonList(
+                $this->model,
+                $this->attribute,
+                $this->getArray(),
+                $this->getEditableHtmlOptions()
             );
-            return $metadata;
+            return $content;
         }
 
-        public static function isTypeDeletable()
+        protected function renderControlNonEditable()
         {
-            return true;
+            throw new NotImplementedException();
         }
 
-        public function getTempTableName()
+        /**
+         * Override to ensure label is pointing to the right input id
+         * @return A string containing the element's label
+         */
+        protected function renderLabel()
         {
-            return 'importtable' . $this->id;
+            if ($this->form === null)
+            {
+                throw new NotImplementedException();
+            }
+            return Yii::t('Default', 'Please select the module you would like to import to:');
+        }
+
+        public function getEditableHtmlOptions()
+        {
+            $htmlOptions = array(
+                'name' => $this->getEditableInputName(),
+                'id'   => $this->getEditableInputId(),
+            );
+            return $htmlOptions;
+        }
+
+        protected function getArray()
+        {
+            return array(
+                'xxxxx' => 'yyyy',
+            );
         }
     }
 ?>

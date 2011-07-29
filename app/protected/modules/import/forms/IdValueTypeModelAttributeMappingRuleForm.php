@@ -30,9 +30,9 @@
      */
     class IdValueTypeModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        const ZURMO_MODEL_ID  = 0;
+        const ZURMO_MODEL_ID  = 1;
 
-        const OTHER_ID = 1;
+        const OTHER_ID = 2;
 
         public $type;
 
