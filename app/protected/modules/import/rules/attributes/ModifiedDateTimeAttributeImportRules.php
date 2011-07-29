@@ -24,45 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AboutView extends View
+    /**
+     * Import rules for the modified date time attribute.
+     */
+    class ModifiedDateTimeAttributeImportRules extends DerivedAttributeImportRules
     {
-        protected function renderContent()
+        public static function getSanitizerUtilNames()
         {
-            $zurmoVersion    = '???';
-            $changeSet      = '??????????';
-            $yiiVersion     = YiiBase::getVersion();
-            if (method_exists('R', 'getVersion'))
-            {
-                $redBeanVersion =  R::getVersion();
-            }
-            else
-            {
-                $redBeanVersion = '&lt; 1.2.9.1';
-            }
-            // TODO - put the strings in Yii::t().
-            return <<<END
-    <p>
-        This is <b>version $zurmoVersion</b> ($changeSet), of <b>Zurmo</b>.
-    </p>
-    <p>
-        <b>Zurmo</b> is a <b>Customer Relation Management</b> system by <b>Zurmo Inc.</b>
-    </p>
-    <p>
-        Visit <b>Zurmo Inc.</b> online at
-        <a href="http://www.zurmo.com">http://www.zurmo.com</a>.<br />
-    </p>
-    <p>
-        Insert licensing information.
-    </p>
-    <p>
-        <b>Zurmo</b> uses the following great Open Source tools and frameworks...
-    </p>
-    <p>
-        <a href="http://www.yiiframework.com">The Yii Framework</a> (version $yiiVersion is installed)<br />
-        <a href="http://www.redbeanphp.com">RedBean Php ORM</a>     (version $redBeanVersion is installed)<br />
-        <a href="http://www.jquery.com">The JQuery Javascript Framework</a> (installed with Yii)<br />
-    </p>
-END;
+            return array('Truncate');
+        }
+
+        public function getDisplayLabel()
+        {
+            return Yii::t('Default','Modified Date Time');
         }
     }
 ?>

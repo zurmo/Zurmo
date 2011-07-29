@@ -96,6 +96,22 @@
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
                                     'ImportModelTestItem', 'primaryAddress__street1');
             $this->assertTrue($attributeImportRules instanceof TextAttributeImportRules);
+
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                    'ImportModelTestItem', 'CreatedByUser');
+            $this->assertTrue($attributeImportRules instanceof CreatedByUserAttributeImportRules);
+
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                    'ImportModelTestItem', 'ModifiedByUser');
+            $this->assertTrue($attributeImportRules instanceof ModifiedByUserAttributeImportRules);
+
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                    'ImportModelTestItem', 'CreatedDateTime');
+            $this->assertTrue($attributeImportRules instanceof CreatedDateTimeAttributeImportRules);
+
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                    'ImportModelTestItem', 'ModifiedDateTime');
+            $this->assertTrue($attributeImportRules instanceof ModifiedDateTimeAttributeImportRules);
         }
     }
 ?>

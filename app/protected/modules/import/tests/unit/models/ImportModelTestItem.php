@@ -91,6 +91,7 @@
                     'primaryEmail'     => 'EmailAddressInformation',
                     'primaryAddress'   => 'Address',
                     'textArea'         => 'TextArea',
+                    'radioDropDown'	   => 'RadioDropDown',
                 ),
                 'customFields' => array(
                     'dropDown'        => 'ImportTestDropDown',

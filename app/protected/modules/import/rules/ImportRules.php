@@ -54,12 +54,18 @@
 
         public static function getDerivedAttributeTypes()
         {
-            return array();
+            return array('CreatedByUser',
+                         'ModifiedByUser',
+                         'CreatedDateTime',
+                         'ModifiedDateTime');
         }
 
         public static function getNonImportableAttributeNames()
         {
-            return array();
+            return array('createdByUser',
+                         'modifiedByUser',
+                         'createdDateTime',
+                         'modifiedDateTime');
         }
 
         public static function getNonImportableAttributeImportRulesTypes()

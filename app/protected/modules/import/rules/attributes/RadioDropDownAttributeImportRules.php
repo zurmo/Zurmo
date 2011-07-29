@@ -29,9 +29,5 @@
      */
     class RadioDropDownAttributeImportRules extends DropDownAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultValueModelAttribute' => 'RadioDropDown');
-        }
     }
 ?>

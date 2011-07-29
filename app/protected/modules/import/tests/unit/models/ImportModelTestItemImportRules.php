@@ -33,7 +33,7 @@
 
         public static function getDerivedAttributeTypes()
         {
-            return array('FullName');
+            return array_merge(parent::getDerivedAttributeTypes(), array('FullName'));
         }
     }
 ?>

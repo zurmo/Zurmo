@@ -155,8 +155,8 @@
                     array('modifiedDateTime', 'required'),
                     array('modifiedDateTime', 'readOnly'),
                     array('modifiedDateTime', 'type', 'type' => 'datetime'),
-                    array('createdByUser',   'readOnly'),
-                    array('modifiedByUser',  'readOnly'),
+                    array('createdByUser',    'readOnly'),
+                    array('modifiedByUser',   'readOnly'),
                 ),
                 'elements' => array(
                     'createdDateTime'  => 'DateTime',

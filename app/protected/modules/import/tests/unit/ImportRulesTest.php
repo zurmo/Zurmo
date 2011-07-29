@@ -35,10 +35,12 @@
         {
             $data = ImportModelTestItemImportRules::getMappableAttributeNamesAndDerivedTypes();
             $compareData = array(
+                'CreatedByUser'				  => 'Created By User',
+                'CreatedDateTime'			  => 'Created Date Time',
                 'FullName'					  => 'Full Name',
+                'ModifiedByUser'		      => 'Modified By User',
+                'ModifiedDateTime'		      => 'Modified Date Time',
                 'boolean'                     => 'Boolean',
-                'createdByUser'			      => 'Created By User',
-                'createdDateTime'             => 'Created Date Time',
                 'currencyValue'			      => 'Currency Value',
                 'date'                        => 'Date',
                 'dateTime'                    => 'Date Time',
@@ -49,8 +51,6 @@
                 'id'                          => 'Id',
                 'integer'                     => 'Integer',
                 'lastName'					  => 'Last Name',
-                'modifiedByUser'			  => 'Modified By User',
-                'modifiedDateTime'            => 'Modified Date Time',
                 'owner' 				      => 'Owner',
                 'phone'                       => 'Phone',
                 'primaryAddress__city'        => 'City',
