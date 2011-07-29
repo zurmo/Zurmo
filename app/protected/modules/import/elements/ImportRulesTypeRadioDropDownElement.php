@@ -70,6 +70,7 @@
                 'name' => $this->getEditableInputName(),
                 'id'   => $this->getEditableInputId(),
             );
+            $htmlOptions['template'] =  '<div style="float:left">{input}</div><div style="margin-top:3px;">{label}</div>';
             return $htmlOptions;
         }
 

@@ -98,8 +98,6 @@
                 ),
             );
             $this->assertEquals($compareData, $tempTableData);
-
-
         }
 
         /**
@@ -138,6 +136,20 @@
                     'column_2' => 'a',
             );
             $this->assertEquals($compareData, $firstRowData);
+        }
+
+        /**
+         * @expectedException RedBean_Exception_SQL
+         */
+        public function testDropTableByTableName()
+        {
+            $testTableName = 'testimporttable';
+            $sql           = 'select * from ' . $testTableName;
+            $tempTableData = R::getAll($sql);
+            $this->assertEquals(2, count($tempTableData));
+            ImportDatabaseUtil::dropTableByTableName($testTableName);
+            $sql           = 'select * from ' . $testTableName;
+            R::getAll($sql);
         }
     }
 ?>

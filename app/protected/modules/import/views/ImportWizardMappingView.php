@@ -37,18 +37,16 @@
          */
         protected $mappingDataMetadata;
 
-        public function __construct($controllerId, $moduleId, ImportWizardForm $model, $importId, $mappingDataMetadata,
+        public function __construct($controllerId, $moduleId, ImportWizardForm $model, $mappingDataMetadata,
                                     $mappingDataMappingRuleFormsAndElementTypes)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
-            assert('is_int($importId)');
             assert('is_array($model->mappingData) && count($model->mappingData) > 0');
             assert('is_array($mappingDataMetadata)');
             $this->controllerId                               = $controllerId;
             $this->moduleId                                   = $moduleId;
             $this->model                                      = $model;
-            $this->modelId                                    = $importId;
             $this->mappingDataMetadata                        = $mappingDataMetadata;
             $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
         }

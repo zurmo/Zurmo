@@ -50,24 +50,23 @@
             $importWizardForm = new ImportWizardForm();
             if(isset($_GET['id']))
             {
-                $import = Import::getById($_GET['id']);
+                $import = Import::getById((int)$_GET['id']);
             }
             else
             {
                 $import = new Import();
             }
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
-            if (isset($_POST[get_class($importStep1Form)]))
+            if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep1($importWizardForm, $_POST[get_class($importWizardForm)]);
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step2');
             }
             $importView = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 1 of 6')), 0, 0);
+            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 1 of 6')), 0, 0);
             $importView->setView(new ImportWizardImportRulesView($this->getId(),
                                                                        $this->getModule()->getId(),
-                                                                       $importWizardForm,
-                                                                       (int)$import->id), 1, 0);
+                                                                       $importWizardForm), 1, 0);
             $view       = new ImportPageView($this, $importView);
             echo $view->render();
         }
@@ -77,21 +76,20 @@
          */
         public function actionStep2($id)
         {
-            $import           = Import::getById($_GET['id']);
-            $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
+            $import           = Import::getById((int)$id);
+            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
 
-            if (isset($_POST[get_class($importStep1Form)]))
+            if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
                 //todo: if the header is there but no other rows, handle error.
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
             }
             $importView = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 2 of 6')), 0, 0);
+            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 2 of 6')), 0, 0);
             $importView->setView(new ImportWizardUploadFileView($this->getId(),
                                                                 $this->getModule()->getId(),
-                                                                $importWizardForm,
-                                                                (int)$import->id), 1, 0);
+                                                                $importWizardForm), 1, 0);
             $view       = new ImportPageView($this, $importView);
             echo $view->render();
         }
@@ -102,19 +100,18 @@
         public function actionStep3($id)
         {
             $import           = Import::getById($_GET['id']);
-            $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
+            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
 
-            if (isset($_POST[get_class($importStep1Form)]))
+            if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step4');
             }
             $importView = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 3 of 6')), 0, 0);
+            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 3 of 6')), 0, 0);
             $importView->setView(new ImportWizardModelPermissionsView($this->getId(),
                                                                       $this->getModule()->getId(),
-                                                                      $importWizardForm,
-                                                                      (int)$import->id), 1, 0);
+                                                                      $importWizardForm), 1, 0);
             $view       = new ImportPageView($this, $importView);
             echo $view->render();
         }
@@ -125,12 +122,12 @@
         public function actionStep4($id)
         {
             $import           = Import::getById($_GET['id']);
-            $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
+            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
             $tempTableName    = $import->getTempTableName();
 
 
 
-            if (isset($_POST[get_class($importStep1Form)]))
+            if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
 
@@ -149,22 +146,21 @@
                                                           $importWizardForm->firstRowIsHeaderRow);
 
             $importView                                 = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 4 of 6')), 0, 0);
+            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 4 of 6')), 0, 0);
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
                                                              $importWizardForm,
-                                                             (int)$import->id,
                                                              $mappingDataMetadata,
                                                              $mappingDataMappingRuleFormsAndElementTypes), 1, 0);
             $view                                       = new ImportPageView($this, $importView);
             echo $view->render();
         }
 
-        public function actionUpload($filesVariableName, $id)
+        public function actionUploadFile($filesVariableName, $id)
         {
             assert('is_string($filesVariableName)');
-            $import           = Import::getById($id);
-            $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
+            $import           = Import::getById((int)$id);
+            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
             try {
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
@@ -183,7 +179,7 @@
                     );
                     ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData,
                                                                           $tempTableName);
-                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
+                    ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
                     if(!$import->save())
                     {
                         throw new FailedFileUploadException(Yii::t('Default', 'Import model failed to save.'));
@@ -199,24 +195,30 @@
             }
             catch(FailedFileUploadException $e)
             {
-                $import->delete();
                 $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
+                ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
             }
             echo CJSON::encode($fileUploadData);
             Yii::app()->end(0, false);
         }
 
+        public function actionDeleteFile($id)
+        {
+            $import = Import::getById((int)$id);
+            ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
+        }
+
         protected function attemptToValidateImportWizardFormAndSave(& $importWizardForm, & $import, $redirectAction)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('$importm instanceof Import');
+            assert('$import instanceof Import');
             assert('is_string($redirectAction)');
             if($importWizardForm->validate())
             {
-                ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
+                ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
                 if($import->save())
                 {
-                    $this->redirect(array($this->getId() . '/' . $redirectAction, array('id' => $import->id)));
+                    $this->redirect(array($this->getId() . '/' . $redirectAction, 'id' => $import->id));
                     Yii::app()->end(0, false);
                 }
                 else

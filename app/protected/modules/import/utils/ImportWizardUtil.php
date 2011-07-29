@@ -43,7 +43,8 @@
         public static function makeFormByImport($import)
         {
             assert('$import instanceof Import');
-            $form = new ImportWizardForm();
+            $form     = new ImportWizardForm();
+            $form->id = $import->id;
             if($import->serializedData != null)
             {
                 $unserializedData = unserialize($import->serializedData);
@@ -139,12 +140,33 @@
          */
         public static function setImportSerializedDataFromForm($importWizardForm, & $import)
         {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('$import instanceof Import');
             $dataToSerialize = array();
             foreach(self::$importToFormAttributeMap as $attributeName)
             {
                 $dataToSerialize[$attributeName] = $importWizardForm->$attributeName;
             }
             $import->serializedData = serialize($dataToSerialize);
+        }
+
+        /**
+         * Use this method to remove the existing temp table associated with this import model.  Will also remove
+         * data from serializedData that is created after a file is normally attached to an import model. It will
+         * leave the importRulesType in place since that is created prior to uploading a new file.
+         * @param object $import model.
+         */
+        public static function clearFileAndRelatedDataFromImport(& $import)
+        {
+            assert('$import instanceof Import');
+            $unserializedData                       = $import->serializedData;
+            $newUnserializedData['importRulesType'] = $unserializedData['importRulesType'];
+            if($import->save())
+            {
+                ImportDatabaseUtil::dropTableByTableName($import->getTempTableName());
+                return true;
+            }
+            return false;
         }
     }
 ?>

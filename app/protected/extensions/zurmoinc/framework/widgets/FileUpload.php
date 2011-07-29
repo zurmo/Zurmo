@@ -122,6 +122,9 @@
             $javaScript = <<<EOD
 jQuery('#{$this->formName}').fileUploadUI({$encodedOptions});
 $('#{$this->formName}').find('.delete-file-link').live('click', function () {
+    $.ajax({
+      url: "{$this->deleteUrl}&id=" + $(this).prev().val(),
+    });
     $(this).parent().parent().remove();
 });
 EOD;
@@ -138,6 +141,7 @@ EOD;
             {
                 echo '<tr><td>' . Yii::app()->format->text($existingFile['name']) . '</td>' . "\n";
                 echo '<td>' . Yii::app()->format->text($existingFile['size']) . '</td><td>';
+                //Keep thie hidden input right before the delete link. This will ensure the delete link works properly.
                 echo '<input name="' . $this->hiddenInputName . '[]" type="hidden" value="' . $existingFile['id'] . '"/>';
                 echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default','Delete');
                 echo '</span></td>' . "\n";
@@ -175,17 +179,20 @@ EOD;
         {
             if($this->allowMultipleUpload)
             {
-                $params = "file, index";
-                $file   = "file[index].name";
+                $params      = "file, index";
+                $file        = "file[index].name";
+                $extraAction = null;
             }
             else
             {
-                $params = "file, index";
-                $file   = "file[0].name";
+                $params      = "file, index";
+                $file        = "file[0].name";
+                $extraAction = "$('#{$this->formName}').find('.delete-file-link').parent().parent().remove()";
             }
             $cancelLabel = Yii::t('Default','Cancel');
             $js = <<<EOD
 js:function ($params) {
+    $extraAction
     return $('<tr>'+
         '<td class="filename">'+$file+'</td>'+
         '<td class="file_upload_progress"><div></div></td>'+

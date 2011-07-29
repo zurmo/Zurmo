@@ -62,6 +62,12 @@
             return true;
         }
 
+        public static function dropTableByTableName($tableName)
+        {
+            assert('$tableName == strtolower($tableName)');
+            R::exec("drop table if exists $tableName");
+        }
+
         public static function getColumnCountByTableName($tableName)
         {
             assert('is_string($tableName)');

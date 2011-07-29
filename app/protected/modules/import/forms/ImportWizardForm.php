@@ -38,6 +38,12 @@
 
         const MAPPING_COLUMN_RULES     = 4;
 
+        /**
+         * Set externally as the import model id when available;
+         * @var integer
+         */
+        public $id;
+
         public $importRulesType;
 
         public $fileUploadData;

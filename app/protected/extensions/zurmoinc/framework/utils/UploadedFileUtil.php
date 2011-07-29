@@ -11,7 +11,11 @@
         public static function getByNameAndCatchError($filesVariableName)
         {
             $uploadedFile  = CUploadedFile::getInstanceByName($filesVariableName);
-            if($uploadedFile->getHasError())
+            if($uploadedFile == null)
+            {
+                throw new FailedFileUploadException(Yii::t('Default', 'The file did not exist'));
+            }
+            elseif($uploadedFile->getHasError())
             {
                 $error = $file->getError();
                 $messageParams = array('{file}'=> $uploadedFile->getName(), '{limit}'=> self::getSizeLimit());
@@ -48,11 +52,7 @@
                     //Unsupported or unknown error.
                     $message = Yii::t('Default','There was an error uploading the file.');
                 }
-                throw new FailedFileUploadException();
-            }
-            elseif($uploadedFile == null)
-            {
-                throw new FailedFileUploadException(Yii::t('Default', 'The file did not exist'));
+                throw new FailedFileUploadException($message);
             }
             else
             {

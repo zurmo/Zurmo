@@ -32,11 +32,15 @@
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
                 $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);
+                if($fileModel == null)
+                {
+                    throw new FailedFileUploadException(Yii::t('Default', 'File failed to upload. The file is empty.'));
+                }
                 assert('$fileModel instanceof FileModel');
                 $fileUploadData = array('name' => $fileModel->name,
                                         'type' => $fileModel->type,
                                         'humanReadableSize' =>
-                                            FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
+                                        FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
                                         'id' => $fileModel->id);
             }
             catch(FailedFileUploadException $e)
@@ -59,6 +63,13 @@
             }
             $fileModel = FileModel::getById((int)$id);
             Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type);
+        }
+
+        public function actionDelete($id)
+        {
+            $fileModel = FileModel::getById((int)$id);
+            $fileModel->delete();
+            //todo: add error handling.
         }
     }
 ?>

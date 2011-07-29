@@ -27,7 +27,7 @@
     /**
      * First view in the import wizard. Allows user to select a module to import data into.
      */
-    class ImportWizardImportRulesView extends ImportWizardView
+    class ImportWizardUploadFileView extends ImportWizardView
     {
         /**
          * Override to handle the form layout for this view.
@@ -38,19 +38,31 @@
         protected function renderFormLayout($form = null)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $element                   = new ImportRulesTypeRadioDropDownElement($this->model, 'importRulesType', $form);
-            $element->editableTemplate = '{label}<br/>{content}';
-
+            $fileUploadElement                         = new ImportFileUploadElement($this->model, 'fileUploadData',
+                                                         $form);
+            $fileUploadElement->editableTemplate       = '{label}<br/>{content}';
+            $firstRowIsHeaderElement                   = new CheckBoxElement($this->model, 'firstRowIsHeaderRow', $form);
+            $firstRowIsHeaderElement->editableTemplate = '{content}{label}';
             $content  = $form->errorSummary($this->model);
             $content .= '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
             $content .= '<tr><td>'    . "\n";
-            $content .= $element->render();
+            $content .= $fileUploadElement->render();
+            $content .= '</td></tr>'  . "\n";
+            $content .= '<tr><td>'    . "\n";
+            $content .= $firstRowIsHeaderElement->render();
             $content .= '</td></tr>'  . "\n";
             $content .= '</tbody>'    . "\n";
             $content .= '</table>'    . "\n";
             $content .= $this->renderActionLinksContent($form);
             return $content;
+        }
+
+        protected function renderPreviousPageLinkContent($form)
+        {
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/step1/',
+                                           array('id' => $this->model->id));
+            return CHtml::link(Yii::t('Default', 'Previous'), $route);
         }
 
         protected function renderNextPageLinkContent($form)

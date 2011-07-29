@@ -47,7 +47,7 @@
         protected function renderControlEditable()
         {
             assert('$this->model instanceof Activity');
-            assert('!isset($this->params["inputPrefix"]'); //Not supported at this time.
+            assert('!isset($this->params["inputPrefix"])'); //Not supported at this time.
             $metadata     = Activity::getMetadata();
             return $this->renderElementsForRelationsByRelationsData($metadata['Activity']['activityItemsModelClassNames']);
         }

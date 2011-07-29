@@ -29,6 +29,15 @@
      */
     abstract class ImportWizardView extends EditView
     {
+        public function __construct($controllerId, $moduleId, ImportWizardForm $model)
+        {
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            $this->controllerId = $controllerId;
+            $this->moduleId     = $moduleId;
+            $this->model        = $model;
+        }
+
         /**
          * Given a form, render the content for the action links at the bottom of the view and return the content as
          * a string.
@@ -41,11 +50,11 @@
             $content  = '<div class="view-toolbar">'; //change to different class?
             if($previousPageLinkContent)
             {
-                $content .= '<div id="previous-page-link">' . $previousPageLinkContent . '</div>'; //float left //should be a form submit link.
+                $content .= '<div id="previous-page-link" style="float:left;">' . $previousPageLinkContent . '</div>';
             }
             if($nextPageLinkContent)
             {
-                $content .= '<div id="next-page-link">' . $nextPageLinkContent . '</div>'; //float right //should be a form submit link.
+                $content .= '<div id="next-page-link" style="float:right;">' . $nextPageLinkContent . '</div>';
             }
             $content .= '</div>';
             return $content;
@@ -67,6 +76,13 @@
         protected function renderNextPageLinkContent($form)
         {
             return null;
+        }
+
+        /**
+         * There are no special requirements for this view's metadata.
+         */
+        protected static function assertMetadataIsValid(array $metadata)
+        {
         }
 
         public function isUniqueToAPage()
