@@ -58,14 +58,25 @@
             }
             foreach($mappingData as $columnName => $columnData)
             {
-                if($firstRowIsHeaderRow)
+                if($columnData['type'] == 'importColumn')
                 {
-                    $mappingData[$columnName]['headerValue'] = $rowData[0][$columnName];
-                    $mappingData[$columnName]['sampleValue'] = $rowData[1][$columnName];
+                    if($firstRowIsHeaderRow)
+                    {
+                        $mappingData[$columnName]['headerValue'] = $rowData[0][$columnName];
+                        $mappingData[$columnName]['sampleValue'] = $rowData[1][$columnName];
+                    }
+                    else
+                    {
+                        $mappingData[$columnName]['sampleValue'] = $rowData[$columnName];
+                    }
                 }
                 else
                 {
-                    $mappingData[$columnName]['sampleValue'] = $rowData[$columnName];
+                    if($firstRowIsHeaderRow)
+                    {
+                        $mappingData[$columnName]['headerValue'] = null;
+                    }
+                    $mappingData[$columnName]['sampleValue']     = null;
                 }
             }
             return $mappingData;

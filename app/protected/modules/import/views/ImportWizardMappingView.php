@@ -44,12 +44,12 @@
             assert('is_int($importId)');
             assert('is_array($model->mappingData) && count($model->mappingData) > 0');
             assert('is_array($mappingDataMetadata)');
-            $this->controllerId        = $controllerId;
-            $this->moduleId            = $moduleId;
-            $this->model               = $model;
+            $this->controllerId                               = $controllerId;
+            $this->moduleId                                   = $moduleId;
+            $this->model                                      = $model;
             $this->modelId                                    = $importId;
             $this->mappingDataMetadata                        = $mappingDataMetadata;
-            $this->mappingDataModelAttributeMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
+            $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
         }
 
         /**
@@ -82,23 +82,39 @@
             foreach ($this->mappingDataMetadata as $columnName => $row)
             {
                 assert('isset($row["attributeNameOrDerivedType"])');
+                assert('$row["type"] == "importColumn" || $row["type"] == "extraColumn"');
                 assert('isset($row["sampleValue"])');
                 $content .= '<tr>';
-                $content .= $this->renderAttributeDropDownElement($columnName);
+                $content .= $this->renderAttributeDropDownElement($columnName, $row['type']);
                 if($this->model->firstRowIsHeaderRow)
                 {
                     assert('isset($row["headerValue"])');
                     $content .= $this->renderHeaderColumnElement($columnName, $row['headerValue']);
                 }
-                $content .= $this->renderImportColumnElement($columnName, $row['sampleValue']);
-                $content .= $this->renderMappingRulesElements($columnName);
-
+                $content .= $this->renderImportColumnElement ($columnName, $row['sampleValue']);
+                $content .= $this->renderMappingRulesElements(
+                                    $columnName,
+                                    $row["attributeNameOrDerivedType"],
+                                    $this->model->importRulesType,
+                                    $row['type'],
+                                    $this->resolveMappingRuleFormsAndElementTypesByColumn($columnName));
                 $content .= '</tr>';
             }
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
         }
+
+        protected function ResolveMappingRuleFormsAndElementTypesByColumn($columnName)
+        {
+            assert('is_string($columnName)');
+            if(isset($this->mappingDataMappingRuleFormsAndElementTypes[$columnName]))
+            {
+                return $this->mappingDataMappingRuleFormsAndElementTypes[$columnName];
+            }
+            return array();
+        }
+
 
         protected function getFormLayoutHeaderColumnsContent()
         {
@@ -113,9 +129,10 @@
             return $headerColumns;
         }
 
-        protected function renderAttributeDropDownElement($columnName)
+        protected function renderAttributeDropDownElement($columnName, $columnType)
         {
             assert('is_string($columnName)');
+            assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
                                          $columnName,
                                          ImportWizardForm::MAPPING_COLUMN_ATTRIBUTE);
@@ -124,7 +141,16 @@
                                             $attributeName,
                                             $form);
             $element->editableTemplate = '<td>{content}{error}</td>';
-            return $element->render();
+            $content                   = $element->render();
+            $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
+                                         $columnName,
+                                         ImportWizardForm::MAPPING_COLUMN_TYPE);
+            $htmlOptions               = array('id' => 'ImportWizardForm' . '_' . $attributeName);
+            $hiddenInputName           = 'ImportWizardForm' . '[' . $attributeName . ']';
+            $content                  .= hiddenField($hiddenInputName,
+                                                     $columnType,
+                                                     $idInputHtmlOptions);
+            return $content;
         }
 
         protected function renderHeaderColumnElement($columnName, $headerValue)
@@ -153,11 +179,13 @@
         protected function renderMappingRulesElements($columnName,
                                                       $attributeNameOrDerivedType,
                                                       $importRulesType,
+                                                      $columnType,
                                                       $mappingRuleFormsAndElementTypes)
         {
             assert('is_string($columnName)');
             assert('is_string($attributeNameOrDerivedType)');
             assert('is_string($importRulesType)');
+            assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             assert('is_array($mappingRuleFormsAndElementTypes) || $mappingRuleFormsAndElementTypes == null');
             $content = '<td>';
             if($attributeNameOrDerivedType != null)
@@ -176,6 +204,10 @@
                 foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {
                     $mappingRuleForm       = $ruleFormAndElementType['mappingRuleForm'];
+                    if($columnType == 'ExtraAttribute')
+                    {
+                        $mappingRuleForm->setScenario('ExtraAttribute');
+                    }
                     $elementClassName      = $ruleFormAndElementType['elementType'] . 'Element';
                     $attributeName         = $mappingRuleForm::getAttributeName();
                     $modelAttributeName    = FormModelUtil::getDerivedAttributeNameFromTwoStrings(

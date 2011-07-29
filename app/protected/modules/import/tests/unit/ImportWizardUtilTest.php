@@ -60,7 +60,7 @@
         public function testSetImportSerializedDataFromForm()
         {
             $import = new Import();
-                            $dataToSerialize        = array('importRulesType' => 'x',
+            $dataToSerialize                        = array('importRulesType' => 'x',
                                                             'fileUploadData'       => array('a' => 'b'),
                                                             'firstRowIsHeaderRow'  => false,
                                                             'modelPermissions'     => 'z',
@@ -122,9 +122,12 @@
             $this->assertEquals('testAbc',       $importWizardForm->importRulesType);
             $this->assertEquals(null,            $importWizardForm->modelPermissions);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_0' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
+                                    'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
+                                    'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
+                                    'mappingRulesData' => null),
             );
             $this->assertEquals($compareData,    $importWizardForm->mappingData);
         }

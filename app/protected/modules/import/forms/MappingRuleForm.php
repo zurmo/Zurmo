@@ -32,6 +32,8 @@
      */
     abstract class MappingRuleForm extends ConfigurableMetadataModel
     {
+        protected $scenario;
+
         public static function getAttributeName()
         {
         }
@@ -44,6 +46,11 @@
         public function attributeLabels()
         {
             return array();
+        }
+
+        public function setScenario($scenario)
+        {
+            $this->scenario = $scenario;
         }
     }
 ?>

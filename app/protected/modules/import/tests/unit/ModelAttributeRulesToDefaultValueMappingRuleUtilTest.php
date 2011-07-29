@@ -79,6 +79,34 @@
                      getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'url');
             $compareData = array(array('defaultValue',  'url'));
             $this->assertEquals($compareData, $rules);
+
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'firstName');
+            $compareData = array(array('defaultValue',  'type', 'type' => 'string'),
+                                 array('defaultValue',  'length',  'min'  => 1, 'max' => 32));
+            $this->assertEquals($compareData, $rules);
+
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'lastName');
+            $compareData = array(array('defaultValue',  'type', 'type' => 'string'),
+                                 array('defaultValue',  'length',  'min'  => 2, 'max' => 32));
+            $this->assertEquals($compareData, $rules);
+
+            //Now test lastName and string with required as applicable.
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'string', true);
+            $compareData = array(array('defaultValue',  'required'),
+                                 array('defaultValue',  'type', 'type' => 'string'),
+                                 array('defaultValue',  'length',  'min'  => 3, 'max' => 64));
+            $this->assertEquals($compareData, $rules);
+
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'lastName', true);
+            $compareData = array(array('defaultValue',  'required'),
+                                 array('defaultValue',  'type', 'type' => 'string'),
+                                 array('defaultValue',  'length',  'min'  => 2, 'max' => 32));
+            $this->assertEquals($compareData, $rules);
+
         }
     }
 ?>

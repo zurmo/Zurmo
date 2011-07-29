@@ -35,9 +35,19 @@
 
         public function rules()
         {
+            if($this->scenario == 'extraColumn')
+            {
+                $requiredRuleIsApplicable = true;
+            }
+            else
+            {
+                $requiredRuleIsApplicable = false;
+            }
             $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
                                                          getApplicableRulesByModelClassNameAndAttributeName(
-                                                         $this->modelClassName, $this->attributeName);
+                                                         $this->modelClassName,
+                                                         $this->attributeName,
+                                                         $requiredRuleIsApplicable);
             return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
 
