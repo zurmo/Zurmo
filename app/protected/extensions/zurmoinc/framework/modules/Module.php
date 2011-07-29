@@ -458,21 +458,7 @@
 
         public static function getViewClassNames()
         {
-            $viewClassNames = array();
-            $className = get_called_class();
-            $pathOfAlias = Yii::getPathOfAlias(
-                    'application.modules.' . $className::getDirectoryName() . '.views.*');
-            if (is_dir($pathOfAlias))
-            {
-                $directoryFiles = ZurmoFileHelper::findFiles($pathOfAlias);
-                $viewClassNames = array();
-                foreach ($directoryFiles as $filePath)
-                {
-                    $filePathInfo = pathinfo($filePath);
-                    $viewClassNames[] = $filePathInfo['filename'];
-                }
-            }
-            return $viewClassNames;
+            return static::getAllClassNamesByPathFolder('views');
         }
 
         /**
@@ -480,21 +466,27 @@
          */
         public static function getModelClassNames()
         {
-            $modelClassNames = array();
+            return static::getAllClassNamesByPathFolder('models');
+        }
+
+        public static function getAllClassNamesByPathFolder($folder)
+        {
+            assert('is_string($folder)');
+            $classNames = array();
             $className = get_called_class();
             $pathOfAlias = Yii::getPathOfAlias(
-                    'application.modules.' . $className::getDirectoryName() . '.models.*');
+                    'application.modules.' . $className::getDirectoryName() . '.' .  $folder . '.*');
             if (is_dir($pathOfAlias))
             {
                 $directoryFiles = ZurmoFileHelper::findFiles($pathOfAlias);
-                $modelClassNames = array();
+                $classNames = array();
                 foreach ($directoryFiles as $filePath)
                 {
                     $filePathInfo = pathinfo($filePath);
-                    $modelClassNames[] = $filePathInfo['filename'];
+                    $classNames[] = $filePathInfo['filename'];
                 }
             }
-            return $modelClassNames;
+            return $classNames;
         }
 
         private static function assertMetadataIsValid(array $metadata)

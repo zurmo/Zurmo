@@ -62,6 +62,7 @@
                 'primaryEmail__emailAddress'  => 'Email Address',
                 'primaryEmail__isInvalid'     => 'Is Invalid',
                 'primaryEmail__optOut'        => 'Opt Out',
+                'radioDropDown'				  => 'Radio Drop Down',
                 'string'                      => 'String',
                 'textArea'                    => 'Text Area',
                 'url'                         => 'Url',
@@ -81,7 +82,17 @@
         {
             Yii::app()->user->userModel     = User::getByUsername('super');
             $attributeImportRulesType       = ImportModelTestItemImportRules::getAttributeImportRulesType('boolean');
-            $this->assertEquals('CheckBox', $attributeImportRulesType);
+            $this->assertEquals('CheckBox',   $attributeImportRulesType);
+        }
+
+        public function testGetImportRulesTypesForCurrentUser()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $data = ImportRulesUtil::getImportRulesTypesForCurrentUser();
+            $compareData = array(
+                'AccountImportRules' => 'Accounts',
+            );
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

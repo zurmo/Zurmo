@@ -75,9 +75,7 @@
 
         protected function getArray()
         {
-            return array(
-                'xxxxx' => 'yyyy',
-            );
+            return ImportRulesUtil::getImportRulesTypesForCurrentUser();
         }
     }
 ?>

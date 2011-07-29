@@ -34,6 +34,24 @@
         {
         }
 
+        public static function getModuleClassNames()
+        {
+            $modelClassName = static::getModelClassName();
+            assert('is_subclass_of($modelClassName, "Item")');
+            $moduleClassName = $modelClassName::getModuleClassName();
+            assert('$moduleClassName != null');
+            return array($moduleClassName);
+        }
+
+        public static function getDisplayLabel()
+        {
+            $modelClassName  = static::getModelClassName();
+            assert('is_subclass_of($modelClassName, "Item")');
+            $moduleClassName = $modelClassName::getModuleClassName();
+            assert('$moduleClassName != null');
+            return $moduleClassName::getModuleLabelByTypeAndLanguage('Plural');
+        }
+
         public static function getDerivedAttributeTypes()
         {
             return array();
