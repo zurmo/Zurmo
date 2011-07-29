@@ -32,7 +32,9 @@
      */
     abstract class MappingRuleForm extends ConfigurableMetadataModel
     {
-        abstract public static function getAttributeName();
+        public static function getAttributeName()
+        {
+        }
 
         public function rules()
         {

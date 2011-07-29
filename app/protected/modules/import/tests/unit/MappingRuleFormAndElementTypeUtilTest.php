@@ -40,6 +40,17 @@
             $this->assertEquals(1, count($collection));
             $this->assertEquals('Phone', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+
+            $attributeImportRules = new UserAttributeImportRules(new ImportModelTestItem(), 'owner');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'owner');
+            $this->assertEquals(2, count($collection));
+            $this->assertEquals('User', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[1]['elementType']);
+            $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
         }
     }
 ?>
