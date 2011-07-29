@@ -26,6 +26,17 @@
 
     class ImportDefaultController extends Controller
     {
+        public function filters()
+        {
+            $filters   = array();
+            $filters[] = array(
+                         ZurmoBaseController::RIGHTS_FILTER_PATH,
+                         'moduleClassName' => 'ImportModule',
+                         'rightName' => ImportModule::getAccessRight(),
+            );
+            return $filters;
+        }
+
         public function actionIndex()
         {
             $this->actionStep1();
