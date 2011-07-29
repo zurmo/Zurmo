@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MappingRuleFormAndElementTypeUtilTest extends BaseTest
+    class MappingRuleFormAndElementTypeUtilTest extends ImportBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -41,7 +41,7 @@
             $this->assertEquals('Phone', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
 
-
+            //User attribute
             $attributeImportRules = new UserAttributeImportRules(new ImportModelTestItem(), 'owner');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
@@ -51,6 +51,17 @@
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
             $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[1]['elementType']);
             $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
+
+            //CurrencyValue attribute
+            $attributeImportRules = new CurrencyAttributeImportRules(new ImportModelTestItem(), 'currencyValue');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'currencyValue');
+            $this->assertEquals(2, count($collection));
+            $this->assertEquals('CurrencyValue', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('XXValueTypeDropDown', $collection[1]['elementType']);
+            $this->assertEquals('YYAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
         }
     }
 ?>

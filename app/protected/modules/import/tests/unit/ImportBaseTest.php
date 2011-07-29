@@ -24,29 +24,12 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any derived attributes that are of type FullName.
-     */
-    class FullNameAttributeImportRules extends DerivedAttributeImportRules
+    class ImportBaseTest extends ImportBaseTest
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function tearDownAfterClass()
         {
-            return array();
-        }
-
-        public function getDisplayLabel()
-        {
-            return Yii::t('Default','Full Name');
-        }
-
-        public function getModelAttributeNames()
-        {
-            return array('firstName', 'lastName');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            R::exec('drop table if exists testimporttable');
+            parent::tearDownAfterClass();
         }
     }
 ?>
