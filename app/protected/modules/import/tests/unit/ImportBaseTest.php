@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportBaseTest extends ImportBaseTest
+    class ImportBaseTest extends BaseTest
     {
         public static function tearDownAfterClass()
         {

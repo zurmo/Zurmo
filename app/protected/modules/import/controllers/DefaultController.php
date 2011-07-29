@@ -83,6 +83,7 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
+                //todo: if the header is there but no other rows, handle error.
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
             }
             $importView = new GridView(2, 1);
@@ -180,7 +181,8 @@
                         'type' => $uploadedFile->getType(),
                         'size' => $uploadedFile->getSize(),
                     );
-                    ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUpload, $tempTableName);
+                    ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData,
+                                                                          $tempTableName);
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
                     if(!$import->save())
                     {
@@ -191,14 +193,14 @@
                 {
                     throw new FailedFileUploadException(Yii::t('Default', 'Failed to open the uploaded file.'));
                 }
-                $fileUpload['humanReadableSize'] = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(
-                                                   $fileUploadData['size']);
-                $fileUploadData['id']            = $import->id;
+                $fileUploadData['humanReadableSize'] = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(
+                                                       $fileUploadData['size']);
+                $fileUploadData['id']                = $import->id;
             }
             catch(FailedFileUploadException $e)
             {
                 $import->delete();
-                $fileUpload = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
+                $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
             }
             echo CJSON::encode($fileUploadData);
             Yii::app()->end(0, false);

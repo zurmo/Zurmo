@@ -32,17 +32,17 @@
         /**
          * Given an import data's table name, create a basic mapping data array that has the correct starting
          * elements set as null.  This will ensure the mapping data array is always structured correctly.  Each key
-         * will be a column name from the table.
+         * will be a column name from the table.  Throws an exception if the table is missing rows.
          * @param string $tableName
-         * @return array $mappingData or null if the table does not have any rows.
+         * @return array $mappingData
          */
         public static function makeMappingDataByTableName($tableName)
         {
             assert('is_string($tableName)');
             $firstRowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
-            if(count($firstRowData) == 1)
+            if(count($firstRowData) == 1 || count($firstRowData) == 0)
             {
-                return null;
+                throw new NoRowsInTableException();
             }
             $mappingData = array();
             foreach($firstRowData as $columnName => $notUsed)

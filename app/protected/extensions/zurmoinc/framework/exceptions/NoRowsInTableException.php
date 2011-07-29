@@ -25,20 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are a CurrencyValue model.
+     * Exception thrown when a table is queried that has no rows, when it is expected to have at least 1 row.
      */
-    class CurrencyValueAttributeImportRules extends AttributeImportRules
+    class NoRowsInTableException extends CException
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultValueModelAttribute' => 'CurrencyValue',
-                         'CurrencyIdModelAttribute'         => 'CurrencyDropDown',
-                         'CurrencyRateToBaseModelAttribute' => 'Decimal');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
-        }
     }
 ?>

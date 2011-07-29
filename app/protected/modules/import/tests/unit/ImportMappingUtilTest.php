@@ -44,5 +44,15 @@
             );
             $this->assertEquals($compareData, $mappingData);
         }
+
+        /**
+         * @expectedException NoRowsInTableException
+         */
+        public function testMakeMappingDataOnFileWithNoRows()
+        {
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest3.csv', $testTableName));
+            ImportMappingUtil::makeMappingDataByTableName($testTableName);
+        }
     }
 ?>

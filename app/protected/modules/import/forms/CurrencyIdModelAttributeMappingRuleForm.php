@@ -25,20 +25,36 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are a CurrencyValue model.
+     * This form is used for mapping a currencyValue attribute.  This form allows the user to select the currency
+     * to use for the existing values on the import.
+     * @see CurrencyRateToBaseModelAttributeMappingRuleForm
+     * @see CurrencyIdModelAttributeMappingRuleForm
      */
-    class CurrencyValueAttributeImportRules extends AttributeImportRules
+    class CurrencyIdModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public $id;
+
+        public function __construct($modelClassName, $attributeName)
         {
-            return array('DefaultValueModelAttribute' => 'CurrencyValue',
-                         'CurrencyIdModelAttribute'         => 'CurrencyDropDown',
-                         'CurrencyRateToBaseModelAttribute' => 'Decimal');
+            parent::__construct($modelClassName, $attributeName);
+            assert('Yii::app()->user->userModel != null');
+            $this->id = Yii::app()->user->userModel->currency->id;
+        }
+        public function rules()
+        {
+            return array(
+                array('id',  'required')
+            );
         }
 
-        public static function getSanitizerUtilNames()
+        public function attributeLabels()
         {
-            return array('Truncate');
+            return array('id'   => Yii::t('Default', 'Currency'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'id';
         }
     }
 ?>

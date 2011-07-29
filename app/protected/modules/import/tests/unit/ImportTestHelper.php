@@ -41,9 +41,5 @@
             }
             return false;
         }
-
-        public static function createAccountsForSearchWithDataProviderTests()
-        {
-        }
     }
 ?>

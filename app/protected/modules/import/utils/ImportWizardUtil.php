@@ -121,7 +121,14 @@
                 }
             }
             $importWizardForm->fileUploadData = $fileUploadData;
-            $importWizardForm->mappingData    = ImportMappingUtil::makeMappingDataByTableName($tableName);
+            try
+            {
+                $importWizardForm->mappingData = ImportMappingUtil::makeMappingDataByTableName($tableName);
+            }
+            catch(NoRowsInTableExceptionException $e)
+            {
+                throw new FailedFileUploadException(Yii::t('Default', 'Import file has no rows to use.'));
+            }
         }
 
         /**

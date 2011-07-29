@@ -40,17 +40,20 @@
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
             }
-            R::exec("drop table $tableName");
+            R::exec("drop table if exists $tableName");
             while (($data = fgetcsv($fileHandle, 0, ',')) !== false)
             {
-                $newBean = R::dispense($tableName);
-                foreach($data as $columnId => $value)
+                if(count($data) > 0)
                 {
-                    $columnName = 'column_' . $columnId;
-                    $newBean->{$columnName} = $value;
+                    $newBean = R::dispense($tableName);
+                    foreach($data as $columnId => $value)
+                    {
+                        $columnName = 'column_' . $columnId;
+                        $newBean->{$columnName} = $value;
+                    }
+                    R::store($newBean);
+                    unset($newBean);
                 }
-                R::store($newBean);
-                unset($newBean);
             }
             if($freezeWhenComplete)
             {
@@ -70,7 +73,14 @@
         {
             assert('is_string($tableName)');
             $sql = 'select * from ' . $tableName;
-            $data = R::getRow($sql);
+            try
+            {
+                $data = R::getRow($sql);
+            }
+            catch(RedBean_Exception_SQL $e)
+            {
+                throw new NoRowsInTableException();
+            }
             return $data;
         }
 

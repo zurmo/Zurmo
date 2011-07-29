@@ -53,15 +53,20 @@
             $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
 
             //CurrencyValue attribute
-            $attributeImportRules = new CurrencyAttributeImportRules(new ImportModelTestItem(), 'currencyValue');
+            $attributeImportRules = new CurrencyValueAttributeImportRules(new ImportModelTestItem(), 'currencyValue');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
                                                                          'currencyValue');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('CurrencyValue', $collection[0]['elementType']);
-            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('XXValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('YYAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
+            $this->assertEquals(3, count($collection));
+            $this->assertEquals('CurrencyValue',    $collection[0]['elementType']);
+            $this->assertEquals('CurrencyDropDown', $collection[1]['elementType']);
+            $this->assertEquals('Decimal',          $collection[2]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm',
+                                get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('CurrencyIdModelAttributeMappingRuleForm',
+                                get_class($collection[1]['mappingRuleForm']));
+            $this->assertEquals('CurrencyRateToBaseModelAttributeMappingRuleForm',
+                                get_class($collection[2]['mappingRuleForm']));
         }
     }
 ?>

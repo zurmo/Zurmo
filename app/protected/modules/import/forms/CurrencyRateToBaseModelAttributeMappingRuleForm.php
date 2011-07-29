@@ -25,20 +25,36 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are a CurrencyValue model.
+     * This form is used for mapping a currencyValue attribute.  This form allows the user to select the rate to base
+     * of the importing values. The form will default with a rate to base of 1.
+     * @see CurrencyIdModelAttributeMappingRuleForm
+     * @see CurrencyValueAttributeImportRules
      */
-    class CurrencyValueAttributeImportRules extends AttributeImportRules
+    class CurrencyRateToBaseModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public $rateToBase;
+
+        public function __construct($modelClassName, $attributeName)
         {
-            return array('DefaultValueModelAttribute' => 'CurrencyValue',
-                         'CurrencyIdModelAttribute'         => 'CurrencyDropDown',
-                         'CurrencyRateToBaseModelAttribute' => 'Decimal');
+            parent::__construct($modelClassName, $attributeName);
+            $this->rateToBase = 1;
+        }
+        public function rules()
+        {
+            return array(
+                array('rateToBase',  'required'),
+                array('rateToBase',  'type', 'type' => 'float'),
+            );
         }
 
-        public static function getSanitizerUtilNames()
+        public function attributeLabels()
         {
-            return array('Truncate');
+            return array('rateToBase'   => Yii::t('Default', 'Rate To Base'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'rateToBase';
         }
     }
 ?>
