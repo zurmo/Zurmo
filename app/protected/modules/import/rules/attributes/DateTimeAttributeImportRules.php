@@ -25,13 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are type DateTime.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class DateTimeAttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'DateTime');
         }
 
         public static function getSanitizerUtilNames()

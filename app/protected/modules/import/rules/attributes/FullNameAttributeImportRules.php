@@ -25,13 +25,23 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any derived attributes that are of type FullName.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class FullNameAttributeImportRules extends DerivedAttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array(); //add like first/last/middle massagers?
+        }
+
+        public function getDisplayLabel()
+        {
+            return Yii::t('Default','Full Name');
+        }
+
+        public function getModelAttributeNames()
+        {
+            return array('firstName', 'lastName');
         }
 
         public static function getSanitizerUtilNames()

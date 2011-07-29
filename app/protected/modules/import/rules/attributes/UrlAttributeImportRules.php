@@ -25,13 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are type Url.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class UrlAttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'Url');
         }
 
         public static function getSanitizerUtilNames()

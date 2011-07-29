@@ -25,18 +25,18 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are id. This would be referencing the model id.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class IdAttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'NameId');
         }
 
         public static function getSanitizerUtilNames()
         {
-            return array('Truncate');
+            return array();
         }
     }
 ?>

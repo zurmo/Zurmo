@@ -25,13 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are type DropDown.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class DropDownAttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'DropDown');
         }
 
         public static function getSanitizerUtilNames()

@@ -25,13 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are a ImportModelTestItem2 model.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class ImportModelTestItem2AttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'ImportModelTestItem2');
         }
 
         public static function getSanitizerUtilNames()

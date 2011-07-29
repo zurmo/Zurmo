@@ -25,18 +25,27 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Helper class to make AttributeImportRules objects
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class AttributeImportRulesFactory
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function makeByImportRulesTypeAndAttributeNameOrDerivedType($importRulesType,
+                                                                                  $attributeNameOrDerivedType)
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            assert('is_string($importRulesType)');
+            assert('is_string($attributeNameOrDerivedType)');
+            $importRulesTypeClassName = $importRulesType . 'ImportRules';
+            $attributeImportRulesType = $importRulesTypeClassName::getAttributeImportRulesType(
+                                        $attributeNameOrDerivedType);
+            $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeNameOrDerivedType(
+                                        $attributeNameOrDerivedType);
+            assert('$attributeImportRulesType !== null');
+            $attributeImportRulesClassName = $attributeImportRulesType . 'AttributeImportRules';
+            if(is_subclass_of($attributeImportRulesClassName, 'DerivedAttributeImportRules'))
+            {
+                return new $attributeImportRulesClassName(new $modelClassName(false));
+            }
+            return new $attributeImportRulesClassName(new $modelClassName(false), $attributeNameOrDerivedType);
         }
     }
 ?>

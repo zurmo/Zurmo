@@ -252,6 +252,7 @@
     $common_config['import'][] = "application.modules.designer.rules.elements.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.designer.elements.layoutsettings.*";          // Not Coding Standard
     $common_config['import'][] = "application.modules.designer.forms.attributes.*";                 // Not Coding Standard
+    $common_config['import'][] = "application.modules.import.rules.attributes.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.install.serviceHelpers.*";                    // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.elements.security.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.utils.security.*";                      // Not Coding Standard

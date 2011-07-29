@@ -25,18 +25,14 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Base class for defining a derived attribute's import rules.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    abstract class DerivedAttributeImportRules extends AttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function __construct($model, $attributeName = null)
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            assert('$attributeName == null');
+            parent::__construct($model, $attributeName);
         }
     }
 ?>

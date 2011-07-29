@@ -44,7 +44,7 @@
             return array();
         }
 
-        public static function getNonImportableAttributeTypes()
+        public static function getNonImportableAttributeImportRulesTypes()
         {
             return array();
         }
@@ -53,27 +53,70 @@
         {
             $mappableAttributeNamesAndDerivedTypes = array();
             $modelClassName                        = static::getModelClassName();
-            assert('$modelClassName != null');
-            $modelAttributesAdapter                = new ModelAttributesImportMappingAdapter(new $modelClassName(false));
-            $attributesCollection                  = $modelAttributesAdapter->getAttributes();
+            $attributesCollection                  = static::getAttributesCollectionByModelClassName($modelClassName);
+            $model                                 = new $modelClassName(false);
 
             foreach($attributesCollection as $attributeIndex => $attributeData)
             {
                 if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
-                    !in_array($attributeData['mappingType'], static::getNonImportableAttributeTypes()))
+                    !in_array($attributeData['attributeImportRulesType'], static::getNonImportableAttributeImportRulesTypes()))
                 {
                     $mappableAttributeNamesAndDerivedTypes[$attributeIndex] = $attributeData['attributeLabel'];
                 }
             }
             foreach(static::getDerivedAttributeTypes() as $derivedType)
             {
-                $attributeImportRulesClassName = $derivedType . 'AttributeImportRules';
-                $mappableAttributeNamesAndDerivedTypes[$derivedType] = $attributeImportRulesClassName::getDisplayLabel();
+                $attributeImportRulesClassName                       = $derivedType . 'AttributeImportRules';
+                $attributeImportRules                                = new $attributeImportRulesClassName($model);
+                $mappableAttributeNamesAndDerivedTypes[$derivedType] = $attributeImportRules->getDisplayLabel();
             }
             return $mappableAttributeNamesAndDerivedTypes;
         }
 
+        protected static function getAttributesCollectionByModelClassName($modelClassName)
+        {
+            assert('$modelClassName != null && is_string($modelClassName)');
+            $modelAttributesAdapter = new ModelAttributesImportMappingAdapter(new $modelClassName(false));
+            return $modelAttributesAdapter->getAttributes();
+        }
 
+        public static function getModelClassNameByAttributeNameOrDerivedType($attributeNameOrDerivedType)
+        {
+            assert('is_string($attributeNameOrDerivedType)');
+            return static::getModelClassName();
+        }
 
+        public static function getAttributeImportRulesType($attributeNameOrDerivedType)
+        {
+            assert('is_string($attributeNameOrDerivedType)');
+            $modelClassName           = static::getModelClassName();
+            $attributeImportRulesData = static::getAttributeNameOrDerivedTypeAndAttributeImportRuleTypes($modelClassName);
+            if(isset($attributeImportRulesData[$attributeNameOrDerivedType]))
+            {
+                return $attributeImportRulesData[$attributeNameOrDerivedType];
+            }
+            throw new NotSupportedException();
+        }
+
+        protected static function getAttributeNameOrDerivedTypeAndAttributeImportRuleTypes($modelClassName)
+        {
+            assert('$modelClassName != null && is_string($modelClassName)');
+            $attributesCollection = static::getAttributesCollectionByModelClassName($modelClassName);
+
+            $attributeNameOrDerivedTypeAndRuleType = array();
+            foreach($attributesCollection as $attributeIndex => $attributeData)
+            {
+                if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
+                    !in_array($attributeData['attributeImportRulesType'], static::getNonImportableAttributeImportRulesTypes()))
+                {
+                    $attributeNameOrDerivedTypeAndRuleType[$attributeIndex] = $attributeData['attributeImportRulesType'];
+                }
+            }
+            foreach(static::getDerivedAttributeTypes() as $derivedType)
+            {
+                $attributeNameOrDerivedTypeAndRuleType[$derivedType] = $derivedType;
+            }
+            return $attributeNameOrDerivedTypeAndRuleType;
+        }
     }
 ?>

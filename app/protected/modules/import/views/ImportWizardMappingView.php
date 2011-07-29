@@ -168,15 +168,15 @@
                                                        makeByImportRulesTypeAndAttributeNameOrDerivedType(
                                                            $importRulesType,
                                                            $attributeNameOrDerivedType);
-                    $mappingRuleFormsAndElementTypes = ModelAttributeMappingRuleFormAndElementTypeUtil::
-                                                       makeByAttributeImportRules($attributeImportRules);
-                                                       //how do we know what to instantiate the derived or the modelattribute form?
-                                                       //the attributeimportrules is going to ahve a method that says whether it isa derived attribute or not
-                                                       //thus allowing us to effectively split things up.
+                    $mappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
+                                                       makeCollectionByAttributeImportRules(
+                                                           $attributeImportRules,
+                                                           $attributeNameOrDerivedType);
                 }
-                foreach($mappingRuleFormsAndElementTypes as $mappingRuleForm => $elementType)
+                foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {
-                    $elementClassName      = $elementType . 'Element';
+                    $mappingRuleForm       = $ruleFormAndElementType['mappingRuleForm'];
+                    $elementClassName      = $ruleFormAndElementType['elementType'] . 'Element';
                     $attributeName         = $mappingRuleForm::getAttributeName();
                     $modelAttributeName    = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
                                              $columnName,
@@ -194,6 +194,7 @@
                     $content .= $element->render();
                     $content .= '</tr></tbody></table>';
                 }
+            }
             $content .= '</td>';
             return $content;
         }

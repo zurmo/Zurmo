@@ -25,9 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are type check box.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class CheckBoxAttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {

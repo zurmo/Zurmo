@@ -26,11 +26,22 @@
 
     class ImportModelTestItem extends OwnedSecurableItem
     {
+        protected function untranslatedAttributeLabels()
+        {
+            return array_merge(parent::untranslatedAttributeLabels(),
+                array(
+                    'fullName' => 'Name',
+                )
+            );
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
+                    'firstName',
+                    'lastName',
                     'boolean',
                     'date',
                     'dateTime',
@@ -51,18 +62,23 @@
 
                 ),
                 'rules' => array(
-                    array('boolean',  'boolean'),
-                    array('date',     'type', 'type' => 'date'),
-                    array('dateTime', 'type', 'type' => 'datetime'),
-                    array('float',    'type',    'type' => 'float'),
-                    array('integer',  'type',    'type' => 'integer'),
-                    array('phone',    'type',    'type' => 'string'),
-                    array('phone',    'length',  'min'  => 1, 'max' => 14),
-                    array('string',   'required'),
-                    array('string',   'type',  'type' => 'string'),
-                    array('string',   'length',  'min'  => 3, 'max' => 64),
-                    array('textArea', 'type',    'type' => 'string'),
-                    array('url',      'url'),
+                    array('firstName', 'type',   'type' => 'string'),
+                    array('firstName', 'length', 'min'  => 1, 'max' => 32),
+                    array('lastName',  'required'),
+                    array('lastName',  'type',   'type' => 'string'),
+                    array('lastName',  'length', 'min'  => 2, 'max' => 32),
+                    array('boolean',   'boolean'),
+                    array('date',      'type', 'type' => 'date'),
+                    array('dateTime',  'type', 'type' => 'datetime'),
+                    array('float',     'type',    'type' => 'float'),
+                    array('integer',   'type',    'type' => 'integer'),
+                    array('phone',     'type',    'type' => 'string'),
+                    array('phone',     'length',  'min'  => 1, 'max' => 14),
+                    array('string',    'required'),
+                    array('string',    'type',  'type' => 'string'),
+                    array('string',    'length',  'min'  => 3, 'max' => 64),
+                    array('textArea',  'type',    'type' => 'string'),
+                    array('url',       'url'),
 
                     ),
                 'elements' => array(

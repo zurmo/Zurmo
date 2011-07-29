@@ -48,7 +48,7 @@
                     'attributeLabel'        => 'def',
                     'attributeName'         => 'xyz',
                     'relationAttributeName' => 'qqq',
-                    'mappingType'           => 'try',
+                    'attributeImportRulesType'           => 'try',
                     'isRequired'            => true,
                 )
             );

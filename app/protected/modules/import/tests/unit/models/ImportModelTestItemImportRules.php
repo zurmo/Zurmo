@@ -30,5 +30,10 @@
         {
             return 'ImportModelTestItem';
         }
+
+        public static function getDerivedAttributeTypes()
+        {
+            return array('FullName');
+        }
     }
 ?>

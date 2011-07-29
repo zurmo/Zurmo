@@ -41,7 +41,7 @@
                     'attributeLabel' => 'Id',
                     'attributeName' => 'id',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Id',
+                    'attributeImportRulesType' => 'Id',
                     'isRequired' => false,
                   ),
               'createdDateTime' =>
@@ -49,7 +49,7 @@
                     'attributeLabel' => 'Created Date Time',
                     'attributeName' => 'createdDateTime',
                     'relationAttributeName' => null,
-                    'mappingType' => 'DateTime',
+                    'attributeImportRulesType' => 'DateTime',
                     'isRequired' => true,
                   ),
               'modifiedDateTime' =>
@@ -57,7 +57,7 @@
                     'attributeLabel' => 'Modified Date Time',
                     'attributeName' => 'modifiedDateTime',
                     'relationAttributeName' => null,
-                    'mappingType' => 'DateTime',
+                    'attributeImportRulesType' => 'DateTime',
                     'isRequired' => true,
                   ),
               'createdByUser' =>
@@ -65,15 +65,31 @@
                     'attributeLabel' => 'Created By User',
                     'attributeName' => 'createdByUser',
                     'relationAttributeName' => null,
-                    'mappingType' => 'User',
+                    'attributeImportRulesType' => 'User',
                     'isRequired' => false,
+                  ),
+              'firstName' =>
+                  array (
+                    'attributeLabel' => 'First Name',
+                    'attributeName' => 'firstName',
+                    'relationAttributeName' => null,
+                    'attributeImportRulesType' => 'Text',
+                    'isRequired' => false,
+                  ),
+              'lastName' =>
+                  array (
+                    'attributeLabel' => 'Last Name',
+                    'attributeName' => 'lastName',
+                    'relationAttributeName' => null,
+                    'attributeImportRulesType' => 'Text',
+                    'isRequired' => true,
                   ),
               'modifiedByUser' =>
                   array (
                     'attributeLabel' => 'Modified By User',
                     'attributeName' => 'modifiedByUser',
                     'relationAttributeName' => null,
-                    'mappingType' => 'User',
+                    'attributeImportRulesType' => 'User',
                     'isRequired' => false,
                   ),
               'owner' =>
@@ -81,7 +97,7 @@
                     'attributeLabel' => 'Owner',
                     'attributeName' => 'owner',
                     'relationAttributeName' => null,
-                    'mappingType' => 'User',
+                    'attributeImportRulesType' => 'User',
                     'isRequired' => true,
                   ),
              'boolean' =>
@@ -89,7 +105,7 @@
                     'attributeLabel' => 'Boolean',
                     'attributeName' => 'boolean',
                     'relationAttributeName' => null,
-                    'mappingType' => 'CheckBox',
+                    'attributeImportRulesType' => 'CheckBox',
                     'isRequired' => false,
                   ),
               'date' =>
@@ -97,7 +113,7 @@
                     'attributeLabel' => 'Date',
                     'attributeName' => 'date',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Date',
+                    'attributeImportRulesType' => 'Date',
                     'isRequired' => false,
                   ),
               'dateTime' =>
@@ -105,7 +121,7 @@
                     'attributeLabel' => 'Date Time',
                     'attributeName' => 'dateTime',
                     'relationAttributeName' => null,
-                    'mappingType' => 'DateTime',
+                    'attributeImportRulesType' => 'DateTime',
                     'isRequired' => false,
                   ),
               'float' =>
@@ -113,7 +129,7 @@
                     'attributeLabel' => 'Float',
                     'attributeName' => 'float',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Decimal',
+                    'attributeImportRulesType' => 'Decimal',
                     'isRequired' => false,
                   ),
               'integer' =>
@@ -121,7 +137,7 @@
                     'attributeLabel' => 'Integer',
                     'attributeName' => 'integer',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Integer',
+                    'attributeImportRulesType' => 'Integer',
                     'isRequired' => false,
                   ),
               'phone' =>
@@ -129,7 +145,7 @@
                     'attributeLabel' => 'Phone',
                     'attributeName' => 'phone',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Phone',
+                    'attributeImportRulesType' => 'Phone',
                     'isRequired' => false,
                   ),
               'string' =>
@@ -137,7 +153,7 @@
                     'attributeLabel' => 'String',
                     'attributeName' => 'string',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => true,
                   ),
               'textArea' =>
@@ -145,7 +161,7 @@
                     'attributeLabel' => 'Text Area',
                     'attributeName' => 'textArea',
                     'relationAttributeName' => null,
-                    'mappingType' => 'TextArea',
+                    'attributeImportRulesType' => 'TextArea',
                     'isRequired' => false,
                   ),
               'url' =>
@@ -153,7 +169,7 @@
                     'attributeLabel' => 'Url',
                     'attributeName' => 'url',
                     'relationAttributeName' => null,
-                    'mappingType' => 'Url',
+                    'attributeImportRulesType' => 'Url',
                     'isRequired' => false,
                   ),
               'currencyValue' =>
@@ -161,7 +177,7 @@
                     'attributeLabel' => 'Currency Value',
                     'attributeName' => 'currencyValue',
                     'relationAttributeName' => null,
-                    'mappingType' => 'CurrencyValue',
+                    'attributeImportRulesType' => 'CurrencyValue',
                     'isRequired' => false,
                   ),
               'dropDown' =>
@@ -169,7 +185,7 @@
                     'attributeLabel' => 'Drop Down',
                     'attributeName' => 'dropDown',
                     'relationAttributeName' => null,
-                    'mappingType' => 'DropDown',
+                    'attributeImportRulesType' => 'DropDown',
                     'isRequired' => false,
                   ),
               'hasOne' =>
@@ -177,7 +193,7 @@
                     'attributeLabel' => 'Has One',
                     'attributeName' => 'hasOne',
                     'relationAttributeName' => null,
-                    'mappingType' => 'ImportModelTestItem2',
+                    'attributeImportRulesType' => 'ImportModelTestItem2',
                     'isRequired' => false,
                   ),
               'primaryEmail__emailAddress' =>
@@ -185,7 +201,7 @@
                     'attributeLabel' => 'Email Address',
                     'attributeName' => 'primaryEmail',
                     'relationAttributeName' => 'emailAddress',
-                    'mappingType' => 'Email',
+                    'attributeImportRulesType' => 'Email',
                     'isRequired' => false,
                   ),
               'primaryEmail__optOut' =>
@@ -193,7 +209,7 @@
                     'attributeLabel' => 'Opt Out',
                     'attributeName' => 'primaryEmail',
                     'relationAttributeName' => 'optOut',
-                    'mappingType' => 'CheckBox',
+                    'attributeImportRulesType' => 'CheckBox',
                     'isRequired' => false,
                   ),
               'primaryEmail__isInvalid' =>
@@ -201,7 +217,7 @@
                     'attributeLabel' => 'Is Invalid',
                     'attributeName' => 'primaryEmail',
                     'relationAttributeName' => 'isInvalid',
-                    'mappingType' => 'CheckBox',
+                    'attributeImportRulesType' => 'CheckBox',
                     'isRequired' => false,
                   ),
               'primaryAddress__street1' =>
@@ -209,7 +225,7 @@
                     'attributeLabel' => 'Street 1',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'street1',
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
               'primaryAddress__street2' =>
@@ -217,7 +233,7 @@
                     'attributeLabel' => 'Street 2',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'street2',
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
               'primaryAddress__city' =>
@@ -225,7 +241,7 @@
                     'attributeLabel' => 'City',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'city',
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
               'primaryAddress__state' =>
@@ -233,7 +249,7 @@
                     'attributeLabel' => 'State',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'state',
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
               'primaryAddress__postalCode' =>
@@ -241,7 +257,7 @@
                     'attributeLabel' => 'Postal Code',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'postalCode',
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
               'primaryAddress__country' =>
@@ -249,7 +265,7 @@
                     'attributeLabel' => 'Country',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'country',
-                    'mappingType' => 'Text',
+                    'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
             );

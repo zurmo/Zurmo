@@ -36,12 +36,17 @@
         public function __construct($model, $attributeName = null)
         {
             assert('$model instanceof RedBeanModel');
-            assert('is_string($attributeName)');
+            assert('is_string($attributeName) || $attributeName == null');
             $this->model         = $model;
             $this->attributeName = $attributeName;
         }
 
-        public function getDisplayName()
+        public function getModelClassName()
+        {
+            return get_class($this->model);
+        }
+
+        public function getDisplayLabel()
         {
             return $this->model->getAttributeLabel($this->attributeName);
         }
@@ -56,7 +61,7 @@
          * pairings as needed.
          * @return array of MappingRuleForm/Element pairings.
          */
-        public static function getModelAttributemappingRuleFormTypesAndElementTypes()
+        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array();
         }

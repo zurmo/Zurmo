@@ -25,18 +25,25 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Helper class for working with MappingRuleForms and Element types that are used with those forms.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class MappingRuleFormAndElementTypeUtil
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function makeCollectionByAttributeImportRules($attributeImportRules, $attributeNameOrDerivedType)
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            assert('$attributeImportRules instanceof AttributeImportRules');
+            assert('is_string($attributeNameOrDerivedType)');
+            $mappingRuleFormsAndElementTypes = array();
+            foreach($attributeImportRules::getModelAttributeMappingRuleFormTypesAndElementTypes()
+                    as $mappingRuleFormType => $elementType)
+            {
+                $mappingRuleFormClassName = $mappingRuleFormType . 'MappingRuleForm';
+                $mappingRuleForm = new $mappingRuleFormClassName($attributeImportRules->getModelClassName(),
+                                                                 $attributeNameOrDerivedType);
+                $mappingRuleFormsAndElementTypes[] = array('elementType'     => $elementType,
+                                                           'mappingRuleForm' => $mappingRuleForm);
+            }
+            return $mappingRuleFormsAndElementTypes;
         }
     }
 ?>

@@ -33,18 +33,25 @@
         }
         public function testGetMappableAttributeNamesAndDerivedTypes()
         {
-            $importRules = new ImportModelTestItemImportRules(new ImportModelTestItem());
-            $data = $importRules->getMappableAttributeNamesAndDerivedTypes();
+            $data = ImportModelTestItemImportRules::getMappableAttributeNamesAndDerivedTypes();
             $compareData = array(
+                'FullName'					  => 'Full Name',
                 'boolean'                     => 'Boolean',
+                'createdByUser'			      => 'Created By User',
                 'createdDateTime'             => 'Created Date Time',
-                'currencyValue__rateToBase'   => 'Rate To Base',
-                'currencyValue__value'        => 'Value',
+                'currencyValue'			      => 'Currency Value',
+                'date'                        => 'Date',
+                'dateTime'                    => 'Date Time',
                 'dropDown'                    => 'Drop Down',
+                'firstName'					  => 'First Name',
                 'float'                       => 'Float',
+                'hasOne'					  => 'Has One',
                 'id'                          => 'Id',
                 'integer'                     => 'Integer',
+                'lastName'					  => 'Last Name',
+                'modifiedByUser'			  => 'Modified By User',
                 'modifiedDateTime'            => 'Modified Date Time',
+                'owner' 				      => 'Owner',
                 'phone'                       => 'Phone',
                 'primaryAddress__city'        => 'City',
                 'primaryAddress__country'     => 'Country',
@@ -60,6 +67,21 @@
                 'url'                         => 'Url',
             );
             $this->assertEquals($compareData, $data);
+        }
+
+        public function testGetModelClassNameByAttributeNameOrDerivedType()
+        {
+            $modelClassName = ImportModelTestItemImportRules::
+                              getModelClassNameByAttributeNameOrDerivedType('boolean');
+            $this->assertEquals('ImportModelTestItem', $modelClassName);
+        }
+
+
+        public function testGetAttributeImportRulesTypeBy()
+        {
+            Yii::app()->user->userModel     = User::getByUsername('super');
+            $attributeImportRulesType       = ImportModelTestItemImportRules::getAttributeImportRulesType('boolean');
+            $this->assertEquals('CheckBox', $attributeImportRulesType);
         }
     }
 ?>

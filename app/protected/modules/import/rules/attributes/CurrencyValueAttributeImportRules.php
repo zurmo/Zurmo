@@ -25,13 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Phone.
+     * Import rules for any attributes that are a CurrencyValue model.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class CurrencyValueAttributeImportRules extends AttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'CurrencyValue');
         }
 
         public static function getSanitizerUtilNames()

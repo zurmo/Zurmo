@@ -58,7 +58,7 @@
                 'attributeLabel'        => $attributeLabel,
                 'attributeName'         => $attributeName,
                 'relationAttributeName' => $relationAttributeName,
-                'mappingType'           => $elementType,
+                'attributeImportRulesType'           => $elementType,
                 'isRequired'            => $isRequired,
             );
         }
