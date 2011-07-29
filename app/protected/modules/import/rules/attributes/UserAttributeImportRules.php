@@ -31,7 +31,8 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'User');
+            return array('DefaultValueModelAttribute'  => 'User',
+                         'UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
         }
 
         public static function getSanitizerUtilNames()

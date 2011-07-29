@@ -24,24 +24,50 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * The import process includes a view for mapping import columns to attributes or derived attribute types
-     * in a model. When a column is selected to be mapped against an attribute or derived attribute type, there is the
-     * potentially for mapping rules to accompany that mapping. An example of a rule would be a default value rule
-     * or in the case of something like owner, is the value the owner's username or actuay user id.
-     */
-    abstract class MappingRuleForm extends ConfigurableMetadataModel
+    class ImportMappingModelIdValueTypeDropDownElement extends DropDownElement
     {
-        abstract public static function getAttributeName();
-
-        public function rules()
+        /**
+         * Override to ensure the model is an IdValueTypeModelAttributeMappingRuleForm.
+         */
+        public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            return array();
+            assert('$model instanceof IdValueTypeModelAttributeMappingRuleForm');
+            parent::__construct($model, $attribute, $form, $params);
         }
 
-        public function attributeLabels()
+        /**
+         * Override to utilize the correct attribute from the model as the value.
+         */
+        protected function renderControlEditable()
         {
-            return array();
+            return $this->form->dropDownList(
+                $this->model,
+                $this->attribute,
+                $this->getDropDownArray(),
+                $this->getEditableHtmlOptions()
+            );
+        }
+
+        protected function renderControlNonEditable()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected function getDropDownArray()
+        {
+            return array(
+                IdValueTypeModelAttributeMappingRuleForm::ZURMO_MODEL_ID  => yii::t('Default', 'Zurmo Id'),
+                IdValueTypeModelAttributeMappingRuleForm::OTHER_ID       => yii::t('Default', 'Other Id'));
+        }
+
+        protected function getIdForSelectInput()
+        {
+            return $this->getEditableInputId();
+        }
+
+        protected function getNameForSelectInput()
+        {
+            return $this->getEditableInputName();
         }
     }
 ?>

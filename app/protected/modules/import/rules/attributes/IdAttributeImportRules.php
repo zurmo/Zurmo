@@ -31,7 +31,13 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'NameId');
+            return array('DefaultValueModelAttribute'  => 'NameId',
+                         'IdValueTypeModelAttribute'   => 'ImportMappingModelIdValueTypeDropDown');
+        }
+
+        public function getDisplayLabel()
+        {
+            return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' .Yii::t('Default', 'Id');
         }
 
         public static function getSanitizerUtilNames()

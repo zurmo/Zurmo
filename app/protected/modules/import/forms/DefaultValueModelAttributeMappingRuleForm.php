@@ -45,5 +45,10 @@
         {
             return array('defaultValue'   => Yii::t('Default', 'Default Value'));
         }
+
+        public static function getAttributeName()
+        {
+            return 'defaultValue';
+        }
     }
 ?>

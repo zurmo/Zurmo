@@ -25,23 +25,30 @@
      ********************************************************************************/
 
     /**
-     * The import process includes a view for mapping import columns to attributes or derived attribute types
-     * in a model. When a column is selected to be mapped against an attribute or derived attribute type, there is the
-     * potentially for mapping rules to accompany that mapping. An example of a rule would be a default value rule
-     * or in the case of something like owner, is the value the owner's username or actuay user id.
+     * This form is used for mapping a model id.  This form helps decide if the id being mapped is a zurmo model id
+     * or another type of id from a different system.
      */
-    abstract class MappingRuleForm extends ConfigurableMetadataModel
+    class IdValueTypeModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        abstract public static function getAttributeName();
+        const ZURMO_MODEL_ID  = 0;
+
+        const OTHER_ID = 1;
+
+        public $type;
 
         public function rules()
         {
-            return array();
+            return array('type' => 'required');
         }
 
         public function attributeLabels()
         {
-            return array();
+            return array('type'   => Yii::t('Default', 'Type of Value'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'type';
         }
     }
 ?>
