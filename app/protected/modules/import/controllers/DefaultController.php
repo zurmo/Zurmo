@@ -49,18 +49,7 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep1($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
-                {
-                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
-                    {
-                        $this->redirect(array($this->getId() . '/step2', array('id' => $import->id)));
-                    }
-                    else
-                    {
-                        //todo: handle error.
-                    }
-                }
+                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step2');
             }
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 1 of 6')), 0, 0);
@@ -83,18 +72,7 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
-                {
-                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
-                    {
-                        $this->redirect(array($this->getId() . '/step3', array('id' => $import->id)));
-                    }
-                    else
-                    {
-                        //todo: handle error.
-                    }
-                }
+                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
             }
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 2 of 6')), 0, 0);
@@ -117,18 +95,7 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
-                {
-                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
-                    {
-                        $this->redirect(array($this->getId() . '/step4', array('id' => $import->id)));
-                    }
-                    else
-                    {
-                        //todo: handle error.
-                    }
-                }
+                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step4');
             }
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 3 of 6')), 0, 0);
@@ -149,36 +116,35 @@
             $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
             $tempTableName    = $import->getTempTableName();
 
-            //todo: ajax validation for mapping? probably makes good sense?
+
 
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
+
+                if(ImportWizardUtil::validateMappingRulesByForm($importWizardForm))
                 {
-                    ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
-                    {
-                        $this->redirect(array($this->getId() . '/step5', array('id' => $import->id)));
-                    }
-                    else
-                    {
-                        //todo: handle error.
-                    }
+                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
                 }
             }
-            $mappingDataMetadata = ImportWizardMappingViewUtil::
-                                   resolveMappingDataForView($importWizardForm->mappingData,
-                                                             $tempTableName,
-                                                             $importWizardForm->firstRowIsHeaderRow);
-            $importView = new GridView(2, 1);
+            $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
+                                                          makeFormsAndElementTypesByMappingDataAndImportRulesType(
+                                                          $importWizardForm->mappingData,
+                                                          $importWizardForm->importRulesType);
+            $mappingDataMetadata                        = ImportWizardMappingViewUtil::
+                                                          resolveMappingDataForView($importWizardForm->mappingData,
+                                                          $tempTableName,
+                                                          $importWizardForm->firstRowIsHeaderRow);
+
+            $importView                                 = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard Step 4 of 6')), 0, 0);
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
                                                              $importWizardForm,
                                                              (int)$import->id,
-                                                             $mappingDataMetadata), 1, 0);
-            $view       = new ImportPageView($this, $importView);
+                                                             $mappingDataMetadata,
+                                                             $mappingDataMappingRuleFormsAndElementTypes), 1, 0);
+            $view                                       = new ImportPageView($this, $importView);
             echo $view->render();
         }
 
@@ -225,6 +191,29 @@
             }
             echo CJSON::encode($fileUploadData);
             Yii::app()->end(0, false);
+        }
+
+        protected function attemptToValidateImportWizardFormAndSave(& $importWizardForm, & $import, $redirectAction)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('$importm instanceof Import');
+            assert('is_string($redirectAction)');
+            if($importWizardForm->validate())
+            {
+                ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
+                if($import->save())
+                {
+                    $this->redirect(array($this->getId() . '/' . $redirectAction, array('id' => $import->id)));
+                    Yii::app()->end(0, false);
+                }
+                else
+                {
+                    $messageView = new ErrorView(Yii::t('Default', 'There was an error processing this import.'));
+                    $view        = new ErrorPageView($messageView);
+                    echo $view->render();
+                    Yii::app()->end(0, false);
+                }
+            }
         }
     }
 ?>

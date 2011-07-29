@@ -37,7 +37,8 @@
          */
         protected $mappingDataMetadata;
 
-        public function __construct($controllerId, $moduleId, ImportWizardForm $model, $importId, $mappingDataMetadata)
+        public function __construct($controllerId, $moduleId, ImportWizardForm $model, $importId, $mappingDataMetadata,
+                                    $mappingDataMappingRuleFormsAndElementTypes)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');

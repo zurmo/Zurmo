@@ -93,6 +93,14 @@
             $importWizardForm->setAttributes(array('modelPermissions' => $postData['modelPermissions']));
         }
 
+        public static function setFormByPostForStep4(& $importWizardForm, $postData)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('is_array($postData) && isset($postData["modelPermissions"])');
+            //todo: this should populate the mappingData fully including the rules data from post.
+        }
+
+
         /**
          * Given an array of file upload data, set the form from this.  Keep the existing importRulesType value
          * but clear out any other form attributes since with a new file uploaded, those other attribute values will
