@@ -151,5 +151,13 @@
             $sql           = 'select * from ' . $testTableName;
             R::getAll($sql);
         }
+
+        public function testGetCount()
+        {
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
+            $count = ImportDatabaseUtil::getCount($testTableName);
+            $this->assertEquals(5, $count);
+        }
     }
 ?>

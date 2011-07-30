@@ -82,8 +82,30 @@
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
-                //todo: if the header is there but no other rows, handle error.
-                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
+
+
+                if($importWizardForm->fileUploadData == null)
+                {
+                    $importWizardForm->addError('fileUploadData',
+                    Yii::t('Default', 'A file must be uploaded in order to continue the import process.'));
+                }
+                elseif(!ImportWizardUtil::importFileHasAtLeastOneImportRow($importWizardForm, $import))
+                {
+                    if($importWizardForm->firstRowIsHeaderRow)
+                    {
+                        $importWizardForm->addError('fileUploadData',
+                        Yii::t('Default', 'The file that has been uploaded only has a header row and no additional rows to import.'));
+                    }
+                    else
+                    {
+                        $importWizardForm->addError('fileUploadData',
+                        Yii::t('Default', 'A file must be uploaded with at least one row to import.'));
+                    }
+                }
+                else
+                {
+                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
+                }
             }
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 2 of 6')), 0, 0);
@@ -99,7 +121,7 @@
          */
         public function actionStep3($id)
         {
-            $import           = Import::getById($_GET['id']);
+            $import           = Import::getById((int)$_GET['id']);
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
 
             if (isset($_POST[get_class($importWizardForm)]))

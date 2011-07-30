@@ -168,5 +168,30 @@
             }
             return false;
         }
+
+        /**
+         * Given an importWizardForm and an import object, ascertain whether there is a sufficient number of rows
+         * to do an import. If there is a header row present, then the minimum row count must be 2, otherwise it only
+         * has to be 1.
+         * @param object $importWizardForm
+         * @param object $import
+         * @return boolean true/false
+         */
+        public static function importFileHasAtLeastOneImportRow($importWizardForm, & $import)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('$import instanceof Import');
+            $count = ImportDatabaseUtil::getCount($import->getTempTableName());
+            $minimumRows = 1;
+            if($importWizardForm->firstRowIsHeaderRow)
+            {
+                $minimumRows = 2;
+            }
+            if($count >= $minimumRows)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 ?>

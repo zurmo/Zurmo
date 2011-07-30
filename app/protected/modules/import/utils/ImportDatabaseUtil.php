@@ -103,5 +103,16 @@
             $data = R::getAll($sql);
             return $data;
         }
+
+        public static function getCount($tableName)
+        {
+            $sql = 'select count(*) count from ' . $tableName;
+            $count = R::getCell($sql);
+            if ($count === null)
+            {
+                $count = 0;
+            }
+            return $count;
+        }
     }
 ?>

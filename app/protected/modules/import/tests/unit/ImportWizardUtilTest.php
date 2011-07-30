@@ -150,6 +150,28 @@
         /**
          * @depends testSetFormByPostForStep2
          */
+        public function testImportFileHasAtLeastOneImportRow()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $import = new Import();
+            $import->serializedData = serialize(array());
+            $this->assertTrue($import->save());
+            $this->assertTrue(ImportTestHelper::
+                              createTempTableByFileNameAndTableName('headerRowOnlyImportTest.csv',
+                                                                    $import->getTempTableName()));
+            $importWizardForm = new ImportWizardForm();
+            $this->assertTrue(ImportWizardUtil::
+                              importFileHasAtLeastOneImportRow($importWizardForm, $import));
+            //Now set that the first row is a header row and the check will fail.
+            $importWizardForm->firstRowIsHeaderRow = true;
+            $this->assertFalse(ImportWizardUtil::
+                              importFileHasAtLeastOneImportRow($importWizardForm, $import));
+            ImportDatabaseUtil::dropTableByTableName($import->getTempTableName());
+        }
+
+        /**
+         * @depends testSetFormByPostForStep2
+         */
         public function testSetFormByPostForStep3()
         {
             $fakePostData = array('modelPermissions' => 'abc');
