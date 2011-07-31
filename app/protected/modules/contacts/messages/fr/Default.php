@@ -30,24 +30,24 @@
     // DON'T MAKE A MESS!
     return array(
         'Contact'
-            => '??',
+            => 'Contact',
         'Contact Statuses'
-            => '??',
+            => 'Liste déroulante',
         'Contacts'
-            => '??',
+            => 'Contacts',
         'ContactsModulePluralLabel'
             => 'ContactsModulePluralLabel',
         'ContactsModuleSingularLabel'
             => 'ContactsModuleSingularLabel',
         'Create ContactsModuleSingularLabel'
-            => '?? ContactsModuleSingularLabel',
+            => 'Nouveau ContactsModuleSingularLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
-            => '?? ContactsModuleSingularLowerCaseLabel ??',
+            => 'Chaque état du ContactsModuleSingularLowerCaseLabel doit avoir un nom unique',
         'Related ContactsModulePluralLabel'
             => '?? ContactsModulePluralLabel',
         'Starting Status'
-            => '??',
+            => 'Valeur par défaut',
         'Status'
-            => '??',
+            => 'Statut',
     );
 ?>

@@ -77,6 +77,10 @@
             => '??',
         'Create New'
             => '??',
+        'Create Group'
+            => '??',
+        'Currency Configuration'
+            => '??',
         'days'
             => '??',
         'Delete Group'
@@ -132,6 +136,8 @@
         'Login'
             => '??',
         'Logout'
+            => '??',
+        'Manage Currency Configuration'
             => '??',
         'Manage Global Configuration'
             => '??',

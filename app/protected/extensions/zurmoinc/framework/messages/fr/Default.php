@@ -30,114 +30,114 @@
     // DON'T MAKE A MESS!
     return array(
         'Advanced Search'
-            => '??',
+            => 'Recherche avancée',
         'All'
-            => '??',
+            => 'Tous',
         'by'
-            => '??',
+            => 'par',
         'Cell Settings'
-            => '??',
+            => 'Paramètres des cellules',
         'Celsius'
-            => '??',
+            => 'Celsius',
         'Change Log'
-            => '??',
+            => 'Log de modifications',
         'Changed'
-            => '??',
+            => 'Modifié',
         'Clear Search'
-            => '??',
+            => 'Effacer',
         'Created Date and User'
-            => '??',
+            => '?? Crée',
         'Created On'
-            => '??',
+            => 'Crée',
         'Delete'
-            => '??',
+            => 'Supprimer',
         'Detail View Only'
-            => '??',
+            => 'Vue détaillée uniquement',
         'Details'
-            => '??',
+            => 'Détails',
         'Edit'
-            => '??',
+            => 'Modifier',
         'Edit Portlet'
-            => '??',
+            => 'Modifier le portlet',
         'Fahrenheit'
-            => '??',
+            => 'Fahrenheit',
         'Filtered List'
-            => '??',
+            => '?? filtered list',
         'from'
-            => '??',
+            => 'de',
         'Full Name'
-            => '??',
+            => 'Nom',
         'Go to Details'
-            => '??',
+            => 'Au détails',
         'Invalid'
-            => '??',
+            => 'Invalide',
         'Last Modified'
-            => '??',
+            => 'Dernière modification',
         'Last Modified Date and User'
-            => '??',
+            => '?? Dernière modification par',
         'List'
-            => '??',
+            => 'Liste',
         'Name'
-            => '??',
+            => 'Nom',
         'No'
-            => '??',
+            => 'Non',
         'None'
-            => '??',
+            => 'Aucun',
         'Opted Out'
-            => '??',
+            => 'Opt out',
         'Panel'
-            => '??',
+            => 'Panel',
         'Panel Settings'
-            => '??',
+            => 'Paramètres du panel',
         'Panel Title'
-            => '??',
+            => 'Titre du panel',
         'Perform Action'
-            => '??',
+            => 'Sélectionner',
         'record'
-            => '??',
+            => 'donnée',
         'records'
-            => '??',
+            => 'données',
         'Remove'
-            => '??',
+            => 'Supprimer',
         'Return to List'
-            => '??',
+            => 'Retour à la liste',
         'Row'
-            => '??',
+            => '[Ajouter une ligne]',
         'Save'
-            => '??',
+            => 'Sauvegarder',
         'Search'
-            => '??',
+            => 'Rechercher',
         'Select'
-            => '??',
+            => 'Sélectionner',
         'selected for updating.'
-            => '??',
+            => 'sélectionnée(s)',
         'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
-            => '??',
+            => '?? some values cannot be removed...',
         'This module doesn\'t have anything to configure.'
-            => '??',
+            => 'Il n\'y a rien a configurer',
         'This pick-list is used by more than one module.'
-            => '??',
+            => 'Cette liste déroulante est utilisée dans les modules suivants:',
         'Title/First/LastName'
-            => '??',
+            => 'Titre/Prénom/Nom',
         'to'
-            => '??',
+            => 'à',
         'Today'
-            => '??',
+            => 'Aujourd\'hui',
         'Tomorrow'
-            => '??',
+            => 'Demain',
         'Unknown'
-            => '??',
+            => 'Inconnu',
         'Update Selected'
-            => '??',
+            => 'Actualiser les données',
         'Yes'
-            => '??',
+            => 'Oui',
         'Yesterday'
-            => '??',
+            => 'Hier',
         'You must enter a value'
-            => '??',
+            => 'Ce champ est obligatoire',
         'You must specify a value.'
-            => '??',
+            => '?? you must specify a value',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '??',
+            => '?? attribute too precise',
     );
 ?>

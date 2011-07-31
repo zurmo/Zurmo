@@ -30,24 +30,24 @@
     // DON'T MAKE A MESS!
     return array(
         'Account'
-            => '??',
+            => 'Compte',
         'Accounts'
-            => '??',
+            => 'Comptes',
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
-            => 'AccountsModuleSingularLabel ??',
+            => 'ID du AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Name'
-            => 'AccountsModuleSingularLabel ??',
+            => 'Nom du AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Search'
-            => 'AccountsModuleSingularLabel ??',
+            => 'Recherche du AccountsModuleSingularLabel',
         'Billing Address'
             => 'Adresse de facturation',
         'Create AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
+            => 'Nouveau AccountsModuleSingularLabel',
         'Related AccountsModulePluralLabel'
-            => '?? AccountsModulePluralLabel',
+            => 'AccountsModulePluralLabel principal',
     );
 ?>

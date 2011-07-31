@@ -75,9 +75,13 @@
             => '??',
         'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
             => 'Copyright &#169; Zurmo Inc. de 2011. Todos los derechos reservados.',
+        'Create Group'
+            => '??',
         'Create New'
             => '??',
-        'days'
+        'Currency Configuration'
+            => '??',
+            'days'
             => '??',
         'Delete Group'
             => '??',
@@ -133,6 +137,8 @@
             => 'Acceder',
         'Logout'
             => 'Salir',
+        'Manage Currency Configuration'
+            => '??',
         'Manage Global Configuration'
             => '??',
         'Manage Groups'

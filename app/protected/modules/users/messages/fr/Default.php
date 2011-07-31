@@ -30,30 +30,30 @@
     // DON'T MAKE A MESS!
     return array(
         'Change Password'
-            => '??',
+            => 'Changer le mot de passe',
         'Confirm Password'
-            => '??',
+            => 'Retapez le mot de passe',
         'Create User'
-            => '??',
+            => 'Nouvel Utilisateur',
         'Manage Users'
-            => '??',
+            => 'Gestion des utilisateurs',
         'Profile'
-            => '??',
+            => 'Profil',
         'The password is too short. Minimum length is'
-            => '??',
+            => 'Le mot de passe doit comprendre ?? charatères minimum',
         'The password must have at least one lowercase letter'
-            => '??',
+            => 'Le mot de passe doit comprendre au moins une lettre minuscule',
         'The password must have at least one number and one letter'
-            => '??',
+            => 'Le mot de passe doit comprendre au moins un chiffre et une lettre',
         'The password must have at least one uppercase letter'
-            => '??',
+            => 'Le mot de passe doit comprendre au moins une lettre majuscule',
         'The username is too short. Minimum length is'
-            => '??',
+            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum ?? characteres ',
         'User'
-            => '??',
+            => 'Utilisateur',
         'User Search'
-            => '??',
+            => 'Recherche d\'utilisateurs',
         'Users'
-            => '??',
+            => 'Utilisateurs',
     );
 ?>

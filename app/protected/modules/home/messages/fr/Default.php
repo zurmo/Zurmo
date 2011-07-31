@@ -30,30 +30,30 @@
     // DON'T MAKE A MESS!
     return array(
         '1 Column'
-            => '??',
+            => '1 colonne',
         '2 Columns'
-            => '??',
+            => '2 colonnes',
         '2 Columns Left Strong'
-            => '??',
+            => 'Gauche',
         '2 Columns Right Strong'
-            => '??',
+            => 'Droite',
         'Add Portlet'
-            => '??',
+            => 'Ajouter un portlet',
         'Add Widget'
-            => '??',
+            => 'Ajouter un portlet',
         'Are you sure want to delete this dashboard?'
-            => '??',
+            => 'Êtes-vous sûr de vouloir supprimer ce tableau de bord?',
         'Create Dashboard'
-            => '??',
+            => 'Ajouter un tableau de bord',
         'Dashboard'
-            => '??',
+            => 'Tableaux de bord',
         'Delete Dashboard'
-            => '??',
+            => 'Supprimer le tableau de bord',
         'Edit Dashboard'
-            => '??',
+            => 'Modifier le tableau de bord',
         'Home'
-            => '??',
+            => 'Accueil',
         'Return to Home'
-            => '??',
+            => 'Retourner a l\'acceuil',
     );
 ?>

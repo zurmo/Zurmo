@@ -30,7 +30,7 @@
     // DON'T MAKE A MESS!
     return array(
         'Rss Reader'
-            => '??',
+            => 'Flux RSS',
         'Rss Reader'
             => '??',
         'RssReaderModulePluralLabel'
@@ -38,10 +38,10 @@
         'RssReaderModuleSingularLabel'
             => 'RssReaderModuleSingularLabel',
         'Create RssReaderModuleSingularLabel'
-            => '?? RssReaderModuleSingularLabel',
+            => 'Créer RssReaderModuleSingularLabel',
         'Related RssReaderModulePluralLabel'
             => '?? RssReaderModulePluralLabel',
         'The Title'
-            => '??',
+            => 'Titre',
     );
 ?>

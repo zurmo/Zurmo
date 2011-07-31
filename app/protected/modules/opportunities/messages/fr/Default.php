@@ -30,15 +30,15 @@
     // DON'T MAKE A MESS!
     return array(
         'Create OpportunitiesModuleSingularLabel'
-            => '?? OpportunitiesModuleSingularLabel',
+            => 'Nouvelle OpportunitiesModuleSingularLabel',
         'Opportunities'
-            => '??',
+            => 'Opportunités',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
         'Opportunity'
-            => '??',
+            => 'Opportunité',
         'Related OpportunitiesModulePluralLabel'
             => '?? OpportunitiesModulePluralLabel',
     );
