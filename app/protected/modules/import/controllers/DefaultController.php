@@ -182,6 +182,12 @@
             echo $view->render();
         }
 
+        /**
+         * Ajax action called from user interface to upload an import file. If a file for this import model is
+         * already uploaded, then this will overwrite it.
+         * @param string $filesVariableName
+         * @param string $id (should be integer, but php type casting doesn't work so well)
+         */
         public function actionUploadFile($filesVariableName, $id)
         {
             assert('is_string($filesVariableName)');
@@ -228,12 +234,22 @@
             Yii::app()->end(0, false);
         }
 
+        /**
+         * Ajax action to delete an import file that was uploaded.  Will drop the temporary table created for the import.
+         * @param string $id
+         */
         public function actionDeleteFile($id)
         {
             $import = Import::getById((int)$id);
             ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
         }
 
+        /**
+         * Generic method that is used by all steps to validate and saved the ImportWizardForm and Import model.
+         * @param object $importWizardForm
+         * @param object $import
+         * @param string $redirectAction
+         */
         protected function attemptToValidateImportWizardFormAndSave($importWizardForm, $import, $redirectAction)
         {
             assert('$importWizardForm instanceof ImportWizardForm');

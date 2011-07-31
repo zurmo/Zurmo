@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Helper class for workign with ImportRules.
+     * Helper class for working with ImportRules.
      */
     class ImportRulesUtil
     {
@@ -67,21 +67,30 @@
             return $importRulesTypes;
         }
 
+        /**
+         * Given a collection of required attributes by attribute indexes and a collection of mapped attribute
+         * rules, check if all of the required attributes are mapped.
+         * @param array $requiredAttributeCollection
+         * @param array $mappedAttributeImportRulesCollection
+         * @throws NotSupportedException - Throws an error if the $mappedAttributeImportRulesCollection contains
+         * 								   any attribute rules that are not AttributeImportRules.
+         * @return boolean true - all required are mapped, otherwise false.
+         */
         public static function areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
-                                                                         $mappedAttributeRulesCollection)
+                                                                         $mappedAttributeImportRulesCollection)
         {
             assert('is_array($requiredAttributeCollection)');
-            assert('is_array($mappedAttributeRulesCollection)');
-            foreach($mappedAttributeRulesCollection as $attributeRules)
+            assert('is_array($mappedAttributeImportRulesCollection)');
+            foreach($mappedAttributeImportRulesCollection as $attributeImportRules)
             {
                 $modelAttributeNames        = array();
-                if($attributeRules instanceof DerivedAttributeRules)
+                if($attributeImportRules instanceof DerivedAttributeImportRules)
                 {
-                    $modelAttributeNames    = $attributeRules->getModelAttributeNames();
+                    $modelAttributeNames    = $attributeImportRules->getModelAttributeNames();
                 }
-                elseif($attributeRules instanceof AttributeRules)
+                elseif($attributeImportRules instanceof AttributeImportRules)
                 {
-                    $modelAttributeNames[0] = $mappedAttributeOrDerivedAttributeType;
+                    $modelAttributeNames[0] = $mappedAttributeIndexOrDerivedAttributeType;
                 }
                 else
                 {
@@ -105,20 +114,30 @@
             }
         }
 
-        public static function checkIfAnyAttributesAreDoubleMapped($mappedAttributeRulesCollection)
+        /**
+         * Given an array of mapped attribute rules, determine if any of the mapped rules overlap in which
+         * attributes they map to. This can happen if a derived attribute type contains multiple model attributes.
+         * If that derived type is mapped to one column, and one of those individual model attributes is also
+         * mapped to a different column, then this is considered an overlap and is not allowed. If this is found an
+         * exception is thrown.
+         * @param array $mappedAttributeImportRulesCollection
+         * @throws ImportAttributeMappedMoreThanOnceException
+         * @return null;
+         */
+        public static function checkIfAnyAttributesAreDoubleMapped($mappedAttributeImportRulesCollection)
         {
-            assert('is_array($mappedAttributeRulesCollection)');
+            assert('is_array($mappedAttributeImportRulesCollection)');
             $mappedModelAttributeNames = array();
-            foreach($mappedAttributeRulesCollection as $attributeRules)
+            foreach($mappedAttributeImportRulesCollection as $attributeImportRules)
             {
-                if($attributeRules instanceof AttributeImportRules)
+                if($attributeImportRules instanceof AttributeImportRules)
                 {
-                    $modelAttributeNames       = $attributeRules->getModelAttributeNames();
+                    $modelAttributeNames       = $attributeImportRules->getModelAttributeNames();
                     foreach($modelAttributeNames as $modelAttributeName)
                     {
                         if(array_search($modelAttributeName, $mappedModelAttributeNames))
                         {
-                            throw new ImportAttributeMappedMoreThanOnceException($attributeRules->getDisplayLabel());
+                            throw new ImportAttributeMappedMoreThanOnceException($attributeImportRules->getDisplayLabel());
                         }
                         $mappedModelAttributeNames[] = $modelAttributeName;
                     }

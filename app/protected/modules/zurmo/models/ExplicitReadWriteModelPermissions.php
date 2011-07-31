@@ -24,12 +24,32 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Class helps interaction between the user interface, forms, and controllers that are involved in setting
+     * the explicit permissions on a model.  This class merges permission concepts together to form easier to
+     * understand structures for the user interface.  Currently this only supports either readOnly or readWrite
+     * permission combinations against a model for a user or group.
+     * @see ExplicitReadWriteModelPermissionsElement
+     * @see ExplicitReadWriteModelPermissionsUtil
+     */
     class ExplicitReadWriteModelPermissions
     {
+        /**
+         * Array of permitable objects that will be explicity set to read only.
+         * @var array
+         */
         protected $readOnlyPermitables  = array();
 
+        /**
+         * Array of permitable objects that will be explicity set to read and write.
+         * @var array
+         */
         protected $readWritePermitables = array();
 
+        /**
+         * Add a permitable object to the read only array.
+         * @param object $permitable
+         */
         public function addReadOnlyPermitable($permitable)
         {
             assert('$permitable instanceof Permitable');
@@ -43,6 +63,10 @@
             }
         }
 
+        /**
+         * Add a permitable object to the read write array.
+         * @param object $permitable
+         */
         public function addReadWritePermitable($permitable)
         {
             assert('$permitable instanceof Permitable');
@@ -56,21 +80,33 @@
             }
         }
 
+        /**
+         * @return integer count of read only permitables
+         */
         public function getReadOnlyPermitablesCount()
         {
             return count($this->readOnlyPermitables);
         }
 
+        /**
+         * @return integer count of read/write permitables
+         */
         public function getReadWritePermitablesCount()
         {
             return count($this->readWritePermitables);
         }
 
+        /**
+         * @return array of read only permitables
+         */
         public function getReadOnlyPermitables()
         {
             return $this->readOnlyPermitables;
         }
 
+        /**
+         * @return array of read/write permitables
+         */
         public function getReadWritePermitables()
         {
             return $this->readWritePermitables;

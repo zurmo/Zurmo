@@ -31,9 +31,9 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
-        public function testGetMappableAttributeNamesAndDerivedTypes()
+        public function testGetMappableAttributeIndicesAndDerivedTypes()
         {
-            $data = ImportModelTestItemImportRules::getMappableAttributeNamesAndDerivedTypes();
+            $data = ImportModelTestItemImportRules::getMappableAttributeIndicesAndDerivedTypes();
             $compareData = array(
                 'CreatedByUser'				  => 'Created By User',
                 'CreatedDateTime'			  => 'Created Date Time',
@@ -70,10 +70,10 @@
             $this->assertEquals($compareData, $data);
         }
 
-        public function testGetModelClassNameByAttributeNameOrDerivedType()
+        public function testGetModelClassNameByAttributeIndexOrDerivedType()
         {
             $modelClassName = ImportModelTestItemImportRules::
-                              getModelClassNameByAttributeNameOrDerivedType('boolean');
+                              getModelClassNameByAttributeIndexOrDerivedType('boolean');
             $this->assertEquals('ImportModelTestItem', $modelClassName);
         }
 

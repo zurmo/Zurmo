@@ -130,11 +130,11 @@
             $this->assertEquals('testAbc',       $importWizardForm->importRulesType);
             $this->assertEquals(0, $importWizardForm->explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
             $compareData = array(
-                'column_0' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
-                'column_1' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
-                'column_2' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
             );
             $this->assertEquals($compareData,    $importWizardForm->mappingData);
@@ -202,7 +202,7 @@
         {
             $fakeData                      = array();
             $columnName                    = 'column_0';
-            $fakeData[$columnName]['attributeNameOrDerivedType']     = 'string';
+            $fakeData[$columnName]['attributeIndexOrDerivedType']     = 'string';
             $fakeData[$columnName]['type']                           = 'importColumn';
             $fakeData[$columnName]['mappingRulesData']
             ['DefaultValueModelAttributeMappingRuleForm']

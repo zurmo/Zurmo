@@ -29,6 +29,13 @@
      */
     class ImportDatabaseUtil
     {
+        /**
+         * Given a file resource, convert the file into a database table based on the table name provided.
+         * Assumes the file is a csv.
+         * @param resource $fileHandle
+         * @param string $tableName
+         * @return true on success.
+         */
         public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName)
         {
             assert('gettype($fileHandle) == "resource"');
@@ -62,12 +69,21 @@
             return true;
         }
 
+        /**
+         * Drops a table by the given table name.
+         * @param string $tableName
+         */
         public static function dropTableByTableName($tableName)
         {
             assert('$tableName == strtolower($tableName)');
             R::exec("drop table if exists $tableName");
         }
 
+        /**
+         * Gets the count of how many columns there are in a table minus the initial 'id' column.
+         * @param string $tableName
+         * @return integer
+         */
         public static function getColumnCountByTableName($tableName)
         {
             assert('is_string($tableName)');
@@ -75,6 +91,10 @@
             return count($firstRowData) - 1;
         }
 
+        /**
+         * Get the first row of a table.  if no rows exist, an NoRowsInTableException is thrown.
+         * @param string $tableName
+         */
         public static function getFirstRowByTableName($tableName)
         {
             assert('is_string($tableName)');
@@ -90,6 +110,13 @@
             return $data;
         }
 
+        /**
+         * Given a table name, count, and offset get an array of rows.
+         * @param string $tableName
+         * @param integer $count
+         * @param integer $offset
+         * @return array
+         */
         public static function getRowsByTableNameAndCount($tableName, $count, $offset = null)
         {
             assert('is_string($tableName)');
@@ -104,6 +131,11 @@
             return $data;
         }
 
+        /**
+         * Get the row count in a given table.
+         * @param string $tableName
+         * @return integer
+         */
         public static function getCount($tableName)
         {
             $sql = 'select count(*) count from ' . $tableName;

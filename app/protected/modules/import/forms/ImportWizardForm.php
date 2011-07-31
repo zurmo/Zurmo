@@ -26,6 +26,9 @@
 
     /**
      * This form works with the import wizard views to collect data from the user interface and validate it.
+     * MappingRules data is not validated using this form, however the mapping rules data is collected and stored
+     * in the mappingData array.
+     * @see MappingRuleFormAndElementTypeUtil::validateMappingRuleForms
      */
     class ImportWizardForm extends ConfigurableMetadataModel
     {
@@ -35,14 +38,35 @@
          */
         public $id;
 
+        /**
+         * @var string
+         */
         public $importRulesType;
 
+        /**
+         * Array of file upload specific information including name, type, and size.
+         * @var array
+         */
         public $fileUploadData;
 
+        /**
+         * True/false whether the import file's first row is a header row or not.
+         * @var boolean
+         */
         public $firstRowIsHeaderRow;
 
+        /**
+         * Object containing information on how to setup permissions for the new models that are created during the
+         * import process.
+         * @var object ExplicitReadWriteModelPermissions
+         */
         protected $explicitReadWriteModelPermissions;
 
+        /**
+         * Mapping data array indexed by column name containing the mapping rules, attribute index or derived type, and
+         * type information.
+         * @var array
+         */
         public $mappingData;
 
         public function rules()
@@ -78,6 +102,14 @@
             $this->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
         }
 
+        /**
+         * Validation used in the saveMappingData scenario to make sure the mapping data is correct based on
+         * user input. Runs several different validations on the data.  This does not validate the validity of the
+         * mapping rules data itself. That is done seperately.
+         * @see MappingRuleFormAndElementTypeUtil::validateMappingRuleForms
+         * @param unknown_type $attribute
+         * @param unknown_type $params
+         */
         public function validateMappingData($attribute, $params)
         {
             assert('$this->importRulesType != null');
@@ -87,16 +119,16 @@
             $importRulesClassName                  = $this->importRulesType . 'ImportRules';
             foreach($this->mappingData as $columnName => $data)
             {
-                if($data['attributeNameOrDerivedType'] != null)
+                if($data['attributeIndexOrDerivedType'] != null)
                 {
                     $atLeastOneAttributeMappedOrHasRules = true;
-                    if(in_array($data['attributeNameOrDerivedType'], $mappedAttributes))
+                    if(in_array($data['attributeIndexOrDerivedType'], $mappedAttributes))
                     {
                         $attributeMappedOrHasRulesMoreThanOnce = true;
                     }
                     else
                     {
-                        $mappedAttributes[] = $data['attributeNameOrDerivedType'];
+                        $mappedAttributes[] = $data['attributeIndexOrDerivedType'];
                     }
                 }
             }
@@ -108,21 +140,22 @@
             {
                 $this->addError('mappingData', Yii::t('Default', 'You must map at least one of your import columns.'));
             }
-            $mappedAttributesOrDerivedAttributeTypes = ImportMappingUtil::
-                                                       getMappedAttributesOrDerivedAttributeTypesByMappingData(
-                                                       $this->mappingData);
-            $requiredAttributeCollection             = $importRulesClassName::getRequiredAttributesCollectionNotIncludingReadOnly();
-            $mappedAttributeRulesCollection          = AttributeImportRulesFactory::makeCollection(
-                                                       $this->importRulesType,
-                                                       $mappedAttributeOrDerivedAttributeTypes);
+            $mappedAttributeIndicesOrDerivedAttributeTypes = ImportMappingUtil::
+                                                             getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData(
+                                                             $this->mappingData);
+            $requiredAttributeCollection                   = $importRulesClassName::
+                                                             getRequiredAttributesCollectionNotIncludingReadOnly();
+            $mappedAttributeImportRulesCollection          = AttributeImportRulesFactory::makeCollection(
+                                                             $this->importRulesType,
+                                                             $mappedAttributeIndicesOrDerivedTypes);
             if(!ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
-                                                                           $mappedAttributeRulesCollection))
+                                                                           $mappedAttributeImportRulesCollection))
             {
                 $this->addError('mappingData', Yii::t('Default', 'All required attributes must be mapped or added.'));
             }
             try
             {
-                ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped($mappedAttributeRulesCollection);
+                ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped($mappedAttributeImportRulesCollection);
             }
             catch(ImportAttributeMappedMoreThanOnceException $e)
             {

@@ -25,38 +25,51 @@
      ********************************************************************************/
 
     /**
-     * Helper class to make AttributeImportRules objects
+     * Helper class to make AttributeImportRules objects and collections.
      */
     class AttributeImportRulesFactory
     {
-        public static function makeByImportRulesTypeAndAttributeNameOrDerivedType($importRulesType,
-                                                                                  $attributeNameOrDerivedType)
+        /**
+         * Given an import rules type and an attribute index or derived type string, make an AttributeImportRules object.
+         * @param string $importRulesType
+         * @param string $attributeIndexOrDerivedType
+         * @return object AttributeImportRules
+         */
+        public static function makeByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
+                                                                                  $attributeIndexOrDerivedType)
         {
             assert('is_string($importRulesType)');
-            assert('is_string($attributeNameOrDerivedType)');
+            assert('is_string($attributeIndexOrDerivedType)');
             $importRulesTypeClassName = $importRulesType . 'ImportRules';
             $attributeImportRulesType = $importRulesTypeClassName::getAttributeImportRulesType(
-                                        $attributeNameOrDerivedType);
-            $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeNameOrDerivedType(
-                                        $attributeNameOrDerivedType);
+                                        $attributeIndexOrDerivedType);
+            $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeIndexOrDerivedType(
+                                        $attributeIndexOrDerivedType);
             assert('$attributeImportRulesType !== null');
             $attributeImportRulesClassName = $attributeImportRulesType . 'AttributeImportRules';
             if(is_subclass_of($attributeImportRulesClassName, 'DerivedAttributeImportRules'))
             {
                 return new $attributeImportRulesClassName(new $modelClassName(false));
             }
-            return new $attributeImportRulesClassName(new $modelClassName(false), $attributeNameOrDerivedType);
+            return new $attributeImportRulesClassName(new $modelClassName(false), $attributeIndexOrDerivedType);
         }
 
-        public static function makeCollection($importRulesType, $mappedAttributeOrDerivedAttributeTypes)
+        /**
+         * Given an import rules type and an array of atttribute indices or derived types, make a collection
+         * of AttributeImportRules.
+         * @param unknown_type $importRulesType
+         * @param unknown_type $attributeIndicesOrDerivedTypes
+         * @return array AttributeImportRules collection
+         */
+        public static function makeCollection($importRulesType, $attributeIndicesOrDerivedTypes)
         {
             assert('is_string($importRulesType)');
-            assert('is_array($mappedAttributeOrDerivedAttributeTypes)');
+            assert('is_array($attributeIndicesOrDerivedTypes)');
             $collection   = array();
-            foreach($mappedAttributeOrDerivedAttributeTypes as $mappedAttributeOrDerivedAttributeType)
+            foreach($attributeIndicesOrDerivedTypes as $attributeIndexOrDerivedAttributeType)
             {
-                $collection[] = self::makeByImportRulesTypeAndAttributeNameOrDerivedType($importRulesType,
-                                $mappedAttributeOrDerivedAttributeType);
+                $collection[] = self::makeByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
+                                $attributeIndexOrDerivedAttributeType);
             }
             return $collection;
         }

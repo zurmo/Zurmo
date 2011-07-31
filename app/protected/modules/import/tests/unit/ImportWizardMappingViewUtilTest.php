@@ -38,36 +38,36 @@
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $mappingData = ImportMappingUtil::makeMappingDataByTableName($testTableName);
             $compareData = array(
-                'column_0' => array('type' => 'importColumn',   'attributeNameOrDerivedType' => null,
+                'column_0' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
-                'column_1' => array('type' => 'importColumn',   'attributeNameOrDerivedType' => null,
+                'column_1' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
-                'column_2' => array('type' => 'importColumn',   'attributeNameOrDerivedType' =>null,
+                'column_2' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' =>null,
                                     'mappingRulesData' => null),
             );
             $this->assertEquals($compareData, $mappingData);
-            $mappingData['column_3'] = array('type' => 'extraColumn', 'attributeNameOrDerivedType' => 'xyz',
+            $mappingData['column_3'] = array('type' => 'extraColumn', 'attributeIndexOrDerivedType' => 'xyz',
                                              'mappingRulesData' => null);
             $mappingDataMetadata = ImportWizardMappingViewUtil::
                                    resolveMappingDataForView($mappingData, $testTableName, true);
             $compareData = array(
                 'column_0' => array('type'                       => 'importColumn',
-                                    'attributeNameOrDerivedType' => null,
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'name',
                                     'sampleValue' 			     => 'abc'),
                 'column_1' => array('type' => 'importColumn',
-                                    'attributeNameOrDerivedType' => null,
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'phone',
                                     'sampleValue' 			     => '123'),
                 'column_2' => array('type'                       => 'importColumn',
-                                    'attributeNameOrDerivedType' => null,
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'industry',
                                     'sampleValue' 			     => 'a'),
                 'column_3' => array('type'                       => 'extraColumn',
-                                    'attributeNameOrDerivedType' => 'xyz',
+                                    'attributeIndexOrDerivedType' => 'xyz',
                                     'mappingRulesData'           => null,
                                     'headerValue'                => null,
                                     'sampleValue' 			     => null),
@@ -77,19 +77,19 @@
                                    resolveMappingDataForView($mappingData, $testTableName, false);
             $compareData = array(
                 'column_0' => array('type' => 'importColumn',
-                                    'attributeNameOrDerivedType' => null,
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'sampleValue' 			     => 'name'),
                 'column_1' => array('type' => 'importColumn',
-                                    'attributeNameOrDerivedType' => null,
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'sampleValue' 			     => 'phone'),
                 'column_2' => array('type' => 'importColumn',
-                                    'attributeNameOrDerivedType' => null,
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'sampleValue' 			     => 'industry'),
                 'column_3' => array('type'                       => 'extraColumn',
-                                    'attributeNameOrDerivedType' => 'xyz',
+                                    'attributeIndexOrDerivedType' => 'xyz',
                                     'mappingRulesData'           => null,
                                     'sampleValue' 			     => null),
             );

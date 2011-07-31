@@ -80,7 +80,7 @@
             $content .= '</tr>';
             foreach ($this->mappingDataMetadata as $columnName => $row)
             {
-                assert('isset($row["attributeNameOrDerivedType"])');
+                assert('isset($row["attributeIndexOrDerivedType"])');
                 assert('$row["type"] == "importColumn" || $row["type"] == "extraColumn"');
                 assert('isset($row["sampleValue"])');
                 $content .= '<tr>';
@@ -93,7 +93,7 @@
                 $content .= $this->renderImportColumnElement ($columnName, $row['sampleValue']);
                 $content .= $this->renderMappingRulesElements(
                                     $columnName,
-                                    $row["attributeNameOrDerivedType"],
+                                    $row["attributeIndexOrDerivedType"],
                                     $this->model->importRulesType,
                                     $row['type'],
                                     $this->resolveMappingRuleFormsAndElementTypesByColumn($columnName));
@@ -174,29 +174,29 @@
         }
 
         protected function renderMappingRulesElements($columnName,
-                                                      $attributeNameOrDerivedType,
+                                                      $attributeIndexOrDerivedType,
                                                       $importRulesType,
                                                       $columnType,
                                                       $mappingRuleFormsAndElementTypes)
         {
             assert('is_string($columnName)');
-            assert('is_string($attributeNameOrDerivedType)');
+            assert('is_string($attributeIndexOrDerivedType)');
             assert('is_string($importRulesType)');
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             assert('is_array($mappingRuleFormsAndElementTypes) || $mappingRuleFormsAndElementTypes == null');
             $content = '<td>';
-            if($attributeNameOrDerivedType != null)
+            if($attributeIndexOrDerivedType != null)
             {
                 if($mappingRuleFormsAndElementTypes == null)
                 {
                     $attributeImportRules            = AttributeImportRulesFactory::
-                                                       makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                                       makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                                            $importRulesType,
-                                                           $attributeNameOrDerivedType);
+                                                           $attributeIndexOrDerivedType);
                     $mappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
                                                        makeCollectionByAttributeImportRules(
                                                            $attributeImportRules,
-                                                           $attributeNameOrDerivedType);
+                                                           $attributeIndexOrDerivedType);
                 }
                 foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {

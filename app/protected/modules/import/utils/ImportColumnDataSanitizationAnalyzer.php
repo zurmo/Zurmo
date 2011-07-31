@@ -9,16 +9,16 @@
         public function analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData)
         {
 
-            //$columnMappingData would have information like ["attributeNameOrDerivedTypeData"]
-                //$columnMappingData["attributeNameOrDerivedTypeData"]['ownerMappingAttributeType']
+            //$columnMappingData would have information like ["attributeIndexOrDerivedTypeData"]
+                //$columnMappingData["attributeIndexOrDerivedTypeData"]['ownerMappingAttributeType']
 
-                //??? but what class would understand this: $columnMappingData["attributeNameOrDerivedTypeData"]['ownerMappingAttributeType']
+                //??? but what class would understand this: $columnMappingData["attributeIndexOrDerivedTypeData"]['ownerMappingAttributeType']
                 //I guess OwnerAttributeImportRules would have to understand it, this is a derived type i guess. and the sanitization to use
                 //that is getAttributeValueSanitizerUtilNames would have to make a decision based on that data. which saniziation to pass back
                 //cause we want OwnerIdsanitizer and OwnerUserNameSanitizer as seperate and not knowing of each other.  There fore the attributeImportRules
                 //must know.
 
-                assert('is_string($columnMappingData["attributeNameOrDerivedType"])');
+                assert('is_string($columnMappingData["attributeIndexOrDerivedType"])');
                 $attributeImportRules = AttributeImportRulesFactory::makeAttributeImportRulesByColumnMappingData(
                                                                         $columnMappingData);
                 if($attributeValueSanitizerUtilNames = $attributeImportRules->getAttributeValueSanitizerUtilNames() != null)

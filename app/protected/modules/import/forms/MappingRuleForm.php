@@ -34,6 +34,9 @@
     {
         protected $scenario;
 
+        /**
+         * A mapping rule form has one attribute. This returns the name of that attribute.
+         */
         public static function getAttributeName()
         {
         }

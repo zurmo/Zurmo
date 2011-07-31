@@ -25,12 +25,19 @@
      ********************************************************************************/
 
     /**
-     *
+     * Element to expose explicit permission setting on a model in a simple way in the user interface. While this
+     * does not have a full user interface offering of the available permission setting mechanisms, this element
+     * provides a way for a user to quickly and easily add a group to a model in a view.  In the future this element
+     * will support adding ad-hoc groups and users to a model.  Any selection made using this element assumes
+     * that the explicit action is both read and write.
+     * @see ExplicitReadWriteModelPermissions
+     * @see ExplicitReadWriteModelPermissionsUtil
      */
     class ExplicitReadWriteModelPermissionsElement extends Element
     {
         /**
-         * Renders the setting as a radio list.
+         * Renders the setting as a radio list.  The second radio option also has a dropdown of available groups
+         * as part of the label.
          * @return A string containing the element's content.
          */
         protected function renderControlEditable()
@@ -74,6 +81,9 @@
             return $htmlOptions;
         }
 
+        /**
+         * @return array of options for the radio drop down.
+         */
         protected function resolveData()
         {
             $selectableGroupsDropDownContent     = $this->renderSelectableGroupsContent();
@@ -91,6 +101,11 @@
             return $data;
         }
 
+        /**
+         * Based on the model's attribute value being a explicitReadWriteModelPermissions object,
+         * resolves the selected type value.
+         * @return string
+         */
         protected function resolveSelectedType()
         {
             $permitables = $this->model->{$this->attribute}->getReadWritePermitables();
@@ -112,6 +127,11 @@
             }
         }
 
+        /**
+         * Based on the model's attribute value being a explicitReadWriteModelPermissions object,
+         * resolves the selected group value if available.
+         * @return string
+         */
         protected function resolveSelectedGroup()
         {
             $permitables = $this->model->{$this->attribute}->getReadWritePermitables();

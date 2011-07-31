@@ -38,9 +38,9 @@
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $mappingData = ImportMappingUtil::makeMappingDataByTableName($testTableName);
             $compareData = array(
-                'column_0' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_1' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_2' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
             );
             $this->assertEquals($compareData, $mappingData);
         }

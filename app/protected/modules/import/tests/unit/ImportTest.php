@@ -40,9 +40,9 @@
             $this->createTempTableByFileNameAndTableName('importAnalyzerTest.csv',
                                                          ImportUtil::getDataTableNameByImport($import));
             $mappingData = array(
-                'column_0' => array('attributeNameOrDerivedType' => 'xx'),
-                'column_1' => array('attributeNameOrDerivedType' => 'xx'),
-                'column_2' => array('attributeNameOrDerivedType' => 'xx'),
+                'column_0' => array('attributeIndexOrDerivedType' => 'xx'),
+                'column_1' => array('attributeIndexOrDerivedType' => 'xx'),
+                'column_2' => array('attributeIndexOrDerivedType' => 'xx'),
             );
             ImportUtil::SetMappingDataToImportAndSave($mappingData, $import);
             $importRules = ImportUtil::makeImportRulesByImportModel($import);

@@ -57,7 +57,7 @@
         protected function getDropDownArray()
         {
             $importRulesClassName = $model->importRulesType . 'ImportRules';
-            return $importRulesClassName::getMappableAttributeNamesAndDerivedTypes();
+            return $importRulesClassName::getMappableAttributeIndicesAndDerivedTypes();
         }
 
         protected function getEditableHtmlOptions()

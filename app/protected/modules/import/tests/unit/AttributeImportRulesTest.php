@@ -31,85 +31,85 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
-        public function testMakeByImportRulesTypeAndAttributeNameOrDerivedType()
+        public function testMakeByImportRulesTypeAndAttributeIndexOrDerivedType()
         {
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'boolean');
             $this->assertTrue($attributeImportRules instanceof CheckBoxAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'date');
             $this->assertTrue($attributeImportRules instanceof DateAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'dateTime');
             $this->assertTrue($attributeImportRules instanceof DateTimeAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'float');
             $this->assertTrue($attributeImportRules instanceof DecimalAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'integer');
             $this->assertTrue($attributeImportRules instanceof IntegerAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'phone');
             $this->assertTrue($attributeImportRules instanceof PhoneAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'string');
             $this->assertTrue($attributeImportRules instanceof TextAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'textArea');
             $this->assertTrue($attributeImportRules instanceof TextAreaAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'url');
             $this->assertTrue($attributeImportRules instanceof UrlAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'FullName');
             $this->assertTrue($attributeImportRules instanceof FullNameAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'currencyValue');
             $this->assertTrue($attributeImportRules instanceof CurrencyValueAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'hasOne');
             $this->assertTrue($attributeImportRules instanceof ImportModelTestItem2AttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'dropDown');
             $this->assertTrue($attributeImportRules instanceof DropDownAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'radioDropDown');
             $this->assertTrue($attributeImportRules instanceof RadioDropDownAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'primaryEmail__emailAddress');
             $this->assertTrue($attributeImportRules instanceof EmailAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'primaryAddress__street1');
             $this->assertTrue($attributeImportRules instanceof TextAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'CreatedByUser');
             $this->assertTrue($attributeImportRules instanceof CreatedByUserAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'ModifiedByUser');
             $this->assertTrue($attributeImportRules instanceof ModifiedByUserAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'CreatedDateTime');
             $this->assertTrue($attributeImportRules instanceof CreatedDateTimeAttributeImportRules);
 
-            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeNameOrDerivedType(
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
                                     'ImportModelTestItem', 'ModifiedDateTime');
             $this->assertTrue($attributeImportRules instanceof ModifiedDateTimeAttributeImportRules);
         }

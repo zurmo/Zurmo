@@ -39,6 +39,11 @@
                                                          'firstRowIsHeaderRow',
                                                          'mappingData');
 
+        /**
+         * Given an import object, make an ImportWizardForm, mapping the attributes from the import object into the
+         * form.
+         * @param object $import
+         */
         public static function makeFormByImport($import)
         {
             assert('$import instanceof Import');
@@ -90,6 +95,11 @@
             $importWizardForm->importRulesType = $postData['importRulesType'];
         }
 
+        /**
+         * Step 2 is where the import file is uploaded and the user checks if the first column is a header row.
+         * @param object $importWizardForm
+         * @param array $postData
+         */
         public static function setFormByPostForStep2($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
@@ -97,6 +107,11 @@
             $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow']));
         }
 
+        /**
+         * Step 3 is where the explicit permissions are decided for the models that will be imported.
+         * @param object $importWizardForm
+         * @param array $postData
+         */
         public static function setFormByPostForStep3($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
@@ -106,6 +121,11 @@
                                                                    $postData['explicitReadWriteModelPermissions']);
         }
 
+        /**
+         * Step 4 is where the import mapping is done along with any mapping rules.
+         * @param object $importWizardForm
+         * @param array $postData
+         */
         public static function setFormByPostForStep4($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');

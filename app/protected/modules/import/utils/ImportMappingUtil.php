@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Helper utility for import mapping logic.
+     * Helper utility for working with import mapping.
      */
     class ImportMappingUtil
     {
@@ -50,22 +50,29 @@
                 if($columnName != 'id')
                 {
                     $mappingData[$columnName] = array('type'                       => 'importColumn',
-                                                      'attributeNameOrDerivedType' => null,
+                                                      'attributeIndexOrDerivedType' => null,
                                                       'mappingRulesData'           => null);
                 }
             }
             return $mappingData;
         }
 
-        public static function getMappedAttributesOrDerivedAttributeTypesByMappingData($mappingData)
+        /**
+         * Given an array of mapping data, extract the 'attributeIndexOrDerivedType' from each sub array
+         * in the mapping data and return an array of the attributeIndexOrDerivedType.  This is useful if you
+         * just need a single dimension array of this information based on the mapping data.
+         * @param array $mappingData
+         * @return array
+         */
+        public static function getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData)
         {
             assert('is_array($mappingData');
-            $mappedAttributesOrDerivedAttributeTypes = array();
+            $mappedAttributeIndicesOrDerivedAttributeTypes = array();
             foreach($mappingData as $data)
             {
-                $mappedAttributesOrDerivedAttributeTypes[] = $data['attributeNameOrDerivedType'];
+                $mappedAttributeIndicesOrDerivedAttributeTypes[] = $data['attributeIndexOrDerivedType'];
             }
-            return $mappedAttributesOrDerivedAttributeTypes;
+            return $mappedAttributeIndicesOrDerivedAttributeTypes;
         }
     }
 ?>

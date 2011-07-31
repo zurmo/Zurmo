@@ -24,12 +24,31 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class for managing the explicit setting of permissions against a model in the user interface.
+     * @see ExplicitReadWriteModelPermissions
+     * @see ExplicitReadWriteModelPermissionsElement
+     */
     class ExplicitReadWriteModelPermissionsUtil
     {
+        /**
+         * Defines the type as being the everyone group.
+         * @var intger
+         */
         const MIXED_TYPE_EVERYONE_GROUP    = 1;
 
+        /**
+         * Defines the type as being a specific group, but not the everyone group.
+         * @var intger
+         */
         const MIXED_TYPE_NONEVERYONE_GROUP = 2;
 
+        /**
+         * Given a mixed permitables data array, make a explicitReadWriteModelPermissions object. The
+         * $mixedPermitablesData is an array with 2 sub-arrays.  readOnly and readWrite. These sub-arrays each
+         * contain an array of permitable objects.
+         * @param array $mixedPermitablesData
+         */
         public static function makeByMixedPermitablesData($mixedPermitablesData)
         {
             assert('is_array($mixedPermitablesData)');
@@ -51,6 +70,10 @@
             return $explicitReadWriteModelPermissions;
         }
 
+        /**
+         * Given a explicitReadWriteModelPermissions object, make a $mixedPermitablesData array.
+         * @param object $explicitReadWriteModelPermissions
+         */
         public static function makeMixedPermitablesDataByExplicitReadWriteModelPermissions(
                                $explicitReadWriteModelPermissions)
         {
@@ -79,6 +102,13 @@
             return $mixedPermitablesData;
         }
 
+        /**
+         * Given post data, which would be coming most likely from the ExplicitReadWriteModelPermissionsElement,
+         * transform the post data into a ExplicitReadWriteModelPermissions object.  If the post data contains a 'type'
+         * value that is not supported, an exception is thrown.
+         * @param array $postData
+         * @see ExplicitReadWriteModelPermissionsElement
+         */
         public static function makeByPostData($postData)
         {
             assert('is_array($postData)');
