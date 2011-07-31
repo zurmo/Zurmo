@@ -37,7 +37,6 @@
         private static $importToFormAttributeMap = array('importRulesType',
                                                          'fileUploadData',
                                                          'firstRowIsHeaderRow',
-                                                         'modelPermissions',
                                                          'mappingData');
 
         public static function makeFormByImport($import)
@@ -54,6 +53,16 @@
                     {
                         $form->$attributeName = $unserializedData[$attributeName];
                     }
+                }
+                if(isset($unserializedData['explicitReadWriteModelPermissions']))
+                {
+                    $form->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                               makeByMixedPermitablesData(
+                                                               $unserializedData['explicitReadWriteModelPermissions']);
+                }
+                else
+                {
+                    $form->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
                 }
             }
             return $form;
@@ -76,6 +85,7 @@
                 {
                     $importWizardForm->$attributeName = null;
                 }
+                $importWizardForm->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             }
             $importWizardForm->importRulesType = $postData['importRulesType'];
         }
@@ -90,14 +100,16 @@
         public static function setFormByPostForStep3(& $importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["modelPermissions"])');
-            $importWizardForm->setAttributes(array('modelPermissions' => $postData['modelPermissions']));
+            assert('is_array($postData) && isset($postData["explicitReadWriteModelPermissions"])');
+            $importWizardForm->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                                   makeByPostData(
+                                                                   $postData['explicitReadWriteModelPermissions']);
         }
 
         public static function setFormByPostForStep4(& $importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["modelPermissions"])');
+            assert('is_array($postData) && isset($postData["explicitReadWriteModelPermissions"])');
             //todo: this should populate the mappingData fully including the rules data from post.
         }
 
@@ -109,7 +121,7 @@
          * @param object $importWizardForm
          * @param array $fileUploadData
          */
-        public static function setFormByFileUploadDataAndTableName(& $importWizardForm, $fileUploadData, $tableName)
+        public static function setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $tableName)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($fileUploadData)');
@@ -121,7 +133,8 @@
                     $importWizardForm->$attributeName = null;
                 }
             }
-            $importWizardForm->fileUploadData = $fileUploadData;
+            $importWizardForm->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            $importWizardForm->fileUploadData                    = $fileUploadData;
             try
             {
                 $importWizardForm->mappingData = ImportMappingUtil::makeMappingDataByTableName($tableName);
@@ -138,7 +151,7 @@
          * @param object $importWizardForm
          * @param object $import
          */
-        public static function setImportSerializedDataFromForm($importWizardForm, & $import)
+        public static function setImportSerializedDataFromForm($importWizardForm, $import)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('$import instanceof Import');
@@ -147,6 +160,10 @@
             {
                 $dataToSerialize[$attributeName] = $importWizardForm->$attributeName;
             }
+            $dataToSerialize['explicitReadWriteModelPermissions'] =
+                ExplicitReadWriteModelPermissionsUtil::
+                makeMixedPermitablesDataByExplicitReadWriteModelPermissions(
+                $importWizardForm->explicitReadWriteModelPermissions);
             $import->serializedData = serialize($dataToSerialize);
         }
 
@@ -156,7 +173,7 @@
          * leave the importRulesType in place since that is created prior to uploading a new file.
          * @param object $import model.
          */
-        public static function clearFileAndRelatedDataFromImport(& $import)
+        public static function clearFileAndRelatedDataFromImport($import)
         {
             assert('$import instanceof Import');
             $unserializedData                       = $import->serializedData;
@@ -177,7 +194,7 @@
          * @param object $import
          * @return boolean true/false
          */
-        public static function importFileHasAtLeastOneImportRow($importWizardForm, & $import)
+        public static function importFileHasAtLeastOneImportRow($importWizardForm, $import)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('$import instanceof Import');

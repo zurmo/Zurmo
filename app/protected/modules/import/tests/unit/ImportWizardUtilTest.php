@@ -49,7 +49,7 @@
             $this->assertEquals('test',  $form->importRulesType);
             $this->assertEquals(null,    $form->fileUploadData);
             $this->assertEquals(null,    $form->firstRowIsHeaderRow);
-            $this->assertEquals(null,    $form->modelPermissions);
+            $this->assertTrue($form->explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions);
             $this->assertEquals(null,    $form->mappingData);
             $this->assertFalse ($form->isAttribute('anElementToIgnore'));
         }
@@ -60,23 +60,24 @@
         public function testSetImportSerializedDataFromForm()
         {
             $import = new Import();
+            $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             $dataToSerialize                        = array('importRulesType' => 'x',
                                                             'fileUploadData'       => array('a' => 'b'),
                                                             'firstRowIsHeaderRow'  => false,
-                                                            'modelPermissions'     => 'z',
+                                                            'explicitReadWriteModelPermissions'     => 'z',
                                                             'mappingData'          => array('x' => 'y'));
             $import->serializedData                 = serialize($dataToSerialize);
             $importWizardForm                       = new ImportWizardForm();
             $importWizardForm->importRulesType = 'xx';
             $importWizardForm->fileUploadData       = array('aa' => 'bb');
             $importWizardForm->firstRowIsHeaderRow  = true;
-            $importWizardForm->modelPermissions     = 'zz';
+            $importWizardForm->explicitReadWriteModelPermissions     = $explicitReadWriteModelPermissions;
             $importWizardForm->mappingData          = array('xx' => 'yy');
             ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
             $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
                                                             'fileUploadData'       => array('aa' => 'bb'),
                                                             'firstRowIsHeaderRow'  => true,
-                                                            'modelPermissions'     => 'zz',
+                                                            'explicitReadWriteModelPermissions'     => null,
                                                             'mappingData'          => array('xx' => 'yy'));
             $this->assertEquals(unserialize($import->serializedData), $compareDataToSerialize);
         }
@@ -115,16 +116,19 @@
          */
         public function testSetFormByFileUploadData()
         {
-            $fileUploadData   = array('a','b');
-            $testTableName = 'testimporttable';
+            $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            $explicitReadWriteModelPermissions->addReadOnlyPermitable(new Group());
+            $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
+            $fileUploadData                                      = array('a','b');
+            $testTableName                                       = 'testimporttable';
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
-            $importWizardForm = new ImportWizardForm();
-            $importWizardForm->importRulesType = 'testAbc';
-            $importWizardForm->modelPermissions     = 'somePermissions';
+            $importWizardForm                                    = new ImportWizardForm();
+            $importWizardForm->importRulesType                   = 'testAbc';
+            $importWizardForm->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
             ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $testTableName);
             $this->assertEquals(array('a','b'),  $importWizardForm->fileUploadData);
             $this->assertEquals('testAbc',       $importWizardForm->importRulesType);
-            $this->assertEquals(null,            $importWizardForm->modelPermissions);
+            $this->assertEquals(0, $importWizardForm->explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
             $compareData = array(
                 'column_0' => array('type' => 'importColumn', 'attributeNameOrDerivedType' => null,
                                     'mappingRulesData' => null),
@@ -174,10 +178,21 @@
          */
         public function testSetFormByPostForStep3()
         {
-            $fakePostData = array('modelPermissions' => 'abc');
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $group = new Group();
+            $group->name = 'myGroup';
+            $this->assertTrue($group->save());
+            $fakePostData = array('explicitReadWriteModelPermissions' =>
+                            array('type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP,
+                                  'nonEveryoneGroup' => $group->id));
             $importWizardForm = new ImportWizardForm();
             ImportWizardUtil::setFormByPostForStep3($importWizardForm, $fakePostData);
-            $this->assertEquals('abc', $importWizardForm->modelPermissions);
+            $this->assertEquals(0, $importWizardForm->explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
+            $this->assertEquals(1, $importWizardForm->explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+
+            $permitables = $importWizardForm->explicitReadWriteModelPermissions->getReadWritePermitables();
+            $permitable  = array_shift($permitables);
+            $this->assertEquals('myGroup', $permitable->name);
         }
 
         /**

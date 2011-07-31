@@ -50,7 +50,7 @@
 
         public $firstRowIsHeaderRow;
 
-        public $modelPermissions;
+        protected $explicitReadWriteModelPermissions;
 
         public $mappingData;
 
@@ -60,7 +60,6 @@
                 array('importRulesType',     'required'),
                 array('fileUploadData', 	 'type', 'type' => 'string'),
                 array('firstRowIsHeaderRow', 'boolean'),
-                array('modelPermissions',    'type', 'type' => 'string'),
                 array('mappingData', 		 'type', 'type' => 'string'),
             );
         }
@@ -68,12 +67,23 @@
         public function attributeLabels()
         {
             return array(
-                'importRulesType'      => Yii::t('Default', 'Module To Import To'),
-                'fileUploadData'       => Yii::t('Default', 'File Upload Data'),
-                'firstRowIsHeaderRow'  => Yii::t('Default', 'First Row is Header Row'),
-                'modelPermissions'     => Yii::t('Default', 'Model Permissions'),
-                'mappingData'          => Yii::t('Default', 'Mapping Data'),
+                'importRulesType'                   => Yii::t('Default', 'Module To Import To'),
+                'fileUploadData'                    => Yii::t('Default', 'File Upload Data'),
+                'firstRowIsHeaderRow'               => Yii::t('Default', 'First Row is Header Row'),
+                'explicitReadWriteModelPermissions' => Yii::t('Default', 'Model Permissions'),
+                'mappingData'                       => Yii::t('Default', 'Mapping Data'),
             );
+        }
+
+        public function getExplicitReadWriteModelPermissions()
+        {
+            return $this->explicitReadWriteModelPermissions;
+        }
+
+        public function setExplicitReadWriteModelPermissions($explicitReadWriteModelPermissions)
+        {
+            assert($explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions);
+            $this->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
         }
     }
 ?>

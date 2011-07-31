@@ -82,8 +82,6 @@
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
-
-
                 if($importWizardForm->fileUploadData == null)
                 {
                     $importWizardForm->addError('fileUploadData',
@@ -131,9 +129,9 @@
             }
             $importView = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 3 of 6')), 0, 0);
-            $importView->setView(new ImportWizardModelPermissionsView($this->getId(),
-                                                                      $this->getModule()->getId(),
-                                                                      $importWizardForm), 1, 0);
+            $importView->setView(new ImportWizardSetModelPermissionsView($this->getId(),
+                                                                         $this->getModule()->getId(),
+                                                                         $importWizardForm), 1, 0);
             $view       = new ImportPageView($this, $importView);
             echo $view->render();
         }
@@ -143,12 +141,9 @@
          */
         public function actionStep4($id)
         {
-            $import           = Import::getById($_GET['id']);
+            $import           = Import::getById((int)$_GET['id']);
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
             $tempTableName    = $import->getTempTableName();
-
-
-
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
