@@ -47,5 +47,20 @@
             }
             return new $attributeImportRulesClassName(new $modelClassName(false), $attributeNameOrDerivedType);
         }
+
+        public static function makeCollection($importRulesType, $mappedAttributeOrDerivedAttributeTypes)
+        {
+            assert('is_string($importRulesType)');
+            assert('is_array($mappedAttributeOrDerivedAttributeTypes)');
+            $collection   = array();
+            foreach($mappedAttributeOrDerivedAttributeTypes as $mappedAttributeOrDerivedAttributeType)
+            {
+                $collection[] = self::makeByImportRulesTypeAndAttributeNameOrDerivedType($importRulesType,
+                                $mappedAttributeOrDerivedAttributeType);
+            }
+            return $collection;
+        }
+
+
     }
 ?>

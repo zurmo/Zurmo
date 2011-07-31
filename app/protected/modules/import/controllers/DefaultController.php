@@ -143,6 +143,7 @@
         {
             $import           = Import::getById((int)$_GET['id']);
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
+            $importWizardForm->setScenario('saveMappingData');
             $tempTableName    = $import->getTempTableName();
             if (isset($_POST[get_class($importWizardForm)]))
             {
@@ -152,7 +153,6 @@
                                                               makeFormsAndElementTypesByMappingDataAndImportRulesType(
                                                               $importWizardForm->mappingData,
                                                               $importWizardForm->importRulesType);
-
                 if(MappingRuleFormAndElementTypeUtil::validateMappingRuleForms(
                                                       $mappingDataMappingRuleFormsAndElementTypes))
                 {

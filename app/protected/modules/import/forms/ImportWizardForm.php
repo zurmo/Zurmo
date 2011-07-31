@@ -52,6 +52,7 @@
                 array('fileUploadData', 	 'type', 'type' => 'string'),
                 array('firstRowIsHeaderRow', 'boolean'),
                 array('mappingData', 		 'type', 'type' => 'string'),
+                array('newPassword',        'validateMappingData', 'on'   => 'saveMappingData'),
             );
         }
 
@@ -75,6 +76,59 @@
         {
             assert($explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions);
             $this->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
+        }
+
+        public function validateMappingData($attribute, $params)
+        {
+            assert('$this->importRulesType != null');
+            $atLeastOneAttributeMappedOrHasRules   = false;
+            $attributeMappedOrHasRulesMoreThanOnce = false;
+            $mappedAttributes                      = array();
+            $importRulesClassName                  = $this->importRulesType . 'ImportRules';
+            foreach($this->mappingData as $columnName => $data)
+            {
+                if($data['attributeNameOrDerivedType'] != null)
+                {
+                    $atLeastOneAttributeMappedOrHasRules = true;
+                    if(in_array($data['attributeNameOrDerivedType'], $mappedAttributes))
+                    {
+                        $attributeMappedOrHasRulesMoreThanOnce = true;
+                    }
+                    else
+                    {
+                        $mappedAttributes[] = $data['attributeNameOrDerivedType'];
+                    }
+                }
+            }
+            if($attributeMappedOrHasRulesMoreThanOnce)
+            {
+                $this->addError('mappingData', Yii::t('Default', 'You can only map each attribute once.'));
+            }
+            if(!$atLeastOneAttributeMappedOrHasRules)
+            {
+                $this->addError('mappingData', Yii::t('Default', 'You must map at least one of your import columns.'));
+            }
+            $mappedAttributesOrDerivedAttributeTypes = ImportMappingUtil::
+                                                       getMappedAttributesOrDerivedAttributeTypesByMappingData(
+                                                       $this->mappingData);
+            $requiredAttributeCollection             = $importRulesClassName::getRequiredAttributesCollectionNotIncludingReadOnly();
+            $mappedAttributeRulesCollection          = AttributeImportRulesFactory::makeCollection(
+                                                       $this->importRulesType,
+                                                       $mappedAttributeOrDerivedAttributeTypes);
+            if(!ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
+                                                                           $mappedAttributeRulesCollection))
+            {
+                $this->addError('mappingData', Yii::t('Default', 'All required attributes must be mapped or added.'));
+            }
+            try
+            {
+                ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped($mappedAttributeRulesCollection);
+            }
+            catch(ImportAttributeMappedMoreThanOnceException $e)
+            {
+                $this->addError('mappingData', Yii::t('Default',
+                'The following attribute is mapped more than once. {message}', array('{message}' => $e->getMessage())));
+            }
         }
     }
 ?>

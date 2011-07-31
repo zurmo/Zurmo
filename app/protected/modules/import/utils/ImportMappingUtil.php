@@ -56,5 +56,16 @@
             }
             return $mappingData;
         }
+
+        public static function getMappedAttributesOrDerivedAttributeTypesByMappingData($mappingData)
+        {
+            assert('is_array($mappingData');
+            $mappedAttributesOrDerivedAttributeTypes = array();
+            foreach($mappingData as $data)
+            {
+                $mappedAttributesOrDerivedAttributeTypes[] = $data['attributeNameOrDerivedType'];
+            }
+            return $mappedAttributesOrDerivedAttributeTypes;
+        }
     }
 ?>

@@ -66,5 +66,68 @@
             }
             return $importRulesTypes;
         }
+
+        public static function areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
+                                                                         $mappedAttributeRulesCollection)
+        {
+            assert('is_array($requiredAttributeCollection)');
+            assert('is_array($mappedAttributeRulesCollection)');
+            foreach($mappedAttributeRulesCollection as $attributeRules)
+            {
+                $modelAttributeNames        = array();
+                if($attributeRules instanceof DerivedAttributeRules)
+                {
+                    $modelAttributeNames    = $attributeRules->getModelAttributeNames();
+                }
+                elseif($attributeRules instanceof AttributeRules)
+                {
+                    $modelAttributeNames[0] = $mappedAttributeOrDerivedAttributeType;
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+                foreach($modelAttributeNames as $modelAttributeName)
+                {
+                    if(isset($requiredAttributeCollection[$modelAttributeName]))
+                    {
+                        unset($requiredAttributeCollection[$modelAttributeName]);
+                    }
+                }
+            }
+            if(count($requiredAttributeCollection) > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static function checkIfAnyAttributesAreDoubleMapped($mappedAttributeRulesCollection)
+        {
+            assert('is_array($mappedAttributeRulesCollection)');
+            $mappedModelAttributeNames = array();
+            foreach($mappedAttributeRulesCollection as $attributeRules)
+            {
+                if($attributeRules instanceof AttributeImportRules)
+                {
+                    $modelAttributeNames       = $attributeRules->getModelAttributeNames();
+                    foreach($modelAttributeNames as $modelAttributeName)
+                    {
+                        if(array_search($modelAttributeName, $mappedModelAttributeNames))
+                        {
+                            throw new ImportAttributeMappedMoreThanOnceException($attributeRules->getDisplayLabel());
+                        }
+                        $mappedModelAttributeNames[] = $modelAttributeName;
+                    }
+                }
+                else
+                {
+                    throw notSupportedException();
+                }
+            }
+        }
     }
 ?>

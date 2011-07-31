@@ -29,6 +29,11 @@
      */
     class CreatedDateTimeAttributeImportRules extends DerivedAttributeImportRules
     {
+        public function getModelAttributeNames()
+        {
+            return array('createdDateTime');
+        }
+
         public static function getSanitizerUtilNames()
         {
             return array('Truncate');

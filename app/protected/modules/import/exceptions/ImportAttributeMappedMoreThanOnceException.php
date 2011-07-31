@@ -25,23 +25,11 @@
      ********************************************************************************/
 
     /**
-     * Import rules for the modified date time attribute.
+     * Exception thrown when the import column is mapped more than once against the same attribute. This can happen
+     * if there is a derived attribute that has 2 attributes.  One of those 2 attributes is also mapped by a different
+     * import column.
      */
-    class ModifiedDateTimeAttributeImportRules extends DerivedAttributeImportRules
+    class ImportAttributeMappedMoreThanOnceException extends CException
     {
-        public function getModelAttributeNames()
-        {
-            return array('modifiedDateTime');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
-        }
-
-        public function getDisplayLabel()
-        {
-            return Yii::t('Default','Modified Date Time');
-        }
     }
 ?>

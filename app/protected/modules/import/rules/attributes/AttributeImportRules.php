@@ -53,7 +53,7 @@
 
         public function getModelAttributeNames()
         {
-            return array($attributeName);
+            return array($this->attributeName);
         }
 
         /**

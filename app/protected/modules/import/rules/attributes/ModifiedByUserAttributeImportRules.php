@@ -29,6 +29,11 @@
      */
     class ModifiedByUserAttributeImportRules extends DerivedAttributeImportRules
     {
+        public function getModelAttributeNames()
+        {
+            return array('modifiedByUser');
+        }
+
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');

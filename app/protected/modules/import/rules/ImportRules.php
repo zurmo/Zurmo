@@ -30,6 +30,13 @@
      */
     abstract class ImportRules
     {
+        public static function getType()
+        {
+            $type = get_called_class();
+            $type = substr($name, 0, strlen($name) - strlen('ImportRules'));
+            return $type;
+        }
+
         public static function getModelClassName()
         {
         }
@@ -104,6 +111,13 @@
             return $modelAttributesAdapter->getAttributes();
         }
 
+        public static function getAttributesCollection()
+        {
+            $modelClassName         = static::getModelClassName();
+            $modelAttributesAdapter = new ModelAttributesImportMappingAdapter(new $modelClassName(false));
+            return $modelAttributesAdapter->getAttributes();
+        }
+
         public static function getModelClassNameByAttributeNameOrDerivedType($attributeNameOrDerivedType)
         {
             assert('is_string($attributeNameOrDerivedType)');
@@ -141,6 +155,22 @@
                 $attributeNameOrDerivedTypeAndRuleType[$derivedType] = $derivedType;
             }
             return $attributeNameOrDerivedTypeAndRuleType;
+        }
+
+        public static function getRequiredAttributesCollectionNotIncludingReadOnly()
+        {
+            $modelClassName                        = static::getModelClassName();
+            $model                                 = new $modelClassName(false);
+            $attributesCollection                  = static::getAttributesCollectionByModelClassName($modelClassName);
+            $requireAttributesCollection           = array();
+            foreach($attributesCollection as $attributeIndex => $attributeData)
+            {
+                if($attributeData['isRequired'] && !$model->isAttributeReadOnly($attributeData['attributeName']))
+                {
+                    $requireAttributesCollection[$attributeIndex] = $attributeData;
+                }
+            }
+            return $requireAttributesCollection;
         }
     }
 ?>
