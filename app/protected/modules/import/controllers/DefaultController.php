@@ -148,28 +148,37 @@
             {
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
 
-                if(ImportWizardUtil::validateMappingRulesByForm($importWizardForm))
+                $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
+                                                              makeFormsAndElementTypesByMappingDataAndImportRulesType(
+                                                              $importWizardForm->mappingData,
+                                                              $importWizardForm->importRulesType);
+
+                if(MappingRuleFormAndElementTypeUtil::validateMappingRuleForms(
+                                                      $mappingDataMappingRuleFormsAndElementTypes))
                 {
                     $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
                 }
             }
-            $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
-                                                          makeFormsAndElementTypesByMappingDataAndImportRulesType(
-                                                          $importWizardForm->mappingData,
-                                                          $importWizardForm->importRulesType);
-            $mappingDataMetadata                        = ImportWizardMappingViewUtil::
-                                                          resolveMappingDataForView($importWizardForm->mappingData,
-                                                          $tempTableName,
-                                                          $importWizardForm->firstRowIsHeaderRow);
+            else
+            {
+                $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
+                                                              makeFormsAndElementTypesByMappingDataAndImportRulesType(
+                                                              $importWizardForm->mappingData,
+                                                              $importWizardForm->importRulesType);
+            }
+            $mappingDataMetadata                            = ImportWizardMappingViewUtil::
+                                                              resolveMappingDataForView($importWizardForm->mappingData,
+                                                              $tempTableName,
+                                                              $importWizardForm->firstRowIsHeaderRow);
 
-            $importView                                 = new GridView(2, 1);
+            $importView                                     = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 4 of 6')), 0, 0);
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
                                                              $importWizardForm,
                                                              $mappingDataMetadata,
                                                              $mappingDataMappingRuleFormsAndElementTypes), 1, 0);
-            $view                                       = new ImportPageView($this, $importView);
+            $view                                           = new ImportPageView($this, $importView);
             echo $view->render();
         }
 
@@ -225,7 +234,7 @@
             ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
         }
 
-        protected function attemptToValidateImportWizardFormAndSave(& $importWizardForm, & $import, $redirectAction)
+        protected function attemptToValidateImportWizardFormAndSave($importWizardForm, $import, $redirectAction)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('$import instanceof Import');

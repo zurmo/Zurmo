@@ -75,7 +75,7 @@
          * @param object $importWizardForm
          * @param array $postData
          */
-        public static function setFormByPostForStep1(& $importWizardForm, $postData)
+        public static function setFormByPostForStep1($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData) && isset($postData["importRulesType"])');
@@ -90,14 +90,14 @@
             $importWizardForm->importRulesType = $postData['importRulesType'];
         }
 
-        public static function setFormByPostForStep2(& $importWizardForm, $postData)
+        public static function setFormByPostForStep2($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData) && isset($postData["firstRowIsHeaderRow"])');
             $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow']));
         }
 
-        public static function setFormByPostForStep3(& $importWizardForm, $postData)
+        public static function setFormByPostForStep3($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData) && isset($postData["explicitReadWriteModelPermissions"])');
@@ -106,11 +106,11 @@
                                                                    $postData['explicitReadWriteModelPermissions']);
         }
 
-        public static function setFormByPostForStep4(& $importWizardForm, $postData)
+        public static function setFormByPostForStep4($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["explicitReadWriteModelPermissions"])');
-            //todo: this should populate the mappingData fully including the rules data from post.
+            assert('is_array($postData)');
+            $importWizardForm->mappingData = $postData;
         }
 
 

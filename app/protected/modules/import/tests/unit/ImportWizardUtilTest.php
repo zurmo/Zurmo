@@ -200,7 +200,19 @@
          */
         public function testSetFormByPostForStep4()
         {
-            //ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
+            $fakeData                      = array();
+            $columnName                    = 'column_0';
+            $fakeData[$columnName]['attributeNameOrDerivedType']     = 'string';
+            $fakeData[$columnName]['type']                           = 'importColumn';
+            $fakeData[$columnName]['mappingRulesData']
+            ['DefaultValueModelAttributeMappingRuleForm']
+            ['defaultValue']                                         = 'someDefault';
+
+            $importWizardForm = new ImportWizardForm();
+            $importWizardForm->importRulesType = 'ImportModelTestItem';
+            ImportWizardUtil::setFormByPostForStep4($importWizardForm, $fakeData);
+            $compareData = $fakeData;
+            $this->assertEquals($compareData, $importWizardForm->mappingData);
         }
     }
 ?>

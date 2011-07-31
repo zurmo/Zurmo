@@ -29,15 +29,6 @@
      */
     class ImportWizardForm extends ConfigurableMetadataModel
     {
-
-        const MAPPING_COLUMN_ATTRIBUTE = 1;
-
-        const MAPPING_COLUMN_TYPE      = 2;
-
-        const MAPPING_COLUMN_IMPORT    = 3;
-
-        const MAPPING_COLUMN_RULES     = 4;
-
         /**
          * Set externally as the import model id when available;
          * @var integer

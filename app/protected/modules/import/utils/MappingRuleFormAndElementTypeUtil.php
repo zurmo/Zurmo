@@ -37,13 +37,55 @@
             foreach($attributeImportRules::getModelAttributeMappingRuleFormTypesAndElementTypes()
                     as $mappingRuleFormType => $elementType)
             {
-                $mappingRuleFormClassName = $mappingRuleFormType . 'MappingRuleForm';
-                $mappingRuleForm = new $mappingRuleFormClassName($attributeImportRules->getModelClassName(),
-                                                                 $attributeNameOrDerivedType);
+                $mappingRuleFormClassName          = $mappingRuleFormType . 'MappingRuleForm';
+                $mappingRuleForm                   = new $mappingRuleFormClassName(
+                                                         $attributeImportRules->getModelClassName(),
+                                                         $attributeNameOrDerivedType);
                 $mappingRuleFormsAndElementTypes[] = array('elementType'     => $elementType,
                                                            'mappingRuleForm' => $mappingRuleForm);
             }
             return $mappingRuleFormsAndElementTypes;
+        }
+
+        public static function makeFormsAndElementTypesByMappingDataAndImportRulesType($mappingData, $importRulesType)
+        {
+            assert('is_array($mappingData)');
+            assert('is_string($importRulesType)');
+            $mappingRuleFormsAndElementTypes = array();
+            foreach($mappingData as $columnName => $mappingData)
+            {
+                $mappingRuleFormsAndElementTypes[$columnName] = array();
+                assert('isset($mappingData["mappingRulesData"]');
+                assert('$mappingData["attributeNameOrDerivedType"] != null');
+                $attributeImportRules = AttributeImportRulesFactory::
+                                        makeByImportRulesTypeAndAttributeNameOrDerivedType(
+                                        $importRulesType, $mappingData['attributeNameOrDerivedType']);
+                assert('$attributeImportRules!= null');
+                foreach($mappingData["mappingRulesData"] as $mappingRuleFormClassName => $mappingRuleFormData)
+                {
+                    $mappingRuleFormAndElementTypes = $attributeImportRules::
+                                                      getModelAttributeMappingRuleFormTypesAndElementTypes();
+                    $elementType                    = $mappingRuleFormAndElementTypes[$mappingRuleFormClassName];
+                    $mappingRuleForm                = new $mappingRuleFormClassName();
+                    $mappingRuleForm->setAttributes   ($mappingRuleFormData);
+                    $mappingRuleFormsAndElementTypes[$columnName][]= array('mappingRuleForm' => $mappingRuleForm,
+                                                                           'elementType'     => $elementType);
+                }
+            }
+            return $mappingRuleFormsAndElementTypes;
+        }
+
+
+        public static function validateMappingRuleForms($mappingDataMappingRuleFormsAndElementTypes)
+        {
+            assert('is_array($mappingDataMappingRuleFormsAndElementTypes)');
+            $validated = true;
+            foreach($mappingDataMappingRuleFormsAndElementTypes as $mappingRuleFormData)
+            {
+                assert('$mappingRuleFormData["mappingRuleForm"] instanceof MappingRuleForm');
+                $validated = $mappingRuleFormData["mappingRuleForm"]->validate();
+            }
+            return $validated;
         }
     }
 ?>

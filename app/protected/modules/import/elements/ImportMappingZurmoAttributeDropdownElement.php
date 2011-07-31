@@ -60,6 +60,20 @@
             return $importRulesClassName::getMappableAttributeNamesAndDerivedTypes();
         }
 
+        protected function getEditableHtmlOptions()
+        {
+            $htmlOptions = array(
+                'name' => $this->getNameForSelectInput(),
+                'id'   => $this->getIdForSelectInput(),
+            );
+            if ($this->getAddBlank())
+            {
+                $htmlOptions['empty'] = Yii::t('Default', 'None');
+            }
+            $htmlOptions['disabled'] = $this->getDisabledValue();
+            return $htmlOptions;
+        }
+
         protected function getIdForSelectInput()
         {
             return $this->getEditableInputId();

@@ -104,7 +104,7 @@
             return $content;
         }
 
-        protected function ResolveMappingRuleFormsAndElementTypesByColumn($columnName)
+        protected function resolveMappingRuleFormsAndElementTypesByColumn($columnName)
         {
             assert('is_string($columnName)');
             if(isset($this->mappingDataMappingRuleFormsAndElementTypes[$columnName]))
@@ -166,9 +166,7 @@
         {
             assert('is_string($columnName)');
             assert('is_string($sampleValue) || $sampleValue == null');
-            $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                         $columnName,
-                                         ImportWizardForm::MAPPING_COLUMN_IMPORT);
+            $attributeName             = $columnName . '-import-data';
             $content  = '<td>';
             $contentt = '<div id="{$attributeName}">' . $sampleValue . '</div>';
             $content .= '</td>';
