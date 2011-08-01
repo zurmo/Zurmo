@@ -36,7 +36,7 @@
         public static function getType()
         {
             $type = get_called_class();
-            $type = substr($name, 0, strlen($name) - strlen('ImportRules'));
+            $type = substr($type, 0, strlen($type) - strlen('ImportRules'));
             return $type;
         }
 

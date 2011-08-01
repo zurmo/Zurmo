@@ -54,7 +54,8 @@
 
         /**
          * Given an array of mapping data and an import rules type, make an array of mapping rule forms
-         * and element types.  This is indexed by the column name from the mapping data.
+         * and element types.  This is indexed by the column name from the mapping data.  If the type of column
+         * is 'extraColumn', then the mapping rules forms will be set with the scenario 'extraColumn'.
          * @param array $mappingData
          * @param string $importRulesType
          */
@@ -63,27 +64,48 @@
             assert('is_array($mappingData)');
             assert('is_string($importRulesType)');
             $mappingRuleFormsAndElementTypes = array();
-            foreach($mappingData as $columnName => $mappingData)
+            foreach($mappingData as $columnName => $mappingDataByColumn)
             {
                 $mappingRuleFormsAndElementTypes[$columnName] = array();
-                assert('isset($mappingData["mappingRulesData"]');
-                assert('$mappingData["attributeIndexOrDerivedType"] != null');
+                assert('isset($mappingDataByColumn["mappingRulesData"])');
+                assert('$mappingDataByColumn["type"] == "importColumn" || $mappingDataByColumn["type"] == "extraColumn"');
+                assert('$mappingDataByColumn["attributeIndexOrDerivedType"] != null');
                 $attributeImportRules = AttributeImportRulesFactory::
                                         makeByImportRulesTypeAndAttributeIndexOrDerivedType(
-                                        $importRulesType, $mappingData['attributeIndexOrDerivedType']);
+                                        $importRulesType, $mappingDataByColumn['attributeIndexOrDerivedType']);
                 assert('$attributeImportRules!= null');
-                foreach($mappingData["mappingRulesData"] as $mappingRuleFormClassName => $mappingRuleFormData)
+                foreach($mappingDataByColumn["mappingRulesData"] as $mappingRuleFormClassName => $mappingRuleFormData)
                 {
                     $mappingRuleFormAndElementTypes = $attributeImportRules::
                                                       getModelAttributeMappingRuleFormTypesAndElementTypes();
-                    $elementType                    = $mappingRuleFormAndElementTypes[$mappingRuleFormClassName];
-                    $mappingRuleForm                = new $mappingRuleFormClassName();
+                    $elementType                    = $mappingRuleFormAndElementTypes
+                                                      [$mappingRuleFormClassName::getType()];
+                    $mappingRuleForm                = static::makeForm($importRulesType,
+                                                      $mappingDataByColumn['attributeIndexOrDerivedType'],
+                                                      $mappingRuleFormClassName);
+                    if($mappingDataByColumn['type'] == "extraColumn")
+                    {
+                        $mappingRuleForm->setScenario = 'extraColumn';
+                    }
                     $mappingRuleForm->setAttributes   ($mappingRuleFormData);
                     $mappingRuleFormsAndElementTypes[$columnName][]= array('mappingRuleForm' => $mappingRuleForm,
                                                                            'elementType'     => $elementType);
                 }
             }
             return $mappingRuleFormsAndElementTypes;
+        }
+
+        protected static function makeForm($importRulesType, $attributeIndexOrDerivedType, $mappingRuleFormClassName)
+        {
+            assert('is_string($importRulesType)');
+            assert('is_string($attributeIndexOrDerivedType)');
+            assert('is_string($mappingRuleFormClassName)');
+            $importRulesTypeClassName = $importRulesType . 'ImportRules';
+            $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeIndexOrDerivedType(
+                                        $attributeIndexOrDerivedType);
+            $mappingRuleForm          = new $mappingRuleFormClassName($importRulesTypeClassName::getModelClassName(),
+                                        $attributeIndexOrDerivedType);
+            return $mappingRuleForm;
         }
 
         /**
@@ -94,9 +116,9 @@
          */
         public static function validateMappingRuleForms($mappingRuleFormsData)
         {
-            assert('is_array($mappingRuleFormsAndElementTypes)');
+            assert('is_array($mappingRuleFormsData)');
             $anyValidatedFalse = false;
-            foreach($mappingRuleFormsAndElementTypes as $mappingRuleFormData)
+            foreach($mappingRuleFormsData as $mappingRuleFormData)
             {
                 assert('$mappingRuleFormData["mappingRuleForm"] instanceof MappingRuleForm');
                 if(!$mappingRuleFormData["mappingRuleForm"]->validate())

@@ -44,6 +44,21 @@
             {
                 throw new NoRowsInTableException();
             }
+            //handles scenario where there is no data in the file, but because there are a few bytes,
+            //it creates a single row.
+            if(count($firstRowData) == 2)
+            {
+                foreach($firstRowData as $columnName => $value)
+                {
+                    if($columnName != 'id' && $value == null)
+                    {
+                        if(ImportDatabaseUtil::getCount($tableName) == 1)
+                        {
+                            throw new NoRowsInTableException();
+                        }
+                    }
+                }
+            }
             $mappingData = array();
             foreach($firstRowData as $columnName => $notUsed)
             {
@@ -66,11 +81,14 @@
          */
         public static function getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData)
         {
-            assert('is_array($mappingData');
-            $mappedAttributeIndicesOrDerivedAttributeTypes = array();
+            assert('is_array($mappingData)');
+            $mappedAttributeIndicesOrDerivedAttributeTypes = null;
             foreach($mappingData as $data)
             {
-                $mappedAttributeIndicesOrDerivedAttributeTypes[] = $data['attributeIndexOrDerivedType'];
+                if($data['attributeIndexOrDerivedType'] != null)
+                {
+                    $mappedAttributeIndicesOrDerivedAttributeTypes[] = $data['attributeIndexOrDerivedType'];
+                }
             }
             return $mappedAttributeIndicesOrDerivedAttributeTypes;
         }

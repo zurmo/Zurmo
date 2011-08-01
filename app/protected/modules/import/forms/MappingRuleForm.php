@@ -32,7 +32,16 @@
      */
     abstract class MappingRuleForm extends ConfigurableMetadataModel
     {
-        protected $scenario;
+        /**
+         * @return string - If the class name is DefaultValueModelAttributeMappingRuleForm,
+         * then 'DefaultValueModelAttribute' will be returned.
+         */
+        public static function getType()
+        {
+            $type = get_called_class();
+            $type = substr($type, 0, strlen($type) - strlen('MappingRuleForm'));
+            return $type;
+        }
 
         /**
          * A mapping rule form has one attribute. This returns the name of that attribute.
@@ -49,11 +58,6 @@
         public function attributeLabels()
         {
             return array();
-        }
-
-        public function setScenario($scenario)
-        {
-            $this->scenario = $scenario;
         }
     }
 ?>

@@ -81,7 +81,7 @@
         {
             assert('is_array($requiredAttributeCollection)');
             assert('is_array($mappedAttributeImportRulesCollection)');
-            foreach($mappedAttributeImportRulesCollection as $attributeImportRules)
+            foreach($mappedAttributeImportRulesCollection as $attributeIndex => $attributeImportRules)
             {
                 $modelAttributeNames        = array();
                 if($attributeImportRules instanceof DerivedAttributeImportRules)
@@ -90,7 +90,7 @@
                 }
                 elseif($attributeImportRules instanceof AttributeImportRules)
                 {
-                    $modelAttributeNames[0] = $mappedAttributeIndexOrDerivedAttributeType;
+                    $modelAttributeNames[0] = $attributeIndex;
                 }
                 else
                 {
@@ -135,17 +135,18 @@
                     $modelAttributeNames       = $attributeImportRules->getModelAttributeNames();
                     foreach($modelAttributeNames as $modelAttributeName)
                     {
-                        if(array_search($modelAttributeName, $mappedModelAttributeNames))
+                        if(in_array($modelAttributeName, $mappedModelAttributeNames))
                         {
-                            throw new ImportAttributeMappedMoreThanOnceException($attributeImportRules->getDisplayLabel());
+                            throw new ImportAttributeMappedMoreThanOnceException($modelAttributeName);
                         }
                         $mappedModelAttributeNames[] = $modelAttributeName;
                     }
                 }
                 else
                 {
-                    throw notSupportedException();
+                    throw new NotSupportedException();
                 }
+
             }
         }
     }

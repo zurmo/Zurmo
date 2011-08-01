@@ -55,7 +55,7 @@
             assert('isset($mixedPermitablesData["readOnly"])');
             assert('isset($mixedPermitablesData["readWrite"])');
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
-            foreach($mixedPermitablesData['readOnly'] as $permitableClassName => $permitableData)
+            foreach($mixedPermitablesData['readOnly'] as $permitableData)
             {
                 $permitableClassName = key($permitableData);
                 $permitableId        = $permitableData[$permitableClassName];
@@ -112,7 +112,6 @@
         public static function makeByPostData($postData)
         {
             assert('is_array($postData)');
-            assert('isset($postData["type"])');
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             if($postData['type'] == null)
             {

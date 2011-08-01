@@ -64,12 +64,16 @@
         public static function makeCollection($importRulesType, $attributeIndicesOrDerivedTypes)
         {
             assert('is_string($importRulesType)');
-            assert('is_array($attributeIndicesOrDerivedTypes)');
+            assert('$attributeIndicesOrDerivedTypes == null || is_array($attributeIndicesOrDerivedTypes)');
             $collection   = array();
-            foreach($attributeIndicesOrDerivedTypes as $attributeIndexOrDerivedAttributeType)
+            if($attributeIndicesOrDerivedTypes != null)
             {
-                $collection[] = self::makeByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
-                                $attributeIndexOrDerivedAttributeType);
+                foreach($attributeIndicesOrDerivedTypes as $attributeIndexOrDerivedAttributeType)
+                {
+                    $collection[$attributeIndexOrDerivedAttributeType] =
+                                    self::makeByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
+                                    $attributeIndexOrDerivedAttributeType);
+                }
             }
             return $collection;
         }

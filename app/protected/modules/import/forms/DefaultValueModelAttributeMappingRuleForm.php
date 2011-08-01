@@ -35,7 +35,7 @@
 
         public function rules()
         {
-            if($this->scenario == 'extraColumn')
+            if($this->getScenario() == 'extraColumn')
             {
                 $requiredRuleIsApplicable = true;
             }
@@ -48,7 +48,7 @@
                                                          $this->modelClassName,
                                                          $this->attributeName,
                                                          $requiredRuleIsApplicable);
-            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+                                                         return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
 
         public function attributeLabels()

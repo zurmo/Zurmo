@@ -54,5 +54,22 @@
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest3.csv', $testTableName));
             ImportMappingUtil::makeMappingDataByTableName($testTableName);
         }
+
+        public function testGetMappedAttributeIndicesOrDerivedAttributeTypesByMappingData()
+        {
+            $mappingData = array(
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'a', 'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'b', 'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'c', 'mappingRulesData' => null),
+            );
+            $data = ImportMappingUtil::getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData);
+            $this->assertEquals(array('a', 'b', 'c'), $data);
+
+            $mappingData = array(
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+            );
+            $data = ImportMappingUtil::getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData);
+            $this->assertNull($data);
+        }
     }
 ?>

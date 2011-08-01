@@ -31,6 +31,7 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
+
         public function testGetMappableAttributeIndicesAndDerivedTypes()
         {
             $data = ImportModelTestItemImportRules::getMappableAttributeIndicesAndDerivedTypes();
@@ -93,6 +94,42 @@
                 'AccountImportRules' => 'Accounts',
             );
             $this->assertEquals($compareData, $data);
+        }
+
+        public function testGetType()
+        {
+            $this->assertEquals('ImportModelTestItem', ImportModelTestItemImportRules::getType());
+        }
+
+        public function testGetRequiredAttributesCollectionNotIncludingReadOnly()
+        {
+            Yii::app()->user->userModel   = User::getByUsername('super');
+            $requiredAttributesCollection = ImportModelTestItemImportRules::
+                                            getRequiredAttributesCollectionNotIncludingReadOnly();
+            $this->assertEquals(3, count($requiredAttributesCollection));
+            $compareData = array(
+                'lastName' => array(
+                        'attributeLabel'           => 'Last Name',
+                        'attributeName'            => 'lastName',
+                        'relationAttributeName'    => null,
+                        'attributeImportRulesType' => 'Text',
+                        'isRequired'               => true
+                ),
+                'owner' => array(
+                        'attributeLabel'           => 'Owner',
+                        'attributeName'            => 'owner',
+                        'relationAttributeName'    => null,
+                        'attributeImportRulesType' => 'User',
+                        'isRequired'               => true
+                ),
+                'string' => array(
+                        'attributeLabel'           => 'String',
+                        'attributeName'            => 'string',
+                        'relationAttributeName'    => null,
+                        'attributeImportRulesType' => 'Text',
+                        'isRequired'			   => true
+                ));
+            $this->assertEquals($compareData, $requiredAttributesCollection);
         }
     }
 ?>

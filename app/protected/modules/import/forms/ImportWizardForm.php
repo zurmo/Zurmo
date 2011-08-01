@@ -107,12 +107,13 @@
          * user input. Runs several different validations on the data.  This does not validate the validity of the
          * mapping rules data itself. That is done seperately.
          * @see MappingRuleFormAndElementTypeUtil::validateMappingRuleForms
-         * @param unknown_type $attribute
-         * @param unknown_type $params
+         * @param string $attribute
+         * @param array $params
          */
         public function validateMappingData($attribute, $params)
         {
             assert('$this->importRulesType != null');
+            assert('$this->mappingData != null');
             $atLeastOneAttributeMappedOrHasRules   = false;
             $attributeMappedOrHasRulesMoreThanOnce = false;
             $mappedAttributes                      = array();
@@ -147,7 +148,7 @@
                                                              getRequiredAttributesCollectionNotIncludingReadOnly();
             $mappedAttributeImportRulesCollection          = AttributeImportRulesFactory::makeCollection(
                                                              $this->importRulesType,
-                                                             $mappedAttributeIndicesOrDerivedTypes);
+                                                             $mappedAttributeIndicesOrDerivedAttributeTypes);
             if(!ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
                                                                            $mappedAttributeImportRulesCollection))
             {

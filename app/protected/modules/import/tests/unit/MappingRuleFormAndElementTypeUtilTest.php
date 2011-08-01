@@ -68,5 +68,54 @@
             $this->assertEquals('CurrencyRateToBaseModelAttributeMappingRuleForm',
                                 get_class($collection[2]['mappingRuleForm']));
         }
+
+        public function testMakeFormsAndElementTypesByMappingDataAndImportRulesType()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $mappingData = array(
+                           'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'string',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'abc'))),
+                           'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'lastName',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'def'))),
+            );
+            $data = MappingRuleFormAndElementTypeUtil::
+                    makeFormsAndElementTypesByMappingDataAndImportRulesType($mappingData, 'ImportModelTestItem');
+            $this->assertEquals(2, count($data));
+            $this->assertEquals('abc',  $data['column_0'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Text', $data['column_0'][0]['elementType']);
+            $this->assertEquals('def',  $data['column_1'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Text', $data['column_1'][0]['elementType']);
+        }
+
+        public function testValidateMappingRuleForms()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $stringDefaultValueMappingRuleForm   = new DefaultValueModelAttributeMappingRuleForm(
+                                                   'ImportModelTestItem', 'string');
+            $stringDefaultValueMappingRuleForm->defaultValue = 'abc';
+            $lastNameDefaultValueMappingRuleForm = new DefaultValueModelAttributeMappingRuleForm(
+                                                   'ImportModelTestItem', 'lastName');
+            //Validate true because scenario is not extra column
+            $mappingRuleFormsData = array(array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
+                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm));
+            $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
+            $this->assertTrue($validated);
+
+            //Now the scenario is extra column, so the lastName column will require validation.
+            $lastNameDefaultValueMappingRuleForm = new DefaultValueModelAttributeMappingRuleForm(
+                                                   'ImportModelTestItem', 'lastName');
+            $lastNameDefaultValueMappingRuleForm->setScenario('extraColumn');
+            $mappingRuleFormsData = array(array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
+                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm));
+            $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
+            $this->assertFalse($validated);
+
+            //Now will validate true because we are populating the default value.
+            $lastNameDefaultValueMappingRuleForm->defaultValue = 'def';
+            $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
+            $this->assertTrue($validated);
+        }
     }
 ?>
