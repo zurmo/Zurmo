@@ -59,7 +59,7 @@
                         }
                         if($addToArray)
                         {
-                            $importRulesTypes[$ruleClassName] = $ruleClassName::getDisplayLabel();
+                            $importRulesTypes[$ruleClassName::getType()] = $ruleClassName::getDisplayLabel();
                         }
                     }
                 }

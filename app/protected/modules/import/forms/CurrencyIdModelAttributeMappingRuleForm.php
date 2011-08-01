@@ -34,9 +34,9 @@
     {
         public $id;
 
-        public function __construct($modelClassName, $attributeName)
+        public function __construct($modelClassName, $modelAttributeName)
         {
-            parent::__construct($modelClassName, $attributeName);
+            parent::__construct($modelClassName, $modelAttributeName);
             assert('Yii::app()->user->userModel != null');
             $this->id = Yii::app()->user->userModel->currency->id;
         }

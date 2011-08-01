@@ -25,13 +25,31 @@
      ********************************************************************************/
 
     /**
-     * This form is used for mapping a default value for an attribute during an import.  If the row does not have a
-     * value for the mapped attribute, then an alternative default value can be specified and used.  This form has
-     * one attribute $defaultValue that gets its rules directly from the attribute on the model that is specified.
      */
-    class DefaultValueModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
+    class DefaultModelNameIdMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        public $defaultValue;
+        public    $defaultModelId;
+
+        public    $defaultModelStringifiedName;
+
+        protected $moduleIdOfDefaultModel;
+
+        public function __construct($modelClassName, $modelAttributeName)
+        {
+            parent::__construct($modelClassName, $modelAttributeName);
+            $model = new $modelClassName(false);
+            assert('$model instanceof Item');
+            assert('$model->isRelation($modelAttributeName)');
+            $relationModelClassName       = $model->getRelationModelClassName($modelAttributeName);
+            $defaultModuleClassName       = $relationModelClassName::getModuleClassName();
+            $this->moduleIdOfDefaultModel = $defaultModuleClassName::getDirectoryName();
+        }
+
+        //todo: there is here because modelElement is lookign for it...
+        public function getId()
+        {
+            return null;
+        }
 
         public function rules()
         {
@@ -53,12 +71,36 @@
 
         public function attributeLabels()
         {
-            return array('defaultValue'   => Yii::t('Default', 'Default Value'));
+            return array('defaultModelId'              => Yii::t('Default', 'Default Value'),
+                         'defaultModelStringifiedName' => Yii::t('Default', 'Default Name'));
         }
 
         public static function getAttributeName()
         {
-            return 'defaultValue';
+            return 'defaultModelId';
+        }
+
+        public function getDefaultModelName()
+        {
+            if($this->defaultModelName != null)
+            {
+                return $this->defaultModelName;
+            }
+            elseif($this->defaultModelId != null)
+            {
+                $modelClassName                    = $this->modelClassName;
+                $this->defaultModelStringifiedName = strval($modelClassName::getById($this->defaultModelId));
+                return $this->defaultModelStringifiedName;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public function getModuleIdOfDefaultModel()
+        {
+            $this->moduleIdOfDefaultModel;
         }
     }
 ?>

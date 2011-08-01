@@ -141,10 +141,11 @@
          */
         public function actionStep4($id)
         {
-            $import           = Import::getById((int)$_GET['id']);
-            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
+            $import               = Import::getById((int)$_GET['id']);
+            $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
             $importWizardForm->setScenario('saveMappingData');
-            $tempTableName    = $import->getTempTableName();
+            $tempTableName        = $import->getTempTableName();
+            $importRulesClassName = $importWizardForm->importRulesType . 'ImportRules';
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
@@ -169,17 +170,38 @@
             $mappingDataMetadata                            = ImportWizardMappingViewUtil::
                                                               resolveMappingDataForView($importWizardForm->mappingData,
                                                               $tempTableName,
-                                                              $importWizardForm->firstRowIsHeaderRow);
-
+                                                              (bool)$importWizardForm->firstRowIsHeaderRow);
+            $mappableAttributeIndicesAndDerivedTypes        = $importRulesClassName::
+                                                              getMappableAttributeIndicesAndDerivedTypes();
             $importView                                     = new GridView(2, 1);
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 4 of 6')), 0, 0);
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
                                                              $importWizardForm,
                                                              $mappingDataMetadata,
-                                                             $mappingDataMappingRuleFormsAndElementTypes), 1, 0);
+                                                             $mappingDataMappingRuleFormsAndElementTypes,
+                                                             $mappableAttributeIndicesAndDerivedTypes), 1, 0);
             $view                                           = new ImportPageView($this, $importView);
             echo $view->render();
+        }
+
+        public function actionMappingRulesEdit($id, $attributeIndexOrDerivedType, $columnName, $columnType)
+        {
+            $import                                  = Import::getById((int)$_GET['id']);
+            $importWizardForm                        = ImportWizardUtil::makeFormByImport($import);
+            $importRulesClassName                    = $importWizardForm->importRulesType . 'ImportRules';
+            $mappableAttributeIndicesAndDerivedTypes = $importRulesClassName::
+                                                       getMappableAttributeIndicesAndDerivedTypes();
+            $mappingFormLayoutUtil                   = new MappingFormLayoutUtil(
+                                                       get_class($importWizardForm),
+                                                       new ZurmoActiveForm(),
+                                                       $mappableAttributeIndicesAndDerivedTypes);
+            echo $mappingFormLayoutUtil->renderMappingRulesElements(
+                                                       $columnName,
+                                                       $attributeIndexOrDerivedType,
+                                                       $importWizardForm->importRulesType,
+                                                       $columnType,
+                                                       array());
         }
 
         /**

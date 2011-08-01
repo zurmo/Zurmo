@@ -31,7 +31,7 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute'  => 'User',
+            return array('DefaultModelNameId'          => 'ImportMappingRuleDefaultModelNameId',
                          'UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
         }
 

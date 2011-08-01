@@ -31,7 +31,7 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'CurrencyValue',
+            return array('DefaultValueModelAttribute'       => 'CurrencyValue',
                          'CurrencyIdModelAttribute'         => 'CurrencyDropDown',
                          'CurrencyRateToBaseModelAttribute' => 'Decimal');
         }

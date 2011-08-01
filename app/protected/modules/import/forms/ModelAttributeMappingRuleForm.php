@@ -31,14 +31,14 @@
     {
         protected $modelClassName;
 
-        protected $attributeName;
+        protected $modelAttributeName;
 
-        public function __construct($modelClassName, $attributeName)
+        public function __construct($modelClassName, $modelAttributeName)
         {
             assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            $this->modelClassName = $modelClassName;
-            $this->attributeName  = $attributeName;
+            assert('is_string($modelAttributeName)');
+            $this->modelClassName     = $modelClassName;
+            $this->modelAttributeName = $modelAttributeName;
         }
     }
 ?>

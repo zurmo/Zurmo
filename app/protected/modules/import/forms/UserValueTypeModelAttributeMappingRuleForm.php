@@ -40,7 +40,7 @@
 
         public function rules()
         {
-            return array('type' => 'required');
+            return array(array('type', 'required'));
         }
 
         public function attributeLabels()

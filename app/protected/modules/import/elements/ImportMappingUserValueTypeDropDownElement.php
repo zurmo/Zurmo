@@ -58,7 +58,7 @@
             return array(
                 UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID  => yii::t('Default', 'Zurmo Id'),
                 UserValueTypeModelAttributeMappingRuleForm::OTHER_USER_ID  => yii::t('Default', 'Other Id'),
-                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME => yii::t('Default', 'Other Id'));
+                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME => yii::t('Default', 'Zurmo Username'));
         }
 
         protected function getIdForSelectInput()

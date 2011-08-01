@@ -24,64 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportMappingZurmoAttributeDropdownElement extends DropDownElement
+    /**
+     *
+     */
+    class ImportMappingRuleDefaultModelNameIdElement extends NameIdElement
     {
+        protected $idAttributeId = 'defaultModelId';
+
+        protected $nameAttributeName = 'defaultModelStringifiedName';
+
         /**
-         * Override to ensure the model is an ImportWizardForm.
+         * Override to ensure the model is the correct type of model. Also nullifying the attribute since
+         * it will not be used by this element.  Setting the null to a string version of 'null' which is how the
+         * view metadata normally sends this value in.
          */
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('$model instanceof ImportWizardForm');
-            assert('$model->importRulesType != null');
+            assert('$model instanceof DefaultModelNameIdMappingRuleForm');
             parent::__construct($model, $attribute, $form, $params);
         }
 
-        /**
-         * Override to utilize the correct attribute from the model as the value.
-         */
-        protected function renderControlEditable()
+        protected function resolveModuleId()
         {
-            return $this->form->dropDownList(
-                $this->model,
-                $this->attribute,
-                $this->getDropDownArray(),
-                $this->getEditableHtmlOptions()
-            );
+            return $this->model->getModuleIdOfDefaultModel();
         }
 
-        protected function renderControlNonEditable()
+        public static function getModuleId()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        protected function getDropDownArray()
+        public static function getModelAttributeNames()
         {
-            $importRulesClassName = $model->importRulesType . 'ImportRules';
-            return $importRulesClassName::getMappableAttributeIndicesAndDerivedTypes();
-        }
-
-        protected function getEditableHtmlOptions()
-        {
-            $htmlOptions = array(
-                'name' => $this->getNameForSelectInput(),
-                'id'   => $this->getIdForSelectInput(),
-            );
-            if ($this->getAddBlank())
-            {
-                $htmlOptions['empty'] = Yii::t('Default', 'None');
-            }
-            $htmlOptions['disabled'] = $this->getDisabledValue();
-            return $htmlOptions;
-        }
-
-        protected function getIdForSelectInput()
-        {
-            return $this->getEditableInputId();
-        }
-
-        protected function getNameForSelectInput()
-        {
-            return $this->getEditableInputName();
+            throw new NotSupportedException();
         }
     }
 ?>

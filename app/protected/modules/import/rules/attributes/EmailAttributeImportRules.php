@@ -31,7 +31,7 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Email');
+            return array('DefaultValueModelAttribute' => 'Text');
         }
 
         public static function getSanitizerUtilNames()

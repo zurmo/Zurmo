@@ -85,7 +85,7 @@
 
         protected function getIdForSelectLink()
         {
-            return $this->getEditableInputId(static::$moduleId, 'SelectLink');
+            return $this->getEditableInputId($this->resolveModuleId(), 'SelectLink');
         }
 
         /**

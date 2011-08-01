@@ -37,18 +37,26 @@
          */
         protected $mappingDataMetadata;
 
-        public function __construct($controllerId, $moduleId, ImportWizardForm $model, $mappingDataMetadata,
-                                    $mappingDataMappingRuleFormsAndElementTypes)
+        protected $mappableAttributeIndicesAndDerivedTypes;
+
+        public function __construct($controllerId,
+                                    $moduleId,
+                                    ImportWizardForm $model,
+                                    $mappingDataMetadata,
+                                    $mappingDataMappingRuleFormsAndElementTypes,
+                                    $mappableAttributeIndicesAndDerivedTypes)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($model->mappingData) && count($model->mappingData) > 0');
             assert('is_array($mappingDataMetadata)');
+            assert('is_array($mappableAttributeIndicesAndDerivedTypes)');
             $this->controllerId                               = $controllerId;
             $this->moduleId                                   = $moduleId;
             $this->model                                      = $model;
             $this->mappingDataMetadata                        = $mappingDataMetadata;
             $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
+            $this->mappableAttributeIndicesAndDerivedTypes    = $mappableAttributeIndicesAndDerivedTypes;
         }
 
         /**
@@ -57,51 +65,93 @@
           */
         protected function renderFormLayout($form = null)
         {
-            $content       = '';
+            assert('$form != null && $form instanceof ZurmoActiveForm');
+            $mappingFormLayoutUtil                   = new MappingFormLayoutUtil(get_class($this->model), $form,
+                                                       $this->mappableAttributeIndicesAndDerivedTypes);
+            $mappingDataMetadataWithRenderedElements = $this->resolveMappingDataMetadataWithRenderedElements(
+                                                                                  $mappingFormLayoutUtil,
+                                                                                  $this->mappingDataMetadata,
+                                                                                  $this->model->firstRowIsHeaderRow,
+                                                                                  $this->model->importRulesType,
+                                                                                  $this->model->id);
             $headerColumns  = $this->getFormLayoutHeaderColumnsContent();
-            assert('count($permissions) > 0');
+            assert('count($headerColumns) > 0');
 
+            $content  = $form->errorSummary($this->model);
             $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:20%" />';
-            $width = 80 / count($headerColumns);
-            foreach ($headerColumns as $notUsed)
-            {
-                $content .= '<col style="width:' . $width . '%" />';
-            }
+            $content .= '<col style="width:20%" />';
+            $content .= '<col style="width:20%" />';
+            $content .= '<col style="width:40%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr>';
-            $content .= '<th>&#160;</th>';
             foreach ($headerColumns as $headerColumnContent)
             {
                 $content .= '<th>' . $headerColumnContent . '</th>';
             }
             $content .= '</tr>';
-            foreach ($this->mappingDataMetadata as $columnName => $row)
-            {
-                assert('isset($row["attributeIndexOrDerivedType"])');
-                assert('$row["type"] == "importColumn" || $row["type"] == "extraColumn"');
-                assert('isset($row["sampleValue"])');
-                $content .= '<tr>';
-                $content .= $this->renderAttributeDropDownElement($columnName, $row['type']);
-                if($this->model->firstRowIsHeaderRow)
-                {
-                    assert('isset($row["headerValue"])');
-                    $content .= $this->renderHeaderColumnElement($columnName, $row['headerValue']);
-                }
-                $content .= $this->renderImportColumnElement ($columnName, $row['sampleValue']);
-                $content .= $this->renderMappingRulesElements(
-                                    $columnName,
-                                    $row["attributeIndexOrDerivedType"],
-                                    $this->model->importRulesType,
-                                    $row['type'],
-                                    $this->resolveMappingRuleFormsAndElementTypesByColumn($columnName));
-                $content .= '</tr>';
-            }
+            $content .= MappingFormLayoutUtil::
+                        renderMappingDataMetadataWithRenderedElements($mappingDataMetadataWithRenderedElements);
+
+
+
+
             $content .= '</tbody>';
             $content .= '</table>';
+            $content .= $this->renderActionLinksContent($form);
             return $content;
+        }
+
+        protected function getFormLayoutHeaderColumnsContent()
+        {
+            $headerColumns = array();
+            $headerColumns[] = Yii::t('Default', 'Zurmo Field');
+            if($this->model->firstRowIsHeaderRow)
+            {
+                $headerColumns[] = Yii::t('Default', 'Header');
+            }
+            $headerColumns[] = Yii::t('Default', 'Sample Row');
+            $headerColumns[] = Yii::t('Default', 'Rules');
+            return $headerColumns;
+        }
+
+        protected function resolveMappingDataMetadataWithRenderedElements($mappingFormLayoutUtil, $mappingDataMetadata,
+                                                                          $firstRowIsHeaderRow, $importRulesType, $id)
+        {
+            assert('$mappingFormLayoutUtil instanceof MappingFormLayoutUtil');
+            assert('is_int($id)');
+            $ajaxOnChangeUrl  = Yii::app()->createUrl("import/default/mappingRulesEdit", array('id' => $id));
+            $metadata         = array();
+            $metadata['rows'] = array();
+            foreach ($mappingDataMetadata as $columnName => $mappingDataRow)
+            {
+                assert('$mappingDataRow["type"] == "importColumn" || $mappingDataRow["type"] == "extraColumn"');
+                $row          = array();
+                $row['cells'] = array();
+                $row['cells'][] = $mappingFormLayoutUtil->renderAttributeAndColumnTypeContent(
+                                                                       $columnName,
+                                                                       $mappingDataRow['type'],
+                                                                       $mappingDataRow['attributeIndexOrDerivedType'],
+                                                                       $ajaxOnChangeUrl);
+                if($firstRowIsHeaderRow)
+                {
+                    assert('isset($mappingDataRow["headerValue"])');
+                    $row['cells'][] = $mappingFormLayoutUtil->renderHeaderColumnContent($columnName,
+                                                                                    $mappingDataRow['headerValue']);
+                }
+                $row['cells'][] = $mappingFormLayoutUtil->renderImportColumnContent ($columnName,
+                                                                                 $mappingDataRow['sampleValue']);
+                $row['cells'][] = $mappingFormLayoutUtil->renderMappingRulesElements(
+                                      $columnName,
+                                      $mappingDataRow['attributeIndexOrDerivedType'],
+                                      $importRulesType,
+                                      $mappingDataRow['type'],
+                                      $this->resolveMappingRuleFormsAndElementTypesByColumn($columnName));
+                $metadata['rows'][] = $row;
+            }
+            return $metadata;
         }
 
         protected function resolveMappingRuleFormsAndElementTypesByColumn($columnName)
@@ -114,118 +164,16 @@
             return array();
         }
 
-
-        protected function getFormLayoutHeaderColumnsContent()
+        protected function renderPreviousPageLinkContent($form)
         {
-            $headerColumns = array();
-            $headerColumns[] = Yii::t('Default', 'Zurmo Field');
-            if($this->model->firstRowIsHeaderRow)
-            {
-                $headerColumns[] = Yii::t('Default', 'Import Field');
-            }
-            $headerColumns[] = Yii::t('Default', 'Sample Value');
-            $headerColumns[] = Yii::t('Default', 'Rules');
-            return $headerColumns;
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/step3/',
+                                           array('id' => $this->model->id));
+            return CHtml::link(Yii::t('Default', 'Previous'), $route);
         }
 
-        protected function renderAttributeDropDownElement($columnName, $columnType)
+        protected function renderNextPageLinkContent($form)
         {
-            assert('is_string($columnName)');
-            assert('$columnType == "importColumn" || $columnType == "extraColumn"');
-            $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                         $columnName,
-                                         ImportWizardForm::MAPPING_COLUMN_ATTRIBUTE);
-            $element                   = new ImportMappingZurmoAttributeDropdownElement(
-                                            $this->model,
-                                            $attributeName,
-                                            $form);
-            $element->editableTemplate = '<td>{content}{error}</td>';
-            $content                   = $element->render();
-            $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                         $columnName,
-                                         ImportWizardForm::MAPPING_COLUMN_TYPE);
-            $htmlOptions               = array('id' => 'ImportWizardForm' . '_' . $attributeName);
-            $hiddenInputName           = 'ImportWizardForm' . '[' . $attributeName . ']';
-            $content                  .= hiddenField($hiddenInputName,
-                                                     $columnType,
-                                                     $idInputHtmlOptions);
-            return $content;
-        }
-
-        protected function renderHeaderColumnElement($columnName, $headerValue)
-        {
-            assert('is_string($columnName)');
-            assert('is_string($headerValue)');
-            $content  = '<td>';
-            $contentt = $headerValue;
-            $content .= '</td>';
-            return $content;
-        }
-
-        protected function renderImportColumnElement($columnName, $sampleValue)
-        {
-            assert('is_string($columnName)');
-            assert('is_string($sampleValue) || $sampleValue == null');
-            $attributeName             = $columnName . '-import-data';
-            $content  = '<td>';
-            $contentt = '<div id="{$attributeName}">' . $sampleValue . '</div>';
-            $content .= '</td>';
-            return $content;
-        }
-
-        protected function renderMappingRulesElements($columnName,
-                                                      $attributeIndexOrDerivedType,
-                                                      $importRulesType,
-                                                      $columnType,
-                                                      $mappingRuleFormsAndElementTypes)
-        {
-            assert('is_string($columnName)');
-            assert('is_string($attributeIndexOrDerivedType)');
-            assert('is_string($importRulesType)');
-            assert('$columnType == "importColumn" || $columnType == "extraColumn"');
-            assert('is_array($mappingRuleFormsAndElementTypes) || $mappingRuleFormsAndElementTypes == null');
-            $content = '<td>';
-            if($attributeIndexOrDerivedType != null)
-            {
-                if($mappingRuleFormsAndElementTypes == null)
-                {
-                    $attributeImportRules            = AttributeImportRulesFactory::
-                                                       makeByImportRulesTypeAndAttributeIndexOrDerivedType(
-                                                           $importRulesType,
-                                                           $attributeIndexOrDerivedType);
-                    $mappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
-                                                       makeCollectionByAttributeImportRules(
-                                                           $attributeImportRules,
-                                                           $attributeIndexOrDerivedType);
-                }
-                foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
-                {
-                    $mappingRuleForm       = $ruleFormAndElementType['mappingRuleForm'];
-                    if($columnType == 'ExtraAttribute')
-                    {
-                        $mappingRuleForm->setScenario('ExtraAttribute');
-                    }
-                    $elementClassName      = $ruleFormAndElementType['elementType'] . 'Element';
-                    $attributeName         = $mappingRuleForm::getAttributeName();
-                    $modelAttributeName    = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
-                                             $columnName,
-                                             ImportWizardForm::MAPPING_COLUMN_RULES);
-                    $params                = array();
-                    $params['inputPrefix'] = array(get_class($this->model),
-                                                   $modelAttributeName,
-                                                   get_class($mappingRuleForm));
-                    $element               = new $elementClassName(
-                                                  $mappingRuleForm,
-                                                  $attributeName,
-                                                  $form,
-                                                  $htmlOptions);
-                    $content .= '<table><tbody><tr>';
-                    $content .= $element->render();
-                    $content .= '</tr></tbody></table>';
-                }
-            }
-            $content .= '</td>';
-            return $content;
+            return CHtml::linkButton(Yii::t('Default', 'Next'));
         }
     }
 ?>

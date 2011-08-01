@@ -34,9 +34,9 @@
     {
         public $rateToBase;
 
-        public function __construct($modelClassName, $attributeName)
+        public function __construct($modelClassName, $modelAttributeName)
         {
-            parent::__construct($modelClassName, $attributeName);
+            parent::__construct($modelClassName, $modelAttributeName);
             $this->rateToBase = 1;
         }
         public function rules()

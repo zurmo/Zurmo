@@ -79,7 +79,7 @@
                         {
                             ModelAttributeImportMappingCollectionUtil::populateCollection(
                                 $attributes,
-                                $attributeName . '__' . $relationAttributeName,
+                                $attributeName . FormModelUtil::DELIMITER . $relationAttributeName,
                                 $this->model->{$attributeName}->getAttributeLabel($relationAttributeName),
                                 $attributeName,
                                 ModelAttributeToDesignerTypeUtil::getDesignerType($this->model->$attributeName,

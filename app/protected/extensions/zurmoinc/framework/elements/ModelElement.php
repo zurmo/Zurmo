@@ -132,7 +132,7 @@
                 'name'    => $this->getNameForTextField(),
                 'id'      => $this->getIdForTextField(),
                 'value'   => $this->getName(),
-                'source'  => Yii::app()->createUrl(static::$moduleId . '/' . $this->getAutoCompleteControllerId()
+                'source'  => Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getAutoCompleteControllerId()
                                                         . '/' . static::$autoCompleteActionId),
                 'options' => array(
                     'select' => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}' // Not Coding Standard
@@ -161,7 +161,7 @@
             $id = $this->getIdForSelectLink();
             $content  = '<span>';
             $content .= CHtml::ajaxLink(Yii::t('Default', 'Select'),
-                Yii::app()->createUrl(static::$moduleId . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
+                Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation()
                 )), array(
                     'onclick' => '$("#modalContainer").dialog("open"); return false;',
@@ -195,7 +195,8 @@
                 {
                     return CHtml::link(
                         Yii::app()->format->text($this->model->{$this->attribute}),
-                        Yii::app()->createUrl(static::$moduleId . '/' . $this->controllerId . '/details/', array('id' => $this->model->{$this->attribute}->id))
+                        Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->controllerId .
+                        '/details/', array('id' => $this->model->{$this->attribute}->id))
                     );
                 }
                 else
@@ -325,6 +326,15 @@
                 return false;
             }
             return true;
+        }
+
+        /**
+         * Gets the moduleId statically. You can override this method and get the moduleId in a non-static way
+         * since this method is called non-statically.
+         */
+        protected function resolveModuleId()
+        {
+            return static::getModuleId();
         }
 
         public static function getModuleId()
