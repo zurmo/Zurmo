@@ -24,19 +24,43 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type DropDown.
-     */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class ImportMappingRuleDefaultDropDownFormElement extends DropDownElement
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+
+        public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
+            assert('$model instanceof DefaultValueDropDownModelAttributeMappingRuleForm');
+            parent::__construct($model, $attribute, $form, $params);
         }
 
-        public static function getSanitizerUtilNames()
+        /**
+         * Renders the editable dropdown content.
+         * @return A string containing the element's content.
+         */
+        protected function renderControlEditable()
         {
-            return array('Truncate');
+            $dropDownArray = $this->getDropDownArray();
+            $htmlOptions = array(
+                'name' => $this->getEditableInputName(),
+                'id'   => $this->getEditableInputId(),
+            );
+            $htmlOptions['empty'] = Yii::t('Default', 'None');
+            return $this->form->dropDownList($this->model, $this->attribute, $dropDownArray, $htmlOptions);
+        }
+
+        protected function renderControlNonEditable()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected function getDropDownArray()
+        {
+            $dropDownArray = unserialize($this->model->data->serializedData);
+            if (empty($dropDownArray))
+            {
+                return array();
+            }
+            return array_combine($dropDownArray, $dropDownArray);
         }
     }
 ?>

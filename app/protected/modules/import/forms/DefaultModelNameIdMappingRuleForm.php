@@ -26,7 +26,7 @@
 
     /**
      */
-    class DefaultModelNameIdMappingRuleForm extends ModelAttributeMappingRuleForm
+    class DefaultModelNameIdMappingRuleForm extends DefaultModelAttributeMappingRuleForm
     {
         public    $defaultModelId;
 
@@ -49,24 +49,6 @@
         public function getId()
         {
             return null;
-        }
-
-        public function rules()
-        {
-            if($this->getScenario() == 'extraColumn')
-            {
-                $requiredRuleIsApplicable = true;
-            }
-            else
-            {
-                $requiredRuleIsApplicable = false;
-            }
-            $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                                                         getApplicableRulesByModelClassNameAndAttributeName(
-                                                         $this->modelClassName,
-                                                         $this->modelAttributeName,
-                                                         $requiredRuleIsApplicable);
-                                                         return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
 
         public function attributeLabels()

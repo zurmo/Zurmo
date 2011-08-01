@@ -29,27 +29,9 @@
      * value for the mapped attribute, then an alternative default value can be specified and used.  This form has
      * one attribute $defaultValue that gets its rules directly from the attribute on the model that is specified.
      */
-    class DefaultValueModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
+    class DefaultValueModelAttributeMappingRuleForm extends DefaultModelAttributeMappingRuleForm
     {
         public $defaultValue;
-
-        public function rules()
-        {
-            if($this->getScenario() == 'extraColumn')
-            {
-                $requiredRuleIsApplicable = true;
-            }
-            else
-            {
-                $requiredRuleIsApplicable = false;
-            }
-            $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                                                         getApplicableRulesByModelClassNameAndAttributeName(
-                                                         $this->modelClassName,
-                                                         $this->modelAttributeName,
-                                                         $requiredRuleIsApplicable);
-                                                         return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
-        }
 
         public function attributeLabels()
         {

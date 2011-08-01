@@ -67,5 +67,23 @@
             }
             return $data;
         }
+
+        public static function getDataByModelClassNameAndAttributeName($modelClassName, $modelAttributeName)
+        {
+            $metadata = $modelClassName::getMetadata();
+            foreach ($metadata as $unused => $classMetadata)
+            {
+                if (isset($classMetadata['customFields']))
+                {
+                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
+                    {
+                        if($modelAttributeName == $customFieldName)
+                        {
+                            return CustomFieldData::getByName($customFieldDataName);
+                        }
+                    }
+                }
+            }
+        }
     }
 ?>

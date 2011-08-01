@@ -25,18 +25,33 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type DropDown.
      */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class DefaultValueDropDownModelAttributeMappingRuleForm extends DefaultModelAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public    $defaultValue;
+
+        protected $data;
+
+        public function __construct($modelClassName, $modelAttributeName)
         {
-            return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
+            parent::__construct($modelClassName, $modelAttributeName);
+            $this->data = CustomFieldDataModelUtil::
+                                     getDataByModelClassNameAndAttributeName($modelClassName, $modelAttributeName);
         }
 
-        public static function getSanitizerUtilNames()
+        public function getData()
         {
-            return array('Truncate');
+            return $this->data;
+        }
+
+        public function attributeLabels()
+        {
+            return array('defaultValue'              => Yii::t('Default', 'Default Value'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'defaultValue';
         }
     }
 ?>
