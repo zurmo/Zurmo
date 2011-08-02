@@ -24,20 +24,29 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Utility helper class for rendering the content for the @see ImportWizardMappingView and
+     * @see ImportWizardMappingExtraColumnView. This class helps to separate the logic for rendering content
+     * for the inputs on these views, so they can be reused more easily.
+     */
     class MappingFormLayoutUtil
     {
-        protected $formModelName;
+        /**
+         * The name of the class for the form used. Typically it would be ImportWizardForm.
+         * @var string
+         */
+        protected $mappingFormModelClassName;
 
         protected $form;
 
         protected $mappableAttributeIndicesAndDerivedTypes;
 
-        public function __construct($formModelName, $form, $mappableAttributeIndicesAndDerivedTypes)
+        public function __construct($mappingFormModelClassName, $form, $mappableAttributeIndicesAndDerivedTypes)
         {
-            assert('is_string($formModelName)');
+            assert('is_string($mappingFormModelClassName)');
             assert('$form instanceof ZurmoActiveForm');
             assert('is_array($mappableAttributeIndicesAndDerivedTypes)');
-            $this->formModelName                           = $formModelName;
+            $this->mappingFormModelClassName               = $mappingFormModelClassName;
             $this->form                                    = $form;
             $this->mappableAttributeIndicesAndDerivedTypes = $mappableAttributeIndicesAndDerivedTypes;
         }
@@ -66,8 +75,8 @@
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             assert('is_string($attributeIndexOrDerivedType) || $attributeIndexOrDerivedType == null');
             assert('is_string($ajaxOnChangeUrl)');
-            $name        = $this->formModelName . '[' . $columnName . '][attributeIndexOrDerivedType]';
-            $id          = $this->formModelName . '_' . $columnName . '_attributeIndexOrDerivedType';
+            $name        = $this->mappingFormModelClassName . '[' . $columnName . '][attributeIndexOrDerivedType]';
+            $id          = $this->mappingFormModelClassName . '_' . $columnName . '_attributeIndexOrDerivedType';
             $htmlOptions = array('id'=> $id,
                 'empty' => Yii::t('Default', 'Do not map this field')
             );
@@ -98,8 +107,8 @@
         {
             assert('is_string($columnName)');
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
-            $idInputHtmlOptions  = array('id' => $this->formModelName . '_' . $columnName . '_type');
-            $hiddenInputName     = $this->formModelName . '[' . $columnName . '][type]';
+            $idInputHtmlOptions  = array('id' => $this->mappingFormModelClassName . '_' . $columnName . '_type');
+            $hiddenInputName     = $this->mappingFormModelClassName . '[' . $columnName . '][type]';
             return CHtml::hiddenField($hiddenInputName, $columnType, $idInputHtmlOptions);
         }
 
@@ -159,7 +168,7 @@
                         $attributeName          = $mappingRuleForm::getAttributeName();
                     }
                     $params                 = array();
-                    $params['inputPrefix']  = array($this->formModelName, $columnName, 'mappingRulesData',
+                    $params['inputPrefix']  = array($this->mappingFormModelClassName, $columnName, 'mappingRulesData',
                                                     get_class($mappingRuleForm));
                     $element                = new $elementClassName(
                                                   $mappingRuleForm,
@@ -175,6 +184,11 @@
             return $content;
         }
 
+        /**
+         * Given an array of MappingFormLayoutUtil metadata, render the html rows and return this content as a string.
+         * @param array $metadata
+         * @return string with the rendered content.
+         */
         public static function renderMappingDataMetadataWithRenderedElements($metadata)
         {
             assert('is_array($metadata)');
@@ -199,7 +213,7 @@
             return $columnName . '-mapping-rules';
         }
 
-        public function renderAttributeDropDownOnChangeScript($id, $columnName, $columnType, $ajaxOnChangeUrl)
+        protected function renderAttributeDropDownOnChangeScript($id, $columnName, $columnType, $ajaxOnChangeUrl)
         {
             assert('is_string($id)');
             assert('is_string($columnName)');

@@ -160,10 +160,10 @@
             assert('is_int($columnCount)');
             $idInputHtmlOptions  = array('id' => 'columnCounter');
             $hiddenInputName     = 'columnCounter';
-            $ajaxOnChangeUrl     = Yii::app()->createUrl("import/default/mappingAddExtraColumn",
+            $ajaxOnChangeUrl     = Yii::app()->createUrl("import/default/mappingAddExtraMappingRow",
                                    array('id' => $this->model->id));
             $content             = CHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
-            $content            .= CHtml::ajaxButton(Yii::t('Default', 'Add Column'), $ajaxOnChangeUrl,
+            $content            .= CHtml::ajaxButton(Yii::t('Default', 'Add Field'), $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'columnCount=\' + $(\'#columnCounter\').val()',
                                           'success' => 'js:function(data){

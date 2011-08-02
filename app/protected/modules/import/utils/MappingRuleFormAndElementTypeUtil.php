@@ -141,6 +141,14 @@
             return !$anyValidatedFalse;
         }
 
+        /**
+         * This method will inspect the attributeIndexOrDerivedType looking for any attribute indexes that represent
+         * two distinct variables. If it finds this, then it gets the correct attributeName to return.  The two
+         * variables would be a relation attributeName and a relatedAttributeName.  It will return the
+         * relatedAttributeName and update by reference the $modelClassName to the relation model class name.
+         * @param string $modelClassName
+         * @param string $attributeIndexOrDerivedType
+         */
         protected static function resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
                                & $modelClassName, $attributeIndexOrDerivedType
         )

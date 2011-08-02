@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Element used by the import mapping process.
+     */
     class ImportMappingModelIdValueTypeDropDownElement extends DropDownElement
     {
         /**

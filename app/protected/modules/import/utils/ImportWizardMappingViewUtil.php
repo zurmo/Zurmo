@@ -82,7 +82,11 @@
             return $mappingData;
         }
 
-        public static function getExtraColumnMappingDataForViewByColumnName($columnName)
+        /**
+         * Given a column name, make the basic mapping data array with all the sub array indexes present.
+         * @param string $columnName
+         */
+        public static function makeExtraColumnMappingDataForViewByColumnName($columnName)
         {
             assert('is_string($columnName)');
             return array(

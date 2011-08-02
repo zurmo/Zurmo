@@ -25,13 +25,24 @@
      ********************************************************************************/
 
     /**
+     * Form for handling default values for relation type attributes.
      */
     class DefaultModelNameIdMappingRuleForm extends DefaultModelAttributeMappingRuleForm
     {
+        /**
+         * @var integer
+         */
         public    $defaultModelId;
 
+        /**
+         * @var string
+         */
         public    $defaultModelStringifiedName;
 
+        /**
+         * For the modelClassName associated with this form, get the model's module id.
+         * @var string
+         */
         protected $moduleIdOfDefaultModel;
 
         public function __construct($modelClassName, $modelAttributeName)
@@ -45,6 +56,12 @@
             $this->moduleIdOfDefaultModel = $defaultModuleClassName::getDirectoryName();
         }
 
+        /**
+         * Override to add an extra rule for the defaultModelStringifiedName. This will ensure if there is an error
+         * the message shows up properly in the user interface, since otherwise with the rule being on the
+         * defaultModelId, it would not show up because it is a hidden input.
+         * @see DefaultModelAttributeMappingRuleForm::rules()
+         */
         public function rules()
         {
             if($this->getScenario() == 'extraColumn')
@@ -65,7 +82,9 @@
             return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
 
-        //todo: there is here because modelElement is lookign for it...
+        /**
+         * This method is needed in the interface to work properly with the elements that use it.
+         */
         public function getId()
         {
             return null;
@@ -82,6 +101,9 @@
             return 'defaultModelId';
         }
 
+        /**
+         * If needed get the stringified model name if the default model id is populated.
+         */
         public function getDefaultModelName()
         {
             if($this->defaultModelName != null)

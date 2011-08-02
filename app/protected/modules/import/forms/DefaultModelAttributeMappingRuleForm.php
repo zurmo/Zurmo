@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base class for default type forms. Extend with forms that are used for capturing a default value for an
+     * attribute during the import mapping step.
+     */
     class DefaultModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
+        /**
+         * Override to properly handle retrieving rule information from the model for the attribute name.
+         * Will also pull required rules if the scenario calls for it.
+         */
         public function rules()
         {
             if($this->getScenario() == 'extraColumn')

@@ -25,7 +25,8 @@
      ********************************************************************************/
 
     /**
-     *
+     * Class for rendering an extraColumn type row. This is rendered when a user in the user interface
+     * on the import mapping view, clicks 'Add Field'.
      */
     class ImportWizardMappingExtraColumnView extends View
     {

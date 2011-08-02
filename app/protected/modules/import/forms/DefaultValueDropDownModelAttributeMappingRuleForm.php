@@ -25,11 +25,16 @@
      ********************************************************************************/
 
     /**
+     * Form for handling default values for customField type attributes.
      */
     class DefaultValueDropDownModelAttributeMappingRuleForm extends DefaultModelAttributeMappingRuleForm
     {
-        public    $defaultValue;
+        public $defaultValue;
 
+        /**
+         * Instance of CustomFieldData
+         * @var object
+         */
         protected $data;
 
         public function __construct($modelClassName, $modelAttributeName)
@@ -46,7 +51,7 @@
 
         public function attributeLabels()
         {
-            return array('defaultValue'              => Yii::t('Default', 'Default Value'));
+            return array('defaultValue' => Yii::t('Default', 'Default Value'));
         }
 
         public static function getAttributeName()

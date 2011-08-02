@@ -30,6 +30,11 @@
      */
     abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
     {
+        /**
+         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
+         * this is going to be the Account model class name.
+         * @var string
+         */
         protected $modelClassName;
 
         protected $derivedAttributeType;

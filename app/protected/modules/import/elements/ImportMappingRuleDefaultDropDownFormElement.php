@@ -24,9 +24,14 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Element used by the import mapping process. This is similar to the StaticDropDownElement in how the input id/name
+     * pairings are constructed.  The $this->model->$this->attribute is not a CustomField model.  The CustomField->data
+     * is an attribute on the model itself as the 'data' attribute.  This class contains the necessary overrides to
+     * support this.
+     */
     class ImportMappingRuleDefaultDropDownFormElement extends DropDownElement
     {
-
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
             assert('$model instanceof DefaultValueDropDownModelAttributeMappingRuleForm');

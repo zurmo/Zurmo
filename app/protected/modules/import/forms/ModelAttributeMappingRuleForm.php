@@ -29,8 +29,19 @@
      */
     abstract class ModelAttributeMappingRuleForm extends MappingRuleForm
     {
+        /**
+         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
+         * this is going to be the Account model class name. However this could also be a relation model class name
+         * if the AttributeIndex is referencing a related attribute.
+         * @var string
+         */
         protected $modelClassName;
 
+        /**
+         * Mapped attribute name or related attribute name if the attributeIndex is for a relation attribute.
+         * @see $modelClassName
+         * @var string
+         */
         protected $modelAttributeName;
 
         public function __construct($modelClassName, $modelAttributeName)

@@ -25,7 +25,9 @@
      ********************************************************************************/
 
     /**
-     *
+     * Element used in the import mapping process. This is used specifically for relation attributes where
+     * a model modal popup/auto-complete input are needed. Unlike other overrides of NameIdElement, this class
+     * is not tied to a specific model and can be used with any model class.
      */
     class ImportMappingRuleDefaultModelNameIdElement extends NameIdElement
     {
@@ -44,6 +46,12 @@
             parent::__construct($model, $attribute, $form, $params);
         }
 
+        /**
+         * Override to get the correct module Id.  In the typical use of NameIdElement, the module id is statically
+         * defined on the overrides, but since this element is used in a dynamic way and not attached to any particular
+         * model, this override is necessary.
+         * @see ModelElement::resolveModuleId()
+         */
         protected function resolveModuleId()
         {
             return $this->model->getModuleIdOfDefaultModel();

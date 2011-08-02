@@ -185,6 +185,10 @@
             echo $view->render();
         }
 
+        /**
+         * Step 4 ajax process.  When you change the attribute dropdown, new mapping rule information is retrieved
+         * and displayed in the user interface.
+         */
         public function actionMappingRulesEdit($id, $attributeIndexOrDerivedType, $columnName, $columnType)
         {
             $import                                  = Import::getById((int)$_GET['id']);
@@ -204,7 +208,11 @@
                                                        array());
         }
 
-        public function actionMappingAddExtraColumn($id, $columnCount)
+        /**
+         * Step 4 ajax process.  When you click the 'Add Field' button in the user interface, this ajax action
+         * is called and makes an extra row to display for mapping.
+         */
+        public function actionMappingAddExtraMappingRow($id, $columnCount)
         {
             $import                                  = Import::getById((int)$_GET['id']);
             $importWizardForm                        = ImportWizardUtil::makeFormByImport($import);
@@ -214,7 +222,7 @@
             $extraColumnName                         = ImportMappingUtil::makeExtraColumnNameByColumnCount(
                                                        (int)$columnCount);
             $mappingDataMetadata                     = ImportWizardMappingViewUtil::
-                                                       getExtraColumnMappingDataForViewByColumnName($extraColumnName);
+                                                       makeExtraColumnMappingDataForViewByColumnName($extraColumnName);
             $extraColumnView                         = new ImportWizardMappingExtraColumnView(
                                                        $importWizardForm,
                                                        $mappingDataMetadata,

@@ -93,12 +93,24 @@
             return $mappedAttributeIndicesOrDerivedAttributeTypes;
         }
 
+        /**
+         * Given a column count, create a suitable column name. An example would be column_5, where 5 would have been
+         * the column count that was passed in.  This pattern column_x matches the pattern used by redbean to generate
+         * column names.
+         * @param integer $columnCount
+         */
         public static function makeExtraColumnNameByColumnCount($columnCount)
         {
             assert('is_int($columnCount)');
             return 'column_' . ($columnCount + 1);
         }
 
+        /**
+         * Given an array of post data, re-index the column names that are of type 'extraColumn'. This method is
+         * needed since it is possible that a user can add, remove extra columns in such a way that produces column
+         * names that are missing index orders.  This will fix the extra column column names and return the data.
+         * @param array $postData
+         */
         public static function reIndexExtraColumnNamesByPostData($postData)
         {
             assert('is_array($postData)');
