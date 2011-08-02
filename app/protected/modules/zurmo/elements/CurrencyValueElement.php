@@ -38,7 +38,7 @@
          */
         protected function renderControlEditable()
         {
-            assert('$this->model->{$this->attribute} instanceof CurrencyValue');
+            assert('$this->model->{$this->attribute} instanceof R');
             $currencyValueModel        = $this->model->{$this->attribute};
             $params                    = array();
             $params['inputPrefix']     = $this->resolveInputPrefix();

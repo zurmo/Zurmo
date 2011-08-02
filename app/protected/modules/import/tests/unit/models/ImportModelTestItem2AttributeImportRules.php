@@ -31,7 +31,7 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'ImportModelTestItem2');
+            return array('DefaultModelNameId' => 'ImportMappingRuleDefaultModelNameId');
         }
 
         public static function getSanitizerUtilNames()
