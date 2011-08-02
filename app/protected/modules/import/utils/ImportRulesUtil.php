@@ -33,7 +33,7 @@
         {
             assert('is_string($importRulesType)');
             $importRulesClassName = $importRulesType . 'ImportRules';
-            if(class_exists($importRulesClassName, false) === false)
+            if(@class_exists($importRulesClassName) === false)
             {
                 throw new NotSupportedException();
             }

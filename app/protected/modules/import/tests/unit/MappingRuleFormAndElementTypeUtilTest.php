@@ -58,9 +58,9 @@
                                     makeCollectionByAttributeImportRules($attributeImportRules,
                                                                          'currencyValue');
             $this->assertEquals(3, count($collection));
-            $this->assertEquals('CurrencyValue',    $collection[0]['elementType']);
-            $this->assertEquals('CurrencyDropDown', $collection[1]['elementType']);
-            $this->assertEquals('Decimal',          $collection[2]['elementType']);
+            $this->assertEquals('Decimal',              $collection[0]['elementType']);
+            $this->assertEquals('CurrencyDropDownForm', $collection[1]['elementType']);
+            $this->assertEquals('Decimal',              $collection[2]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm',
                                 get_class($collection[0]['mappingRuleForm']));
             $this->assertEquals('CurrencyIdModelAttributeMappingRuleForm',

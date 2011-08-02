@@ -77,7 +77,7 @@
             $this->assertTrue($importWizardForm->hasErrors());
             $compareData = array(
                 'mappingData' => array('All required attributes must be mapped or added.',
-                                       'The following attribute is mapped more than once. lastName'),
+                                       'The following attribute is mapped more than once. Last Name'),
             );
             $this->assertEquals($compareData, $importWizardForm->getErrors());
 

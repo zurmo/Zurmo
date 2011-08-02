@@ -64,9 +64,9 @@
             {
                 if($columnName != 'id')
                 {
-                    $mappingData[$columnName] = array('type'                       => 'importColumn',
+                    $mappingData[$columnName] = array('type'                        => 'importColumn',
                                                       'attributeIndexOrDerivedType' => null,
-                                                      'mappingRulesData'           => null);
+                                                      'mappingRulesData'            => null);
                 }
             }
             return $mappingData;
