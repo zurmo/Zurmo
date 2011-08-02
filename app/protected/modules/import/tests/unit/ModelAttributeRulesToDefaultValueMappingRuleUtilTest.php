@@ -34,74 +34,74 @@
         public function testGetApplicableRulesByModelClassNameAndAttributeName()
         {
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'boolean');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'boolean', 'defaultValue');
             $compareData = array(array('defaultValue',  'boolean'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'date');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'date', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'date'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'dateTime');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'dateTime', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'datetime'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'float');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'float', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'float'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'integer');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'integer', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'integer'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'phone');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'phone', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 1, 'max' => 14));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'string');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'string', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 3, 'max' => 64));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'textArea');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'textArea', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'string'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'url');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'url', 'defaultValue');
             $compareData = array(array('defaultValue',  'url'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'firstName');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'firstName', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 1, 'max' => 32));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'lastName');
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'lastName', 'defaultValue');
             $compareData = array(array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 2, 'max' => 32));
             $this->assertEquals($compareData, $rules);
 
             //Now test lastName and string with required as applicable.
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'string', true);
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'string', 'defaultValue', true);
             $compareData = array(array('defaultValue',  'required'),
                                  array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 3, 'max' => 64));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'lastName', true);
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'lastName', 'defaultValue', true);
             $compareData = array(array('defaultValue',  'required'),
                                  array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 2, 'max' => 32));

@@ -47,8 +47,8 @@
                                     makeCollectionByAttributeImportRules($attributeImportRules,
                                                                          'owner');
             $this->assertEquals(2, count($collection));
-            $this->assertEquals('User', $collection[0]['elementType']);
-            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
+            $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
             $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[1]['elementType']);
             $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
 
@@ -98,8 +98,9 @@
             $lastNameDefaultValueMappingRuleForm = new DefaultValueModelAttributeMappingRuleForm(
                                                    'ImportModelTestItem', 'lastName');
             //Validate true because scenario is not extra column
-            $mappingRuleFormsData = array(array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
-                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm));
+            $mappingRuleFormsData = array('column_0' => array(
+                                          array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
+                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm)));
             $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
             $this->assertTrue($validated);
 
@@ -107,8 +108,9 @@
             $lastNameDefaultValueMappingRuleForm = new DefaultValueModelAttributeMappingRuleForm(
                                                    'ImportModelTestItem', 'lastName');
             $lastNameDefaultValueMappingRuleForm->setScenario('extraColumn');
-            $mappingRuleFormsData = array(array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
-                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm));
+            $mappingRuleFormsData = array('column_0' => array(
+                                          array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
+                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm)));
             $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
             $this->assertFalse($validated);
 
@@ -116,6 +118,21 @@
             $lastNameDefaultValueMappingRuleForm->defaultValue = 'def';
             $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
             $this->assertTrue($validated);
+        }
+
+        public function testResolveAttributeIndexAndTheFormsAreUsingTheCorrectModelClassNameAndAttributeName()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $attributeImportRules = new EmailAttributeImportRules(new ImportModelTestItem(), 'primaryEmail__emailAddress');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules, 'primaryEmail__emailAddress');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Text', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('Email',        static::getReflectedPropertyValue($collection[0]['mappingRuleForm'],
+                                                'modelClassName'));
+            $this->assertEquals('emailAddress', static::getReflectedPropertyValue($collection[0]['mappingRuleForm'],
+                                                'modelAttributeName'));
         }
     }
 ?>

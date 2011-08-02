@@ -95,5 +95,18 @@
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
         }
+
+        public function testMakeExtraColumnMappingDataForViewByColumnName()
+        {
+            $data = ImportWizardMappingViewUtil::
+                    makeExtraColumnMappingDataForViewByColumnName('abc');
+            $compareData = array(
+                      'abc' => array('type'                        => 'extraColumn',
+                                     'attributeIndexOrDerivedType' => null,
+                                     'mappingRulesData'            => null,
+                                     'headerValue'                 => null,
+                                     'sampleValue'                 => null));
+            $this->assertEquals($compareData, $data);
+        }
     }
 ?>

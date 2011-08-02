@@ -26,12 +26,35 @@
 
     class CustomFieldDataModelUtilTest extends BaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
         public function testGetModelPluralNameAndAttributeLabelsByName()
         {
             $data = CustomFieldDataModelUtil::getModelPluralNameAndAttributeLabelsByName('Industries');
-            $this->assertEquals(2, count($data));
+            $this->assertEquals(3, count($data));
             $data = CustomFieldDataModelUtil::getModelPluralNameAndAttributeLabelsByName('AccountTypes');
             $this->assertEquals(1, count($data));
+        }
+
+        public function testGetDataByModelClassNameAndAttributeName()
+        {
+            $customFieldData = CustomFieldDataModelUtil::
+                               getDataByModelClassNameAndAttributeName('TestCustomFieldsModel', 'industry');
+            $this->assertTrue($customFieldData instanceof CustomFieldData);
+            $this->assertEquals('Industries', $customFieldData->name);
+        }
+
+        /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetDataByModelClassNameAndAttributeNameNotFound()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            CustomFieldDataModelUtil::getDataByModelClassNameAndAttributeName('TestBooleanAttributeModel', 'bool');
         }
     }
 ?>

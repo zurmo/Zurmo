@@ -71,5 +71,30 @@
             $data = ImportMappingUtil::getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData);
             $this->assertNull($data);
         }
+
+        public function testMakeExtraColumnNameByColumnCount()
+        {
+            $this->assertEquals('column_5', ImportMappingUtil::makeExtraColumnNameByColumnCount(4));
+        }
+
+        public function testReIndexExtraColumnNamesByPostData()
+        {
+            $postData = array(
+                'column_0'  => array('type' => 'importColumn'),
+                'column_1'  => array('type' => 'importColumn'),
+                'column_2'  => array('type' => 'importColumn'),
+                'column_5'  => array('type' => 'extraColumn'),
+                'column_55' => array('type' => 'extraColumn'),
+            );
+            $reIndexedPostData = ImportMappingUtil::reIndexExtraColumnNamesByPostData($postData);
+            $compareData = array(
+                'column_0'  => array('type' => 'importColumn'),
+                'column_1'  => array('type' => 'importColumn'),
+                'column_2'  => array('type' => 'importColumn'),
+                'column_3'  => array('type' => 'extraColumn'),
+                'column_4'  => array('type' => 'extraColumn'),
+            );
+            $this->assertEquals($compareData, $reIndexedPostData);
+        }
     }
 ?>
