@@ -222,7 +222,7 @@
             {
                 $id .= '_' . $relationAttributeName;
             }
-            return $id;
+            return CHtml::getIdByName($id);
         }
 
         /**
