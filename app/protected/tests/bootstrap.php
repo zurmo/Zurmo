@@ -27,10 +27,11 @@
     require_once('testRoots.php');
 
     chdir(COMMON_ROOT);
-
+    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
     $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
     $config = INSTANCE_ROOT . "/protected/config/test.php";
 
+    require_once($debug);
     require_once($yiit);
     require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
     require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');

@@ -26,7 +26,6 @@
 
     $cwd = getcwd();
     require_once('../testRoots.php');
-    require_once(INSTANCE_ROOT . '/protected/config/debug.php');
     require_once('../bootstrap.php');
 
     $freeze = true; // TODO - figure out the correct was to pass information like this into tests.
