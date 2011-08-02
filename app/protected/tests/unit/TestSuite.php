@@ -25,8 +25,7 @@
      ********************************************************************************/
 
     $cwd = getcwd();
-    require_once('../roots.php');
-    require_once(INSTANCE_ROOT . '/protected/config/debug.php');
+    require_once('../testRoots.php');
     require_once('../bootstrap.php');
 
     $freeze = true; // TODO - figure out the correct was to pass information like this into tests.
@@ -118,9 +117,9 @@
             $suite->setName("$whatToTest Tests");
             if (!$freeze)
             {
-                self::buildAndAddSuiteFromDirectory($suite, 'Framework', 'protected/extensions/zurmoinc/framework/tests/unit', $whatToTest, true, false);
+                self::buildAndAddSuiteFromDirectory($suite, 'Framework', COMMON_ROOT . '/protected/extensions/zurmoinc/framework/tests/unit', $whatToTest, true, false);
             }
-            $moduleDirectoryName = 'protected/modules';
+            $moduleDirectoryName = COMMON_ROOT . '/protected/modules';
             if (is_dir($moduleDirectoryName))
             {
                 $moduleNames = scandir($moduleDirectoryName);
@@ -136,10 +135,10 @@
             }
             if (!$freeze)
             {
-                self::buildAndAddSuiteFromDirectory($suite, 'Misc',            'protected/tests/unit',                     $whatToTest, $includeUnitTests, $includeWalkthroughs);
+                self::buildAndAddSuiteFromDirectory($suite, 'Misc',            COMMON_ROOT . '/protected/tests/unit',                     $whatToTest, $includeUnitTests, $includeWalkthroughs);
 ////////////////////////////////////////////////////////////////////////////////
 // Temporary - See Readme.txt in the notSupposedToBeHere directory.
-                self::buildAndAddSuiteFromDirectory($suite, 'BadDependencies', 'protected/tests/unit/notSupposedToBeHere', $whatToTest, $includeUnitTests, $includeWalkthroughs);
+                self::buildAndAddSuiteFromDirectory($suite, 'BadDependencies', COMMON_ROOT . '/protected/tests/unit/notSupposedToBeHere', $whatToTest, $includeUnitTests, $includeWalkthroughs);
 ////////////////////////////////////////////////////////////////////////////////
             }
             if ($suite->count() == 0)
