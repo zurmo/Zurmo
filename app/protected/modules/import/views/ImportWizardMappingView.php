@@ -101,7 +101,7 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= $this->renderActionLinksContent($form);
+            $content .= $this->renderActionLinksContent();
             return $content;
         }
 
@@ -184,16 +184,9 @@
             return array();
         }
 
-        protected function renderPreviousPageLinkContent($form)
+        protected function renderPreviousPageLinkContent()
         {
-            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/step3/',
-                                           array('id' => $this->model->id));
-            return CHtml::link(Yii::t('Default', 'Previous'), $route);
-        }
-
-        protected function renderNextPageLinkContent($form)
-        {
-            return CHtml::linkButton(Yii::t('Default', 'Next'));
+            return getPreviousPageLinkContentByControllerAction('step3');
         }
     }
 ?>

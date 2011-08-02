@@ -117,7 +117,8 @@
             $atLeastOneAttributeMappedOrHasRules   = false;
             $attributeMappedOrHasRulesMoreThanOnce = false;
             $mappedAttributes                      = array();
-            $importRulesClassName                  = $this->importRulesType . 'ImportRules';
+            $importRulesClassName                  = ImportRulesUtil::
+                                                     getImportRulesClassNameByType($this->importRulesType);
             foreach($this->mappingData as $columnName => $data)
             {
                 if($data['attributeIndexOrDerivedType'] != null)

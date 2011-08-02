@@ -37,7 +37,7 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $billy                      = UserTestHelper::createBasicUser('billy');
             $importRulesTypes           = ImportRulesUtil::getImportRulesTypesForCurrentUser();
-            $compareData                = array('AccountImportRules' => 'Accounts');
+            $compareData                = array('Account' => 'Accounts');
             $this->assertEquals($compareData, $importRulesTypes);
             Yii::app()->user->userModel = User::getByUsername('billy');
             $importRulesTypes           = ImportRulesUtil::getImportRulesTypesForCurrentUser();
@@ -125,6 +125,20 @@
         public function testInvalidDataPassedToCheckIfAnyAttributesAreDoubleMapped()
         {
             ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped(array('a','b'));
+        }
+
+        public function testGetImportRulesClassNameByType()
+        {
+            $rulesClassName = ImportRulesUtil::getImportRulesClassNameByType('ImportModelTestItem');
+            $this->assertEquals('ImportModelTestItemImportRules', $rulesClassName);
+        }
+
+            /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetImportRulesClassNameByTypeWithBadType()
+        {
+            ImportRulesUtil::getImportRulesClassNameByType('abc');
         }
     }
 ?>

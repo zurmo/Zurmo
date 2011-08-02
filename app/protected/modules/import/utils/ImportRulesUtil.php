@@ -29,6 +29,16 @@
      */
     class ImportRulesUtil
     {
+        public static function getImportRulesClassNameByType($importRulesType)
+        {
+            assert('is_string($importRulesType)');
+            $importRulesClassName = $importRulesType . 'ImportRules';
+            if(class_exists($importRulesClassName, false) === false)
+            {
+                throw new NotSupportedException();
+            }
+            return $importRulesClassName;
+        }
         /**
          * Based on the current user, return the importRules types and thier display labels.  Only include import rules
          * that the user has a right to access its corresponding module.
@@ -137,7 +147,8 @@
                     {
                         if(in_array($modelAttributeName, $mappedModelAttributeNames))
                         {
-                            throw new ImportAttributeMappedMoreThanOnceException($modelAttributeName);
+                            $displayLabel = $attributeImportRules->getDisplayLabelByAttributeName($modelAttributeName);
+                            throw new ImportAttributeMappedMoreThanOnceException($displayLabel);
                         }
                         $mappedModelAttributeNames[] = $modelAttributeName;
                     }

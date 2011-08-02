@@ -49,13 +49,8 @@
             $content .= '</td></tr>'  . "\n";
             $content .= '</tbody>'    . "\n";
             $content .= '</table>'    . "\n";
-            $content .= $this->renderActionLinksContent($form);
+            $content .= $this->renderActionLinksContent();
             return $content;
-        }
-
-        protected function renderNextPageLinkContent($form)
-        {
-            return CHtml::linkButton(Yii::t('Default', 'Next'));
         }
     }
 ?>

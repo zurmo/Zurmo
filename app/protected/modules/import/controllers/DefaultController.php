@@ -145,7 +145,7 @@
             $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
             $importWizardForm->setScenario('saveMappingData');
             $tempTableName        = $import->getTempTableName();
-            $importRulesClassName = $importWizardForm->importRulesType . 'ImportRules';
+            $importRulesClassName = ImportRulesUtil::getImportRulesClassNameByType($importWizardForm->importRulesType);
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 $reIndexedPostData = ImportMappingUtil::
@@ -193,7 +193,8 @@
         {
             $import                                  = Import::getById((int)$_GET['id']);
             $importWizardForm                        = ImportWizardUtil::makeFormByImport($import);
-            $importRulesClassName                    = $importWizardForm->importRulesType . 'ImportRules';
+            $importRulesClassName                    = ImportRulesUtil::
+                                                       getImportRulesClassNameByType($importWizardForm->importRulesType);
             $mappableAttributeIndicesAndDerivedTypes = $importRulesClassName::
                                                        getMappableAttributeIndicesAndDerivedTypes();
             $mappingFormLayoutUtil                   = new MappingFormLayoutUtil(
@@ -216,7 +217,8 @@
         {
             $import                                  = Import::getById((int)$_GET['id']);
             $importWizardForm                        = ImportWizardUtil::makeFormByImport($import);
-            $importRulesClassName                    = $importWizardForm->importRulesType . 'ImportRules';
+            $importRulesClassName                    = ImportRulesUtil::
+                                                       getImportRulesClassNameByType($importWizardForm->importRulesType);
             $mappableAttributeIndicesAndDerivedTypes = $importRulesClassName::
                                                        getMappableAttributeIndicesAndDerivedTypes();
             $extraColumnName                         = ImportMappingUtil::makeExtraColumnNameByColumnCount(

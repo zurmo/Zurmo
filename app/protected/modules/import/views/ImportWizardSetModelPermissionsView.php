@@ -38,7 +38,11 @@
         protected function renderFormLayout($form = null)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $label                     = Yii::t('Default', 'Who can read and write the new {models}');
+
+            $importModelClassName      = ImportRulesUtil::getImportRulesClassNameByType($this->model->importRulesType);
+            $importRulesLabel          = $importModelClassName::getDisplayLabel();
+            $label                     = Yii::t('Default', 'Who can read and write the new {importRulesLabel}',
+                                                array('{importRulesLabel}' => $importRulesLabel));
             $element                   = new ExplicitReadWriteModelPermissionsElement($this->model,
                                              'explicitReadWriteModelPermissions', $form);
             $element->editableTemplate = $label . '<br/>{content}';
@@ -51,20 +55,13 @@
             $content .= '</td></tr>'  . "\n";
             $content .= '</tbody>'    . "\n";
             $content .= '</table>'    . "\n";
-            $content .= $this->renderActionLinksContent($form);
+            $content .= $this->renderActionLinksContent();
             return $content;
         }
 
-        protected function renderPreviousPageLinkContent($form)
+        protected function renderPreviousPageLinkContent()
         {
-            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/step2/',
-                                           array('id' => $this->model->id));
-            return CHtml::link(Yii::t('Default', 'Previous'), $route);
-        }
-
-        protected function renderNextPageLinkContent($form)
-        {
-            return CHtml::linkButton(Yii::t('Default', 'Next'));
+            return getPreviousPageLinkContentByControllerAction('step2');
         }
     }
 ?>

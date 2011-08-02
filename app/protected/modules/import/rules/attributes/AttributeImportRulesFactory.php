@@ -40,7 +40,7 @@
         {
             assert('is_string($importRulesType)');
             assert('is_string($attributeIndexOrDerivedType)');
-            $importRulesTypeClassName = $importRulesType . 'ImportRules';
+            $importRulesTypeClassName = ImportRulesUtil::getImportRulesClassNameByType($importRulesType);
             $attributeImportRulesType = $importRulesTypeClassName::getAttributeImportRulesType(
                                         $attributeIndexOrDerivedType);
             $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeIndexOrDerivedType(

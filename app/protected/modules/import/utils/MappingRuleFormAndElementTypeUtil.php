@@ -105,7 +105,7 @@
             assert('is_string($importRulesType)');
             assert('is_string($attributeIndexOrDerivedType)');
             assert('is_string($mappingRuleFormClassName)');
-            $importRulesTypeClassName = $importRulesType . 'ImportRules';
+            $importRulesTypeClassName = ImportRulesUtil::getImportRulesClassNameByType($importRulesType);
             $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeIndexOrDerivedType(
                                         $attributeIndexOrDerivedType);
             $attributeName            = self::resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(

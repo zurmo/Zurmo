@@ -43,10 +43,10 @@
          * a string.
          * @param object $form
          */
-        protected function renderActionLinksContent($form)
+        protected function renderActionLinksContent()
         {
-            $previousPageLinkContent = $this->renderPreviousPageLinkContent($form);
-            $nextPageLinkContent     = $this->renderNextPageLinkContent($form);
+            $previousPageLinkContent = $this->renderPreviousPageLinkContent();
+            $nextPageLinkContent     = $this->renderNextPageLinkContent();
             $content  = '<div class="view-toolbar">'; //change to different class?
             if($previousPageLinkContent)
             {
@@ -62,20 +62,26 @@
 
         /**
          * Override if the view should show a previous link.
-         * @param object $form
          */
-        protected function renderPreviousPageLinkContent($form)
+        protected function renderPreviousPageLinkContent()
         {
             return null;
         }
 
         /**
          * Override if the view should show a next link.
-         * @param object $form
          */
-        protected function renderNextPageLinkContent($form)
+        protected function renderNextPageLinkContent()
         {
-            return null;
+            return CHtml::linkButton(Yii::t('Default', 'Next'));
+        }
+
+        protected function getPreviousPageLinkContentByControllerAction($action)
+        {
+            assert('is_string($action)');
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $action . '/',
+                                           array('id' => $this->model->id));
+            return CHtml::link(Yii::t('Default', 'Previous'), $route);
         }
 
         /**

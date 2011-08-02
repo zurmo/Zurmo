@@ -51,6 +51,12 @@
             return $this->model->getAttributeLabel($this->attributeName);
         }
 
+        public function getDisplayLabelByAttributeName($attributeName)
+        {
+            assert('$attributeName == null || is_string($attributeName)');
+            return $this->model->getAttributeLabel($attributeName);
+        }
+
         public function getModelAttributeNames()
         {
             return array($this->attributeName);
