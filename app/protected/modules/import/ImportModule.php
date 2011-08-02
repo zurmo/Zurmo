@@ -33,6 +33,11 @@
            return array('zurmo');
         }
 
+        public function getRootModelNames()
+        {
+            return array('Import');
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();
