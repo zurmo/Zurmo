@@ -180,7 +180,9 @@
                                                              $importWizardForm,
                                                              $mappingDataMetadata,
                                                              $mappingDataMappingRuleFormsAndElementTypes,
-                                                             $mappableAttributeIndicesAndDerivedTypes), 1, 0);
+                                                             $mappableAttributeIndicesAndDerivedTypes,
+                                                             $importRulesClassName::getRequiredAttributesLabelsData()),
+                                                             1, 0);
             $view                                           = new ImportPageView($this, $importView);
             echo $view->render();
         }

@@ -60,7 +60,7 @@
 
         protected function renderPreviousPageLinkContent()
         {
-            return getPreviousPageLinkContentByControllerAction('step1');
+            return $this->getPreviousPageLinkContentByControllerAction('step1');
         }
     }
 ?>

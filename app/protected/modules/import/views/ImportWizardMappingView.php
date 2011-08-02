@@ -39,24 +39,29 @@
 
         protected $mappableAttributeIndicesAndDerivedTypes;
 
+        protected $requiredAttributesLabelsData;
+
         public function __construct($controllerId,
                                     $moduleId,
                                     ImportWizardForm $model,
                                     $mappingDataMetadata,
                                     $mappingDataMappingRuleFormsAndElementTypes,
-                                    $mappableAttributeIndicesAndDerivedTypes)
+                                    $mappableAttributeIndicesAndDerivedTypes,
+                                    $requiredAttributesLabelsData)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($model->mappingData) && count($model->mappingData) > 0');
             assert('is_array($mappingDataMetadata)');
             assert('is_array($mappableAttributeIndicesAndDerivedTypes)');
+            assert('is_array($requiredAttributesLabelsData)');
             $this->controllerId                               = $controllerId;
             $this->moduleId                                   = $moduleId;
             $this->model                                      = $model;
             $this->mappingDataMetadata                        = $mappingDataMetadata;
             $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
             $this->mappableAttributeIndicesAndDerivedTypes    = $mappableAttributeIndicesAndDerivedTypes;
+            $this->requiredAttributesLabelsData               = $requiredAttributesLabelsData;
         }
 
         /**
@@ -78,6 +83,8 @@
             assert('count($headerColumns) > 0');
 
             $content  = $form->errorSummary($this->model);
+            $content .= '<h3>' . Yii::t('Default', 'Please map the fields you would like to import.') . '</h3>';
+            $content .= $this->renderRequiredAttributesLabelsDataContent();
             $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:20%" />';
@@ -102,6 +109,21 @@
             $content .= '</tbody>';
             $content .= '</table>';
             $content .= $this->renderActionLinksContent();
+            return $content;
+        }
+
+        protected function renderRequiredAttributesLabelsDataContent()
+        {
+            $content = null;
+            if(count($this->requiredAttributesLabelsData) > 0)
+            {
+                $content .= '<b>' . Yii::t('Default', 'Required Fields') . '</b>' . '<br/>';
+                foreach($this->requiredAttributesLabelsData as $label)
+                {
+                    $content .= $label. '<br/>';
+                }
+                $content .= '<br/>';
+            }
             return $content;
         }
 
@@ -186,7 +208,7 @@
 
         protected function renderPreviousPageLinkContent()
         {
-            return getPreviousPageLinkContentByControllerAction('step3');
+            return $this->getPreviousPageLinkContentByControllerAction('step3');
         }
     }
 ?>

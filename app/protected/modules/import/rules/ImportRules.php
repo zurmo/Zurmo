@@ -239,5 +239,16 @@
             }
             return $requireAttributesCollection;
         }
+
+        public static function getRequiredAttributesLabelsData()
+        {
+            $requireAttributesCollection = static::getRequiredAttributesCollectionNotIncludingReadOnly();
+            $labelsData                  = array();
+            foreach($requireAttributesCollection as $attributeData)
+            {
+                $labelsData[] = $attributeData['attributeLabel'];
+            }
+            return $labelsData;
+        }
     }
 ?>
