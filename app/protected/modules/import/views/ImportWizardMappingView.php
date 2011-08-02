@@ -94,10 +94,11 @@
             $content .= '</tr>';
             $content .= MappingFormLayoutUtil::
                         renderMappingDataMetadataWithRenderedElements($mappingDataMetadataWithRenderedElements);
-
-
-
-
+            $content .= '<tr>';
+            $content .= '<td colspan="4">';
+            $content .= $this->renderAddExtraColumnContent(count($this->mappingDataMetadata));
+            $content .= '</td>';
+            $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
             $content .= $this->renderActionLinksContent($form);
@@ -137,7 +138,7 @@
                                                                        $ajaxOnChangeUrl);
                 if($firstRowIsHeaderRow)
                 {
-                    assert('isset($mappingDataRow["headerValue"])');
+                    assert('$mappingDataRow["headerValue"] == null || is_string($mappingDataRow["headerValue"])');
                     $row['cells'][] = $mappingFormLayoutUtil->renderHeaderColumnContent($columnName,
                                                                                     $mappingDataRow['headerValue']);
                 }
@@ -152,6 +153,25 @@
                 $metadata['rows'][] = $row;
             }
             return $metadata;
+        }
+
+        protected function renderAddExtraColumnContent($columnCount)
+        {
+            assert('is_int($columnCount)');
+            $idInputHtmlOptions  = array('id' => 'columnCounter');
+            $hiddenInputName     = 'columnCounter';
+            $ajaxOnChangeUrl     = Yii::app()->createUrl("import/default/mappingAddExtraColumn",
+                                   array('id' => $this->model->id));
+            $content             = CHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
+            $content            .= CHtml::ajaxButton(Yii::t('Default', 'Add Column'), $ajaxOnChangeUrl,
+                                    array('type' => 'GET',
+                                          'data' => 'js:\'columnCount=\' + $(\'#columnCounter\').val()',
+                                          'success' => 'js:function(data){
+                                            $(\'#columnCounter\').val(parseInt($(\'#columnCounter\').val()) + 1)
+                                            $(\'#addExtraColumnButton\').parent().parent().prev().after(data);
+                                          }'),
+                                    array('id' => 'addExtraColumnButton'));
+            return $content;
         }
 
         protected function resolveMappingRuleFormsAndElementTypesByColumn($columnName)

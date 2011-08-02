@@ -45,6 +45,26 @@
             $this->moduleIdOfDefaultModel = $defaultModuleClassName::getDirectoryName();
         }
 
+        public function rules()
+        {
+            if($this->getScenario() == 'extraColumn')
+            {
+                $requiredRuleIsApplicable = true;
+            }
+            else
+            {
+                $requiredRuleIsApplicable = false;
+            }
+            $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                                                         getApplicableRulesByModelClassNameAndAttributeName(
+                                                         $this->modelClassName,
+                                                         $this->modelAttributeName,
+                                                         'defaultModelStringifiedName',
+                                                         $requiredRuleIsApplicable);
+                                                         return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+        }
+
         //todo: there is here because modelElement is lookign for it...
         public function getId()
         {

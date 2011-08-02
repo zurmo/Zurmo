@@ -148,17 +148,17 @@
             $importRulesClassName = $importWizardForm->importRulesType . 'ImportRules';
             if (isset($_POST[get_class($importWizardForm)]))
             {
-                ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
+                $reIndexedPostData = ImportMappingUtil::
+                                     reIndexExtraColumnNamesByPostData($_POST[get_class($importWizardForm)]);
+                ImportWizardUtil::setFormByPostForStep4($importWizardForm, $reIndexedPostData);
 
                 $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
                                                               makeFormsAndElementTypesByMappingDataAndImportRulesType(
                                                               $importWizardForm->mappingData,
                                                               $importWizardForm->importRulesType);
-                if(MappingRuleFormAndElementTypeUtil::validateMappingRuleForms(
-                                                      $mappingDataMappingRuleFormsAndElementTypes))
-                {
-                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
-                }
+                MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingDataMappingRuleFormsAndElementTypes);
+                //still validate even if MappingRuleForms fails, so all errors are captured and returned.
+                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
             }
             else
             {
@@ -202,6 +202,25 @@
                                                        $importWizardForm->importRulesType,
                                                        $columnType,
                                                        array());
+        }
+
+        public function actionMappingAddExtraColumn($id, $columnCount)
+        {
+            $import                                  = Import::getById((int)$_GET['id']);
+            $importWizardForm                        = ImportWizardUtil::makeFormByImport($import);
+            $importRulesClassName                    = $importWizardForm->importRulesType . 'ImportRules';
+            $mappableAttributeIndicesAndDerivedTypes = $importRulesClassName::
+                                                       getMappableAttributeIndicesAndDerivedTypes();
+            $extraColumnName                         = ImportMappingUtil::makeExtraColumnNameByColumnCount(
+                                                       (int)$columnCount);
+            $mappingDataMetadata                     = ImportWizardMappingViewUtil::
+                                                       getExtraColumnMappingDataForViewByColumnName($extraColumnName);
+            $extraColumnView                         = new ImportWizardMappingExtraColumnView(
+                                                       $importWizardForm,
+                                                       $mappingDataMetadata,
+                                                       $mappableAttributeIndicesAndDerivedTypes);
+            $view                                    = new AjaxPageView($extraColumnView);
+            echo $view->render();
         }
 
         /**

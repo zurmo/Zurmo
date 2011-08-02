@@ -76,10 +76,22 @@
                                                      $columnName,
                                                      $columnType,
                                                      $ajaxOnChangeUrl));
-            return CHtml::dropDownList($name,
+            $content = CHtml::dropDownList($name,
                                        $attributeIndexOrDerivedType,
                                        $this->mappableAttributeIndicesAndDerivedTypes,
                                        $htmlOptions);
+            if($columnType == 'extraColumn')
+            {
+                $content .= '&#160;' . CHtml::link(Yii::t('Default', 'Remove Column'),
+                            '#', array('class' => 'remove-extra-column-link'));
+                Yii::app()->clientScript->registerScript('mappingExtraColumnRemoveLink', "
+                $('.remove-extra-column-link').click( function()
+                    {
+                        $(this).parent().parent().remove();
+                    }
+                );");
+            }
+            return $content;
         }
 
         protected function renderColumnTypeContent($columnName, $columnType, $attributeIndexOrDerivedType)
@@ -94,7 +106,7 @@
         public function renderHeaderColumnContent($columnName, $headerValue)
         {
             assert('is_string($columnName)');
-            assert('is_string($headerValue)');
+            assert('is_string($headerValue) || $headerValue == null');
             $content = $headerValue;
             return $content;
         }
@@ -147,8 +159,8 @@
                         $attributeName          = $mappingRuleForm::getAttributeName();
                     }
                     $params                 = array();
-                    $params['inputPrefix']  = $this->formModelName . '[' . $columnName . '][mappingRulesData]';
-                    $params['inputPrefix'] .= '[' . get_class($mappingRuleForm) . ']';
+                    $params['inputPrefix']  = array($this->formModelName, $columnName, 'mappingRulesData',
+                                                    get_class($mappingRuleForm));
                     $element                = new $elementClassName(
                                                   $mappingRuleForm,
                                                   $attributeName,

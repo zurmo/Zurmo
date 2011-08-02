@@ -31,10 +31,12 @@
     class ModelAttributeRulesToDefaultValueMappingRuleUtil
     {
         public static function getApplicableRulesByModelClassNameAndAttributeName($modelClassName, $attributeName,
+                                                                                  $ruleAttributeName,
                                                                                   $requiredRuleIsApplicable = false)
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
+            assert('is_string($ruleAttributeName)');
             assert('is_bool($requiredRuleIsApplicable)');
             $model    = new $modelClassName(false);
             assert('$model->isAttribute($attributeName)');
@@ -63,12 +65,12 @@
                             case 'required':
                                if($requiredRuleIsApplicable)
                                {
-                                   $rule[0] = 'defaultValue';
+                                   $rule[0] = $ruleAttributeName;
                                    $applicableRules[] = $rule;
                                }
                                continue;
                             default:
-                               $rule[0] = 'defaultValue';
+                               $rule[0] = $ruleAttributeName;
                                $applicableRules[] = $rule;
                         }
                     }

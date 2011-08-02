@@ -92,5 +92,39 @@
             }
             return $mappedAttributeIndicesOrDerivedAttributeTypes;
         }
+
+        public static function makeExtraColumnNameByColumnCount($columnCount)
+        {
+            assert('is_int($columnCount)');
+            return 'column_' . ($columnCount + 1);
+        }
+
+        public static function reIndexExtraColumnNamesByPostData($postData)
+        {
+            assert('is_array($postData)');
+            $reIndexedData     = array();
+            $importColumnCount = 0;
+            $tempData          = array();
+            foreach($postData as $columnName => $data)
+            {
+                assert('$data["type"] == "importColumn" || $data["type"] == "extraColumn"');
+                if($data['type'] == 'extraColumn')
+                {
+                    $tempData[] = $data;
+                }
+                else
+                {
+                    $reIndexedData[$columnName] = $data;
+                    $importColumnCount ++;
+                }
+            }
+            $extraColumnStartingCount = $importColumnCount - 1;
+            foreach($tempData as $data)
+            {
+                $reIndexedData[self::makeExtraColumnNameByColumnCount($extraColumnStartingCount)] = $data;
+                $extraColumnStartingCount ++;
+            }
+            return $reIndexedData;
+        }
     }
 ?>

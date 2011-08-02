@@ -89,7 +89,7 @@
                                                           $mappingRuleFormClassName);
                         if($mappingDataByColumn['type'] == "extraColumn")
                         {
-                            $mappingRuleForm->setScenario = 'extraColumn';
+                            $mappingRuleForm->setScenario('extraColumn');
                         }
                         $mappingRuleForm->setAttributes   ($mappingRuleFormData);
                         $mappingRuleFormsAndElementTypes[$columnName][]= array('mappingRuleForm' => $mappingRuleForm,
@@ -116,23 +116,27 @@
         }
 
         /**
-         * Given an array of mappingRuleForms data, validate each form.  If any form does not validate,
-         * then return false.
+         * Given an array of mappingDataMappingRuleForms data, validate each form.  If any form does not validate,
+         * then return false.  The mappingDataMappingRuleForms array is organized by columnNames, then by the mapping
+         * rules for each column.
          * @param array $mappingDataMappingRuleFormsAndElementTypes
          * @return true/false validation results.
          */
-        public static function validateMappingRuleForms($mappingRuleFormsData)
+        public static function validateMappingRuleForms($mappingDataMappingRuleFormsData)
         {
-            assert('is_array($mappingRuleFormsData)');
+            assert('is_array($mappingDataMappingRuleFormsData)');
             $anyValidatedFalse = false;
-            foreach($mappingRuleFormsData as $mappingRuleFormData)
+            foreach($mappingDataMappingRuleFormsData as $notUsed => $mappingRuleFormsData)
             {
-                assert('$mappingRuleFormData["mappingRuleForm"] instanceof MappingRuleForm');
-                if(!$mappingRuleFormData["mappingRuleForm"]->validate())
+                foreach($mappingRuleFormsData as $mappingRuleFormData)
                 {
-                    $anyValidatedFalse = true;
-                }
+                    assert('$mappingRuleFormData["mappingRuleForm"] instanceof MappingRuleForm');
+                    if(!$mappingRuleFormData["mappingRuleForm"]->validate())
+                    {
+                        $anyValidatedFalse = true;
+                    }
 
+                }
             }
             return !$anyValidatedFalse;
         }

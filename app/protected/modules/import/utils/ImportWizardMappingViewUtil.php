@@ -81,5 +81,16 @@
             }
             return $mappingData;
         }
+
+        public static function getExtraColumnMappingDataForViewByColumnName($columnName)
+        {
+            assert('is_string($columnName)');
+            return array(
+                $columnName => array('type'                        => 'extraColumn',
+                                     'attributeIndexOrDerivedType' => null,
+                                     'mappingRulesData'            => null,
+                                     'headerValue'                 => null,
+                                     'sampleValue'                 => null));
+        }
     }
 ?>

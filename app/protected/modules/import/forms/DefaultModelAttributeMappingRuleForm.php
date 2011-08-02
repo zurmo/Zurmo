@@ -40,8 +40,9 @@
                                                          getApplicableRulesByModelClassNameAndAttributeName(
                                                          $this->modelClassName,
                                                          $this->modelAttributeName,
+                                                         static::getAttributeName(),
                                                          $requiredRuleIsApplicable);
-                                                         return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
     }
 ?>
