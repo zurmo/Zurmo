@@ -118,10 +118,9 @@
         public static function getMappableAttributeIndicesAndDerivedTypes()
         {
             $mappableAttributeIndicesAndDerivedTypes = array();
-            $modelClassName                        = static::getModelClassName();
-            $attributesCollection                  = static::getAttributesCollectionByModelClassName($modelClassName);
-            $model                                 = new $modelClassName(false);
-
+            $modelClassName                          = static::getModelClassName();
+            $attributesCollection                    = static::getAttributesCollectionByModelClassName($modelClassName);
+            $model                                   = new $modelClassName(false);
             foreach($attributesCollection as $attributeIndex => $attributeData)
             {
                 if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
@@ -132,8 +131,8 @@
             }
             foreach(static::getDerivedAttributeTypes() as $derivedType)
             {
-                $attributeImportRulesClassName                       = $derivedType . 'AttributeImportRules';
-                $attributeImportRules                                = new $attributeImportRulesClassName($model);
+                $attributeImportRulesClassName                         = $derivedType . 'AttributeImportRules';
+                $attributeImportRules                                  = new $attributeImportRulesClassName($model);
                 $mappableAttributeIndicesAndDerivedTypes[$derivedType] = $attributeImportRules->getDisplayLabel();
             }
             asort($mappableAttributeIndicesAndDerivedTypes);

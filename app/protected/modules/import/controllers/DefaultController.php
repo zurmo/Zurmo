@@ -245,7 +245,7 @@
             $import           = Import::getById((int)$id);
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
             try {
-                $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
+                $uploadedFile = ImportUploadedFileUtil::getByNameCatchErrorAndEnsureFileIsACSV($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
                 $fileHandle  = fopen($uploadedFile->getTempName(), 'r');
                 if ($fileHandle !== false)
