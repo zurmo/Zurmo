@@ -206,7 +206,7 @@
                   ),
               'primaryEmail__emailAddress' =>
                   array (
-                    'attributeLabel' => 'Email Address',
+                    'attributeLabel' => 'Primary Email - Email Address',
                     'attributeName' => 'primaryEmail',
                     'relationAttributeName' => 'emailAddress',
                     'attributeImportRulesType' => 'Email',
@@ -214,7 +214,7 @@
                   ),
               'primaryEmail__optOut' =>
                   array (
-                    'attributeLabel' => 'Opt Out',
+                    'attributeLabel' => 'Primary Email - Opt Out',
                     'attributeName' => 'primaryEmail',
                     'relationAttributeName' => 'optOut',
                     'attributeImportRulesType' => 'CheckBox',
@@ -222,7 +222,7 @@
                   ),
               'primaryEmail__isInvalid' =>
                   array (
-                    'attributeLabel' => 'Is Invalid',
+                    'attributeLabel' => 'Primary Email - Is Invalid',
                     'attributeName' => 'primaryEmail',
                     'relationAttributeName' => 'isInvalid',
                     'attributeImportRulesType' => 'CheckBox',
@@ -230,7 +230,7 @@
                   ),
               'primaryAddress__street1' =>
                   array (
-                    'attributeLabel' => 'Street 1',
+                    'attributeLabel' => 'Primary Address - Street 1',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'street1',
                     'attributeImportRulesType' => 'Text',
@@ -238,7 +238,7 @@
                   ),
               'primaryAddress__street2' =>
                   array (
-                    'attributeLabel' => 'Street 2',
+                    'attributeLabel' => 'Primary Address - Street 2',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'street2',
                     'attributeImportRulesType' => 'Text',
@@ -246,7 +246,7 @@
                   ),
               'primaryAddress__city' =>
                   array (
-                    'attributeLabel' => 'City',
+                    'attributeLabel' => 'Primary Address - City',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'city',
                     'attributeImportRulesType' => 'Text',
@@ -254,7 +254,7 @@
                   ),
               'primaryAddress__state' =>
                   array (
-                    'attributeLabel' => 'State',
+                    'attributeLabel' => 'Primary Address - State',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'state',
                     'attributeImportRulesType' => 'Text',
@@ -262,7 +262,7 @@
                   ),
               'primaryAddress__postalCode' =>
                   array (
-                    'attributeLabel' => 'Postal Code',
+                    'attributeLabel' => 'Primary Address - Postal Code',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'postalCode',
                     'attributeImportRulesType' => 'Text',
@@ -270,7 +270,7 @@
                   ),
               'primaryAddress__country' =>
                   array (
-                    'attributeLabel' => 'Country',
+                    'attributeLabel' => 'Primary Address - Country',
                     'attributeName' => 'primaryAddress',
                     'relationAttributeName' => 'country',
                     'attributeImportRulesType' => 'Text',

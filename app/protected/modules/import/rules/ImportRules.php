@@ -136,6 +136,7 @@
                 $attributeImportRules                                = new $attributeImportRulesClassName($model);
                 $mappableAttributeIndicesAndDerivedTypes[$derivedType] = $attributeImportRules->getDisplayLabel();
             }
+            asort($mappableAttributeIndicesAndDerivedTypes);
             return $mappableAttributeIndicesAndDerivedTypes;
         }
 

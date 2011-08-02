@@ -77,10 +77,13 @@
                     {
                         if (!$this->model->{$attributeName}->isRelation($relationAttributeName))
                         {
+                            $attributeLabel = $this->model->getAttributeLabel($attributeName) .
+                                              ' - ' .
+                                              $this->model->{$attributeName}->getAttributeLabel($relationAttributeName);
                             ModelAttributeImportMappingCollectionUtil::populateCollection(
                                 $attributes,
                                 $attributeName . FormModelUtil::DELIMITER . $relationAttributeName,
-                                $this->model->{$attributeName}->getAttributeLabel($relationAttributeName),
+                                $attributeLabel,
                                 $attributeName,
                                 ModelAttributeToDesignerTypeUtil::getDesignerType($this->model->$attributeName,
                                                                                   $relationAttributeName),

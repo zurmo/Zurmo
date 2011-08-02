@@ -36,39 +36,39 @@
         {
             $data = ImportModelTestItemImportRules::getMappableAttributeIndicesAndDerivedTypes();
             $compareData = array(
+                'boolean'                     => 'Boolean',
                 'CreatedByUser'				  => 'Created By User',
                 'CreatedDateTime'			  => 'Created Date Time',
-                'FullName'					  => 'Full Name',
-                'ModifiedByUser'		      => 'Modified By User',
-                'ModifiedDateTime'		      => 'Modified Date Time',
-                'boolean'                     => 'Boolean',
                 'currencyValue'			      => 'Currency Value',
                 'date'                        => 'Date',
                 'dateTime'                    => 'Date Time',
                 'dropDown'                    => 'Drop Down',
                 'firstName'					  => 'First Name',
                 'float'                       => 'Float',
+                'FullName'					  => 'Full Name',
                 'hasOne'					  => 'Has One',
                 'id'                          => 'Id',
                 'integer'                     => 'Integer',
                 'lastName'					  => 'Last Name',
+                'ModifiedByUser'		      => 'Modified By User',
+                'ModifiedDateTime'		      => 'Modified Date Time',
                 'owner' 				      => 'Owner',
                 'phone'                       => 'Phone',
-                'primaryAddress__city'        => 'City',
-                'primaryAddress__country'     => 'Country',
-                'primaryAddress__postalCode'  => 'Postal Code',
-                'primaryAddress__state'       => 'State',
-                'primaryAddress__street1'     => 'Street 1',
-                'primaryAddress__street2'     => 'Street 2',
-                'primaryEmail__emailAddress'  => 'Email Address',
-                'primaryEmail__isInvalid'     => 'Is Invalid',
-                'primaryEmail__optOut'        => 'Opt Out',
+                'primaryAddress__city'        => 'Primary Address - City',
+                'primaryAddress__country'     => 'Primary Address - Country',
+                'primaryAddress__postalCode'  => 'Primary Address - Postal Code',
+                'primaryAddress__state'       => 'Primary Address - State',
+                'primaryAddress__street1'     => 'Primary Address - Street 1',
+                'primaryAddress__street2'     => 'Primary Address - Street 2',
+                'primaryEmail__emailAddress'  => 'Primary Email - Email Address',
+                'primaryEmail__isInvalid'     => 'Primary Email - Is Invalid',
+                'primaryEmail__optOut'        => 'Primary Email - Opt Out',
                 'radioDropDown'				  => 'Radio Drop Down',
                 'string'                      => 'String',
                 'textArea'                    => 'Text Area',
                 'url'                         => 'Url',
             );
-            $this->assertEquals($compareData, $data);
+            $this->assertEquals(serialize($compareData), serialize($data));
         }
 
         public function testGetModelClassNameByAttributeIndexOrDerivedType()
@@ -91,7 +91,7 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $data = ImportRulesUtil::getImportRulesTypesForCurrentUser();
             $compareData = array(
-                'AccountImportRules' => 'Accounts',
+                'Account' => 'Accounts',
             );
             $this->assertEquals($compareData, $data);
         }
