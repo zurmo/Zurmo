@@ -228,6 +228,8 @@
         /**
          * An input name is typically formed like: modelClassName[attributeName] or
          * modelClassName[attributeName][relationAttributeName].  This method resolves the input name string.
+         * Also handles scenarios where attributeName has something like abc[def]. This method will properly account
+         * for that.
          * @param string $attributeName
          * @param string $relationAttributeName
          * @return string representing the content of the input name.
@@ -241,12 +243,22 @@
                 $attributeName = $this->attribute;
             }
             $inputPrefix = $this->resolveInputNamePrefix();
-            $name        = $inputPrefix . '[' . $attributeName . ']';
+            $name        = $inputPrefix . static::resolveInputNameForEditableInput($attributeName);
             if($relationAttributeName != null)
             {
+                assert('strpos($relationAttributeName, "[") === false && strpos($relationAttributeName, "]") === false');
                 $name .= '[' . $relationAttributeName . ']';
             }
             return $name;
+        }
+
+        public static function resolveInputNameForEditableInput($attributeName)
+        {
+            assert('is_string($attributeName)');
+            $modifiedAttributeName = str_replace('[', '][', $attributeName);
+            $modifiedAttributeName = '[' . $modifiedAttributeName . ']';
+            $modifiedAttributeName = str_replace(']]', ']', $modifiedAttributeName);
+            return $modifiedAttributeName;
         }
 
         /**
