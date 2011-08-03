@@ -209,3 +209,48 @@ File upload progress bar
 div.multiple-file-upload .file_upload_progress .ui-progressbar-value {
   background: url(../images/pbar-ani.gif);
 }
+
+/*
+Import module styles
+*/
+div.mapping-rules
+{
+    white-space: nowrap;
+}
+
+div.mapping-rules table th
+{
+    text-align: right;
+    width: 20%;
+}
+
+div.wide.form div.mapping-rules table th label
+{
+    margin-right: 2px;
+    padding-top: 2px;
+    float: right;
+}
+
+div.mapping-rules table td
+{
+    width: 80%;
+}
+
+div.mapping-rules table th, div.mapping-rules table td
+{
+    margin-top: 0;
+    padding-top: 0;
+    padding-right: 2px;
+    border: 0;
+    background-color: transparent;
+}
+
+div.import-previous-page-link
+{
+    float:left;
+}
+
+div.import-next-page-link
+{
+    float:right;
+}

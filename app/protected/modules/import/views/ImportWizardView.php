@@ -50,11 +50,13 @@
             $content  = '<div class="view-toolbar">'; //change to different class?
             if($previousPageLinkContent)
             {
-                $content .= '<div id="previous-page-link" style="float:left;">' . $previousPageLinkContent . '</div>';
+                $content .= '<div id="previous-page-link" class="import-previous-page-link">' .
+                $previousPageLinkContent . '</div>';
             }
             if($nextPageLinkContent)
             {
-                $content .= '<div id="next-page-link" style="float:right;">' . $nextPageLinkContent . '</div>';
+                $content .= '<div id="next-page-link" class="import-next-page-link">' .
+                $nextPageLinkContent . '</div>';
             }
             $content .= '</div>';
             return $content;

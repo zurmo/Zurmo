@@ -140,7 +140,7 @@
             assert('is_string($importRulesType)');
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             assert('is_array($mappingRuleFormsAndElementTypes) || $mappingRuleFormsAndElementTypes == null');
-            $content = '<div id="' . self::getMappingRulesDivIdByColumnName($columnName) . '">';
+            $content = '<div id="' . self::getMappingRulesDivIdByColumnName($columnName) . '" class="mapping-rules">';
             if($attributeIndexOrDerivedType != null)
             {
                 if($mappingRuleFormsAndElementTypes == null)

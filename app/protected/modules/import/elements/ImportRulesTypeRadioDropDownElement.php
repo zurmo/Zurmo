@@ -70,7 +70,7 @@
                 'name' => $this->getEditableInputName(),
                 'id'   => $this->getEditableInputId(),
             );
-            $htmlOptions['template'] =  '<div style="float:left">{input}</div><div style="margin-top:3px;">{label}</div>';
+            $htmlOptions['template'] =  '<div class="radio-input">{input}{label}</div>';
             return $htmlOptions;
         }
 

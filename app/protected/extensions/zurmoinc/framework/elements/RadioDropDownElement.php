@@ -45,7 +45,7 @@
         protected function getEditableHtmlOptions()
         {
             $htmlOptions = parent::getEditableHtmlOptions();
-            $htmlOptions['template'] =  '{label} {input}';
+            $htmlOptions['template'] =  '<div class="radio-input">{input}{label}</div>';
             return $htmlOptions;
         }
     }
