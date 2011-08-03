@@ -179,7 +179,13 @@
             {
                 ReadPermissionsOptimizationUtil::userAddedToRole($this);
             }
+            if (isset($this->originalAttributeValues['language']) && Yii::app()->user->userModel != null &&
+                Yii::app()->user->userModel == $this)
+            {
+                Yii::app()->languageHelper->setActive($this->language);
+            }
             parent::afterSave();
+
         }
 
         protected function beforeSave()
