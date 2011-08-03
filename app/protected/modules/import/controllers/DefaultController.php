@@ -167,10 +167,27 @@
                                                               $importWizardForm->mappingData,
                                                               $importWizardForm->importRulesType);
             }
+            $dataProvider                                   = $this->makeDataProviderForSampleRow($import,
+                                                              (bool)$importWizardForm->firstRowIsHeaderRow);
+            if($importWizardForm->firstRowIsHeaderRow)
+            {
+                $headerRow = ImportDatabaseUtil::getFirstRowByTableName($import->getTempTableName());
+                assert('$headerRow != null');
+            }
+            else
+            {
+                $headerRow = null;
+            }
+            $sampleData                                     = $dataProvider->getData();
+            assert('count($sampleData) == 1');
+            $sample                                         = current($sampleData);
+            $pagerUrl                                       = Yii::app()->createUrl('import/default/sampleRow',
+                                                              array('id' => $import->id));
+            $pagerContent                                   = ImportDataProviderPagerUtil::
+                                                              renderPagerAndHeaderTextContent($dataProvider, $pagerUrl);
             $mappingDataMetadata                            = ImportWizardMappingViewUtil::
                                                               resolveMappingDataForView($importWizardForm->mappingData,
-                                                              $tempTableName,
-                                                              (bool)$importWizardForm->firstRowIsHeaderRow);
+                                                              $sample, $headerRow);
             $mappableAttributeIndicesAndDerivedTypes        = $importRulesClassName::
                                                               getMappableAttributeIndicesAndDerivedTypes();
             $importView                                     = new GridView(2, 1);
@@ -178,6 +195,7 @@
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
                                                              $importWizardForm,
+                                                             $pagerContent,
                                                              $mappingDataMetadata,
                                                              $mappingDataMappingRuleFormsAndElementTypes,
                                                              $mappableAttributeIndicesAndDerivedTypes,
@@ -233,6 +251,32 @@
                                                        $mappableAttributeIndicesAndDerivedTypes);
             $view                                    = new AjaxPageView($extraColumnView);
             echo $view->render();
+        }
+
+        public function actionSampleRow($id)
+        {
+            $import              = Import::getById((int)$_GET['id']);
+            $importWizardForm    = ImportWizardUtil::makeFormByImport($import);
+            $dataProvider        = $this->makeDataProviderForSampleRow($import,
+                                   (bool)$importWizardForm->firstRowIsHeaderRow);
+            $data                = $dataProvider->getData();
+            $renderedContentData = array();
+            $pagerUrl            = Yii::app()->createUrl('import/default/sampleRow', array('id' => $import->id));
+            $headerContent       = ImportDataProviderPagerUtil::renderPagerAndHeaderTextContent($dataProvider, $pagerUrl);
+            $renderedContentData[MappingFormLayoutUtil::getSampleColumnHeaderId()] = $headerContent;
+            foreach($data as $sampleColumnData)
+            {
+                foreach($sampleColumnData as $columnName => $value)
+                {
+                    if($columnName != 'id')
+                    {
+                        $renderedContentData[MappingFormLayoutUtil::
+                        resolveSampleColumnIdByColumnName($columnName)] = $value;
+                    }
+                }
+            }
+            echo CJSON::encode($renderedContentData);
+            Yii::app()->end(0, false);
         }
 
         /**
@@ -324,6 +368,14 @@
                     Yii::app()->end(0, false);
                 }
             }
+        }
+
+        protected function makeDataProviderForSampleRow($import, $firstRowIsHeaderRow)
+        {
+            assert('$import instanceof Import');
+            assert('is_bool($firstRowIsHeaderRow)');
+            $config = array('pagination' => array('pageSize' => 1));
+            return    new ImportDataProvider($import->getTempTableName(), $firstRowIsHeaderRow, $config);
         }
     }
 ?>

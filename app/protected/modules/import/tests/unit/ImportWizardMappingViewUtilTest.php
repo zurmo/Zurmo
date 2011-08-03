@@ -48,8 +48,10 @@
             $this->assertEquals($compareData, $mappingData);
             $mappingData['column_3'] = array('type' => 'extraColumn', 'attributeIndexOrDerivedType' => 'xyz',
                                              'mappingRulesData' => null);
-            $mappingDataMetadata = ImportWizardMappingViewUtil::
-                                   resolveMappingDataForView($mappingData, $testTableName, true);
+            $headerRow               = ImportDatabaseUtil::getFirstRowByTableName($testTableName);
+            $sampleBean              = ImportDatabaseUtil::getSubset($testTableName, null, 1, 1);
+            $mappingDataMetadata     = ImportWizardMappingViewUtil::
+                                       resolveMappingDataForView($mappingData, current($sampleBean), $headerRow);
             $compareData = array(
                 'column_0' => array('type'                       => 'importColumn',
                                     'attributeIndexOrDerivedType' => null,
@@ -73,8 +75,9 @@
                                     'sampleValue' 			     => null),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
+            $sampleBean = ImportDatabaseUtil::getSubset($testTableName, null, 1);
             $mappingDataMetadata = ImportWizardMappingViewUtil::
-                                   resolveMappingDataForView($mappingData, $testTableName, false);
+                                   resolveMappingDataForView($mappingData, current($sampleBean), null);
             $compareData = array(
                 'column_0' => array('type' => 'importColumn',
                                     'attributeIndexOrDerivedType' => null,

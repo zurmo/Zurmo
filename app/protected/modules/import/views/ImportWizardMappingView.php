@@ -30,6 +30,8 @@
      */
     class ImportWizardMappingView extends ImportWizardView
     {
+        protected $sampleColumnPagerContent;
+
         /**
          * The import's mapping data is massaged by adding sample column values and header values if available. This
          * property is set from the constructor and passed from the controller into this view.
@@ -44,6 +46,7 @@
         public function __construct($controllerId,
                                     $moduleId,
                                     ImportWizardForm $model,
+                                    $sampleColumnPagerContent,
                                     $mappingDataMetadata,
                                     $mappingDataMappingRuleFormsAndElementTypes,
                                     $mappableAttributeIndicesAndDerivedTypes,
@@ -52,12 +55,14 @@
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($model->mappingData) && count($model->mappingData) > 0');
+            assert('is_string($sampleColumnPagerContent)');
             assert('is_array($mappingDataMetadata)');
             assert('is_array($mappableAttributeIndicesAndDerivedTypes)');
             assert('is_array($requiredAttributesLabelsData)');
             $this->controllerId                               = $controllerId;
             $this->moduleId                                   = $moduleId;
             $this->model                                      = $model;
+            $this->sampleColumnPagerContent                   = $sampleColumnPagerContent;
             $this->mappingDataMetadata                        = $mappingDataMetadata;
             $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
             $this->mappableAttributeIndicesAndDerivedTypes    = $mappableAttributeIndicesAndDerivedTypes;
@@ -135,7 +140,8 @@
             {
                 $headerColumns[] = Yii::t('Default', 'Header');
             }
-            $headerColumns[] = Yii::t('Default', 'Sample Row');
+            $headerColumns[] = '<div id="' . MappingFormLayoutUtil::getSampleColumnHeaderId() . '">' .
+                               $this->sampleColumnPagerContent . '</div>';
             $headerColumns[] = Yii::t('Default', 'Rules');
             return $headerColumns;
         }

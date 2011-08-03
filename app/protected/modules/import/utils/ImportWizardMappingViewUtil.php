@@ -32,47 +32,30 @@
     {
         /**
          * @param array   $mappingData
-         * @param string  $tableName
-         * @param boolean $firstRowIsHeaderRow
+         * @param object  $sample RedBean_OODBBean
+         * @param mixed   $headerRow
          */
-        public static function resolveMappingDataForView($mappingData, $tableName, $firstRowIsHeaderRow)
+        public static function resolveMappingDataForView($mappingData, RedBean_OODBBean $sample, $headerRow = null)
         {
             assert('is_array($mappingData)');
-            assert('is_string($tableName)');
-            assert('is_bool($firstRowIsHeaderRow)');
-            if($firstRowIsHeaderRow)
-            {
-                $rowData = ImportDatabaseUtil::getRowsByTableNameAndCount($tableName, 2, 0);
-                if(count($rowData) <= 1)
-                {
-                    throw new notSupportedException();
-                }
-            }
-            else
-            {
-                $rowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
-                if($rowData == null)
-                {
-                    throw new notSupportedException();
-                }
-            }
+            assert('$headerRow == null || is_array($headerRow)');
             foreach($mappingData as $columnName => $columnData)
             {
                 if($columnData['type'] == 'importColumn')
                 {
-                    if($firstRowIsHeaderRow)
+                    if($headerRow != null)
                     {
-                        $mappingData[$columnName]['headerValue'] = $rowData[0][$columnName];
-                        $mappingData[$columnName]['sampleValue'] = $rowData[1][$columnName];
+                        $mappingData[$columnName]['headerValue'] = $headerRow[$columnName];
+                        $mappingData[$columnName]['sampleValue'] = $sample->$columnName;
                     }
                     else
                     {
-                        $mappingData[$columnName]['sampleValue'] = $rowData[$columnName];
+                        $mappingData[$columnName]['sampleValue'] = $sample->$columnName;
                     }
                 }
                 else
                 {
-                    if($firstRowIsHeaderRow)
+                    if($headerRow != null)
                     {
                         $mappingData[$columnName]['headerValue'] = null;
                     }

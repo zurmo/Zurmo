@@ -124,8 +124,7 @@
         {
             assert('is_string($columnName)');
             assert('is_string($sampleValue) || $sampleValue == null');
-            $attributeName             = $columnName . '-import-data';
-            $content = '<div id="' . $attributeName . '">' . $sampleValue . '</div>';
+            $content = '<div id="' . self::resolveSampleColumnIdByColumnName($columnName) . '">' . $sampleValue . '</div>';
             return $content;
         }
 
@@ -230,5 +229,16 @@
                 $ajaxSubmitScript
             }
             );";
+        }
+
+        public static function resolveSampleColumnIdByColumnName($columnName)
+        {
+            assert('is_string($columnName)');
+            return $columnName . '-import-data';
+        }
+
+        public static function getSampleColumnHeaderId()
+        {
+            return 'sample-column-header';
         }
     }

@@ -111,24 +111,32 @@
         }
 
         /**
-         * Given a table name, count, and offset get an array of rows.
+         * Given a table name, count, and offset get an array of beans.
          * @param string $tableName
          * @param integer $count
          * @param integer $offset
-         * @return array
+         * @return array of RedBean_OODBBean beans.
          */
-        public static function getRowsByTableNameAndCount($tableName, $count, $offset = null)
+        public static function getSubset($tableName, $where = null, $count = null, $offset = null)
         {
             assert('is_string($tableName)');
             assert('$offset  === null || is_integer($offset)  && $offset  >= 0');
-            assert('$count   === null || is_integer($count)   && $count   >= 1');
-            $sql = 'select * from ' . $tableName . ' limit ' . $count;
+            assert('$offset  === null || is_integer($count)   && $count   >= 1');
+            $sql = 'select id from ' . $tableName;
+            if($where != null)
+            {
+                $sql .= ' where ' . $where;
+            }
+            if ($count !== null)
+            {
+                $sql .= " limit $count";
+            }
             if ($offset !== null)
             {
                 $sql .= " offset $offset";
             }
-            $data = R::getAll($sql);
-            return $data;
+            $ids   = R::getCol($sql);
+            return R::batch ($tableName, $ids);
         }
 
         /**
@@ -136,9 +144,13 @@
          * @param string $tableName
          * @return integer
          */
-        public static function getCount($tableName)
+        public static function getCount($tableName, $where = null)
         {
             $sql = 'select count(*) count from ' . $tableName;
+            if($where != null)
+            {
+                $sql .= ' where ' . $where;
+            }
             $count = R::getCell($sql);
             if ($count === null)
             {
