@@ -25,19 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are a user model.
+     * Import rules for an attribute that is an account model.
      */
-    class UserAttributeImportRules extends AttributeImportRules
+    class AccountAttributeImportRules extends ModelAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultModelNameId'          => 'ImportMappingRuleDefaultModelNameId',
-                         'UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
-        }
     }
 ?>

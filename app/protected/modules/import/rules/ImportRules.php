@@ -133,6 +133,7 @@
             {
                 $attributeImportRulesClassName                         = $derivedType . 'AttributeImportRules';
                 $attributeImportRules                                  = new $attributeImportRulesClassName($model);
+                assert('$attributeImportRules instanceof DerivedAttributeImportRules');
                 $mappableAttributeIndicesAndDerivedTypes[$derivedType] = $attributeImportRules->getDisplayLabel();
             }
             asort($mappableAttributeIndicesAndDerivedTypes);

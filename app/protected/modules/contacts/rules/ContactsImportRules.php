@@ -25,26 +25,31 @@
      ********************************************************************************/
 
     /**
-     * Base class to support MappingRule forms that are used for derived attributes.  Unlike the
-     * ModelAttributeMappingRuleForm, this class is constructed with a model class name and a derived attribute type.
+     * Defines the import rules for importing into the contacts module.
      */
-    abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
+    class ContactsImportRules extends ImportRules
     {
-        /**
-         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
-         * this is going to be the Account model class name.
-         * @var string
-         */
-        protected $modelClassName;
-
-        protected $derivedAttributeType;
-
-        public function __construct($modelClassName, $derivedAttributeType)
+        public static function getModelClassName()
         {
-            assert('is_string($modelClassName) && $derivedAttributeType != ""');
-            assert('is_string($derivedAttributeType)');
-            $this->modelClassName        = $modelClassName;
-            $this->derivedAttributeType  = $derivedAttributeType;
+            return 'Contact';
+        }
+
+            /**
+         * Get the array of available derived attribute types that can be mapped when using these import rules.
+         * @return array
+         */
+        public static function getDerivedAttributeTypes()
+        {
+            return array_merge(parent::getDerivedAttributeTypes(), array('ContactState', 'FullName'));
+        }
+
+        /**
+         * Get the array of attributes that cannot be mapped when using these import rules.
+         * @return array
+         */
+        public static function getNonImportableAttributeNames()
+        {
+            return array_merge(parent::getNonImportableAttributeNames(), array('state', 'companyName'));
         }
     }
 ?>

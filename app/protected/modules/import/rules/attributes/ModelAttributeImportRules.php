@@ -25,26 +25,19 @@
      ********************************************************************************/
 
     /**
-     * Base class to support MappingRule forms that are used for derived attributes.  Unlike the
-     * ModelAttributeMappingRuleForm, this class is constructed with a model class name and a derived attribute type.
+     * Base class for an attribute that is a relation attribute to a model.
      */
-    abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
+    abstract class ModelAttributeImportRules extends AttributeImportRules
     {
-        /**
-         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
-         * this is going to be the Account model class name.
-         * @var string
-         */
-        protected $modelClassName;
-
-        protected $derivedAttributeType;
-
-        public function __construct($modelClassName, $derivedAttributeType)
+        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            assert('is_string($modelClassName) && $derivedAttributeType != ""');
-            assert('is_string($derivedAttributeType)');
-            $this->modelClassName        = $modelClassName;
-            $this->derivedAttributeType  = $derivedAttributeType;
+            return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
+                         'IdValueTypeModelAttribute' => 'ImportMappingModelIdValueTypeDropDown');
+        }
+
+        public static function getSanitizerUtilNames()
+        {
+            return array('Truncate');
         }
     }
 ?>

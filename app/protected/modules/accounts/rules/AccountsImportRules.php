@@ -24,7 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AccountImportRules extends ImportRules
+    /**
+     * Defines the import rules for importing into the accounts module.
+     */
+    class AccountsImportRules extends ImportRules
     {
         public static function getModelClassName()
         {

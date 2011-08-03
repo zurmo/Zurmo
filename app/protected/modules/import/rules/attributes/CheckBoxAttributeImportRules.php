@@ -31,7 +31,7 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Phone');
+            return array('DefaultValueModelAttribute' => 'CheckBox');
         }
 
         public static function getSanitizerUtilNames()

@@ -25,26 +25,40 @@
      ********************************************************************************/
 
     /**
-     * Base class to support MappingRule forms that are used for derived attributes.  Unlike the
-     * ModelAttributeMappingRuleForm, this class is constructed with a model class name and a derived attribute type.
+     * Base class for importing into models that extend the activity model.
      */
-    abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
+    abstract class ActivitiesImportRules extends ImportRules
     {
         /**
-         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
-         * this is going to be the Account model class name.
-         * @var string
+         * Override to handle special dynamically adding each activity item derived type that the user
+         * has access too.
+         * @return array
          */
-        protected $modelClassName;
-
-        protected $derivedAttributeType;
-
-        public function __construct($modelClassName, $derivedAttributeType)
+        public static function getDerivedAttributeTypes()
         {
-            assert('is_string($modelClassName) && $derivedAttributeType != ""');
-            assert('is_string($derivedAttributeType)');
-            $this->modelClassName        = $modelClassName;
-            $this->derivedAttributeType  = $derivedAttributeType;
+            $activityItemsDerivedAttributeTypes = static::getActivityItemsDerivedAttributeTypesAndResolveAccessByCurrentUser();
+            return array_merge($activityItemsDerivedAttributeTypes, array('CreatedByUser',
+                         'ModifiedByUser',
+                         'CreatedDateTime',
+                         'ModifiedDateTime'));
+        }
+
+        protected static function getActivityItemsDerivedAttributeTypesAndResolveAccessByCurrentUser()
+        {
+            $metadata                     = Activity::getMetadata();
+            $derivedAttributeTypes        = array();
+            $activityItemsModelClassNames = $metadata['Activity']['activityItemsModelClassNames'];
+            foreach($activityItemsModelClassNames as $modelClassName)
+            {
+                $moduleClassName = $modelClassName::getModuleClassName();
+                if(RightsUtil::canUserAccessModule($moduleClassName, Yii::app()->user->userModel))
+                {
+                    $derivedAttributeTypes[] = $modelClassName . 'Derived';
+                }
+                //todo: add support for leads.
+            }
+            return $derivedAttributeTypes;
+
         }
     }
 ?>

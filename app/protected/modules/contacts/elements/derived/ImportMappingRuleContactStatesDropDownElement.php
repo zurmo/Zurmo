@@ -25,26 +25,44 @@
      ********************************************************************************/
 
     /**
-     * Base class to support MappingRule forms that are used for derived attributes.  Unlike the
-     * ModelAttributeMappingRuleForm, this class is constructed with a model class name and a derived attribute type.
+     * Display a drop down of contact states specifically for mapping rules during the import process.
      */
-    abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
+    class ImportMappingRuleContactStatesDropDownElement extends DropDownElement
     {
-        /**
-         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
-         * this is going to be the Account model class name.
-         * @var string
-         */
-        protected $modelClassName;
-
-        protected $derivedAttributeType;
-
-        public function __construct($modelClassName, $derivedAttributeType)
+        public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('is_string($modelClassName) && $derivedAttributeType != ""');
-            assert('is_string($derivedAttributeType)');
-            $this->modelClassName        = $modelClassName;
-            $this->derivedAttributeType  = $derivedAttributeType;
+            assert('$model instanceof DefaultValueContactStateModelAttributeMappingRuleForm');
+            parent::__construct($model, $attribute, $form, $params);
+        }
+
+        /**
+         * Renders the editable dropdown content.
+         * @return A string containing the element's content.
+         */
+        protected function renderControlEditable()
+        {
+            $dropDownArray = $this->getDropDownArray();
+            $htmlOptions = array(
+                'name' => $this->getEditableInputName(),
+                'id'   => $this->getEditableInputId(),
+            );
+            $htmlOptions['empty'] = Yii::t('Default', 'None');
+            return $this->form->dropDownList($this->model, $this->attribute, $dropDownArray, $htmlOptions);
+        }
+
+        protected function renderControlNonEditable()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected function getDropDownArray()
+        {
+            $dropDownArray = $this->model->statesData;
+            if (empty($dropDownArray))
+            {
+                return array();
+            }
+            return array_combine($dropDownArray, $dropDownArray);
         }
     }
 ?>

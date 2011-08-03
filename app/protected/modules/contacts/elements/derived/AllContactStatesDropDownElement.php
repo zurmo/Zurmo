@@ -60,7 +60,9 @@
 
         protected function renderControlNonEditable()
         {
-            $dropDownArray = $this->model->contactStatesData;
+            $relatedAttributeName = $this->getRelatedAttributeName();
+            assert('$relatedAttributeName != null');
+            $dropDownArray = $this->getDropDownArray();
             return Yii::app()->format->text(ArrayUtil::getArrayValue($dropDownArray, $this->model->{$this->attribute}));
         }
 

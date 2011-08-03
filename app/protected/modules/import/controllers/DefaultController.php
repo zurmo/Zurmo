@@ -148,8 +148,9 @@
             $importRulesClassName = ImportRulesUtil::getImportRulesClassNameByType($importWizardForm->importRulesType);
             if (isset($_POST[get_class($importWizardForm)]))
             {
-                $reIndexedPostData = ImportMappingUtil::
-                                     reIndexExtraColumnNamesByPostData($_POST[get_class($importWizardForm)]);
+                $reIndexedPostData                          = ImportMappingUtil::
+                                                              reIndexExtraColumnNamesByPostData(
+                                                              $_POST[get_class($importWizardForm)]);
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $reIndexedPostData);
 
                 $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::

@@ -42,7 +42,8 @@
          */
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('$model instanceof DefaultModelNameIdMappingRuleForm');
+            assert('$model instanceof DefaultModelNameIdMappingRuleForm ||
+                    $model instanceof DefaultModelNameIdDerivedAttributeMappingRuleForm');
             parent::__construct($model, $attribute, $form, $params);
         }
 

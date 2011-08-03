@@ -25,26 +25,28 @@
      ********************************************************************************/
 
     /**
-     * Base class to support MappingRule forms that are used for derived attributes.  Unlike the
-     * ModelAttributeMappingRuleForm, this class is constructed with a model class name and a derived attribute type.
+     * Base class for a derived relation attribute. This would occur if the relation attribute is not specifically
+     * defined on a model, but instead a casted up model is specifically defined.
+     * @see DefaultModelNameIdDerivedAttributeMappingRuleForm
      */
-    abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
+    abstract class ModelDerivedAttributeImportRules extends DerivedAttributeImportRules
     {
-        /**
-         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
-         * this is going to be the Account model class name.
-         * @var string
-         */
-        protected $modelClassName;
-
-        protected $derivedAttributeType;
-
-        public function __construct($modelClassName, $derivedAttributeType)
+        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            assert('is_string($modelClassName) && $derivedAttributeType != ""');
-            assert('is_string($derivedAttributeType)');
-            $this->modelClassName        = $modelClassName;
-            $this->derivedAttributeType  = $derivedAttributeType;
+            return array('DefaultModelNameIdDerivedAttribute' => 'ImportMappingRuleDefaultModelNameId',
+                         'IdValueTypeModelAttribute'          => 'ImportMappingModelIdValueTypeDropDown');
+        }
+
+        public function getDisplayLabel()
+        {
+            $name           = get_called_class();
+            $modelClassName = substr($name, 0, strlen($name) - strlen('DerivedAttributeImportRules'));
+            return $modelClassName::getModelLabelByTypeAndLanguage('Singular');
+        }
+
+        public static function getSanitizerUtilNames()
+        {
+            return array('Truncate');
         }
     }
 ?>

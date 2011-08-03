@@ -64,19 +64,18 @@
                     try
                     {
                         $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem($relationModelClassName);
-                        $castedDownModel = $item->castDown(array($modelDerivationPathToItem));
-                        $activityItemForm = new ActivityItemForm($castedDownModel);
+                        $castedDownModel           = $item->castDown(array($modelDerivationPathToItem));
+                        $activityItemForm         = new ActivityItemForm($castedDownModel);
                         break;
                     }
                     catch (NotFoundException $e)
                     {
-                        //do nothing
                     }
                 }
                 if($activityItemForm == null)
                 {
-                    $relationModel = new $relationModelClassName();
-                    $activityItemForm = new ActivityItemForm($relationModel);
+                    $relationModel     = new $relationModelClassName();
+                    $activityItemForm  = new ActivityItemForm($relationModel);
                 }
                 $modelElementClassName = ActivityItemRelationToModelElementUtil::resolveModelElementClassNameByActionSecurity(
                                               $relationModelClassName, Yii::app()->user->userModel);

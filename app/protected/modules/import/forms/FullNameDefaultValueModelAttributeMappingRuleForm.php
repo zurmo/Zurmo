@@ -25,26 +25,31 @@
      ********************************************************************************/
 
     /**
-     * Base class to support MappingRule forms that are used for derived attributes.  Unlike the
-     * ModelAttributeMappingRuleForm, this class is constructed with a model class name and a derived attribute type.
+     * Form for handling default values for the full name derived attribute type.
      */
-    abstract class DerivedAttributeMappingRuleForm extends MappingRuleForm
+    class FullNameDefaultValueModelAttributeMappingRuleForm extends DerivedAttributeMappingRuleForm
     {
-        /**
-         * Refers to the model that is associated with the import rules. If your import rules are for accounts, then
-         * this is going to be the Account model class name.
-         * @var string
-         */
-        protected $modelClassName;
+        public $defaultValue;
 
-        protected $derivedAttributeType;
-
-        public function __construct($modelClassName, $derivedAttributeType)
+        public function rules()
         {
-            assert('is_string($modelClassName) && $derivedAttributeType != ""');
-            assert('is_string($derivedAttributeType)');
-            $this->modelClassName        = $modelClassName;
-            $this->derivedAttributeType  = $derivedAttributeType;
+            //combine first/last name max lengths?
+            return array();
+        }
+
+        public function getStatesData()
+        {
+            return $this->statesData;
+        }
+
+        public function attributeLabels()
+        {
+            return array('defaultValue' => Yii::t('Default', 'Default Value'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'defaultValue';
         }
     }
 ?>

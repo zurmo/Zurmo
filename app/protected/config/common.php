@@ -232,9 +232,10 @@
         $common_config['import'][] = "application.modules.$moduleName.models.*";                    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.modules.*";                   // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.*";                     // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.rules.attributes.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.policies.*";            // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.*";                // Not Coding Standard
-        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";         // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.models.*";         // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.walkthrough.*";    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.*";                     // Not Coding Standard
@@ -252,7 +253,6 @@
     $common_config['import'][] = "application.modules.designer.rules.elements.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.designer.elements.layoutsettings.*";          // Not Coding Standard
     $common_config['import'][] = "application.modules.designer.forms.attributes.*";                 // Not Coding Standard
-    $common_config['import'][] = "application.modules.import.rules.attributes.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.install.serviceHelpers.*";                    // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.elements.security.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.utils.security.*";                      // Not Coding Standard

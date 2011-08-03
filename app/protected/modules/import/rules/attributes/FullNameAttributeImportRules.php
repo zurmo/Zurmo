@@ -31,12 +31,12 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array();
+            return array('FullNameDefaultValueModelAttribute' => 'Text');
         }
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default','Full Name');
+            return Yii::t('Default', 'Full Name');
         }
 
         public function getModelAttributeNames()
