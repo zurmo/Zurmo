@@ -124,7 +124,7 @@
 
         public function getModuleIdOfDefaultModel()
         {
-            $this->moduleIdOfDefaultModel;
+            return $this->moduleIdOfDefaultModel;
         }
     }
 ?>

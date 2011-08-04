@@ -222,12 +222,15 @@
                                                        get_class($importWizardForm),
                                                        new ZurmoActiveForm(),
                                                        $mappableAttributeIndicesAndDerivedTypes);
-            echo $mappingFormLayoutUtil->renderMappingRulesElements(
+            $content                                 = $mappingFormLayoutUtil->renderMappingRulesElements(
                                                        $columnName,
                                                        $attributeIndexOrDerivedType,
                                                        $importWizardForm->importRulesType,
                                                        $columnType,
                                                        array());
+            Yii::app()->getClientScript()->setToAjaxMode();
+            Yii::app()->getClientScript()->render($content);
+            echo $content;
         }
 
         /**

@@ -188,4 +188,14 @@ div.radio-input label
 {
     padding-left:3px;
 }
+
+/*
+Process view classes
+*/
+.process-container-view
+{
+    align:center;
+    margin:0 auto;
+    width:800px;
+}
 /* End Misc Classes */
