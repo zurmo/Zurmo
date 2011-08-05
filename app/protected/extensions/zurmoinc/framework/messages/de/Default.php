@@ -29,11 +29,15 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '(None)'
+            => '??',
         'Advanced Search'
             => '??',
         'All'
             => '??',
         'by'
+            => '??',
+        'Cancel'
             => '??',
         'Cell Settings'
             => '??',
@@ -45,9 +49,17 @@
             => '??',
         'Clear Search'
             => '??',
+        'Created By User'
+            => '??',
         'Created Date and User'
             => '??',
+        'Created Date Time'
+            => '??',
         'Created On'
+            => '??',
+        'Date'
+            => '??',
+        'Date Time'
             => '??',
         'Delete'
             => '??',
@@ -59,15 +71,29 @@
             => '??',
         'Edit Portlet'
             => '??',
+        'Error'
+            => '??',
+        'Error:'
+            => '??',
         'Fahrenheit'
             => '??',
         'Filtered List'
+            => '??',
+        'firstDateTime must occur after  secondDateTime'
+            => '??',
+        'firstDateTime must occur before secondDateTime'
+            => '??',
+        'Float'
             => '??',
         'from'
             => '??',
         'Full Name'
             => '??',
         'Go to Details'
+            => '??',
+        'Inline Edit View'
+            => '??',
+        'Integer'
             => '??',
         'Invalid'
             => '??',
@@ -77,11 +103,27 @@
             => '??',
         'List'
             => '??',
+        'Model Class Name'
+            => '??',
+        'Model Id'
+            => '??',
+        'Modified By User'
+            => '??',
+        'Modified Date Time'
+            => '??',
+        'Module Name'
+            => '??',
+        'More Details'
+            => '??',
+        'More Options'
+            => '??',
         'Name'
             => '??',
         'No'
             => '??',
         'None'
+            => '??',
+        'Now'
             => '??',
         'Opted Out'
             => '??',
@@ -111,11 +153,17 @@
             => '??',
         'selected for updating.'
             => '??',
+        'Serialized Data'
+            => '??',
         'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
+            => '??',
+        'Tab'
             => '??',
         'This module doesn\'t have anything to configure.'
             => '??',
         'This pick-list is used by more than one module.'
+            => '??',
+        'Time'
             => '??',
         'Title/First/LastName'
             => '??',
@@ -128,6 +176,10 @@
         'Unknown'
             => '??',
         'Update Selected'
+            => '??',
+        'User'
+            => '??',
+        'Users'
             => '??',
         'Yes'
             => '??',

@@ -29,18 +29,18 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Create RssReaderModuleSingularLabel'
+            => '?? RssReaderModuleSingularLabel',
+        'Related RssReaderModulePluralLabel'
+            => '?? RssReaderModulePluralLabel',
         'Rss Reader'
             => '??',
-        'Rss Reader'
+        'Rss Url'
             => '??',
         'RssReaderModulePluralLabel'
             => 'RssReaderModulePluralLabel',
         'RssReaderModuleSingularLabel'
             => 'RssReaderModuleSingularLabel',
-        'Create RssReaderModuleSingularLabel'
-            => '?? RssReaderModuleSingularLabel',
-        'Related RssReaderModulePluralLabel'
-            => '?? RssReaderModulePluralLabel',
         'The Title'
             => '??',
     );

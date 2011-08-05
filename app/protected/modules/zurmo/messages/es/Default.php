@@ -33,6 +33,18 @@
             => '(Desconocido)',
         '(Unnamed)'
             => '(Sin Nombre)',
+        '2D Donut Chart'
+            => '??',
+        '2D Horizontal Bar Graph'
+            => '??',
+        '2D Pie Chart'
+            => '??',
+        '2D Vertical Bar Graph'
+            => '??',
+        '3D Pie Chart'
+            => '??',
+        '3D Vertical Bar Graph'
+            => '??',
         'About'
             => 'Sobre',
         'Access Failure'
@@ -43,6 +55,8 @@
             => '??',
         'Allow'
             => 'Permitir',
+        'Amount'
+            => '??',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
         'Any City'
@@ -67,7 +81,17 @@
             => '??',
         'Are you sure you want to remove this role?'
             => '??',
+        'Audit Event'
+            => '??',
+        'Audit Trail'
+            => '??',
         'Cancel'
+            => '??',
+        'Chart Type'
+            => '??',
+        'City'
+            => '??',
+        'Code'
             => '??',
         'Configuration'
             => '??',
@@ -75,13 +99,23 @@
             => '??',
         'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
             => 'Copyright &#169; Zurmo Inc. de 2011. Todos los derechos reservados.',
+        'Country'
+            => '??',
         'Create Group'
             => '??',
         'Create New'
             => '??',
+        'Currencies: Create'
+            => '??',
+        'Currencies: List'
+            => '??',
+        'Currency'
+            => '??',
         'Currency Configuration'
             => '??',
-            'days'
+        'Data'
+            => '??',
+        'days'
             => '??',
         'Delete Group'
             => '??',
@@ -89,12 +123,30 @@
             => '??',
         'Deny'
             => 'Denegar',
+        'Department'
+            => '??',
+        'Description'
+            => '??',
+        'Email Address'
+            => '??',
+        'Event Name'
+            => '??',
         'every'
             => '??',
         'Everyone'
             => 'Todo el Mundo',
         'Fields with'
             => 'Los campos con',
+        'File Content'
+            => '??',
+        'Files'
+            => '??',
+        'Filter By Created User'
+            => '??',
+        'Filtered Lists'
+            => '??',
+        'First Name'
+            => '??',
         'Global Configuration'
             => '??',
         'Go to Search'
@@ -117,9 +169,17 @@
             => '??',
         'Incorrect username or password.'
             => '??',
+        'Industry'
+            => '??',
         'Inherited - All'
             => '??',
         'Inherited - Allow'
+            => '??',
+        'Invalid currency code.'
+            => '??',
+        'Is Invalid'
+            => '??',
+        'Job Title'
             => '??',
         'Label must be all lowercase.'
             => '??',
@@ -128,6 +188,8 @@
         'Label must not contain any special characters.'
             => '??',
         'Language'
+            => '??',
+        'Last Name'
             => '??',
         'List page size'
             => '??',
@@ -145,6 +207,14 @@
             => '??',
         'Manage Roles'
             => '??',
+        'Member'
+            => '??',
+        'Member Of'
+            => '??',
+        'Members'
+            => '??',
+        'Mobile Phone'
+            => '??',
         'Module Name - Plural'
             => '??',
         'Module Name - Plural (lowercase)'
@@ -155,27 +225,47 @@
             => '??',
         'Module Permissions'
             => '??',
+        'Munge rebuild complete.'
+            => '??',
         'Not Set'
             => '??',
         'Not Set - Ad Hoc / Owner'
             => '??',
-        'Office Phone'
+        'Office Fax'
             => 'Fax de la Oficina',
         'Office Phone'
             => 'Teléfono de la Oficina',
         'Oh no!'
             => 'Oh no!',
+        'Opt Out'
+            => '??',
+        'Owner'
+            => '??',
         'Owner Only'
             => '??',
         'Parent Group'
             => '??',
         'Password'
             => 'Contraseña',
+        'Permissions'
+            => '??',
+        'Permitable'
+            => '??',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Por favor, use Firefox, Chrome, o Internet Explorer.',
         'Policies'
             => '??',
         'Popup list page size'
+            => '??',
+        'Postal Code'
+            => '??',
+        'Primary Address'
+            => '??',
+        'Primary Email'
+            => '??',
+        'Rate to'
+            => '??',
+        'Rate To Base'
             => '??',
         'Remember me next time'
             => '??',
@@ -189,6 +279,12 @@
             => '??',
         'Search'
             => 'Buscar',
+        'Secondary Address'
+            => '??',
+        'Secondary Email'
+            => '??',
+        'Securable Item'
+            => '??',
         'Security'
             => '??',
         'Select a Parent Group'
@@ -197,17 +293,35 @@
             => '??',
         'Select a Role'
             => '??',
+        'Shipping Address'
+            => '??',
+        'Size'
+            => '??',
         'Sorry! Your browser is not supported.'
             => 'Lo sentimos! Su navegador no es compatible.',
+        'Source'
+            => '??',
+        'Stage'
+            => '??',
+        'State'
+            => '??',
+        'Street 1'
+            => '??',
+        'Street 2'
+            => '??',
         'Sublist page size'
             => '??',
         'Successfully updated'
             => '??',
         'Super Administrators'
             => 'Superadministradores',
+        'The currency code is invalid'
+            => '??',
         'This name is reserved. Please pick a different name.'
             => '??',
         'Time zone'
+            => '??',
+        'Title'
             => '??',
         'to continue to the home page. If the error persists please do something or other.'
             => 'para continuar a la página de inicio. Si el error persiste, por favor haga una cosa u otra.',
@@ -215,6 +329,8 @@
             => '??',
         'Username'
             => 'Usario',
+        'Website'
+            => '??',
         'Welcome'
             => 'Bienvenidos',
         'Your Profile'

@@ -59,9 +59,9 @@
         public function attributeLabels()
         {
             return array(
-                'accountId'          => Yii::t('Default', 'AccountModulesSingularLabel Id',
+                'accountId'          => Yii::t('Default', 'AccountsModuleSingularLabel Id',
                                             LabelUtil::getTranslationParamsForAllModules()),
-                'accountName'        => Yii::t('Default', 'AccountsModulesSingularLabel Name',
+                'accountName'        => Yii::t('Default', 'AccountsModuleSingularLabel Name',
                                             LabelUtil::getTranslationParamsForAllModules()),
             );
         }

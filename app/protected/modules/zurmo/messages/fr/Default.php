@@ -33,6 +33,18 @@
             => '(Inconnu)',
         '(Unnamed)'
             => '(Anonyme)',
+        '2D Donut Chart'
+            => 'Anneau',
+        '2D Horizontal Bar Graph'
+            => 'Barres',
+        '2D Pie Chart'
+            => 'Secteur 2D',
+        '2D Vertical Bar Graph'
+            => 'Histogramme',
+        '3D Pie Chart'
+            => 'Secteur 3D',
+        '3D Vertical Bar Graph'
+            => 'Histogramme 3D',
         'About'
             => 'À propos de zurmo',
         'Access Failure'
@@ -43,6 +55,8 @@
             => 'Alerte',
         'Allow'
             => 'Autorisé',
+        'Amount'
+            => 'Montant',
         'An error has occurred. Please click'
             => 'Il y a une erreur. Veuillez cliquer.',
         'Any City'
@@ -67,20 +81,40 @@
             => 'Êtes-vous sûr(e) de vouloir supprimer ce groupe?',
         'Are you sure you want to remove this role?'
             => 'Êtes-vous sûr(e) de vouloir supprimer ce rôle?',
+        'Audit Event'
+            => '?? Audit Event',
+        'Audit Trail'
+            => 'Log de modifications',
         'Cancel'
             => 'Annuler',
+        'Chart Type'
+            => 'Type de graphique',
+        'City'
+            => 'Ville',
+        'Code'
+            => 'Code',
         'Configuration'
             => 'Configuration',
         'Convert'
             => 'Convertir',
         'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
             => 'Copyright &#169; Zurmo Inc., 2011. Tous droits réservés.',
+        'Country'
+            => 'Pays',
         'Create Group'
             => 'Nouveau Groupe',
         'Create New'
             => 'Crée',
+        'Currencies: Create'
+            => 'Devises: Créer',
+        'Currencies: List'
+            => 'Devises: Liste',
+        'Currency'
+            => 'Devise',
         'Currency Configuration'
             => 'Devises',
+        'Data'
+            => 'Donées',
         'days'
             => 'jours',
         'Delete Group'
@@ -89,12 +123,30 @@
             => 'Supprimer le Rôle',
         'Deny'
             => 'Interdit',
+        'Department'
+            => 'Département',
+        'Description'
+            => 'Description',
+        'Email Address'
+            => 'Addresse e-mail',
+        'Event Name'
+            => '?? Event Name',
         'every'
             => 'chaque',
         'Everyone'
             => 'Tous',
         'Fields with'
             => 'Champs avec',
+        'File Content'
+            => 'Contenu du fichier',
+        'Files'
+            => 'Fichiers',
+        'Filter By Created User'
+            => '?? Filter By Created User',
+        'Filtered Lists'
+            => '?? Filtered Lists',
+        'First Name'
+            => 'Prénom',
         'Global Configuration'
             => 'Configuration globale',
         'Go to Search'
@@ -117,10 +169,18 @@
             => 'Accueil',
         'Incorrect username or password.'
             => 'Le nom d\'utilisateur ou le mot de passe est incorrect.',
+        'Industry'
+            => 'Secteur',
         'Inherited - All'
-            => '??inherited-tous',
+            => '?? inherited-tous',
         'Inherited - Allow'
-            => '??inherited-allow',
+            => '?? inherited-allow',
+        'Invalid currency code.'
+            => 'Le code de devise est invalide.',
+        'Is Invalid'
+            => 'Invalide',
+        'Job Title'
+            => 'Titre',
         'Label must be all lowercase.'
             => 'Veuillez utiliser des lettres miniscules',
         'Label must not be empty.'
@@ -129,10 +189,12 @@
             => 'L\'étiquette ne peut pas contenir de caractères spéciaux',
         'Language'
             => 'Langue',
+        'Last Name'
+            => 'Nom',
         'List page size'
             => 'Dimension de la liste',
         'Load'
-            => '??',
+            => '?? Charger',
         'Login'
             => 'Connexion',
         'Logout'
@@ -142,9 +204,17 @@
         'Manage Global Configuration'
             => 'Gestion de la configuration globale',
         'Manage Groups'
-            => 'Gestion des groupes',
+            => 'Gestion des groupes de sécurité',
         'Manage Roles'
-            => 'Gestion des rôles',
+            => 'Gestion des rôles et hiérarchies',
+        'Member'
+            => 'Filiale',
+        'Member Of'
+            => 'Maison mère',
+        'Members'
+            => 'Filiales',
+        'Mobile Phone'
+            => 'Téléphone portable',
         'Module Name - Plural'
             => 'Nom du module - au pluriel',
         'Module Name - Plural (lowercase)'
@@ -155,8 +225,10 @@
             => 'Nom du module - au singulier (miniscule)',
         'Module Permissions'
             => 'Permissions',
+        'Munge rebuild complete.'
+            => 'La permission de sécurité de vue liste a été reconstruite.',
         'Not Set'
-            => 'Par défaut',
+            => 'Défaut',
         'Not Set - Ad Hoc / Owner'
             => '?? not set adhoc',
         'Office Fax'
@@ -165,18 +237,36 @@
             => 'Téléphone de Bureau',
         'Oh no!'
             => 'Zut!',
+        'Opt Out'
+            => 'Opt-Out',
+        'Owner'
+            => 'Resp. du compte',
         'Owner Only'
             => 'Propriétaire',
         'Parent Group'
             => 'Groupe mère',
         'Password'
             => 'Mot de passe',
+        'Permissions'
+            => 'Permissions',
+        'Permitable'
+            => 'Permis',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Veuillez utiliser FireFox, Chrome, ou Internet Explorer.',
         'Policies'
             => 'Règles',
         'Popup list page size'
             => 'Dimensions de la liste pop-up',
+        'Postal Code'
+            => 'Code Postal',
+        'Primary Address'
+            => 'Adresse principale',
+        'Primary Email'
+            => 'Adresse e-mail',
+        'Rate to'
+            => 'Taux de change a l\'',
+        'Rate To Base'
+            => '?? Rate To Base',
         'Remember me next time'
             => 'Retenir le nom d\'utilisateur',
         'Return to Admin Menu'
@@ -189,32 +279,58 @@
             => 'Rôles',
         'Search'
             => 'Rechercher',
+        'Secondary Address'
+            => 'Adresse secondaire',
+        'Secondary Email'
+            => 'Adresse e-mail secondaire',
+        'Securable Item'
+            => '?? Securable Item',
         'Security'
             => 'Sécurité',
         'Select a Parent Group'
-            => '?? un groupe',
+            => 'Sélectionner un groupe ??',
         'Select a Parent Role'
-            => '?? un rôle',
+            => 'Sélectionner un rôle ??',
         'Select a Role'
             => 'Selectionner un rôle',
+        'Shipping Address'
+            => 'Adresse de livraison',
+        'Size'
+            => 'Taille',
         'Sorry! Your browser is not supported.'
             => 'Désolé! Votre navigateur n\'est pas supporté',
+        'Source'
+            => 'Origine',
+        'Stage'
+            => 'Étape',
+        'State'
+            => 'Province/Région',
+        'Street 1'
+            => 'Adresse 1',
+        'Street 2'
+            => 'Adresse 2',
         'Sublist page size'
             => 'Dimensions de la sous-liste',
         'Successfully updated'
             => 'Mise à jour réussie',
         'Super Administrators'
             => 'Super Administrateur',
+        'The currency code is invalid'
+            => 'Le code de devise est invalide.',
         'This name is reserved. Please pick a different name.'
-            => '?? error:name reserved, pick a different one',
+            => 'Ce nom est réservé.  Veuillez choisir un nom différent.',
         'Time zone'
             => 'Fuseau horaire',
+         'Title'
+            => 'Fonction',
         'to continue to the home page. If the error persists please do something or other.'
             => 'pour continuer à l\'accueil. ??' ,
         'User Membership'
             => 'Membres du groupe',
         'Username'
             => 'Nom d\'utilisateur',
+        'Website'
+            => 'Site web',
         'Welcome'
             => 'Bienvenue',
         'Your Profile'

@@ -53,6 +53,12 @@
             => 'Modifier le tableau de bord',
         'Home'
             => 'Accueil',
+        'Is Default'
+            => 'Défault',
+        'Layout Id'
+            => '?? layout id',
+        'Layout Type'
+            => 'Format des colonnes',
         'Return to Home'
             => 'Retourner a l\'acceuil',
     );

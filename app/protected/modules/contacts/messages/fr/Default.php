@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Company Name'
+            => 'Nom du compte',
         'Contact'
             => 'Contact',
         'Contact Statuses'
@@ -37,12 +39,22 @@
             => 'Contacts',
         'ContactsModulePluralLabel'
             => 'ContactsModulePluralLabel',
+        'ContactsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'ContactsModulePluralLabel pour AccountsModuleSingularLabel',
+        'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel'
+            => 'ContactsModulePluralLabel pour OpportunitiesModuleSingularLabel',
         'ContactsModuleSingularLabel'
             => 'ContactsModuleSingularLabel',
+        'ContactsModuleSingularLabel or LeadsModuleSingularLabel'
+            => 'ContactsModuleSingularLabel ou LeadsModuleSingularLabel',
+        'ContactsModuleSingularLabel Search'
+            => 'ContactsModuleSingularLabel Search',
         'Create ContactsModuleSingularLabel'
             => 'Nouveau ContactsModuleSingularLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Chaque état du ContactsModuleSingularLowerCaseLabel doit avoir un nom unique',
+        'Order'
+            => 'Ordre',
         'Related ContactsModulePluralLabel'
             => '?? ContactsModulePluralLabel',
         'Starting Status'

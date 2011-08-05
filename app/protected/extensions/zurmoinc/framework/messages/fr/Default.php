@@ -29,12 +29,16 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '(None)'
+            => '--Aucun--',
         'Advanced Search'
             => 'Recherche avancée',
         'All'
             => 'Tous',
         'by'
             => 'par',
+        'Cancel'
+            => 'Annuler',
         'Cell Settings'
             => 'Paramètres des cellules',
         'Celsius'
@@ -45,10 +49,18 @@
             => 'Modifié',
         'Clear Search'
             => 'Effacer',
+        'Created By User'
+            => 'Crée par',
         'Created Date and User'
             => '?? Crée',
+        'Created Date Time'
+            => '?? Created Date Time',
         'Created On'
             => 'Crée',
+        'Date'
+            => 'Date',
+        'Date Time'
+            => 'Date/Heure',
         'Delete'
             => 'Supprimer',
         'Detail View Only'
@@ -59,16 +71,30 @@
             => 'Modifier',
         'Edit Portlet'
             => 'Modifier le portlet',
+        'Error'
+            => 'Erreur',
+        'Error:'
+            => 'Erreur',
         'Fahrenheit'
             => 'Fahrenheit',
         'Filtered List'
             => '?? filtered list',
+        'firstDateTime must occur after  secondDateTime'
+            => '?? firstDateTime must occur after  secondDateTime',
+        'firstDateTime must occur before secondDateTime'
+            => '?? firstDateTime must occur before secondDateTime',
+        'Float'
+            => 'Float',
         'from'
             => 'de',
         'Full Name'
             => 'Nom',
         'Go to Details'
             => 'Au détails',
+        'Inline Edit View'
+            => '?? Inline Edit View',
+        'Integer'
+            => 'Nombre entier',
         'Invalid'
             => 'Invalide',
         'Last Modified'
@@ -77,12 +103,28 @@
             => '?? Dernière modification par',
         'List'
             => 'Liste',
+        'Model Class Name'
+            => '??',
+        'Model Id'
+            => '?? model id',
+        'Modified By User'
+            => '?? modified by user',
+        'Modified Date Time'
+            => '?? Modified Date Time',
+        'Module Name'
+            => '?? Module Name',
+        'More Details'
+            => '?? more details',
+        'More Options'
+            => '?? more options',
         'Name'
             => 'Nom',
         'No'
             => 'Non',
         'None'
             => 'Aucun',
+        'Now'
+            => 'Maintenant',
         'Opted Out'
             => 'Opt out',
         'Panel'
@@ -111,12 +153,18 @@
             => 'Sélectionner',
         'selected for updating.'
             => 'sélectionnée(s)',
+        'Serialized Data'
+            => '??',
         'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
             => '?? some values cannot be removed...',
+        'Tab'
+            => 'Onglet',
         'This module doesn\'t have anything to configure.'
             => 'Il n\'y a rien a configurer',
         'This pick-list is used by more than one module.'
             => 'Cette liste déroulante est utilisée dans les modules suivants:',
+        'Time'
+            => 'Heure',
         'Title/First/LastName'
             => 'Titre/Prénom/Nom',
         'to'
@@ -129,6 +177,10 @@
             => 'Inconnu',
         'Update Selected'
             => 'Actualiser les données',
+        'User'
+            => 'Utilisateur',
+        'Users'
+            => 'Utilisateurs',
         'Yes'
             => 'Oui',
         'Yesterday'

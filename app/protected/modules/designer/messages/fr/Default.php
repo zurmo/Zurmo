@@ -31,6 +31,8 @@
     return array(
         'A field with this name is already used.'
             => 'Un champ avec ce nom est déjà utilisé.',
+        'All panels visible'
+            => 'Tous visibles',
         'Create Field'
             => 'Ajouter un champ',
         'Default Value'
@@ -53,8 +55,12 @@
             => 'Type de champ',
         'Fields'
             => 'Champs',
+        'First panel visible, then `show more` link'
+            => 'Premier panneau visible, ensuite un lien "plus de détails"',
         'General'
             => 'Général',
+        'Invalid panel configuration type'
+            => 'La configuration des panneaux choisie est invalide',
         'Layouts'
             => 'Présentations de page',
         'List View'
@@ -64,7 +70,7 @@
         'Mass Edit View'
             => 'Vue modification en masse',
         'Maximum Length'
-            => 'Longueur maximum',
+            => 'Longueur maximale',
         'Maximum Value'
             => 'Valeur maximale',
         'Menu'
@@ -75,6 +81,10 @@
             => 'Valeur minimale',
         'Module'
             => 'Module',
+        'Panels are tabbed'
+            => 'Onglets',
+        'Panels Configuration'
+            => 'Configuration des panneaux',
         'Pick List Values'
             => 'Éléments de la liste déroulante',
         'Popup List View'

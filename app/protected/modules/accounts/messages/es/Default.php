@@ -31,10 +31,14 @@
     return array(
         'Account'
             => 'Cuenta',
+        'Account Revenue'
+            => '??',
         'Accounts'
             => 'Cuentas',
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
+        'AccountsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'AccountsModulePluralLabel ?? AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
@@ -47,8 +51,11 @@
             => 'Dirección de facturación',
         'Create AccountsModuleSingularLabel'
             => 'Crear una AccountsModuleSingularLabel',
+        'Employees'
+            => '??',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel Relacionadas',
-
+        'Type'
+            => '??',
     );
 ?>

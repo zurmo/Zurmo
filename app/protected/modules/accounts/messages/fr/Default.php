@@ -31,10 +31,14 @@
     return array(
         'Account'
             => 'Compte',
+        'Account Revenue'
+            => 'Chiffres d\'affaires annuel',
         'Accounts'
             => 'Comptes',
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
+        'AccountsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'AccountsModulePluralLabel pour AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
@@ -47,7 +51,11 @@
             => 'Adresse de facturation',
         'Create AccountsModuleSingularLabel'
             => 'Nouveau AccountsModuleSingularLabel',
+        'Employees'
+            => 'Employés',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel principal',
+        'Type'
+            => 'Type',
     );
 ?>
