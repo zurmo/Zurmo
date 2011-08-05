@@ -30,6 +30,7 @@
      */
     class ModelAttributeToDesignerTypeUtil extends ModelAttributeToMixedTypeUtil
     {
+        private static $availableDesignerTypes;
         /**
          * Returns the element or attribute form type
          * that should be used with the named attribute
@@ -50,16 +51,26 @@
          */
         public static function getAvailableDesignerTypes()
         {
-            $designerTypes = array(
-                'Account',
-                'Address',
-                'ContactState',
-                'EmailAddressInformation',
-                'User',
-            );
-            return array_merge($designerTypes,
-                ModelAttributeToDesignerTypeUtil::getAvailableCustomAttributeTypes()
-            );
+            if(self::$availableDesignerTypes != null)
+            {
+                return self::$availableDesignerTypes;
+            }
+            $modules = Module::getModuleObjects();
+            $designerTypes = array();
+            foreach($modules as $module)
+            {
+                $formsClassNames = $module::getAllClassNamesByPathFolder('forms');
+                foreach($formsClassNames as $formClassName)
+                {
+                    $classToEvaluate     = new ReflectionClass($formClassName);
+                    if (is_subclass_of($formClassName, 'AttributeForm') && !$classToEvaluate->isAbstract())
+                    {
+$designerTypes[] = substr($formClassName, 0, strlen($formClassName) - strlen('AttributeForm'));
+                    }
+                }
+            }
+            self::$availableDesignerTypes = $designerTypes;
+            return self::$availableDesignerTypes;
         }
 
         /**
