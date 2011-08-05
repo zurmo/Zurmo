@@ -25,40 +25,28 @@
      ********************************************************************************/
 
     /**
-     * Import Module Super User Walkthrough.
-     * Walkthrough for the super user of all possible controller actions.
-     * Since this is a super user, he should have access to all controller actions
-     * without any exceptions being thrown.
+     * Contacts Module Import Super User Walkthrough.
+     * Walkthrough for the super user of various import specific actions.
      */
-    class ImportSuperUserWalkthroughTest extends ImportWalkthroughBaseTest
+    class ContactsImportSuperUserWalkthroughTest extends ImportWalkthroughBaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            ContactsModule::loadStartingData();
+        }
+
         public function testSuperUserMappingRulesEditActionAllAttributeIndexAndDerivedTypes()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             $import = new Import();
-            $import->serializedData = serialize(array('importRulesType' => 'ImportModelTestItem'));
+            $import->serializedData = serialize(array('importRulesType' => 'Contacts'));
             $this->assertTrue($import->save());
 
-            //Test all attributeIndex and Derived types to make sure all types of mapping rules load properly.
-            $this->runMappingRulesEditAction($import->id, 'firstName');
-            $this->runMappingRulesEditAction($import->id, 'lastName');
-            $this->runMappingRulesEditAction($import->id, 'date');
-            $this->runMappingRulesEditAction($import->id, 'dateTime');
-            $this->runMappingRulesEditAction($import->id, 'float');
-            $this->runMappingRulesEditAction($import->id, 'integer');
-            $this->runMappingRulesEditAction($import->id, 'phone');
-            $this->runMappingRulesEditAction($import->id, 'string');
-            $this->runMappingRulesEditAction($import->id, 'textArea');
-            $this->runMappingRulesEditAction($import->id, 'string');
-            $this->runMappingRulesEditAction($import->id, 'url');
-
-            $this->runMappingRulesEditAction($import->id, 'currencyValue');
-            $this->runMappingRulesEditAction($import->id, 'dropDown');
-            $this->runMappingRulesEditAction($import->id, 'radioDropDown');
-            $this->runMappingRulesEditAction($import->id, 'hasOne');
-            $this->runMappingRulesEditAction($import->id, 'primaryEmail__emailAddress');
-            $this->runMappingRulesEditAction($import->id, 'primaryAddress__street1');
+            //Test contact specific attribute indexes and derived attribute types
+            $this->runMappingRulesEditAction($import->id, 'FullName');
+            $this->runMappingRulesEditAction($import->id, 'ContactState');
         }
     }
 ?>
