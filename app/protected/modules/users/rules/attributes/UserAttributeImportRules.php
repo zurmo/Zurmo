@@ -29,7 +29,7 @@
      */
     class UserAttributeImportRules extends ModelAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultModelNameId'          => 'ImportMappingRuleDefaultModelNameId',
                          'UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');

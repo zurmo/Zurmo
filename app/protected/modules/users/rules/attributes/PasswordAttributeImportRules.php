@@ -29,7 +29,7 @@
      */
     class PasswordAttributeImportRules extends DerivedAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('PasswordDefaultValueModelAttribute' => 'Text');
         }

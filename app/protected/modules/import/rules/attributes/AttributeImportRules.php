@@ -67,7 +67,45 @@
          * pairings as needed.
          * @return array of MappingRuleForm/Element pairings.
          */
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getModelAttributeMappingRuleFormTypesAndElementTypes($type)
+        {
+            assert('$type == "importColumn" || $type == "extraColumn"');
+
+            $forAllData = static::getAllModelAttributeMappingRuleFormTypesAndElementTypes();
+            if($type == 'extraColumn')
+            {
+                $typeBasedData  = static::getExtraColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes();
+            }
+            else
+            {
+                $typeBasedData  = static::getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes();
+            }
+            return array_merge($forAllData, $typeBasedData);
+        }
+
+        /**
+         * Returns mapping rule form and the associated element to use.  Override to specify as many
+         * pairings as needed. This method is used for mapping rule form/element pairings that are available for
+         * both types of columns.
+         * @return array of MappingRuleForm/Element pairings.
+         */
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return array();
+        }
+
+        /**
+         * Override to place mapping rule forms / elements that are only for mapping extra columns.
+         */
+        protected static function getExtraColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return array();
+        }
+
+        /**
+         * Override to place mapping rule forms / elements that are only for mapping actual import columns.
+         */
+        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array();
         }

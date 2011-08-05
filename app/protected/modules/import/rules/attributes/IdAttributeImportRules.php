@@ -29,7 +29,7 @@
      */
     class IdAttributeImportRules extends AttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('IdValueType'   => 'ImportMappingModelIdValueTypeDropDown');
         }

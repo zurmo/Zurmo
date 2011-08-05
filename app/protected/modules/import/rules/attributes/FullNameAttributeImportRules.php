@@ -29,7 +29,7 @@
      */
     class FullNameAttributeImportRules extends DerivedAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('FullNameDefaultValueModelAttribute' => 'Text');
         }

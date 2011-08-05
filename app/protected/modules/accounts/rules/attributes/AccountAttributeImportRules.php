@@ -29,10 +29,14 @@
      */
     class AccountAttributeImportRules extends ModelAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
-                         'RelatedModelValueType'     => 'ImportMappingRelatedModelValueTypeDropDown');
+            return array('DefaultModelNameId' => 'ImportMappingRuleDefaultModelNameId');
+        }
+
+        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return array('RelatedModelValueType' => 'ImportMappingRelatedModelValueTypeDropDown');
         }
     }
 ?>

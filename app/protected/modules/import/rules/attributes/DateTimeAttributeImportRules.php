@@ -29,10 +29,14 @@
      */
     class DateTimeAttributeImportRules extends AttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'DateTime',
-                         'ValueFormat'                => 'ImportMappingRuleDateTimeFormatDropDown');
+            return array('DefaultValueModelAttribute' => 'DateTime');
+        }
+
+        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
         }
 
         public static function getSanitizerUtilNames()

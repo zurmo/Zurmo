@@ -36,7 +36,7 @@
             $attributeImportRules = new PhoneAttributeImportRules(new ImportModelTestItem(), 'phone');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'phone');
+                                                                         'phone', 'importColumn');
             $this->assertEquals(1, count($collection));
             $this->assertEquals('Phone', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
@@ -45,7 +45,7 @@
             $attributeImportRules = new UserAttributeImportRules(new ImportModelTestItem(), 'owner');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'owner');
+                                                                         'owner', 'importColumn');
             $this->assertEquals(2, count($collection));
             $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
             $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
@@ -56,7 +56,7 @@
             $attributeImportRules = new CurrencyValueAttributeImportRules(new ImportModelTestItem(), 'currencyValue');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'currencyValue');
+                                                                         'currencyValue', 'importColumn');
             $this->assertEquals(3, count($collection));
             $this->assertEquals('Decimal',              $collection[0]['elementType']);
             $this->assertEquals('CurrencyDropDownForm', $collection[1]['elementType']);
@@ -125,7 +125,8 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $attributeImportRules = new EmailAttributeImportRules(new ImportModelTestItem(), 'primaryEmail__emailAddress');
             $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules, 'primaryEmail__emailAddress');
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                    'primaryEmail__emailAddress', 'importColumn');
             $this->assertEquals(1, count($collection));
             $this->assertEquals('Text', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));

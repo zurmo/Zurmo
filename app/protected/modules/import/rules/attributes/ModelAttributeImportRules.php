@@ -29,7 +29,7 @@
      */
     abstract class ModelAttributeImportRules extends AttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
                          'IdValueType' => 'ImportMappingModelIdValueTypeDropDown');

@@ -29,7 +29,7 @@
      */
     class ContactStateAttributeImportRules extends DerivedAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueContactStateModelAttribute' => 'ImportMappingRuleContactStatesDropDown');
         }

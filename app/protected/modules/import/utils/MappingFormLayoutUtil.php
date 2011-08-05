@@ -151,7 +151,8 @@
                     $mappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
                                                        makeCollectionByAttributeImportRules(
                                                            $attributeImportRules,
-                                                           $attributeIndexOrDerivedType);
+                                                           $attributeIndexOrDerivedType,
+                                                           $columnType);
                 }
                 foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {

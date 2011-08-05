@@ -29,7 +29,7 @@
      */
     class ImportModelTestItem2AttributeImportRules extends AttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultModelNameId' => 'ImportMappingRuleDefaultModelNameId');
         }

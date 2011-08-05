@@ -31,7 +31,7 @@
      */
     abstract class ModelDerivedAttributeImportRules extends DerivedAttributeImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultModelNameIdDerivedAttribute' => 'ImportMappingRuleDefaultModelNameId',
                          'IdValueType'          => 'ImportMappingModelIdValueTypeDropDown');

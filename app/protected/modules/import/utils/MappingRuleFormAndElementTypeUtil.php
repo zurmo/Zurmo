@@ -34,13 +34,15 @@
          * @param array $attributeImportRules
          * @param string $attributeIndexOrDerivedType
          */
-        public static function makeCollectionByAttributeImportRules($attributeImportRules, $attributeIndexOrDerivedType)
+        public static function makeCollectionByAttributeImportRules($attributeImportRules, $attributeIndexOrDerivedType, $columnType)
         {
             assert('$attributeImportRules instanceof AttributeImportRules');
             assert('is_string($attributeIndexOrDerivedType)');
+            assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             $mappingRuleFormsAndElementTypes = array();
-            foreach($attributeImportRules::getModelAttributeMappingRuleFormTypesAndElementTypes()
-                    as $mappingRuleFormType => $elementType)
+            $mappingRuleFormTypesAndElementTypes = $attributeImportRules::
+                                                   getModelAttributeMappingRuleFormTypesAndElementTypes($columnType);
+            foreach($mappingRuleFormTypesAndElementTypes as $mappingRuleFormType => $elementType)
             {
                 $mappingRuleFormClassName          = $mappingRuleFormType . 'MappingRuleForm';
                 $modelClassName                    = $attributeImportRules->getModelClassName();
@@ -81,7 +83,8 @@
                     foreach($mappingDataByColumn["mappingRulesData"] as $mappingRuleFormClassName => $mappingRuleFormData)
                     {
                         $mappingRuleFormAndElementTypes = $attributeImportRules::
-                                                          getModelAttributeMappingRuleFormTypesAndElementTypes();
+                                                          getModelAttributeMappingRuleFormTypesAndElementTypes(
+                                                          $mappingDataByColumn["type"]);
                         $elementType                    = $mappingRuleFormAndElementTypes
                                                           [$mappingRuleFormClassName::getType()];
                         $mappingRuleForm                = static::makeForm($importRulesType,
