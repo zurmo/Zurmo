@@ -119,7 +119,7 @@
             $nextKey      = $currentKey + 1;
             if(!key_exists($nextKey, $steps))
             {
-                $this->complete             = true;
+                $this->complete = true;
             }
             else
             {
