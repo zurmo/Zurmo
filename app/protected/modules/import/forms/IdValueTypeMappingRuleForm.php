@@ -25,19 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * This form is used for mapping a model id.  This form helps decide if the id being mapped is a zurmo model id
+     * or another type of id from a different system.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class IdValueTypeMappingRuleForm extends ValueTypeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
-        }
+        const ZURMO_MODEL_ID  = 1;
 
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
-        }
+        const OTHER_ID = 2;
     }
 ?>

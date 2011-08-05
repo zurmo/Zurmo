@@ -37,11 +37,6 @@
             return array();
         }
 
-        public function getStatesData()
-        {
-            return $this->statesData;
-        }
-
         public function attributeLabels()
         {
             return array('defaultValue' => Yii::t('Default', 'Default Value'));

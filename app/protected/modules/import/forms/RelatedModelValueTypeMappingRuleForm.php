@@ -25,30 +25,15 @@
      ********************************************************************************/
 
     /**
-     * This form is used for mapping a model id.  This form helps decide if the id being mapped is a zurmo model id
-     * or another type of id from a different system.
+     * This form is used for mapping a related model name or id.  This form helps decide if the value being mapped
+     * is an id or the name of the related model.
      */
-    class IdValueTypeModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
+    class RelatedModelValueTypeMappingRuleForm extends ValueTypeMappingRuleForm
     {
         const ZURMO_MODEL_ID  = 1;
 
         const OTHER_ID = 2;
 
-        public $type;
-
-        public function rules()
-        {
-            return array(array('type', 'required'));
-        }
-
-        public function attributeLabels()
-        {
-            return array('type'   => Yii::t('Default', 'Type of Value'));
-        }
-
-        public static function getAttributeName()
-        {
-            return 'type';
-        }
+        const ZURMO_MODEL_NAME = 3;
     }
 ?>

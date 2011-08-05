@@ -25,19 +25,40 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Defines the import rules for importing into the leads module.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class LeadsImportRules extends ImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getModelClassName()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            return 'Contact';
         }
 
-        public static function getSanitizerUtilNames()
+        /**
+         * Get the display label used to describe the import rules.
+         * @return string
+         */
+        public static function getDisplayLabel()
         {
-            return array('Truncate');
+            return LeadsModule::getModuleLabelByTypeAndLanguage('Plural');
+        }
+
+        /**
+         * Get the array of available derived attribute types that can be mapped when using these import rules.
+         * @return array
+         */
+        public static function getDerivedAttributeTypes()
+        {
+            return array_merge(parent::getDerivedAttributeTypes(), array('FirstStatesContact', 'FullName'));
+        }
+
+        /**
+         * Get the array of attributes that cannot be mapped when using these import rules.
+         * @return array
+         */
+        public static function getNonImportableAttributeNames()
+        {
+            return array_merge(parent::getNonImportableAttributeNames(), array('state', 'account'));
         }
     }
 ?>

@@ -32,7 +32,7 @@
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
-                         'IdValueTypeModelAttribute' => 'ImportMappingModelIdValueTypeDropDown');
+                         'IdValueType' => 'ImportMappingModelIdValueTypeDropDown');
         }
 
         public static function getSanitizerUtilNames()

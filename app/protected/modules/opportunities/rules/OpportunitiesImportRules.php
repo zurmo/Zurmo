@@ -25,19 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Defines the import rules for importing into the opportunities module.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class OpportunitiesImportRules extends ImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getModelClassName()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            return 'Opportunity';
         }
     }
 ?>

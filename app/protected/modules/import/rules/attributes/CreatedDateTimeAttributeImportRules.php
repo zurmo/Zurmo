@@ -29,6 +29,11 @@
      */
     class CreatedDateTimeAttributeImportRules extends DerivedAttributeImportRules
     {
+        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
+        }
+
         public function getModelAttributeNames()
         {
             return array('createdDateTime');

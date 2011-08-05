@@ -31,7 +31,7 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('IdValueTypeModelAttribute'   => 'ImportMappingModelIdValueTypeDropDown');
+            return array('IdValueType'   => 'ImportMappingModelIdValueTypeDropDown');
         }
 
         public function getDisplayLabel()

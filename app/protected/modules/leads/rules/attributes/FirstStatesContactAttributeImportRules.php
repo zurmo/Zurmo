@@ -25,19 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Import rules for the contact state attribute. This is used for the states that are the starting state or after.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class FirstStatesContactAttributeImportRules extends ContactStateAttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            return array('DefaultValueFirstStatesContactModelAttribute' => 'ImportMappingRuleContactStatesDropDown');
         }
     }
 ?>

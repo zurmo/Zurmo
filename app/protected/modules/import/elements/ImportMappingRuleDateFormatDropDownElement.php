@@ -24,20 +24,52 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Date.
-     */
-    class DateAttributeImportRules extends AttributeImportRules
+    class ImportMappingRuleDateFormatDropDownElement extends DropDownElement
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        /**
+         * Override to ensure the model is an UserValueTypeModelAttributeMappingRuleForm.
+         */
+        public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            assert('$model instanceof ValueFormatMappingRuleForm');
+            parent::__construct($model, $attribute, $form, $params);
         }
 
-        public static function getSanitizerUtilNames()
+        /**
+         * Override to utilize the correct attribute from the model as the value.
+         */
+        protected function renderControlEditable()
         {
-            return array('Truncate');
+            return $this->form->dropDownList(
+                $this->model,
+                $this->attribute,
+                $this->getDropDownArray(),
+                $this->getEditableHtmlOptions()
+            );
+        }
+
+        protected function renderControlNonEditable()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected function getDropDownArray()
+        {
+            return array(
+                'Y-m-d'  => '2010-12-22',
+                'm-d-Y'  => '12-22-2010',
+                'd-m-Y'  => '22-12-2010',
+                'm/d/Y'  => '12/22/2010');
+        }
+
+        protected function getIdForSelectInput()
+        {
+            return $this->getEditableInputId();
+        }
+
+        protected function getNameForSelectInput()
+        {
+            return $this->getEditableInputName();
         }
     }
 ?>

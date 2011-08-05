@@ -31,7 +31,8 @@
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'DateTime');
+            return array('DefaultValueModelAttribute' => 'DateTime',
+                         'ValueFormat'                => 'ImportMappingRuleDateTimeFormatDropDown');
         }
 
         public static function getSanitizerUtilNames()

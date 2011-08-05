@@ -25,19 +25,26 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Base class for working with model values and what type they are.  Typicall the type would be a zurmo model id,
+     * another system id, or the name of the model.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    abstract class ValueTypeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public $type;
+
+        public function rules()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            return array(array('type', 'required'));
         }
 
-        public static function getSanitizerUtilNames()
+        public function attributeLabels()
         {
-            return array('Truncate');
+            return array('type'   => Yii::t('Default', 'Type of Value'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'type';
         }
     }
 ?>

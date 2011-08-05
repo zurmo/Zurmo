@@ -30,11 +30,11 @@
     class ImportMappingModelIdValueTypeDropDownElement extends DropDownElement
     {
         /**
-         * Override to ensure the model is an IdValueTypeModelAttributeMappingRuleForm.
+         * Override to ensure the model is an IdValueTypeMappingRuleForm.
          */
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('$model instanceof IdValueTypeModelAttributeMappingRuleForm');
+            assert('$model instanceof IdValueTypeMappingRuleForm');
             parent::__construct($model, $attribute, $form, $params);
         }
 
@@ -59,8 +59,8 @@
         protected function getDropDownArray()
         {
             return array(
-                IdValueTypeModelAttributeMappingRuleForm::ZURMO_MODEL_ID  => yii::t('Default', 'Zurmo Id'),
-                IdValueTypeModelAttributeMappingRuleForm::OTHER_ID       => yii::t('Default', 'Other Id'));
+                IdValueTypeMappingRuleForm::ZURMO_MODEL_ID  => yii::t('Default', 'Zurmo Id'),
+                IdValueTypeMappingRuleForm::OTHER_ID       => yii::t('Default', 'Other Id'));
         }
 
         protected function getIdForSelectInput()

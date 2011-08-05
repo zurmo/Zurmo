@@ -25,19 +25,33 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Defines the import rules for importing into the users module.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class UsersImportRules extends ImportRules
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        /**
+         * Override to handle the password setting as well as not showing all the derived types that are available
+         * in other models. This is why this override does not call the parent first.
+         * @return array
+         */
+        public static function getDerivedAttributeTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            return array('Password');
         }
 
-        public static function getSanitizerUtilNames()
+        /**
+         * Override to block out additional attributes that are not importable
+         * @return array
+         */
+        public static function getNonImportableAttributeNames()
         {
-            return array('Truncate');
+            return array_merge(parent::getNonImportableAttributeNames(), array('currency', 'language', 'timeZone','
+                               manager', 'hash'));
+        }
+
+        public static function getModelClassName()
+        {
+            return 'User';
         }
     }
 ?>

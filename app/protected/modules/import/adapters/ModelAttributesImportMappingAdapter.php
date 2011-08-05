@@ -66,7 +66,7 @@
                         $attributeName,
                         $this->model->getAttributeLabel($attributeName),
                         $attributeName,
-                        ModelAttributeToDesignerTypeUtil::getDesignerType($this->model, $attributeName),
+                        ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName),
                         null,
                         $this->model->isAttributeRequired($attributeName)
                     );
@@ -85,7 +85,7 @@
                                 $attributeName . FormModelUtil::DELIMITER . $relationAttributeName,
                                 $attributeLabel,
                                 $attributeName,
-                                ModelAttributeToDesignerTypeUtil::getDesignerType($this->model->$attributeName,
+                                ModelAttributeToMixedTypeUtil::getType($this->model->$attributeName,
                                                                                   $relationAttributeName),
                                 $relationAttributeName,
                                 $this->model->{$attributeName}->isAttributeRequired($relationAttributeName)

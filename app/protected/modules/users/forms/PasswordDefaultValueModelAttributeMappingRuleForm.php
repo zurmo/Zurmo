@@ -25,19 +25,45 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Form for handling default values for the password attribute on a user.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class PasswordDefaultValueModelAttributeMappingRuleForm extends DerivedAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public $defaultValue;
+
+        public function __construct($modelClassName, $derivedAttributeType)
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            assert($modelClassName == "User");
+            parent::__construct($modelClassName, $derivedAttributeType);
         }
 
-        public static function getSanitizerUtilNames()
+        public function rules()
         {
-            return array('Truncate');
+            if($this->getScenario() == 'extraColumn')
+            {
+                $requiredRuleIsApplicable = true;
+            }
+            else
+            {
+                $requiredRuleIsApplicable = false;
+            }
+            $defaultValueApplicableModelAttributeRules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                                                         getApplicableRulesByModelClassNameAndAttributeName(
+                                                         $this->modelClassName,
+                                                         'hash',
+                                                         static::getAttributeName(),
+                                                         $requiredRuleIsApplicable);
+            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+        }
+
+        public function attributeLabels()
+        {
+            return array('defaultValue' => Yii::t('Default', 'Default Value'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'defaultValue';
         }
     }
 ?>

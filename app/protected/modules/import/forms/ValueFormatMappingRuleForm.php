@@ -25,19 +25,25 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Base class for working with attributes that could have different formats coming from the import.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class ValueFormatMappingRuleForm extends ModelAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        public $format;
+
+        public function rules()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            return array(array('format', 'required'));
         }
 
-        public static function getSanitizerUtilNames()
+        public function attributeLabels()
         {
-            return array('Truncate');
+            return array('format'   => Yii::t('Default', 'Format'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'format';
         }
     }
 ?>

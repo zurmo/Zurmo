@@ -25,19 +25,23 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Import rules for any derived attributes that are of type Password
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class PasswordAttributeImportRules extends DerivedAttributeImportRules
     {
         public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
+            return array('PasswordDefaultValueModelAttribute' => 'Text');
         }
 
-        public static function getSanitizerUtilNames()
+        public function getDisplayLabel()
         {
-            return array('Truncate');
+            return Yii::t('Default', 'Password');
+        }
+
+        public function getModelAttributeNames()
+        {
+            return array('hash');
         }
     }
 ?>

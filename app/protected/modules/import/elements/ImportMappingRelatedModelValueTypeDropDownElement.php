@@ -25,28 +25,53 @@
      ********************************************************************************/
 
     /**
-     * Import rules for the modified date time attribute.
+     * Element used by the import mapping process.
      */
-    class ModifiedDateTimeAttributeImportRules extends DerivedAttributeImportRules
+    class ImportMappingRelatedModelValueTypeDropDownElement extends DropDownElement
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        /**
+         * Override to ensure the model is an IdValueTypeMappingRuleForm.
+         */
+        public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
+            assert('$model instanceof RelatedModelValueTypeMappingRuleForm');
+            parent::__construct($model, $attribute, $form, $params);
         }
 
-        public function getModelAttributeNames()
+        /**
+         * Override to utilize the correct attribute from the model as the value.
+         */
+        protected function renderControlEditable()
         {
-            return array('modifiedDateTime');
+            return $this->form->dropDownList(
+                $this->model,
+                $this->attribute,
+                $this->getDropDownArray(),
+                $this->getEditableHtmlOptions()
+            );
         }
 
-        public static function getSanitizerUtilNames()
+        protected function renderControlNonEditable()
         {
-            return array('Truncate');
+            throw new NotImplementedException();
         }
 
-        public function getDisplayLabel()
+        protected function getDropDownArray()
         {
-            return Yii::t('Default','Modified Date Time');
+            return array(
+                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID   => yii::t('Default', 'Zurmo Id'),
+                RelatedModelValueTypeMappingRuleForm::OTHER_ID         => yii::t('Default', 'Other Id'),
+                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME => yii::t('Default', 'Name'));
+        }
+
+        protected function getIdForSelectInput()
+        {
+            return $this->getEditableInputId();
+        }
+
+        protected function getNameForSelectInput()
+        {
+            return $this->getEditableInputName();
         }
     }
 ?>

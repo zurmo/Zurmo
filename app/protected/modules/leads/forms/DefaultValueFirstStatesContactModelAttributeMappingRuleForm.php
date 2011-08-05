@@ -25,19 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Date.
+     * Form for handling default values for the contact state derived attribute type.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class DefaultValueFirstStatesContactModelAttributeMappingRuleForm extends DefaultValueContactStateModelAttributeMappingRuleForm
     {
-        public static function getModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function makeStateData()
         {
-            return array('DefaultValueModelAttribute' => 'Date',
-                         'ValueFormat'                => 'ImportMappingRuleDateFormatDropDown');
-        }
-
-        public static function getSanitizerUtilNames()
-        {
-            return array('Truncate');
+            return LeadsUtil::getLeadStateDataFromStartingStateOnAndKeyedById();
         }
     }
 ?>
