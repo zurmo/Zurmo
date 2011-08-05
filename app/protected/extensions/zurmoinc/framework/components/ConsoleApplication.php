@@ -24,16 +24,51 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('testRoots.php');
+    /**
+     * Override to handle zurmo specific requirements for the console application. Certain methods are expected
+     * to be available in the application that are added here. Additional the session component is defined as some
+     * code running the console application will require access to the session component even though it is not utilized
+     * in the console application.
+     */
+    class ConsoleApplication extends CConsoleApplication
+    {
+        /**
+         * If the application has been installed or not.
+         * @var boolean
+         */
+        protected $installed;
 
-    chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
+        public function isApplicationInstalled()
+        {
+            return $this->installed;
+        }
 
-    require_once($debug);
-    require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+        protected function registerCoreComponents()
+        {
+            parent::registerCoreComponents();
+            $components=array(
+                'session'=>array(
+                    'class'=>'CHttpSession',
+                ),
+            );
+
+            $this->setComponents($components);
+        }
+
+        /**
+         * Adding expected WebApplication method.
+         */
+        public function getSession()
+        {
+            return $this->getComponent('session');
+        }
+
+        /**
+         * Adding expected WebApplication method.
+         */
+        public function findModule($moduleID)
+        {
+            return WebApplication::findModuleInApplication($moduleID);
+        }
+    }
 ?>

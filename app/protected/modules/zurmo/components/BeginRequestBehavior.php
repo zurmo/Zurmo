@@ -42,7 +42,8 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
-                //$owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadBodgyData'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
             }
         }
@@ -145,17 +146,15 @@
 
             if(Yii::app()->isApplicationInstalled())
             {
-                InstallUtil::freezeDatabase();
+                if (!FORCE_NO_FREEZE)
+                {
+                    RedBeanDatabase::freeze();
+                }
             }
             else
             {
                 throw new NotSupportedException();
             }
-        }
-
-        public function handleLoadBodgyData($event)
-        {
-            BodgySampleDataUtil::makeBodgyTestDataIfItDoesntLookLikeItIsAlreadyThere();
         }
 
         public function handleLoadLanguage($event)

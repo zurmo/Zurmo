@@ -24,16 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('testRoots.php');
-
-    chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
-
-    require_once($debug);
-    require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+    class ImportWizardMappingViewUtil
+    {
+        public static function resolveMappingDataForView($mappingData, $tableName, $firstRowIsHeaderRow)
+        {
+            assert('is_array($mappingData)');
+            assert('is_string($tableName)');
+            assert('is_bool($firstRowIsHeaderRow)');
+            if($firstRowIsHeaderRow)
+            {
+                $rowData = ImportDatabaseUtil::getRowsByTableNameAndCount($tableName, 2, 0);
+                if(count($rowData) <= 1)
+                {
+                    throw new notSupportedException();
+                }
+            }
+            else
+            {
+                $rowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
+                if($rowData == null)
+                {
+                    throw new notSupportedException();
+                }
+            }
+            foreach($mappingData as $columnName => $columnData)
+            {
+                if($firstRowIsHeaderRow)
+                {
+                    $mappingData[$columnName]['headerValue']      = $rowData[0][$columnName];
+                    $mappingData[$columnName]['firstSampleValue'] = $rowData[1][$columnName];
+                }
+                else
+                {
+                    $mappingData[$columnName]['firstSampleValue'] = $rowData[$columnName];
+                }
+            }
+            return $mappingData;
+        }
+    }
 ?>

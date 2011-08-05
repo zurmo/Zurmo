@@ -97,7 +97,7 @@
             {
                 $content .= $performanceMessage;
             }
-            if (YII_DEBUG)
+            if (YII_DEBUG && Yii::app()->isApplicationInstalled())
             {
                 $content .= '<span style="background-color: lightgreen; color: green">Database: \'' . Yii::app()->db->connectionString . '\', username: \'' . Yii::app()->db->username . '\'.</span><br />';
             }

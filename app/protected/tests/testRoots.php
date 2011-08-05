@@ -24,19 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class BodgySampleDataUtilTest extends BaseTest
-    {
-        public function testCreateBodgySampleData()
-        {
-            $this->assertTrue(Yii::app()->user->userModel === null);
-            BodgySampleDataUtil::makeBodgyTestDataIfItDoesntLookLikeItIsAlreadyThere();
-            $this->assertTrue(count(User       ::getAll()) > 5);
-            Yii::app()->user->userModel = User::getByUsername('super');
-            BodgySampleDataUtil::makeBodgyTestDataIfItDoesntLookLikeItIsAlreadyThere();
-            $this->assertTrue(count(Group      ::getAll()) > 5);
-            $this->assertTrue(count(Account    ::getAll()) > 5);
-            $this->assertTrue(count(Opportunity::getAll()) > 5);
-            $this->assertTrue(count(Contact    ::getAll()) > 5);
-        }
-    }
+    // $cwd is set in TestSuite.php so that it is the
+    // real cwd when the script is run as a symlink.
+    define('COMMON_ROOT',   realpath(dirname(__FILE__) . '/../..'));
+    define('INSTANCE_ROOT', realpath($cwd . '/../../..'));
 ?>

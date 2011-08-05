@@ -24,16 +24,22 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('testRoots.php');
-
-    chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
-
-    require_once($debug);
-    require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+    /**
+     * Override begin request behavior used by console applications.  Certain request/http/url specific logic
+     * is not included since it is not applicable when using the console application.
+     */
+    class CommandBeginRequestBehavior extends BeginRequestBehavior
+    {
+        public function attach($owner)
+        {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+            if(Yii::app()->isApplicationInstalled())
+            {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+            }
+        }
+    }
 ?>

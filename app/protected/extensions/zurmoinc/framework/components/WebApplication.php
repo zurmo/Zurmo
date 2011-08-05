@@ -148,6 +148,15 @@
         }
 
         /**
+         * Extra method so the findModule can be called statically from outside this class.
+         * @param string $moduleID
+         */
+        public static function findModuleInApplication($moduleID)
+        {
+            return self::findInModule(Yii::app(), $moduleID);
+        }
+
+        /**
          * Recursively searches for module including nested modules.
          */
         private static function findInModule($parentModule, $moduleId)

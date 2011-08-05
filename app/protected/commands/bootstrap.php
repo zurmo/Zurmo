@@ -24,16 +24,22 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('testRoots.php');
+    // fix for fcgi
+    defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
+    require_once('roots.php');
 
     chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
+    $yii   = COMMON_ROOT   . "/../yii/framework/yii.php";
+    // Debug is used per instance.
+    $debug = INSTANCE_ROOT . '/protected/config/debug.php';
+    //Console configuration file
+    $config = INSTANCE_ROOT . '/protected/config/console.php';
 
     require_once($debug);
-    require_once($yiit);
+    require_once($yii);
+    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');
+    //Including web application, because in console application, there is a reference to a method here.
     require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+    $app = Yii::createApplication('ConsoleApplication', $config);
+    $app->run();
 ?>

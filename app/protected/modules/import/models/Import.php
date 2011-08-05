@@ -24,16 +24,59 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('testRoots.php');
+    class Import extends Item
+    {
+        public function __toString()
+        {
+            return yii::t('Default', '(Unnamed)');
+        }
 
-    chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
+        public static function getModuleClassName()
+        {
+            return 'ImportModule';
+        }
 
-    require_once($debug);
-    require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+        /**
+         * Returns the display name for the model class.
+         * @return dynamic label name based on module.
+         */
+        protected static function getLabel()
+        {
+            return 'ImportsModuleSingularLabel';
+        }
+
+        /**
+         * Returns the display name for plural of the model class.
+         * @return dynamic label name based on module.
+         */
+        protected static function getPluralLabel()
+        {
+            return 'ImportModulePluralLabel';
+        }
+
+        public static function canSaveMetadata()
+        {
+            return false;
+        }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'serializedMetadata',
+                ),
+                'rules' => array(
+                    array('serializedMetadata',  'required'),
+                    array('serializedMetadata',  'type', 'type' => 'string'),
+                )
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
+        }
+    }
 ?>

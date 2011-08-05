@@ -100,44 +100,12 @@
         protected function actionRunInstallation($form)
         {
             assert('$form instanceof InstallSettingsForm');
-            ZurmoGeneralCache::forgetAll();
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();
             $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
-            $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
-            InstallUtil::connectToDatabase( $form->databaseType,
-                                            $form->databaseHostname,
-                                            $form->databaseName,
-                                            $form->databaseUsername,
-                                            $form->databasePassword);
-            $messageStreamer->add(Yii::t('Default', 'Dropping existing tables.'));
-            InstallUtil::dropAllTables();
-            $messageStreamer->add(Yii::t('Default', 'Creating super user.'));
-            InstallUtil::createSuperUser(   'super',
-                                            $form->superUserPassword);
-            $messageLogger = new MessageLogger($messageStreamer);
-            $messageStreamer->add(Yii::t('Default', 'Starting database schema creation.'));
-            InstallUtil::autoBuildDatabase($messageLogger);
-            $messageStreamer->add(Yii::t('Default', 'Database schema creation complete.'));
-            $messageStreamer->add(Yii::t('Default', 'Rebuilding Permissions.'));
-            ReadPermissionsOptimizationUtil::rebuild();
-            $messageStreamer->add(Yii::t('Default', 'Freezing database.'));
-            InstallUtil::freezeDatabase();
-            $messageStreamer->add(Yii::t('Default', 'Writing Configuration File.'));
-            InstallUtil::writeConfiguration(INSTANCE_ROOT,
-                                            $form->databaseType,
-                                            $form->databaseHostname,
-                                            $form->databaseName,
-                                            $form->databaseUsername,
-                                            $form->databasePassword,
-                                            $form->memcacheHostname,
-                                            (int)$form->memcachePortNumber,
-                                            Yii::app()->language);
-            $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
-            DefaultDataUtil::load($messageLogger);
-            $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
+            InstallUtil::runInstallation($form, $messageStreamer);
             if($form->installDemoData)
             {
                 echo CHtml::script('$("#progress-table").hide(); $("#demo-data-table").show();');
@@ -164,7 +132,7 @@
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);
-            DemoDataUtil::load($messageLogger, 100);
+            DemoDataUtil::load($messageLogger, 3);
             $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);

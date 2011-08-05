@@ -24,16 +24,38 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    require_once('testRoots.php');
+    abstract class ImportWizardView extends EditView
+    {
+        protected function renderActionLinksContent($form)
+        {
+            $previousPageLinkContent = $this->renderPreviousPageLinkContent($form);
+            $nextPageLinkContent     = $this->renderNextPageLinkContent($form);
+            $content  = '<div class="view-toolbar">'; //change to different class?
+            if($previousPageLinkContent)
+            {
+                $content .= '<div id="previous-page-link">' . $previousPageLinkContent . '</div>'; //float left //should be a form submit link.
+            }
+            if($nextPageLinkContent)
+            {
+                $content .= '<div id="next-page-link">' . $nextPageLinkContent . '</div>'; //float right //should be a form submit link.
+            }
+            $content .= '</div>';
+            return $content;
+        }
 
-    chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
-    $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
-    $config = INSTANCE_ROOT . "/protected/config/test.php";
+        protected function renderPreviousPageLinkContent($form)
+        {
+            return null;
+        }
 
-    require_once($debug);
-    require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
-    Yii::createApplication('WebTestApplication', $config);
+        protected function renderNextPageLinkContent($form)
+        {
+            return null;
+        }
+
+        public function isUniqueToAPage()
+        {
+            return true;
+        }
+    }
 ?>
