@@ -39,7 +39,7 @@
             return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' .Yii::t('Default', 'Id');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
             return array();
         }

@@ -113,7 +113,7 @@
         /**
          * @return array of sanitizer util names.
          */
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
             return array();
         }

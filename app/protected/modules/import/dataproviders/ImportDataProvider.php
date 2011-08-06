@@ -28,7 +28,7 @@
      * A data provider that manages import data during the import process.  The data provider will retrieve data
      * from the temporary import table that is created when a csv is uploaded.
      */
-    class ImportDataProvider extends CDataProvider
+    class ImportDataProvider extends AnalyzerSupportedDataProvider
     {
         private $tableName;
 
@@ -95,6 +95,37 @@
                 $keys[] = $row['id'];
             }
             return $keys;
+        }
+
+        public function getCountByWhere($where)
+        {
+            assert('$where != null');
+            if($this->excludeFirstRow)
+            {
+                $where .= ' and id != 1';
+            }
+            return ImportDatabaseUtil::getCount($this->tableName, $where);
+        }
+
+        public function getCountDataByGroupByColumnName($groupbyColumnName, $where = null)
+        {
+            assert(is_string($groupbyColumnName));
+            assert('is_string($where) || $where == null');
+            $sql = "select count(*), {$groupbyColumnName} from {$this->tableName} ";
+            if($where != null)
+            {
+                $sql .= 'where ' . $where . ' ';
+            }
+            if($this->excludeFirstRow)
+            {
+                if($where != null)
+                {
+                    $where .= 'and ';
+                }
+                $where .= 'id != 1';
+            }
+            $sql .= 'group by ' . $groupbyColumnName;
+            return R::getAll($sql);
         }
     }
 ?>

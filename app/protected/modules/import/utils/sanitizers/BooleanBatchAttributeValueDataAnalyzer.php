@@ -24,19 +24,30 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class BooleanBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+                                                  implements DataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            return array('DefaultValueModelAttribute' => 'Text');
+            assert('is_string($columnName)');
+            return $this->processAndGetMessage($dataProvider, $columnName);
         }
 
-        public static function getSanitizerUtilTypes()
+        protected function analyzeByValue($value)
         {
-            return array('Truncate');
+            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
+            if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        protected function getMessageByFailedCount($failed)
+        {
+            $label   = '{count} value(s) have invalid check box values. ';
+            $label  .= 'These values will be set to false upon import.';
+            return Yii::t('Default', $label, array('{count}' => $failed));
         }
     }
 ?>

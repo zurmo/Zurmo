@@ -24,19 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class BooleanSanitizerUtil extends SanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            return array('DefaultValueModelAttribute' => 'Text');
+            return 'Boolean';
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return array('Truncate');
+            return 'Boolean';
+        }
+
+        /**
+         * Lowercase array of mappable boolean values. These values if found in an import, will be converted correctly
+         * to false/true. All other values are not valid.
+         */
+        public static function getAcceptableValuesMapping()
+        {
+            return array(
+                'false' => false,
+                'true'  => true,
+                'y'     => true,
+                'n'		=> false,
+                'yes'	=> true,
+                'no'	=> false,
+                false   => false,
+                true    => true,
+                0       => false,
+                1       => true,
+                '0'		=> false,
+                '1'		=> true,
+                ''		=> false,
+            );
         }
     }
 ?>

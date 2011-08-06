@@ -172,6 +172,5 @@
             assert('$modelClassName != null');
             return $attributeName;
         }
-
     }
 ?>

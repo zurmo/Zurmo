@@ -24,19 +24,34 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class TruncateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
+                                                implements DataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            return array('DefaultValueModelAttribute' => 'Text');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('Truncate');
+            assert('is_string($columnName)');
+            assert('count($this->attributeNameOrNames) == 1');
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            $maxLength      = StringValidatorHelper::
+                              getMaxLengthByModelAndAttributeName($model, $this->attributeNameOrNames[0]);
+            if($maxLength == null)
+            {
+                return;
+            }
+            $where = DatabaseCompatibilityUtil::charLength($columnName) . ' > ' . $maxLength;
+            $count = $dataProvider->getCountByWhere($where);
+            if($count > 0)
+            {
+                $label   = '{count} value(s) are too large for this field. ';
+                $label  .= 'These values will be truncated to a length of {length} upon import.';
+                $message = Yii::t('Default', $label, array('{count}' => $count, '{length}' => $maxLength));
+                return $message;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 ?>

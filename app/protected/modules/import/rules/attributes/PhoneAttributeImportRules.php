@@ -34,7 +34,7 @@
             return array('DefaultValueModelAttribute' => 'Phone');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
             return array('Truncate');
         }

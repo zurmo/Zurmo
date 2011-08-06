@@ -24,19 +24,48 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    abstract class BatchAttributeValueDataAnalyzer extends AttributeValueDataAnalyzer
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultValueModelAttribute' => 'Text');
-        }
+        abstract protected function analyzeByValue($value);
 
-        public static function getSanitizerUtilTypes()
+        abstract protected function getMessageByFailedCount($failed);
+
+        protected function processAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            return array('Truncate');
+            assert('is_string($columnName)');
+
+            $page   = 0;
+            $failed = 0;
+            $dataProvider->getPagination()->setCurrentPage($page);
+            while(null != $data = $dataProvider->getData())
+            {
+                $data = $dataProvider->getData(true);
+                foreach($data as $rowData)
+                {
+                    $passed = $this->analyzeByValue($rowData->$columnName);
+                    if(!$passed)
+                    {
+                        $failed ++;
+                    }
+                }
+                if(count($data) == $dataProvider->getPagination()->getPageSize())
+                {
+                    $page ++;
+                    $dataProvider->getPagination()->setCurrentPage($page);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if($failed > 0)
+            {
+                return $this->getMessageByFailedCount($failed);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 ?>

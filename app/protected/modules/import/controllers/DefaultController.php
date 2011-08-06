@@ -158,7 +158,7 @@
                                                               $importWizardForm->mappingData,
                                                               $importWizardForm->importRulesType);
                 MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingDataMappingRuleFormsAndElementTypes);
-                //still validate even if MappingRuleForms fails, so all errors are captured and returned.
+                //Still validate even if MappingRuleForms fails, so all errors are captured and returned.
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
             }
             else

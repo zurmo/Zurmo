@@ -32,6 +32,16 @@
     class DatabaseCompatibilityUtil
     {
         /**
+         * Returns the database character length equivalent string function by a column name.
+         * @param string $columnName
+         */
+        public static function charLength($columnName)
+        {
+            assert('is_string($columnName)');
+            return 'char_length(' . $columnName . ')';
+        }
+
+        /**
          * Returns sql to concatentate the given strings for
          * the current database.
          */
@@ -104,6 +114,16 @@
         public static function getDateTimeFormat()
         {
             return 'yyyy-MM-dd HH:mm:ss';
+        }
+
+        /**
+         * Returns the database string to lower equivalent string function by a column name.
+         * @param string $columnName
+         */
+        public static function lower($columnName)
+        {
+            assert('is_string($columnName)');
+            return 'lower(' . $columnName . ')';
         }
 
         /**

@@ -34,9 +34,9 @@
             return array('DefaultValueModelAttribute' => 'TextArea');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array();
         }
     }
 ?>

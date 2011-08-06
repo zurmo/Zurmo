@@ -39,9 +39,14 @@
             return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array('DateTime');
+        }
+
+        public static function getLinkedMappingRuleType()
+        {
+            return 'ValueFormat';
         }
     }
 ?>

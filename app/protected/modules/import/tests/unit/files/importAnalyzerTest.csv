@@ -1,0 +1,12 @@
+string,phone,float,boolean,date,datetime
+thisstringisnottoolong,1234567g90123,45,yes,06-03-1980,06-03-1980 05:00
+thisstringisnottoolong,1234567890a123450000,757,no,06-03-1981,06-03-1980 05:00
+thisstringisgoingtobewaytolongtofitintothisfieldinthesystemthisstringisgoingtobewaytolongtofitintothisfieldinthesystemthisstringisgoingtobewaytolongtofitintothisfieldinthesystem,123456s789012332000,76,1,06-03-1982,06-03-1980 05:00
+thisstringisnottoolong,,45445,0,06-03-1983,06-03-1980 05:00
+thisstringisnottoolong,1234567g90123,45,TRUE,06-03-1984,06-03-1980 05:01
+thisstringisnottoolong,1234567g90123,45,FALSE,abc,06-03-1980 05:02
+thisstringisnottoolong,1234567g90123,45,y,2011-06-03,2011-12-22 05:03
+thisstringisnottoolong,1234567g90123,45,n,06-03-1984,06-03-1980 05:04
+thisstringisnottoolong,1234567g90123,45,abc,06-03-1984,ddd
+thisstringisnottoolong,1234567g90123,45,,06-03-1984,06-03-1980 05:06
+thisstringisnottoolong,1234567g90123,45,xyz,06-03-1984,06-03-1980 05:07

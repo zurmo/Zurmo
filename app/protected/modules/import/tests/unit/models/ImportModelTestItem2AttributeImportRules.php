@@ -34,7 +34,7 @@
             return array('DefaultModelNameId' => 'ImportMappingRuleDefaultModelNameId');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
             return array('Truncate');
         }

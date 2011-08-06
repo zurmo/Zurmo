@@ -55,11 +55,17 @@
 
         protected function getDropDownArray()
         {
-            return array(
-                'Y-m-d H:i'  => '2010-12-22 21:00',
-                'm-d-Y H:i'  => '12-22-2010 21:00',
-                'd-m-Y H:i'  => '22-12-2010 21:00',
-                'm/d/Y H:i'  => '12/22/2010 21:00');
+            $dropDownData = array();
+            $formats      = DateTimeSanitizerUtil::getAcceptableFormats();
+            foreach($formats as $format)
+            {
+                $firstDate  = Yii::app()->dateFormatter->format($format, strtotime('30 May 1950 4 hours 2 minutes'));
+                $secondDate = Yii::app()->dateFormatter->format($format, strtotime('15 December 2011 14 hours 45 minutes'));
+                $label = Yii::t('Default', '{firstDate} or {secondDate}', array('{firstDate}' =>  $firstDate,
+                                                                                '{secondDate}' => $secondDate));
+                $dropDownData[$format] = $label;
+            }
+            return $dropDownData;
         }
 
         protected function getIdForSelectInput()

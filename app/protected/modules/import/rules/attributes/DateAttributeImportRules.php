@@ -39,9 +39,9 @@
             return array('ValueFormat' => 'ImportMappingRuleDateFormatDropDown');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array('Date');
         }
     }
 ?>

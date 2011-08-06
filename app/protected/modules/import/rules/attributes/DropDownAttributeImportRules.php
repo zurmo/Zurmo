@@ -34,7 +34,7 @@
             return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
         }
 
-        public static function getSanitizerUtilNames()
+        public static function getSanitizerUtilTypes()
         {
             return array('Truncate');
         }

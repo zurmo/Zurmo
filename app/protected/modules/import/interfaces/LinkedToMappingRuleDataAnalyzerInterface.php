@@ -24,19 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    interface LinkedToMappingRuleDataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultValueModelAttribute' => 'Text');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('Truncate');
-        }
+        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName,
+                                         $mappingRuleType, $mappingRuleData);
     }
 ?>

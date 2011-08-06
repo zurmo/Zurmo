@@ -24,19 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class DateTimeBatchAttributeValueDataAnalyzer extends DateBatchAttributeValueDataAnalyzer
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('DefaultValueModelAttribute' => 'Text');
-        }
+        protected $exceptedFormat;
 
-        public static function getSanitizerUtilTypes()
+        protected function getMessageByFailedCount($failed)
         {
-            return array('Truncate');
+            $label   = '{count} value(s) have invalid date time formats. ';
+            $label  .= 'These values will be cleared during import.';
+            return Yii::t('Default', $label, array('{count}' => $failed));
         }
     }
 ?>

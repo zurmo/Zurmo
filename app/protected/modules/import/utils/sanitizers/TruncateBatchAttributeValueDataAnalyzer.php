@@ -24,19 +24,40 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class TruncateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+                                                  implements DataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected $maxLength;
+
+        public function __construct($modelClassName, $attributeNameOrNames)
         {
-            return array('DefaultValueModelAttribute' => 'Text');
+            parent:: __construct($modelClassName, $attributeNameOrNames);
+            assert('count($this->attributeNameOrNames) == 1');
+            $model           = new $modelClassName(false);
+            $this->maxLength = StringValidatorHelper::
+                               getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);
         }
 
-        public static function getSanitizerUtilTypes()
+        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            return array('Truncate');
+            assert('is_string($columnName)');
+            return $this->processAndGetMessage($dataProvider, $columnName);
+        }
+
+        protected function analyzeByValue($value)
+        {
+            if(strlen($value) > $this->maxLength)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        protected function getMessageByFailedCount($failed)
+        {
+            $label   = '{count} value(s) are too large for this field. ';
+            $label  .= 'These values will be truncated to a length of {length} upon import.';
+            return Yii::t('Default', $label, array('{count}' => $failed, '{length}' => $this->maxLength));
         }
     }
 ?>

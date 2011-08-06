@@ -39,6 +39,14 @@
             }
             return $importRulesClassName;
         }
+
+        public static function makeImportRulesByType($importRulesType)
+        {
+            assert('is_string($importRulesType)');
+            $importRulesClassName = self::getImportRulesClassNameByType($importRulesType);
+            return new $importRulesClassName();
+        }
+
         /**
          * Based on the current user, return the importRules types and thier display labels.  Only include import rules
          * that the user has a right to access its corresponding module.

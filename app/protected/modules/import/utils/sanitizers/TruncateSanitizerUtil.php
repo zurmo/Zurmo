@@ -23,20 +23,16 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class TruncateSanitizerUtil extends SanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            return array('DefaultValueModelAttribute' => 'Text');
+            return 'Truncate';
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return array('Truncate');
+            return 'Truncate';
         }
     }
 ?>

@@ -24,19 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Email.
-     */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class StringValidatorHelper
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getMaxLengthByModelAndAttributeName(RedBeanModel $model, $attributeName)
         {
-            return array('DefaultValueModelAttribute' => 'Text');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('Truncate');
+            assert('is_string($attributeName)');
+            $validators     = $model->getValidators($attributeName);
+            $maxLength      = null;
+            foreach ($validators as $validator)
+            {
+                if ($validator instanceof CStringValidator)
+                {
+                    if ($validator->max !== null)
+                    {
+                        $maxLength = $validator->max;
+                        break;
+                    }
+                }
+            }
+            return $maxLength;
         }
     }
 ?>
