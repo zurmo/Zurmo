@@ -38,5 +38,10 @@
         {
             return array('RelatedModelValueType' => 'ImportMappingRelatedModelValueTypeDropDown');
         }
+
+        public static function getSanitizerUtilTypes()
+        {
+            return array('RelatedModelNameOrIdValueType');
+        }
     }
 ?>

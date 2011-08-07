@@ -24,20 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Base class for an attribute that is a relation attribute to a model.
-     */
-    abstract class ModelAttributeImportRules extends AttributeImportRules
+    class RelatedModelNameOrIdValueTypeSanitizerUtil extends SanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function supportsSqlAttributeValuesDataAnalysis()
         {
-            return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
-                         'IdValueType'               => 'ImportMappingModelIdValueTypeDropDown');
+            return false;
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return array('IdValueType');
+            return 'RelatedModelNameOrIdValueType';
+        }
+
+        public static function getLinkedMappingRuleType()
+        {
+            return 'RelatedModelValueType';
         }
     }
 ?>

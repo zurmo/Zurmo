@@ -80,8 +80,7 @@
                     array('string',    'length',  'min'  => 3, 'max' => 64),
                     array('textArea',  'type',    'type' => 'string'),
                     array('url',       'url'),
-
-                    ),
+                ),
                 'elements' => array(
                     'currencyValue'    => 'CurrencyValue',
                     'date'             => 'Date',

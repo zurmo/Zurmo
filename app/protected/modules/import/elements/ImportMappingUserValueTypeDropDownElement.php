@@ -56,9 +56,9 @@
         protected function getDropDownArray()
         {
             return array(
-                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID  => yii::t('Default', 'Zurmo Id'),
-                UserValueTypeModelAttributeMappingRuleForm::OTHER_USER_ID  => yii::t('Default', 'Other Id'),
-                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME => yii::t('Default', 'Zurmo Username'));
+                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID            => yii::t('Default', 'Zurmo Id'),
+                UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID  => yii::t('Default', 'Exernal System Id'),
+                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME           => yii::t('Default', 'Zurmo Username'));
         }
 
         protected function getIdForSelectInput()

@@ -24,20 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Base class for an attribute that is a relation attribute to a model.
-     */
-    abstract class ModelAttributeImportRules extends AttributeImportRules
+    class SelfIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected function getMessageByFoundAndUnfoundCount($found, $unfound)
         {
-            return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
-                         'IdValueType'               => 'ImportMappingModelIdValueTypeDropDown');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('IdValueType');
+            if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            {
+                $label   = '{found} record(s) will be updated ';
+                $label  .= 'and {unfound} record(s) will be skipped during import.';
+            }
+            else
+            {
+                $label   = '{found} record(s) will be updated and ';
+                $label  .= '{unfound} record(s) will be created during the import.';
+            }
+            return Yii::t('Default', $label, array('{found}' => $found, '{unfound}' => $unfound));
         }
     }
 ?>

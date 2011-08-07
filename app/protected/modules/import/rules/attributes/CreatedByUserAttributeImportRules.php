@@ -41,7 +41,7 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array('UserValueType');
         }
 
         public function getDisplayLabel()

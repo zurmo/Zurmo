@@ -24,20 +24,41 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Base class for an attribute that is a relation attribute to a model.
-     */
-    abstract class ModelAttributeImportRules extends AttributeImportRules
+    class UserValueTypeSanitizerUtil extends SanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return array('DefaultModelNameId'        => 'ImportMappingRuleDefaultModelNameId',
-                         'IdValueType'               => 'ImportMappingModelIdValueTypeDropDown');
+            return 'UserValueType';
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            return array('IdValueType');
+            return 'UserValueType';
+        }
+
+        public static function getLinkedMappingRuleType()
+        {
+            return 'UserValueTypeModelAttribute';
+        }
+
+        public static function getUsernames()
+        {
+            $sql = 'select username from ' . User::getTableName('User');
+            return R::getCol($sql);
+        }
+
+        public static function getUserIds()
+        {
+            $sql = 'select id from ' . User::getTableName('User');
+            return R::getCol($sql);
+        }
+
+        public static function getUserExternalSystemIds()
+        {
+            RedBean_Plugin_Optimizer_ExternalSystemId::
+            ensureColumnIsVarchar100(User::getTableName('User'), 'externalSystemId');
+            $sql = 'select externalSystemId from ' . User::getTableName('User');
+            return R::getCol($sql);
         }
     }
 ?>

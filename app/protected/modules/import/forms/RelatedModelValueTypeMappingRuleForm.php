@@ -28,12 +28,8 @@
      * This form is used for mapping a related model name or id.  This form helps decide if the value being mapped
      * is an id or the name of the related model.
      */
-    class RelatedModelValueTypeMappingRuleForm extends ValueTypeMappingRuleForm
+    class RelatedModelValueTypeMappingRuleForm extends IdValueTypeMappingRuleForm
     {
-        const ZURMO_MODEL_ID  = 1;
-
-        const OTHER_ID = 2;
-
-        const ZURMO_MODEL_NAME = 3;
+        const ZURMO_MODEL_NAME   = 3;
     }
 ?>

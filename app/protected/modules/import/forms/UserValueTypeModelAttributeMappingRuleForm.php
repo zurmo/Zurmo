@@ -32,7 +32,7 @@
     {
         const ZURMO_USER_ID  = 1;
 
-        const OTHER_USER_ID  = 2;
+        const EXTERNAL_SYSTEM_USER_ID  = 2;
 
         const ZURMO_USERNAME = 3;
 

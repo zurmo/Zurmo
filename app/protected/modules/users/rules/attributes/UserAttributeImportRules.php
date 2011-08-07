@@ -34,5 +34,10 @@
             return array('DefaultModelNameId'          => 'ImportMappingRuleDefaultModelNameId',
                          'UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
         }
+
+        public static function getSanitizerUtilTypes()
+        {
+            return array('UserValueType');
+        }
     }
 ?>

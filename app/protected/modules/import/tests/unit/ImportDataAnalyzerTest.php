@@ -29,7 +29,9 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            Yii::app()->user->userModel = SecurityTestHelper::createSuperAdmin();
+            $super = SecurityTestHelper::createSuperAdmin();
+            Yii::app()->user->userModel = $super;
+            $jim = UserTestHelper::createBasicUser('jim');
 
             $values = array(
                 'Test1',
@@ -42,6 +44,13 @@
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
             assert('$saved');
+
+            //Ensure the external system id column is present.
+            RedBean_Plugin_Optimizer_ExternalSystemId::
+            ensureColumnIsVarchar100(User::getTableName('User'), 'externalSystemId');
+            $userTableName = User::getTableName('User');
+            R::exec("update " . $userTableName . " set externalSystemId = 'A' where id = {$super->id}");
+            R::exec("update " . $userTableName . " set externalSystemId = 'B' where id = {$jim->id}");
         }
 
         public function testImportDataAnalysisResults()
@@ -52,17 +61,30 @@
             $import->serializedData            = serialize($serializedData);
             $this->assertTrue($import->save());
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
+            R::exec("update " . $import->getTempTableName() . " set column_8 = " .
+                     Yii::app()->user->userModel->id ." where id != 1 limit 4");
             $mappingData = array(
-                'column_0' => array('attributeIndexOrDerivedType' => 'string',   'type' => 'importColumn'),
-                'column_1' => array('attributeIndexOrDerivedType' => 'phone',    'type' => 'importColumn'),
-                'column_2' => array('attributeIndexOrDerivedType' => 'float',    'type' => 'importColumn'),
-                'column_3' => array('attributeIndexOrDerivedType' => 'boolean',  'type' => 'importColumn'),
-                'column_4' => array('attributeIndexOrDerivedType' => 'date', 	 'type' => 'importColumn',
-                                    'mappingRulesData' => array('ValueFormat' => array('format' => 'MM-dd-yyyy'))),
-                'column_5' => array('attributeIndexOrDerivedType' => 'dateTime', 'type' => 'importColumn',
-                                    'mappingRulesData' => array('ValueFormat' => array('format' => 'MM-dd-yyyy hh:mm'))),
-                'column_6' => array('attributeIndexOrDerivedType' => 'dropDown', 'type' => 'importColumn'),
-            );
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn'),
+                'column_1' => array('attributeIndexOrDerivedType' => 'phone',    	  'type' => 'importColumn'),
+                'column_2' => array('attributeIndexOrDerivedType' => 'float',    	  'type' => 'importColumn'),
+                'column_3' => array('attributeIndexOrDerivedType' => 'boolean',  	  'type' => 'importColumn'),
+                'column_4' => array('attributeIndexOrDerivedType' => 'date', 	 	  'type' => 'importColumn',
+                                    'mappingRulesData' => array('ValueFormat' =>
+                                    array('format' => 'MM-dd-yyyy'))),
+                'column_5' => array('attributeIndexOrDerivedType' => 'dateTime', 	  'type' => 'importColumn',
+                                    'mappingRulesData' => array('ValueFormat' =>
+                                    array('format' => 'MM-dd-yyyy hh:mm'))),
+                'column_6' => array('attributeIndexOrDerivedType' => 'dropDown',      'type' => 'importColumn'),
+                'column_7' => array('attributeIndexOrDerivedType' => 'CreatedByUser', 'type' => 'importColumn',
+                                    'mappingRulesData' => array('UserValueTypeModelAttribute' =>
+                                    array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME))),
+                'column_8' => array('attributeIndexOrDerivedType' => 'ModifiedByUser', 'type' => 'importColumn',
+                                    'mappingRulesData' => array('UserValueTypeModelAttribute' =>
+                                    array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID))),
+                'column_9' => array('attributeIndexOrDerivedType' => 'owner', 		   'type' => 'importColumn',
+                                    'mappingRulesData' => array('UserValueTypeModelAttribute' =>
+                                    array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID))),
+                );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
             $import->serializedData        = serialize($serializedData);
@@ -105,6 +127,18 @@
                     array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',
                            'sanitizerUtilType' => 'DropDown', 'moreAvailable' => false),
                 ),
+                'column_7' => array(
+                    array('message'=> '2 username(s) specified were not found. These values will not be used during the import.',
+                           'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
+                ),
+                'column_8' => array(
+                    array('message'=> '1 zurmo user id(s) across 7 row(s) were not found. These values will not be used during the import.',
+                           'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
+                ),
+                'column_9' => array(
+                    array('message'=> '2 external system user id(s) specified were not found. These values will not be used during the import.',
+                           'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
+                ),
             );
             $this->assertEquals($compareData, $resultsData);
         }
@@ -121,6 +155,8 @@
             $import->serializedData            = serialize($serializedData);
             $this->assertTrue($import->save());
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
+            R::exec("update " . $import->getTempTableName() . " set column_8 = " .
+                     Yii::app()->user->userModel->id ." where id != 1 limit 6");
 
             $config       = array('pagination' => array('pageSize' => 2));
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
@@ -155,6 +191,27 @@
             $dataAnalyzer = new DropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dropDown'));
             $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_6');
             $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
+            $this->assertEquals($compareMessage, $message);
+
+            //Test CreatedByUser sanitization by batch.
+            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('CreatedByUser'));
+            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_7', 'UserValueTypeModelAttribute',
+                       array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME));
+            $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
+            $this->assertEquals($compareMessage, $message);
+
+            //Test ModifiedByUser sanitization by batch.
+            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('ModifiedByUser'));
+            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_8', 'UserValueTypeModelAttribute',
+                       array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID));
+            $compareMessage = '5 value(s) have invalid user values. These values will not be used during the import.';
+            $this->assertEquals($compareMessage, $message);
+
+            //Test owner sanitization by batch.
+            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('owner'));
+            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_9', 'UserValueTypeModelAttribute',
+                       array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID));
+            $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
             $this->assertEquals($compareMessage, $message);
         }
     }

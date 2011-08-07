@@ -30,8 +30,8 @@
      */
     class IdValueTypeMappingRuleForm extends ValueTypeMappingRuleForm
     {
-        const ZURMO_MODEL_ID  = 1;
+        const ZURMO_MODEL_ID     = 1;
 
-        const OTHER_ID = 2;
+        const EXTERNAL_SYSTEM_ID = 2;
     }
 ?>

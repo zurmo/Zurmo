@@ -117,13 +117,14 @@
         }
 
         /**
-         * Returns the database string to lower equivalent string function by a column name.
+         * Returns the database string to lower equivalent string function by a column name and adds quotes
+         * to it.
          * @param string $columnName
          */
         public static function lower($columnName)
         {
             assert('is_string($columnName)');
-            return 'lower(' . $columnName . ')';
+            return 'lower(' . self::getQuote() . $columnName . self::getQuote() . ')';
         }
 
         /**

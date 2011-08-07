@@ -34,7 +34,7 @@
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultModelNameIdDerivedAttribute' => 'ImportMappingRuleDefaultModelNameId',
-                         'IdValueType'          => 'ImportMappingModelIdValueTypeDropDown');
+                         'IdValueType'                        => 'ImportMappingModelIdValueTypeDropDown');
         }
 
         public function getDisplayLabel()
@@ -46,7 +46,7 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array('IdValueType');
         }
     }
 ?>

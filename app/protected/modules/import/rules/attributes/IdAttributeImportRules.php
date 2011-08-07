@@ -41,7 +41,7 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array();
+            return array('SelfIdValueType');
         }
     }
 ?>

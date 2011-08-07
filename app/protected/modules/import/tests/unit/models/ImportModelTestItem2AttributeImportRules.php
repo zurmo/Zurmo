@@ -31,12 +31,12 @@
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultModelNameId' => 'ImportMappingRuleDefaultModelNameId');
+            return array('RelatedModelValueType' => 'ImportMappingRelatedModelValueTypeDropDown');
         }
 
         public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array('IdValueType');
         }
     }
 ?>
