@@ -29,7 +29,19 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
+            Yii::app()->user->userModel = SecurityTestHelper::createSuperAdmin();
+
+            $values = array(
+                'Test1',
+                'Test2',
+                'Test3',
+                'Sample',
+                'Demo',
+            );
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert('$saved');
         }
 
         public function testImportDataAnalysisResults()
@@ -49,6 +61,7 @@
                                     'mappingRulesData' => array('ValueFormat' => array('format' => 'MM-dd-yyyy'))),
                 'column_5' => array('attributeIndexOrDerivedType' => 'dateTime', 'type' => 'importColumn',
                                     'mappingRulesData' => array('ValueFormat' => array('format' => 'MM-dd-yyyy hh:mm'))),
+                'column_6' => array('attributeIndexOrDerivedType' => 'dropDown', 'type' => 'importColumn'),
             );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
@@ -79,6 +92,18 @@
                 'column_3' => array(
                     array('message'=> '2 value(s) have invalid check box values. These values will be set to false upon import.',
                            'sanitizerUtilType' => 'Boolean', 'moreAvailable' => false),
+                ),
+                'column_4' => array(
+                    array('message'=> '2 value(s) have invalid date formats. These values will be cleared during import.',
+                           'sanitizerUtilType' => 'Date', 'moreAvailable' => false),
+                ),
+                'column_5' => array(
+                    array('message'=> '2 value(s) have invalid date time formats. These values will be cleared during import.',
+                           'sanitizerUtilType' => 'DateTime', 'moreAvailable' => false),
+                ),
+                'column_6' => array(
+                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',
+                           'sanitizerUtilType' => 'DropDown', 'moreAvailable' => false),
                 ),
             );
             $this->assertEquals($compareData, $resultsData);
@@ -114,14 +139,22 @@
 
             //Test date sanitization by batch.
             $dataAnalyzer = new DateBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('date'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_4');
-            $compareMessage = '2 value(s) have invalid check box values. These values will be set to false upon import.';
+            $message      = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_4', 'ValueFormat',
+                            array('format' => 'MM-dd-yyyy'));
+            $compareMessage = '2 value(s) have invalid date formats. These values will be cleared during import.';
             $this->assertEquals($compareMessage, $message);
 
             //Test datetime sanitization by batch.
-            $dataAnalyzer = new DateBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('datetime'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_5');
-            $compareMessage = '2 value(s) have invalid check box values. These values will be set to false upon import.';
+            $dataAnalyzer = new DateTimeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dateTime'));
+            $message      = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_5', 'ValueFormat',
+                            array('format' => 'MM-dd-yyyy hh:mm'));
+            $compareMessage = '2 value(s) have invalid date time formats. These values will be cleared during import.';
+            $this->assertEquals($compareMessage, $message);
+
+            //Test dropdown sanitization by batch.
+            $dataAnalyzer = new DropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dropDown'));
+            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_6');
+            $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
             $this->assertEquals($compareMessage, $message);
         }
     }

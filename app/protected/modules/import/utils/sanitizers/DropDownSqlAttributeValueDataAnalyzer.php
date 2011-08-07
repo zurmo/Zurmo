@@ -24,26 +24,38 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper functionality for use in accessing and manipulating arrays.
-     */
-    class ArrayUtil
+    class DropDownSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
+                                                implements DataAnalyzerInterface
     {
-        /**
-         * Returns value of $array[$element] if $element is defined, otherwise if not defined will return null
-         */
-        public static function getArrayValue($array, $element)
+        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            if (isset($array[$element]))
+            assert('is_string($columnName)');
+            assert('count($this->attributeNameOrNames) == 1');
+            $customFieldData = CustomFieldDataModelUtil::
+                               getDataByModelClassNameAndAttributeName($this->modelClassName,
+                                                                       $this->attributeNameOrNames[0]);
+            $dropDownValues  = unserialize($customFieldData->serializedData);
+            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
+            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
+            $count           = 0;
+            foreach($data as $valueCountData)
             {
-                return $array[$element];
+                if(!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
+                {
+                    $count ++;
+                }
             }
-            return null;
-        }
-
-        public static function resolveArrayToLowerCase($array)
-        {
-            return unserialize(mb_strtolower(serialize($array)));
+            if($count > 0)
+            {
+                $label   = '{count} dropdown value(s) are missing from the field. ';
+                $label  .= 'These values will be added upon import.';
+                $message = Yii::t('Default', $label, array('{count}' => $count));
+                return $message;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 ?>

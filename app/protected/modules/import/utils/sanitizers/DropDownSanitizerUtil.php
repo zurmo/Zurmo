@@ -23,27 +23,16 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    /**
-     * Helper functionality for use in accessing and manipulating arrays.
-     */
-    class ArrayUtil
+    class DropDownSanitizerUtil extends SanitizerUtil
     {
-        /**
-         * Returns value of $array[$element] if $element is defined, otherwise if not defined will return null
-         */
-        public static function getArrayValue($array, $element)
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            if (isset($array[$element]))
-            {
-                return $array[$element];
-            }
-            return null;
+            return 'DropDown';
         }
 
-        public static function resolveArrayToLowerCase($array)
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return unserialize(mb_strtolower(serialize($array)));
+            return 'DropDown';
         }
     }
 ?>

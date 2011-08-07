@@ -111,11 +111,7 @@
         {
             assert(is_string($groupbyColumnName));
             assert('is_string($where) || $where == null');
-            $sql = "select count(*), {$groupbyColumnName} from {$this->tableName} ";
-            if($where != null)
-            {
-                $sql .= 'where ' . $where . ' ';
-            }
+            $sql = "select count(*) count, {$groupbyColumnName} from {$this->tableName} ";
             if($this->excludeFirstRow)
             {
                 if($where != null)
@@ -123,6 +119,10 @@
                     $where .= 'and ';
                 }
                 $where .= 'id != 1';
+            }
+            if($where != null)
+            {
+                $sql .= 'where ' . $where . ' ';
             }
             $sql .= 'group by ' . $groupbyColumnName;
             return R::getAll($sql);
