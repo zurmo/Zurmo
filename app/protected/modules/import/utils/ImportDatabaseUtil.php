@@ -147,6 +147,7 @@
         public static function getCount($tableName, $where = null)
         {
             $sql = 'select count(*) count from ' . $tableName;
+
             if($where != null)
             {
                 $sql .= ' where ' . $where;

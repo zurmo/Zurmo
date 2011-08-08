@@ -31,6 +31,15 @@
 
         protected $attributeModelClassName;
 
+        public function __construct($modelClassName, $attributeNameOrNames)
+        {
+            parent:: __construct($modelClassName, $attributeNameOrNames);
+            assert('count($this->attributeNameOrNames) == 1');
+            $model                         = new $modelClassName(false);
+            $this->maxLength               = StringValidatorHelper::
+                                             getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);
+            $this->attributeModelClassName = $this->resolveAttributeModelClassName($model,$this->attributeNameOrNames[0]);
+        }
         public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
@@ -38,11 +47,10 @@
             assert('is_string($mappingRuleType)');
             assert('is_array($mappingRuleData)');
             assert('is_int($mappingRuleData["type"])');
-            assert('$this->attributeName == "id"');
+            assert('count($this->attributeNameOrNames) == 1');
             $this->ensureTypeValueIsValid($mappingRuleData["type"]);
             $this->type = $mappingRuleData["type"];
-            $this->attributeModelClassName = $this->resolveAttributeModelClassName();
-            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
+            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 RedBean_Plugin_Optimizer_ExternalSystemId::
                 ensureColumnIsVarchar100(User::getTableName($this->attributeModelClassName), 'externalSystemId');
@@ -52,19 +60,17 @@
 
         protected function ensureTypeValueIsValid($type)
         {
-            assert('$type == IdValueTypeMappingRuleForm::ZURMO_USER_ID ||
-                    $type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID');
+            assert('$type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+                    $type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
         }
 
-        protected function resolveAttributeModelClassName()
+        protected function resolveAttributeModelClassName(RedBeanModel $model, $attributeName)
         {
-            $modelClassName = $this->modelClassName;
-            $model          = new $modelClassName(false);
             if ($attributeName == 'id')
             {
                 return get_class($model);
             }
-            return $model->getAttributeModelClassName($this->attributeName);
+            return $model->getRelationModelClassName($attributeName);
         }
 
         protected function processAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
@@ -73,15 +79,18 @@
 
             $page    = 0;
             $unfound = 0;
-            $total   = $dataProvider->calculateTotalItemCount();
+            $found   = 0;
             $dataProvider->getPagination()->setCurrentPage($page);
             while(null != $data = $dataProvider->getData())
             {
                 $data = $dataProvider->getData(true);
                 foreach($data as $rowData)
                 {
-                    $passed = $this->analyzeByValue($rowData->$columnName);
-                    if(!$passed)
+                    if($this->analyzeByValue($rowData->$columnName))
+                    {
+                        $found ++;
+                    }
+                    else
                     {
                         $unfound ++;
                     }
@@ -96,7 +105,7 @@
                     break;
                 }
             }
-            return $this->getMessageByFoundAndUnfoundCount($found, ($total - $found));
+            return $this->getMessageByFoundAndUnfoundCount($found, $unfound);
         }
 
         protected function analyzeByValue($value)
@@ -130,7 +139,7 @@
         {
             $modelClassName = $this->attributeModelClassName;
             $sql = 'select id from ' . $modelClassName::getTableName($modelClassName) .
-            ' where externalSystemId = ' . $value . ' limit 1';
+            ' where externalSystemId = \'' . $value . '\' limit 1';
             $ids =  R::getCol($sql);
             assert('count($ids) <= 1');
             if(count($ids) == 0)
@@ -138,6 +147,11 @@
                 return false;
             }
             return true;
+        }
+
+        protected function getMessageByFailedCount($failed)
+        {
+            throw new NotSupportedException();
         }
 
         protected function getMessageByFoundAndUnfoundCount($found, $unfound)

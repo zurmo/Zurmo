@@ -58,6 +58,7 @@
                     'radioDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
                     'hasOne'           => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem2'),
                     'hasMany'          => array(RedBeanModel::MANY_MANY, 'ImportModelTestItem3'),
+                    'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem4'),
                     'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
                     'primaryAddress'   => array(RedBeanModel::HAS_ONE,   'Address', RedBeanModel::OWNED),
 
@@ -86,6 +87,7 @@
                     'date'             => 'Date',
                     'DateTime'         => 'DateTime',
                     'hasOne'           => 'ImportModelTestItem2',
+                    'hasOneAlso'       => 'ImportModelTestItem4',
                     'phone'            => 'Phone',
                     'primaryEmail'     => 'EmailAddressInformation',
                     'primaryAddress'   => 'Address',

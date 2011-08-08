@@ -28,8 +28,8 @@
     {
         protected function ensureTypeValueIsValid($type)
         {
-            assert('$type == RelatedModelValueTypeMappingRuleForm::ZURMO_USER_ID ||
-                    $type == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
+            assert('$type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+                    $type == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID ||
                     $type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME');
         }
 
@@ -40,11 +40,11 @@
             {
                 return $this->resolveFoundIdByValue($value);
             }
-            elseif(RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)
+            elseif($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)
             {
                 $modelClassName = $this->attributeModelClassName;
                 $sql = 'select name from ' . $modelClassName::getTableName($modelClassName) .
-                " where name = lower(' . DatabaseCompatibilityUtil::lower($value) . ') limit 1";
+                " where name = " . DatabaseCompatibilityUtil::lower("'" . $value . "'") . " limit 1";
                 $ids =  R::getCol($sql);
                 if(count($ids) == 0)
                 {
@@ -61,7 +61,7 @@
         protected function getMessageByFoundAndUnfoundCount($found, $unfound)
         {
             if($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
-                RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+               $this->type == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 $label   = '{found} record(s) will be updated ';
                 $label  .= 'and {unfound} record(s) will be skipped during import.';

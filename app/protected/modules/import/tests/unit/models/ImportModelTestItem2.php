@@ -34,7 +34,6 @@
                     'name',
                 ),
                 'rules' => array(
-                    array('name',  'required'),
                     array('name',  'type',   'type' => 'string'),
                 ),
             );

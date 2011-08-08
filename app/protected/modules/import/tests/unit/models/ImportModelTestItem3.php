@@ -30,6 +30,12 @@
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
+                'members' => array(
+                    'name',
+                ),
+                'rules' => array(
+                    array('name',  'type',   'type' => 'string'),
+                ),
             );
             return $metadata;
         }

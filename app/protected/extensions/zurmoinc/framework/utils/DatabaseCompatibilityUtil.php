@@ -124,7 +124,7 @@
         public static function lower($columnName)
         {
             assert('is_string($columnName)');
-            return 'lower(' . self::getQuote() . $columnName . self::getQuote() . ')';
+            return 'lower(' . $columnName . ')';
         }
 
         /**

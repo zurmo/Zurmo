@@ -28,7 +28,9 @@
     {
         abstract protected function analyzeByValue($value);
 
-        abstract protected function getMessageByFailedCount($failed);
+        protected function getMessageByFailedCount($failed)
+        {
+        }
 
         protected function processAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {

@@ -46,7 +46,12 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array('IdValueType');
+            throw new NotImplementedException();
+        }
+
+        public function getModelAttributeNames()
+        {
+            return null;
         }
     }
 ?>
