@@ -77,13 +77,14 @@
         {
             assert('is_string($columnName)');
 
-            $page    = 0;
-            $unfound = 0;
-            $found   = 0;
+            $page           = 0;
+            $unfound        = 0;
+            $found          = 0;
+            $itemsProcessed = 0;
+            $totalItemCount =  $dataProvider->getTotalItemCount(true);
             $dataProvider->getPagination()->setCurrentPage($page);
-            while(null != $data = $dataProvider->getData())
+            while(null != $data = $dataProvider->getData(true))
             {
-                $data = $dataProvider->getData(true);
                 foreach($data as $rowData)
                 {
                     if($this->analyzeByValue($rowData->$columnName))
@@ -94,8 +95,10 @@
                     {
                         $unfound ++;
                     }
+                    $itemsProcessed ++;
                 }
-                if(count($data) == $dataProvider->getPagination()->getPageSize())
+
+                if($itemsProcessed < $totalItemCount)
                 {
                     $page ++;
                     $dataProvider->getPagination()->setCurrentPage($page);
@@ -123,9 +126,18 @@
 
         protected function resolveFoundIdByValue($value)
         {
+            assert('is_int($value) || is_string($value)');
+            if(is_int($value))
+            {
+                $sqlReadyString = $value;
+            }
+            else
+            {
+                $sqlReadyString = '\'' . $value . '\'';
+            }
             $modelClassName = $this->attributeModelClassName;
             $sql = 'select id from ' . $modelClassName::getTableName($modelClassName) .
-            ' where id = ' . $value . ' limit 1';
+            ' where id = ' . $sqlReadyString . ' limit 1';
             $ids =  R::getCol($sql);
             assert('count($ids) <= 1');
             if(count($ids) == 0)

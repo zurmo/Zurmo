@@ -60,6 +60,10 @@
             $rowCount = 0;
             foreach($data as $valueCountData)
             {
+                if($valueCountData[$columnName] == null)
+                {
+                    continue;
+                }
                 if(!in_array($valueCountData[$columnName], $userIds))
                 {
                     $count ++;
@@ -87,6 +91,10 @@
             $count = 0;
             foreach($data as $valueCountData)
             {
+                if($valueCountData[$columnName] == null)
+                {
+                    continue;
+                }
                 if(!in_array($valueCountData[$columnName], $userIds))
                 {
                     $count ++;
@@ -114,6 +122,10 @@
             $count = 0;
             foreach($data as $valueCountData)
             {
+                if($valueCountData[$columnName] == null)
+                {
+                    continue;
+                }
                 if(!in_array(mb_strtolower($valueCountData[$columnName]), $usernameValues))
                 {
                     $count ++;

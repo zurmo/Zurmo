@@ -67,7 +67,7 @@
             {
                 $compareValue = $value;
             }
-            if(!in_array($compareValue, $this->acceptableValues))
+            if($value != null && !in_array($compareValue, $this->acceptableValues))
             {
                 return false;
             }

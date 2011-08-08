@@ -49,7 +49,7 @@
         protected function analyzeByValue($value)
         {
 
-            if(!in_array(strtolower($value), $this->dropDownValues))
+            if($value != null && !in_array(strtolower($value), $this->dropDownValues))
             {
                 return false;
             }

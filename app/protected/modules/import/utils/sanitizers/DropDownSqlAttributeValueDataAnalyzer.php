@@ -40,6 +40,10 @@
             $count           = 0;
             foreach($data as $valueCountData)
             {
+                if($valueCountData[$columnName] == null)
+                {
+                    continue;
+                }
                 if(!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
                 {
                     $count ++;

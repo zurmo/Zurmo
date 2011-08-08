@@ -62,83 +62,6 @@
             ensureColumnIsVarchar100(ImportModelTestItem4::getTableName('ImportModelTestItem4'), 'externalSystemId');
         }
 
-        public static function createImportModelTestItem($string, $lastName)
-        {
-            $freeze = false;
-            if(RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $model = new ImportModelTestItem();
-            $model->string   = $string;
-            $model->lastName = $lastName;
-            $saved           = $model->save();
-            assert('$saved');
-            if($freeze)
-            {
-                RedBeanDatabase::unfreeze();
-            }
-            return $model;
-        }
-
-        public static function createImportModelTestItem2($name)
-        {
-            $freeze = false;
-            if(RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $model = new ImportModelTestItem2();
-            $model->name = $name;
-            $saved = $model->save();
-            assert('$saved');
-            if($freeze)
-            {
-                RedBeanDatabase::unfreeze();
-            }
-            return $model;
-        }
-
-        public static function createImportModelTestItem3($name)
-        {
-            $freeze = false;
-            if(RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $model = new ImportModelTestItem3();
-            $model->name = $name;
-            $saved = $model->save();
-            assert('$saved');
-            if($freeze)
-            {
-                RedBeanDatabase::unfreeze();
-            }
-            return $model;
-        }
-
-        public static function createImportModelTestItem4($name)
-        {
-            $freeze = false;
-            if(RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $model = new ImportModelTestItem4();
-            $model->name = $name;
-            $saved = $model->save();
-            assert('$saved');
-            if($freeze)
-            {
-                RedBeanDatabase::unfreeze();
-            }
-            return $model;
-        }
-
         public function testImportDataAnalysisResults()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
@@ -152,8 +75,8 @@
 
 
             //Add test ImportModelTestItem models for use in this test.
-            $importModelTestItemModel1 = self::createImportModelTestItem('aaa','aba');
-            $importModelTestItemModel2 = self::createImportModelTestItem('ddw','daf');
+            $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa','aba');
+            $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw','daf');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_10 = " .
                      $importModelTestItemModel1->id ." where id != 1 limit 3");
@@ -162,9 +85,9 @@
             . " set externalSystemId = 'B' where id = {$importModelTestItemModel2->id}");
 
             //Add test ImportModelTestItem2 models for use in this test.
-            $importModelTestItem2Model1 = self::createImportModelTestItem2('aaa');
-            $importModelTestItem2Model2 = self::createImportModelTestItem2('bbb');
-            $importModelTestItem2Model3 = self::createImportModelTestItem2('ccc');
+            $importModelTestItem2Model1 = ImportTestHelper::createImportModelTestItem2('aaa');
+            $importModelTestItem2Model2 = ImportTestHelper::createImportModelTestItem2('bbb');
+            $importModelTestItem2Model3 = ImportTestHelper::createImportModelTestItem2('ccc');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping.
             R::exec("update " . $import->getTempTableName() . " set column_14 = " .
                      $importModelTestItem2Model1->id ." where id != 1 limit 4");
@@ -173,8 +96,8 @@
             . " set externalSystemId = 'B' where id = {$importModelTestItem2Model2->id}");
 
             //Add test ImportModelTestItem3 models for use in this test.
-            $importModelTestItem3Model1 = self::createImportModelTestItem3('aaa');
-            $importModelTestItem3Model2 = self::createImportModelTestItem3('dd');
+            $importModelTestItem3Model1 = ImportTestHelper::createImportModelTestItem3('aaa');
+            $importModelTestItem3Model2 = ImportTestHelper::createImportModelTestItem3('dd');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_17 = " .
                      $importModelTestItem3Model1->id ." where id != 1 limit 3");
@@ -183,8 +106,8 @@
             . " set externalSystemId = 'K' where id = {$importModelTestItem3Model2->id}");
 
             //Add test ImportModelTestItem4 models for use in this test.
-            $importModelTestItem4Model1 = self::createImportModelTestItem4('aaa');
-            $importModelTestItem4Model2 = self::createImportModelTestItem4('dd');
+            $importModelTestItem4Model1 = ImportTestHelper::createImportModelTestItem4('aaa');
+            $importModelTestItem4Model2 = ImportTestHelper::createImportModelTestItem4('dd');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_12 = " .
                      $importModelTestItem4Model1->id ." where id != 1 limit 5");
@@ -301,39 +224,39 @@
                            'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
                 ),
                 'column_10' => array(
-                    array('message'=> '3 record(s) will be updated and 8 record(s) will be skipped during import.',
+                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
                 ),
                 'column_11' => array(
-                    array('message'=> '1 record(s) will be updated and 10 record(s) will be created during the import.',
+                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',
                            'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
                 ),
                 'column_12' => array(
-                    array('message'=> '5 record(s) will be updated and 6 record(s) will be skipped during import.',
+                    array('message'=> '5 record(s) will be updated and 7 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'IdValueType', 'moreAvailable' => false),
                 ),
                 'column_13' => array(
-                    array('message'=> '2 record(s) will be updated and 9 record(s) will be skipped during import.',
+                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'IdValueType', 'moreAvailable' => false),
                 ),
                 'column_14' => array(
-                    array('message'=> '4 record(s) will be updated and 7 record(s) will be skipped during import.',
+                    array('message'=> '4 record(s) will be updated and 8 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
                 ),
                 'column_15' => array(
-                    array('message'=> '1 record(s) will be updated and 10 record(s) will be skipped during import.',
+                    array('message'=> '1 record(s) will be updated and 11 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
                 ),
                 'column_16' => array(
-                    array('message'=> '1 record(s) will be updated and 10 record(s) will be created during the import.',
+                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',
                            'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
                 ),
                 'column_17' => array(
-                    array('message'=> '3 record(s) will be updated and 8 record(s) will be skipped during import.',
+                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'ImportModelTestItem3ModelDerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_18' => array(
-                    array('message'=> '2 record(s) will be updated and 9 record(s) will be skipped during import.',
+                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'ImportModelTestItem3ModelDerivedIdValueType', 'moreAvailable' => false),
                 ),
             );

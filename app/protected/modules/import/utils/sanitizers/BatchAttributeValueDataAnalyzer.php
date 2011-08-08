@@ -35,13 +35,13 @@
         protected function processAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-
-            $page   = 0;
-            $failed = 0;
+            $page           = 0;
+            $failed         = 0;
+            $itemsProcessed = 0;
+            $totalItemCount =  $dataProvider->getTotalItemCount(true);
             $dataProvider->getPagination()->setCurrentPage($page);
-            while(null != $data = $dataProvider->getData())
+            while(null != $data = $dataProvider->getData(true))
             {
-                $data = $dataProvider->getData(true);
                 foreach($data as $rowData)
                 {
                     $passed = $this->analyzeByValue($rowData->$columnName);
@@ -49,8 +49,9 @@
                     {
                         $failed ++;
                     }
+                    $itemsProcessed ++;
                 }
-                if(count($data) == $dataProvider->getPagination()->getPageSize())
+                if($itemsProcessed < $totalItemCount)
                 {
                     $page ++;
                     $dataProvider->getPagination()->setCurrentPage($page);

@@ -29,6 +29,9 @@
         public static function tearDownAfterClass()
         {
             R::exec('drop table if exists testimporttable');
+            R::exec('drop table if exists testimporttable2');
+            R::exec('drop table if exists testimporttable3');
+            R::exec('drop table if exists testimporttable4');
             parent::tearDownAfterClass();
         }
     }

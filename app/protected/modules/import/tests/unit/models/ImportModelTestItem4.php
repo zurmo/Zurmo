@@ -24,36 +24,30 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class DateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
-                                                  implements LinkedToMappingRuleDataAnalyzerInterface
+    class ImportModelTestItem4 extends OwnedSecurableItem
     {
-        protected $exceptedFormat;
-
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName,
-                                         $mappingRuleType, $mappingRuleData)
+        public static function getDefaultMetadata()
         {
-            assert('is_string($columnName)');
-            assert('is_string($mappingRuleType)');
-            assert('is_array($mappingRuleData)');
-            assert('is_string($mappingRuleData["format"])');
-            $this->exceptedFormat = $mappingRuleData['format'];
-            return $this->processAndGetMessage($dataProvider, $columnName);
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'name',
+                ),
+                'rules' => array(
+                    array('name',  'type',   'type' => 'string'),
+                ),
+            );
+            return $metadata;
         }
 
-        protected function analyzeByValue($value)
+        public static function isTypeDeletable()
         {
-            if($value != null && !CDateTimeParser::parse($value, $this->exceptedFormat))
-            {
-                return false;
-            }
             return true;
         }
 
-        protected function getMessageByFailedCount($failed)
+        public static function getModuleClassName()
         {
-            $label   = '{count} value(s) have invalid date formats. ';
-            $label  .= 'These values will be cleared during import.';
-            return Yii::t('Default', $label, array('{count}' => $failed));
+            return 'ImportModule';
         }
     }
 ?>
