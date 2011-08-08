@@ -28,7 +28,7 @@
     {
         public static function getSanitizerUtilTypes()
         {
-            return array('ImportModelTestItem3ModelDerivedIdValueType');
+            return array('ImportModelTestItem3DerivedIdValueType');
         }
     }
 ?>

@@ -32,5 +32,9 @@
      */
     class AccountDerivedAttributeImportRules extends ModelDerivedAttributeImportRules
     {
+        public static function getSanitizerUtilTypes()
+        {
+            return array('AccountDerivedIdValueType');
+        }
     }
 ?>

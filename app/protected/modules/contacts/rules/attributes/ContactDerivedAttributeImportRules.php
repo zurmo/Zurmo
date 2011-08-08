@@ -32,5 +32,9 @@
      */
     class ContactDerivedAttributeImportRules extends ModelDerivedAttributeImportRules
     {
+        public static function getSanitizerUtilTypes()
+        {
+            return array('ContactDerivedIdValueType');
+        }
     }
 ?>

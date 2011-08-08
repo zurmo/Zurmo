@@ -24,11 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportModelTestItem3ModelDerivedIdValueTypeSanitizerUtil extends ModelDerivedIdValueTypeSanitizerUtil
+    class AccountDerivedIdValueTypeSanitizerUtil extends ModelDerivedIdValueTypeSanitizerUtil
     {
         protected static function getDerivedModelClassName()
         {
-            return 'ImportModelTestItem3';
+            return 'Account';
         }
     }
 ?>

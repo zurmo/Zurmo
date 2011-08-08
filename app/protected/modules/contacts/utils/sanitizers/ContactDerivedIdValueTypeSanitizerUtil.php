@@ -24,17 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for when an opportunity is not a specific attribute on a model, but most likely a casted down
-     * model of an existing attribute.  An example would be in the activity model and the activityItems relation.
-     * This relation does not point to a casted down model, but ultimately refers to it.
-     * @see DefaultModelNameIdDerivedAttributeMappingRuleForm
-     */
-    class OpportunityDerivedAttributeImportRules extends ModelDerivedAttributeImportRules
+    class ContactDerivedIdValueTypeSanitizerUtil extends ModelDerivedIdValueTypeSanitizerUtil
     {
-        public static function getSanitizerUtilTypes()
+        protected static function getDerivedModelClassName()
         {
-            return array('OpportunityDerivedIdValueType');
+            return 'Contact';
         }
     }
 ?>

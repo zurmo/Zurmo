@@ -51,7 +51,7 @@
         public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
         {
             assert('is_string($modelClassName)');
-            assert('is_array($attributeNameOrNames) || is_string($attributeNameOrNames)');
+            assert('is_array($attributeNameOrNames)');
             $sqlAttributeValueDataAnalyzerType = static::getSqlAttributeValueDataAnalyzerType();
             if($sqlAttributeValueDataAnalyzerType == null)
             {
@@ -65,7 +65,7 @@
         public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
         {
             assert('is_string($modelClassName)');
-            assert('is_array($attributeNameOrNames) || is_string($attributeNameOrNames)');
+            assert('is_array($attributeNameOrNames)');
             $batchAttributeValueDataAnalyzerType = static::getBatchAttributeValueDataAnalyzerType();
             if($batchAttributeValueDataAnalyzerType == null)
             {

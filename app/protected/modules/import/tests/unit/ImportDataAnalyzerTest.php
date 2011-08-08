@@ -253,11 +253,11 @@
                 ),
                 'column_17' => array(
                     array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',
-                           'sanitizerUtilType' => 'ImportModelTestItem3ModelDerivedIdValueType', 'moreAvailable' => false),
+                           'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_18' => array(
                     array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
-                           'sanitizerUtilType' => 'ImportModelTestItem3ModelDerivedIdValueType', 'moreAvailable' => false),
+                           'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
                 ),
             );
             $this->assertEquals($compareData, $resultsData);
