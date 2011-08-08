@@ -27,20 +27,30 @@
     class IdValueTypeBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                               implements LinkedToMappingRuleDataAnalyzerInterface
     {
+        const FOUND   = 'Found';
+
+        const UNFOUND = 'Unfound';
+
+        const EXTERNAL_SYSTEM_ID_TOO_LONG = 'External system id too long';
+
         protected $type;
 
         protected $attributeModelClassName;
+
+        protected $externalSystemIdMaxLength = 40;
 
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
             assert('count($this->attributeNameOrNames) == 1');
             $model                         = new $modelClassName(false);
-            $this->maxLength               = StringValidatorHelper::
-                                             getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);
             $this->attributeModelClassName = $this->resolveAttributeModelClassName($model,$this->attributeNameOrNames[0]);
+            $this->messageCountData[static::FOUND]                        = 0;
+            $this->messageCountData[static::UNFOUND]                      = 0;
+            $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] = 0;
         }
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName,
+
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
             assert('is_string($columnName)');
@@ -52,10 +62,13 @@
             $this->type = $mappingRuleData["type"];
             if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
+                $modelClassName = $this->attributeModelClassName;
                 RedBean_Plugin_Optimizer_ExternalSystemId::
-                ensureColumnIsVarchar100(User::getTableName($this->attributeModelClassName), 'externalSystemId');
+                ensureColumnIsVarchar($modelClassName::getTableName($modelClassName),
+                                      'externalSystemId',
+                                      $this->externalSystemIdMaxLength);
             }
-            return $this->processAndGetMessage($dataProvider, $columnName);
+            $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
         protected function ensureTypeValueIsValid($type)
@@ -73,13 +86,11 @@
             return $model->getRelationModelClassName($attributeName);
         }
 
-        protected function processAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        protected function processAndMakeMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
 
             $page           = 0;
-            $unfound        = 0;
-            $found          = 0;
             $itemsProcessed = 0;
             $totalItemCount =  $dataProvider->getTotalItemCount(true);
             $dataProvider->getPagination()->setCurrentPage($page);
@@ -87,14 +98,7 @@
             {
                 foreach($data as $rowData)
                 {
-                    if($this->analyzeByValue($rowData->$columnName))
-                    {
-                        $found ++;
-                    }
-                    else
-                    {
-                        $unfound ++;
-                    }
+                    $this->analyzeByValue($rowData->$columnName);
                     $itemsProcessed ++;
                 }
 
@@ -108,7 +112,7 @@
                     break;
                 }
             }
-            return $this->getMessageByFoundAndUnfoundCount($found, $unfound);
+            return $this->makeMessages();
         }
 
         protected function analyzeByValue($value)
@@ -116,11 +120,26 @@
             $modelClassName = $this->attributeModelClassName;
             if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
-                return $this->resolveFoundIdByValue($value);
+                $found = $this->resolveFoundIdByValue($value);
             }
             else
             {
-                return $this->resolveFoundExternalSystemIdByValue($value);
+                $found = $this->resolveFoundExternalSystemIdByValue($value);
+            }
+            if($found)
+            {
+                $this->messageCountData[static::FOUND] ++;
+            }
+            else
+            {
+                $this->messageCountData[static::UNFOUND] ++;
+            }
+            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            {
+                if(strlen($value) > $this->externalSystemIdMaxLength)
+                {
+                    $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] ++;
+                }
             }
         }
 
@@ -166,11 +185,25 @@
             throw new NotSupportedException();
         }
 
-        protected function getMessageByFoundAndUnfoundCount($found, $unfound)
+        protected function makeMessages()
         {
             $label   = '{found} record(s) will be updated ';
             $label  .= 'and {unfound} record(s) will be skipped during import.';
-            return Yii::t('Default', $label, array('{found}' => $found, '{unfound}' => $unfound));
+            $this->addMessage(Yii::t('Default', $label,
+                              array('{found}' => $this->messageCountData[static::FOUND],
+                                    '{unfound}' => $this->messageCountData[static::UNFOUND])));
+            $this->resolveMakeExternalSystemIdTooLargeMessage();
+        }
+
+        protected function resolveMakeExternalSystemIdTooLargeMessage()
+        {
+            if($this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] > 0)
+            {
+                $label   = '{invalid} value(s) were too large. ';
+                $label  .= 'These rows will be skipped during the import.';
+                $this->addMessage(Yii::t('Default', $label,
+                              array('{invalid}' => $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG])));
+            }
         }
     }
 ?>

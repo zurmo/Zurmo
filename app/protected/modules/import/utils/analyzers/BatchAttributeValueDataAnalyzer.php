@@ -24,34 +24,37 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TruncateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    abstract class BatchAttributeValueDataAnalyzer extends AttributeValueDataAnalyzer
     {
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        abstract protected function analyzeByValue($value);
+
+        abstract protected function makeMessages();
+
+        protected function processAndMakeMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            assert('count($this->attributeNameOrNames) == 1');
-            $modelClassName = $this->modelClassName;
-            $model          = new $modelClassName(false);
-            $maxLength      = StringValidatorHelper::
-                              getMaxLengthByModelAndAttributeName($model, $this->attributeNameOrNames[0]);
-            if($maxLength == null)
+            $page           = 0;
+            $itemsProcessed = 0;
+            $totalItemCount =  $dataProvider->getTotalItemCount(true);
+            $dataProvider->getPagination()->setCurrentPage($page);
+            while(null != $data = $dataProvider->getData(true))
             {
-                return;
+                foreach($data as $rowData)
+                {
+                    $this->analyzeByValue($rowData->$columnName);
+                    $itemsProcessed ++;
+                }
+                if($itemsProcessed < $totalItemCount)
+                {
+                    $page ++;
+                    $dataProvider->getPagination()->setCurrentPage($page);
+                }
+                else
+                {
+                    break;
+                }
             }
-            $where = DatabaseCompatibilityUtil::charLength($columnName) . ' > ' . $maxLength;
-            $count = $dataProvider->getCountByWhere($where);
-            if($count > 0)
-            {
-                $label   = '{count} value(s) are too large for this field. ';
-                $label  .= 'These values will be truncated to a length of {length} upon import.';
-                $message = Yii::t('Default', $label, array('{count}' => $count, '{length}' => $maxLength));
-                return $message;
-            }
-            else
-            {
-                return null;
-            }
+            $this->makeMessages();
         }
     }
 ?>

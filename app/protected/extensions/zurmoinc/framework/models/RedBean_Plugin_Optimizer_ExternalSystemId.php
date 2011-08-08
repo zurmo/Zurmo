@@ -37,14 +37,13 @@
      */
     class RedBean_Plugin_Optimizer_ExternalSystemId extends RedBean_Plugin_Optimizer_Datetime
     {
-        const ID_TYPE = "varchar(100) NULL";
-
         public function optimize()
         {
-            self::ensureIdColumnIsINT11($this->table, $this->column, $this->writer, $this->adapter);
+            //not implemented yet because we don't have a way to pass the length here.
+            throw notImplementedException();
         }
 
-        public static function ensureColumnIsVarchar100($tableName, $columnName, $writer = null, $adapter = null)
+        public static function ensureColumnIsVarchar($tableName, $columnName, $length = 40, $writer = null, $adapter = null)
         {
             if ($writer == null)
             {
@@ -60,14 +59,14 @@
                 if (array_key_exists($columnName, $columnNamesToTypes))
                 {
                     $columnType = $columnNamesToTypes[$columnName];
-                    if ($columnType != self::ID_TYPE)
+                    if ($columnType != static::getIdType($length))
                     {
-                        $adapter->exec("alter table {$tableName} change {$columnName} {$columnName} " . self::ID_TYPE);
+                        $adapter->exec("alter table {$tableName} change {$columnName} {$columnName} " . static::getIdType($length));
                     }
                 }
                 else
                 {
-                    $adapter->exec("alter table {$tableName} add {$columnName} " . self::ID_TYPE);
+                    $adapter->exec("alter table {$tableName} add {$columnName} " . static::getIdType($length));
                 }
             }
             catch (RedBean_Exception_SQL $e)
@@ -80,9 +79,15 @@
                 else
                 {
                     $writer->createTable($tableName);
-                    $adapter->exec("alter table {$tableName} add {$columnName} " . self::ID_TYPE);
+                    $adapter->exec("alter table {$tableName} add {$columnName} " . static::getIdType($length));
                 }
             }
+        }
+
+        protected static function getIdType($length = 40)
+        {
+            assert('is_int($length)');
+            return "varchar(" . $length . ") NULL";
         }
     }
 ?>

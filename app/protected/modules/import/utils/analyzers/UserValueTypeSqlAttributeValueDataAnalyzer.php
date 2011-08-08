@@ -27,7 +27,7 @@
     class UserValueTypeSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                      implements LinkedToMappingRuleDataAnalyzerInterface
     {
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName,
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
             assert('is_string($columnName)');
@@ -39,15 +39,15 @@
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
             if($mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
             {
-                return $this->resolveForTypeZurmoUserId($dataProvider, $columnName);
+                $this->resolveForTypeZurmoUserId($dataProvider, $columnName);
             }
             elseif ($mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
             {
-                return $this->resolveForTypeExternalSystemId($dataProvider, $columnName);
+                $this->resolveForTypeExternalSystemId($dataProvider, $columnName);
             }
             else
             {
-                return $this->resolveForTypeUsername($dataProvider, $columnName);
+                $this->resolveForTypeUsername($dataProvider, $columnName);
             }
         }
 
@@ -74,12 +74,7 @@
             {
                 $label   = '{count} zurmo user id(s) across {rowCount} row(s) were not found. ';
                 $label  .= 'These values will not be used during the import.';
-                $message = Yii::t('Default', $label, array('{count}' => $count, '{rowCount}' => $rowCount));
-                return $message;
-            }
-            else
-            {
-                return null;
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count, '{rowCount}' => $rowCount)));
             }
         }
 
@@ -104,12 +99,7 @@
             {
                 $label   = '{count} external system user id(s) specified were not found. ';
                 $label  .= 'These values will not be used during the import.';
-                $message = Yii::t('Default', $label, array('{count}' => $count));
-                return $message;
-            }
-            else
-            {
-                return null;
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
             }
         }
 
@@ -135,12 +125,7 @@
             {
                 $label   = '{count} username(s) specified were not found. ';
                 $label  .= 'These values will not be used during the import.';
-                $message = Yii::t('Default', $label, array('{count}' => $count));
-                return $message;
-            }
-            else
-            {
-                return null;
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
             }
         }
     }

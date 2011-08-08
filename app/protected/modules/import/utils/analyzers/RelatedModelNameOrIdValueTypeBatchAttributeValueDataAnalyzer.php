@@ -26,6 +26,21 @@
 
     class RelatedModelNameOrIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
     {
+        protected $maxNameLength;
+
+        const NEW_NAME_TO0_LONG = 'New name too long';
+
+        public function __construct($modelClassName, $attributeNameOrNames)
+        {
+            parent:: __construct($modelClassName, $attributeNameOrNames);
+            assert('count($this->attributeNameOrNames) == 1');
+            $attributeModelClassName                        = $this->attributeModelClassName;
+            $model                                          = new $attributeModelClassName(false);
+            $this->maxNameLength                            = StringValidatorHelper::
+                                                              getMaxLengthByModelAndAttributeName($model, 'name');
+            $this->messageCountData[static::NEW_NAME_TO0_LONG] = 0;
+        }
+
         protected function ensureTypeValueIsValid($type)
         {
             assert('$type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
@@ -38,7 +53,7 @@
             $modelClassName = $this->attributeModelClassName;
             if($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
-                return $this->resolveFoundIdByValue($value);
+                $found = $this->resolveFoundIdByValue($value);
             }
             elseif($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)
             {
@@ -48,17 +63,40 @@
                 $ids =  R::getCol($sql);
                 if(count($ids) == 0)
                 {
-                    return false;
+                    $found = false;
+                    if(strlen($value) > $this->maxNameLength)
+                    {
+                        $this->messageCountData[static::NEW_NAME_TO0_LONG] ++;
+                    }
                 }
-                return true;
+                else
+                {
+                    $found = true;
+                }
+
             }
             else
             {
-                return $this->resolveFoundExternalSystemIdByValue($value);
+                $found = $this->resolveFoundExternalSystemIdByValue($value);
+            }
+            if($found)
+            {
+                $this->messageCountData[static::FOUND] ++;
+            }
+            else
+            {
+                $this->messageCountData[static::UNFOUND] ++;
+            }
+            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            {
+                if(strlen($value) > $this->externalSystemIdMaxLength)
+                {
+                    $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] ++;
+                }
             }
         }
 
-        protected function getMessageByFoundAndUnfoundCount($found, $unfound)
+        protected function makeMessages()
         {
             if($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                $this->type == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
@@ -71,7 +109,17 @@
                 $label   = '{found} record(s) will be updated and ';
                 $label  .= '{unfound} record(s) will be created during the import.';
             }
-            return Yii::t('Default', $label, array('{found}' => $found, '{unfound}' => $unfound));
+            $this->addMessage(Yii::t('Default', $label,
+                              array('{found}' => $this->messageCountData[static::FOUND],
+                                    '{unfound}' => $this->messageCountData[static::UNFOUND])));
+            if($this->messageCountData[static::NEW_NAME_TO0_LONG] > 0)
+            {
+                $label   = '{invalid} name value(s) is/are too long.';
+                $label  .= 'These records will be skipped during import.';
+                $this->addMessage(Yii::t('Default', $label,
+                              array('{invalid}' => $this->messageCountData[static::NEW_NAME_TO0_LONG])));
+            }
+            $this->resolveMakeExternalSystemIdTooLargeMessage();
         }
     }
 ?>

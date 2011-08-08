@@ -24,21 +24,13 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class SelfIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
+    class TextAreaTruncateBatchAttributeValueDataAnalyzer extends TruncateBatchAttributeValueDataAnalyzer
     {
-        protected function getMessageByFoundAndUnfoundCount($found, $unfound)
+        protected function resolveMaxLength($modelClassName, $attributeName)
         {
-            if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
-            {
-                $label   = '{found} record(s) will be updated ';
-                $label  .= 'and {unfound} record(s) will be skipped during import.';
-            }
-            else
-            {
-                $label   = '{found} record(s) will be updated and ';
-                $label  .= '{unfound} record(s) will be created during the import.';
-            }
-            return Yii::t('Default', $label, array('{found}' => $found, '{unfound}' => $unfound));
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            return 65000;
         }
     }
 ?>

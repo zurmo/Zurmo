@@ -24,50 +24,33 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    abstract class BatchAttributeValueDataAnalyzer extends AttributeValueDataAnalyzer
+    class BooleanBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+                                                  implements DataAnalyzerInterface
     {
-        abstract protected function analyzeByValue($value);
-
-        protected function getMessageByFailedCount($failed)
-        {
-        }
-
-        protected function processAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            $page           = 0;
-            $failed         = 0;
-            $itemsProcessed = 0;
-            $totalItemCount =  $dataProvider->getTotalItemCount(true);
-            $dataProvider->getPagination()->setCurrentPage($page);
-            while(null != $data = $dataProvider->getData(true))
+            $this->processAndMakeMessage($dataProvider, $columnName);
+        }
+
+        protected function analyzeByValue($value)
+        {
+            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
+            if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
             {
-                foreach($data as $rowData)
-                {
-                    $passed = $this->analyzeByValue($rowData->$columnName);
-                    if(!$passed)
-                    {
-                        $failed ++;
-                    }
-                    $itemsProcessed ++;
-                }
-                if($itemsProcessed < $totalItemCount)
-                {
-                    $page ++;
-                    $dataProvider->getPagination()->setCurrentPage($page);
-                }
-                else
-                {
-                    break;
-                }
+                $this->messageCountData[static::INVALID] ++;
             }
-            if($failed > 0)
+        }
+
+
+        protected function makeMessages()
+        {
+            $invalid  = $this->messageCountData[static::INVALID];
+            if($invalid > 0)
             {
-                return $this->getMessageByFailedCount($failed);
-            }
-            else
-            {
-                return null;
+                $label   = '{count} value(s) have invalid check box values. ';
+                $label  .= 'These values will be set to false upon import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }
         }
     }

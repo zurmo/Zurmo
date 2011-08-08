@@ -24,9 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    interface LinkedToMappingRuleDataAnalyzerInterface
+    class UrlSanitizerUtil extends SanitizerUtil
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
-                                         $mappingRuleType, $mappingRuleData);
+        public static function supportsSqlAttributeValuesDataAnalysis()
+        {
+            return false;
+        }
+
+        public static function getBatchAttributeValueDataAnalyzerType()
+        {
+            return 'Url';
+        }
     }
 ?>

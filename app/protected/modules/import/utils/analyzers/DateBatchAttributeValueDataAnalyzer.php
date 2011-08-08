@@ -24,30 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class BooleanBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
-                                                  implements DataAnalyzerInterface
+    class DateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+                                                  implements LinkedToMappingRuleDataAnalyzerInterface
     {
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        protected $exceptedFormat;
+
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
+                                         $mappingRuleType, $mappingRuleData)
         {
             assert('is_string($columnName)');
-            return $this->processAndGetMessage($dataProvider, $columnName);
+            assert('is_string($mappingRuleType)');
+            assert('is_array($mappingRuleData)');
+            assert('is_string($mappingRuleData["format"])');
+            $this->exceptedFormat = $mappingRuleData['format'];
+            $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
         protected function analyzeByValue($value)
         {
-            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
-            if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            if($value != null && !CDateTimeParser::parse($value, $this->exceptedFormat))
             {
-                return false;
+                $this->messageCountData[static::INVALID] ++;
             }
-            return true;
         }
 
-        protected function getMessageByFailedCount($failed)
+        protected function makeMessages()
         {
-            $label   = '{count} value(s) have invalid check box values. ';
-            $label  .= 'These values will be set to false upon import.';
-            return Yii::t('Default', $label, array('{count}' => $failed));
+            $invalid  = $this->messageCountData[static::INVALID];
+            if($invalid > 0)
+            {
+                $label   = '{count} value(s) have invalid date formats. ';
+                $label  .= 'These values will be cleared during import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+            }
         }
     }
 ?>

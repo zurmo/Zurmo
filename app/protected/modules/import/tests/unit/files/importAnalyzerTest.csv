@@ -1,13 +1,13 @@
-string,phone,float,boolean,date,datetime,dropdown,createdByUser,modifiedByUser,owner,idZurmoId,idExternalId,relatedIdZurmoId,relatedIdExternalId,relatedModelZurmoId,relatedModelExternalId,relatedModelName,derivedModelZurmoId,derivedModelExternalId
-thisstringisnottoolong,1234567g90123,45,yes,06-03-1980,06-03-1980 05:00,Test1,super,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A
-thisstringisnottoolong,1234567890a123450000,757,no,06-03-1981,06-03-1980 05:00,sample,super,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A
-thisstringisgoingtobewaytolongtofitintothisfieldinthesystemthisstringisgoingtobewaytolongtofitintothisfieldinthesystemthisstringisgoingtobewaytolongtofitintothisfieldinthesystem,123456s789012332000,76,1,06-03-1982,06-03-1980 05:00,Sample,super,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A
-thisstringisnottoolong,,45445,0,06-03-1983,06-03-1980 05:00,test2,jim,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A
-thisstringisnottoolong,1234567g90123,45,TRUE,06-03-1984,06-03-1980 05:01,test3,jim,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A
-thisstringisnottoolong,1234567g90123,45,FALSE,abc,06-03-1980 05:02,notpresent,jim,56890,D,60000,A,60000,A,60000,A,aModelName,60000,K
-thisstringisnottoolong,1234567g90123,45,y,2011-06-03,2011-12-22 05:03,neverpresent,jim,56890,A,60000,A,60000,A,60000,A,aModelName,60000,K
-thisstringisnottoolong,1234567g90123,45,n,06-03-1984,06-03-1980 05:04,test1,noOne,56890,C,60000,A,60000,J,60000,A,aModelName,60000,A
-thisstringisnottoolong,1234567g90123,45,abc,06-03-1984,ddd,SAMPLE,super,56890,B,60000,B,60000,J,60000,A,aModelName,60000,A
-thisstringisnottoolong,1234567g90123,45,,06-03-1984,06-03-1980 05:06,demo,jim,56890,B,60000,A,60000,A,60000,A,bbb,60000,A
-thisstringisnottoolong,1234567g90123,45,xyz,06-03-1984,06-03-1980 05:07,Demo,nobody,56890,A,60000,A,60000,A,60000,B,aModelName,60000,A
-,,,,,,,,,,,,,,,,,,
+string,phone,float,boolean,date,datetime,dropdown,createdByUser,modifiedByUser,owner,idZurmoId,idExternalId,relatedIdZurmoId,relatedIdExternalId,relatedModelZurmoId,relatedModelExternalId,relatedModelName,derivedModelZurmoId,derivedModelExternalId,url,textArea
+thisstringisnottoolong,1234567g90123,45,yes,06-03-1980,06-03-1980 05:00,Test1,super,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+thisstringisnottoolong,1234567890a123450000,757,no,06-03-1981,06-03-1980 05:00,sample,super,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+thisstringisgoingtobewaytolongtofitintothisfieldinthesystemthisstringisgoingtobewaytolongtofitintothisfieldinthesystemthisstringisgoingtobewaytolongtofitintothisfieldinthesystem,123456s789012332000,76,1,06-03-1982,06-03-1980 05:00,Sample,super,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+thisstringisnottoolong,,45445,0,06-03-1983,06-03-1980 05:00,test2,jim,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,TRUE,06-03-1984,06-03-1980 05:01,test3,jim,56890,A,60000,A,60000,A,60000,A,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,FALSE,abc,06-03-1980 05:02,notpresent,jim,56890,D,60000,A,60000,A,60000,A,aModelName,60000,K,www.zurmo.org,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,y,2011-06-03,2011-12-22 05:03,neverpresent,jim,56890,A,60000,A,60000,A,60000,A,aModelName,60000,K,www.zurmo.com,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,n,06-03-1984,06-03-1980 05:04,test1,noOne,56890,C,60000,A,60000,J,60000,A,aModelName,60000,A,https://www.zurmo.org,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,abc,06-03-1984,ddd,SAMPLE,super,56890,B,60000,B,60000,J,60000,A,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,,06-03-1984,06-03-1980 05:06,demo,jim,56890,B,60000,A,60000,A,60000,A,bbb,60000,A,http://somethinginvalid,65k is a real long string
+thisstringisnottoolong,1234567g90123,45,xyz,06-03-1984,06-03-1980 05:07,Demo,nobody,56890,A,60000,A,60000,A,60000,B,aModelName,60000,A,http://www.zurmo.org,65k is a real long string
+,,,,,,,,,,,,,,,,,,,,

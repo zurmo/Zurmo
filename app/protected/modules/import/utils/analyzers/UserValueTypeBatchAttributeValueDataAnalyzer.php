@@ -30,7 +30,7 @@
         protected $acceptableValues;
         protected $type;
 
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName,
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
             assert('is_string($columnName)');
@@ -54,7 +54,7 @@
                 $acceptableValues       = UserValueTypeSanitizerUtil::getUsernames();
                 $this->acceptableValues = ArrayUtil::resolveArrayToLowerCase($acceptableValues);
             }
-            return $this->processAndGetMessage($dataProvider, $columnName);
+            $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
         protected function analyzeByValue($value)
@@ -69,16 +69,20 @@
             }
             if($value != null && !in_array($compareValue, $this->acceptableValues))
             {
-                return false;
+                $this->messageCountData[static::INVALID] ++;
             }
-            return true;
         }
 
-        protected function getMessageByFailedCount($failed)
+
+        protected function makeMessages()
         {
-            $label   = '{count} value(s) have invalid user values. ';
-            $label  .= 'These values will not be used during the import.';
-            return Yii::t('Default', $label, array('{count}' => $failed));
+            $invalid  = $this->messageCountData[static::INVALID];
+            if($invalid > 0)
+            {
+                $label   = '{count} value(s) have invalid user values. ';
+                $label  .= 'These values will not be used during the import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+            }
         }
     }
 ?>

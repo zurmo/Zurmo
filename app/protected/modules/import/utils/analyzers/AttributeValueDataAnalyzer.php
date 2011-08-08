@@ -26,9 +26,15 @@
 
     class AttributeValueDataAnalyzer
     {
+        const INVALID       = 'Invalid';
+
         protected $modelClassName;
 
-        protected$attributeNameOrNames;
+        protected $attributeNameOrNames;
+
+        protected $messageCountData;
+
+        private   $messages;
 
         public function __construct($modelClassName, $attributeNameOrNames)
         {
@@ -36,11 +42,22 @@
             assert('is_array($attributeNameOrNames) || is_string($attributeNameOrNames)');
             $this->modelClassName       = $modelClassName;
             $this->attributeNameOrNames = $attributeNameOrNames;
+            $this->messageCountData[static::INVALID] = 0;
         }
 
         public static function supportsAdditionalResultInformation()
         {
             return false;
+        }
+
+        protected function addMessage($message)
+        {
+            $this->messages[] = $message;
+        }
+
+        public function getMessages()
+        {
+            return $this->messages;
         }
     }
 ?>

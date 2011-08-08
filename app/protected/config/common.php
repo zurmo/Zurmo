@@ -240,7 +240,8 @@
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.walkthrough.*";    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.charts.*";              // Not Coding Standard
-        $common_config['import'][] = "application.modules.$moduleName.utils.sanitizers.*";           // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.sanitizers.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.analyzers.*";           // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.attributetypes.*";      // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.charts.*";              // Not Coding Standard

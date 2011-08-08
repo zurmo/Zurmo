@@ -24,15 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class DateTimeBatchAttributeValueDataAnalyzer extends DateBatchAttributeValueDataAnalyzer
+    class SelfIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
     {
-        protected $exceptedFormat;
-
-        protected function getMessageByFailedCount($failed)
+        protected function makeMessages()
         {
-            $label   = '{count} value(s) have invalid date time formats. ';
-            $label  .= 'These values will be cleared during import.';
-            return Yii::t('Default', $label, array('{count}' => $failed));
+            if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            {
+                $label   = '{found} record(s) will be updated ';
+                $label  .= 'and {unfound} record(s) will be skipped during import.';
+            }
+            else
+            {
+                $label   = '{found} record(s) will be updated and ';
+                $label  .= '{unfound} record(s) will be created during the import.';
+            }
+            $this->addMessage(Yii::t('Default', $label,
+                              array('{found}' => $this->messageCountData[static::FOUND],
+                                    '{unfound}' => $this->messageCountData[static::UNFOUND])));
+            $this->resolveMakeExternalSystemIdTooLargeMessage();
         }
     }
 ?>

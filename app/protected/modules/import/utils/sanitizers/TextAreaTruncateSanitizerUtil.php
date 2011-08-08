@@ -23,10 +23,16 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    interface LinkedToMappingRuleDataAnalyzerInterface
+    class TextAreaTruncateSanitizerUtil extends SanitizerUtil
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
-                                         $mappingRuleType, $mappingRuleData);
+        public static function getSqlAttributeValueDataAnalyzerType()
+        {
+            return 'TextAreaTruncate';
+        }
+
+        public static function getBatchAttributeValueDataAnalyzerType()
+        {
+            return 'TextAreaTruncate';
+        }
     }
 ?>

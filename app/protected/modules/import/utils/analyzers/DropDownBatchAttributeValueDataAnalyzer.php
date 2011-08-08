@@ -40,10 +40,10 @@
             $this->dropDownValues = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
         }
 
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            return $this->processAndGetMessage($dataProvider, $columnName);
+            $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
         protected function analyzeByValue($value)
@@ -51,16 +51,19 @@
 
             if($value != null && !in_array(strtolower($value), $this->dropDownValues))
             {
-                return false;
+                $this->messageCountData[static::INVALID] ++;
             }
-            return true;
         }
 
-        protected function getMessageByFailedCount($failed)
+        protected function makeMessages()
         {
-            $label   = '{count} dropdown value(s) are missing from the field. ';
-            $label  .= 'These values will be added upon import.';
-            return Yii::t('Default', $label, array('{count}' => $failed));
+            $invalid  = $this->messageCountData[static::INVALID];
+            if($invalid > 0)
+            {
+                $label   = '{count} dropdown value(s) are missing from the field. ';
+                $label  .= 'These values will be added upon import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+            }
         }
     }
 ?>

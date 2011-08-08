@@ -27,7 +27,7 @@
     class DropDownSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                 implements DataAnalyzerInterface
     {
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
             assert('count($this->attributeNameOrNames) == 1');
@@ -53,12 +53,7 @@
             {
                 $label   = '{count} dropdown value(s) are missing from the field. ';
                 $label  .= 'These values will be added upon import.';
-                $message = Yii::t('Default', $label, array('{count}' => $count));
-                return $message;
-            }
-            else
-            {
-                return null;
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
             }
         }
     }

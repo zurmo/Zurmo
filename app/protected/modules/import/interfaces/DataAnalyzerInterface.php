@@ -26,6 +26,6 @@
 
     interface DataAnalyzerInterface
     {
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName);
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName);
     }
 ?>

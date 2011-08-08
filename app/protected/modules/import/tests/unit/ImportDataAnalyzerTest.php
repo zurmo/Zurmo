@@ -47,19 +47,19 @@
 
             //Ensure the external system id column is present.
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar100(User::getTableName('User'), 'externalSystemId');
+            ensureColumnIsVarchar(User::getTableName('User'), 'externalSystemId');
             $userTableName = User::getTableName('User');
             R::exec("update " . $userTableName . " set externalSystemId = 'A' where id = {$super->id}");
             R::exec("update " . $userTableName . " set externalSystemId = 'B' where id = {$jim->id}");
 
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar100(ImportModelTestItem::getTableName('ImportModelTestItem'),   'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem::getTableName('ImportModelTestItem'),   'externalSystemId');
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar100(ImportModelTestItem2::getTableName('ImportModelTestItem2'), 'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem2::getTableName('ImportModelTestItem2'), 'externalSystemId');
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar100(ImportModelTestItem3::getTableName('ImportModelTestItem3'), 'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem3::getTableName('ImportModelTestItem3'), 'externalSystemId');
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar100(ImportModelTestItem4::getTableName('ImportModelTestItem4'), 'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem4::getTableName('ImportModelTestItem4'), 'externalSystemId');
         }
 
         public function testImportDataAnalysisResults()
@@ -168,7 +168,9 @@
                                       'type' => 'importColumn',
                                       'mappingRulesData' => array('IdValueType' =>
                                       array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
-                );
+                'column_19' => array('attributeIndexOrDerivedType' => 'url',   	  'type' => 'importColumn'),
+                'column_20' => array('attributeIndexOrDerivedType' => 'textArea', 'type' => 'importColumn'),
+            );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
             $import->serializedData        = serialize($serializedData);
@@ -259,6 +261,10 @@
                     array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
                 ),
+                'column_19' => array(
+                    array('message'=> '1 value(s) have urls that are invalid. These rows will be skipped during import.',
+                          'sanitizerUtilType' => 'Url', 'moreAvailable' => false),
+                ),
             );
             $this->assertEquals($compareData, $resultsData);
         }
@@ -283,56 +289,72 @@
 
             //Test truncate sanitization by batch.
             $dataAnalyzer = new TruncateBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('phone'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_1');
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_1');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test boolean sanitization by batch.
             $dataAnalyzer = new BooleanBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('boolean'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_3');
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_3');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid check box values. These values will be set to false upon import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test date sanitization by batch.
             $dataAnalyzer = new DateBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('date'));
-            $message      = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_4', 'ValueFormat',
-                            array('format' => 'MM-dd-yyyy'));
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_4', 'ValueFormat',
+                           array('format' => 'MM-dd-yyyy'));
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid date formats. These values will be cleared during import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test datetime sanitization by batch.
             $dataAnalyzer = new DateTimeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dateTime'));
-            $message      = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_5', 'ValueFormat',
-                            array('format' => 'MM-dd-yyyy hh:mm'));
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_5', 'ValueFormat',
+                           array('format' => 'MM-dd-yyyy hh:mm'));
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid date time formats. These values will be cleared during import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test dropdown sanitization by batch.
             $dataAnalyzer = new DropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dropDown'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_6');
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_6');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test CreatedByUser sanitization by batch.
             $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('CreatedByUser'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_7', 'UserValueTypeModelAttribute',
-                       array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME));
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_7', 'UserValueTypeModelAttribute',
+                           array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME));
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test ModifiedByUser sanitization by batch.
             $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('ModifiedByUser'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_8', 'UserValueTypeModelAttribute',
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_8', 'UserValueTypeModelAttribute',
                        array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID));
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '5 value(s) have invalid user values. These values will not be used during the import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
 
             //Test owner sanitization by batch.
             $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('owner'));
-            $message = $dataAnalyzer->runAndGetMessage($dataProvider, 'column_9', 'UserValueTypeModelAttribute',
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_9', 'UserValueTypeModelAttribute',
                        array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID));
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
-            $this->assertEquals($compareMessage, $message);
+            $this->assertEquals($compareMessage, $messages[0]);
         }
     }
 ?>

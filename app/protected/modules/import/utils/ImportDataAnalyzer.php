@@ -68,14 +68,18 @@
                                                               makeSqlAttributeValueDataAnalyzer($modelClassName,
                                                                                                 $attributeNameOrNames);
                             assert('$sqlAttributeValuesDataAnalyzer != null');
-                            $message = $this->resolveRunAndGetMessage($columnName, $columnMappingData,
-                                                                      $attributeValueSanitizerUtilClassName,
-                                                                      $sqlAttributeValuesDataAnalyzer);
-                            if($message != null)
+                            $this->resolveRun($columnName, $columnMappingData,
+                                              $attributeValueSanitizerUtilClassName,
+                                              $sqlAttributeValuesDataAnalyzer);
+                            $messages       = $sqlAttributeValuesDataAnalyzer->getMessages();
+                            if($messages != null)
                             {
-                                $moreAvailable     = $sqlAttributeValuesDataAnalyzer::supportsAdditionalResultInformation();
-                                $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
-                                $this->addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
+                                foreach($messages as $message)
+                                {
+                                    $moreAvailable     = $sqlAttributeValuesDataAnalyzer::supportsAdditionalResultInformation();
+                                    $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
+                                    $this->addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
+                                }
                             }
                         }
                         elseif($attributeValueSanitizerUtilClassName::supportsBatchAttributeValuesDataAnalysis())
@@ -84,15 +88,19 @@
                                                                 makeBatchAttributeValueDataAnalyzer($modelClassName,
                                                                                                     $attributeNameOrNames);
                             assert('$batchAttributeValuesDataAnalyzer != null');
-                            $message = $this->resolveRunAndGetMessage($columnName, $columnMappingData,
-                                                                      $attributeValueSanitizerUtilClassName,
-                                                                      $batchAttributeValuesDataAnalyzer);
-                            if($message != null)
+                            $this->resolveRun($columnName, $columnMappingData,
+                                                           $attributeValueSanitizerUtilClassName,
+                                                           $batchAttributeValuesDataAnalyzer);
+                            $messages                    = $batchAttributeValuesDataAnalyzer->getMessages();
+                            if($messages != null)
                             {
-                                $moreAvailable     = $batchAttributeValuesDataAnalyzer::
-                                                     supportsAdditionalResultInformation();
-                                $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
-                                $this->addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
+                                foreach($messages as $message)
+                                {
+                                    $moreAvailable     = $batchAttributeValuesDataAnalyzer::
+                                                         supportsAdditionalResultInformation();
+                                    $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
+                                    $this->addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
+                                }
                             }
                         }
                         else
@@ -104,7 +112,7 @@
             }
         }
 
-        protected function resolveRunAndGetMessage($columnName, $columnMappingData,
+        protected function resolveRun($columnName, $columnMappingData,
                                                    $attributeValueSanitizerUtilClassName, $dataAnalyzer)
         {
             assert('is_string($columnName)');
@@ -119,11 +127,11 @@
                 assert('$mappingRuleType != null');
                 $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleType];
                 assert('$mappingRuleData != null');
-                return $dataAnalyzer->runAndGetMessage($this->dataProvider, $columnName, $mappingRuleType, $mappingRuleData);
+                $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName, $mappingRuleType, $mappingRuleData);
             }
             else
             {
-                return $dataAnalyzer->runAndGetMessage($this->dataProvider, $columnName);
+                $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName);
             }
         }
 

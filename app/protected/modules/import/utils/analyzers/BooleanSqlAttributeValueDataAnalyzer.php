@@ -24,9 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    interface LinkedToMappingRuleDataAnalyzerInterface
+    class BooleanSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
+                                                implements DataAnalyzerInterface
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
-                                         $mappingRuleType, $mappingRuleData);
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        {
+            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
+            $inPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array_keys($acceptableValuesMapping));
+            $where  = DatabaseCompatibilityUtil::lower($columnName) . ' NOT ' . $inPart;
+            $count  = $dataProvider->getCountByWhere($where);
+            if($count > 0)
+            {
+                $label   = '{count} value(s) have invalid check box values. ';
+                $label  .= 'These values will be set to false upon import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+            }
+        }
     }
 ?>

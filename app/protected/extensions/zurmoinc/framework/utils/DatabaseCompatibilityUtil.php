@@ -163,6 +163,16 @@
         }
 
         /**
+         * Returns the database length equivalent string function by a column name.
+         * @param string $columnName
+         */
+        public static function length($columnName)
+        {
+            assert('is_string($columnName)');
+            return 'length(' . $columnName . ')';
+        }
+
+        /**
          * Returns the given string quoted for the current
          * database.
          * Note: ' is always used for strings. Do not use this

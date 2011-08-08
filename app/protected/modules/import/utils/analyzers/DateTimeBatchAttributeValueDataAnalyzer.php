@@ -24,25 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class BooleanSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class DateTimeBatchAttributeValueDataAnalyzer extends DateBatchAttributeValueDataAnalyzer
     {
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        protected $exceptedFormat;
+
+        protected function makeMessages()
         {
-            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
-            $inPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array_keys($acceptableValuesMapping));
-            $where  = DatabaseCompatibilityUtil::lower($columnName) . ' NOT ' . $inPart;
-            $count  = $dataProvider->getCountByWhere($where);
-            if($count > 0)
+            $invalid  = $this->messageCountData[static::INVALID];
+            if($invalid > 0)
             {
-                $label   = '{count} value(s) have invalid check box values. ';
-                $label  .= 'These values will be set to false upon import.';
-                $message = Yii::t('Default', $label, array('{count}' => $count));
-                return $message;
-            }
-            else
-            {
-                return null;
+                $label   = '{count} value(s) have invalid date time formats. ';
+                $label  .= 'These values will be cleared during import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }
         }
     }

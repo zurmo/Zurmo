@@ -24,40 +24,64 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TruncateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+    class UrlBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
+        const URL_TOO_LONG = 'Url too long';
+
         protected $maxLength;
 
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
             assert('count($this->attributeNameOrNames) == 1');
-            $model           = new $modelClassName(false);
-            $this->maxLength = StringValidatorHelper::
-                               getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);
+            $this->maxLength = 255; //CUrlValidator does not have a max to return so it defaults to the largest varchar.
+            $this->messageCountData[static::URL_TOO_LONG] = 0;
         }
 
-        public function runAndGetMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            return $this->processAndGetMessage($dataProvider, $columnName);
+            $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
         protected function analyzeByValue($value)
         {
-            if(strlen($value) > $this->maxLength)
+            if($value == null)
             {
-                return false;
+                return;
             }
-            return true;
+            $validator = new CUrlValidator();
+            $validator->defaultScheme = 'http';
+            $validatedUrl = $validator->validateValue($value);
+            if($validatedUrl === false)
+            {
+                $this->messageCountData[static::INVALID] ++;
+                return;
+            }
+            if(strlen($validatedUrl) > $this->maxLength)
+            {
+                $this->messageCountData[static::URL_TOO_LONG] ++;
+            }
         }
 
-        protected function getMessageByFailedCount($failed)
+        protected function makeMessages()
         {
-            $label   = '{count} value(s) are too large for this field. ';
-            $label  .= 'These values will be truncated to a length of {length} upon import.';
-            return Yii::t('Default', $label, array('{count}' => $failed, '{length}' => $this->maxLength));
+            $invalid  = $this->messageCountData[static::INVALID];
+            $tooLarge = $this->messageCountData[static::URL_TOO_LONG];
+            if($invalid > 0)
+            {
+                $label   = '{count} value(s) have urls that are invalid. ';
+                $label  .= 'These rows will be skipped during import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+            }
+            if($tooLarge > 0)
+            {
+                $label   = '{count} value(s) are too large for this field. ';
+                $label  .= 'These values will be truncated to a length of {length} upon import.';
+                $this->addMessage(Yii::t('Default', $label,
+                                  array('{count}' => $tooLarge, '{length}' => $this->maxLength)));
+            }
         }
     }
 ?>
