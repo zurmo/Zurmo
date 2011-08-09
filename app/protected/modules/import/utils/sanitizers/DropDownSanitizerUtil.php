@@ -25,6 +25,8 @@
      ********************************************************************************/
     class DropDownSanitizerUtil extends SanitizerUtil
     {
+        const ADD_MISSING_VALUE = 'Add missing value';
+
         public static function getSqlAttributeValueDataAnalyzerType()
         {
             return 'DropDown';

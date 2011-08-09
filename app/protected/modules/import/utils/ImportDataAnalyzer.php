@@ -30,7 +30,9 @@
 
         protected $dataProvider;
 
-        protected $results = array();
+        protected $messagesData = array();
+
+        protected $importInstructionsData = array();
 
         public function __construct($importRules, $dataProvider)
         {
@@ -78,8 +80,13 @@
                                 {
                                     $moreAvailable     = $sqlAttributeValuesDataAnalyzer::supportsAdditionalResultInformation();
                                     $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
-                                    $this->addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
+                                    $this->addMessageDataByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
                                 }
+                            }
+                            $instructionsData = $sqlAttributeValuesDataAnalyzer->getInstructionsData();
+                            if($instructionsData != null)
+                            {
+                                $this->addInstructionDataByColumnName($columnName, $instructionsData, $sanitizerUtilType);
                             }
                         }
                         elseif($attributeValueSanitizerUtilClassName::supportsBatchAttributeValuesDataAnalysis())
@@ -99,8 +106,13 @@
                                     $moreAvailable     = $batchAttributeValuesDataAnalyzer::
                                                          supportsAdditionalResultInformation();
                                     $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
-                                    $this->addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
+                                    $this->addMessageDataByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable);
                                 }
+                            }
+                            $instructionsData = $batchAttributeValuesDataAnalyzer->getInstructionsData();
+                            if($instructionsData != null)
+                            {
+                                $this->addInstructionDataByColumnName($columnName, $instructionsData, $sanitizerUtilType);
                             }
                         }
                         else
@@ -135,20 +147,33 @@
             }
         }
 
-        public function addResultByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable)
+        public function addMessageDataByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable)
         {
             assert('is_string($columnName)');
             assert('is_string($message)');
             assert('is_string($sanitizerUtilType)');
             assert('is_bool($moreAvailable)');
-            $this->results[$columnName][] = array('message'           => $message,
+            $this->messagesData[$columnName][] = array('message'           => $message,
                                                   'sanitizerUtilType' => $sanitizerUtilType,
                                                   'moreAvailable'     => $moreAvailable);
         }
 
-        public function getResults()
+        public function addInstructionDataByColumnName($columnName, $instructionData, $sanitizerUtilType)
         {
-            return $this->results;
+            assert('is_string($columnName)');
+            assert('is_string($instructionData) || is_array($instructionData)');
+            assert('is_string($sanitizerUtilType)');
+            $this->importInstructionsData[$columnName][$sanitizerUtilType] = $instructionData;
+        }
+
+        public function getMessagesData()
+        {
+            return $this->messagesData;
+        }
+
+        public function getImportInstructionsData()
+        {
+            return $this->importInstructionsData;
         }
     }
 ?>

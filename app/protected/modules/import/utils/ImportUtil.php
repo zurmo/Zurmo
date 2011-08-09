@@ -24,57 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AttributeValueDataAnalyzer
+    /**
+     * Helper class for working with import.
+     */
+    class ImportUtil
     {
-        const INVALID       = 'Invalid';
-
-        protected $modelClassName;
-
-        protected $attributeNameOrNames;
-
-        protected $messageCountData;
-
-        private   $messages;
-
-        private   $instructionsData;
-
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public static function setDataAnalyzerMessagesDataToImport($import, $messagesData)
         {
-            assert('is_string($modelClassName)');
-            assert('is_array($attributeNameOrNames) || is_string($attributeNameOrNames)');
-            $this->modelClassName       = $modelClassName;
-            $this->attributeNameOrNames = $attributeNameOrNames;
-            $this->messageCountData[static::INVALID] = 0;
-        }
-
-        public static function supportsAdditionalResultInformation()
-        {
-            return false;
-        }
-
-        protected function addMessage($message)
-        {
-            $this->messages[] = $message;
-        }
-
-        public function getMessages()
-        {
-            return $this->messages;
-        }
-
-        public function setInstructionsData($instructionsData)
-        {
-            assert('$instructionsData != null');
-            if($this->instructionsData != null)
-            {
-                throw new NotSupportedException();
-            }
-            $this->instructionsData = $instructionsData;
-        }
-
-        public function getInstructionsData()
-        {
-            return $this->instructionsData;
+            assert('$import instanceof Import');
+            assert('is_array($messagesData) || $messagesData == null');
+            $serializedData = unserialize($import->serializedData);
+            $serializedData['dataAnalyzerMessagesData'] = $messagesData;
+            $import->serializedData = serialize($serializedData);
         }
     }
 ?>

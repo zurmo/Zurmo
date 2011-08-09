@@ -31,13 +31,14 @@
         {
             assert('is_string($columnName)');
             assert('count($this->attributeNameOrNames) == 1');
-            $customFieldData = CustomFieldDataModelUtil::
-                               getDataByModelClassNameAndAttributeName($this->modelClassName,
+            $customFieldData  = CustomFieldDataModelUtil::
+                                getDataByModelClassNameAndAttributeName($this->modelClassName,
                                                                        $this->attributeNameOrNames[0]);
-            $dropDownValues  = unserialize($customFieldData->serializedData);
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
+            $dropDownValues   = unserialize($customFieldData->serializedData);
+            $dropDownValues   = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
+            $data             = $dataProvider->getCountDataByGroupByColumnName($columnName);
+            $count            = 0;
+            $missingDropDowns = null;
             foreach($data as $valueCountData)
             {
                 if($valueCountData[$columnName] == null)
@@ -46,6 +47,7 @@
                 }
                 if(!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
                 {
+                    $missingDropDowns[] = $valueCountData[$columnName];
                     $count ++;
                 }
             }
@@ -54,6 +56,12 @@
                 $label   = '{count} dropdown value(s) are missing from the field. ';
                 $label  .= 'These values will be added upon import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+            }
+
+            if($missingDropDowns != null)
+            {
+                $instructionsData = array(DropDownSanitizerUtil::ADD_MISSING_VALUE => $missingDropDowns);
+                $this->setInstructionsData($instructionsData);
             }
         }
     }

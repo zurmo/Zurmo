@@ -29,6 +29,8 @@
     {
         protected $dropDownValues;
 
+        protected $missingDropDownInstructions;
+
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
@@ -44,6 +46,10 @@
         {
             assert('is_string($columnName)');
             $this->processAndMakeMessage($dataProvider, $columnName);
+            if($this->missingDropDownInstructions != null)
+            {
+                $this->setInstructionsData($this->missingDropDownInstructions);
+            }
         }
 
         protected function analyzeByValue($value)
@@ -51,6 +57,7 @@
 
             if($value != null && !in_array(strtolower($value), $this->dropDownValues))
             {
+                $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $value;
                 $this->messageCountData[static::INVALID] ++;
             }
         }

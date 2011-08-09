@@ -225,7 +225,7 @@
             {
                 $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
             }
-            $resultsData = $importDataAnalyzer->getResults();
+            $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
                     array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.',
@@ -304,7 +304,23 @@
                           'sanitizerUtilType' => 'Url', 'moreAvailable' => false),
                 ),
             );
-            $this->assertEquals($compareData, $resultsData);
+            $this->assertEquals($compareData, $messagesData);
+            $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
+            $compareInstructionsData  = array('column_6' =>
+                                            array('DropDown' =>
+                                                array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
+                                                    array('neverpresent', 'notpresent'))));
+            $this->assertEquals($compareInstructionsData, $importInstructionsData);
+            ImportUtil::setDataAnalyzerMessagesDataToImport($import, $messagesData);
+            $compareData = unserialize($import->serializedData);
+            $compareData = $compareData['dataAnalyzerMessagesData'];
+            $this->assertEquals($compareData, $messagesData);
+            $newMappingData           = ImportMappingUtil::
+                                        resolveImportInstructionsDataIntoMappingData($mappingData, $importInstructionsData);
+            $compareMappingData       = $mappingData;
+            $compareMappingData['column_6']['importInstructionsData'] = $compareInstructionsData['column_6'];
+            $this->assertEquals($compareMappingData, $newMappingData);
+
         }
 
         /**
