@@ -278,7 +278,8 @@
                     if($columnName != 'id')
                     {
                         $renderedContentData[MappingFormLayoutUtil::
-                        resolveSampleColumnIdByColumnName($columnName)] = $value;
+                        resolveSampleColumnIdByColumnName($columnName)] = MappingFormLayoutUtil::
+                                                                          renderChoppedDisplayValueContent($value);
                     }
                 }
             }

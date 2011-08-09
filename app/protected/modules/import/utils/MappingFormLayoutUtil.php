@@ -116,7 +116,7 @@
         {
             assert('is_string($columnName)');
             assert('is_string($headerValue) || $headerValue == null');
-            $content = $headerValue;
+            $content = self::renderChoppedDisplayValueContent($headerValue);
             return $content;
         }
 
@@ -124,7 +124,8 @@
         {
             assert('is_string($columnName)');
             assert('is_string($sampleValue) || $sampleValue == null');
-            $content = '<div id="' . self::resolveSampleColumnIdByColumnName($columnName) . '">' . $sampleValue . '</div>';
+            $sampleValueContent = self::renderChoppedDisplayValueContent($sampleValue);
+            $content = '<div id="' . self::resolveSampleColumnIdByColumnName($columnName) . '">' . $sampleValueContent . '</div>';
             return $content;
         }
 
@@ -241,5 +242,14 @@
         public static function getSampleColumnHeaderId()
         {
             return 'sample-column-header';
+        }
+
+        public static function renderChoppedDisplayValueContent($value)
+        {
+            if(strlen($value) <= 22)
+            {
+                return $value;
+            }
+            return CHtml::tag('div', array('title' => $value), substr($value, 0, 22) . '...');
         }
     }

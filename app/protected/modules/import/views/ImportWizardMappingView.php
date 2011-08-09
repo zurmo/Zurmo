@@ -94,8 +94,15 @@
             $content .= '<colgroup>';
             $content .= '<col style="width:20%" />';
             $content .= '<col style="width:20%" />';
-            $content .= '<col style="width:20%" />';
-            $content .= '<col style="width:40%" />';
+            if(count($headerColumns) == 4)
+            {
+                $content .= '<col style="width:20%" />';
+                $content .= '<col style="width:40%" />';
+            }
+            else
+            {
+                $content .= '<col style="width:60%" />';
+            }
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr>';
@@ -107,7 +114,7 @@
             $content .= MappingFormLayoutUtil::
                         renderMappingDataMetadataWithRenderedElements($mappingDataMetadataWithRenderedElements);
             $content .= '<tr>';
-            $content .= '<td colspan="4">';
+            $content .= '<td colspan="' . count($headerColumns) . '">';
             $content .= $this->renderAddExtraColumnContent(count($this->mappingDataMetadata));
             $content .= '</td>';
             $content .= '</tr>';
