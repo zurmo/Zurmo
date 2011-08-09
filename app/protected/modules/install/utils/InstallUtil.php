@@ -86,6 +86,11 @@
             return !empty($timezone);
         }
 
+        public static function isMbStringInstalled()
+        {
+            return function_exists('mb_strlen');
+        }
+
         /**
          * @returns true, or the max memory setting is less than the minimum required.
          */

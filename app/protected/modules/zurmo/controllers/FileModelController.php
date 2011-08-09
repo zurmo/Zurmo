@@ -62,7 +62,7 @@
                 Yii::app()->end(0, false);
             }
             $fileModel = FileModel::getById((int)$id);
-            Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type);
+            Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type, false);
         }
 
         public function actionDelete($id)

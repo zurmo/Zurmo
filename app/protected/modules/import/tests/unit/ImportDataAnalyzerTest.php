@@ -29,7 +29,8 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-
+            echo 'grapes ' . "\n";
+            exit;
             $super = SecurityTestHelper::createSuperAdmin();
             Yii::app()->user->userModel = $super;
             $jim = UserTestHelper::createBasicUser('jim');

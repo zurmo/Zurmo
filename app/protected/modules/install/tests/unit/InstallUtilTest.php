@@ -205,6 +205,12 @@
             $this->assertTrue(InstallUtil::checkRedBeanPatched());
         }
 
+        public function testIsMbStringInstalled()
+        {
+            $this->assertTrue(InstallUtil::isMbStringInstalled());
+        }
+
+
         public function testCheckMemcacheConnection()
         {
             $this->assertTrue  (InstallUtil::checkMemcacheConnection('127.0.0.1', 11211));
