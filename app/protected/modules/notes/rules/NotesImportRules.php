@@ -25,28 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any derived attributes that are of type Password
+     * Defines the import rules for importing into the notes module.
      */
-    class PasswordAttributeImportRules extends DerivedAttributeImportRules
+    class NotesImportRules extends ActivitiesImportRules
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getModelClassName()
         {
-            return array('PasswordDefaultValueModelAttribute' => 'Text');
-        }
-
-        public function getDisplayLabel()
-        {
-            return Yii::t('Default', 'Password');
-        }
-
-        public function getModelAttributeNames()
-        {
-            return array('hash');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('Truncate');
+            return 'Note';
         }
     }
 ?>

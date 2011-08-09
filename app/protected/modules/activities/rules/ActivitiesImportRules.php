@@ -30,6 +30,15 @@
     abstract class ActivitiesImportRules extends ImportRules
     {
         /**
+         * Override to block out additional attributes that are not importable
+         * @return array
+         */
+        public static function getNonImportableAttributeNames()
+        {
+            return array_merge(parent::getNonImportableAttributeNames(), array('latestDateTime'));
+        }
+
+        /**
          * Override to handle special dynamically adding each activity item derived type that the user
          * has access too.
          * @return array
