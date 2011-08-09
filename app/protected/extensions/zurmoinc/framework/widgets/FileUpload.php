@@ -89,6 +89,11 @@
          */
         public $existingFiles;
 
+        /**
+         * The maximum size allowed for file uploads.
+         * @var integer
+         */
+        public $maxSize;
 
         /**
          * Initializes the widget.
@@ -132,7 +137,7 @@ EOD;
 
             $htmlOptions = array('id' => $this->inputId);
             echo '<div class="multiple-file-upload">' . "\n";
-            echo CHtml::fileField($this->inputName, null, $htmlOptions);
+            echo CHtml::fileField($this->inputName, null, $htmlOptions) . $this->renderMaxSizeContent($this->maxSize);
             echo '<table id="files' . $id . '">' . "\n";
             echo '<colgroup><col/><col/><col/></colgroup>' . "\n";
             echo '<tbody>'  . "\n";
@@ -205,6 +210,18 @@ js:function ($params) {
 }
 EOD;
         return $js;
+        }
+
+        protected static function renderMaxSizeContent($maxSize)
+        {
+            assert('is_int($maxSize) || $maxSize == null');
+            if($maxSize == null)
+            {
+                return;
+            }
+            $content = '&#160;' . Yii::t('Default', 'Max upload size: {maxSize}',
+                       array('{maxSize}' => FileModelDisplayUtil::convertSizeToHumanReadableAndGet($maxSize)));
+            return $content;
         }
     }
 ?>

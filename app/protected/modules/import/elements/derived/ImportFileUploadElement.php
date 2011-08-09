@@ -55,7 +55,8 @@
                 'inputId'              => $inputNameAndId,
                 'hiddenInputName'      => 'fileId',
                 'formName'             => $this->form->id,
-                'existingFiles'        => $existingFilesInformation
+                'existingFiles'        => $existingFilesInformation,
+                'maxSize'  	 		   => (int)InstallUtil::getMaxAllowedFileSize()
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['filesElement'];

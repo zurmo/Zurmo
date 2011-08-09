@@ -70,8 +70,10 @@
                 'hiddenInputName'      => 'filesIds',
                 'formName'             => $this->form->id,
                 'allowMultipleUpload'  => true,
-                'existingFiles'        => $existingFilesInformation
+                'existingFiles'        => $existingFilesInformation,
+                'maxSize'			   => (int)InstallUtil::getMaxAllowedFileSize()
             ));
+
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['filesElement'];
         }

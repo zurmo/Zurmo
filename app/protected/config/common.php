@@ -58,10 +58,6 @@
                 'baseCode' => 'USD',
             ),
             'db' => array(
-   'initSQLs' => array(
-      //'set global max_allowed_packet = 25000000', // 1500000 - your value (if you have permissions to change this value - it helps)
-   ),
-
                 'emulatePrepare' => true,
                 'charset'        => 'utf8',
             ),

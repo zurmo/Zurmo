@@ -27,7 +27,7 @@
     /**
      * Makes sure the upload file size is large enough.
      */
-    class PhpUploadSizeServiceHelper extends ServiceHelper
+    class DatabaseMaxAllowedPacketSizeServiceHelper extends ServiceHelper
     {
         protected $required = false;
 
@@ -36,22 +36,25 @@
         protected function checkService()
         {
             $passed = true;
-            $actualUploadSizeBytes = null;
-            $uploadSizeBytesPassed = InstallUtil::checkPhpUploadSizeSetting($this->minimumUploadRequireBytes,
-                                                                            $actualUploadSizeBytes);
-            if($uploadSizeBytesPassed)
+            $actualBytes = null;
+            if(!InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', $this->minimumUploadRequireBytes, $actualBytes))
             {
-                $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Php Upload size meets minimum requirement.');
+                if($actualBytes == null)
+                {
+
+                }else
+                {
+                    $this->message .= "\n";
+                    $this->message .= Yii::t('Default', 'Database max allowed packet size is:') . ' ';
+                    $this->message .= round($actualBytes / 1024000) . 'M ';
+                    $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
+                    $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
+                }
+                $passed = false;
             }
             else
             {
-                $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Php Upload size setting is:') . ' ';
-                $this->message .= round($actualUploadSizeBytes / 1024000) . 'M ';
-                $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
-                $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
-                $passed = false;
+                $this->message = Yii::t('Default', 'Database max allowed packet size meets minimum requirement.');
             }
             return $passed;
         }

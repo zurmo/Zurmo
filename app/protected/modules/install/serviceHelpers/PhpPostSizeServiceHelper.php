@@ -27,7 +27,7 @@
     /**
      * Makes sure the upload file size is large enough.
      */
-    class PhpUploadSizeServiceHelper extends ServiceHelper
+    class PhpPostSizeServiceHelper extends ServiceHelper
     {
         protected $required = false;
 
@@ -36,19 +36,19 @@
         protected function checkService()
         {
             $passed = true;
-            $actualUploadSizeBytes = null;
-            $uploadSizeBytesPassed = InstallUtil::checkPhpUploadSizeSetting($this->minimumUploadRequireBytes,
-                                                                            $actualUploadSizeBytes);
-            if($uploadSizeBytesPassed)
+            $actualPostSizeBytes = null;
+            $postSizeBytesPassed = InstallUtil::checkPhpPostSizeSetting($this->minimumUploadRequireBytes,
+                                                                            $actualPostSizeBytes);
+            if($postSizeBytesPassed)
             {
                 $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Php Upload size meets minimum requirement.');
+                $this->message = Yii::t('Default', 'Php post max size meets minimum requirement.');
             }
             else
             {
                 $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Php Upload size setting is:') . ' ';
-                $this->message .= round($actualUploadSizeBytes / 1024000) . 'M ';
+                $this->message .= Yii::t('Default', 'Php post max size setting is:') . ' ';
+                $this->message .= round($actualPostSizeBytes / 1024000) . 'M ';
                 $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
                 $passed = false;
