@@ -59,6 +59,13 @@
                     {
                         switch ($rule[1])
                         {
+                            case 'type':
+                                if($rule['type'] == 'date')
+                                {
+                                    $rule[1] = 'TypeValidator';
+                                }
+                                $rule[0] = $ruleAttributeName;
+                                $applicableRules[] = $rule;
                             case 'default':
                             case 'safe':
                                 continue;

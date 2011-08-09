@@ -151,7 +151,10 @@
                 $reIndexedPostData                          = ImportMappingUtil::
                                                               reIndexExtraColumnNamesByPostData(
                                                               $_POST[get_class($importWizardForm)]);
-                ImportWizardUtil::setFormByPostForStep4($importWizardForm, $reIndexedPostData);
+                $sanitizedPostData                          = ImportWizardFormPostUtil::
+                                                              sanitizePostByTypeForSavingMappingData(
+                                                              $importWizardForm->importRulesType, $reIndexedPostData);
+                                                              ImportWizardUtil::setFormByPostForStep4($importWizardForm, $sanitizedPostData);
 
                 $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
                                                               makeFormsAndElementTypesByMappingDataAndImportRulesType(

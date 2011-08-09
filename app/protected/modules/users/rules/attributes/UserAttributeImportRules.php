@@ -37,7 +37,7 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array('UserValueType');
+            return array('UserValueType', 'ModelNameIdRequired');
         }
     }
 ?>

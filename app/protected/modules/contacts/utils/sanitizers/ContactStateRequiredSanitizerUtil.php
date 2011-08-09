@@ -24,19 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type DropDown.
-     */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class ContactStateRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getLinkedMappingRuleType()
         {
-            return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('DropDown', 'DropDownRequired');
+            return 'DefaultValueContactStateModelAttribute';
         }
     }
 ?>

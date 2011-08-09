@@ -24,10 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UrlBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+    class EmailBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
-        const URL_TOO_LONG = 'Url too long';
+        const EMAIL_TOO_LONG = 'Email too long';
 
         protected $maxLength;
 
@@ -36,7 +36,7 @@
             parent:: __construct($modelClassName, $attributeNameOrNames);
             assert('count($this->attributeNameOrNames) == 1');
             $this->maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
-            $this->messageCountData[static::URL_TOO_LONG] = 0;
+            $this->messageCountData[static::EMAIL_TOO_LONG] = 0;
         }
 
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
@@ -51,27 +51,27 @@
             {
                 return;
             }
-            $validator = new CUrlValidator();
+            $validator = new CEmailValidator();
             $validator->defaultScheme = 'http';
-            $validatedUrl = $validator->validateValue($value);
-            if($validatedUrl === false)
+            $validatedEmail = $validator->validateValue($value);
+            if($validatedEmail === false)
             {
                 $this->messageCountData[static::INVALID] ++;
                 return;
             }
-            if(strlen($validatedUrl) > $this->maxLength)
+            if(strlen($validatedEmail) > $this->maxLength)
             {
-                $this->messageCountData[static::URL_TOO_LONG] ++;
+                $this->messageCountData[static::EMAIL_TOO_LONG] ++;
             }
         }
 
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            $tooLarge = $this->messageCountData[static::URL_TOO_LONG];
+            $tooLarge = $this->messageCountData[static::EMAIL_TOO_LONG];
             if($invalid > 0)
             {
-                $label   = '{count} value(s) have urls that are invalid. ';
+                $label   = '{count} value(s) have emails that are invalid. ';
                 $label  .= 'These rows will be skipped during import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }

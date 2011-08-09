@@ -25,12 +25,10 @@
      ********************************************************************************/
 
     /**
-     * RedBeanModel version of CTypeValidator.
-     * Validates datetime as integer, since it is a timestamp
-     * Validates date as a db formatted date string.
+     *
      * See the yii documentation.
      */
-    class RedBeanModelTypeValidator extends TypeValidator
+    class TypeValidator extends CTypeValidator
     {
         /**
          * Validates the attribute of the model.
@@ -41,8 +39,56 @@
          */
         protected function validateAttribute($object, $attribute)
         {
-            assert('$object instanceof RedBeanModel');
-            parent::validateAttribute($object, $attribute);
+            $value = $object->$attribute;
+            if ($this->allowEmpty && $this->isEmpty($value))
+            {
+                return;
+            }
+            switch ($this->type)
+            {
+                case 'blob':
+                case 'longblob':
+                    return;
+
+                case 'integer':
+                    $valid = preg_match('/^[-+]?[0-9]+$/', trim($value)); // Not Coding Standard
+                    break;
+
+                case 'float':
+                    $valid = preg_match('/^[-+]?([0-9]*\.)?[0-9]+([eE][-+]?[0-9]+)?$/', trim($value)); // Not Coding Standard
+                    break;
+
+                case 'date':
+                    $valid = DateTimeUtil::isValidDbFormattedDate($value);
+                    break;
+
+                case 'time':
+                    $valid = CDateTimeParser::parse($value, $this->timeFormat) !== false;
+                    break;
+
+                case 'datetime':
+                    $valid = DateTimeUtil::isValidDbFormattedDateTime($value);
+                    break;
+
+                case 'array';
+                    throw new NotSupportedException();
+
+                case 'string';
+                default:
+                    return;
+            }
+            if (!$valid)
+            {
+                if ($this->message !== null)
+                {
+                    $message = $this->message;
+                }
+                else
+                {
+                    $message = Yii::t('yii', '{attribute} must be {type}.');
+                }
+                $this->addError($object, $attribute, $message, array('{type}' => $this->type));
+            }
         }
     }
 ?>

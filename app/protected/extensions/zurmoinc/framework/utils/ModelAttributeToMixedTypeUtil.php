@@ -58,46 +58,60 @@
             }
             else
             {
-                $validators = $model->getValidators($attributeName);
-                foreach ($validators as $validator)
+                $typeByValidator = static::getTypeByModelUsingValidator($model, $attributeName);
+                if($typeByValidator != null)
                 {
-                    switch(get_class($validator))
-                    {
-                        case 'CBooleanValidator':
-                            return 'CheckBox';
-
-                        case 'CEmailValidator':
-                            return 'Email';
-
-                        case 'RedBeanModelTypeValidator':
-                            switch ($validator->type)
-                            {
-                                case 'date':
-                                    return 'Date';
-
-                                case 'datetime':
-                                    return 'DateTime';
-
-                                case 'integer':
-                                    return 'Integer';
-
-                                case 'float':
-                                    return 'Decimal';
-
-                                case 'time':
-                                    return 'Time';
-
-                                case 'array':
-                                    throw new NotSupportedException();
-                            }
-                            break;
-
-                        case 'CUrlValidator':
-                            return 'Url';
-                    }
+                    return $typeByValidator;
                 }
             }
             return 'Text';
+        }
+
+        public static function getTypeByModelUsingValidator($model, $attributeName)
+        {
+            assert('$model instanceof RedBeanModel || $model instanceof ModelForm ||
+                    $model instanceof ConfigurableMetadataModel');
+            assert('is_string($attributeName) && $attributeName != ""');
+            $validators = $model->getValidators($attributeName);
+            foreach ($validators as $validator)
+            {
+                switch(get_class($validator))
+                {
+                    case 'CBooleanValidator':
+                        return 'CheckBox';
+
+                    case 'CEmailValidator':
+                        return 'Email';
+
+                    case 'RedBeanModelTypeValidator':
+                    case 'TypeValidator':
+                        switch ($validator->type)
+                        {
+                            case 'date':
+                                return 'Date';
+
+                            case 'datetime':
+                                return 'DateTime';
+
+                            case 'integer':
+                                return 'Integer';
+
+                            case 'float':
+                                return 'Decimal';
+
+                            case 'time':
+                                return 'Time';
+
+                            case 'array':
+                                throw new NotSupportedException();
+                        }
+                        break;
+
+                    case 'CUrlValidator':
+                        return 'Url';
+                }
+            }
+            return null;
         }
     }
 ?>

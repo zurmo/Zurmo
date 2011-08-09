@@ -117,6 +117,14 @@
         }
 
         /**
+         * Returns the maximum varchar column type value.
+         */
+        public static function getMaxVarCharLength()
+        {
+            return 255;
+        }
+
+        /**
          * Returns the database string to lower equivalent string function by a column name and adds quotes
          * to it.
          * @param string $columnName

@@ -24,25 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UrlBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+    class NumberBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
-        const URL_TOO_LONG = 'Url too long';
-
-        protected $maxLength;
+        protected $type;
 
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
             assert('count($this->attributeNameOrNames) == 1');
-            $this->maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
-            $this->messageCountData[static::URL_TOO_LONG] = 0;
         }
 
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
+            assert('count($this->attributeNameOrNames) == 1');
             $this->processAndMakeMessage($dataProvider, $columnName);
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            $this->type     = ModelAttributeToMixedTypeUtil::getType($model, $this->attributeNameOrNames[0]);
         }
 
         protected function analyzeByValue($value)
@@ -51,36 +51,34 @@
             {
                 return;
             }
-            $validator = new CUrlValidator();
-            $validator->defaultScheme = 'http';
-            $validatedUrl = $validator->validateValue($value);
-            if($validatedUrl === false)
+            $validator = new RedBeanModelNumberValidator();
+            if($this->type == 'Integer')
             {
-                $this->messageCountData[static::INVALID] ++;
-                return;
+                if(!preg_match($validator->integerPattern, $value))
+                {
+                    $this->messageCountData[static::INVALID] ++;
+                    return;
+                }
             }
-            if(strlen($validatedUrl) > $this->maxLength)
+            else
             {
-                $this->messageCountData[static::URL_TOO_LONG] ++;
+                if(!preg_match($validator->numberPattern, $value))
+                {
+                    $this->messageCountData[static::INVALID] ++;
+                    return;
+                }
             }
+
         }
 
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            $tooLarge = $this->messageCountData[static::URL_TOO_LONG];
             if($invalid > 0)
             {
-                $label   = '{count} value(s) have urls that are invalid. ';
+                $label   = '{count} value(s) are invalid. ';
                 $label  .= 'These rows will be skipped during import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
-            }
-            if($tooLarge > 0)
-            {
-                $label   = '{count} value(s) are too large for this field. ';
-                $label  .= 'These values will be truncated to a length of {length} upon import.';
-                $this->addMessage(Yii::t('Default', $label,
-                                  array('{count}' => $tooLarge, '{length}' => $this->maxLength)));
             }
         }
     }

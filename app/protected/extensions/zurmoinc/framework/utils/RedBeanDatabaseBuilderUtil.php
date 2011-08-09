@@ -312,6 +312,7 @@
                     case 'RedBeanModelCompareDateTimeValidator':
                     case 'RedBeanModelRequiredValidator':
                     case 'RedBeanModelTypeValidator':
+                    case 'TypeValidator':
                         break;
 
                     case 'CCaptchaValidator':
@@ -340,7 +341,7 @@
             {
                 foreach ($model->getValidators($memberName) as $validator)
                 {
-                    if ($validator instanceof RedBeanModelTypeValidator)
+                    if ($validator instanceof TypeValidator)
                     {
                         switch ($validator->type)
                         {

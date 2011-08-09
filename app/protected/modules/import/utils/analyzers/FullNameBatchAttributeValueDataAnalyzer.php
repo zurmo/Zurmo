@@ -27,16 +27,25 @@
     class UrlBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
-        const URL_TOO_LONG = 'Url too long';
+        const FULL_NAME_TOO_LONG = 'Full name too long';
 
-        protected $maxLength;
+        protected $firstNameMaxLength;
+
+        protected $lastNameMaxLength;
 
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
-            $this->maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
-            $this->messageCountData[static::URL_TOO_LONG] = 0;
+            assert('count($this->attributeNameOrNames) == 2');
+            assert('$this->attributeNameOrNames[0] == "firstName"');
+            assert('$this->attributeNameOrNames[1] == "lastName"');
+            $this->messageCountData[static::FULL_NAME_TOO_LONG] = 0;
+
+            $model                    = new $modelClassName(false);
+            $this->firstNameMaxLength = StringValidatorHelper::
+                                        getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);
+            $this->lastNameMaxLength  = StringValidatorHelper::
+                                        getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[1]);
         }
 
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
@@ -51,30 +60,21 @@
             {
                 return;
             }
-            $validator = new CUrlValidator();
-            $validator->defaultScheme = 'http';
-            $validatedUrl = $validator->validateValue($value);
-            if($validatedUrl === false)
+            list($firstName, $lastName) = explode(' ', trim($value));
+            if($firstName == null)
             {
-                $this->messageCountData[static::INVALID] ++;
-                return;
+                $lastName  = $firstName;
+                $firstName = null;
             }
-            if(strlen($validatedUrl) > $this->maxLength)
+            if(strlen($lastName) > $this->lastNameMaxLength || strlen($firstName) > $this->firstNameMaxLength)
             {
-                $this->messageCountData[static::URL_TOO_LONG] ++;
+                $this->messageCountData[static::FULL_NAME_TOO_LONG] ++;
             }
         }
 
         protected function makeMessages()
         {
-            $invalid  = $this->messageCountData[static::INVALID];
             $tooLarge = $this->messageCountData[static::URL_TOO_LONG];
-            if($invalid > 0)
-            {
-                $label   = '{count} value(s) have urls that are invalid. ';
-                $label  .= 'These rows will be skipped during import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
-            }
             if($tooLarge > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';

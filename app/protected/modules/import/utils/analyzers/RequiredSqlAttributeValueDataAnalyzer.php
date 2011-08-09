@@ -24,19 +24,35 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type DropDown.
-     */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class RequiredSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
+                                                implements LinkedToMappingRuleDataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
+            $mappingRuleType, $mappingRuleData)
         {
-            return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
-        }
-
-        public static function getSanitizerUtilTypes()
-        {
-            return array('DropDown', 'DropDownRequired');
+            assert('is_string($columnName)');
+            assert('count($this->attributeNameOrNames) == 1');
+            assert('is_array($mappingRuleData)');
+            $modelClassName = $this->modelClassName;
+            $model = new $modelClassName(false);
+            if(!$model->isAttributeRequired($this->attributeNameOrNames[0]))
+            {
+                return false;
+            }
+            $mappingRuleFormClassName  = $mappingRuleType . 'MappingRuleForm';
+            $defaultValueAttributeName = $mappingRuleFormClassName::getAttributeName();
+            if($mappingRuleData[$defaultValueAttributeName] == null)
+            {
+                return;
+            }
+            $where = $columnName . ' IS NULL OR ' . $columnName . "=''";
+            $count = $dataProvider->getCountByWhere($where);
+            if($count > 0)
+            {
+                $label   = '{count} value(s) are missing and are required. ';
+                $label  .= 'These rows will be skipped on import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+            }
         }
     }
 ?>

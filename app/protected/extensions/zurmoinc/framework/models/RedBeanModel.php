@@ -670,6 +670,7 @@
                         switch ($validatorName)
                         {
                             case 'RedBeanModelTypeValidator':
+                            case 'TypeValidator':
                                 $columnName = strtolower($attributeName);
                                 if (array_key_exists($columnName, $hints))
                                 {

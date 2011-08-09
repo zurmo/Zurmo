@@ -43,5 +43,10 @@
         {
             return array('state');
         }
+
+        public static function getSanitizerUtilTypes()
+        {
+            return array('ContactState', 'ContactStateRequired');
+        }
     }
 ?>

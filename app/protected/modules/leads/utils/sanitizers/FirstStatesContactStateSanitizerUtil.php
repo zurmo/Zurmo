@@ -23,20 +23,16 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    /**
-     * Import rules for any attributes that are type DropDown.
-     */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class FirstStatesContactSanitizerUtil extends SanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
+            return 'FirstStatesContact';
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return array('DropDown', 'DropDownRequired');
+            return 'FirstStatesContact';
         }
     }
 ?>

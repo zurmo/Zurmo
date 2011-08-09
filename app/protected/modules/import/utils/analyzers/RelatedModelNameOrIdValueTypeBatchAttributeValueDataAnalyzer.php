@@ -36,6 +36,7 @@
             assert('count($this->attributeNameOrNames) == 1');
             $attributeModelClassName                        = $this->attributeModelClassName;
             $model                                          = new $attributeModelClassName(false);
+            assert('$model->isAttribute("name")');
             $this->maxNameLength                            = StringValidatorHelper::
                                                               getMaxLengthByModelAndAttributeName($model, 'name');
             $this->messageCountData[static::NEW_NAME_TO0_LONG] = 0;

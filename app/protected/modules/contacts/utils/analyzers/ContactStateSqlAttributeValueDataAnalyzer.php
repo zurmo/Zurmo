@@ -24,19 +24,38 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type DropDown.
-     */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
+                                                implements DataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
+            assert('is_string($columnName)');
+            assert('count($this->attributeNameOrNames) == 1');
+            $dropDownValues  = $this->resolveStates();
+            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
+            $count           = 0;
+            foreach($data as $valueCountData)
+            {
+                if($valueCountData[$columnName] == null)
+                {
+                    continue;
+                }
+                if(!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
+                {
+                    $count ++;
+                }
+            }
+            if($count > 0)
+            {
+                $label   = '{count} value(s) are not valid. ';
+                $label  .= 'These rows will be skipped upon import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+            }
         }
 
-        public static function getSanitizerUtilTypes()
+        protected function resolveStates()
         {
-            return array('DropDown', 'DropDownRequired');
+            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
         }
     }
 ?>

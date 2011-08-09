@@ -24,24 +24,48 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Date.
-     */
-    class DateAttributeImportRules extends AttributeImportRules
+    class ContactStateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+                                                      implements DataAnalyzerInterface
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected $states;
+
+        public function __construct($modelClassName, $attributeNameOrNames)
         {
-            return array('DefaultValueModelAttribute' => 'Date');
+            parent:: __construct($modelClassName, $attributeNameOrNames);
+            assert('count($this->attributeNameOrNames) == 1');
+            assert('$this->attributeNameOrNames[0] == "state"');
+            $this->states = $this->resolveStates();
         }
 
-        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            return array('ValueFormat' => 'ImportMappingRuleDateFormatDropDown');
+            assert('is_string($columnName)');
+            $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
-        public static function getSanitizerUtilTypes()
+        protected function analyzeByValue($value)
         {
-            return array('Date', 'Required');
+
+            if($value != null && !in_array(strtolower($value), $this->states))
+            {
+                $this->messageCountData[static::INVALID] ++;
+            }
+        }
+
+        protected function makeMessages()
+        {
+            $invalid  = $this->messageCountData[static::INVALID];
+            if($invalid > 0)
+            {
+                $label   = '{count} value(s) are invalid. ';
+                $label  .= 'These rows will be skipped upon import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+            }
+        }
+
+        protected function resolveStates()
+        {
+            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
         }
     }
 ?>

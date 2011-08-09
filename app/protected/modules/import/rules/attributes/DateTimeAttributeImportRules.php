@@ -41,7 +41,7 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array('DateTime');
+            return array('DateTime', 'Required');
         }
 
         public static function getLinkedMappingRuleType()

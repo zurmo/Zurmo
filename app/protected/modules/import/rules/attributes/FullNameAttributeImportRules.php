@@ -46,7 +46,7 @@
 
         public static function getSanitizerUtilTypes()
         {
-            return array('Truncate');
+            return array('FullName');
         }
     }
 ?>

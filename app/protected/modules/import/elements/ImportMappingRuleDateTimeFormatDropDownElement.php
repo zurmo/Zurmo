@@ -27,7 +27,7 @@
     class ImportMappingRuleDateTimeFormatDropDownElement extends DropDownElement
     {
         /**
-         * Override to ensure the model is an UserValueTypeModelAttributeMappingRuleForm.
+         * Override to ensure the model is an ValueFormatMappingRuleForm.
          */
         public function __construct($model, $attribute, $form = null, array $params = array())
         {

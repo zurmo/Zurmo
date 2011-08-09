@@ -103,7 +103,7 @@
             return $mappingRuleFormsAndElementTypes;
         }
 
-        protected static function makeForm($importRulesType, $attributeIndexOrDerivedType, $mappingRuleFormClassName)
+        public static function makeForm($importRulesType, $attributeIndexOrDerivedType, $mappingRuleFormClassName)
         {
             assert('is_string($importRulesType)');
             assert('is_string($attributeIndexOrDerivedType)');
