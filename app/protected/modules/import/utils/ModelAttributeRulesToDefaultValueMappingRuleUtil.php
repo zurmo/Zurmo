@@ -60,7 +60,7 @@
                         switch ($rule[1])
                         {
                             case 'type':
-                                if($rule['type'] == 'date')
+                                if($rule['type'] == 'date' || $rule['type'] == 'datetime')
                                 {
                                     $rule[1] = 'TypeValidator';
                                 }

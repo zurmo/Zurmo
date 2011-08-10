@@ -85,7 +85,7 @@
                 'elements' => array(
                     'currencyValue'    => 'CurrencyValue',
                     'date'             => 'Date',
-                    'DateTime'         => 'DateTime',
+                    'dateTime'         => 'DateTime',
                     'hasOne'           => 'ImportModelTestItem2',
                     'hasOneAlso'       => 'ImportModelTestItem4',
                     'phone'            => 'Phone',
