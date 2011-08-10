@@ -229,7 +229,8 @@
 
             $import               = Import::getById((int)$id);
             $unserializedData     = unserialize($import->serializedData);
-            $config               = array('pagination' => array('pageSize' => 500));
+            $pageSize             = Yii::app()->pagination->resolveActiveForCurrentUserByType('importPageSize');
+            $config               = array('pagination' => array('pageSize' => $pageSize));
             $dataProvider         = new ImportDataProvider($import->getTempTableName(), true, $config);
             $sequentialProcess    = new ImportDataAnalysisSequentialProcess($import, $dataProvider);
             $sequentialProcess->run($step, $nextParams);

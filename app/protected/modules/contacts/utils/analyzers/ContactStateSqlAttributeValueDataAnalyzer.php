@@ -48,7 +48,7 @@
             }
             if($count > 0)
             {
-                $label   = '{count} drop down value(s) are not valid. ';
+                $label   = '{count} pick list value(s) are not valid. ';
                 $label  .= 'Rows that have these values will be skipped upon import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
             }

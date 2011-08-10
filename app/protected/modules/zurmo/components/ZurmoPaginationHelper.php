@@ -52,6 +52,11 @@
         protected $_massEditProgressPageSize;
 
         /**
+         * How many records to import at one time.
+         */
+        protected $_importPageSize;
+
+        /**
          * When using the auto complete functionality on an input field, this is how many values are returned
          * per search.
          */
@@ -97,6 +102,15 @@
          * This is set from the value in the application common config file. It is used as the final fall back
          * if no other configuration settings are found.
          */
+        public function setImportPageSize($value)
+        {
+            $this->_importPageSize = $value;
+        }
+
+        /**
+         * This is set from the value in the application common config file. It is used as the final fall back
+         * if no other configuration settings are found.
+         */
         public function setAutoCompleteListPageSize($value)
         {
             $this->_autoCompleteListPageSize = $value;
@@ -112,8 +126,7 @@
          */
         public function resolveActiveForCurrentUserByType($type, $moduleName = null)
         {
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName = $this->getKeyByTypeAndModuleName($type);
             if ( null == $pageSize = Yii::app()->user->getState($keyName))
@@ -132,8 +145,7 @@
          */
         public function getForCurrentUserByType($type, $moduleName = null)
         {
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName = $this->getKeyByTypeAndModuleName($type);
             if ( null != $pageSize = ZurmoConfigurationUtil::getForCurrentUserByModuleName('ZurmoModule', $keyName))
@@ -152,8 +164,7 @@
          */
         public function setForCurrentUserByType($type, $value, $moduleName = null)
         {
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('is_int($value) && $value > 0');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName = $this->getKeyByTypeAndModuleName($type);
@@ -171,8 +182,7 @@
         public function getByUserAndType($user, $type, $moduleName = null)
         {
             assert('$user instanceOf User && $user->id > 0');
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName = $this->getKeyByTypeAndModuleName($type);
             if (null != $pageSize = ZurmoConfigurationUtil::getByUserAndModuleName($user, 'ZurmoModule', $keyName))
@@ -191,8 +201,7 @@
         public function setByUserAndType($user, $type, $value, $moduleName = null)
         {
             assert('$user instanceOf User && $user->id > 0');
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('is_int($value) && $value > 0');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName = $this->getKeyByTypeAndModuleName($type);
@@ -207,8 +216,7 @@
          */
         public function getGlobalValueByType($type, $moduleName = null)
         {
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName  = $this->getKeyByTypeAndModuleName($type);
             if (null != $pageSize = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', $keyName))
@@ -226,8 +234,7 @@
          */
         public function setGlobalValueByType($type, $value, $moduleName = null)
         {
-            assert('in_array($type, array("listPageSize", "subListPageSize", "modalListPageSize",
-                    "massEditProgressPageSize", "autoCompleteListPageSize")) == true');
+            assert('in_array($type, static::getAvailablePageSizeNames()) == true');
             assert('is_int($value) && $value > 0');
             assert('$moduleName == null || is_string($moduleName)');
             $keyName  = $this->getKeyByTypeAndModuleName($type);
@@ -237,6 +244,12 @@
         protected function getKeyByTypeAndModuleName($type, $moduleName = null)
         {
             return $type . $moduleName;
+        }
+
+        protected static function getAvailablePageSizeNames()
+        {
+            return array('listPageSize', 'subListPageSize', 'modalListPageSize', 'massEditProgressPageSize',
+                         'autoCompleteListPageSize', 'importPageSize');
         }
     }
 ?>
