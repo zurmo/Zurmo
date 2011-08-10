@@ -81,6 +81,10 @@
 
         public function getTempTableName()
         {
+            if($this->id <= 0 )
+            {
+                throw new NotSupportedException();
+            }
             return 'importtable' . $this->id;
         }
     }
