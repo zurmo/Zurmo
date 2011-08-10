@@ -42,7 +42,8 @@
 
             //Test an import object with existing data and a data element that does not go into the form.
             $import                 = new Import();
-            $dataToSerialize        = array('importRulesType' => 'test', 'anElementToIgnore' => 'something');
+            $dataToSerialize        = array('importRulesType' => 'test', 'anElementToIgnore' => 'something',
+                                            'dataAnalyzerMessagesData' => 'ttt');
             $import->serializedData = serialize($dataToSerialize);
             $form                   = ImportWizardUtil::makeFormByImport($import);
             $this->assertTrue  ($form instanceof ImportWizardForm);
@@ -51,6 +52,7 @@
             $this->assertEquals(null,    $form->firstRowIsHeaderRow);
             $this->assertTrue($form->explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions);
             $this->assertEquals(null,    $form->mappingData);
+            $this->assertEquals('ttt',   $form->dataAnalyzerMessagesData);
             $this->assertFalse ($form->isAttribute('anElementToIgnore'));
         }
 
@@ -61,24 +63,27 @@
         {
             $import = new Import();
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
-            $dataToSerialize                        = array('importRulesType' => 'x',
-                                                            'fileUploadData'       => array('a' => 'b'),
-                                                            'firstRowIsHeaderRow'  => false,
-                                                            'explicitReadWriteModelPermissions'     => 'z',
-                                                            'mappingData'          => array('x' => 'y'));
-            $import->serializedData                 = serialize($dataToSerialize);
-            $importWizardForm                       = new ImportWizardForm();
-            $importWizardForm->importRulesType = 'xx';
-            $importWizardForm->fileUploadData       = array('aa' => 'bb');
-            $importWizardForm->firstRowIsHeaderRow  = true;
-            $importWizardForm->explicitReadWriteModelPermissions     = $explicitReadWriteModelPermissions;
-            $importWizardForm->mappingData          = array('xx' => 'yy');
+            $dataToSerialize                            = array('importRulesType' => 'x',
+                                                                'fileUploadData'       => array('a' => 'b'),
+                                                                'firstRowIsHeaderRow'  => false,
+                                                                'explicitReadWriteModelPermissions'     => 'z',
+                                                                'mappingData'          => array('x' => 'y'),
+                                                                'dataAnalyzerMessagesData' => array('h'));
+            $import->serializedData                     = serialize($dataToSerialize);
+            $importWizardForm                           = new ImportWizardForm();
+            $importWizardForm->importRulesType          = 'xx';
+            $importWizardForm->fileUploadData           = array('aa' => 'bb');
+            $importWizardForm->firstRowIsHeaderRow      = true;
+            $importWizardForm->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
+            $importWizardForm->mappingData              = array('xx' => 'yy');
+            $importWizardForm->dataAnalyzerMessagesData = array('hhh');
             ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
             $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
-                                                            'fileUploadData'       => array('aa' => 'bb'),
-                                                            'firstRowIsHeaderRow'  => true,
-                                                            'explicitReadWriteModelPermissions'     => null,
-                                                            'mappingData'          => array('xx' => 'yy'));
+                                                             'fileUploadData'       => array('aa' => 'bb'),
+                                                             'firstRowIsHeaderRow'  => true,
+                                                             'explicitReadWriteModelPermissions'     => null,
+                                                             'mappingData'          => array('xx' => 'yy'),
+                                                             'dataAnalyzerMessagesData' => array('hhh'));
             $this->assertEquals(unserialize($import->serializedData), $compareDataToSerialize);
         }
 

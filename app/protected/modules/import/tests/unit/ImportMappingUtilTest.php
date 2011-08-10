@@ -96,5 +96,18 @@
             );
             $this->assertEquals($compareData, $reIndexedPostData);
         }
+
+        public function testMakeColumnNamesAndAttributeIndexOrDerivedTypeLabels()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $mappingData = array(
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'string', 'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'FullName', 'mappingRulesData' => null),
+            );
+            $data = ImportMappingUtil::makeColumnNamesAndAttributeIndexOrDerivedTypeLabels($mappingData, 'ImportModelTestItem');
+            $compareData = array('column_0' => 'String', 'column_1' => null, 'column_2' => 'Full Name');
+            $this->assertEquals($compareData, $data);
+        }
     }
 ?>

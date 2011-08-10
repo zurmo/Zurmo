@@ -126,7 +126,12 @@
          */
         public static function isFileUploadsOn()
         {
-            return ini_get('file_uploads');
+            $value = ini_get('file_uploads');
+            if($value)
+            {
+                return true;
+            }
+            return false;
         }
 
         protected static function getBytes($size)

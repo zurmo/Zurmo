@@ -32,6 +32,7 @@
             assert('is_string($columnName)');
             assert('count($this->attributeNameOrNames) == 1');
             $dropDownValues  = $this->resolveStates();
+            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
             $count           = 0;
             foreach($data as $valueCountData)
@@ -47,8 +48,8 @@
             }
             if($count > 0)
             {
-                $label   = '{count} value(s) are not valid. ';
-                $label  .= 'These rows will be skipped upon import.';
+                $label   = '{count} drop down value(s) are not valid. ';
+                $label  .= 'Rows that have these values will be skipped upon import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
             }
         }

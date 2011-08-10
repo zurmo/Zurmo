@@ -33,5 +33,10 @@
         {
             return array('DefaultValueFirstStatesContactModelAttribute' => 'ImportMappingRuleContactStatesDropDown');
         }
+
+        public static function getSanitizerUtilTypes()
+        {
+            return array('FirstStatesContact', 'FirstStatesContactRequired');
+        }
     }
 ?>

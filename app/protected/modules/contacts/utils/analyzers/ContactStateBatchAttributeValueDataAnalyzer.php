@@ -35,6 +35,7 @@
             assert('count($this->attributeNameOrNames) == 1');
             assert('$this->attributeNameOrNames[0] == "state"');
             $this->states = $this->resolveStates();
+            $this->states = ArrayUtil::resolveArrayToLowerCase($this->states);
         }
 
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
@@ -57,8 +58,8 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if($invalid > 0)
             {
-                $label   = '{count} value(s) are invalid. ';
-                $label  .= 'These rows will be skipped upon import.';
+                $label   = '{count} drop down value(s) are not valid. ';
+                $label  .= 'Rows that have these values will be skipped upon import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }
         }

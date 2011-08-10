@@ -29,8 +29,6 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            echo 'grapes ' . "\n";
-            exit;
             $super = SecurityTestHelper::createSuperAdmin();
             Yii::app()->user->userModel = $super;
             $jim = UserTestHelper::createBasicUser('jim');
@@ -144,7 +142,7 @@
 
                 'column_5' => array('attributeIndexOrDerivedType' => 'dateTime', 	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttribute' =>
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null),
                                         'ValueFormatMappingRuleForm' =>
                                         array('format' => 'MM-dd-yyyy hh:mm'))),
@@ -166,8 +164,8 @@
 
                 'column_9' => array('attributeIndexOrDerivedType' => 'owner', 		   'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                    'DefaultModelNameId' => array('defaultModelId' => null),
-                                    'UserValueTypeModelAttribute' =>
+                                    'DefaultModelNameIdMappingRuleForm' => array('defaultModelId' => null),
+                                    'UserValueTypeModelAttributeMappingRuleForm' =>
                                         array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID))),
 
                 'column_10' => array('attributeIndexOrDerivedType' => 'id', 		   'type' => 'importColumn',
@@ -182,11 +180,11 @@
 
                 'column_12' => array('attributeIndexOrDerivedType' => 'hasOneAlso', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultModelNameId' => array('defaultModelId' => null),
-                                        'IdValueType' => array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
+                                        'DefaultModelNameIdMappingRuleForm' => array('defaultModelId' => null),
+                                        'IdValueTypeMappingRuleForm' => array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
                 'column_13' => array('attributeIndexOrDerivedType' => 'hasOneAlso', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultModelNameId' => array('defaultModelId' => null),
+                                        'DefaultModelNameIdMappingRuleForm' => array('defaultModelId' => null),
                                         'IdValueTypeMappingRuleForm' =>
                                         array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
@@ -223,7 +221,22 @@
                                           array('defaultValue' => null))),
 
                 'column_20' => array('attributeIndexOrDerivedType' => 'textArea', 'type' => 'importColumn'),
-            );
+
+                'column_21' => array('attributeIndexOrDerivedType' => 'integer',    	  'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+
+                'column_22' => array('attributeIndexOrDerivedType' => 'currencyValue',    	  'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+
+                'column_23' => array('attributeIndexOrDerivedType' => 'FullName',    	  'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+                                        );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
             $import->serializedData        = serialize($serializedData);
@@ -249,6 +262,10 @@
                 'column_1' => array(
                     array('message'=> '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.',
                            'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
+                ),
+                'column_2' => array(
+                    array('message'=> '2 value(s) are invalid. These rows will be skipped during import.',
+                           'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
                 ),
                 'column_3' => array(
                     array('message'=> '2 value(s) have invalid check box values. These values will be set to false upon import.',
@@ -318,7 +335,19 @@
                     array('message'=> '1 value(s) have urls that are invalid. These rows will be skipped during import.',
                           'sanitizerUtilType' => 'Url', 'moreAvailable' => false),
                 ),
-            );
+                'column_21' => array(
+                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',
+                          'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
+                ),
+                'column_22' => array(
+                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',
+                          'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
+                ),
+                'column_23' => array(
+                    array('message'=> '1 value(s) are too large for this field. These rows will be skipped during import.',
+                          'sanitizerUtilType' => 'FullName', 'moreAvailable' => false),
+                ),
+                );
             $this->assertEquals($compareData, $messagesData);
             $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
             $compareInstructionsData  = array('column_6' =>

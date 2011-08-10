@@ -162,7 +162,7 @@
                                                               $importWizardForm->importRulesType);
                 MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingDataMappingRuleFormsAndElementTypes);
                 //Still validate even if MappingRuleForms fails, so all errors are captured and returned.
-                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'analyzeData');
+                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
             }
             else
             {
@@ -211,9 +211,10 @@
 
         /**
          * Step 5. Analyze data in a sequential process.
-         * @param unknown_type $step
+         * @param integer id - Import model id
+         * @param string $step
          */
-        function actionAnalyzeData($id, $step = null)
+        function actionStep5($id, $step = null)
         {
             if(isset($_GET['nextParams']))
             {
@@ -233,7 +234,7 @@
             $sequentialProcess    = new ImportDataAnalysisSequentialProcess($import, $dataProvider);
             $sequentialProcess->run($step, $nextParams);
             $nextStep             = $sequentialProcess->getNextStep();
-            $route                = $this->getModule()->getId() . '/' . $this->getId() . '/analyzeData';
+            $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step5';
             if($sequentialProcess->isComplete())
             {
                 $columnNamesAndAttributeIndexOrDerivedTypeLabels = ImportMappingUtil::

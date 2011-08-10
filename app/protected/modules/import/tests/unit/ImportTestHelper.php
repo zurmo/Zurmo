@@ -26,11 +26,14 @@
 
     class ImportTestHelper
     {
-        public static function createTempTableByFileNameAndTableName($fileName, $tableName)
+        public static function createTempTableByFileNameAndTableName($fileName, $tableName, $pathToFiles = null)
         {
             assert('is_string($fileName)');
             assert('is_string($tableName)');
-            $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
+            if($pathToFiles == null)
+            {
+                $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
+            }
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
             $fileHandle  = fopen($filePath, 'r');
             if ($fileHandle !== false)
