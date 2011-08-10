@@ -31,8 +31,12 @@
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultModelNameId'          => 'ImportMappingRuleDefaultModelNameId',
-                         'UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
+            return array('DefaultModelNameId'          => 'ImportMappingRuleDefaultModelNameId');
+        }
+
+        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
         }
 
         public static function getSanitizerUtilTypes()

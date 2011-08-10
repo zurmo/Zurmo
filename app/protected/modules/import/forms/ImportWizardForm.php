@@ -56,6 +56,13 @@
         public $firstRowIsHeaderRow;
 
         /**
+         * Data analysis messages indexed  by column name.
+         * type information.
+         * @var array
+         */
+        public $dataAnalyzerMessagesData;
+
+        /**
          * Object containing information on how to setup permissions for the new models that are created during the
          * import process.
          * @var object ExplicitReadWriteModelPermissions

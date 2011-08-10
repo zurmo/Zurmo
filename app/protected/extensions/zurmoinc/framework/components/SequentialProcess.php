@@ -117,9 +117,9 @@
             $steps        = $this->steps();
             $currentKey   = array_search($step, $steps);
             $nextKey      = $currentKey + 1;
-            if(!key_exists($nextKey, $steps))
+            if(count($steps) == 1)
             {
-                $this->complete = true;
+                $this->completionPercentage = $this->subSequenceCompletionPercentage;
             }
             else
             {

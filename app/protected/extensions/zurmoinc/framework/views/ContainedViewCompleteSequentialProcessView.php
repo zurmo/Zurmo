@@ -25,25 +25,25 @@
      ********************************************************************************/
 
     /**
-     * Helper class for working with import.
+     * Simple complete sequential process view that acts as a wrapper for displaying a contained view as the
+     * completion view.
      */
-    class ImportUtil
+    class ContainedViewCompleteSequentialProcessView extends CompleteSequentialProcessView
     {
-        public static function setDataAnalyzerMessagesDataToImport($import, $messagesData, $merge = false)
+
+        protected $view;
+
+        public function __construct($view)
         {
-            assert('$import instanceof Import');
-            assert('is_array($messagesData) || $messagesData == null');
-            $serializedData = unserialize($import->serializedData);
-            if($merge && isset($serializedData['dataAnalyzerMessagesData']))
-            {
-                $serializedData['dataAnalyzerMessagesData'] = array_merge($serializedData['dataAnalyzerMessagesData'],
-                                                                          $messagesData);
-            }
-            else
-            {
-                $serializedData['dataAnalyzerMessagesData'] = $messagesData;
-            }
-            $import->serializedData = serialize($serializedData);
+            assert('$view instanceof View');
+            $this->view = $view;
+        }
+
+        protected function renderContent()
+        {
+            $content  = $this->view->render();
+            $this->registerScripts();
+            return $content;
         }
     }
 ?>

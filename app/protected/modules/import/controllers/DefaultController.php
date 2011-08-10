@@ -141,7 +141,7 @@
          */
         public function actionStep4($id)
         {
-            $import               = Import::getById((int)$_GET['id']);
+            $import               = Import::getById((int)$id);
             $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
             $importWizardForm->setScenario('saveMappingData');
             $tempTableName        = $import->getTempTableName();
@@ -162,7 +162,7 @@
                                                               $importWizardForm->importRulesType);
                 MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingDataMappingRuleFormsAndElementTypes);
                 //Still validate even if MappingRuleForms fails, so all errors are captured and returned.
-                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
+                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'analyzeData');
             }
             else
             {
@@ -206,6 +206,65 @@
                                                              $importRulesClassName::getRequiredAttributesLabelsData()),
                                                              1, 0);
             $view                                           = new ImportPageView($this, $importView);
+            echo $view->render();
+        }
+
+        /**
+         * Step 5. Analyze data in a sequential process.
+         * @param unknown_type $step
+         */
+        function actionAnalyzeData($id, $step = null)
+        {
+            if(isset($_GET['nextParams']))
+            {
+                $nextParams = $_GET['nextParams'];
+            }
+            else
+            {
+                $nextParams = null;
+            }
+            assert('$step == null || is_string($step)');
+            assert('$nextParams == null || is_array($nextParams)');
+
+            $import               = Import::getById((int)$id);
+            $unserializedData     = unserialize($import->serializedData);
+            $config               = array('pagination' => array('pageSize' => 500));
+            $dataProvider         = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $sequentialProcess    = new ImportDataAnalysisSequentialProcess($import, $dataProvider);
+            $sequentialProcess->run($step, $nextParams);
+            $nextStep             = $sequentialProcess->getNextStep();
+            $route                = $this->getModule()->getId() . '/' . $this->getId() . '/analyzeData';
+            if($sequentialProcess->isComplete())
+            {
+                $columnNamesAndAttributeIndexOrDerivedTypeLabels = ImportMappingUtil::
+                                                                  makeColumnNamesAndAttributeIndexOrDerivedTypeLabels(
+                                                                  $unserializedData['mappingData'],
+                                                                  $unserializedData['importRulesType']);
+                $importWizardForm         = ImportWizardUtil::makeFormByImport($import);
+                $dataAnalysisCompleteView = new ImportWizardDataAnalysisCompleteView($this->getId(),
+                                                $this->getModule()->getId(),
+                                                $importWizardForm,
+                                                $columnNamesAndAttributeIndexOrDerivedTypeLabels);
+
+                $sequenceView = new ContainedViewCompleteSequentialProcessView($dataAnalysisCompleteView);
+            }
+            else
+            {
+                $sequenceView = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
+            }
+            if($step == null)
+            {
+                $gridView     = new GridView(2, 1);
+                $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 5 of 6'));
+                $wrapperView  = new SequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
+                $gridView->setView($titleBarView, 0, 0);
+                $gridView->setView($wrapperView, 1, 0);
+                $view        = new ImportPageView($this, $gridView);
+            }
+            else
+            {
+                $view        = new AjaxPageView($sequenceView);
+            }
             echo $view->render();
         }
 

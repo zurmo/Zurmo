@@ -120,55 +120,65 @@
             $mappingData = array(
                 'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttribute' => array('defaultValue' => null))),
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
 
                 'column_1' => array('attributeIndexOrDerivedType' => 'phone',    	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttribute' => array('defaultValue' => null))),
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
 
                 'column_2' => array('attributeIndexOrDerivedType' => 'float',    	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttribute' => array('defaultValue' => null))),
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
 
                 'column_3' => array('attributeIndexOrDerivedType' => 'boolean',  	  'type' => 'importColumn'),
 
                 'column_4' => array('attributeIndexOrDerivedType' => 'date', 	 	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttribute' => array('defaultValue' => null),
-                                        'ValueFormat'                => array('format' => 'MM-dd-yyyy'))),
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null),
+                                        'ValueFormatMappingRuleForm'                =>
+                                        array('format' => 'MM-dd-yyyy'))),
 
                 'column_5' => array('attributeIndexOrDerivedType' => 'dateTime', 	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttribute' => array('defaultValue' => null),
-                                        'ValueFormat' => array('format' => 'MM-dd-yyyy hh:mm'))),
+                                        'DefaultValueModelAttribute' =>
+                                        array('defaultValue' => null),
+                                        'ValueFormatMappingRuleForm' =>
+                                        array('format' => 'MM-dd-yyyy hh:mm'))),
 
                 'column_6' => array('attributeIndexOrDerivedType' => 'dropDown',      'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueDropDownModelAttribute' => array('defaultValue' => null))),
+                                        'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
 
                 'column_7' => array('attributeIndexOrDerivedType' => 'CreatedByUser', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                    'UserValueTypeModelAttribute' =>
-                                    array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME))),
+                                    'UserValueTypeModelAttributeMappingRuleForm' =>
+                                        array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME))),
 
                 'column_8' => array('attributeIndexOrDerivedType' => 'ModifiedByUser', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                    'UserValueTypeModelAttribute' =>
-                                    array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID))),
+                                    'UserValueTypeModelAttributeMappingRuleForm' =>
+                                        array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID))),
 
                 'column_9' => array('attributeIndexOrDerivedType' => 'owner', 		   'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                     'DefaultModelNameId' => array('defaultModelId' => null),
                                     'UserValueTypeModelAttribute' =>
-                                    array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID))),
+                                        array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID))),
 
                 'column_10' => array('attributeIndexOrDerivedType' => 'id', 		   'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'IdValueType' => array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
+                                        'IdValueTypeMappingRuleForm' =>
+                                        array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
 
                 'column_11' => array('attributeIndexOrDerivedType' => 'id', 		   'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'IdValueType' => array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
+                                        'IdValueTypeMappingRuleForm' =>
+                                        array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
                 'column_12' => array('attributeIndexOrDerivedType' => 'hasOneAlso', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
@@ -177,36 +187,40 @@
                 'column_13' => array('attributeIndexOrDerivedType' => 'hasOneAlso', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultModelNameId' => array('defaultModelId' => null),
-                                        'IdValueType' => array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
+                                        'IdValueTypeMappingRuleForm' =>
+                                        array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
                 'column_14'  => array('attributeIndexOrDerivedType' => 'hasOne',
                                          'type' => 'importColumn',
-                                      'mappingRulesData' => array('RelatedModelValueType' =>
-                                      array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
+                                      'mappingRulesData' => array('RelatedModelValueTypeMappingRuleForm' =>
+                                          array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
 
                 'column_15'  => array('attributeIndexOrDerivedType' => 'hasOne',
                                       'type' => 'importColumn',
-                                      'mappingRulesData' => array('RelatedModelValueType' =>
-                                      array('type' => RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
+                                      'mappingRulesData' => array('RelatedModelValueTypeMappingRuleForm' =>
+                                          array('type' => RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
                 'column_16'  => array('attributeIndexOrDerivedType' => 'hasOne',
                                       'type' => 'importColumn',
-                                      'mappingRulesData' => array('RelatedModelValueType' =>
-                                      array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME))),
+                                      'mappingRulesData' => array('RelatedModelValueTypeMappingRuleForm' =>
+                                          array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME))),
 
                 'column_17'  => array('attributeIndexOrDerivedType' => 'ImportModelTestItem3Derived',
                                          'type' => 'importColumn',
                                       'mappingRulesData' => array(
-                                          'IdValueType' => array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
+                                          'IdValueTypeMappingRuleForm' =>
+                                          array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
 
                 'column_18'  => array('attributeIndexOrDerivedType' => 'ImportModelTestItem3Derived',
                                       'type' => 'importColumn',
                                       'mappingRulesData' => array(
-                                          'IdValueType' => array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
+                                          'IdValueTypeMappingRuleForm' =>
+                                          array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
                 'column_19' => array('attributeIndexOrDerivedType' => 'url',   	  'type' => 'importColumn',
                                      'mappingRulesData' => array(
-                                         'DefaultValueModelAttribute' => array('defaultValue' => null))),
+                                         'DefaultValueModelAttributeMappingRuleForm' =>
+                                          array('defaultValue' => null))),
 
                 'column_20' => array('attributeIndexOrDerivedType' => 'textArea', 'type' => 'importColumn'),
             );

@@ -156,5 +156,28 @@
             }
             return $mappingData;
         }
+
+        public static function makeColumnNamesAndAttributeIndexOrDerivedTypeLabels($mappingData, $importRulesType)
+        {
+            assert('is_array($mappingData)');
+            assert('is_string($importRulesType)');
+            $columnNamesAndAttributeIndexOrDerivedTypeLabels = array();
+            foreach($mappingData as $columnName => $columnData)
+            {
+                if($columnData['attributeIndexOrDerivedType'] != null)
+                {
+                    $attributeImportRules = AttributeImportRulesFactory::
+                                            makeByImportRulesTypeAndAttributeIndexOrDerivedType(
+                                            $importRulesType, $columnData['attributeIndexOrDerivedType']);
+                    $columnNamesAndAttributeIndexOrDerivedTypeLabels[$columnName] = $attributeImportRules->getDisplayLabel();
+                }
+                else
+                {
+                    $columnNamesAndAttributeIndexOrDerivedTypeLabels[$columnName] = null;
+                }
+            }
+            return $columnNamesAndAttributeIndexOrDerivedTypeLabels;
+        }
+
     }
 ?>

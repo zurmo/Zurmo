@@ -58,6 +58,11 @@
             throw new NotImplementedException();
         }
 
+        protected function renderLabel()
+        {
+            return $this->getFormattedAttributeLabel();
+        }
+
         protected function getDropDownArray()
         {
             $dropDownArray = unserialize($this->model->data->serializedData);

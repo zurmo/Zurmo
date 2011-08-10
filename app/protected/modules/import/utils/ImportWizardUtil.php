@@ -37,7 +37,8 @@
         private static $importToFormAttributeMap = array('importRulesType',
                                                          'fileUploadData',
                                                          'firstRowIsHeaderRow',
-                                                         'mappingData');
+                                                         'mappingData',
+                                                         'dataAnalyzerMessagesData');
 
         /**
          * Given an import object, make an ImportWizardForm, mapping the attributes from the import object into the

@@ -46,7 +46,14 @@
         {
             assert('is_string($columnMappingData["attributeIndexOrDerivedType"]) ||
                     $columnMappingData["attributeIndexOrDerivedType"] == null');
+                    assert('$columnMappingData["type"] == "importColumn" ||
+            $columnMappingData["type"] == "extraColumn"');
             if($columnMappingData['attributeIndexOrDerivedType'] == null)
+            {
+                return;
+            }
+            //Currently does not support data analysis on extra columns.
+            if($columnMappingData['type'] =='extraColumn')
             {
                 return;
             }
@@ -137,7 +144,8 @@
             {
                 $mappingRuleType = $attributeValueSanitizerUtilClassName::getLinkedMappingRuleType();
                 assert('$mappingRuleType != null');
-                $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleType];
+                $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
+                $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
                 assert('$mappingRuleData != null');
                 $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName, $mappingRuleType, $mappingRuleData);
             }
