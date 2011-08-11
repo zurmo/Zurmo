@@ -327,19 +327,18 @@
                                     'AuditTestItem\([0-9]+\), \(None\)/',             // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
 
-                $item->dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60);
+                $item->dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 120);
                 $item->date     = '2010-12-20';
                 $item->float    = 3.14159;
                 $item->integer  = 666;
                 $item->time     = '11:59';
                 $this->assertTrue($item->save());
                 $this->assertEquals($beforeCount + 6, AuditEvent::getCount());
-
                 $auditEvents = AuditEvent::getTailEvents(5);
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard
-                                    'Changed Datetime from \(None\) to [0-9]+/',      // Not Coding Standard
+                                    'Changed Date Time from \(None\) to [0-9]+/',      // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
@@ -371,13 +370,13 @@
                 $this->assertEquals($beforeCount + 11, AuditEvent::getCount());
 
                 $auditEvents = AuditEvent::getTailEvents(5);
-                /*
+/*
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard
-                                    'Changed Datetime from [0-9]+ to [0-9]+/',        // Not Coding Standard
+                                    'Changed Date Time from [0-9]+ to [0-9]+/',        // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
-                                    */
+*/
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard
