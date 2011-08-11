@@ -327,7 +327,7 @@
                                     'AuditTestItem\([0-9]+\), \(None\)/',             // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
 
-                $item->datetime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60);
+                $item->dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60);
                 $item->date     = '2010-12-20';
                 $item->float    = 3.14159;
                 $item->integer  = 666;
@@ -362,7 +362,7 @@
                                     'Changed Time from \(None\) to 11:59/',           // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[4]));
 
-                $item->datetime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+                $item->dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                 $item->date     = '2012-01-22';
                 $item->float    = 6.626068E-34;
                 $item->integer  = 69;
