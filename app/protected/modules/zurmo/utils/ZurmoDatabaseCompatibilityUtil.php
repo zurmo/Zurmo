@@ -543,12 +543,18 @@
                     set allow_permissions = 31;
                     set deny_permissions  = 0;
                 else                                                            # Not Coding Standard
-                    select _securableitem_id in
-                        (select securableitem_id
-                         from   _user, ownedsecurableitem
-                         where  _user.id = ownedsecurableitem.owner__user_id and
-                                permitable_id = _permitable_id)
-                    into is_owner;
+                    begin
+                        declare continue handler for 1054, 1146 # Column, table doesn\'t exist.
+                        begin                           		# RedBean hasn\'t created it yet.
+                            set is_owner = 0;
+                        end;
+                        select _securableitem_id in
+                            (select securableitem_id
+                             from   _user, ownedsecurableitem
+                             where  _user.id = ownedsecurableitem.owner__user_id and
+                                    permitable_id = _permitable_id)
+                        into is_owner;
+                    end;
                     if is_owner then
                         set allow_permissions = 31;
                         set deny_permissions  = 0;
@@ -808,13 +814,18 @@
                         set allow_permissions = 0;
                         set deny_permissions  = 0;
                     end;
-
-                select _securableitem_id in
-                    (select securableitem_id
-                     from   _user, ownedsecurableitem
-                     where  _user.id = ownedsecurableitem.owner__user_id and
-                            permitable_id = _permitable_id)
-                into is_owner;
+                begin
+                    declare continue handler for 1054, 1146 # Column, table doesn\'t exist.
+                    begin                           		# RedBean hasn\'t created it yet.
+                        set is_owner = 0;
+                    end;
+                    select _securableitem_id in
+                        (select securableitem_id
+                         from   _user, ownedsecurableitem
+                         where  _user.id = ownedsecurableitem.owner__user_id and
+                                permitable_id = _permitable_id)
+                    into is_owner;
+                end;
                 if is_owner then
                     set allow_permissions = 31;
                     set deny_permissions  = 0;
