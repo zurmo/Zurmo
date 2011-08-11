@@ -24,8 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Interface for AttributeValueDataAnalyzer objects that are not linked to a MappingRuleForm. If the analyzer needs
+     * information from a mapping rule form, then utilize @see LinkedToMappingRuleDataAnalyzerInterface.
+     */
     interface DataAnalyzerInterface
     {
+        /**
+         * Run the analysis and make any associated messages.
+         * @param AnalyzerSupportedDataProvider$dataProvider
+         * @param string $columnName
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName);
     }
 ?>

@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Element used by the import mapping process.
+     */
     class ImportMappingRuleDateFormatDropDownElement extends DropDownElement
     {
         /**
@@ -53,6 +56,10 @@
             throw new NotImplementedException();
         }
 
+        /**
+         * The static dates are just sample data for the user interface to help illustrate the available formats.
+         * @see DropDownElement::getDropDownArray()
+         */
         protected function getDropDownArray()
         {
             $dropDownData = array();

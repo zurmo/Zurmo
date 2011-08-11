@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for attributes that are a contact state.
+     */
     class ContactStateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                       implements DataAnalyzerInterface
     {

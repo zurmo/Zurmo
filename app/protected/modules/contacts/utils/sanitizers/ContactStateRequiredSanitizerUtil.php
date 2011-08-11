@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for handling contact state. These are states that are the starting state or after.  Manages
+     * if the state is required and the value is present.
+     */
     class ContactStateRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
         public static function getLinkedMappingRuleType()

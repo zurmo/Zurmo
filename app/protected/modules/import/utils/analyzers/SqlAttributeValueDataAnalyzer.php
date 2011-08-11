@@ -24,6 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base class for Sql analyzers. These type of analyzers run a query on all the rows at once for example instead
+     * of operating in batch where the data provider loops over the rows and each row is processed one at a time.
+     * @see BatchAttributeValueDataAnalyzer
+     */
     abstract class SqlAttributeValueDataAnalyzer extends AttributeValueDataAnalyzer
     {
 

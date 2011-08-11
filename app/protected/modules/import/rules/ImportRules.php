@@ -241,6 +241,9 @@
             return $requireAttributesCollection;
         }
 
+        /**
+         * Returns an array of required attribute labels.
+         */
         public static function getRequiredAttributesLabelsData()
         {
             $requireAttributesCollection = static::getRequiredAttributesCollectionNotIncludingReadOnly();

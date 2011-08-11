@@ -27,13 +27,14 @@
     /**
      *
      * See the yii documentation.
+     * Validates datetime as integer, since it is a timestamp
+     * Validates date as a db formatted date string.
      */
     class TypeValidator extends CTypeValidator
     {
         /**
          * Validates the attribute of the model.
          * If there is any error, the error message is added to the model.
-         * Override exists
          * @param RedBeanModel $model the model being validated
          * @param string $attribute the attribute being validated
          */

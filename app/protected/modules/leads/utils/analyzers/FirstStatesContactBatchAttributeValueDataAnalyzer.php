@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for contact state values that are before the starting state. This means it is a lead value.
+     */
     class FirstStatesContactBatchAttributeValueDataAnalyzer extends ContactStateBatchAttributeValueDataAnalyzer
     {
         protected function resolveStates()

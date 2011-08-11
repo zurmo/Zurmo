@@ -25,7 +25,9 @@
      ********************************************************************************/
 
     /**
-     *
+     * View for displaying the data analysis results after the data analysis runs in a sequential process.
+     * This step occurs after the import mapping view is completed.
+     * @see ImportDataAnalysisSequentialProcess
      */
     class ImportWizardDataAnalysisCompleteView extends ImportWizardView
     {

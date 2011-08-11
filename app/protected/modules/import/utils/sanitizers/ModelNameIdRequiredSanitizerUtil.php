@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for resolving if an attribute is required or not and whether the value is present. Override to
+     * handle attributes that are relation models specifically.
+     */
     class ModelNameIdRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
         public static function getLinkedMappingRuleType()

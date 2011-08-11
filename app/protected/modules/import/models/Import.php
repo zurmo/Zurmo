@@ -79,6 +79,11 @@
             return true;
         }
 
+        /**
+         * Returns the string name of the temp table in the database used for the import data.
+         * @throws NotSupportedException
+         * @return Temporary table id if the import model has a valid id.
+         */
         public function getTempTableName()
         {
             if($this->id <= 0 )

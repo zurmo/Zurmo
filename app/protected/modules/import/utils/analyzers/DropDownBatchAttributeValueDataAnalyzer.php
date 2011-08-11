@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to drop down type attributes.  Values found in the import data but not
+     * in the zurmo CustomFieldData will be added to the instructionsData array.
+     */
     class DropDownBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
@@ -42,6 +46,9 @@
             $this->dropDownValues = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
         }
 
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
@@ -52,6 +59,9 @@
             }
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
 
@@ -62,6 +72,9 @@
             }
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

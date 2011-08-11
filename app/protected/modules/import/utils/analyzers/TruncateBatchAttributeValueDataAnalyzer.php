@@ -24,11 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for process truncate.  Determines if a value is to large and adds messages about how the value
+     * will be truncated on import or the row itself will be skipped.
+     */
     class TruncateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
+        /**
+         * Max length allowed for the attribute specified or null if not specified.
+         * @var integer
+         */
         protected $maxLength;
 
+        /**
+         * Override to make the max length information.
+         * @param string $modelClassName
+         * @param array $attributeNameOrNames
+         */
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
@@ -36,6 +49,11 @@
             $this->maxLength = $this->resolveMaxLength($modelClassName, $attributeNameOrNames[0]);
         }
 
+        /**
+         * Provided a model class name and an attribute name, get the max length for that attribute.
+         * @param string $modelClassName
+         * @param string $attributeName
+         */
         protected function resolveMaxLength($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
@@ -44,12 +62,18 @@
             return StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, $attributeName);
         }
 
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
             $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             if(strlen($value) > $this->maxLength)
@@ -58,6 +82,9 @@
             }
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

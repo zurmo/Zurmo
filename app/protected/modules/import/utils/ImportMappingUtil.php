@@ -139,6 +139,11 @@
             return $reIndexedData;
         }
 
+        /**
+         * Given an array of import instructions data, merge this data into the mapping data.
+         * @param array $mappingData
+         * @param array $importInstructionsData
+         */
         public static function resolveImportInstructionsDataIntoMappingData($mappingData, $importInstructionsData)
         {
             assert('is_array($mappingData)');
@@ -157,6 +162,12 @@
             return $mappingData;
         }
 
+        /**
+         *
+         * Make an array of index/values that are the column names and their respective labels.
+         * @param array $mappingData
+         * @param array $importRulesType
+         */
         public static function makeColumnNamesAndAttributeIndexOrDerivedTypeLabels($mappingData, $importRulesType)
         {
             assert('is_array($mappingData)');

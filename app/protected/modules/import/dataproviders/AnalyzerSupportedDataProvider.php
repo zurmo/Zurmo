@@ -24,10 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Extend this class if the data provider should support DataAnalyzer classes.  These abstract methods
+     * act as an interface for any methods requiring the data provider to be an AnalyzerSupportedDataProvider
+     */
     abstract class AnalyzerSupportedDataProvider extends CDataProvider
     {
+        /**
+         * Get the count of rows in a table and filter by a where sql part if supplied.
+         * @param string $where
+         */
         abstract public function getCountByWhere($where);
 
+        /**
+         * Get the grouped count by a column name and filter by a where sql part if supplied.  Each row has 2
+         * resulting elements, 'count' and the column named the $groupbyColumnName
+         * @param string $groupbyColumnName
+         * @param string $where
+         */
         abstract public function getCountDataByGroupByColumnName($groupbyColumnName, $where = null);
     }
 ?>

@@ -116,7 +116,7 @@
         {
             assert('is_string($columnName)');
             assert('is_string($headerValue) || $headerValue == null');
-            $content = self::renderChoppedDisplayValueContent($headerValue);
+            $content = self::renderChoppedStringContent($headerValue);
             return $content;
         }
 
@@ -124,7 +124,7 @@
         {
             assert('is_string($columnName)');
             assert('is_string($sampleValue) || $sampleValue == null');
-            $sampleValueContent = self::renderChoppedDisplayValueContent($sampleValue);
+            $sampleValueContent = self::renderChoppedStringContent($sampleValue);
             $content = '<div id="' . self::resolveSampleColumnIdByColumnName($columnName) . '">' . $sampleValueContent . '</div>';
             return $content;
         }
@@ -244,12 +244,18 @@
             return 'sample-column-header';
         }
 
-        public static function renderChoppedDisplayValueContent($value)
+        /**
+         * Given a string, chop the string by 22 characters only displaying the first 22 characters with a '...'.
+         * Add a div with a title, so that if the user hovers over the text, it will show the entire string.
+         * @param string $value
+         * @return string content
+         */
+        public static function renderChoppedStringContent($string)
         {
-            if(strlen($value) <= 22)
+            if(strlen($string) <= 22)
             {
-                return $value;
+                return $string;
             }
-            return CHtml::tag('div', array('title' => $value), substr($value, 0, 22) . '...');
+            return CHtml::tag('div', array('title' => $string), substr($string, 0, 22) . '...');
         }
     }

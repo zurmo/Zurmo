@@ -24,13 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to full name derived attributes.
+     */
     class FullNameBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
+        /**
+         * A variable used to index a count of values that are too long.
+         * @var string
+         */
         const FULL_NAME_TOO_LONG = 'Full name too long';
 
+        /**
+         * The max allowed length for the first name attribute.
+         * @var integer
+         */
         protected $firstNameMaxLength;
 
+        /**
+         * The max allowed length for the last name attribute.
+         * @var integer
+         */
         protected $lastNameMaxLength;
 
         public function __construct($modelClassName, $attributeNameOrNames)
@@ -48,12 +63,18 @@
                                         getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[1]);
         }
 
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
             $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             if($value == null)
@@ -72,6 +93,9 @@
             }
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $tooLarge = $this->messageCountData[static::FULL_NAME_TOO_LONG];

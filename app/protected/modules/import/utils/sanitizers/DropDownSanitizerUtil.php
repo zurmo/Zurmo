@@ -23,8 +23,16 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
+
+    /**
+     * Sanitizer for drop down attributes.
+     */
     class DropDownSanitizerUtil extends SanitizerUtil
     {
+        /**
+         * Variable used to indicate a drop down value is missing from zurmo and will need to be added during import.
+         * @var string
+         */
         const ADD_MISSING_VALUE = 'Add missing value';
 
         public static function getSqlAttributeValueDataAnalyzerType()

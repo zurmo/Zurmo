@@ -340,7 +340,7 @@
                     {
                         $renderedContentData[MappingFormLayoutUtil::
                         resolveSampleColumnIdByColumnName($columnName)] = MappingFormLayoutUtil::
-                                                                          renderChoppedDisplayValueContent($value);
+                                                                          renderChoppedStringContent($value);
                     }
                 }
             }

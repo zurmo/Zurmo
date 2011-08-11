@@ -24,9 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for process truncate.  Determines if a value is to large and adds messages about how the value
+     * will be truncated on import or the row itself will be skipped.
+     */
     class TruncateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                 implements DataAnalyzerInterface
     {
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
@@ -46,12 +53,20 @@
             }
         }
 
+        /**
+         * @param string $columnName
+         */
         protected static function resolvColumnNameSqlLengthFunction($columnName)
         {
             assert('is_string($columnName)');
             return DatabaseCompatibilityUtil::charLength($columnName);
         }
 
+        /**
+         * Provided a model class name and an attribute name, get the max length for that attribute.
+         * @param string $modelClassName
+         * @param string $attributeName
+         */
         protected function resolveMaxLength($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');

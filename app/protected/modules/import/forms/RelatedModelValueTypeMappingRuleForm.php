@@ -30,6 +30,11 @@
      */
     class RelatedModelValueTypeMappingRuleForm extends IdValueTypeMappingRuleForm
     {
+        /**
+         * Indicates the value is the 'name' of the model. If the model is found with that name, the mapping will
+         * connect that related model, otherwise create a new model with that name.
+         * @var integer
+         */
         const ZURMO_MODEL_NAME   = 3;
     }
 ?>

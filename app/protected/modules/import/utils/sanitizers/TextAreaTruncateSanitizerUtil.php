@@ -23,7 +23,11 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-    class TextAreaTruncateSanitizerUtil extends SanitizerUtil
+
+    /**
+     * Truncate sanitizer specific for text area type attributes.
+     */
+    class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
     {
         public static function getSqlAttributeValueDataAnalyzerType()
         {

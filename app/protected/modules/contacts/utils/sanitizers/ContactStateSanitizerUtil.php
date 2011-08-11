@@ -23,6 +23,10 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
+
+   /**
+     * Sanitizer for handling contact state. These are states that are the starting state or after.
+     */
     class ContactStateSanitizerUtil extends SanitizerUtil
     {
         public static function getSqlAttributeValueDataAnalyzerType()

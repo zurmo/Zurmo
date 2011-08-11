@@ -24,9 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to boolean type attributes.  There is a variety of values that are accepted and
+     * converted into the boolean values at import time. @see BooleanSanitizerUtil::getAcceptableValuesMapping
+     */
     class BooleanSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                 implements DataAnalyzerInterface
     {
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();

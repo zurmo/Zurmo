@@ -24,8 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Provides similar functionality as the PostUtil except is designed specifically for handling posted
+     * data from an ImportWizardForm.
+     * @see PostUtil
+     */
     class ImportWizardFormPostUtil
     {
+        /**
+         * Sanitize post data, specifically handling any date and date time conversions from local format to the
+         * database format.
+         * @param string $importRulesType
+         * @param array $postMappingData
+         */
         public static function sanitizePostByTypeForSavingMappingData($importRulesType, $postMappingData)
         {
             assert('is_string($importRulesType)');

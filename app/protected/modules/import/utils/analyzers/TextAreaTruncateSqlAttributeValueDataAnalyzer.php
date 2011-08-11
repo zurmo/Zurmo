@@ -24,14 +24,23 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analysis specific to text area type attributes. Handles checking if a value is too large.
+     */
     class TextAreaTruncateSqlAttributeValueDataAnalyzer extends TruncateSqlAttributeValueDataAnalyzer
     {
+        /**
+         * @param string $columnName
+         */
         protected static function resolvColumnNameSqlLengthFunction($columnName)
         {
             assert('is_string($columnName)');
             return DatabaseCompatibilityUtil::length($columnName);
         }
 
+        /**
+         * @see TruncateSqlAttributeValueDataAnalyzer::resolveMaxLength()
+         */
         protected function resolveMaxLength($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');

@@ -24,9 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analysis to check if a value should not be null or empty based on if the attribute is required or not.
+     * Also looks at whether a default value is specified since if the value is empty or null, but a default value
+     * is specified, then that will pass.
+     */
     class RequiredSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                 implements LinkedToMappingRuleDataAnalyzerInterface
     {
+        /**
+         * @see LinkedToMappingRuleDataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
             $mappingRuleType, $mappingRuleData)
         {

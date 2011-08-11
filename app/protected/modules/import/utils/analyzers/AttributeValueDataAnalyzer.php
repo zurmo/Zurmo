@@ -24,18 +24,49 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base class for attribute data analyzers.  Data analyzers can inspect a value and based on rules, decide whether
+     * that value is valid or invalid.  This information is then utilized to help users during the import process
+     * ensure their import data is correct before finalizing the import.
+     */
     class AttributeValueDataAnalyzer
     {
+        /**
+         * Indicates an invalid value.
+         * @var string
+         */
         const INVALID       = 'Invalid';
 
+        /**
+         * Model class name for the attribute or attribute names passed into the analyzer.
+         * @var string
+         */
         protected $modelClassName;
 
+        /**
+         * Typically this is just an array of one attribute name, however with derived types, it is possible that more
+         * than one attribute name will be pased through.
+         * @var array
+         */
         protected $attributeNameOrNames;
 
+        /**
+         * Array of various counts of data. An example is a sub-element of the array storing a count of how many
+         * invalid values.
+         * @var array
+         */
         protected $messageCountData;
 
+        /**
+         * Array of messages.
+         * @var array
+         */
         private   $messages;
 
+        /**
+         * Array of instructional data that is generated after the data is analyzed
+         * @var array
+         */
         private   $instructionsData;
 
         public function __construct($modelClassName, $attributeNameOrNames)
@@ -47,21 +78,38 @@
             $this->messageCountData[static::INVALID] = 0;
         }
 
+        /**
+         * @return true/false if the analyzer supports offering additional result information. Some analyzers will
+         * offer additional options after analysis.  An example is a drop down, where a user can decide whether to map
+         * all the missing dropdowns or do something else, like merge some together with existing ones.
+         */
         public static function supportsAdditionalResultInformation()
         {
             return false;
         }
 
+        /**
+         * Add a message.
+         * @param string $message
+         */
         protected function addMessage($message)
         {
             $this->messages[] = $message;
         }
 
+        /**
+         * @return array of messages if available. Otherwise null is returned.
+         */
         public function getMessages()
         {
             return $this->messages;
         }
 
+        /**
+         * Set the instructional data. If the data is already set for this analyzer an exception is thrown because
+         * each analyzer can only have one set of instructional data.
+         * @param array $instructionsData
+         */
         public function setInstructionsData($instructionsData)
         {
             assert('$instructionsData != null');
@@ -72,6 +120,9 @@
             $this->instructionsData = $instructionsData;
         }
 
+        /**
+         * @return array of instructional data if available. Otherwise null is returned.
+         */
         public function getInstructionsData()
         {
             return $this->instructionsData;

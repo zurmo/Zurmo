@@ -23,6 +23,10 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
+
+    /**
+     * Sanitizer for resolving whether a value is too large based on an attribute's rules.
+     */
     class TruncateSanitizerUtil extends SanitizerUtil
     {
         public static function getSqlAttributeValueDataAnalyzerType()

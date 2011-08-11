@@ -29,6 +29,12 @@
      */
     class ImportUtil
     {
+        /**
+         * @param object $import
+         * @param array $messagesData
+         * @param boolean $merge - if true, then merge the $messagesData with existing data, otherwise overwrite
+         * existing data.
+         */
         public static function setDataAnalyzerMessagesDataToImport($import, $messagesData, $merge = false)
         {
             assert('$import instanceof Import');

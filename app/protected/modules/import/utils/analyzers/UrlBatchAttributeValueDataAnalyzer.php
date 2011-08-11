@@ -24,13 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to url type attributes.
+     */
     class UrlBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
+        /**
+         * Identifier for when a url is larger than the max length.
+         * @var string
+         */
         const URL_TOO_LONG = 'Url too long';
 
+        /**
+         * @var integer
+         */
         protected $maxLength;
 
+        /**
+         * Override to resolve the max length.
+         * @param string $modelClassName
+         * @param string $attributeNameOrNames
+         */
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
@@ -39,12 +54,18 @@
             $this->messageCountData[static::URL_TOO_LONG] = 0;
         }
 
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
             $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             if($value == null)
@@ -65,6 +86,9 @@
             }
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

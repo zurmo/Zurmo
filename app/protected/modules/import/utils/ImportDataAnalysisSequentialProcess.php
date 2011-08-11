@@ -25,7 +25,8 @@
      ********************************************************************************/
 
     /**
-     *
+     * Sequential processing for the import data analysis.  Each step is a different column that is being mapped
+     * for import.
      */
     class ImportDataAnalysisSequentialProcess extends SequentialProcess
     {
@@ -37,6 +38,10 @@
 
         protected $dataProvider;
 
+        /**
+         * A filtered down array of only column names that are mapped.
+         * @var array
+         */
         protected $sanitizableColumnNames;
 
         public function __construct(Import $import, $dataProvider)

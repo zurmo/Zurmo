@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer that is for attributes that are user models.
+     */
     class UserValueTypeSanitizerUtil extends SanitizerUtil
     {
         public static function getBatchAttributeValueDataAnalyzerType()

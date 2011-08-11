@@ -24,8 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class for handling file upload for imports.
+     */
     class ImportUploadedFileUtil extends UploadedFileUtil
     {
+        /**
+         * Check the $_FILES array by the $filesVariableName and make sure the file is a CSV and that the file
+         * is uploaded ok.
+         * @param string $filesVariableName
+         * @return CUploadedFile if successful, otherwise throw an exception.
+         */
         public static function getByNameCatchErrorAndEnsureFileIsACSV($filesVariableName)
         {
             assert('is_string($filesVariableName)');

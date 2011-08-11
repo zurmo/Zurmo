@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for resolving if an attribute is required or not and whether the value is present.
+     */
     class RequiredSanitizerUtil extends SanitizerUtil
     {
         public static function supportsBatchAttributeValuesDataAnalysis()

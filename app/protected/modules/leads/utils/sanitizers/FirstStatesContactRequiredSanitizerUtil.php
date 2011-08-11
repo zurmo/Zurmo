@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for contact state values that are before the starting state. Manages if the value is empty
+     * or null and resolves against if the state attribute is required.
+     */
     class FirstStatesContactRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
         public static function getLinkedMappingRuleType()

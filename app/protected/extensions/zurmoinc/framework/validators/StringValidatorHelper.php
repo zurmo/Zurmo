@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class for working with string attributes and getting information about the attribute rules.
+     */
     class StringValidatorHelper
     {
+        /**
+         * Given a model and attributeName, get the max length for that attribute as defined by the metadata rules.
+         * @param object $model RedBeanModel
+         * @param string $attributeName
+         */
         public static function getMaxLengthByModelAndAttributeName(RedBeanModel $model, $attributeName)
         {
             assert('is_string($attributeName)');

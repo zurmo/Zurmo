@@ -24,12 +24,32 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Override to accomodate a value type of 'ZURMO_MODEL_NAME'. This would represent a model 'name' attribute value
+     * that can be used as a unique identifier to map to existing models. An example is when importing a contact, and
+     * the account name is provided. If the name is found, then the contact will be connected to the existing account
+     * otherwise a new account is created with the name provided.
+     * @see IdValueTypeBatchAttributeValueDataAnalyzer
+     */
     class RelatedModelNameOrIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
     {
+        /**
+         * The max allowed length of the name.
+         * @var integer
+         */
         protected $maxNameLength;
 
+        /**
+         * If the name provide is larger than the $maxNameLength
+         * @var string
+         */
         const NEW_NAME_TO0_LONG = 'New name too long';
 
+        /**
+         * Override to ensure the $attributeNameOrNames is a single value and also to resolve the max name length.
+         * @param string $modelClassName
+         * @param string $attributeNameOrNames
+         */
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
@@ -42,6 +62,9 @@
             $this->messageCountData[static::NEW_NAME_TO0_LONG] = 0;
         }
 
+        /**
+         * @see IdValueTypeBatchAttributeValueDataAnalyzer::ensureTypeValueIsValid()
+         */
         protected function ensureTypeValueIsValid($type)
         {
             assert('$type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
@@ -49,6 +72,9 @@
                     $type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME');
         }
 
+        /**
+         * @see IdValueTypeBatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             $modelClassName = $this->attributeModelClassName;
@@ -97,6 +123,9 @@
             }
         }
 
+        /**
+         * @see IdValueTypeBatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             if($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||

@@ -24,16 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Class for handling the data analysis performed on mapped data in an import.  Each column mapping can
+     * be analyzed and the resulting message and instructional data will be stored in an array which is accessible
+     * once the analysis is complete.
+     * NOTE - Analysis is only performed on mapped import columns and not extra columns with mapping rules.
+     */
     class ImportDataAnalyzer
     {
+        /**
+         * ImportRules object to base the analysis on.
+         * @var object
+         */
         protected $importRules;
 
+        /**
+         * AnalyzerSupportedDataProvider extended data provider for use in querying data to analyze.
+         * @var object
+         */
         protected $dataProvider;
 
+        /**
+         * Analyzing data can produce messages that need to be saved for later use.
+         * @var array
+         */
         protected $messagesData = array();
 
+        /**
+         * Analyzing data can produce instructional data that needs to be saved for later use during the actual import.
+         * @var array
+         */
         protected $importInstructionsData = array();
 
+        /**
+         * @param string $importRules
+         * @param object $dataProvider
+         */
         public function __construct($importRules, $dataProvider)
         {
             assert('$importRules instanceof ImportRules');
@@ -42,6 +68,15 @@
             $this->dataProvider = $dataProvider;
         }
 
+        /**
+         * Given a column name and column mapping data, perform data analysis on the column based on the mapped
+         * attribute index or derived type.  The attribute index or derived type will correspond with an attribute
+         * import rules which will have information on what sanitizers to use.  Based on this, the correct sanitizers
+         * will be called and their appropriate analyzers will be used.
+         * NOTE - Analysis is only performed on mapped import columns and not extra columns with mapping rules.
+         * @param string $columnName
+         * @param array $columnMappingData
+         */
         public function analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData)
         {
             assert('is_string($columnMappingData["attributeIndexOrDerivedType"]) ||
@@ -155,6 +190,13 @@
             }
         }
 
+        /**
+         * Add a analysis results message by column name.
+         * @param string  $columnName
+         * @param string  $message
+         * @param string  $sanitizerUtilType
+         * @param boolean $moreAvailable
+         */
         public function addMessageDataByColumnName($columnName, $message, $sanitizerUtilType, $moreAvailable)
         {
             assert('is_string($columnName)');
@@ -166,6 +208,12 @@
                                                   'moreAvailable'     => $moreAvailable);
         }
 
+        /**
+         * Add instructional data by column name and sanitizer type
+         * @param string $columnName
+         * @param array  $instructionData
+         * @param string $sanitizerUtilType
+         */
         public function addInstructionDataByColumnName($columnName, $instructionData, $sanitizerUtilType)
         {
             assert('is_string($columnName)');
@@ -174,11 +222,17 @@
             $this->importInstructionsData[$columnName][$sanitizerUtilType] = $instructionData;
         }
 
+        /**
+         * @return array of messages data.
+         */
         public function getMessagesData()
         {
             return $this->messagesData;
         }
 
+        /**
+         * @return array of instructions data.
+         */
         public function getImportInstructionsData()
         {
             return $this->importInstructionsData;

@@ -24,6 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Element used by the import mapping process. This allows a type of user value to be selected.  The user attribute
+     * when mapped can be mapped either as a username, zurmo user id, or an external system id.
+     * @see UserValueTypeModelAttributeMappingRuleForm
+     */
     class ImportMappingUserValueTypeDropDownElement extends DropDownElement
     {
         /**

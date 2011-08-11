@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for attributes that are models, and handling the values that represent the ids of those models.
+     */
     class IdValueTypeSanitizerUtil extends SanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()

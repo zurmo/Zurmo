@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for relation attributes that are derived (casted down) from a real relation.  Specific for handling
+     * opportunity derived attribute values.
+     */
     class OpportunityDerivedIdValueTypeSanitizerUtil extends ModelDerivedIdValueTypeSanitizerUtil
     {
         protected static function getDerivedModelClassName()

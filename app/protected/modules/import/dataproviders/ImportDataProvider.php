@@ -97,6 +97,9 @@
             return $keys;
         }
 
+        /**
+         * @see AnalyzerSupportedDataProvider::getCountByWhere()
+         */
         public function getCountByWhere($where)
         {
             assert('$where != null');
@@ -107,6 +110,9 @@
             return ImportDatabaseUtil::getCount($this->tableName, $where);
         }
 
+        /**
+         * @see AnalyzerSupportedDataProvider::getCountDataByGroupByColumnName()
+         */
         public function getCountDataByGroupByColumnName($groupbyColumnName, $where = null)
         {
             assert(is_string($groupbyColumnName));

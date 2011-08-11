@@ -24,12 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analysis for attributes that are user model types.
+     */
     class UserValueTypeBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                        implements LinkedToMappingRuleDataAnalyzerInterface
     {
+        /**
+         * Array of acceptable ids for a user value based on the value type.
+         * @var array
+         */
         protected $acceptableValues;
+
+        /**
+         * Type of user value. Zurmo user id, external system id, or username.
+         * @var integer
+         */
         protected $type;
 
+        /**
+         * @see LinkedToMappingRuleDataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
@@ -57,6 +72,9 @@
             $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             if($this->type == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME)
@@ -73,7 +91,9 @@
             }
         }
 
-
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

@@ -24,17 +24,35 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to number type attributes. Includes decimal, currency, and integer.
+     * Validates whether the value is a valid number.
+     */
     class NumberBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements DataAnalyzerInterface
     {
+        /**
+         * Used to identify the type of mixed type the attribute is. Integer, Currency, Decimal etc.
+         * @see ModelAttributeToMixedTypeUtil::getType()
+         * @var string
+         */
         protected $type;
 
+        /**
+         * Override to assert $attributeNameOrNames is only a single attribute as this is the only way this analyzer
+         * supports it.
+         * @param string $modelClassName
+         * @param string $attributeNameOrNames
+         */
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
             assert('count($this->attributeNameOrNames) == 1');
         }
 
+        /**
+         * @see DataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
@@ -45,6 +63,9 @@
             $this->type     = ModelAttributeToMixedTypeUtil::getType($model, $this->attributeNameOrNames[0]);
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             if($value == null)
@@ -71,6 +92,9 @@
 
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

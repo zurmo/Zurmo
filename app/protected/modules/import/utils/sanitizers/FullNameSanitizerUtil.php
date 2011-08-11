@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for full name attributes.
+     */
     class FullNameSanitizerUtil extends SanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()

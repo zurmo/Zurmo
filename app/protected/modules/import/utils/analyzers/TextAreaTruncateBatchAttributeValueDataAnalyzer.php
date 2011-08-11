@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Override to handle truncate analysis specifically for text area type attributes
+     *
+     */
     class TextAreaTruncateBatchAttributeValueDataAnalyzer extends TruncateBatchAttributeValueDataAnalyzer
     {
+        /**
+         * A text area cannot be larger than ~ 65k.
+         * @see TruncateBatchAttributeValueDataAnalyzer::resolveMaxLength()
+         */
         protected function resolveMaxLength($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');

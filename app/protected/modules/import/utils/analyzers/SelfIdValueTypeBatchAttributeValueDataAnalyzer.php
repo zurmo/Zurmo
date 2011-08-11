@@ -24,8 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Override to handle when the value is an id that represents the model itself.
+     */
     class SelfIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
     {
+
+        /**
+         * Override to ensure the attribute is 'id'.
+         * @param unknown_type $modelClassName
+         * @param unknown_type $attributeNameOrNames
+         */
+        public function __construct($modelClassName, $attributeNameOrNames)
+        {
+            parent:: __construct($modelClassName, $attributeNameOrNames);
+            assert('$this->attributeNameOrNames[0] == "id"');
+        }
+
+        /**
+         * @see IdValueTypeBatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)

@@ -24,21 +24,56 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to attributes that are either ids or relation ids.  For importing ids, there
+     * are several approved value types including a zurmo model id as well as an external system id that can be used to
+     * maintain key integerity during the entirety of a data import.
+     */
     class IdValueTypeBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                               implements LinkedToMappingRuleDataAnalyzerInterface
     {
+        /**
+         * Index used for values found matched to an existing model in the database.
+         * @var string
+         */
         const FOUND   = 'Found';
 
+        /**
+         * Index used for when a value is not found matched to an existing model in the database.
+         * @var unknown_type
+         */
         const UNFOUND = 'Unfound';
 
+        /**
+         * Identifies when the value provided is too large.
+         * @var string
+         */
         const EXTERNAL_SYSTEM_ID_TOO_LONG = 'External system id too long';
 
+        /**
+         * Identifies the type of value provided. IdValueTypeMappingRuleForm::ZURMO_MODEL_ID or
+         * IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID
+         * @var integer
+         */
         protected $type;
 
+        /**
+         * The attribute is expected to be a relation. This is the model class name for that relation.
+         * @var string
+         */
         protected $attributeModelClassName;
 
+        /**
+         * Max allowed length of a value when the type of value is IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID
+         * @var integer
+         */
         protected $externalSystemIdMaxLength = 40;
 
+        /**
+         * Override to ensure the attribute is only a single attribute and also setup the message count data.
+         * @param unknown_type $modelClassName
+         * @param unknown_type $attributeNameOrNames
+         */
         public function __construct($modelClassName, $attributeNameOrNames)
         {
             parent:: __construct($modelClassName, $attributeNameOrNames);
@@ -50,6 +85,9 @@
             $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] = 0;
         }
 
+        /**
+         * @see LinkedToMappingRuleDataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
@@ -71,14 +109,24 @@
             $this->processAndMakeMessage($dataProvider, $columnName);
         }
 
+        /**
+         * Ensure the type is an accepted type.
+         * @param unknown_type integer
+         */
         protected function ensureTypeValueIsValid($type)
         {
             assert('$type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                     $type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
         }
 
+        /**
+         * Given a model and an attribute, return the model class name for the attribute.
+         * @param object $model
+         * @param string $attributeName
+         */
         protected function resolveAttributeModelClassName(RedBeanModel $model, $attributeName)
         {
+            assert('is_string($attributeName)');
             if ($attributeName == 'id')
             {
                 return get_class($model);
@@ -86,10 +134,12 @@
             return $model->getRelationModelClassName($attributeName);
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::processAndMakeMessage()
+         */
         protected function processAndMakeMessage(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-
             $page           = 0;
             $itemsProcessed = 0;
             $totalItemCount =  $dataProvider->getTotalItemCount(true);
@@ -115,6 +165,9 @@
             return $this->makeMessages();
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::analyzeByValue()
+         */
         protected function analyzeByValue($value)
         {
             $modelClassName = $this->attributeModelClassName;
@@ -143,6 +196,10 @@
             }
         }
 
+        /**
+         * Tries to find the value in the system. If found, returns true, otherwise false.
+         * @param string $value
+         */
         protected function resolveFoundIdByValue($value)
         {
             assert('is_int($value) || is_string($value)');
@@ -166,6 +223,10 @@
             return true;
         }
 
+        /**
+         * Tries to find the value in the system. If found, returns true, otherwise false.
+         * @param string $value
+         */
         protected function resolveFoundExternalSystemIdByValue($value)
         {
             $modelClassName = $this->attributeModelClassName;
@@ -185,6 +246,9 @@
             throw new NotSupportedException();
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $label   = '{found} record(s) will be updated ';

@@ -30,8 +30,16 @@
      */
     class IdValueTypeMappingRuleForm extends ValueTypeMappingRuleForm
     {
+        /**
+         * A valid zurmo model id.
+         * @var integer
+         */
         const ZURMO_MODEL_ID     = 1;
 
+        /**
+         * A valid external system id representing the model to be mapped.
+         * @var integer
+         */
         const EXTERNAL_SYSTEM_ID = 2;
     }
 ?>

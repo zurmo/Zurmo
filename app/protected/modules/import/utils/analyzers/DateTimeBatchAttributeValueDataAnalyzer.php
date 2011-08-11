@@ -24,10 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to datetime type attributes. Several different formats are accepted and can be
+     * converted during import to the database format.
+     */
     class DateTimeBatchAttributeValueDataAnalyzer extends DateBatchAttributeValueDataAnalyzer
     {
         protected $exceptedFormat;
 
+        /**
+         * @see DateBatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

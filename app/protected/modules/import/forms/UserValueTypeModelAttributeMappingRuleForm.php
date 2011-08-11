@@ -30,10 +30,22 @@
      */
     class UserValueTypeModelAttributeMappingRuleForm extends ModelAttributeMappingRuleForm
     {
+        /**
+         * A valid zurmo user model id.
+         * @var integer
+         */
         const ZURMO_USER_ID  = 1;
 
+        /**
+         * A valid external system id representing the user to be mapped.
+         * @var integer
+         */
         const EXTERNAL_SYSTEM_USER_ID  = 2;
 
+        /**
+         * A valid username on a user model in zurmo.
+         * @var integer
+         */
         const ZURMO_USERNAME = 3;
 
         public $type;

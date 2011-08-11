@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class SanitizerUtil
+    /**
+     * Base sanitization utility to be overriden as needed for specific sanitizers. Sanitizer utils provide information
+     * on the data analyzers to utilize and if sql and batch analysis are supported. Also provides method to perform
+     * actual sanitization prior to setting the value in a model to import.
+     */
+    abstract class SanitizerUtil
     {
+        /**
+         * @return string - type of sanitizer
+         */
         public static function getType()
         {
             $type = get_called_class();
@@ -33,21 +41,38 @@
             return $type;
         }
 
+        /**
+         * @return boolean - whether this sanitizer supports sql analysis which does an analysis using a sql query.
+         */
         public static function supportsSqlAttributeValuesDataAnalysis()
         {
             return true;
         }
 
+        /**
+         * @return boolean - whether this sanitizer supports batch analysis which does analysis looping over rows
+         * of data using a data provider.
+         */
         public static function supportsBatchAttributeValuesDataAnalysis()
         {
             return true;
         }
 
+        /**
+         * @return boolean - whether this sanitizer supports data analysis at all.
+         */
         public static function supportsDataAnalysis()
         {
             return true;
         }
 
+        /**
+         *
+         * Given a model class name and attribute name or names, make a sql analyzer and return it.
+         * @param string $modelClassName
+         * @param array $attributeNameOrNames
+         * @throws NotSupportedException
+         */
         public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
         {
             assert('is_string($modelClassName)');
@@ -62,6 +87,11 @@
             return new $sqlAttributeValueDataAnalyzerClassName($modelClassName, $attributeNameOrNames);
         }
 
+        /**
+         * Given a model class name and attribute name or names, make a batch analyzer and return it.
+         * @param string $modelClassName
+         * @param array $attributeNameOrNames
+         */
         public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
         {
             assert('is_string($modelClassName)');
@@ -76,16 +106,29 @@
             return new $batchAttributeValueDataAnalyzerClassName($modelClassName, $attributeNameOrNames);
         }
 
+        /**
+         * @return string - the type of sql attribute value data analyzer or null if none available.
+         */
         public static function getSqlAttributeValueDataAnalyzerType()
         {
             return null;
         }
 
+        /**
+         *
+         * @return string - the type of batch attribute value data analyzer or null if none available.
+         */
         public static function getBatchAttributeValueDataAnalyzerType()
         {
             return null;
         }
 
+        /**
+         *
+         * @return string - the type of linked mapping rule  or null if none available.  Some sanitizers and
+         * data analyzers need information from a mapping rule form in order to perform their job. This method
+         * returns the type of mapping rule form.
+         */
         public static function getLinkedMappingRuleType()
         {
             return null;

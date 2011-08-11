@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for attributes that are derived model types. This means the specific relation is not on the model,
+     * but typically this is a casted down version of the actual relation on the model.
+     */
     abstract class ModelDerivedIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
     {
         protected static function getDerivedModelClassName()

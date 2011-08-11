@@ -24,11 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analyzer for columns mapped to date type attributes. Several different formats are accepted and can be
+     * converted during import to the database format.
+     */
     class DateBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
                                                   implements LinkedToMappingRuleDataAnalyzerInterface
     {
         protected $exceptedFormat;
 
+        /**
+         * @see LinkedToMappingRuleDataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
@@ -48,6 +55,9 @@
             }
         }
 
+        /**
+         * @see BatchAttributeValueDataAnalyzer::makeMessages()
+         */
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

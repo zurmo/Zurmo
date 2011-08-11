@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Sanitizer for date time type attributes.
+     */
     class DateTimeSanitizerUtil extends SanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()

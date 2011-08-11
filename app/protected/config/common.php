@@ -160,6 +160,7 @@
             'application.extensions.zurmoinc.framework.portlets.*',
             'application.extensions.zurmoinc.framework.portlets.rules.*',
             'application.extensions.zurmoinc.framework.utils.*',
+            'application.extensions.zurmoinc.framework.validators.*',
             'application.extensions.zurmoinc.framework.views.*',
             'application.extensions.zurmoinc.framework.widgets.*',
         ),

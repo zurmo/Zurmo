@@ -24,9 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Data analysis for attributes that are user model types.
+     */
     class UserValueTypeSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                      implements LinkedToMappingRuleDataAnalyzerInterface
     {
+        /**
+         * @see LinkedToMappingRuleDataAnalyzerInterface::runAndMakeMessages()
+         */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName,
                                          $mappingRuleType, $mappingRuleData)
         {
@@ -51,6 +57,11 @@
             }
         }
 
+        /**
+         * Check whether the value specified is a valid zurmo user model id.
+         * @param object $dataProvider
+         * @param string $columnName
+         */
         protected function resolveForTypeZurmoUserId(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
@@ -78,6 +89,11 @@
             }
         }
 
+        /**
+         * Check whether the value is a valid external system id.
+         * @param object $dataProvider
+         * @param string $columnName
+         */
         protected function resolveForTypeExternalSystemId(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
@@ -103,6 +119,11 @@
             }
         }
 
+        /**
+         * Check whether the specified value corresponds to a valid username of a user model.
+         * @param AnalyzerSupportedDataProvider $dataProvider
+         * @param string $columnName
+         */
         protected function resolveForTypeUsername(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');

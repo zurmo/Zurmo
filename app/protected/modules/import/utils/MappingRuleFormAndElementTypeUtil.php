@@ -103,6 +103,12 @@
             return $mappingRuleFormsAndElementTypes;
         }
 
+        /**
+         * Make a mapping rule form object.
+         * @param string $importRulesType
+         * @param string $attributeIndexOrDerivedType
+         * @param string $mappingRuleFormClassName
+         */
         public static function makeForm($importRulesType, $attributeIndexOrDerivedType, $mappingRuleFormClassName)
         {
             assert('is_string($importRulesType)');

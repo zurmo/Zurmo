@@ -24,7 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class SelfIdValueTypeSanitizerUtil extends SanitizerUtil
+    /**
+     * Sanitizer for attributes that are ids. This would be used if mapping an id for the model that is being imported.
+     */
+    class SelfIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()
         {
