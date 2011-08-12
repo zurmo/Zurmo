@@ -189,11 +189,13 @@
 
             public function tearDown()
             {
-                parent::tearDown();
                 ReadPermissionsOptimizationUtil::rebuild();
                 assert('self::getAccountMungeRowCount() == 0'); // Not Coding Standard
                 RedBeanModel::forgetAll();
                 self::assertEverythingHasBeenSetBackToHowItStarted();
+                //Teardown comes after so that the Yii::app()->user->userModel is still in tact since the rebuild
+                //requires it.
+                parent::tearDown();
             }
 
             protected static function assertEverythingHasBeenSetBackToHowItStarted()
