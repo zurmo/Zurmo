@@ -143,5 +143,17 @@
         {
             return true;
         }
+
+        /**
+         * BEFORE ADDING TO THIS ARRAY - Remember to change the assertion in JuiPortlets:::init()
+         */
+        public static function getLayoutTypesData()
+        {
+            return array(
+                '100'   => Yii::t('Default', '1 Column'),
+                '50,50' => Yii::t('Default', '2 Columns'), // Not Coding Standard
+                '75,25' => Yii::t('Default', '2 Columns Left Strong'), // Not Coding Standard
+            );
+        }
     }
 ?>
