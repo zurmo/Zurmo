@@ -143,10 +143,15 @@
                         $PhpDriverVersion = phpversion('mysql');
                         if($PhpDriverVersion !== null)
                         {
-                            $actualVersion = mysql_get_server_info();
-                            if($actualVersion !== null)
+                            $output = shell_exec('mysql -V 2>&1');
+                            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches);
+                            if($matches != null)
                             {
-                                return self::checkVersion($minimumRequiredVersion, $actualVersion);
+                                $actualVersion=  $matches[0];
+                                if($actualVersion !== null)
+                                {
+                                    return self::checkVersion($minimumRequiredVersion, $actualVersion);
+                                }
                             }
                         }
                         return false;
@@ -353,6 +358,10 @@
                         if($row == null)
                         {
                             $result = array(mysql_errno(), mysql_error());
+                        }
+                        elseif(is_array($row) && count($row) == 1 && $row[0] == 0)
+                        {
+                            return false;
                         }
                         else
                         {
