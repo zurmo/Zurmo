@@ -36,6 +36,51 @@
             return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Apache'));
         }
 
+        /**
+         * Override to handle scenarios where the application can detect apache is installed, but is unable to resolve
+         * the version.
+         * @see ServiceHelper::checkServiceAndSetMessagesByMethodNameAndDisplayLabel()
+         */
+        protected function checkServiceAndSetMessagesByMethodNameAndDisplayLabel($methodName, $displayLabel)
+        {
+            assert('$this->minimumVersion != null &&
+                    (is_array($this->minimumVersion) || is_string($this->minimumVersion))');
+            assert('is_string($methodName)');
+            assert('is_string($displayLabel)');
+            $actualVersion           = null;
+            $minimumVersionLabel     = $this->getMinimumVersionLabel();
+            $passed                  = $this->callCheckServiceMethod($methodName, $actualVersion);
+            if($passed)
+            {
+                $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
+                $this->message .= ' ' .Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
+                return true;
+            }
+            else
+            {
+                if($actualVersion == null)
+                {
+                    if($_SERVER['SERVER_SOFTWARE'] == 'Apache')
+                    {
+                        $this->checkResultedInWarning = true;
+                        $this->message  = $displayLabel . ' ' .
+                        Yii::t('Default', 'is installed, but the version is unknown.');
+                    }
+                    else
+                    {
+                        $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
+                    }
+                }
+                else
+                {
+                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
+                }
+                $this->message .= "\n";
+                $this->message .= Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
+                return false;
+            }
+        }
+
         protected function getMinimumVersionLabel()
         {
             assert('is_array($this->minimumVersion)');
