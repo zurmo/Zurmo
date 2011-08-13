@@ -35,7 +35,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc install <database-hostname> <database-username> <database-password> <superuser-password> [demodata]
+      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <superuser-password> [demodata]
 
     DESCRIPTION
       This command runs a silent install on the application, optional loading demo data if specified. This version
@@ -44,7 +44,8 @@
 
     PARAMETERS
      * database-hostname  : The hostname, typically 'localhost'.
-     * database-username  : The database name to installation the application on.
+     * database-name      : The database name to installation the application on.
+     * database-username  : The database user
      * database-password  : The database user password.
      * superuser-password : The password for the super administrator that is created.  The username will be 'super'
 
