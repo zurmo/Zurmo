@@ -160,9 +160,20 @@
                                                               makeFormsAndElementTypesByMappingDataAndImportRulesType(
                                                               $importWizardForm->mappingData,
                                                               $importWizardForm->importRulesType);
-                MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingDataMappingRuleFormsAndElementTypes);
-                //Still validate even if MappingRuleForms fails, so all errors are captured and returned.
-                $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
+                $validated                                  = MappingRuleFormAndElementTypeUtil::
+                                                              validateMappingRuleForms(
+                                                              $mappingDataMappingRuleFormsAndElementTypes);
+                if($validated)
+                {
+                    //Still validate even if MappingRuleForms fails, so all errors are captured and returned.
+                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
+                }
+                else
+                {
+                    $importWizardForm->validate();
+                    $importWizardForm->addError('mappingData', Yii::t('Default',
+                                                'There are errors with some of your mapping rules. Please fix.'));
+                }
             }
             else
             {
