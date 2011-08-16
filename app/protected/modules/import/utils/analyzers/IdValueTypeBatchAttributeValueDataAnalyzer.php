@@ -101,9 +101,10 @@
             if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 $modelClassName = $this->attributeModelClassName;
+                $columnName     = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
                 RedBean_Plugin_Optimizer_ExternalSystemId::
                 ensureColumnIsVarchar($modelClassName::getTableName($modelClassName),
-                                      'externalSystemId',
+                                      $columnName,
                                       $this->externalSystemIdMaxLength);
             }
             $this->processAndMakeMessage($dataProvider, $columnName);
@@ -230,8 +231,9 @@
         protected function resolveFoundExternalSystemIdByValue($value)
         {
             $modelClassName = $this->attributeModelClassName;
+            $columnName     = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             $sql = 'select id from ' . $modelClassName::getTableName($modelClassName) .
-            ' where externalSystemId = \'' . $value . '\' limit 1';
+            ' where ' . $columnName . ' = \'' . $value . '\' limit 1';
             $ids =  R::getCol($sql);
             assert('count($ids) <= 1');
             if(count($ids) == 0)

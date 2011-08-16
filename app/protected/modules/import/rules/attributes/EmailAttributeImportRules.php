@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type Email.
      */
-    class EmailAttributeImportRules extends AttributeImportRules
+    class EmailAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'Text');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Email', 'Required');
         }

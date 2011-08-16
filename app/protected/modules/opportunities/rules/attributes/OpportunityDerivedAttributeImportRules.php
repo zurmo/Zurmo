@@ -32,7 +32,7 @@
      */
     class OpportunityDerivedAttributeImportRules extends ModelDerivedAttributeImportRules
     {
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('OpportunityDerivedIdValueType');
         }

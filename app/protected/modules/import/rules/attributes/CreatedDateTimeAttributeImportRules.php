@@ -39,7 +39,7 @@
             return array('createdDateTime');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('DateTime');
         }

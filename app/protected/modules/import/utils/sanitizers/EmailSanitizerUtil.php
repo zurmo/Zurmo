@@ -38,5 +38,13 @@
         {
             return 'Email';
         }
+
+        /**
+         * If an email value is invalid, then skip the entire row during import.
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
+        {
+            return true;
+        }
     }
 ?>

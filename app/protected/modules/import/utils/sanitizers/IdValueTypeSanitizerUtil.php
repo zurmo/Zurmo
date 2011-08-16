@@ -27,7 +27,7 @@
     /**
      * Sanitizer for attributes that are models, and handling the values that represent the ids of those models.
      */
-    class IdValueTypeSanitizerUtil extends SanitizerUtil
+    class IdValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()
         {
@@ -42,6 +42,14 @@
         public static function getLinkedMappingRuleType()
         {
             return 'IdValueType';
+        }
+
+        /**
+         * If a model id value is invalid, then skip the entire row during import.
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
+        {
+            return true;
         }
     }
 ?>

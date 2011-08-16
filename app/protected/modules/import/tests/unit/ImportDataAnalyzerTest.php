@@ -46,20 +46,21 @@
             assert('$saved');
 
             //Ensure the external system id column is present.
+            $columnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(User::getTableName('User'), 'externalSystemId');
+            ensureColumnIsVarchar(User::getTableName('User'), $columnName);
             $userTableName = User::getTableName('User');
-            R::exec("update " . $userTableName . " set externalSystemId = 'A' where id = {$super->id}");
-            R::exec("update " . $userTableName . " set externalSystemId = 'B' where id = {$jim->id}");
+            R::exec("update " . $userTableName . " set $columnName = 'A' where id = {$super->id}");
+            R::exec("update " . $userTableName . " set $columnName = 'B' where id = {$jim->id}");
 
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem::getTableName('ImportModelTestItem'),   'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem::getTableName('ImportModelTestItem'),   $columnName);
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem2::getTableName('ImportModelTestItem2'), 'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem2::getTableName('ImportModelTestItem2'), $columnName);
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem3::getTableName('ImportModelTestItem3'), 'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem3::getTableName('ImportModelTestItem3'), $columnName);
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem4::getTableName('ImportModelTestItem4'), 'externalSystemId');
+            ensureColumnIsVarchar(ImportModelTestItem4::getTableName('ImportModelTestItem4'), $columnName);
         }
 
         public function testImportDataAnalysisResults()
@@ -73,7 +74,7 @@
             R::exec("update " . $import->getTempTableName() . " set column_8 = " .
                      Yii::app()->user->userModel->id ." where id != 1 limit 4");
 
-
+            $externalSystemIdColumnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             //Add test ImportModelTestItem models for use in this test.
             $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa','aba');
             $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw','daf');
@@ -82,7 +83,7 @@
                      $importModelTestItemModel1->id ." where id != 1 limit 3");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem::getTableName('ImportModelTestItem')
-            . " set externalSystemId = 'B' where id = {$importModelTestItemModel2->id}");
+            . " set $externalSystemIdColumnName = 'B' where id = {$importModelTestItemModel2->id}");
 
             //Add test ImportModelTestItem2 models for use in this test.
             $importModelTestItem2Model1 = ImportTestHelper::createImportModelTestItem2('aaa');
@@ -93,7 +94,7 @@
                      $importModelTestItem2Model1->id ." where id != 1 limit 4");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem2::getTableName('ImportModelTestItem2')
-            . " set externalSystemId = 'B' where id = {$importModelTestItem2Model2->id}");
+            . " set $externalSystemIdColumnName = 'B' where id = {$importModelTestItem2Model2->id}");
 
             //Add test ImportModelTestItem3 models for use in this test.
             $importModelTestItem3Model1 = ImportTestHelper::createImportModelTestItem3('aaa');
@@ -103,7 +104,7 @@
                      $importModelTestItem3Model1->id ." where id != 1 limit 3");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem3::getTableName('ImportModelTestItem3')
-            . " set externalSystemId = 'K' where id = {$importModelTestItem3Model2->id}");
+            . " set $externalSystemIdColumnName = 'K' where id = {$importModelTestItem3Model2->id}");
 
             //Add test ImportModelTestItem4 models for use in this test.
             $importModelTestItem4Model1 = ImportTestHelper::createImportModelTestItem4('aaa');
@@ -113,7 +114,7 @@
                      $importModelTestItem4Model1->id ." where id != 1 limit 5");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem3::getTableName('ImportModelTestItem4')
-            . " set externalSystemId = 'J' where id = {$importModelTestItem4Model2->id}");
+            . " set $externalSystemIdColumnName = 'J' where id = {$importModelTestItem4Model2->id}");
 
             $mappingData = array(
                 'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',

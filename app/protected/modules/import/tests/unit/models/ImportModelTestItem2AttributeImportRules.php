@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are a ImportModelTestItem2 model.
      */
-    class ImportModelTestItem2AttributeImportRules extends AttributeImportRules
+    class ImportModelTestItem2AttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('RelatedModelValueType' => 'ImportMappingRelatedModelValueTypeDropDown');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('RelatedModelNameOrIdValueType');
         }

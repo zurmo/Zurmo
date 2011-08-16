@@ -27,7 +27,7 @@
     /**
      * Import rules for any attributes that are a CurrencyValue model.
      */
-    class CurrencyValueAttributeImportRules extends AttributeImportRules
+    class CurrencyValueAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
@@ -36,7 +36,7 @@
                          'CurrencyRateToBaseModelAttribute' => 'Decimal');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Number', 'Required');
         }

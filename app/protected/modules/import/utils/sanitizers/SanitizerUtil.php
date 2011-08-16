@@ -133,5 +133,59 @@
         {
             return null;
         }
+
+        /**
+         * @return boolean - whether this sanitizer supports the use of instructions data in the form of an array
+         * during sanitization. An example is drop downs, which has possible instructional information regarding
+         * what to do with missing drop down values.
+         * @see self::sanitizeValueWithInstructions()
+         */
+        public static function supportsSanitizingWithInstructions()
+        {
+            return false;
+        }
+
+        /**
+         * Sanitize a value with possible instructions data that was developed during data anlysis. This is the final
+         * step for importing a row, this method is called as the value from the import column for a row is ready to
+         * be populated into a model to save.  This method can also be called in a chain of sanitizers based on what
+         * sanitizers are set for a given attribute import rule.
+         * @see self::supportsSanitizingWithInstructions()
+         * @param mixed $value
+         * @param null or array $mappingRuleData
+         * @param array $importInstructionsData
+         */
+        public static function sanitizeValueWithInstructions($modelClassName, $attributeName,
+                                                             $value, $mappingRuleData, $importInstructionsData)
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
+         * Sanitize a value, returning a sanitized value either as the same cast or different cast. This is the final
+         * step for importing a row, this method is called as the value from the import column for a row is ready to
+         * be populated into a model to save.  This method can also be called in a chain of sanitizers based on what
+         * sanitizers are set for a given attribute import rule.
+         * depending on the circumstances.
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
+        public static function sanitizeValue($modelClassName, $attributeName,
+                                             $value, $mappingRuleData)
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
+         * If the sanitization of a value fails, should the entire row that is trying to be imported be ignored?
+         * Override if you want to change this value, but returning false, means save the import row anyways regardless
+         * of if a sanitization of a value failed.  If the model has other validation errors, these will block saving
+         * the model regardless of what value is returned here.
+         * @return boolean
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
+        {
+            return false;
+        }
     }
 ?>

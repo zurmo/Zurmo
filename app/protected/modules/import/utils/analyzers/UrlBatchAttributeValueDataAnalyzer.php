@@ -96,7 +96,7 @@
             if($invalid > 0)
             {
                 $label   = '{count} value(s) have urls that are invalid. ';
-                $label  .= 'These rows will be skipped during import.';
+                $label  .= 'These values will be cleared during import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }
             if($tooLarge > 0)

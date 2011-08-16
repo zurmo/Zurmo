@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type check box.
      */
-    class CheckBoxAttributeImportRules extends AttributeImportRules
+    class CheckBoxAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'CheckBox');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Boolean');
         }

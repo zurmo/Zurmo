@@ -26,7 +26,7 @@
 
     class ImportModelTestItem3DerivedAttributeImportRules extends ModelDerivedAttributeImportRules
     {
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('ImportModelTestItem3DerivedIdValueType');
         }

@@ -27,7 +27,7 @@
     /**
      * Base class for an attribute that is a relation attribute to a model.
      */
-    abstract class ModelAttributeImportRules extends AttributeImportRules
+    abstract class ModelAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
@@ -35,7 +35,7 @@
                          'IdValueType'               => 'ImportMappingModelIdValueTypeDropDown');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('IdValueType', 'ModelNameIdRequired');
         }

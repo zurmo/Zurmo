@@ -25,16 +25,11 @@
      ********************************************************************************/
 
     /**
-     * Import rules for when an account is not a specific attribute on a model, but most likely a casted down
-     * model of an existing attribute.  An example would be in the activity model and the activityItems relation.
-     * This relation does not point to a casted down model, but ultimately refers to it.
-     * @see DefaultModelNameIdDerivedAttributeMappingRuleForm
+     * Exception thrown when there is an attempt to sanitize a value and it fails. There could be many reasons
+     * why a value would fail sanitization. An example is a value in a bad format or a value that is a model id that
+     * does not exist.
      */
-    class AccountDerivedAttributeImportRules extends ModelDerivedAttributeImportRules
+    class InvalidValueToSanitizeException extends CException
     {
-        public static function getSanitizerUtilTypesInProcessingOrder()
-        {
-            return array('AccountDerivedIdValueType');
-        }
     }
 ?>

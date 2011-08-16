@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type Text.
      */
-    class TextAttributeImportRules extends AttributeImportRules
+    class TextAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'Text');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Truncate', 'Required');
         }

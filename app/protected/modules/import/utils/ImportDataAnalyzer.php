@@ -98,7 +98,7 @@
                                     $columnMappingData['attributeIndexOrDerivedType']);
             $modelClassName       = $attributeImportRules->getModelClassName();
             $attributeNameOrNames = $attributeImportRules->getModelAttributeNames();
-            if(null != $attributeValueSanitizerUtilTypes = $attributeImportRules->getSanitizerUtilTypes())
+            if(null != $attributeValueSanitizerUtilTypes = $attributeImportRules->getSanitizerUtilTypesInProcessingOrder())
             {
                 assert('is_array($attributeValueSanitizerUtilTypes)');
                 foreach($attributeValueSanitizerUtilTypes as $attributeValueSanitizerUtilType)

@@ -39,7 +39,7 @@
             return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('UserValueType', 'ModelNameIdRequired');
         }

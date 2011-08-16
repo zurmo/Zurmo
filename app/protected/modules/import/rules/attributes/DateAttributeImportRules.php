@@ -27,7 +27,7 @@
     /**
      * Import rules for any attributes that are type Date.
      */
-    class DateAttributeImportRules extends AttributeImportRules
+    class DateAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
@@ -39,7 +39,7 @@
             return array('ValueFormat' => 'ImportMappingRuleDateFormatDropDown');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Date', 'Required');
         }

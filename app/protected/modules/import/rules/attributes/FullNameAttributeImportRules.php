@@ -44,7 +44,7 @@
             return array('firstName', 'lastName');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('FullName');
         }

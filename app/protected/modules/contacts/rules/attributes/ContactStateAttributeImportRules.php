@@ -44,7 +44,7 @@
             return array('state');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('ContactState', 'ContactStateRequired');
         }

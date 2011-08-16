@@ -25,16 +25,24 @@
      ********************************************************************************/
 
     /**
-     * Import rules for when an account is not a specific attribute on a model, but most likely a casted down
-     * model of an existing attribute.  An example would be in the activity model and the activityItems relation.
-     * This relation does not point to a casted down model, but ultimately refers to it.
-     * @see DefaultModelNameIdDerivedAttributeMappingRuleForm
+     *
      */
-    class AccountDerivedAttributeImportRules extends ModelDerivedAttributeImportRules
+    abstract class ExternalSystemIdSuppportedSanitizerUtil
     {
-        public static function getSanitizerUtilTypesInProcessingOrder()
+        const EXTERNAL_SYSTEM_ID_COLUMN_NAME = 'external_system_id';
+
+        public static function getModelByExternalSystemIdAndModelClassName($id, $modelClassName)
         {
-            return array('AccountDerivedIdValueType');
+            assert('$id != null && is_string($id)');
+            assert('is_string($modelClassName)');
+            $tableName = self::getTableName($modelClassName);
+            $beans = RedBean_Plugin_Finder::where($tableName, self::EXTERNAL_SYSTEM_ID_COLUMN_NAME . " = '$id'");
+            assert('count($beans) <= 1');
+            if (count($beans) == 0)
+            {
+                throw new NotFoundException();
+            }
+            return RedBeanModel::makeModel(end($beans), $modelClassName);
         }
     }
 ?>

@@ -43,5 +43,13 @@
         {
             return 'DefaultValueModelAttribute';
         }
+
+        /**
+         * If a required value is missing or invalid, then skip the entire row during import.
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
+        {
+            return true;
+        }
     }
 ?>

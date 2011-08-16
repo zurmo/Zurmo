@@ -51,5 +51,21 @@
             }
             $import->serializedData = serialize($serializedData);
         }
+
+
+        //importData comes from some sort of dataprovider. it is the result of getData.
+        public static function performImportByMappingData($importData, $mappingData) //mappingData is for all column.
+        {
+            //foreach something or other
+
+                //get linked mapping data by the sanitizer methods.
+                //call the sanitizer to run.
+                //catch any errors. or populate model
+
+            //if value is empty, set as null. because we only wnat nulls going into the anitizers
+
+                //try to save model, if not then errors, either way update hte import table with processing info
+                //and/or error information.
+        }
     }
 ?>

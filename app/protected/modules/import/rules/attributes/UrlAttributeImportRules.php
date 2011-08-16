@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type Url.
      */
-    class UrlAttributeImportRules extends AttributeImportRules
+    class UrlAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'Url');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Url', 'Required');
         }

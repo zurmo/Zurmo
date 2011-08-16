@@ -111,9 +111,10 @@
         }
 
         /**
-         * @return array of sanitizer util names.
+         * @return array of sanitizer util names. The sanitizer utils in the array are in the order that they will
+         * be processed during the import.
          */
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array();
         }

@@ -34,5 +34,36 @@
         {
             return 'DefaultModelNameId';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value == null || $value instanceof User');
+            assert('$mappingRuleData["defaultModelId"] == null || is_string($mappingRuleData["defaultModelId"])');
+            if($value == null)
+            {
+                if($mappingRuleData['defaultModelId'] != null)
+                {
+                    $model                  = new $modelClassName(false);
+                    assert('$model->isRelation($attributeName)');
+                    $relationModelClassName = $model->getRelationModelClassName($modelAttributeName);
+                    try
+                    {
+                       $relationModel       = $relationModelClassName::getById($mappingRuleData['defaultModelId']);
+                    }
+                    catch(NotFoundException $e)
+                    {
+                        throw new InvalidValueToSanitizeException();
+                    }
+                    return $relationModel;
+                }
+                else
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            return $value;
+        }
     }
 ?>

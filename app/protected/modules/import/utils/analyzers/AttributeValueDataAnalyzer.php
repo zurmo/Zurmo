@@ -73,6 +73,7 @@
         {
             assert('is_string($modelClassName)');
             assert('is_array($attributeNameOrNames) || is_string($attributeNameOrNames)');
+            assert('is_string($sanitizerUtilType)');
             $this->modelClassName       = $modelClassName;
             $this->attributeNameOrNames = $attributeNameOrNames;
             $this->messageCountData[static::INVALID] = 0;

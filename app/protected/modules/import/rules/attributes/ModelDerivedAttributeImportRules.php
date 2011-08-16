@@ -44,7 +44,7 @@
             return $modelClassName::getModelLabelByTypeAndLanguage('Singular');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             throw new NotImplementedException();
         }

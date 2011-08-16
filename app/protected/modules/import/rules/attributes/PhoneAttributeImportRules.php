@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type Phone.
      */
-    class PhoneAttributeImportRules extends AttributeImportRules
+    class PhoneAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'Phone');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Truncate', 'Required');
         }

@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type Decimal.
      */
-    class DecimalAttributeImportRules extends AttributeImportRules
+    class DecimalAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'Decimal');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Number', 'Required');
         }

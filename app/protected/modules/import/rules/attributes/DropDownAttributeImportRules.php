@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type DropDown.
      */
-    class DropDownAttributeImportRules extends AttributeImportRules
+    class DropDownAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueDropDownModelAttribute' => 'ImportMappingRuleDefaultDropDownForm');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('DropDown', 'DropDownRequired');
         }

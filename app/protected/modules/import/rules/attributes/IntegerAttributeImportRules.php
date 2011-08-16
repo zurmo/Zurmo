@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type Integer.
      */
-    class IntegerAttributeImportRules extends AttributeImportRules
+    class IntegerAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'Integer');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('Number', 'Required');
         }

@@ -27,7 +27,7 @@
     /**
      * Import rules for any attributes that are id. This would be referencing the model id.
      */
-    class IdAttributeImportRules extends AttributeImportRules
+    class IdAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
@@ -39,9 +39,11 @@
             return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' .Yii::t('Default', 'Id');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('SelfIdValueType');
         }
+
+        //assert the this->attribute is an ID?
     }
 ?>

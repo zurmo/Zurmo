@@ -27,7 +27,7 @@
     /**
      * Sanitizer that is for attributes that are user models.
      */
-    class UserValueTypeSanitizerUtil extends SanitizerUtil
+    class UserValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
     {
         public static function getBatchAttributeValueDataAnalyzerType()
         {
@@ -58,10 +58,58 @@
 
         public static function getUserExternalSystemIds()
         {
+            $columnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(User::getTableName('User'), 'externalSystemId');
-            $sql = 'select externalSystemId from ' . User::getTableName('User');
+            ensureColumnIsVarchar(User::getTableName('User'), $columnName);
+            $sql = 'select ' . $columnName . ' from ' . User::getTableName('User');
             return R::getCol($sql);
+        }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID ||
+                    $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
+                    $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
+            if($value == null)
+            {
+                return $value;
+            }
+            if($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
+            {
+                try
+                {
+                    return User::getById($value);
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            elseif($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
+            {
+                try
+                {
+                    return static::getModelByExternalSystemIdAndModelClassName($value, 'User');
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            else
+            {
+                try
+                {
+                    return User::getByUsername($value);
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
         }
     }
 ?>

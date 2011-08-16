@@ -27,7 +27,7 @@
     /**
      * Import rules for any attributes that are type DateTime.
      */
-    class DateTimeAttributeImportRules extends AttributeImportRules
+    class DateTimeAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
@@ -39,7 +39,7 @@
             return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('DateTime', 'Required');
         }

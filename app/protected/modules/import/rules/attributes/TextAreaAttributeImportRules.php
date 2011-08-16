@@ -27,14 +27,14 @@
     /**
      * Import rules for any attributes that are type TextArea.
      */
-    class TextAreaAttributeImportRules extends AttributeImportRules
+    class TextAreaAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('DefaultValueModelAttribute' => 'TextArea');
         }
 
-        public static function getSanitizerUtilTypes()
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('TextAreaTruncate');
         }
