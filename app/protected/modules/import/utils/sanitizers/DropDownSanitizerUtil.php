@@ -40,9 +40,82 @@
             return 'DropDown';
         }
 
+        /**
+         * Override to support instructions for drop downs. An example is if there is a missing drop down value,
+         * information is provided in the instructions explainnig whether to add the missing drop down, delete the value,
+         * or merge the value into an existing drop down.
+         */
+        public static function supportsSanitizingWithInstructions()
+        {
+            return true;
+        }
+
         public static function getBatchAttributeValueDataAnalyzerType()
         {
             return 'DropDown';
+        }
+
+        /**
+         * Example of importInstructionsData
+         * array('DropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array('neverPresent', 'notPresent')))
+         * @param unknown_type $modelClassName
+         * @param unknown_type $attributeName
+         * @param unknown_type $value
+         * @param unknown_type $mappingRuleData
+         * @param unknown_type $importInstructionsData
+         */
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData,
+                                             $importInstructionsData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            assert('is_array($importInstructionsData["DropDown"][DropDownSanitizerUtil::ADD_MISSING_VALUE]');
+            if($value == null)
+            {
+                return $value;
+            }
+            $customFieldData                     = CustomFieldDataModelUtil::
+                                                   getDataByModelClassNameAndAttributeName(
+                                                   $modelClassName, $attributeName);
+            $dropDownValues                      = unserialize($customFieldData->serializedData);
+            $lowerCaseDropDownValues             = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
+            //does the value already exist in the custom field data
+            if(in_array(lower($value), $lowerCaseDropDownValues))
+            {
+                $keyToUse                        = array_search(lower($value), $lowerCaseDropDownValues);
+                $resolvedValueToUse              = $dropDownValues[$keyToUse];
+            }
+            //if the value does not already exist, then check the instructions data.
+            $lowerCaseValuesToAdd                = ArrayUtil::resolveArrayToLowerCase(
+                                                   $importInstructionsData['DropDown']
+                                                   [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
+            if(in_array(lower($value), $lowerCaseValuesToAdd))
+            {
+                $keyToAddAndUse                  = array_search(lower($value), $lowerCaseValuesToAdd);
+                $resolvedValueToUse              = $importInstructionsData['DropDown']
+                                                   [DropDownSanitizerUtil::ADD_MISSING_VALUE][$keyToAddAndUse];
+                $unserializedData                = unserialize($customFieldData->serializedData);
+                $unserializedData[]              = $resolvedValueToUse;
+                $customFieldData->serializedData = serialize($unserializedData);
+                assert('$customFieldData->saved()');
+            }
+            else
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            try
+            {
+                $customField        = new CustomField();
+                $customField->value = $resolvedValueToUse;
+                $customField->data  = $customFieldData;
+            }
+            catch(NotSupportedException $e)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            return $customField;
         }
     }
 ?>

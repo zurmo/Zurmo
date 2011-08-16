@@ -45,8 +45,9 @@
          */
         public static function getNonImportableAttributeNames()
         {
-            return array_merge(parent::getNonImportableAttributeNames(), array('currency', 'language', 'timeZone','
-                               manager', 'hash'));
+            return array_merge(parent::getNonImportableAttributeNames(), array('currency', 'language', 'timeZone',
+                               'manager', 'hash', 'createdByUser', 'modifiedByUser',
+                               'createdDateTime', 'modifiedDateTime'));
         }
 
         public static function getModelClassName()

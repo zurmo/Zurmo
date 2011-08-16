@@ -25,44 +25,40 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any derived attributes that are of type FullName.
+     *
      */
-    class FullNameAttributeImportRules extends DerivedAttributeImportRules
+    class FullNameRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function supportsSqlAttributeValuesDataAnalysis()
         {
-            return array('FullNameDefaultValueModelAttribute' => 'Text');
+            return false;
         }
 
-        public function getDisplayLabel()
+        public static function supportsBatchAttributeValuesDataAnalysis()
         {
-            return Yii::t('Default', 'Full Name');
+            return false;
         }
 
-        public function getModelAttributeNames()
+        public static function supportsDataAnalysis()
         {
-            return array('firstName', 'lastName');
+            return false;
         }
 
-        public static function getSanitizerUtilTypesInProcessingOrder()
+        public static function getLinkedMappingRuleType()
         {
-            return array('FullName', 'FullNameRequired');
+            return 'FullNameDefaultValueModelAttribute';
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
-            $attributeNames = $this->getModelAttributeNames();
-            assert('$attributeNames[0] == "firstName"');
-            assert('$attributeNames[1] == "lastName"');
-            $modelClassName = $this->getModelClassName();
-            $value = $this->sanitizeValueForImport($modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
-            list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
-            if($firstName == null)
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
+            if($value == null)
             {
-                $lastName  = $firstName;
-                $firstName = null;
+                $value = $mappingRuleData['defaultValue'];
             }
-            return array('firstName' => $firstName, 'lastName' => $lastName);
+            return $value;
         }
     }
 ?>

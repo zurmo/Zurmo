@@ -39,15 +39,19 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('$value == null || $value instanceof User');
+            $model                  = new $modelClassName(false);
+            if(!$model->isAttributeRequired($this->$attributeName))
+            {
+                return false;
+            }
+            assert('$model->isRelation($attributeName)');
+            $relationModelClassName = $model->getRelationModelClassName($modelAttributeName);
+            assert('$value == null || $value instanceof $relationModelClassName');
             assert('$mappingRuleData["defaultModelId"] == null || is_string($mappingRuleData["defaultModelId"])');
             if($value == null)
             {
                 if($mappingRuleData['defaultModelId'] != null)
                 {
-                    $model                  = new $modelClassName(false);
-                    assert('$model->isRelation($attributeName)');
-                    $relationModelClassName = $model->getRelationModelClassName($modelAttributeName);
                     try
                     {
                        $relationModel       = $relationModelClassName::getById($mappingRuleData['defaultModelId']);

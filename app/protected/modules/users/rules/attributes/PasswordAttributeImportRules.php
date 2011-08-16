@@ -48,5 +48,28 @@
         {
             return array('Truncate');
         }
+
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        {
+            $attributeNames = $this->getModelAttributeNames();
+            assert('count$attributeNames) == 1');
+            assert('$attributeNames[0] == "hash"');
+            assert('is_array($columnMappingData)');
+            assert('is_bool($shouldSaveModel)');
+            $modelClassName = $this->getModelClassName();
+            $value          = $this->sanitizeValueForImport($modelClassName, 'hash',
+                                                            $value, $columnMappingData, $shouldSaveModel);
+            if($value == null)
+            {
+                $mappingRuleFormClassName = 'PasswordDefaultValueModelAttributeMappingRuleForm';
+                $mappingRuleData          = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
+                assert('$mappingRuleData != null');
+                if(isset($mappingRuleData['defaultValue']))
+                {
+                    $value = $mappingRuleData['defaultValue'];
+                }
+            }
+            return array('hash' => md5($value));
+        }
     }
 ?>

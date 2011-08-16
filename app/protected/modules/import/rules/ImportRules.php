@@ -80,10 +80,7 @@
          */
         public static function getDerivedAttributeTypes()
         {
-            return array('CreatedByUser',
-                         'ModifiedByUser',
-                         'CreatedDateTime',
-                         'ModifiedDateTime');
+            return array();
         }
 
         /**
@@ -92,10 +89,7 @@
          */
         public static function getNonImportableAttributeNames()
         {
-            return array('createdByUser',
-                         'modifiedByUser',
-                         'createdDateTime',
-                         'modifiedDateTime');
+            return array();
         }
 
         /**

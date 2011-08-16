@@ -27,16 +27,11 @@
     /**
      * Import rules for the created date time attribute.
      */
-    class CreatedDateTimeAttributeImportRules extends DerivedAttributeImportRules
+    class CreatedDateTimeAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
-        }
-
-        public function getModelAttributeNames()
-        {
-            return array('createdDateTime');
         }
 
         public static function getSanitizerUtilTypesInProcessingOrder()

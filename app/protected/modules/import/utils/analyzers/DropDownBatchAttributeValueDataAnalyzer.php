@@ -44,6 +44,7 @@
                                                                        $this->attributeNameOrNames[0]);
             $dropDownValues       = unserialize($customFieldData->serializedData);
             $this->dropDownValues = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
+            $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE] = array();
         }
 
         /**

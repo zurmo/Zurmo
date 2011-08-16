@@ -27,13 +27,8 @@
     /**
      * Import rules for the created by user model.
      */
-    class CreatedByUserAttributeImportRules extends DerivedAttributeImportRules
+    class CreatedByUserAttributeImportRules extends NonDerivedAttributeImportRules
     {
-        public function getModelAttributeNames()
-        {
-            return array('createdByUser');
-        }
-
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');

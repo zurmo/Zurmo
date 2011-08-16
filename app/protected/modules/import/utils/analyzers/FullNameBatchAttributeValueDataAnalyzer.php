@@ -55,7 +55,6 @@
             assert('$this->attributeNameOrNames[0] == "firstName"');
             assert('$this->attributeNameOrNames[1] == "lastName"');
             $this->messageCountData[static::FULL_NAME_TOO_LONG] = 0;
-
             $model                    = new $modelClassName(false);
             $this->firstNameMaxLength = StringValidatorHelper::
                                         getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);

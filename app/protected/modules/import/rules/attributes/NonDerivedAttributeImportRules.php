@@ -29,59 +29,17 @@
      */
     abstract class NonDerivedAttributeImportRules extends AttributeImportRules
     {
-        public function resolveValueToImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
         {
             $attributeNames = $this->getModelAttributeNames();
             assert('count($attributeNames) == 1');
+            assert('is_array($columnMappingData)');
+            assert('is_bool($shouldSaveModel)');
             $attributeName  = $attributeNames[0];
             $modelClassName =$this->getModelClassName();
-            foreach(static::getSanitizerUtilTypesInProcessingOrder() as $sanitizerUtilType)
-            {
-                $sanitizerUtilClassName = $sanitizerUtilType . 'SanitizerUtil';
-                $mappingRuleType = $attributeValueSanitizerUtilClassName::getLinkedMappingRuleType();
-                if($mappingRuleType != null)
-                {
-                    assert('$mappingRuleType != null');
-                    $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
-                    $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
-                    assert('$mappingRuleData != null');
-                }
-                else
-                {
-                    $mappingRuleData = null;
-                }
-                  try
-                  {
-                      if($sanitizerUtilClassName::supportsSanitizingWithInstructions())
-                      {
-                        if($columnMappingData['importInstructionsData'] != null)
-                        {
-                            $importInstructionsData = $columnMappingData['importInstructionsData'];
-                        }
-                        else
-                        {
-                            $importInstructionsData = null;
-                        }
-                          $value = $sanitizerUtilClassName::
-                                   sanitizeValueWithInstructions($modelClassName, $attributeName,
-                                                                 $value, $mappingRuleData, $importInstructionsData);
-                      }
-                      else
-                      {
-                          $value = $sanitizerUtilClassName::
-                                   sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData);
-                      }
-                  }
-                  catch(InvalidValueToSanitizeException $e)
-                  {
-                      $value = null;
-                      if($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
-                      {
-                          $shouldSaveModel = false;
-                      }
-                  }
-            }
-            return $value;
+            $value  = $this->sanitizeValueForImport($modelClassName, $attributeName, $value,
+                                                    $columnMappingData, $shouldSaveModel);
+            return array($attributeName => $value);
         }
     }
 ?>

@@ -34,5 +34,43 @@
         {
             return 'DefaultValueDropDownModelAttribute';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            $model                  = new $modelClassName(false);
+            if(!$model->isAttributeRequired($this->$attributeName))
+            {
+                return false;
+            }
+            assert('$model->isRelation($attributeName)');
+            $relationModelClassName = $model->getRelationModelClassName($modelAttributeName);
+            assert('$value == null || $value instanceof $relationModelClassName');
+            assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
+            if($value == null)
+            {
+                if($mappingRuleData['defaultValue'] != null)
+                {
+                    try
+                    {
+                        $customField = new CustomField();
+                        $customField->value = $mappingRuleData['defaultValue'];
+                        $customField->data  = CustomFieldDataModelUtil::
+                                              getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
+                    }
+                    catch(NotSupportedException $e)
+                    {
+                        throw new InvalidValueToSanitizeException();
+                    }
+                    return $customField;
+                }
+                else
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            return $value;
+        }
     }
 ?>

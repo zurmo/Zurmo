@@ -46,5 +46,38 @@
         {
             return true;
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            list($firstName, $lastName) = explode(' ', trim($value));
+            if($firstName == null)
+            {
+                $lastName  = $firstName;
+                $firstName = null;
+            }
+            if($lastName == null)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            $model              = new $modelClassName(false);
+            $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
+            $lastNameMaxLength  = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'lastName');
+            if(strlen($lastName) > $lastNameMaxLength)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            if($firstName != null && strlen($firstName) > $firstNameMaxLength)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+        }
     }
 ?>

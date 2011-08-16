@@ -27,16 +27,11 @@
     /**
      * Import rules for the modified date time attribute.
      */
-    class ModifiedDateTimeAttributeImportRules extends DerivedAttributeImportRules
+    class ModifiedDateTimeAttributeImportRules extends NonDerivedAttributeImportRules
     {
         protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('ValueFormat' => 'ImportMappingRuleDateTimeFormatDropDown');
-        }
-
-        public function getModelAttributeNames()
-        {
-            return array('modifiedDateTime');
         }
 
         public static function getSanitizerUtilTypesInProcessingOrder()

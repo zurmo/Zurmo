@@ -34,5 +34,17 @@
             assert('$attributeName == null');
             parent::__construct($model, $attributeName);
         }
+
+        /**
+         * Derived attribute import rules need to implement this method individually.  Override for each derived
+         * atribute import rule and implement as needed.
+         * @param mixed $value
+         * @param array $columnMappingData
+         * @param boolean $shouldSaveModel
+         */
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 ?>
