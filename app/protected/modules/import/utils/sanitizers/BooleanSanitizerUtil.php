@@ -61,5 +61,27 @@
                 ''		=> false,
             );
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
+            if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            else
+            {
+                $key = array_search(strtolower($value), $acceptableValuesMapping);
+                return $acceptableValuesMapping[$key];
+            }
+        }
     }
 ?>

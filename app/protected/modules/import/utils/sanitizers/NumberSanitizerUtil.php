@@ -46,5 +46,35 @@
         {
             return true;
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            $model    = new $modelClassName(false);
+            $type     = ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
+            $validator = new RedBeanModelNumberValidator();
+            if($this->type == 'Integer')
+            {
+                if(!preg_match($validator->integerPattern, $value))
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            else
+            {
+                if(!preg_match($validator->numberPattern, $value))
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            return $value;
+        }
     }
 ?>

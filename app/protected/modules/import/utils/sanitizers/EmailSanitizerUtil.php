@@ -46,5 +46,29 @@
         {
             return true;
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            $maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
+            $validator = new CEmailValidator();
+            $validatedEmail = $validator->validateValue($value);
+            if($validatedEmail === false)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            if(strlen($validatedEmail) > $maxLength)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            return  $validatedEmail;
+        }
     }
 ?>

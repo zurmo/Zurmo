@@ -31,7 +31,7 @@
     {
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('$model instanceof DefaultValueContactStateModelAttributeMappingRuleForm');
+            assert('$model instanceof DefaultContactStateIdMappingRuleForm');
             parent::__construct($model, $attribute, $form, $params);
         }
 

@@ -27,7 +27,7 @@
     /**
      * Form for handling default values for the contact state derived attribute type.
      */
-    class DefaultValueFirstStatesContactModelAttributeMappingRuleForm extends DefaultValueContactStateModelAttributeMappingRuleForm
+    class DefaultLeadStateIdMappingRuleForm extends DefaultContactStateIdMappingRuleForm
     {
         protected static function makeStateData()
         {

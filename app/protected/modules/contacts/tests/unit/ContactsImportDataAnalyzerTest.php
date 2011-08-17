@@ -50,7 +50,7 @@
                 'column_0'  => array('attributeIndexOrDerivedType' => 'ContactState',
                                          'type' => 'importColumn',
                                       'mappingRulesData' => array(
-                                          'DefaultValueContactStateModelAttributeMappingRuleForm' => array('defaultValue' => null))),
+                                          'DefaultContactStateIdMappingRuleForm' => array('defaultStateId' => null))),
             );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;

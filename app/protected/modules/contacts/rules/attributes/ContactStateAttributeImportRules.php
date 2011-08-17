@@ -31,7 +31,7 @@
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueContactStateModelAttribute' => 'ImportMappingRuleContactStatesDropDown');
+            return array('DefaultContactStateId' => 'ImportMappingRuleContactStatesDropDown');
         }
 
         public function getDisplayLabel()
@@ -47,6 +47,16 @@
         public static function getSanitizerUtilTypesInProcessingOrder()
         {
             return array('ContactState', 'ContactStateRequired');
+        }
+
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        {
+            $attributeNames = $this->getRealModelAttributeNames();
+            assert('count$attributeNames) == 1');
+            assert('$attributeNames[0] == "state"');
+            $modelClassName = $this->getModelClassName();
+            $value = static::sanitizeValueForImport($modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
+            return array('state' => $value);
         }
     }
 ?>

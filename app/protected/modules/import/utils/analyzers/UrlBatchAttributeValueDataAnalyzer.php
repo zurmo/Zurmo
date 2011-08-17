@@ -102,7 +102,7 @@
             if($tooLarge > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
-                $label  .= 'These values will be truncated to a length of {length} upon import.';
+                $label  .= 'These values will be cleared during import.';
                 $this->addMessage(Yii::t('Default', $label,
                                   array('{count}' => $tooLarge, '{length}' => $this->maxLength)));
             }

@@ -31,7 +31,7 @@
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueFirstStatesContactModelAttribute' => 'ImportMappingRuleContactStatesDropDown');
+            return array('DefaultLeadStateId' => 'ImportMappingRuleContactStatesDropDown');
         }
 
         public static function getSanitizerUtilTypesInProcessingOrder()

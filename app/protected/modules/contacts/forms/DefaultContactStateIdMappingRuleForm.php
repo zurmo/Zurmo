@@ -27,9 +27,9 @@
     /**
      * Form for handling default values for the contact state derived attribute type.
      */
-    class DefaultValueContactStateModelAttributeMappingRuleForm extends DerivedAttributeMappingRuleForm
+    class DefaultContactStateIdMappingRuleForm extends DerivedAttributeMappingRuleForm
     {
-        public $defaultValue;
+        public $defaultStateId;
 
         protected $statesData;
 
@@ -65,12 +65,12 @@
 
         public function attributeLabels()
         {
-            return array('defaultValue' => Yii::t('Default', 'Default Value'));
+            return array('defaultStateId' => Yii::t('Default', 'Default Value'));
         }
 
         public static function getAttributeName()
         {
-            return 'defaultValue';
+            return 'defaultStateId';
         }
 
         protected static function makeStateData()

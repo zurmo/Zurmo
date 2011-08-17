@@ -38,5 +38,22 @@
         {
             return 'TextAreaTruncate';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            if(strlen($value < 65000))
+            {
+                return $value;
+            }
+            return substr($value, 0, 65000);
+        }
     }
 ?>

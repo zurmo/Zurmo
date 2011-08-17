@@ -51,7 +51,14 @@
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
             if($value == null)
             {
-                $value = $mappingRuleData['defaultValue'];
+                if($mappingRuleData['defaultValue'] != '')
+                {
+                    $value = $mappingRuleData['defaultValue'];
+                }
+                else
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
             }
             return $value;
         }

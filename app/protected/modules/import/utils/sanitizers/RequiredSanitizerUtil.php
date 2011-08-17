@@ -51,5 +51,24 @@
         {
             return true;
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
+            if($value == null)
+            {
+                if($mappingRuleData['defaultValue'] != '')
+                {
+                    $value = $mappingRuleData['defaultValue'];
+                }
+                else
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            return $value;
+        }
     }
 ?>

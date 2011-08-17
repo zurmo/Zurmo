@@ -38,5 +38,24 @@
         {
             return 'Truncate';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            $model     = new $modelClassName(false);
+            $maxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, $attributeName);
+            if($value == null)
+            {
+                return $value;
+            }
+            if(strlen($value < $maxLength))
+            {
+                return $value;
+            }
+            return substr($value, 0, $maxLength);
+        }
     }
 ?>

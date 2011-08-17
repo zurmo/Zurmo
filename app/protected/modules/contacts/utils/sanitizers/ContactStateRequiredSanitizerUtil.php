@@ -32,7 +32,36 @@
     {
         public static function getLinkedMappingRuleType()
         {
-            return 'DefaultValueContactStateModelAttribute';
+            return 'DefaultContactStateId';
+        }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('is_string($value) || $value == null || $value instanceof ContactState');
+            $model                  = new $modelClassName(false);
+            assert('$mappingRuleData["defaultStateId"] == null || is_string($mappingRuleData["defaultStateId"])');
+            if($value == null)
+            {
+                if($mappingRuleData['defaultStateId'] != null)
+                {
+                    try
+                    {
+                       $state       = ContactState::getById($mappingRuleData['defaultStateId']);
+                    }
+                    catch(NotFoundException $e)
+                    {
+                        throw new InvalidValueToSanitizeException();
+                    }
+                    return $state;
+                }
+                else
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            return $value;
         }
     }
 ?>

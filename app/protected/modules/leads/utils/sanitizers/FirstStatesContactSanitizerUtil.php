@@ -27,7 +27,7 @@
     /**
      * Sanitizer for contact states that are before the starting state. Used by the leads module.
      */
-    class FirstStatesContactSanitizerUtil extends SanitizerUtil
+    class FirstStatesContactSanitizerUtil extends ContactStateSanitizerUtil
     {
         public static function getSqlAttributeValueDataAnalyzerType()
         {

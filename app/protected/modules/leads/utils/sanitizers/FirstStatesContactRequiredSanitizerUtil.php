@@ -28,11 +28,11 @@
      * Data analyzer for contact state values that are before the starting state. Manages if the value is empty
      * or null and resolves against if the state attribute is required.
      */
-    class FirstStatesContactRequiredSanitizerUtil extends RequiredSanitizerUtil
+    class FirstStatesContactRequiredSanitizerUtil extends ContactStateRequiredSanitizerUtil
     {
         public static function getLinkedMappingRuleType()
         {
-            return 'DefaultValueFirstStatesContactModelAttribute';
+            return 'DefaultLeadStateId';
         }
     }
 ?>

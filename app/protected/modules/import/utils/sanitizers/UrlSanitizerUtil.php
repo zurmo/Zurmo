@@ -38,5 +38,30 @@
         {
             return 'Url';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            $maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
+            $validator = new CUrlValidator();
+            $validator->defaultScheme = 'http';
+            $validatedUrl = $validator->validateValue($value);
+            if($validatedUrl === false)
+            {
+                return null;
+            }
+            if(strlen($validatedUrl) > $maxLength)
+            {
+                return null;
+            }
+            return $validatedUrl;
+        }
     }
 ?>

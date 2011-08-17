@@ -38,5 +38,25 @@
         {
             return 'ContactState';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('$value != ""');
+            assert('$mappingRuleData == null');
+            if($value == null)
+            {
+                return $value;
+            }
+            try
+            {
+                return ContactState::getById($value);
+            }
+            catch(NotFoundException $e)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+        }
     }
 ?>
