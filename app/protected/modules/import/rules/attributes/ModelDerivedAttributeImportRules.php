@@ -44,6 +44,18 @@
             return $modelClassName::getModelLabelByTypeAndLanguage('Singular');
         }
 
+        /**
+         * This information regarding the correct attribute name on the model is not available. This information is
+         * available via DerivedAttributeSupportedImportRules::getDerivedAttributeRealAttributeName();  Since we don't
+         * have access to that information in this class, we don't know the import rule type, we cannot return anything.
+         * Resolving what attribute to save the derived model to will need to be handled outside of this class.
+         * @see DerivedAttributeSupportedImportRules::getRealModelAttributeNameForDerivedAttribute()
+         */
+        public function getRealModelAttributeNames()
+        {
+            return null;
+        }
+
         public static function getSanitizerUtilTypesInProcessingOrder()
         {
             throw new NotImplementedException();
