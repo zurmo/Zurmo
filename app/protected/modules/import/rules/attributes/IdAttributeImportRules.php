@@ -29,6 +29,12 @@
      */
     class IdAttributeImportRules extends NonDerivedAttributeImportRules
     {
+        public function __construct($model, $attributeName)
+        {
+            parent::__construct($model);
+            assert('$attributeName == "id"');
+        }
+
         protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('IdValueType'   => 'ImportMappingModelIdValueTypeDropDown');
@@ -43,7 +49,5 @@
         {
             return array('SelfIdValueType');
         }
-
-        //assert the this->attribute is an ID?
     }
 ?>

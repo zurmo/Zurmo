@@ -27,27 +27,12 @@
     /**
      * Sanitizer for attributes that are ids. This would be used if mapping an id for the model that is being imported.
      */
-    class SelfIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
+    class ModelIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'SelfIdValueType';
-        }
-
-        public static function getLinkedMappingRuleType()
-        {
-            return 'IdValueType';
-        }
-
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');
-            assert('is_string($attributeName) && $attributeName == "id"');
+            assert('is_string($attributeName) && $attributeName != "id"');
             assert('$value != ""');
             assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                     $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
@@ -61,8 +46,7 @@
             {
                 try
                 {
-                    $attributeModelClassName::getById((int)$value);
-                    return (int)$value;
+                    return $attributeModelClassName::getById((int)$value);
                 }
                 catch(NotFoundException $e)
                 {
@@ -73,7 +57,7 @@
             {
                 try
                 {
-                    $model = static::getModelByExternalSystemIdAndModelClassName($value, $attributeModelClassName);
+                    return static::getModelByExternalSystemIdAndModelClassName($value, $attributeModelClassName);
                 }
                 catch(NotFoundException $e)
                 {

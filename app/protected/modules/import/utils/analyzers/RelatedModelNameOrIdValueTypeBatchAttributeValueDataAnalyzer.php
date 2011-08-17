@@ -91,10 +91,12 @@
                 else
                 {
                     $modelClassName = $this->attributeModelClassName;
-                    $sql = 'select name from ' . $modelClassName::getTableName($modelClassName) .
-                    " where name = " . DatabaseCompatibilityUtil::lower("'" . $value . "'") . " limit 1";
-                    $ids =  R::getCol($sql);
-                    if(count($ids) == 0)
+                    if(!method_exists($modelClassName, 'getByName'))
+                    {
+                        throw new NotSupportedException();
+                    }
+                    $modelsFound = $modelClassName::getByName($value);
+                    if(count($modelsFound) == 0)
                     {
                         $found = false;
                         if(strlen($value) > $this->maxNameLength)

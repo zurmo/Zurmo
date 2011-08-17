@@ -53,5 +53,41 @@
                                                         'BatchAttributeValueDataAnalyzer';
             return new $batchAttributeValueDataAnalyzerClassName(static::getDerivedModelClassName(), 'id');
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('$value != ""');
+            assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+                    $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
+            $derivedModelClassName = $this->getDerivedModelClassName();
+            if($value == null)
+            {
+                return $value;
+            }
+            if($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_MODEL_ID)
+            {
+                try
+                {
+                    return $derivedModelClassName::getById($value);
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            elseif($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            {
+                try
+                {
+                    return static::getModelByExternalSystemIdAndModelClassName($value, $derivedModelClassName);
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+        }
     }
 ?>

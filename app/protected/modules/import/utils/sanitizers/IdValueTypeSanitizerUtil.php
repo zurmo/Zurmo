@@ -26,8 +26,10 @@
 
     /**
      * Sanitizer for attributes that are models, and handling the values that represent the ids of those models.
+     * If you are importing a related account on a contact, this would be used for the account id, not the contact id.
+     * To sanitize for the contact id in this example, you would use  @see SelfIdValueTypeSanitizerUtil
      */
-    class IdValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
+    abstract class IdValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()
         {
@@ -50,6 +52,21 @@
         public static function shouldNotSaveModelOnSanitizingValueFailure()
         {
             return true;
+        }
+
+        /**
+         * Override in children classes as needed.
+         * @see SelfIdValueTypeSanitizerUtil
+         * @see ModelDerivedIdValueTypeSanitizerUtil
+         * @see ModelIdValueTypeSanitizerUtil
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param mixed $mappingRuleData - array or null
+         */
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            throw notImplementedException();
         }
     }
 ?>

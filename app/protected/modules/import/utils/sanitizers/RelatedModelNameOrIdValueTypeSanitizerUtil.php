@@ -27,7 +27,7 @@
     /**
      * Sanitizer to handle attribute values that are possible a model name not just a model id.
      */
-    class RelatedModelNameOrIdValueTypeSanitizerUtil extends SanitizerUtil
+    class RelatedModelNameOrIdValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
     {
         public static function supportsSqlAttributeValuesDataAnalysis()
         {
@@ -42,6 +42,62 @@
         public static function getLinkedMappingRuleType()
         {
             return 'RelatedModelValueType';
+        }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName');
+            assert('$value != ""');
+            assert('$mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+                    $mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID ||
+                    $mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME');
+            if($value == null)
+            {
+                return $value;
+            }
+            $model                   = new $modelClassName(false);
+            $attributeModelClassName = $this->resolveAttributeModelClassName($model,$attributeName);
+            if($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            {
+                try
+                {
+                    return $attributeModelClassName::getById((int)$value);
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            elseif($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            {
+                try
+                {
+                    return static::getModelByExternalSystemIdAndModelClassName($value, $attributeModelClassName);
+                }
+                catch(NotFoundException $e)
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            else
+            {
+                if(!method_exists($attributeModelClassName, 'getByName'))
+                {
+                    throw new NotSupportedException();
+                }
+                $modelsFound = $attributeModelClassName::getByName($value);
+                if(count($modelsFound) == 0)
+                {
+                    $newRelatedModel       = new $attributeModelClassName();
+                    $newRelatedModel->name = $value;
+                }
+                else
+                {
+                    return $modelsFound[0];
+                }
+            }
+
         }
     }
 ?>
