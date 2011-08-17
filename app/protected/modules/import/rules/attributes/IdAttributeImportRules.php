@@ -49,5 +49,33 @@
         {
             return array('SelfIdValueType');
         }
+
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        {
+            assert('is_array($columnMappingData)');
+            assert('is_bool($shouldSaveModel)');
+            $sanitizerUtilTypes = static::getSanitizerUtilTypesInProcessingOrder();
+            if(count($sanitizerUtilTypes) == 1 && $sanitizerUtilTypes[0] == 'SelfIdValueType')
+            {
+                $modelClassName =$this->getModelClassName();
+                try
+                {
+                    $value  = static::sanitizeValueForImport($this->getModelClassName(),
+                                                         $this->getModelAttributeName(),
+                                                         $value,
+                                                         $columnMappingData,
+                                                         $shouldSaveModel);
+                    return array($attributeName => $value);
+                }
+                catch (ExternalSystemIdNotFoundException $e)
+                {
+                    return array('THE CONSTANT FOR external_system_id' => $value);
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
     }
 ?>

@@ -74,10 +74,11 @@
                 try
                 {
                     $model = static::getModelByExternalSystemIdAndModelClassName($value, $attributeModelClassName);
+                    return $model->id;
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new ExternalSystemIdNotFoundException();
                 }
             }
         }

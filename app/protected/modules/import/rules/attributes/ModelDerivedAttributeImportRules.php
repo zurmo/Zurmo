@@ -48,5 +48,29 @@
         {
             throw new NotImplementedException();
         }
+
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        {
+            $modelClassName        = $this->getModelClassName();
+            $derivedModelClassName = static::getDerivedModelClassName();
+            $sanitizedValue = static::sanitizeValueForImport($modelClassName, null,
+                                                    $value, $columnMappingData, $shouldSaveModel);
+             if($sanitizedValue == null &&
+                $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
+             {
+
+                $modelId               = $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']
+                                         ['defaultModelId'];
+                $sanitizedValue        = $derivedModelClassName::getById((int)$modelId);
+             }
+            return array($derivedModelClassName . 'Derived' => $sanitizedValue);
+        }
+
+        public static function getDerivedModelClassName()
+        {
+            $class = get_called_class();
+            $class = substr($class, 0, strlen($class) - strlen('DerivedAttributeImportRules'));
+            return $class;
+        }
     }
 ?>

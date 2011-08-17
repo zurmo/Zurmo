@@ -45,7 +45,7 @@
         {
             $attributeNames = $this->getRealModelAttributeNames();
             $modelClassName = $this->getModelClassName();
-            $sanitizedvalue = static::sanitizeValueForImport($modelClassName, $this->getModelAttributeName(),
+            $sanitizedValue = static::sanitizeValueForImport($modelClassName, $this->getModelAttributeName(),
                                                     $value, $columnMappingData, $shouldSaveModel);
             $currencyValue             = new CurrencyValue();
             $currencyValue->value      = $sanitizedValue;
