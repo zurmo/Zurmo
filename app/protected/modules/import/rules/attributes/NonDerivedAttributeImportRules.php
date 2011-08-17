@@ -58,11 +58,13 @@
             assert('is_array($columnMappingData)');
             assert('is_bool($shouldSaveModel)');
             $modelClassName =$this->getModelClassName();
-            $value  = static::sanitizeValueForImport($this->getModelClassName(),
-                                                     $this->getModelAttributeName(),
-                                                     $value,
-                                                     $columnMappingData,
-                                                     $shouldSaveModel);
+            $value  = ImportSanitizerUtil::
+                      sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                    $this->getModelClassName(),
+                                                    $this->getModelAttributeName(),
+                                                    $value,
+                                                    $columnMappingData,
+                                                    $shouldSaveModel);
             return array($attributeName => $value);
         }
     }

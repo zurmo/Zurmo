@@ -65,8 +65,10 @@
         {
             $modelClassName        = $this->getModelClassName();
             $derivedModelClassName = static::getDerivedModelClassName();
-            $sanitizedValue = static::sanitizeValueForImport($modelClassName, null,
-                                                    $value, $columnMappingData, $shouldSaveModel);
+            $sanitizedValue = ImportSanitizerUtil::
+                              sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                            $modelClassName, null,
+                                                            $value, $columnMappingData, $shouldSaveModel);
              if($sanitizedValue == null &&
                 $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
              {

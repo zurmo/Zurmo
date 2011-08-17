@@ -24,24 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportModelTestItemImportRules extends DerivedAttributeSupportedImportRules
+    /**
+     * Base class of import rules for models that support importing a derived attribute. An example is activites.
+     * ActivityItems is a MANY_MANY of Items, but for import, the casted down models need to be imported such
+     * as accounts, contacts, and opportunities. Extend this class for any models that require this suppoprt.  Currently
+     * this only supports one real attribute on the model that has this type of setup.
+     */
+    abstract class DerivedAttributeSupportedImportRules extends ImportRules
     {
-        public static function getModelClassName()
-        {
-            return 'ImportModelTestItem';
-        }
-
-        public static function getDerivedAttributeTypes()
-        {
-            return array_merge(parent::getDerivedAttributeTypes(), array('FullName', 'ImportModelTestItem3Derived'));
-        }
-
         /**
-         * The derived attribute ImportModelTestItem3Derived corresponds to the hasMany attribute on ImportModelTestItem
+         * Used to define the real attribute name that the derived attribute corresponds to.
          */
-        public static function getActualModelAttributeNameForDerivedAttribute()
-        {
-            return 'hasMany';
-        }
+        abstract static function getActualModelAttributeNameForDerivedAttribute();
     }
 ?>

@@ -45,8 +45,10 @@
         {
             $attributeNames = $this->getRealModelAttributeNames();
             $modelClassName = $this->getModelClassName();
-            $sanitizedValue = static::sanitizeValueForImport($modelClassName, $this->getModelAttributeName(),
-                                                    $value, $columnMappingData, $shouldSaveModel);
+            $sanitizedValue = ImportSanitizerUtil::
+                              sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                            $modelClassName, $this->getModelAttributeName(),
+                                                            $value, $columnMappingData, $shouldSaveModel);
             $currencyValue             = new CurrencyValue();
             $currencyValue->value      = $sanitizedValue;
             $currencyValue->rateToBase = $columnMappingData['CurrencyRateToBaseModelAttributeMappingRuleForm']

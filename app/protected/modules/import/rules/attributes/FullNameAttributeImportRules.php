@@ -55,7 +55,9 @@
             assert('$attributeNames[0] == "firstName"');
             assert('$attributeNames[1] == "lastName"');
             $modelClassName = $this->getModelClassName();
-            $value = static::sanitizeValueForImport($modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
+            $value = ImportSanitizerUtil::
+                     sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                   $modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
             list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
             if($firstName == null)
             {

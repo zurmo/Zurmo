@@ -27,7 +27,7 @@
     /**
      * Base class for importing into models that extend the activity model.
      */
-    abstract class ActivitiesImportRules extends ImportRules
+    abstract class ActivitiesImportRules extends DerivedAttributeSupportedImportRules
     {
         /**
          * Override to block out additional attributes that are not importable
@@ -68,6 +68,14 @@
             }
             return $derivedAttributeTypes;
 
+        }
+
+        /**
+         * The derived attributes for activities corresponds to the activityItems attribute.
+         */
+        public static function getActualModelAttributeNameForDerivedAttribute()
+        {
+            return 'activityItems';
         }
     }
 ?>

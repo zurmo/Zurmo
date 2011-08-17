@@ -306,11 +306,11 @@
                 ),
                 'column_12' => array(
                     array('message'=> '5 record(s) will be updated and 7 record(s) will be skipped during import.',
-                           'sanitizerUtilType' => 'IdValueType', 'moreAvailable' => false),
+                           'sanitizerUtilType' => 'ModelIdValueType', 'moreAvailable' => false),
                 ),
                 'column_13' => array(
                     array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
-                           'sanitizerUtilType' => 'IdValueType', 'moreAvailable' => false),
+                           'sanitizerUtilType' => 'ModelIdValueType', 'moreAvailable' => false),
                 ),
                 'column_14' => array(
                     array('message'=> '4 record(s) will be updated and 8 record(s) will be skipped during import.',

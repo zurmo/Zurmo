@@ -57,8 +57,10 @@
             assert('is_array($columnMappingData)');
             assert('is_bool($shouldSaveModel)');
             $modelClassName = $this->getModelClassName();
-            $value          = static::sanitizeValueForImport($modelClassName, 'hash',
-                                                            $value, $columnMappingData, $shouldSaveModel);
+            $value          = ImportSanitizerUtil::
+                              sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                            $modelClassName, 'hash', $value, $columnMappingData,
+                                                            $shouldSaveModel);
             if($value == null)
             {
                 $mappingRuleFormClassName = 'PasswordDefaultValueModelAttributeMappingRuleForm';

@@ -55,7 +55,9 @@
             assert('count$attributeNames) == 1');
             assert('$attributeNames[0] == "state"');
             $modelClassName = $this->getModelClassName();
-            $value = static::sanitizeValueForImport($modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
+            $value = ImportSanitizerUtil::
+                     sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                   $modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
             return array('state' => $value);
         }
     }

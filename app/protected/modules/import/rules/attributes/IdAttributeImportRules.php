@@ -31,7 +31,7 @@
     {
         public function __construct($model, $attributeName)
         {
-            parent::__construct($model);
+            parent::__construct($model, $attributeName);
             assert('$attributeName == "id"');
         }
 
@@ -60,16 +60,18 @@
                 $modelClassName =$this->getModelClassName();
                 try
                 {
-                    $value  = static::sanitizeValueForImport($this->getModelClassName(),
-                                                         $this->getModelAttributeName(),
-                                                         $value,
-                                                         $columnMappingData,
-                                                         $shouldSaveModel);
-                    return array($attributeName => $value);
+                    $value  = ImportSanitizerUtil::
+                              sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
+                                                            $this->getModelClassName(),
+                                                            $this->getModelAttributeName(),
+                                                            $value,
+                                                            $columnMappingData,
+                                                            $shouldSaveModel);
+                    return array($this->getModelAttributeName() => $value);
                 }
                 catch (ExternalSystemIdNotFoundException $e)
                 {
-                    return array('THE CONSTANT FOR external_system_id' => $value);
+                    return array(ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME => $value);
                 }
             }
             else
