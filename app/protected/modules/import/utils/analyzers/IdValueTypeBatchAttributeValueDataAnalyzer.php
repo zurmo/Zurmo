@@ -71,15 +71,15 @@
 
         /**
          * Override to ensure the attribute is only a single attribute and also setup the message count data.
-         * @param unknown_type $modelClassName
-         * @param unknown_type $attributeNameOrNames
+         * @param string $modelClassName
+         * @param string $attributeName
          */
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
             $model                         = new $modelClassName(false);
-            $this->attributeModelClassName = $this->resolveAttributeModelClassName($model,$this->attributeNameOrNames[0]);
+            $this->attributeModelClassName = $this->resolveAttributeModelClassName($model,$this->attributeName);
             $this->messageCountData[static::FOUND]                        = 0;
             $this->messageCountData[static::UNFOUND]                      = 0;
             $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] = 0;
@@ -95,16 +95,15 @@
             assert('is_string($mappingRuleType)');
             assert('is_array($mappingRuleData)');
             assert('is_int($mappingRuleData["type"])');
-            assert('count($this->attributeNameOrNames) == 1');
             $this->ensureTypeValueIsValid($mappingRuleData["type"]);
             $this->type = $mappingRuleData["type"];
             if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
-                $modelClassName = $this->attributeModelClassName;
-                $columnName     = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+                $modelClassName  = $this->attributeModelClassName;
+                $tableColumnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
                 RedBean_Plugin_Optimizer_ExternalSystemId::
                 ensureColumnIsVarchar($modelClassName::getTableName($modelClassName),
-                                      $columnName,
+                                      $tableColumnName,
                                       $this->externalSystemIdMaxLength);
             }
             $this->processAndMakeMessage($dataProvider, $columnName);
@@ -203,8 +202,12 @@
          */
         protected function resolveFoundIdByValue($value)
         {
-            assert('is_int($value) || is_string($value)');
-            if(is_int($value))
+            assert('is_int($value) || is_string($value) || $value == null');
+            if($value == null)
+            {
+                return false;
+            }
+            elseif(is_int($value))
             {
                 $sqlReadyString = $value;
             }
@@ -230,6 +233,11 @@
          */
         protected function resolveFoundExternalSystemIdByValue($value)
         {
+            assert('is_int($value) || is_string($value) || $value == null');
+            if($value == null)
+            {
+                return false;
+            }
             $modelClassName = $this->attributeModelClassName;
             $columnName     = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             $sql = 'select id from ' . $modelClassName::getTableName($modelClassName) .

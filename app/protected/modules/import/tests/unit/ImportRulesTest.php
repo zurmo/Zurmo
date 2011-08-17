@@ -37,8 +37,8 @@
             $data = ImportModelTestItemImportRules::getMappableAttributeIndicesAndDerivedTypes();
             $compareData = array(
                 'boolean'                     => 'Boolean',
-                'CreatedByUser'				  => 'Created By User',
-                'CreatedDateTime'			  => 'Created Date Time',
+                'createdByUser'				  => 'Created By User',
+                'createdDateTime'			  => 'Created Date Time',
                 'currencyValue'			      => 'Currency Value',
                 'date'                        => 'Date',
                 'dateTime'                    => 'Date Time',
@@ -47,11 +47,13 @@
                 'float'                       => 'Float',
                 'FullName'					  => 'Full Name',
                 'hasOne'					  => 'Has One',
+                'hasOneAlso'				  => 'Has One Also',
                 'id'                          => 'Id',
+                'ImportModelTestItem3Derived' => 'ImportModelTestItem3',
                 'integer'                     => 'Integer',
                 'lastName'					  => 'Last Name',
-                'ModifiedByUser'		      => 'Modified By User',
-                'ModifiedDateTime'		      => 'Modified Date Time',
+                'modifiedByUser'		      => 'Modified By User',
+                'modifiedDateTime'		      => 'Modified Date Time',
                 'owner' 				      => 'Owner',
                 'phone'                       => 'Phone',
                 'primaryAddress__city'        => 'Primary Address - City',
@@ -91,7 +93,14 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $data = ImportRulesUtil::getImportRulesTypesForCurrentUser();
             $compareData = array(
-                'Account' => 'Accounts',
+                'Accounts'      => 'Accounts',
+                'Contacts'      => 'Contacts',
+                'Leads'         => 'Leads',
+                'Meetings'      => 'Meetings',
+                'Notes'         => 'Notes',
+                'Opportunities' => 'Opportunities',
+                'Tasks'         => 'Tasks',
+                'Users'         => 'Users',
             );
             $this->assertEquals($compareData, $data);
         }

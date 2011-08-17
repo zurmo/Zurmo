@@ -37,10 +37,9 @@
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            assert('count($this->attributeNameOrNames) == 1');
             $customFieldData  = CustomFieldDataModelUtil::
                                 getDataByModelClassNameAndAttributeName($this->modelClassName,
-                                                                       $this->attributeNameOrNames[0]);
+                                                                       $this->attributeName);
             $dropDownValues   = unserialize($customFieldData->serializedData);
             $dropDownValues   = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $data             = $dataProvider->getCountDataByGroupByColumnName($columnName);

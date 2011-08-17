@@ -40,5 +40,20 @@
         {
             return array('Number', 'Required');
         }
+
+        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        {
+            $attributeNames = $this->getRealModelAttributeNames();
+            $modelClassName = $this->getModelClassName();
+            $sanitizedvalue = static::sanitizeValueForImport($modelClassName, $this->getModelAttributeName(),
+                                                    $value, $columnMappingData, $shouldSaveModel);
+            $currencyValue             = new CurrencyValue();
+            $currencyValue->value      = $sanitizedValue;
+            $currencyValue->rateToBase = $columnMappingData['CurrencyRateToBaseModelAttributeMappingRuleForm']
+                                         ['rateToBase'];
+            $currencyValue->currency   = Currency::
+                                         getById($columnMappingData['CurrencyRateToBaseModelAttributeMappingRuleForm']['id']);
+            return array($this->getModelAttributeName() => $currencyValue);
+        }
     }
 ?>

@@ -104,9 +104,9 @@
                 $modelAttributeNames        = array();
                 if($attributeImportRules instanceof DerivedAttributeImportRules)
                 {
-                    $modelAttributeNames    = $attributeImportRules->getModelAttributeNames();
+                    $modelAttributeNames    = $attributeImportRules->getRealModelAttributeNames();
                 }
-                elseif($attributeImportRules instanceof AttributeImportRules)
+                elseif($attributeImportRules instanceof NonDerivedAttributeImportRules)
                 {
                     $modelAttributeNames[0] = $attributeIndex;
                 }
@@ -150,7 +150,7 @@
             {
                 if($attributeImportRules instanceof AttributeImportRules)
                 {
-                    $modelAttributeNames       = $attributeImportRules->getModelAttributeNames();
+                    $modelAttributeNames       = $attributeImportRules->getRealModelAttributeNames();
                     foreach($modelAttributeNames as $modelAttributeName)
                     {
                         if(in_array($modelAttributeName, $mappedModelAttributeNames))

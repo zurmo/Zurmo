@@ -44,12 +44,12 @@
         /**
          * Override to resolve the max length.
          * @param string $modelClassName
-         * @param string $attributeNameOrNames
+         * @param string $attributeName
          */
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
             $this->maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
             $this->messageCountData[static::URL_TOO_LONG] = 0;
         }

@@ -37,7 +37,16 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $billy                      = UserTestHelper::createBasicUser('billy');
             $importRulesTypes           = ImportRulesUtil::getImportRulesTypesForCurrentUser();
-            $compareData                = array('Account' => 'Accounts');
+            $compareData = array(
+                'Accounts'      => 'Accounts',
+                'Contacts'      => 'Contacts',
+                'Leads'         => 'Leads',
+                'Meetings'      => 'Meetings',
+                'Notes'         => 'Notes',
+                'Opportunities' => 'Opportunities',
+                'Tasks'         => 'Tasks',
+                'Users'         => 'Users',
+            );
             $this->assertEquals($compareData, $importRulesTypes);
             Yii::app()->user->userModel = User::getByUsername('billy');
             $importRulesTypes           = ImportRulesUtil::getImportRulesTypesForCurrentUser();

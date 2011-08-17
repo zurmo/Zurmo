@@ -39,7 +39,7 @@
             return Yii::t('Default', 'Password');
         }
 
-        public function getModelAttributeNames()
+        public function getRealModelAttributeNames()
         {
             return array('hash');
         }
@@ -57,7 +57,7 @@
             assert('is_array($columnMappingData)');
             assert('is_bool($shouldSaveModel)');
             $modelClassName = $this->getModelClassName();
-            $value          = $this->sanitizeValueForImport($modelClassName, 'hash',
+            $value          = static::sanitizeValueForImport($modelClassName, 'hash',
                                                             $value, $columnMappingData, $shouldSaveModel);
             if($value == null)
             {

@@ -34,10 +34,10 @@
 
         protected $maxLength;
 
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
             $this->maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
             $this->messageCountData[static::EMAIL_TOO_LONG] = 0;
         }

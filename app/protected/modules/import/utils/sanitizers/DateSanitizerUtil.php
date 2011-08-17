@@ -56,5 +56,23 @@
         {
             return 'ValueFormat';
         }
+
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$value != ""');
+            assert('isset($mappingRuleData["format"])');
+            if($value == null)
+            {
+                return $value;
+            }
+            $sanitizedValue = CDateTimeParser::parse($value, $mappingRuleData['format']);
+            if($sanitizedValue === false)
+            {
+                throw new InvalidValueToSanitizeException();
+            }
+            return $sanitizedValue;
+        }
     }
 ?>

@@ -98,19 +98,19 @@
             $this->assertTrue($attributeImportRules instanceof TextAttributeImportRules);
 
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
-                                    'ImportModelTestItem', 'CreatedByUser');
+                                    'ImportModelTestItem', 'createdByUser');
             $this->assertTrue($attributeImportRules instanceof CreatedByUserAttributeImportRules);
 
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
-                                    'ImportModelTestItem', 'ModifiedByUser');
+                                    'ImportModelTestItem', 'modifiedByUser');
             $this->assertTrue($attributeImportRules instanceof ModifiedByUserAttributeImportRules);
 
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
-                                    'ImportModelTestItem', 'CreatedDateTime');
+                                    'ImportModelTestItem', 'createdDateTime');
             $this->assertTrue($attributeImportRules instanceof CreatedDateTimeAttributeImportRules);
 
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
-                                    'ImportModelTestItem', 'ModifiedDateTime');
+                                    'ImportModelTestItem', 'modifiedDateTime');
             $this->assertTrue($attributeImportRules instanceof ModifiedDateTimeAttributeImportRules);
         }
     }

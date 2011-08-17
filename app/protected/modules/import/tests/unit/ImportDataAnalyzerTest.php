@@ -153,12 +153,12 @@
                                         'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_7' => array('attributeIndexOrDerivedType' => 'CreatedByUser', 'type' => 'importColumn',
+                'column_7' => array('attributeIndexOrDerivedType' => 'createdByUser', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                     'UserValueTypeModelAttributeMappingRuleForm' =>
                                         array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME))),
 
-                'column_8' => array('attributeIndexOrDerivedType' => 'ModifiedByUser', 'type' => 'importColumn',
+                'column_8' => array('attributeIndexOrDerivedType' => 'modifiedByUser', 'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                     'UserValueTypeModelAttributeMappingRuleForm' =>
                                         array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID))),
@@ -333,7 +333,7 @@
                            'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_19' => array(
-                    array('message'=> '1 value(s) have urls that are invalid. These rows will be skipped during import.',
+                    array('message'=> '1 value(s) have urls that are invalid. These values will be cleared during import.',
                           'sanitizerUtilType' => 'Url', 'moreAvailable' => false),
                 ),
                 'column_21' => array(
@@ -348,7 +348,7 @@
                     array('message'=> '1 value(s) are too large for this field. These rows will be skipped during import.',
                           'sanitizerUtilType' => 'FullName', 'moreAvailable' => false),
                 ),
-                );
+            );
             $this->assertEquals($compareData, $messagesData);
             $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
             $compareInstructionsData  = array('column_6' =>
@@ -387,7 +387,7 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Test truncate sanitization by batch.
-            $dataAnalyzer = new TruncateBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('phone'));
+            $dataAnalyzer = new TruncateBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'phone');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_1');
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
@@ -395,7 +395,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test boolean sanitization by batch.
-            $dataAnalyzer = new BooleanBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('boolean'));
+            $dataAnalyzer = new BooleanBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'boolean');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_3');
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
@@ -403,7 +403,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test date sanitization by batch.
-            $dataAnalyzer = new DateBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('date'));
+            $dataAnalyzer = new DateBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'date');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_4', 'ValueFormat',
                            array('format' => 'MM-dd-yyyy'));
             $messages = $dataAnalyzer->getMessages();
@@ -412,7 +412,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test datetime sanitization by batch.
-            $dataAnalyzer = new DateTimeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dateTime'));
+            $dataAnalyzer = new DateTimeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'dateTime');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_5', 'ValueFormat',
                            array('format' => 'MM-dd-yyyy hh:mm'));
             $messages = $dataAnalyzer->getMessages();
@@ -421,7 +421,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test dropdown sanitization by batch.
-            $dataAnalyzer = new DropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('dropDown'));
+            $dataAnalyzer = new DropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'dropDown');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_6');
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
@@ -429,7 +429,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test CreatedByUser sanitization by batch.
-            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('CreatedByUser'));
+            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'createdByUser');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_7', 'UserValueTypeModelAttribute',
                            array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME));
             $messages = $dataAnalyzer->getMessages();
@@ -438,7 +438,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test ModifiedByUser sanitization by batch.
-            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('ModifiedByUser'));
+            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'modifiedByUser');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_8', 'UserValueTypeModelAttribute',
                        array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID));
             $messages = $dataAnalyzer->getMessages();
@@ -447,7 +447,7 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test owner sanitization by batch.
-            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', array('owner'));
+            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'owner');
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_9', 'UserValueTypeModelAttribute',
                        array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID));
             $messages = $dataAnalyzer->getMessages();

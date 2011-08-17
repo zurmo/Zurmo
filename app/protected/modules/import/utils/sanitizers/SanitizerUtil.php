@@ -59,24 +59,16 @@
         }
 
         /**
-         * @return boolean - whether this sanitizer supports data analysis at all.
-         */
-        public static function supportsDataAnalysis()
-        {
-            return true;
-        }
-
-        /**
          *
          * Given a model class name and attribute name or names, make a sql analyzer and return it.
          * @param string $modelClassName
-         * @param array $attributeNameOrNames
+         * @param array $attributeName
          * @throws NotSupportedException
          */
-        public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
+        public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
-            assert('is_array($attributeNameOrNames)');
+            assert('is_string($attributeName) || $attributeName == null');
             $sqlAttributeValueDataAnalyzerType = static::getSqlAttributeValueDataAnalyzerType();
             if($sqlAttributeValueDataAnalyzerType == null)
             {
@@ -84,18 +76,18 @@
             }
             $sqlAttributeValueDataAnalyzerClassName = $sqlAttributeValueDataAnalyzerType .
                                                       'SqlAttributeValueDataAnalyzer';
-            return new $sqlAttributeValueDataAnalyzerClassName($modelClassName, $attributeNameOrNames);
+            return new $sqlAttributeValueDataAnalyzerClassName($modelClassName, $attributeName);
         }
 
         /**
          * Given a model class name and attribute name or names, make a batch analyzer and return it.
          * @param string $modelClassName
-         * @param array $attributeNameOrNames
+         * @param array $attributeName
          */
-        public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
+        public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
-            assert('is_array($attributeNameOrNames)');
+            assert('is_string($attributeName) || $attributeName == null');
             $batchAttributeValueDataAnalyzerType = static::getBatchAttributeValueDataAnalyzerType();
             if($batchAttributeValueDataAnalyzerType == null)
             {
@@ -103,7 +95,7 @@
             }
             $batchAttributeValueDataAnalyzerClassName = $batchAttributeValueDataAnalyzerType .
                                                         'BatchAttributeValueDataAnalyzer';
-            return new $batchAttributeValueDataAnalyzerClassName($modelClassName, $attributeNameOrNames);
+            return new $batchAttributeValueDataAnalyzerClassName($modelClassName, $attributeName);
         }
 
         /**
@@ -178,7 +170,7 @@
 
         /**
          * If the sanitization of a value fails, should the entire row that is trying to be imported be ignored?
-         * Override if you want to change this value, but returning false, means save the import row anyways regardless
+         * Override if you want to change this value.  Returning false means save the import row anyways regardless
          * of if a sanitization of a value failed.  If the model has other validation errors, these will block saving
          * the model regardless of what value is returned here.
          * @return boolean

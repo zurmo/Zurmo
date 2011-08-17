@@ -61,12 +61,14 @@
                      $this->isAttributeAHasOneNotOwnedRelation($attributeName) ||
                      $this->isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation($attributeName))
                 {
+                   $type         = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
+                   $resolvedType = static::resolveAttributeImportTypeByAttributeName($type, $attributeName);
                     ModelAttributeImportMappingCollectionUtil::populateCollection(
                         $attributes,
                         $attributeName,
                         $this->model->getAttributeLabel($attributeName),
                         $attributeName,
-                        ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName),
+                        $resolvedType,
                         null,
                         $this->model->isAttributeRequired($attributeName)
                     );
@@ -80,13 +82,16 @@
                             $attributeLabel = $this->model->getAttributeLabel($attributeName) .
                                               ' - ' .
                                               $this->model->{$attributeName}->getAttributeLabel($relationAttributeName);
+                            $type         = ModelAttributeToMixedTypeUtil::getType($this->model->$attributeName,
+                                                                                   $relationAttributeName);
+                            $resolvedType = static::
+                                            resolveAttributeImportTypeByAttributeName($type, $relationAttributeName);
                             ModelAttributeImportMappingCollectionUtil::populateCollection(
                                 $attributes,
                                 $attributeName . FormModelUtil::DELIMITER . $relationAttributeName,
                                 $attributeLabel,
                                 $attributeName,
-                                ModelAttributeToMixedTypeUtil::getType($this->model->$attributeName,
-                                                                                  $relationAttributeName),
+                                $resolvedType,
                                 $relationAttributeName,
                                 $this->model->{$attributeName}->isAttributeRequired($relationAttributeName)
                             );
@@ -163,6 +168,29 @@
         protected static function getRelationModelClassNamesToTreatAsNonOwnedRelations()
         {
             return array('CurrencyValue');
+        }
+
+        protected static function resolveAttributeImportTypeByAttributeName($type, $attributeName)
+        {
+            assert('is_string($type)');
+            assert('is_string($attributeName)');
+            if($attributeName =='createdByUser')
+            {
+                return 'CreatedByUser';
+            }
+            if($attributeName =='modifiedByUser')
+            {
+                return 'ModifiedByUser';
+            }
+            if($attributeName =='createdDateTime')
+            {
+                return 'CreatedDateTime';
+            }
+            if($attributeName =='modifiedDateTime')
+            {
+                return 'ModifiedDateTime';
+            }
+            return $type;
         }
     }
 ?>

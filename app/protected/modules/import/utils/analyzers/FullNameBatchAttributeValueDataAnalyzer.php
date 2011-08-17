@@ -48,18 +48,16 @@
          */
         protected $lastNameMaxLength;
 
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 2');
-            assert('$this->attributeNameOrNames[0] == "firstName"');
-            assert('$this->attributeNameOrNames[1] == "lastName"');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('$attributeName == null');
             $this->messageCountData[static::FULL_NAME_TOO_LONG] = 0;
             $model                    = new $modelClassName(false);
             $this->firstNameMaxLength = StringValidatorHelper::
-                                        getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[0]);
+                                        getMaxLengthByModelAndAttributeName($model, 'firstName');
             $this->lastNameMaxLength  = StringValidatorHelper::
-                                        getMaxLengthByModelAndAttributeName($model, $attributeNameOrNames[1]);
+                                        getMaxLengthByModelAndAttributeName($model, 'lastName');
         }
 
         /**

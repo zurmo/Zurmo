@@ -32,13 +32,13 @@
 
         /**
          * Override to ensure the attribute is 'id'.
-         * @param unknown_type $modelClassName
-         * @param unknown_type $attributeNameOrNames
+         * @param string $modelClassName
+         * @param string $attributeName
          */
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('$this->attributeNameOrNames[0] == "id"');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('$this->attributeName == "id"');
         }
 
         /**

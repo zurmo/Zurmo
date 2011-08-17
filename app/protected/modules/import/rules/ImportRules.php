@@ -196,20 +196,20 @@
             assert('$modelClassName != null && is_string($modelClassName)');
             $attributesCollection = static::getAttributesCollectionByModelClassName($modelClassName);
 
-            $attributeIndexOrDerivedTypeAndRuleType = array();
+            $attributeIndexOrDerivedTypeAndRuleTypes = array();
             foreach($attributesCollection as $attributeIndex => $attributeData)
             {
                 if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
                     !in_array($attributeData['attributeImportRulesType'], static::getNonImportableAttributeImportRulesTypes()))
                 {
-                    $attributeIndexOrDerivedTypeAndRuleType[$attributeIndex] = $attributeData['attributeImportRulesType'];
+                    $attributeIndexOrDerivedTypeAndRuleTypes[$attributeIndex] = $attributeData['attributeImportRulesType'];
                 }
             }
             foreach(static::getDerivedAttributeTypes() as $derivedType)
             {
-                $attributeIndexOrDerivedTypeAndRuleType[$derivedType] = $derivedType;
+                $attributeIndexOrDerivedTypeAndRuleTypes[$derivedType] = $derivedType;
             }
-            return $attributeIndexOrDerivedTypeAndRuleType;
+            return $attributeIndexOrDerivedTypeAndRuleTypes;
         }
 
         /**

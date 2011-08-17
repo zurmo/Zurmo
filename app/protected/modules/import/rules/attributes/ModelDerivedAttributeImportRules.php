@@ -48,10 +48,5 @@
         {
             throw new NotImplementedException();
         }
-
-        public function getModelAttributeNames()
-        {
-            return null;
-        }
     }
 ?>

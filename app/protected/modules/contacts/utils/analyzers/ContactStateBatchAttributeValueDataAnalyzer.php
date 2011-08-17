@@ -32,11 +32,10 @@
     {
         protected $states;
 
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
-            assert('$this->attributeNameOrNames[0] == "state"');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('$attributeName == null');
             $this->states = $this->resolveStates();
             $this->states = ArrayUtil::resolveArrayToLowerCase($this->states);
         }

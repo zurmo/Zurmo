@@ -31,14 +31,20 @@
     {
         protected $model;
 
-        protected $attributeName;
-
-        public function __construct($model, $attributeName = null)
+        public function __construct($model)
         {
             assert('$model instanceof RedBeanModel');
-            assert('is_string($attributeName) || $attributeName == null');
             $this->model         = $model;
-            $this->attributeName = $attributeName;
+        }
+
+        /**
+         * @return string - If the class name is TestAttributeImportRules, then 'Test' will be returned.
+         */
+        public static function getType()
+        {
+            $type = get_called_class();
+            $type = substr($type, 0, strlen($type) - strlen('AttributeImportRules'));
+            return $type;
         }
 
         public function getModelClassName()
@@ -46,20 +52,12 @@
             return get_class($this->model);
         }
 
-        public function getDisplayLabel()
-        {
-            return $this->model->getAttributeLabel($this->attributeName);
-        }
+        abstract public function getRealModelAttributeNames();
 
         public function getDisplayLabelByAttributeName($attributeName)
         {
             assert('$attributeName == null || is_string($attributeName)');
             return $this->model->getAttributeLabel($attributeName);
-        }
-
-        public function getModelAttributeNames()
-        {
-            return array($this->attributeName);
         }
 
         /**
@@ -119,7 +117,7 @@
             return array();
         }
 
-        protected function sanitizeValueForImport($modelClassName, $attributeName, $value,
+        protected static function sanitizeValueForImport($modelClassName, $attributeName, $value,
                                                               $columnMappingData, & $shouldSaveModel)
         {
             assert('is_string($modelClassName)');

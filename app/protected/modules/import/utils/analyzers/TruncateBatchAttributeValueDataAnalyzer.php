@@ -40,13 +40,13 @@
         /**
          * Override to make the max length information.
          * @param string $modelClassName
-         * @param array $attributeNameOrNames
+         * @param array $attributeName
          */
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
-            $this->maxLength = $this->resolveMaxLength($modelClassName, $attributeNameOrNames[0]);
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
+            $this->maxLength = $this->resolveMaxLength($modelClassName, $attributeName);
         }
 
         /**

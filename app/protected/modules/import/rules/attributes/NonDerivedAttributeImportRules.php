@@ -29,16 +29,40 @@
      */
     abstract class NonDerivedAttributeImportRules extends AttributeImportRules
     {
+        protected $attributeName;
+
+        public function __construct($model, $attributeName)
+        {
+            parent::__construct($model);
+            assert('is_string($attributeName)');
+            $this->attributeName = $attributeName;
+        }
+
+        public function getDisplayLabel()
+        {
+            return $this->model->getAttributeLabel($this->attributeName);
+        }
+
+        public function getModelAttributeName()
+        {
+            return $this->attributeName;
+        }
+
+        public function getRealModelAttributeNames()
+        {
+            return array($this->getModelAttributeName());
+        }
+
         public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
         {
-            $attributeNames = $this->getModelAttributeNames();
-            assert('count($attributeNames) == 1');
             assert('is_array($columnMappingData)');
             assert('is_bool($shouldSaveModel)');
-            $attributeName  = $attributeNames[0];
             $modelClassName =$this->getModelClassName();
-            $value  = $this->sanitizeValueForImport($modelClassName, $attributeName, $value,
-                                                    $columnMappingData, $shouldSaveModel);
+            $value  = static::sanitizeValueForImport($this->getModelClassName(),
+                                                     $this->getModelAttributeName(),
+                                                     $value,
+                                                     $columnMappingData,
+                                                     $shouldSaveModel);
             return array($attributeName => $value);
         }
     }

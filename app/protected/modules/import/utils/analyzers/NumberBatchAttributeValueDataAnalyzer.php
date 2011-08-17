@@ -39,15 +39,15 @@
         protected $type;
 
         /**
-         * Override to assert $attributeNameOrNames is only a single attribute as this is the only way this analyzer
+         * Override to assert $attributeName is only a single attribute as this is the only way this analyzer
          * supports it.
          * @param string $modelClassName
-         * @param string $attributeNameOrNames
+         * @param string $attributeName
          */
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
         }
 
         /**
@@ -56,11 +56,10 @@
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            assert('count($this->attributeNameOrNames) == 1');
             $this->processAndMakeMessage($dataProvider, $columnName);
             $modelClassName = $this->modelClassName;
             $model          = new $modelClassName(false);
-            $this->type     = ModelAttributeToMixedTypeUtil::getType($model, $this->attributeNameOrNames[0]);
+            $this->type     = ModelAttributeToMixedTypeUtil::getType($model, $this->attributeName);
         }
 
         /**

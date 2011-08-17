@@ -40,12 +40,12 @@
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
                      getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'date', 'defaultValue');
-            $compareData = array(array('defaultValue',  'type', 'type' => 'date'));
+            $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'date'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
                      getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'dateTime', 'defaultValue');
-            $compareData = array(array('defaultValue',  'type', 'type' => 'datetime'));
+            $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'datetime'));
             $this->assertEquals($compareData, $rules);
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::

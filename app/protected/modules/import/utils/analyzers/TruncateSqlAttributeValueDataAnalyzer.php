@@ -37,8 +37,8 @@
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            assert('count($this->attributeNameOrNames) == 1');
-            $maxLength = $this->resolveMaxLength($this->modelClassName, $this->attributeNameOrNames[0]);
+            assert('is_string($this->attributeName)');
+            $maxLength = $this->resolveMaxLength($this->modelClassName, $this->attributeName);
             if($maxLength == null)
             {
                 return;

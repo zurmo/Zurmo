@@ -35,15 +35,15 @@
             throw new NotImplementedException();
         }
 
-        public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
+        public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeName)
         {
             throw new NotImplementedException();
         }
 
-        public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeNameOrNames)
+        public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
-            assert('$attributeNameOrNames == null');
+            assert('$attributeName == null');
             $batchAttributeValueDataAnalyzerType = static::getBatchAttributeValueDataAnalyzerType();
             if($batchAttributeValueDataAnalyzerType == null)
             {
@@ -51,7 +51,7 @@
             }
             $batchAttributeValueDataAnalyzerClassName = $batchAttributeValueDataAnalyzerType .
                                                         'BatchAttributeValueDataAnalyzer';
-            return new $batchAttributeValueDataAnalyzerClassName(static::getDerivedModelClassName(), array('id'));
+            return new $batchAttributeValueDataAnalyzerClassName(static::getDerivedModelClassName(), 'id');
         }
     }
 ?>

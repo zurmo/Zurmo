@@ -39,7 +39,7 @@
             return Yii::t('Default', 'Full Name');
         }
 
-        public function getModelAttributeNames()
+        public function getRealModelAttributeNames()
         {
             return array('firstName', 'lastName');
         }
@@ -51,11 +51,11 @@
 
         public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
         {
-            $attributeNames = $this->getModelAttributeNames();
+            $attributeNames = $this->getRealModelAttributeNames();
             assert('$attributeNames[0] == "firstName"');
             assert('$attributeNames[1] == "lastName"');
             $modelClassName = $this->getModelClassName();
-            $value = $this->sanitizeValueForImport($modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
+            $value = static::sanitizeValueForImport($modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
             list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
             if($firstName == null)
             {

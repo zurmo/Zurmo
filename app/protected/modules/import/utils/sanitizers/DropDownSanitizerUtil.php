@@ -64,7 +64,7 @@
          * @param unknown_type $mappingRuleData
          * @param unknown_type $importInstructionsData
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData,
+        public static function sanitizeValueWithInstructions($modelClassName, $attributeName, $value, $mappingRuleData,
                                              $importInstructionsData)
         {
             assert('is_string($modelClassName)');

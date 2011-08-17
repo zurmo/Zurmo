@@ -33,7 +33,6 @@
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            assert('count($this->attributeNameOrNames) == 1');
             $dropDownValues  = $this->resolveStates();
             $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);

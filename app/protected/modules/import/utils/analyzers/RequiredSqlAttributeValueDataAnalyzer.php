@@ -39,11 +39,10 @@
             $mappingRuleType, $mappingRuleData)
         {
             assert('is_string($columnName)');
-            assert('count($this->attributeNameOrNames) == 1');
             assert('is_array($mappingRuleData)');
             $modelClassName = $this->modelClassName;
             $model = new $modelClassName(false);
-            if(!$model->isAttributeRequired($this->attributeNameOrNames[0]))
+            if(!$model->isAttributeRequired($this->attributeName))
             {
                 return false;
             }

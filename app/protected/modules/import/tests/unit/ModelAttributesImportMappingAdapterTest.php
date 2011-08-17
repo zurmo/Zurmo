@@ -49,7 +49,7 @@
                     'attributeLabel' => 'Created Date Time',
                     'attributeName' => 'createdDateTime',
                     'relationAttributeName' => null,
-                    'attributeImportRulesType' => 'DateTime',
+                    'attributeImportRulesType' => 'CreatedDateTime',
                     'isRequired' => true,
                   ),
               'modifiedDateTime' =>
@@ -57,7 +57,7 @@
                     'attributeLabel' => 'Modified Date Time',
                     'attributeName' => 'modifiedDateTime',
                     'relationAttributeName' => null,
-                    'attributeImportRulesType' => 'DateTime',
+                    'attributeImportRulesType' => 'ModifiedDateTime',
                     'isRequired' => true,
                   ),
               'createdByUser' =>
@@ -65,7 +65,7 @@
                     'attributeLabel' => 'Created By User',
                     'attributeName' => 'createdByUser',
                     'relationAttributeName' => null,
-                    'attributeImportRulesType' => 'User',
+                    'attributeImportRulesType' => 'CreatedByUser',
                     'isRequired' => false,
                   ),
               'firstName' =>
@@ -89,7 +89,7 @@
                     'attributeLabel' => 'Modified By User',
                     'attributeName' => 'modifiedByUser',
                     'relationAttributeName' => null,
-                    'attributeImportRulesType' => 'User',
+                    'attributeImportRulesType' => 'ModifiedByUser',
                     'isRequired' => false,
                   ),
               'owner' =>
@@ -202,6 +202,14 @@
                     'attributeName' => 'hasOne',
                     'relationAttributeName' => null,
                     'attributeImportRulesType' => 'ImportModelTestItem2',
+                    'isRequired' => false,
+                  ),
+              'hasOneAlso' =>
+                  array (
+                    'attributeLabel' => 'Has One Also',
+                    'attributeName' => 'hasOneAlso',
+                    'relationAttributeName' => null,
+                    'attributeImportRulesType' => 'ImportModelTestItem4',
                     'isRequired' => false,
                   ),
               'primaryEmail__emailAddress' =>

@@ -39,11 +39,6 @@
             return false;
         }
 
-        public static function supportsDataAnalysis()
-        {
-            return false;
-        }
-
         public static function getLinkedMappingRuleType()
         {
             return 'FullNameDefaultValueModelAttribute';

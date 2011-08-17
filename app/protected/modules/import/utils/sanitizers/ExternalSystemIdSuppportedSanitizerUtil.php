@@ -27,7 +27,7 @@
     /**
      *
      */
-    abstract class ExternalSystemIdSuppportedSanitizerUtil
+    abstract class ExternalSystemIdSuppportedSanitizerUtil extends SanitizerUtil
     {
         const EXTERNAL_SYSTEM_ID_COLUMN_NAME = 'external_system_id';
 

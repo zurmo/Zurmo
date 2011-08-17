@@ -123,7 +123,7 @@
         public function testResolveAttributeIndexAndTheFormsAreUsingTheCorrectModelClassNameAndAttributeName()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
-            $attributeImportRules = new EmailAttributeImportRules(new ImportModelTestItem(), 'primaryEmail__emailAddress');
+            $attributeImportRules = new EmailAttributeImportRules(new Email(), 'emailAddress');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
                                     'primaryEmail__emailAddress', 'importColumn');

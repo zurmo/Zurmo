@@ -44,11 +44,11 @@
         protected $modelClassName;
 
         /**
-         * Typically this is just an array of one attribute name, however with derived types, it is possible that more
-         * than one attribute name will be pased through.
+         * Either a specific attribute on a model or null, in the case of a derived attribute. If it is derived, then
+         * it is expected the data analyzer handling this knows what real model attributes the derived attribute refer to.
          * @var array
          */
-        protected $attributeNameOrNames;
+        protected $attributeName;
 
         /**
          * Array of various counts of data. An example is a sub-element of the array storing a count of how many
@@ -69,13 +69,12 @@
          */
         private   $instructionsData;
 
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
-            assert('is_array($attributeNameOrNames) || is_string($attributeNameOrNames)');
-            assert('is_string($sanitizerUtilType)');
-            $this->modelClassName       = $modelClassName;
-            $this->attributeNameOrNames = $attributeNameOrNames;
+            assert('is_string($attributeName) || $attributeName == null');
+            $this->modelClassName = $modelClassName;
+            $this->attributeName  = $attributeName;
             $this->messageCountData[static::INVALID] = 0;
         }
 

@@ -46,14 +46,14 @@
         const NEW_NAME_TO0_LONG = 'New name too long';
 
         /**
-         * Override to ensure the $attributeNameOrNames is a single value and also to resolve the max name length.
+         * Override to ensure the $attributeName is a single value and also to resolve the max name length.
          * @param string $modelClassName
-         * @param string $attributeNameOrNames
+         * @param string $attributeName
          */
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
             $attributeModelClassName                        = $this->attributeModelClassName;
             $model                                          = new $attributeModelClassName(false);
             assert('$model->isAttribute("name")');
@@ -84,21 +84,28 @@
             }
             elseif($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)
             {
-                $modelClassName = $this->attributeModelClassName;
-                $sql = 'select name from ' . $modelClassName::getTableName($modelClassName) .
-                " where name = " . DatabaseCompatibilityUtil::lower("'" . $value . "'") . " limit 1";
-                $ids =  R::getCol($sql);
-                if(count($ids) == 0)
+                if($value == null)
                 {
                     $found = false;
-                    if(strlen($value) > $this->maxNameLength)
-                    {
-                        $this->messageCountData[static::NEW_NAME_TO0_LONG] ++;
-                    }
                 }
                 else
                 {
-                    $found = true;
+                    $modelClassName = $this->attributeModelClassName;
+                    $sql = 'select name from ' . $modelClassName::getTableName($modelClassName) .
+                    " where name = " . DatabaseCompatibilityUtil::lower("'" . $value . "'") . " limit 1";
+                    $ids =  R::getCol($sql);
+                    if(count($ids) == 0)
+                    {
+                        $found = false;
+                        if(strlen($value) > $this->maxNameLength)
+                        {
+                            $this->messageCountData[static::NEW_NAME_TO0_LONG] ++;
+                        }
+                    }
+                    else
+                    {
+                        $found = true;
+                    }
                 }
 
             }

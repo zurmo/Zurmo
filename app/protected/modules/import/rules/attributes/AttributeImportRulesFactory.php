@@ -51,7 +51,10 @@
             {
                 return new $attributeImportRulesClassName(new $modelClassName(false));
             }
-            return new $attributeImportRulesClassName(new $modelClassName(false), $attributeIndexOrDerivedType);
+            $attributeName = self::resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
+                             $modelClassName,
+                             $attributeIndexOrDerivedType);
+            return new $attributeImportRulesClassName(new $modelClassName(false), $attributeName);
         }
 
         /**
@@ -78,6 +81,46 @@
             return $collection;
         }
 
+        public static function getClassNameByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
+                                                                                      $attributeIndexOrDerivedType)
+        {
+            assert('is_string($importRulesType)');
+            assert('is_string($attributeIndexOrDerivedType)');
+            $importRulesTypeClassName = ImportRulesUtil::getImportRulesClassNameByType($importRulesType);
+            $attributeImportRulesType = $importRulesTypeClassName::
+                                        getAttributeImportRulesType($attributeIndexOrDerivedType);
+            assert('$attributeImportRulesType !== null');
+            $attributeImportRulesClassName = $attributeImportRulesType . 'AttributeImportRules';
+            return $attributeImportRulesClassName;
+        }
 
+        /**
+         * This method will inspect the attributeIndexOrDerivedType looking for any attribute indexes that represent
+         * two distinct variables. If it finds this, then it gets the correct attributeName to return.  The two
+         * variables would be a relation attributeName and a relatedAttributeName.  It will return the
+         * relatedAttributeName and update by reference the $modelClassName to the relation model class name.
+         * @param string $modelClassName
+         * @param string $attributeIndexOrDerivedType
+         */
+        public static function resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
+                               & $modelClassName, $attributeIndexOrDerivedType
+        )
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeIndexOrDerivedType)');
+            $relationNameAndAttributeName = explode(FormModelUtil::DELIMITER, $attributeIndexOrDerivedType);
+            if(count($relationNameAndAttributeName) == 1)
+            {
+                return $attributeIndexOrDerivedType;
+            }
+            else
+            {
+                list($relationName, $attributeName) = $relationNameAndAttributeName;
+            }
+            $model          = new $modelClassName(false);
+            $modelClassName = $model->getRelationModelClassName($relationName);
+            assert('$modelClassName != null');
+            return $attributeName;
+        }
     }
 ?>

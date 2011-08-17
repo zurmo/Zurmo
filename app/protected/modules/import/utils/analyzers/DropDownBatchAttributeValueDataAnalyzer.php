@@ -35,13 +35,12 @@
 
         protected $missingDropDownInstructions;
 
-        public function __construct($modelClassName, $attributeNameOrNames)
+        public function __construct($modelClassName, $attributeName)
         {
-            parent:: __construct($modelClassName, $attributeNameOrNames);
-            assert('count($this->attributeNameOrNames) == 1');
+            parent:: __construct($modelClassName, $attributeName);
+            assert('is_string($attributeName)');
             $customFieldData      = CustomFieldDataModelUtil::
-                                    getDataByModelClassNameAndAttributeName($this->modelClassName,
-                                                                       $this->attributeNameOrNames[0]);
+                                    getDataByModelClassNameAndAttributeName($this->modelClassName, $this->attributeName);
             $dropDownValues       = unserialize($customFieldData->serializedData);
             $this->dropDownValues = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE] = array();

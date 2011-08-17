@@ -29,10 +29,23 @@
      */
     abstract class DerivedAttributeImportRules extends AttributeImportRules
     {
-        public function __construct($model, $attributeName = null)
+        public function getModelAttributeName()
         {
-            assert('$attributeName == null');
-            parent::__construct($model, $attributeName);
+            throw new NotSupportedException();
+        }
+
+        public function getRealModelAttributeNames()
+        {
+            return null;
+        }
+
+        /**
+         * Override in any derived children classes to ensure a display label is available.
+         * @see AttributeImportRules::getDisplayLabel()
+         */
+        public function getDisplayLabel()
+        {
+            throw new NotImplementedException();
         }
 
         /**

@@ -39,7 +39,7 @@
             return Yii::t('Default', 'Status');
         }
 
-        public function getModelAttributeNames()
+        public function getRealModelAttributeNames()
         {
             return array('state');
         }
