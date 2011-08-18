@@ -7,16 +7,30 @@
 }*/
 
 /* Begin Template Classes */
+.zurmoLogo
+{
+	width: 170px;
+    height: 53px;
+    background-image: url(../images/ZurmoLogo.png);
+}
+
 #MainLogo
 {
     float: left;
-    padding-left: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
 }
 
 #LoginLogo
 {
     margin-bottom: 20px;
-    margin-left: 50px;
+    margin-left: 85px;
+}
+
+#InstallLogo
+{
+    margin-bottom: 20px;
+    margin-left: 15px;
 }
 
 #HeaderView
