@@ -76,6 +76,8 @@
             $this->assertEquals($expectedVersion, $actualVersion);
             $this->assertFalse (InstallUtil::checkWebServer(array('iis'    => '5.0.0'),  $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
+            $_SERVER['SERVER_SOFTWARE'] = 'Apache';
+            $this->assertFalse (InstallUtil::checkWebServer(array('apache' => '1.0.0'),  $actualVersion));
         }
 
         public function testCheckPhp()

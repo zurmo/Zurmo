@@ -66,7 +66,20 @@
          */
         protected $minimumVersion;
 
+        /**
+         * In some cases, the check for a service version or presence of a service might only result in partial
+         * information. An example is the Apache server check. The check might be able to ascertain apache is in
+         * fact installed, but the version of apache remains unknown.
+         * @var boolean
+         */
+        protected $checkResultedInWarning = false;
+
         abstract protected function checkService();
+
+        public function didCheckProduceWarningStatus()
+        {
+            return $this->checkResultedInWarning;
+        }
 
         /**
          * Called to check service.  Will check service and populate message.

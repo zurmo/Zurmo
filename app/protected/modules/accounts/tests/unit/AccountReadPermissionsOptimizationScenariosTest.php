@@ -189,11 +189,13 @@
 
             public function tearDown()
             {
-                parent::tearDown();
                 ReadPermissionsOptimizationUtil::rebuild();
                 assert('self::getAccountMungeRowCount() == 0'); // Not Coding Standard
                 RedBeanModel::forgetAll();
                 self::assertEverythingHasBeenSetBackToHowItStarted();
+                //Teardown comes after so that the Yii::app()->user->userModel is still in tact since the rebuild
+                //requires it.
+                parent::tearDown();
             }
 
             protected static function assertEverythingHasBeenSetBackToHowItStarted()
@@ -221,6 +223,10 @@
                 assert('$g1->users->count() == 0'); // Not Coding Standard
                 assert('$g2->users->count() == 0'); // Not Coding Standard
                 assert('$g3->users->count() == 0'); // Not Coding Standard
+
+                assert('$g1->groups->count() == 0'); // Not Coding Standard
+                assert('$g2->groups->count() == 0'); // Not Coding Standard
+                assert('$g3->groups->count() == 0'); // Not Coding Standard
 
                 assert('$r1->role->isSame($r2)');   // Not Coding Standard
                 assert('$r2->role->isSame($r3)');   // Not Coding Standard
@@ -1452,12 +1458,31 @@
                 $u2->role = $r4;
                 $this->assertTrue($u2->save());
 
+                $this->assertTrue($g2->groups->contains($g1)); //Testing it contains G1.
+                $this->assertTrue($g1->group->isSame($g2));
                 $g2->users->removeAll();
                 $g2->groups->removeAll();
                 $this->assertTrue($g2->save());
+                $this->assertFalse($g2->groups->contains($g1));
+                $this->assertTrue($g1->group->isSame($g2)); //BUG - This should not be true, but something with caching
+                                                            //is causing it to be.  Need to ->forget to then show the
+                                                            //right value. This needs to be fixed eventually.
+
+                $g1->forget();    //Doing this properly clears out $g1->group->isSame($g2), but we shouldn't have to do that.
+                $g1 = Group::getByName('G1.');
+                $this->assertFalse($g1->group->isSame($g2));
+                $this->assertEquals(0, $g2->groups->count());
 
                 $g1->users->removeAll();
                 $this->assertTrue($g1->save());
+                $this->assertFalse($g2->groups->contains($g1)); //G1 should still no longer be contained/
+                $this->assertFalse($g1->group->isSame($g2));
+                $this->assertEquals(0, $g2->groups->count());
+
+                $g2->forget();
+                $g2 = Group::getByName('G2.');
+                $this->assertFalse($g2->groups->contains($g1));
+                $this->assertEquals(0, $g2->groups->count());
             }
 
             public function testGroupRemovedFromGroup_Slide18()

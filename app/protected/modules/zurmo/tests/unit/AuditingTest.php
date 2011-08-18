@@ -35,8 +35,8 @@
             $user->username  = 'jimmy';
             $user->firstName = 'James';
             $user->lastName  = 'Boondog';
-            assert('$user->save()'); // Not Coding Standard
-            assert('AuditEvent::getCount() == 4'); // Not Coding Standard
+            assert($user->save()); // Not Coding Standard
+            assert(AuditEvent::getCount() == 4); // Not Coding Standard
         }
 
         public function testLogAuditEventsListForUser()
@@ -327,19 +327,18 @@
                                     'AuditTestItem\([0-9]+\), \(None\)/',             // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
 
-                $item->datetime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60);
+                $item->dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 120);
                 $item->date     = '2010-12-20';
                 $item->float    = 3.14159;
                 $item->integer  = 666;
                 $item->time     = '11:59';
                 $this->assertTrue($item->save());
                 $this->assertEquals($beforeCount + 6, AuditEvent::getCount());
-
                 $auditEvents = AuditEvent::getTailEvents(5);
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard
-                                    'Changed Datetime from \(None\) to [0-9]+/',      // Not Coding Standard
+                                    'Changed Date Time from \(None\) to [0-9]+/',      // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
@@ -362,7 +361,7 @@
                                     'Changed Time from \(None\) to 11:59/',           // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[4]));
 
-                $item->datetime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+                $item->dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                 $item->date     = '2012-01-22';
                 $item->float    = 6.626068E-34;
                 $item->integer  = 69;
@@ -371,13 +370,13 @@
                 $this->assertEquals($beforeCount + 11, AuditEvent::getCount());
 
                 $auditEvents = AuditEvent::getTailEvents(5);
-                /*
+/*
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard
-                                    'Changed Datetime from [0-9]+ to [0-9]+/',        // Not Coding Standard
+                                    'Changed Date Time from [0-9]+ to [0-9]+/',        // Not Coding Standard
                                     ZurmoModule::stringifyAuditEvent($auditEvents[0]));
-                                    */
+*/
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard

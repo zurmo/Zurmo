@@ -44,5 +44,10 @@
         {
             return 'ZurmoModule';
         }
+
+        public static function hasReadPermissionsOptimization()
+        {
+            return true;
+        }
     }
 ?>

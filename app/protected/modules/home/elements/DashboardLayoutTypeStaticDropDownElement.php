@@ -26,14 +26,12 @@
 
     class DashboardLayoutTypeStaticDropDownElement extends StaticDropDownFormElement
     {
+        /**
+         * @see DropDownElement::getDropDownArray()
+         */
         protected function getDropDownArray()
         {
-            return array(
-                '100'   => Yii::t('Default', '1 Column'),
-                '50,50' => Yii::t('Default', '2 Columns'), // Not Coding Standard
-                '75,25' => Yii::t('Default', '2 Columns Left Strong'), // Not Coding Standard
-                //'30,70' => Yii::t('Default', '2 Columns Right Strong'), add to language labels when restored // Not Coding Standard
-            );
+            return Dashboard::getLayoutTypesData();
         }
     }
 ?>

@@ -33,6 +33,13 @@
 
         const CHECK_FAILED = 2;
 
+        /**
+         * Utilize if a check does not pass or fail but is able to ascertain partial information, thus resulting in
+         * a warning.
+         * @var integer
+         */
+        const CHECK_WARNING = 3;
+
         private static function getServicesToCheck()
         {
             return array('WebServer',
@@ -66,8 +73,10 @@
             $resultsData                                                      = array();
             $resultsData[self::CHECK_PASSED]                                  = array();
             $resultsData[self::CHECK_FAILED]                                  = array();
-            $resultsData[self::CHECK_FAILED][ServiceHelper::REQUIRED_SERVICE] = array();
-            $resultsData[self::CHECK_FAILED][ServiceHelper::OPTIONAL_SERVICE] = array();
+            $resultsData[self::CHECK_FAILED] [ServiceHelper::REQUIRED_SERVICE] = array();
+            $resultsData[self::CHECK_FAILED] [ServiceHelper::OPTIONAL_SERVICE] = array();
+            $resultsData[self::CHECK_WARNING]                                  = array();
+
             foreach($servicesToCheck as $service)
             {
                 $serviceHelperClassName = $service . 'ServiceHelper';
@@ -76,6 +85,11 @@
                 if($serviceHelper->runCheckAndGetIfSuccessful())
                 {
                     $resultsData[self::CHECK_PASSED][] = array('service' => $service,
+                                                                      'message' => $serviceHelper->getMessage());
+                }
+                elseif($serviceHelper->didCheckProduceWarningStatus())
+                {
+                    $resultsData[self::CHECK_WARNING][]  = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
                 }
                 else

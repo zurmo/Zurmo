@@ -50,6 +50,7 @@
         {
             $failedIndexId   = CheckServicesUtil::CHECK_FAILED;
             $passedIndexId   = CheckServicesUtil::CHECK_PASSED;
+            $warningIndexId  = CheckServicesUtil::CHECK_WARNING;
             $requiredIndexId = ServiceHelper::REQUIRED_SERVICE;
             $optionalIndexId = ServiceHelper::OPTIONAL_SERVICE;
             $currentPageUrl  = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/checkSystem/');
@@ -83,6 +84,15 @@
                     $content .= '<br/>';
                 }
             }
+            if(count($this->checkResultsDisplayData[$warningIndexId]) > 0)
+            {
+                $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
+                                        Yii::t('Default', 'Service Status Partially Known'),
+                                        $this->checkResultsDisplayData[$warningIndexId],
+                                        Yii::t('Default', 'WARNING'));
+                $content .= '<br/>';
+            }
+
             if(count($this->checkResultsDisplayData[$passedIndexId]) > 0)
             {
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
@@ -109,7 +119,7 @@
             assert('is_array($groupData)');
             assert('is_string($checkResultLabel) && $checkResultLabel != ""');
             $content  = '<table>' . "\n";
-            $content .= '<colgroup><col/><col style="width:70px;" /></colgroup>' . "\n";
+            $content .= '<colgroup><col/><col style="width:100px;" /></colgroup>' . "\n";
             $content .= '<tr><td>' . $groupLabel . '</td><td></td></tr>' . "\n";
             foreach ($groupData as $serviceDisplayData)
             {
