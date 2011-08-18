@@ -193,11 +193,11 @@
 
         protected function getViewLayoutWidgetPath()
         {
-            if($this->configurationForm->viewType == self::VIEW_TYPE_LISTVIEW)
+            if ($this->configurationForm->viewType == self::VIEW_TYPE_LISTVIEW)
             {
                 return 'application.modules.activities.widgets.LatestActivitiesListViewLayout';
             }
-            elseif($this->configurationForm->viewType == self::VIEW_TYPE_SUMMARY)
+            elseif ($this->configurationForm->viewType == self::VIEW_TYPE_SUMMARY)
             {
                 return 'application.modules.activities.widgets.LatestActivitiesSummaryViewLayout';
             }

@@ -15,10 +15,10 @@
             //todo: cache results to improve performance if needed.
             $mashableModelClassNames = array();
             $modules = Module::getModuleObjects();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 $modelClassNames = $module::getModelClassNames();
-                foreach($modelClassNames as $modelClassName)
+                foreach ($modelClassNames as $modelClassName)
                 {
                     $classToEvaluate     = new ReflectionClass($modelClassName);
                     if ($classToEvaluate->implementsInterface('MashableActivityInterface') &&
@@ -48,11 +48,11 @@
             assert('is_array($modelClassNames)');
             assert('is_array($relationItemIds)');
             $modelClassNamesAndSearchAttributeData = array();
-            foreach($modelClassNames as $modelClassName)
+            foreach ($modelClassNames as $modelClassName)
             {
                 $mashableActivityRules =
                     MashableActivityRulesFactory::createMashableActivityRulesByModel($modelClassName);
-                if(count($relationItemIds) > 1)
+                if (count($relationItemIds) > 1)
                 {
                     $searchAttributesData  =
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemIds($relationItemIds);
@@ -76,7 +76,7 @@
         public static function getSortAttributesByMashableModelClassNames($modelClassNames)
         {
             $modelClassNamesAndSortAttributes = array();
-            foreach($modelClassNames as $modelClassName)
+            foreach ($modelClassNames as $modelClassName)
             {
                 $mashableActivityRules =
                     MashableActivityRulesFactory::createMashableActivityRulesByModel($modelClassName);
@@ -98,9 +98,9 @@
         {
             assert('is_array($mashableModelClassNames)');
             assert('is_string($filteredByModelName) || $filteredByModelName == null');
-            foreach($mashableModelClassNames as $index => $modelClassName)
+            foreach ($mashableModelClassNames as $index => $modelClassName)
             {
-                if( $filteredByModelName != LatestActivitiesConfigurationForm::FILTERED_BY_ALL &&
+                if ( $filteredByModelName != LatestActivitiesConfigurationForm::FILTERED_BY_ALL &&
                     $filteredByModelName != $modelClassName)
                 {
                     unset($mashableModelClassNames[$index]);

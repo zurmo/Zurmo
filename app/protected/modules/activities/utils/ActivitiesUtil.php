@@ -40,9 +40,9 @@
             assert('is_string($modelClassName)');
             $modelDerivationPath = RuntimeUtil::getClassHierarchy($modelClassName, 'RedBeanModel');
             $modelDerivationPathToItem = array();
-            foreach($modelDerivationPath as $modelClassName)
+            foreach ($modelDerivationPath as $modelClassName)
             {
-                if($modelClassName == 'Item')
+                if ($modelClassName == 'Item')
                 {
                     break;
                 }

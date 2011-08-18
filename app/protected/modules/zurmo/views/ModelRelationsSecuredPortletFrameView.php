@@ -48,7 +48,7 @@
 
         protected function renderPortlets($uniqueLayoutId, $portletsAreCollapsible = true, $portletsAreMovable = true)
         {
-            if(!$this->showAsTabs)
+            if (!$this->showAsTabs)
             {
                 return parent::renderPortlets($uniqueLayoutId, $portletsAreCollapsible, $portletsAreMovable);
             }

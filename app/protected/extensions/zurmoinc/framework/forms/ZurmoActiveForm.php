@@ -8,26 +8,26 @@
          */
         public function errorSummary($models, $header = null, $footer = null, $htmlOptions = array())
         {
-            if(!$this->enableAjaxValidation && !$this->enableClientValidation)
+            if (!$this->enableAjaxValidation && !$this->enableClientValidation)
             {
                 return ZurmoHtml::errorSummary($models, $header, $footer, $htmlOptions);
             }
-            if(!isset($htmlOptions['id']))
+            if (!isset($htmlOptions['id']))
             {
                 $htmlOptions['id'] = $this->id . '_es_';
             }
             $html = ZurmoHtml::errorSummary($models, $header, $footer, $htmlOptions);
-            if($html === '')
+            if ($html === '')
             {
-                if($header === null)
+                if ($header === null)
                 {
                     $header = '<p>' . Yii::t('yii','Please fix the following input errors:') . '</p>';
                 }
-                if(!isset($htmlOptions['class']))
+                if (!isset($htmlOptions['class']))
                 {
                     $htmlOptions['class'] = CHtml::$errorSummaryCss;
                 }
-                if(isset($htmlOptions['style']))
+                if (isset($htmlOptions['style']))
                 {
                     $htmlOptions['style'] = rtrim($htmlOptions['style'], ';') . ';display:none';
                 }

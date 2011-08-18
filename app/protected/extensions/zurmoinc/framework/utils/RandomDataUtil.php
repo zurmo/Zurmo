@@ -16,13 +16,13 @@
         {
             assert('is_string($moduleClassName)');
             assert('is_string($modelClassName)');
-            if(!isset(self::$randomData[$modelClassName]))
+            if (!isset(self::$randomData[$modelClassName]))
             {
                 $directoryName = $moduleClassName::getDirectoryName();
                 $moduleName    = $moduleClassName::getPluralCamelCasedName();
                 $filePath      = Yii::getPathOfAlias('application.modules.' . $directoryName . '.data.' .
                                  $modelClassName . 'RandomData') . '.php';
-                if(file_exists($filePath))
+                if (file_exists($filePath))
                 {
                     self::$randomData[$modelClassName] = require($filePath);
                 }
@@ -46,7 +46,7 @@
         public static function getRandomBooleanValue()
         {
             $value  = mt_rand(0,1);
-            if($value == 1)
+            if ($value == 1)
             {
                 return true;
             }

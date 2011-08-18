@@ -50,7 +50,7 @@
         public function actionDownload($id, $modelId, $modelClassName)
         {
             $model = $modelClassName::getById((int)$modelId);
-            if(!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
+            if (!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
             {
                 $messageView = new AccessFailureView();
                 $view        = new AccessFailurePageView($messageView);

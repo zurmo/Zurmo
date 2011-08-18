@@ -80,7 +80,7 @@
                 assert('isset($row["mappingDataRules"])');
                 $content .= '<tr>';
                 $content .= $this->renderAttributeDropDownElement($columnName);
-                if($this->model->firstRowIsHeaderRow)
+                if ($this->model->firstRowIsHeaderRow)
                 {
                     $content .= $this->renderHeaderColumnElement($columnName);
                 }
@@ -141,9 +141,9 @@
             assert('is_string($columnName)');
             assert('is_array($columnMappingRulesData) || $columnMappingRulesData == null');
             $content = '<td>';
-            if($columnMappingRulesData != null)
+            if ($columnMappingRulesData != null)
             {
-                foreach($columnMappingRulesData as $mappingRulesType => $mappingRulesValue)
+                foreach ($columnMappingRulesData as $mappingRulesType => $mappingRulesValue)
                 {
                     $attributeName             = FormModelUtil::getDerivedAttributeNameFromTwoStrings(
                                                  $columnName,

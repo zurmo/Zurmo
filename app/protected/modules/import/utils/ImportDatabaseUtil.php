@@ -7,7 +7,7 @@
             assert('is_string($tableName)');
             assert('$tableName == strtolower($tableName)');
             $freezeWhenComplete = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
@@ -16,7 +16,7 @@
             while (($data = fgetcsv($fileHandle, 0, ',')) !== false)
             {
                 $newBean = R::dispense($tableName);
-                foreach($data as $columnId => $value)
+                foreach ($data as $columnId => $value)
                 {
                     $columnName = 'column_' . $columnId;
                     $newBean->{$columnName} = $value;
@@ -24,7 +24,7 @@
                 R::store($newBean);
                 unset($newBean);
             }
-            if($freezeWhenComplete)
+            if ($freezeWhenComplete)
             {
                 RedBeanDatabase::freeze();
             }

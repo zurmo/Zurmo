@@ -31,11 +31,11 @@
             $previousPageLinkContent = $this->renderPreviousPageLinkContent($form);
             $nextPageLinkContent     = $this->renderNextPageLinkContent($form);
             $content  = '<div class="view-toolbar">'; //change to different class?
-            if($previousPageLinkContent)
+            if ($previousPageLinkContent)
             {
                 $content .= '<div id="previous-page-link">' . $previousPageLinkContent . '</div>'; //float left //should be a form submit link.
             }
-            if($nextPageLinkContent)
+            if ($nextPageLinkContent)
             {
                 $content .= '<div id="next-page-link">' . $nextPageLinkContent . '</div>'; //float right //should be a form submit link.
             }

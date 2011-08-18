@@ -55,7 +55,7 @@
         {
             assert('is_string($name)');
             $name = $new_string = preg_replace('/[^a-zA-Z0-9]/', '', $name);
-            if(strlen($name) > 15)
+            if (strlen($name) > 15)
             {
                 $name = substr($name, 0, 15);
             }
@@ -71,7 +71,7 @@
         public function getCustomFieldDataByName($name)
         {
             assert('is_string($name)');
-            if(!isset(self::$customFieldData[$name]))
+            if (!isset(self::$customFieldData[$name]))
             {
                 $data = CustomFieldData::getByName('AccountTypes');
                 $values = unserialize($data->serializedData);

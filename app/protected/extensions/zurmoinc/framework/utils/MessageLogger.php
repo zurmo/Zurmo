@@ -80,7 +80,7 @@
         {
             assert('is_array($message)');
             $this->messages[] = $message;
-            if($this->messageStreamer != null)
+            if ($this->messageStreamer != null)
             {
                 $this->messageStreamer->add(static::getTypeLabel($message[0]) . ' - ' . $message[1]);
             }
@@ -99,14 +99,14 @@
         public function printMessages($return = false, $errorOnly = false)
         {
             $content = '';
-            foreach($this->messages as $messageInfo)
+            foreach ($this->messages as $messageInfo)
             {
-                if(!$errorOnly || ($errorOnly && $messageInfo[0] == MessageLogger::ERROR))
+                if (!$errorOnly || ($errorOnly && $messageInfo[0] == MessageLogger::ERROR))
                 {
                     $content .= static::getTypeLabel($messageInfo[0]) . ' - ' . $messageInfo[1] . "\n";
                 }
             }
-            if($return)
+            if ($return)
             {
                 return $content;
             }
@@ -120,7 +120,7 @@
         public static function getTypeLabel($type)
         {
             assert('$type == MessageLogger::ERROR || $type == MessageLogger::INFO');
-            if($type == MessageLogger::ERROR)
+            if ($type == MessageLogger::ERROR)
             {
                 return Yii::t('Default', 'Error');
             }

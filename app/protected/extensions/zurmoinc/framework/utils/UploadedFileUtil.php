@@ -11,7 +11,7 @@
         public static function getByNameAndCatchError($filesVariableName)
         {
             $uploadedFile  = CUploadedFile::getInstanceByName($filesVariableName);
-            if($uploadedFile->getHasError())
+            if ($uploadedFile->getHasError())
             {
                 $error = $file->getError();
                 $messageParams = array('{file}'=> $uploadedFile->getName(), '{limit}'=> self::getSizeLimit());
@@ -50,7 +50,7 @@
                 }
                 throw new FailedFileUploadException();
             }
-            elseif($uploadedFile == null)
+            elseif ($uploadedFile == null)
             {
                 throw new FailedFileUploadException(Yii::t('Default', 'The file did not exist'));
             }
@@ -75,7 +75,7 @@
         {
             $limit = ini_get('upload_max_filesize');
             $limit = self::sizeToBytes($limit);
-            if(isset($_POST['MAX_FILE_SIZE']) && $_POST['MAX_FILE_SIZE'] > 0 && $_POST['MAX_FILE_SIZE'] < $limit)
+            if (isset($_POST['MAX_FILE_SIZE']) && $_POST['MAX_FILE_SIZE'] > 0 && $_POST['MAX_FILE_SIZE'] < $limit)
             {
                 $limit = $_POST['MAX_FILE_SIZE'];
             }

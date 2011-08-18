@@ -36,7 +36,7 @@
             $actualMemoryBytes = null;
             $memoryBytesPassed = InstallUtil::checkPhpMaxMemorySetting($this->minimumMemoryRequireBytes,
                                                                        $actualMemoryBytes);
-            if($memoryBytesPassed)
+            if ($memoryBytesPassed)
             {
                 $this->message = Yii::t('Default', 'Php Memory setting meets minimum requirement.');
                 return true;

@@ -20,7 +20,7 @@
         public function __construct($template = null)
         {
             assert('is_string($template) || $template == null');
-            if($template != null)
+            if ($template != null)
             {
                 $this->template = $template;
             }

@@ -33,7 +33,7 @@
         {
             $passed = true;
             $debugWritable =  InstallUtil::isDebugConfigWritable(INSTANCE_ROOT);
-            if($debugWritable)
+            if ($debugWritable)
             {
                 $this->message  = Yii::t('Default', 'The debug.php config file is writable.');
             }
@@ -43,7 +43,7 @@
                 $passed = false;
             }
             $perInstanceWritable = InstallUtil::isPerInstanceConfigWritable(INSTANCE_ROOT);
-            if($perInstanceWritable)
+            if ($perInstanceWritable)
             {
                 $this->message  .= "\n" . Yii::t('Default', 'The perInstance.php config file is writable.');
             }

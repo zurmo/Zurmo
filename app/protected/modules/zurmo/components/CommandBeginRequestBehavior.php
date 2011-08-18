@@ -36,7 +36,7 @@
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
-            if(Yii::app()->isApplicationInstalled())
+            if (Yii::app()->isApplicationInstalled())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
             }

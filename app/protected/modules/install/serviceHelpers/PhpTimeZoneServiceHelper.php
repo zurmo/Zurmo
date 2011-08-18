@@ -32,7 +32,7 @@
         protected function checkService()
         {
             $allPassed = false;
-            if(InstallUtil::checkPhpTimezoneSetting())
+            if (InstallUtil::checkPhpTimezoneSetting())
             {
                 $this->message = Yii::t('Default', 'Php Timezone is set.');
                 return true;

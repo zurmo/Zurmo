@@ -42,7 +42,7 @@
         public function setTimeZone($value)
         {
             assert('is_string($value)');
-            if(new DateTimeZone($value) === false)
+            if (new DateTimeZone($value) === false)
             {
                 throw new NotSupportedException();
             }

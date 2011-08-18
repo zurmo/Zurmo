@@ -36,12 +36,12 @@
         {
             assert('$import instanceof Import');
             $form = new ImportWizardForm();
-            if($import->serializedData != null)
+            if ($import->serializedData != null)
             {
                 $unserializedData = unserialize($import->serializedData);
-                foreach(self::$importToFormAttributeMap as $attributeName)
+                foreach (self::$importToFormAttributeMap as $attributeName)
                 {
-                    if(isset($unserializedData[$attributeName]))
+                    if (isset($unserializedData[$attributeName]))
                     {
                         $form->$attributeName = $unserializedData[$attributeName];
                     }
@@ -61,10 +61,10 @@
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData) && isset($postData["modelImportRulesType"])');
-            if($importWizardForm->modelImportRulesType != null &&
+            if ($importWizardForm->modelImportRulesType != null &&
                $importWizardForm->modelImportRulesType != $postData["modelImportRulesType"])
             {
-                foreach(self::$importToFormAttributeMap as $attributeName)
+                foreach (self::$importToFormAttributeMap as $attributeName)
                 {
                     $importWizardForm->$attributeName = null;
                 }
@@ -98,9 +98,9 @@
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($fileUploadData)');
             assert('is_string($tableName');
-            foreach(self::$importToFormAttributeMap as $attributeName)
+            foreach (self::$importToFormAttributeMap as $attributeName)
             {
-                if($attributeName != 'modelImportRulesType')
+                if ($attributeName != 'modelImportRulesType')
                 {
                     $importWizardForm->$attributeName = null;
                 }
@@ -112,7 +112,7 @@
         public static function setImportSerializedDataFromForm($importWizardForm, & $import)
         {
             $dataToSerialize = array();
-            foreach(self::$importToFormAttributeMap as $attributeName)
+            foreach (self::$importToFormAttributeMap as $attributeName)
             {
                 $dataToSerialize[$attributeName] = $importWizardForm->$attributeName;
             }

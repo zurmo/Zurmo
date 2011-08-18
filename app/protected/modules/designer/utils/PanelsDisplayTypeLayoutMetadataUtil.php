@@ -34,7 +34,7 @@
             $panelsDisplayTypeForm = new LayoutPanelsTypeForm();
             $panelsDisplayTypeForm->setAttributes($layoutPanelsTypeFormPostData);
             $validated = $panelsDisplayTypeForm->validate();
-            if(!$validated)
+            if (!$validated)
             {
                 return false;
             }

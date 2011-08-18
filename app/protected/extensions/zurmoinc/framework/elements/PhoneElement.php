@@ -37,7 +37,7 @@
             is_integer($this->model->{$this->attribute})');
             $htmlOptions             = array();
             $htmlOptions['disabled'] = $this->getDisabledValue();
-            if($this->model->{$this->attribute} == 0)
+            if ($this->model->{$this->attribute} == 0)
             {
                 $htmlOptions['value'] = '';
             }
@@ -46,7 +46,7 @@
 
         protected function renderControlNonEditable()
         {
-            if($this->model->{$this->attribute} == 0)
+            if ($this->model->{$this->attribute} == 0)
             {
                 return null;
             }

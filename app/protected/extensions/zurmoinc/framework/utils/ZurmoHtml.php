@@ -31,21 +31,21 @@
                 {
                     foreach ($errors as $errorOrRelatedError)
                     {
-                        if(is_array($errorOrRelatedError))
+                        if (is_array($errorOrRelatedError))
                         {
                             foreach ($errorOrRelatedError as $relatedError)
                             {
-                                if($relatedError != '')
+                                if ($relatedError != '')
                                 {
                                     $content .= "<li>$relatedError</li>\n";
                                 }
                             }
                         }
-                        elseif($errorOrRelatedError != '')
+                        elseif ($errorOrRelatedError != '')
                         {
                             $content .= "<li>$errorOrRelatedError</li>\n";
                         }
-                        if($firstError)
+                        if ($firstError)
                         {
                             break;
                         }

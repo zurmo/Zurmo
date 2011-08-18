@@ -36,7 +36,7 @@
             $content = null;
             foreach ($this->model->files as $fileModel)
             {
-                if($content != null)
+                if ($content != null)
                 {
                     $content .= "<br/>";
                 }

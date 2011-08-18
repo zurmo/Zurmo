@@ -30,14 +30,14 @@
         {
             assert('is_string($tableName)');
             $firstRowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
-            if(count($firstRowData) == 1)
+            if (count($firstRowData) == 1)
             {
                 return null;
             }
             $mappingData = array();
-            foreach($firstRowData as $columnName => $notUsed)
+            foreach ($firstRowData as $columnName => $notUsed)
             {
-                if($columnName != 'id')
+                if ($columnName != 'id')
                 {
                     $mappingData[$columnName] = array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null);
                 }

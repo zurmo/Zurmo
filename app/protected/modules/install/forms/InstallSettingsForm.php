@@ -97,12 +97,12 @@
         public function afterValidate()
         {
             parent::afterValidate();
-            if(count($this->getErrors()) == 0)
+            if (count($this->getErrors()) == 0)
             {
                 //check memcache first, since creating the db / user should be last.
-                if($this->memcacheHostname != null)
+                if ($this->memcacheHostname != null)
                 {
-                    if($this->memcachePortNumber == null)
+                    if ($this->memcachePortNumber == null)
                     {
                         $this->addError('memcachePortNumber', Yii::t( 'Default', 'Since you specified a memcache
                         hostname, you must specify a port.'));
@@ -110,7 +110,7 @@
                     }
                     $memcacheResult = InstallUtil::checkMemcacheConnection($this->memcacheHostname,
                                                                            (int)$this->memcachePortNumber);
-                    if($memcacheResult !== true)
+                    if ($memcacheResult !== true)
                     {
                         $this->addError('memcacheHostname', Yii::t('Default', 'Error code:') . " " .
                         $memcacheResult[0] . '<br/>Message: ' . $memcacheResult[1]);
@@ -119,9 +119,9 @@
                 }
 
 
-                if($this->databaseAdminUsername != null)
+                if ($this->databaseAdminUsername != null)
                 {
-                    if($this->databaseAdminPassword == null)
+                    if ($this->databaseAdminPassword == null)
                     {
                         $this->addError('databaseAdminPassword', Yii::t( 'Default', 'Since you specified a database
                         admin username, you must enter a password'));
@@ -131,7 +131,7 @@
                                                                       $this->databaseHostname,
                                                                       $this->databaseAdminUsername,
                                                                       $this->databaseAdminPassword);
-                    if($connectionResult !== true)
+                    if ($connectionResult !== true)
                     {
                         $this->addError('databaseAdminUsername', Yii::t('Default', 'Error code:') . " " .
                         $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
@@ -142,7 +142,7 @@
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
                                                                              $this->databaseUsername);
-                    if($userExistsResult === true)
+                    if ($userExistsResult === true)
                     {
                         $this->addError('databaseUsername', Yii::t('Default', 'You have specified an existing user.
                         If you would like to use this user, then do not specify the database admin username and
@@ -154,7 +154,7 @@
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
                                                                              $this->databaseName);
-                    if($databaseExistsResult === true)
+                    if ($databaseExistsResult === true)
                     {
                         $this->addError('databaseName', Yii::t('Default', 'You have specified an existing database.
                         If you would like to use this database, then do not specify the database admin username and
@@ -166,7 +166,7 @@
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
                                                                              $this->databaseName);
-                    if($createDatabaseResult === false)
+                    if ($createDatabaseResult === false)
                     {
                         $this->addError('databaseName', Yii::t('Default', 'There was a problem creating the database
                         Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
@@ -179,7 +179,7 @@
                                                                              $this->databaseName,
                                                                              $this->databaseUsername,
                                                                              $this->databasePassword);
-                    if($createUserResult === false)
+                    if ($createUserResult === false)
                     {
                         $this->addError('databaseUsername', Yii::t('Default', 'There was a problem creating the user
                         Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
@@ -193,7 +193,7 @@
                                                                              $this->databaseHostname,
                                                                              $this->databaseUsername,
                                                                              $this->databasePassword);
-                    if($connectionResult !== true)
+                    if ($connectionResult !== true)
                     {
                         $this->addError('databaseUsername', Yii::t('Default', 'Error code:') . " " .
                         $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
@@ -204,7 +204,7 @@
                                                                              $this->databaseUsername,
                                                                              $this->databasePassword,
                                                                              $this->databaseName);
-                    if($databaseExistsResult !== true)
+                    if ($databaseExistsResult !== true)
                     {
                         $this->addError('databaseName', Yii::t('Default', 'The database name specified does not
                         exist or the user specified does not have access.') . '<br/>' .
@@ -214,7 +214,7 @@
                     }
                     else
                     {
-                        if($this->removeExistingData == false)
+                        if ($this->removeExistingData == false)
                         {
                         $this->addError('removeExistingData', Yii::t('Default', 'Since you specified an existing database
                         you must check this box in order to proceed. THIS WILL REMOVE ALL EXISTING DATA.'));

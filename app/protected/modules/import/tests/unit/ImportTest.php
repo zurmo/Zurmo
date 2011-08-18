@@ -48,7 +48,7 @@
             $modelImportRules = ImportUtil::makeModelImportRulesByImportModel($import);
             $dataProvider     = ImportDataProviderUtil::makeDataProviderByImportModel($import);
             $importColumnDataSanitizationAnalyzer = new ImportColumnDataSanitizationAnalyzer($modelImportRules, $dataProvider);
-            foreach($mappingData as $importColumnName => $columnMappingData)
+            foreach ($mappingData as $importColumnName => $columnMappingData)
             {
                 $importColumnDataSanitizationAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
             }

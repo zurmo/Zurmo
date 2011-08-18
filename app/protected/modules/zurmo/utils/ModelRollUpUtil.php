@@ -8,25 +8,25 @@
         {
             $relatedItemIds = array($model->getClassId('Item'));
             $metadata = $model::getMetadata();
-            if(isset($metadata[get_class($model)]['rollupRelations']))
+            if (isset($metadata[get_class($model)]['rollupRelations']))
             {
-                foreach($metadata[get_class($model)]['rollupRelations'] as $relationOrKey => $relationOrRelations)
+                foreach ($metadata[get_class($model)]['rollupRelations'] as $relationOrKey => $relationOrRelations)
                 {
-                    if(is_string($relationOrRelations))
+                    if (is_string($relationOrRelations))
                     {
-                        foreach($model->{$relationOrRelations} as $relationModel)
+                        foreach ($model->{$relationOrRelations} as $relationModel)
                         {
                             self::resolveRelatedItemIdsByModelAndUser($relationModel, $relatedItemIds, $user);
                         }
                     }
-                    elseif(is_array($relationOrRelations) && is_string($relationOrKey))
+                    elseif (is_array($relationOrRelations) && is_string($relationOrKey))
                     {
                         //Only supports single nesting level.
-                        foreach($model->{$relationOrKey} as $relationModel)
+                        foreach ($model->{$relationOrKey} as $relationModel)
                         {
-                            foreach($relationOrRelations as $notUsed => $relationsSubRelation)
+                            foreach ($relationOrRelations as $notUsed => $relationsSubRelation)
                             {
-                                foreach($relationModel->$relationsSubRelation as $subRelationModel)
+                                foreach ($relationModel->$relationsSubRelation as $subRelationModel)
                                 {
                                     self::resolveRelatedItemIdsByModelAndUser($subRelationModel, $relatedItemIds, $user);
                                 }
@@ -49,7 +49,7 @@
             if (RightsUtil::canUserAccessModule($model::getModuleClassName(), $user))
             {
                 $itemId = $model->getClassId('Item');
-                if(!in_array($itemId, $relatedItemIds))
+                if (!in_array($itemId, $relatedItemIds))
                 {
                     $relatedItemIds[] = $itemId;
                 }

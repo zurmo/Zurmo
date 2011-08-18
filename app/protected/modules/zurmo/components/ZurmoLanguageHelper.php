@@ -45,13 +45,13 @@
          */
         public function load()
         {
-            if(Yii::app()->user->userModel == null)
+            if (Yii::app()->user->userModel == null)
             {
                 $language = $this->getForCurrentUser();
             }
             else
             {
-                if(null == $language = Yii::app()->user->getState('language'))
+                if (null == $language = Yii::app()->user->getState('language'))
                 {
                     $language = $this->getForCurrentUser();
                     Yii::app()->user->setState('language', $language);

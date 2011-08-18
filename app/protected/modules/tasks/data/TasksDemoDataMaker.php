@@ -38,7 +38,7 @@
             $taskRandomData    = ZurmoRandomDataUtil::
                                  getRandomDataByModuleAndModelClassNames('TasksModule', 'Task');
             $name              = RandomDataUtil::getRandomValueFromArray($taskRandomData['names']);
-            if(RandomDataUtil::getRandomBooleanValue())
+            if (RandomDataUtil::getRandomBooleanValue())
             {
                 $dueTimeStamp             = time() - (mt_rand(1,50) * 60 * 60 * 24);
                 $completedDateTime        = DateTimeUtil::convertTimestampToDbFormatDateTime(

@@ -37,7 +37,7 @@
         public function actionStep1()
         {
             $importWizardForm = new ImportWizardForm();
-            if(isset($_GET['id']))
+            if (isset($_GET['id']))
             {
                 $import = Import::getById($_GET['id']);
             }
@@ -49,10 +49,10 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep1($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
+                if ($importWizardForm->validate())
                 {
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
+                    if ($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step2', array('id' => $import->id)));
                     }
@@ -83,10 +83,10 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
+                if ($importWizardForm->validate())
                 {
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
+                    if ($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step3', array('id' => $import->id)));
                     }
@@ -117,10 +117,10 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
+                if ($importWizardForm->validate())
                 {
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
+                    if ($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step4', array('id' => $import->id)));
                     }
@@ -157,10 +157,10 @@
             if (isset($_POST[get_class($importStep1Form)]))
             {
                 ImportWizardUtil::setFormByPostForStep4($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->validate())
+                if ($importWizardForm->validate())
                 {
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if($import->save())
+                    if ($import->save())
                     {
                         $this->redirect(array($this->getId() . '/step5', array('id' => $import->id)));
                     }
@@ -192,7 +192,7 @@
                 if ($fileHandle !== false)
                 {
                     $tableName = 'importtable' . $import->id;
-                    if(!ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName))
+                    if (!ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName))
                     {
                         throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
                     }
@@ -203,7 +203,7 @@
                     );
                     ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUpload, $tableName);
                     ImportWizardUtil::setImportSerializedDataFromForm($import, $importWizardForm);
-                    if(!$import->save())
+                    if (!$import->save())
                     {
                         throw new FailedFileUploadException(Yii::t('Default', 'Import model failed to save.'));
                     }

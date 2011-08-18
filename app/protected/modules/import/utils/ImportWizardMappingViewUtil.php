@@ -31,10 +31,10 @@
             assert('is_array($mappingData)');
             assert('is_string($tableName)');
             assert('is_bool($firstRowIsHeaderRow)');
-            if($firstRowIsHeaderRow)
+            if ($firstRowIsHeaderRow)
             {
                 $rowData = ImportDatabaseUtil::getRowsByTableNameAndCount($tableName, 2, 0);
-                if(count($rowData) <= 1)
+                if (count($rowData) <= 1)
                 {
                     throw new notSupportedException();
                 }
@@ -42,14 +42,14 @@
             else
             {
                 $rowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
-                if($rowData == null)
+                if ($rowData == null)
                 {
                     throw new notSupportedException();
                 }
             }
-            foreach($mappingData as $columnName => $columnData)
+            foreach ($mappingData as $columnName => $columnData)
             {
-                if($firstRowIsHeaderRow)
+                if ($firstRowIsHeaderRow)
                 {
                     $mappingData[$columnName]['headerValue']      = $rowData[0][$columnName];
                     $mappingData[$columnName]['firstSampleValue'] = $rowData[1][$columnName];

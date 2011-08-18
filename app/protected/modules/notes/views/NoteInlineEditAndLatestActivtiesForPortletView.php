@@ -98,13 +98,13 @@
         protected function renderLatestActivitiesContent()
         {
             $mashableModelClassNamesAndDisplayLabels = LatestActivitiesUtil::getMashableModelDataForCurrentUser();
-            if(count($mashableModelClassNamesAndDisplayLabels) > 0)
+            if (count($mashableModelClassNamesAndDisplayLabels) > 0)
             {
                 $uniquePageId  = get_called_class();
                 $latestActivitiesConfigurationForm = new LatestActivitiesConfigurationForm();
                 $latestActivitiesConfigurationForm->mashableModelClassNamesAndDisplayLabels =
                     $mashableModelClassNamesAndDisplayLabels;
-                if(isset($_GET[get_class($latestActivitiesConfigurationForm)]))
+                if (isset($_GET[get_class($latestActivitiesConfigurationForm)]))
                 {
                     $latestActivitiesConfigurationForm->setAttributes($_GET[get_class($latestActivitiesConfigurationForm)]);
                 }
@@ -151,7 +151,7 @@
                                                     array_keys($form->mashableModelClassNamesAndDisplayLabels),
                                                     $form->filteredByModelName);
             $relationItemId = (int)$this->params['relationModel']->getClassId('Item');
-            if($form->rollup)
+            if ($form->rollup)
             {
                 $relationItemsIds = ModelRollUpUtil::getItemIdsByModelAndUser($this->params['relationModel'],
                                                                               Yii::app()->user->userModel);

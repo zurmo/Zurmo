@@ -66,7 +66,7 @@
         {
             if (parent::beforeSave())
             {
-                if($this->fileContent != null)
+                if ($this->fileContent != null)
                 {
                     return $this->fileContent->save();
                 }

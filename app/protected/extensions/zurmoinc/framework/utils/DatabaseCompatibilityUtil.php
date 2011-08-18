@@ -172,7 +172,7 @@
                 " lower('" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
                 $value . SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "')";
             }
-            elseif(is_array($value) && count($value) > 0)
+            elseif (is_array($value) && count($value) > 0)
             {
                 return SQLOperatorUtil::resolveOperatorAndValueForOneOf($operatorType, $value);
             }

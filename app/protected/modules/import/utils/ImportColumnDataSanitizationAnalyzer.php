@@ -21,15 +21,15 @@
                 assert('is_string($columnMappingData["attributeNameOrDerivedType"])');
                 $attributeImportRules = AttributeImportRulesFactory::makeAttributeImportRulesByColumnMappingData(
                                                                         $columnMappingData);
-                if($attributeValueSanitizerUtilNames = $attributeImportRules->getAttributeValueSanitizerUtilNames() != null)
+                if ($attributeValueSanitizerUtilNames = $attributeImportRules->getAttributeValueSanitizerUtilNames() != null)
                 {
                     assert('is_array($attributeValueSanitizerUtils)');
-                    foreach($attributeValueSanitizerUtilNames as $attributeValueSanitizerUtilName)
+                    foreach ($attributeValueSanitizerUtilNames as $attributeValueSanitizerUtilName)
                     {
                         //???i think here you will probably need to check IF the util supports any type of acceptableAttributeValuesCheck
                         //???example, trim, could be used, but not part of a acceptable values check, it is just run regardless.
 
-                        if($attributeValueSanitizerUtilName::supportsSqlBulkAttributeValuesSanitizer())
+                        if ($attributeValueSanitizerUtilName::supportsSqlBulkAttributeValuesSanitizer())
                         {
  //ACTUALLY - if we move the below logics into               $importAcceptableAttributeValuesCheckResults
  //then we can also move dataProvider in here too and then we dont have to pass Dataprovider into ImportColumnsSanitizerUtil

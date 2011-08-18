@@ -35,11 +35,11 @@
         {
             $passed = $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkRedBean',
                                                                                 Yii::t('Default', 'RedBean'));
-            if($passed)
+            if ($passed)
             {
                 $patched = InstallUtil::checkRedBeanPatched();
                 $this->message .= "\n";
-                if($patched)
+                if ($patched)
                 {
                     $this->message .= Yii::t('Default', 'RedBean file is patched correctly');
                 }

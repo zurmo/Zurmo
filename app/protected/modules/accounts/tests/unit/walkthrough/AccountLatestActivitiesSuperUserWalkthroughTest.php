@@ -60,9 +60,9 @@
             //Find the LatestActivity portlet.
             $portletToUse = null;
             $portlets     = Portlet::getAll();
-            foreach($portlets as $portlet)
+            foreach ($portlets as $portlet)
             {
-                if($portlet->viewType == 'AccountNoteInlineEditAndLatestActivtiesForPortlet')
+                if ($portlet->viewType == 'AccountNoteInlineEditAndLatestActivtiesForPortlet')
                 {
                     $portletToUse = $portlet;
                     break;

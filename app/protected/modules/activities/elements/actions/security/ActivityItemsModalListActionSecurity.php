@@ -38,7 +38,7 @@
             $metadata     = Activity::getMetadata();
             foreach ($metadata['Activity']['activityItemsModelClassNames'] as $modelClassName)
             {
-                if(is_subclass_of($modelClassName, 'Item') && $modelClassName::getModuleClassName() != null)
+                if (is_subclass_of($modelClassName, 'Item') && $modelClassName::getModuleClassName() != null)
                 {
                     if (RightsUtil::canUserAccessModule($modelClassName::getModuleClassName(), $this->user));
                     {

@@ -38,7 +38,7 @@
             $content .= '</colgroup>';
             $content .= '<tbody id="' . $this->getViewContainerId() . '" >';
             $data = $this->dataProvider->getData();
-            if(count($data) == 0)
+            if (count($data) == 0)
             {
                 $content .= '<tr>';
                 $content .= '<td colspan="3">';
@@ -64,7 +64,7 @@
                     $content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
                     $content .= '<br/>';
                     $modelDisplayString = strval($model);
-                    if(strlen($modelDisplayString) > 500)
+                    if (strlen($modelDisplayString) > 500)
                     {
                         $modelDisplayString = substr($modelDisplayString, 0, 500) . '...';
                     }
@@ -74,7 +74,7 @@
                     $element  = new DetailsLinkActionElement('default', $moduleId, $model->id, $params);
                     $content .= $element->render() . '<br/>';
                     $extraContent = $mashableActivityRules->getLatestActivityExtraDisplayStringByModel($model);
-                    if($extraContent)
+                    if ($extraContent)
                     {
                         $content .= '<br/>' . $extraContent;
                     }

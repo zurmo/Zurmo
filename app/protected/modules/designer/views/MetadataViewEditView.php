@@ -95,7 +95,7 @@
             $content .= '<div class="view-toolbar">';
             $content .= $this->renderNotificationBar('NotifcationBar');
             $content .= $this->renderSaveLayoutButton('NotifcationBar');
-            if($this->designerRules->canConfigureLayoutPanelsType())
+            if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
             }

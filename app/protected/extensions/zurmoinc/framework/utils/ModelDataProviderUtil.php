@@ -402,7 +402,7 @@
 
 
             //if this is not the id column, then add an additional left join.
-            if($clauseInformation["relatedAttributeName"] != 'id')
+            if ($clauseInformation["relatedAttributeName"] != 'id')
             {
                 $joinTablesAdapter->setSelectDistinctToTrue();
                 $relationTableAliasName = $joinTablesAdapter->addLeftTableAndGetAliasName(

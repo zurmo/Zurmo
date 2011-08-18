@@ -249,7 +249,7 @@
                 {
                     $classString  = "juiportlet-columns-" . $this->uniqueLayoutId . " ";
                     $classString .= "juiportlet-widget-column" . $column . " ";
-                    if($totalColumns > 1)
+                    if ($totalColumns > 1)
                     {
                         $classString .= "juiportlet-column " . $columnStyle[$column];
                     }

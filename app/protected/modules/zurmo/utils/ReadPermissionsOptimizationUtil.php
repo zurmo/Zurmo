@@ -676,7 +676,7 @@
                         }
                     }
                     $permitableIds = array_unique($permitableIds);
-                    if(count($permitableIds) > 0)
+                    if (count($permitableIds) > 0)
                     {
                         $sql = 'select securableitem_id
                                 from   permission
@@ -998,10 +998,10 @@
         {
             $mungableModelClassNames = array();
             $modules = Module::getModuleObjects();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 $modelClassNames = $module::getModelClassNames();
-                foreach($modelClassNames as $modelClassName)
+                foreach ($modelClassNames as $modelClassName)
                 {
                     if (is_subclass_of($modelClassName, 'SecurableItem') &&
                         $modelClassName::hasReadPermissionsOptimization())

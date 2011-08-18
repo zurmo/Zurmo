@@ -109,7 +109,7 @@
             $startingState     = ContactsUtil::getStartingStateId();
             foreach ($states as $state)
             {
-                if($startingState == $state->id)
+                if ($startingState == $state->id)
                 {
                     break;
                 }

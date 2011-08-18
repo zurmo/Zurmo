@@ -83,7 +83,7 @@
             $compareMetadata['clauses'] = array();
             $compareMetadata['structure'] = null;
             $index = 1;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
@@ -130,7 +130,7 @@
                 'structure' => '(1 and 2) and (3 or 4 or 5 or 6)',
             );
             $index = 3;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
@@ -168,7 +168,7 @@
             $contact->lastName        = 'Man';
             $contact->companyName     = 'ABC Company';
             $stateIds = ContactsUtil::getContactStateDataKeyedById();
-            foreach($stateIds as $stateId => $notUsed)
+            foreach ($stateIds as $stateId => $notUsed)
             {
                 $stateToUse = ContactState::getById($stateId);
                 break;
