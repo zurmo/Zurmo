@@ -25,15 +25,35 @@
      ********************************************************************************/
 
     /**
-     * Helper class for working with import.
+     * Helper class for working with import results as rows are processed.
      */
-    class ImportResulstsUtil
+    class ImportResultsUtil
     {
-                $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
-                //update processed flag based on?
-                //update messages serializedData based on ?
+        protected $import;
 
-                //what about column ensuresize on the status/messages? when would this happen? during initial table creation? probably.
-                ImportDatabaseUtil::updateRowAfterProcessing($tableName, $rowData['id'], $status, serialize($messages));
+        protected $rowResultsData;
+
+        public function __construct(Import $import)
+        {
+            $this->import = $import;
+        }
+
+        public function addRowDataResults(ImportRowDataResultsUtil $importRowDataResultsUtil)
+        {
+            $this->$rowResultsData[] = $importRowDataResultsUtil;
+        }
+
+        public function processResultsToImportData()
+        {
+            foreach($this->$rowResultsData as $rowResult)
+            {
+                assert('$rowResult instanceof ImportRowDataResultsUtil');
+                $tableName = $this->import->getTempTableName();
+                $status    = $rowResult->getStatus();
+                $messages  = $rowResult->getMessages();
+                $rowId     = $rowResult->getId();
+                ImportDatabaseUtil::updateRowAfterProcessing($tableName, $rowId, $status, serialize($messages));
+            }
+        }
     }
 ?>

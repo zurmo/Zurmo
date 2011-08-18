@@ -60,7 +60,7 @@
             foreach($data as $rowData)
             {
                 assert('$rowData["id"] != null');
-                $importRowDataResultsUtil = new ImportRowDataResultsUtil();
+                $importRowDataResultsUtil = new ImportRowDataResultsUtil($rowData['id']);
                 $this->importByImportRulesRowData($importRules, $rowData, $mappingData, $importRowDataResultsUtil);
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
             }
