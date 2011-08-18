@@ -66,7 +66,7 @@
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                 }
             }
             elseif($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
@@ -77,7 +77,7 @@
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other id specified did not match any existing records.'));
                 }
             }
             else

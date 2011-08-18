@@ -49,7 +49,7 @@
             return array('ContactState', 'ContactStateRequired');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $attributeNames = $this->getRealModelAttributeNames();
             assert('count$attributeNames) == 1');
@@ -57,7 +57,7 @@
             $modelClassName = $this->getModelClassName();
             $value = ImportSanitizerUtil::
                      sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                   $modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
+                                                   $modelClassName, null, $value, $columnMappingData, $importSanitizeResultsUtil);
             return array('state' => $value);
         }
     }

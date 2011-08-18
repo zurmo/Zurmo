@@ -41,7 +41,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default','Created By User');
+            return Yii::t('Default', 'Created By User');
         }
     }
 ?>

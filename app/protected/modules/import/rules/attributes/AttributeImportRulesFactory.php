@@ -122,5 +122,21 @@
             assert('$modelClassName != null');
             return $attributeName;
         }
+
+        public static function getAttributeNameFromAttributeNameByAttributeIndexOrDerivedType(
+                               $attributeIndexOrDerivedType)
+        {
+            assert('is_string($attributeIndexOrDerivedType)');
+                    $relationNameAndAttributeName = explode(FormModelUtil::DELIMITER, $attributeIndexOrDerivedType);
+            if(count($relationNameAndAttributeName) == 1)
+            {
+                return $attributeIndexOrDerivedType;
+            }
+            else
+            {
+                list($relationName, $attributeName) = $relationNameAndAttributeName;
+                return $relationName;
+            }
+        }
     }
 ?>

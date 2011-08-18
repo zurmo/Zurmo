@@ -64,14 +64,14 @@
             {
                 if(!preg_match($validator->integerPattern, $value))
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid number format.'));
                 }
             }
             else
             {
                 if(!preg_match($validator->numberPattern, $value))
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid number format.'));
                 }
             }
             return $value;

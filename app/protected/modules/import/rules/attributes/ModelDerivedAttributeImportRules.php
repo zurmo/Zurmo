@@ -61,14 +61,14 @@
             throw new NotImplementedException();
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $modelClassName        = $this->getModelClassName();
             $derivedModelClassName = static::getDerivedModelClassName();
             $sanitizedValue = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, null,
-                                                            $value, $columnMappingData, $shouldSaveModel);
+                                                            $value, $columnMappingData, $importSanitizeResultsUtil);
              if($sanitizedValue == null &&
                 $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
              {
@@ -77,7 +77,12 @@
                                          ['defaultModelId'];
                 $sanitizedValue        = $derivedModelClassName::getById((int)$modelId);
              }
-            return array($derivedModelClassName . 'Derived' => $sanitizedValue);
+            return array(static::getDerivedAttributeName() => $sanitizedValue);
+        }
+
+        public static function getDerivedAttributeName()
+        {
+            return static::getDerivedModelClassName() . 'Derived';
         }
 
         public static function getDerivedModelClassName()

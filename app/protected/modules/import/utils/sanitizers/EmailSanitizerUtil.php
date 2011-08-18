@@ -62,11 +62,11 @@
             $validatedEmail = $validator->validateValue($value);
             if($validatedEmail === false)
             {
-                throw new InvalidValueToSanitizeException();
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid email format.'));
             }
             if(strlen($validatedEmail) > $maxLength)
             {
-                throw new InvalidValueToSanitizeException();
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Email was too large.'));
             }
             return  $validatedEmail;
         }

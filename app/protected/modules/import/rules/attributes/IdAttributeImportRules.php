@@ -50,10 +50,9 @@
             return array('SelfIdValueType');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($columnMappingData)');
-            assert('is_bool($shouldSaveModel)');
             $sanitizerUtilTypes = static::getSanitizerUtilTypesInProcessingOrder();
             if(count($sanitizerUtilTypes) == 1 && $sanitizerUtilTypes[0] == 'SelfIdValueType')
             {
@@ -66,12 +65,26 @@
                                                             $this->getModelAttributeName(),
                                                             $value,
                                                             $columnMappingData,
-                                                            $shouldSaveModel);
-                    return array($this->getModelAttributeName() => $value);
+                                                            $importSanitizeResultsUtil);
+                    if($value != null)
+                    {
+                        return array($this->getModelAttributeName() => $value);
+                    }
+                    else
+                    {
+                        return array();
+                    }
                 }
                 catch (ExternalSystemIdNotFoundException $e)
                 {
-                    return array(ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME => $value);
+                    if($value != null)
+                    {
+                        return array(ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME => $value);
+                    }
+                    else
+                    {
+                        return array();
+                    }
                 }
             }
             else

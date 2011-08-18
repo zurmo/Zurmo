@@ -41,7 +41,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default','Modified Date Time');
+            return Yii::t('Default', 'Modified Date Time');
         }
     }
 ?>

@@ -87,34 +87,33 @@
                 $keyToUse                        = array_search(lower($value), $lowerCaseDropDownValues);
                 $resolvedValueToUse              = $dropDownValues[$keyToUse];
             }
-            //if the value does not already exist, then check the instructions data.
-            $lowerCaseValuesToAdd                = ArrayUtil::resolveArrayToLowerCase(
-                                                   $importInstructionsData['DropDown']
-                                                   [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-            if(in_array(lower($value), $lowerCaseValuesToAdd))
-            {
-                $keyToAddAndUse                  = array_search(lower($value), $lowerCaseValuesToAdd);
-                $resolvedValueToUse              = $importInstructionsData['DropDown']
-                                                   [DropDownSanitizerUtil::ADD_MISSING_VALUE][$keyToAddAndUse];
-                $unserializedData                = unserialize($customFieldData->serializedData);
-                $unserializedData[]              = $resolvedValueToUse;
-                $customFieldData->serializedData = serialize($unserializedData);
-                assert('$customFieldData->saved()');
-            }
             else
             {
-                throw new InvalidValueToSanitizeException();
+                //if the value does not already exist, then check the instructions data.
+                $lowerCaseValuesToAdd                = ArrayUtil::resolveArrayToLowerCase(
+                                                       $importInstructionsData['DropDown']
+                                                       [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
+                if(in_array(lower($value), $lowerCaseValuesToAdd))
+                {
+                    $keyToAddAndUse                  = array_search(lower($value), $lowerCaseValuesToAdd);
+                    $resolvedValueToUse              = $importInstructionsData['DropDown']
+                                                       [DropDownSanitizerUtil::ADD_MISSING_VALUE][$keyToAddAndUse];
+                    $unserializedData                = unserialize($customFieldData->serializedData);
+                    $unserializedData[]              = $resolvedValueToUse;
+                    $customFieldData->serializedData = serialize($unserializedData);
+                    $saved                           = $customFieldData->saved();
+                    assert('$saved');
+                }
+                else
+                {
+                    $message = 'Pick list value specified is missing from existing pick list and no valid instructions' .
+                               ' were provided on how to resolve this.';
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', $message));
+                }
             }
-            try
-            {
-                $customField        = new CustomField();
-                $customField->value = $resolvedValueToUse;
-                $customField->data  = $customFieldData;
-            }
-            catch(NotSupportedException $e)
-            {
-                throw new InvalidValueToSanitizeException();
-            }
+            $customField        = new CustomField();
+            $customField->value = $resolvedValueToUse;
+            $customField->data  = $customFieldData;
             return $customField;
         }
     }

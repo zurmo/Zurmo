@@ -53,9 +53,9 @@
          * atribute import rule and implement as needed.
          * @param mixed $value
          * @param array $columnMappingData
-         * @param boolean $shouldSaveModel
+         * @param object $importSanitizeResultsUtil
          */
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             throw new NotImplementedException();
         }

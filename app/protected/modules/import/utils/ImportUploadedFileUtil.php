@@ -42,7 +42,7 @@
             $extension = $uploadedFile->getExtensionName();
             if(strtolower($extension) != 'csv')
             {
-                $message = Yii::t('Default','The file that was uploaded was not a csv.');
+                $message = Yii::t('Default', 'The file that was uploaded was not a csv.');
                 throw new FailedFileUploadException($message);
             }
             return $uploadedFile;

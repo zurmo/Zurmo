@@ -49,7 +49,7 @@
             return array('FullName', 'FullNameRequired');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $attributeNames = $this->getRealModelAttributeNames();
             assert('$attributeNames[0] == "firstName"');
@@ -57,7 +57,7 @@
             $modelClassName = $this->getModelClassName();
             $value = ImportSanitizerUtil::
                      sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                   $modelClassName, null, $value, $columnMappingData, $shouldSaveModel);
+                                                   $modelClassName, null, $value, $columnMappingData, object $importSanitizeResultsUtil);
             list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
             if($firstName == null)
             {

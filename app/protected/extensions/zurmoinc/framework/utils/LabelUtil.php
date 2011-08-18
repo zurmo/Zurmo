@@ -66,5 +66,12 @@
         {
             return Yii::app()->languageHelper->getAllModuleLabelsAsTranslationParameters();
         }
+
+        public static function getModelAndAttributeNameCombinationLabel($modelClassName, $attributeName)
+        {
+            $model = new $modelClassName(false);
+            return $modelClassName::getModelLabelByTypeAndLanguage('Singular') .
+                   ' - ' . $model->getAttributeLabel($attributeName);
+        }
     }
 ?>

@@ -85,7 +85,7 @@
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The user id specified did not match any existing records.'));
                 }
             }
             elseif($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
@@ -96,7 +96,7 @@
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other user id specified did not match any existing records.'));
                 }
             }
             else
@@ -107,7 +107,7 @@
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The username specified did not match any existing records.'));
                 }
             }
         }

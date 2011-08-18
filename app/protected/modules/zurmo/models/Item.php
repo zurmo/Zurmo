@@ -48,10 +48,20 @@
             if (!$this->insideOnModified)
             {
                 $this->insideOnModified = true;
-                $this->unrestrictedSet('modifiedDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+                if(!($this->unrestrictedGet('id') < 0 &&
+                     $this->getScenario() == 'importModel' &&
+                     array_key_exists('modifiedDateTime', $this->originalAttributeValues)))
+                {
+                    $this->unrestrictedSet('modifiedDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+                }
                 if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
                 {
-                    $this->unrestrictedSet('modifiedByUser', Yii::app()->user->userModel);
+                    if(!($this->unrestrictedGet('id') < 0 &&
+                         $this->getScenario() == 'importModel' &&
+                         array_key_exists('modifiedByUser', $this->originalAttributeValues)))
+                    {
+                        $this->unrestrictedSet('modifiedByUser', Yii::app()->user->userModel);
+                    }
                 }
                 $this->insideOnModified = false;
             }
@@ -93,12 +103,15 @@
         {
              if (parent::beforeSave())
              {
-
                 if ($this->unrestrictedGet('id') < 0)
                 {
-                    if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
+                    if($this->getScenario() != 'importModel' ||
+                      ($this->getScenario() == 'importModel' && $this->createdByUser->id  < 0))
                     {
-                        $this->unrestrictedSet('createdByUser', Yii::app()->user->userModel);
+                        if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
+                        {
+                            $this->unrestrictedSet('createdByUser', Yii::app()->user->userModel);
+                        }
                     }
                 }
                 $this->isNewModel = $this->id < 0;
@@ -200,6 +213,26 @@
                 return false;
             }
             return true;
+        }
+
+        public function isAllowedToSetReadOnlyAttribute($attributeName)
+        {
+            if($this->getScenario() == 'importModel')
+            {
+                if($this->unrestrictedGet('id') > 0)
+                {
+                    return false;
+                }
+                if( in_array($attributeName, array('createdByUser', 'modifiedByUser', 'createdDateTime', 'modifiedDateTime')))
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            return false;
         }
     }
 ?>

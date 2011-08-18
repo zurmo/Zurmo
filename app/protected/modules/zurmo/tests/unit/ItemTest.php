@@ -38,6 +38,33 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        /**
+         * This test serves to confirm createdBy/ModifiedBy user is setting/getting properly. This test was added
+         * after the import work as part of a refactor to allow for readOnly attributes to be set externally.
+         */
+        public function testNewModelCreatedAndModifiedByUserIsNull()
+        {
+            $account = new Account();
+            $this->assertTrue($account->createdByUser->id  < 0);
+            $this->assertTrue($account->modifiedByUser->id < 0);
+            $this->assertFalse(array_key_exists('createdByUser', $account->originalAttributeValues));
+            $this->assertFalse(array_key_exists('modifiedByUser', $account->originalAttributeValues));
+
+            //Add values and save. This account is being created.
+            $account->name  = 'aTest';
+            $account->owner = User::getByUsername('super');
+            $this->assertTrue($account->save());
+            $this->assertFalse(array_key_exists('createdByUser', $account->originalAttributeValues));
+            $this->assertFalse(array_key_exists('modifiedByUser', $account->originalAttributeValues));
+            $this->assertTrue($account->createdByUser->id  > 0);
+            $this->assertTrue($account->modifiedByUser->id > 0);
+
+            //Change the value and save. This time the account is being modified.
+            $account->name  = 'aTestb';
+            $this->assertTrue($account->save());
+            $this->assertFalse(array_key_exists('modifiedByUser', $account->originalAttributeValues));
+        }
+
         public function testCreationAndModificationTimes()
         {
             $user = UserTestHelper::createBasicUser('Billy');
@@ -133,6 +160,45 @@
 
         /**
          * @depends testItemReadOnlyFieldsModifiedUser
+         */
+         public function testItemReadOnlyChangeScenarioSoCanPopulate()
+         {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $dbDateTime1 = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 200);
+            $dbDateTime2 = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 300);
+            $dbDateTime3 = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 400);
+            $jimmy = UserTestHelper::createBasicUser('Jimmy');
+            $user  = User::getByUsername('billy');
+            $account = new Account();
+            $account->setScenario('importModel');
+            $account->createdByUser    = $user;
+            $account->modifiedByUser   = $user;
+            $account->createdDateTime  = $dbDateTime1;
+            $account->modifiedDateTime = $dbDateTime2;
+            $account->owner            = Yii::app()->user->userModel;
+            $account->name             = 'someName';
+            $this->assertTrue($account->save());
+            $accountId = $account->id;
+            $account->forget();
+            $account = Account::getById($accountId);
+            $this->assertEquals($user, $account->createdByUser);
+            $this->assertEquals($user, $account->modifiedByUser);
+            $this->assertEquals($dbDateTime1, $account->createdDateTime);
+            $this->assertEquals($dbDateTime2, $account->modifiedDateTime);
+            $account->name = 'aNewName';
+            $this->assertTrue($account->save());
+            $account->forget();
+            //Now test that the attempt to cahnge createdByUser and modifiedUser on an existing model will not work.
+            //even when there are read only override permissions set.
+            $account = Account::getById($accountId);
+            $this->assertEquals($user, $account->createdByUser);
+            $this->assertEquals(Yii::app()->user->userModel, $account->modifiedByUser);
+            $this->assertNotEquals($dbDateTime2, $account->modifiedDateTime);
+            $this->assertNotEquals($dbDateTime3, $account->modifiedDateTime);
+         }
+
+        /**
+         * @depends testItemReadOnlyChangeScenarioSoCanPopulate
          */
          public function testCreatedByAndModifiedByUsersPopulateCorrectly()
          {

@@ -57,7 +57,7 @@
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'A full name value is required but missing.'));
                 }
             }
             return $value;

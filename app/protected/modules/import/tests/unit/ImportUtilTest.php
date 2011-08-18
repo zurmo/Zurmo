@@ -49,5 +49,17 @@
             $unserializedData = unserialize($import->serializedData);
             $this->assertEquals(array('d' => 'e', 'k' => 'j'), $unserializedData['dataAnalyzerMessagesData']);
         }
+
+        public function testSomething()
+        {
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
+            $page         = 'some page value??';
+            $config       = array('pagination' => array('pageSize' => 2));
+            $dataProvider->getPagination()->setCurrentPage($page);
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $importResultsUtil = new ImportResultsUtil($import);
+            ImportUtil::importByDataProvider($dataProvider, $importRules, $mappingData, $importResultsUtil);
+            $importResulstUtil->processResultsToImportData();
+        }
     }
 ?>

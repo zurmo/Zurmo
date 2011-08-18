@@ -75,7 +75,7 @@
             $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
             if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
             {
-                throw new InvalidValueToSanitizeException();
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid check box format.'));
             }
             else
             {

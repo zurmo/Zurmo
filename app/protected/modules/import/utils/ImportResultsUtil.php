@@ -25,54 +25,15 @@
      ********************************************************************************/
 
     /**
-     * Sanitizer for date time type attributes.
+     * Helper class for working with import.
      */
-    class DateTimeSanitizerUtil extends SanitizerUtil
+    class ImportResulstsUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
+                $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
+                //update processed flag based on?
+                //update messages serializedData based on ?
 
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'DateTime';
-        }
-
-        /**
-         * @see DateTimeParser
-         */
-        public static function getAcceptableFormats()
-        {
-            return array(
-                'yyyy-MM-dd hh:mm',
-                'MM-dd-yyyy hh:mm',
-                'dd-MM-yyyy hh:mm',
-                'MM/dd/yyyy hh:mm'
-            );
-        }
-
-        public static function getLinkedMappingRuleType()
-        {
-            return 'ValueFormat';
-        }
-
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
-        {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('isset($mappingRuleData["format"])');
-            if($value == null)
-            {
-                return $value;
-            }
-            $sanitizedValue = CDateTimeParser::parse($value, $mappingRuleData['format']);
-            if($sanitizedValue === false)
-            {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid datetime format.'));
-            }
-            return $sanitizedValue;
-        }
+                //what about column ensuresize on the status/messages? when would this happen? during initial table creation? probably.
+                ImportDatabaseUtil::updateRowAfterProcessing($tableName, $rowData['id'], $status, serialize($messages));
     }
 ?>

@@ -52,13 +52,15 @@
                     }
                     catch(NotFoundException $e)
                     {
-                        throw new InvalidValueToSanitizeException();
+                        throw new InvalidValueToSanitizeException(
+                        Yii::t('Default', 'The default status specified does not exist.'));
                     }
                     return $state;
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(
+                    Yii::t('Default', 'The status is required.  Neither a value nor a default was specified.'));
                 }
             }
             return $value;

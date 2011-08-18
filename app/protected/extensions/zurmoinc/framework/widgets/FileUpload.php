@@ -148,7 +148,7 @@ EOD;
                 echo '<td>' . Yii::app()->format->text($existingFile['size']) . '</td><td>';
                 //Keep thie hidden input right before the delete link. This will ensure the delete link works properly.
                 echo '<input name="' . $this->hiddenInputName . '[]" type="hidden" value="' . $existingFile['id'] . '"/>';
-                echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default','Delete');
+                echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default', 'Delete');
                 echo '</span></td>' . "\n";
                 echo '</tr>' . "\n";
             }
@@ -159,7 +159,7 @@ EOD;
 
         private function makeDownloadRowScriptContent()
         {
-            $deleteLabel = Yii::t('Default','Delete');
+            $deleteLabel = Yii::t('Default', 'Delete');
             $js = <<<EOD
 js:function (file, index) {
     $('#{$this->formName}').find('.file-upload-error-row').remove();
@@ -194,7 +194,7 @@ EOD;
                 $file        = "file[0].name";
                 $extraAction = "$('#{$this->formName}').find('.delete-file-link').parent().parent().remove()";
             }
-            $cancelLabel = Yii::t('Default','Cancel');
+            $cancelLabel = Yii::t('Default', 'Cancel');
             $js = <<<EOD
 js:function ($params) {
     $extraAction

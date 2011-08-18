@@ -58,13 +58,13 @@
                     }
                     catch(NotFoundException $e)
                     {
-                        throw new InvalidValueToSanitizeException();
+                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                     }
                     return $relationModel;
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'This id is required and was not specified.'));
                 }
             }
             return $value;

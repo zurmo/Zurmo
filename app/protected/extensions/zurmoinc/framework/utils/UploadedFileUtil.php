@@ -76,7 +76,7 @@
                 else
                 {
                     //Unsupported or unknown error.
-                    $message = Yii::t('Default','There was an error uploading the file.');
+                    $message = Yii::t('Default', 'There was an error uploading the file.');
                 }
                 throw new FailedFileUploadException($message);
             }

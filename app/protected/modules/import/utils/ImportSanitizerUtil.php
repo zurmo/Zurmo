@@ -28,13 +28,12 @@
     {
         protected static function sanitizeValueBySanitizerTypes($sanitizerUtilTypes, $modelClassName,
                                                                 $attributeName, $value, $columnMappingData,
-                                                                & $shouldSaveModel)
+                                                                ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($sanitizerUtilTypes)');
             assert('is_string($modelClassName)');
             assert('is_string($attributeName) || $attributeName == null');
             assert('is_array($columnMappingData)');
-            assert('is_bool($shouldSaveModel)');
             foreach($sanitizerUtilTypes as $sanitizerUtilType)
             {
                 $sanitizerUtilClassName = $sanitizerUtilType . 'SanitizerUtil';
@@ -75,10 +74,15 @@
                   }
                   catch(InvalidValueToSanitizeException $e)
                   {
+                      if($e->getMessage() != null)
+                      {
+                          $label = LabelUtil::getModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
+                          $importSanitizeResultsUtil->addMessage($label . ' ' . $e->getMessage());
+                      }
                       $value = null;
                       if($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
                       {
-                          $shouldSaveModel = false;
+                          $importSanitizeResultsUtil->setShouldNotSaveModel();
                       }
                   }
             }

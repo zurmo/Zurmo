@@ -49,18 +49,17 @@
             return array('Truncate');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $attributeNames = $this->getModelAttributeNames();
             assert('count$attributeNames) == 1');
             assert('$attributeNames[0] == "hash"');
             assert('is_array($columnMappingData)');
-            assert('is_bool($shouldSaveModel)');
             $modelClassName = $this->getModelClassName();
             $value          = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, 'hash', $value, $columnMappingData,
-                                                            $shouldSaveModel);
+                                                            $importSanitizeResultsUtil);
             if($value == null)
             {
                 $mappingRuleFormClassName = 'PasswordDefaultValueModelAttributeMappingRuleForm';

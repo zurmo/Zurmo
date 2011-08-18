@@ -65,7 +65,7 @@
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'This field is required and neither a value nor a default value was specified.'));
                 }
             }
             return $value;

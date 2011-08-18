@@ -41,7 +41,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default','Modified By User');
+            return Yii::t('Default', 'Modified By User');
         }
     }
 ?>

@@ -53,10 +53,9 @@
             return array($this->getModelAttributeName());
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($columnMappingData)');
-            assert('is_bool($shouldSaveModel)');
             $modelClassName =$this->getModelClassName();
             $value  = ImportSanitizerUtil::
                       sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
@@ -64,8 +63,8 @@
                                                     $this->getModelAttributeName(),
                                                     $value,
                                                     $columnMappingData,
-                                                    $shouldSaveModel);
-            return array($attributeName => $value);
+                                                    $importSanitizeResultsUtil);
+            return array($this->getModelAttributeName() => $value);
         }
     }
 ?>

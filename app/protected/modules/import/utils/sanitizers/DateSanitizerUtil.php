@@ -70,7 +70,7 @@
             $sanitizedValue = CDateTimeParser::parse($value, $mappingRuleData['format']);
             if($sanitizedValue === false)
             {
-                throw new InvalidValueToSanitizeException();
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid date format.'));
             }
             return $sanitizedValue;
         }

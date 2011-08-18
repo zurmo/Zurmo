@@ -61,13 +61,13 @@
                     }
                     catch(NotSupportedException $e)
                     {
-                        throw new InvalidValueToSanitizeException();
+                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list is missing corresponding custom field data.'));
                     }
                     return $customField;
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list value required, but missing.'));
                 }
             }
             return $value;

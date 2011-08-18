@@ -41,14 +41,14 @@
             return array('Number', 'Required');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, & $shouldSaveModel)
+        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $attributeNames = $this->getRealModelAttributeNames();
             $modelClassName = $this->getModelClassName();
             $sanitizedValue = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, $this->getModelAttributeName(),
-                                                            $value, $columnMappingData, $shouldSaveModel);
+                                                            $value, $columnMappingData, $importSanitizeResultsUtil);
             $currencyValue             = new CurrencyValue();
             $currencyValue->value      = $sanitizedValue;
             $currencyValue->rateToBase = $columnMappingData['CurrencyRateToBaseModelAttributeMappingRuleForm']

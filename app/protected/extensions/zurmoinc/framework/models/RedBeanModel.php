@@ -1147,7 +1147,8 @@
          */
         public function __set($attributeName, $value)
         {
-            if ($attributeName == 'id' || $this->isAttributeReadOnly($attributeName))
+            if ($attributeName == 'id' ||
+                ($this->isAttributeReadOnly($attributeName) && !$this->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 throw new NotSupportedException();
             }
@@ -1314,6 +1315,11 @@
                     }
                 }
             }
+            return false;
+        }
+
+        public function isAllowedToSetReadOnlyAttribute($attributeName)
+        {
             return false;
         }
 
