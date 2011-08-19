@@ -1659,7 +1659,7 @@
                                     $relatedModel = $this->relationNameToRelatedModel[$relationName];
                                     $relatedBean  = $relatedModel->getClassBean($relatedModelClassName);
                                     R::$linkManager->link($bean, $relatedBean, $linkName);
-                                    //if (!RedBeanDatabase::isFrozen())
+                                    if (!RedBeanDatabase::isFrozen())
                                     {
                                         $tableName  = self::getTableName($this->getAttributeModelClassName($relationName));
                                         $columnName = self::getForeignKeyName(get_class($this), $relationName);
@@ -1688,7 +1688,7 @@
                         {
                             R::store($bean);
                             assert('$bean->id > 0');
-                            //if (!RedBeanDatabase::isFrozen())
+                            if (!RedBeanDatabase::isFrozen())
                             {
                                 if ($baseModelClassName !== null)
                                 {
@@ -1734,7 +1734,7 @@
                 if ($baseBean !== null)
                 {
                     R::$linkManager->link($bean, $baseBean);
-                    //if (!RedBeanDatabase::isFrozen())
+                    if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = self::getTableName($modelClassName);
                         $columnName = self::getTableName($baseModelClassName) . '_id';

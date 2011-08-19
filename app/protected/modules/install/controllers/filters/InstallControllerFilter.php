@@ -32,7 +32,7 @@
     {
         protected function preFilter($filterChain)
         {
-            if(!Yii::app()->isApplicationInstalled())
+            if (!Yii::app()->isApplicationInstalled())
             {
                 return true;
             }

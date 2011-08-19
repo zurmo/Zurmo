@@ -61,7 +61,7 @@
             $this->assertEquals($user,                 $task->owner);
             $this->assertEquals(1, $task->activityItems->count());
             $this->assertEquals($accounts[0], $task->activityItems->offsetGet(0));
-            foreach($task->activityItems as $existingItem)
+            foreach ($task->activityItems as $existingItem)
             {
                 $castedDownModel = $existingItem->castDown(array('Account')); //this should not fail
             }
@@ -78,7 +78,7 @@
             $accounts[0]->forget();
             $task = new Task();
             $task->activityItems->add(Account::getById($accountId));
-            foreach($task->activityItems as $existingItem)
+            foreach ($task->activityItems as $existingItem)
             {
                 try
                 {
@@ -89,7 +89,7 @@
                     $this->fail();
                 }
             }
-            foreach($task->activityItems as $existingItem)
+            foreach ($task->activityItems as $existingItem)
             {
                 try
                 {
@@ -182,7 +182,6 @@
             $tasks = Task::getAll();
             $this->assertEquals(1, count($tasks));
         }
-
 
         public function testManyToManyRelationInTheMiddleOfTheInheritanceHierarchy()
         {

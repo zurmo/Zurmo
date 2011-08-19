@@ -128,6 +128,7 @@
                 )
             );
         }
+
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();

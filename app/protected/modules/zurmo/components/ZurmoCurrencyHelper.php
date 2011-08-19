@@ -109,12 +109,12 @@
             if (!empty($file_contents) &&
                 false !== $xml = @simplexml_load_string($file_contents))
             {
-                if(is_object($xml) && $xml instanceof SimpleXMLElement)
+                if (is_object($xml) && $xml instanceof SimpleXMLElement)
                 {
                     $xmlAsArray = (array)$xml;
                     return $xmlAsArray[0];
                 }
-                elseif(is_array($xml))
+                elseif (is_array($xml))
                 {
                     return $xml[0];
                 }

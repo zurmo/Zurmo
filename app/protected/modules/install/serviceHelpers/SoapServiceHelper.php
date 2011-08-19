@@ -32,7 +32,7 @@
         protected function checkService()
         {
             $soapInstalled =  InstallUtil::checkSoap();
-            if($soapInstalled)
+            if ($soapInstalled)
             {
                 $this->message  = Yii::t('Default', 'Soap is installed.');
                 return true;
@@ -43,6 +43,5 @@
                 return false;
             }
         }
-
     }
 ?>

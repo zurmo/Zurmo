@@ -266,7 +266,6 @@
             $this->assertEquals($compareFromPart,  $fromPart);
             $this->assertEquals($compareJoinPart,  $joinPart);
             $this->assertEquals($compareWherePart, $wherePart);
-
         }
     }
 ?>

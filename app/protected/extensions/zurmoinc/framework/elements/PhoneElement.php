@@ -39,7 +39,7 @@
             $htmlOptions['id']       = $this->getEditableInputId();
             $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = $this->getDisabledValue();
-            if($this->model->{$this->attribute} == 0)
+            if ($this->model->{$this->attribute} == 0)
             {
                 $htmlOptions['value'] = '';
             }
@@ -48,7 +48,7 @@
 
         protected function renderControlNonEditable()
         {
-            if($this->model->{$this->attribute} == 0)
+            if ($this->model->{$this->attribute} == 0)
             {
                 return null;
             }

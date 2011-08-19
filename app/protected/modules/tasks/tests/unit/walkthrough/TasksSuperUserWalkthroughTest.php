@@ -82,7 +82,6 @@
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('tasks/default/details');
 
-
             //test editing an existing task and saving. Add a second relation, to a contact.
             //First just go to the edit view and confirm it loads ok.
             $this->setGetArray(array('id' => $tasks[0]->id, 'redirectUrl' => 'someRedirect'));

@@ -38,7 +38,7 @@
             $content .= '</colgroup>';
             $content .= '<tbody id="' . $this->getViewContainerId() . '" >';
             $data = $this->dataProvider->getData();
-            if(count($data) == 0)
+            if (count($data) == 0)
             {
                 $content .= '<tr>';
                 $content .= '<td colspan="3">';
@@ -59,7 +59,7 @@
                     $content .= '</td>';
                     $content .= '<td>';
                     $modelDisplayString = strval($model);
-                    if(strlen($modelDisplayString) > 200)
+                    if (strlen($modelDisplayString) > 200)
                     {
                         $modelDisplayString = substr($modelDisplayString, 0, 200) . '...';
                     }
@@ -70,7 +70,7 @@
                     $content .= $element->render() . '<br/>';
                     $content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
                     $extraContent = $mashableActivityRules->getLatestActivityExtraDisplayStringByModel($model);
-                    if($extraContent)
+                    if ($extraContent)
                     {
                         $content .= '<br/>' . $extraContent;
                     }

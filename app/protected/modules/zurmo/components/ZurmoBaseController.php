@@ -398,7 +398,6 @@
                     $modelToStringValue = strval($model);
                     if ($sanitizedOwnerPostData != null)
                     {
-
                         $model->setAttributes($sanitizedOwnerPostData);
                     }
                     if ($model instanceof OwnedSecurableItem)

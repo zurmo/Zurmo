@@ -163,10 +163,13 @@
             InstallUtil::checkAPC('10.1.3', $expectedVersion);
             $this->assertFalse(InstallUtil::checkAPC('5.1.3',          $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue (InstallUtil::checkAPC($expectedVersion, $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue (InstallUtil::checkAPC('2.0.5',          $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
+            if (phpversion('apc') !== false)
+            {
+                $this->assertTrue (InstallUtil::checkAPC($expectedVersion, $actualVersion));
+                $this->assertEquals($expectedVersion, $actualVersion);
+                $this->assertTrue (InstallUtil::checkAPC('2.0.5',          $actualVersion));
+                $this->assertEquals($expectedVersion, $actualVersion);
+            }
         }
 
         public function testCheckTidy()

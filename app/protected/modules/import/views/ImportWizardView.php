@@ -48,12 +48,12 @@
             $previousPageLinkContent = $this->renderPreviousPageLinkContent();
             $nextPageLinkContent     = $this->renderNextPageLinkContent();
             $content  = '<div class="view-toolbar">'; //change to different class?
-            if($previousPageLinkContent)
+            if ($previousPageLinkContent)
             {
                 $content .= '<div id="previous-page-link" class="import-previous-page-link">' .
                 $previousPageLinkContent . '</div>';
             }
-            if($nextPageLinkContent)
+            if ($nextPageLinkContent)
             {
                 $content .= '<div id="next-page-link" class="import-next-page-link">' .
                 $nextPageLinkContent . '</div>';

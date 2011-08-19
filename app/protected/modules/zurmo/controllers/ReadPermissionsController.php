@@ -46,6 +46,5 @@
            ReadPermissionsOptimizationUtil::rebuild();
            echo Yii::t('Default', 'Munge rebuild complete.');
         }
-
     }
 ?>

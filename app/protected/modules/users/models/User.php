@@ -108,7 +108,7 @@
                 if ($baseBean !== null)
                 {
                     R::$linkManager->link($bean, $baseBean);
-                    //if (!RedBeanDatabase::isFrozen())
+                    if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = self::getTableName(get_class($this));
                         $columnName = 'person_id';
@@ -120,7 +120,7 @@
             $userBean   = $this->modelClassNameToBean['User'];
             $personBean = $this->modelClassNameToBean['Person'];
             R::$linkManager->link($userBean, $personBean);
-            //if (!RedBeanDatabase::isFrozen())
+            if (!RedBeanDatabase::isFrozen())
             {
                 $tableName  = self::getTableName(get_class($this));
                 RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, 'person_id');
@@ -185,7 +185,6 @@
                 Yii::app()->languageHelper->setActive($this->language);
             }
             parent::afterSave();
-
         }
 
         protected function beforeSave()

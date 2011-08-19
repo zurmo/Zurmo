@@ -32,11 +32,11 @@
         public function getLatestActivityExtraDisplayStringByModel($model)
         {
             $content = null;
-            if($model->files->count() > 0)
+            if ($model->files->count() > 0)
             {
-                foreach($model->files as $fileModel)
+                foreach ($model->files as $fileModel)
                 {
-                    if($content != null)
+                    if ($content != null)
                     {
                         $content .= ', ';
                     }

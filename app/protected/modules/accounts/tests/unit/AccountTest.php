@@ -443,7 +443,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();

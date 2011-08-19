@@ -113,9 +113,9 @@
             $includeState      = false;
             foreach ($states as $state)
             {
-                if($startingState == $state->id || $includeState)
+                if ($startingState == $state->id || $includeState)
                 {
-                    if($startingState == $state->id)
+                    if ($startingState == $state->id)
                     {
                         $includeState = true;
                     }

@@ -371,7 +371,6 @@
                 $this->assertTrue  ($account->createdByUser  === Yii::app()->user->userModel);
                 $this->assertTrue  ($account->modifiedByUser === Yii::app()->user->userModel);
                 unset($account);
-
             }
             $memoryAfter = memory_get_usage(true);
             $this->assertWithinPercentage($memoryBefore, $memoryAfter, 10);

@@ -62,7 +62,6 @@
             foreach ($rows as $row)
             {
                 $countData[$row['attribute']] = $row['count'];
-
             }
             return $countData;
         }

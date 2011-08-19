@@ -43,7 +43,7 @@
                                         FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
                                         'id' => $fileModel->id);
             }
-            catch(FailedFileUploadException $e)
+            catch (FailedFileUploadException $e)
             {
                 $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
             }
@@ -54,7 +54,7 @@
         public function actionDownload($id, $modelId, $modelClassName)
         {
             $model = $modelClassName::getById((int)$modelId);
-            if(!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
+            if (!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
             {
                 $messageView = new AccessFailureView();
                 $view        = new AccessFailurePageView($messageView);

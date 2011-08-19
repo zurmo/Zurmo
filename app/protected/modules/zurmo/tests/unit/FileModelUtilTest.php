@@ -88,7 +88,7 @@
                 $model = ModelWithAttachmentTestItem::getById($modelId);
                 $this->assertEquals(3, $model->files->count());
                 $compareIds = array($file1->id, $file3->id, $file4->id);
-                foreach($model->files as $fileModel)
+                foreach ($model->files as $fileModel)
                 {
                     $this->assertTrue(in_array($fileModel->id, $compareIds));
                 }

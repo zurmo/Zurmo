@@ -42,7 +42,7 @@
                 return in_array($operatorType, array('startsWith', 'endsWith', 'equals', 'doesNotEqual', 'contains',
                                                      'lessThan', 'greaterThan'));
             }
-            elseif(is_array($value))
+            elseif (is_array($value))
             {
                 return in_array($operatorType, array('oneOf'));
             }
@@ -136,17 +136,17 @@
             assert('$operatorType == "oneOf"');
             assert('is_array($values) && count($values) > 0');
             $inPart = null;
-            foreach($values as $theValue)
+            foreach ($values as $theValue)
             {
-                if($inPart != null)
+                if ($inPart != null)
                 {
                     $inPart .= ','; // Not Coding Standard
                 }
-                if(is_string($theValue))
+                if (is_string($theValue))
                 {
                     $inPart .= "lower('" . $theValue . "')";
                 }
-                elseif(is_numeric($theValue))
+                elseif (is_numeric($theValue))
                 {
                     $inPart .= $theValue;
                 }

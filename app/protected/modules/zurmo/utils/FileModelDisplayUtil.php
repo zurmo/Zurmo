@@ -12,15 +12,15 @@
         public static function convertSizeToHumanReadableAndGet($size)
         {
             assert('is_numeric($size)');
-            if($size == 0)
+            if ($size == 0)
             {
                 return '0';
             }
-            if($size < 1048576)
+            if ($size < 1048576)
             {
                 return round($size / 1024, 2) . 'Kb';
             }
-            elseif($size < 1073741824)
+            elseif ($size < 1073741824)
             {
                 return round($size / 1048576, 2) . 'Mb';
             }

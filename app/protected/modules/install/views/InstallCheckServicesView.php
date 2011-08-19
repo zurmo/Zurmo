@@ -65,9 +65,9 @@
             $content .= Yii::t('Default', 'It is highly recommended that all optional services are installed and
                                            working before continuing.');
             $content .= '<br/><br/>';
-            if(count($this->checkResultsDisplayData[$failedIndexId]) > 0)
+            if (count($this->checkResultsDisplayData[$failedIndexId]) > 0)
             {
-                if(count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) > 0)
+                if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) > 0)
                 {
                     $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                             Yii::t('Default', 'Failed Required Services'),
@@ -75,7 +75,7 @@
                                             Yii::t('Default', 'FAIL'));
                     $content .= '<br/><br/>';
                 }
-                if(count($this->checkResultsDisplayData[$failedIndexId][$optionalIndexId]) > 0)
+                if (count($this->checkResultsDisplayData[$failedIndexId][$optionalIndexId]) > 0)
                 {
                     $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                             Yii::t('Default', 'Failed Optional Services'),
@@ -84,7 +84,7 @@
                     $content .= '<br/>';
                 }
             }
-            if(count($this->checkResultsDisplayData[$warningIndexId]) > 0)
+            if (count($this->checkResultsDisplayData[$warningIndexId]) > 0)
             {
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                         Yii::t('Default', 'Service Status Partially Known'),
@@ -93,7 +93,7 @@
                 $content .= '<br/>';
             }
 
-            if(count($this->checkResultsDisplayData[$passedIndexId]) > 0)
+            if (count($this->checkResultsDisplayData[$passedIndexId]) > 0)
             {
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                         Yii::t('Default', 'Correctly Installed Services'),
@@ -102,7 +102,7 @@
             }
             $content .= '<br/><br/>';
             $content .= CHtml::link(Yii::t('Default', 'Recheck System'), $currentPageUrl);
-            if(count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) == 0)
+            if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) == 0)
             {
                 $content .= ' ' . Yii::t('Default', 'or') . ' ';
                 $content .= CHtml::link(Yii::t('Default', 'Continue'), $nextPageUrl);

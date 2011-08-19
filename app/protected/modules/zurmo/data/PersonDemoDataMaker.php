@@ -13,7 +13,7 @@
             $jobTitlesAndDepartments = RandomDataUtil::
                                        getRandomValueFromArray($personRandomData['jobTitlesAndDepartments']);
             $lastName                = RandomDataUtil::getRandomValueFromArray($personRandomData['lastNames']);
-            if(RandomDataUtil::getRandomBooleanValue())
+            if (RandomDataUtil::getRandomBooleanValue())
             {
                 $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleFirstNames']);
                 $title = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleTitles']);

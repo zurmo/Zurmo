@@ -89,7 +89,6 @@
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('meetings/default/details');
 
-
             //test editing an existing meeting and saving. Add a second relation, to a contact.
             //First just go to the edit view and confirm it loads ok.
             $this->setGetArray(array('id' => $meetings[0]->id, 'redirectUrl' => 'someRedirect'));

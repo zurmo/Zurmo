@@ -169,14 +169,14 @@
             {
                 case 'mysql':
                         $PhpDriverVersion = phpversion('mysql');
-                        if($PhpDriverVersion !== null)
+                        if ($PhpDriverVersion !== null)
                         {
                             $output = shell_exec('mysql -V 2>&1');
                             preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches);
-                            if($matches != null)
+                            if ($matches != null)
                             {
-                                $actualVersion=  $matches[0];
-                                if($actualVersion !== null)
+                                $actualVersion =  $matches[0];
+                                if ($actualVersion !== null)
                                 {
                                     return self::checkVersion($minimumRequiredVersion, $actualVersion);
                                 }
@@ -246,7 +246,7 @@
             }
             $versionInfo   = curl_version();
             $actualVersion = $versionInfo['version'];
-            if($actualVersion !== null)
+            if ($actualVersion !== null)
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }
@@ -256,7 +256,7 @@
         public static function checkYii($minimumRequiredVersion, /* out */ &$actualVersion)
         {
             $actualVersion = Yii::getVersion();
-            if($actualVersion !== null)
+            if ($actualVersion !== null)
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }
@@ -266,7 +266,7 @@
         public static function checkRedBean($minimumRequiredVersion, /* out */ &$actualVersion)
         {
             $actualVersion = R::getVersion();
-            if($actualVersion !== null)
+            if ($actualVersion !== null)
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }
@@ -402,11 +402,11 @@
                     }
                     else
                     {
-                        if($row == null)
+                        if ($row == null)
                         {
                             $result = array(mysql_errno(), mysql_error());
                         }
-                        elseif(is_array($row) && count($row) == 1 && $row[0] == 0)
+                        elseif (is_array($row) && count($row) == 1 && $row[0] == 0)
                         {
                             return false;
                         }
@@ -639,7 +639,7 @@
                       "\$memcacheServers  = array( // An empty array means memcache is not used.
                             array(
                                 'host'   => '$memcacheHost',
-                                'port'   => $memcachePort,",
+                                'port'   => $memcachePort, ",
                                      $contents);
             $contents = preg_replace('/\s+\/\/ REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.*?>/s', // Not Coding Standard
                                      "\n?>",

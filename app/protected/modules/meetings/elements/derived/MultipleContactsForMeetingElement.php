@@ -35,9 +35,9 @@
         {
             $content  = null;
             $contacts = $this->getExistingContactRelationsIdsAndLabels();
-            foreach($contacts as $contactData)
+            foreach ($contacts as $contactData)
             {
-                if($content != null)
+                if ($content != null)
                 {
                     $content .= ', ';
                 }
@@ -122,7 +122,6 @@
                 {
                     //do nothing
                 }
-
             }
             return $existingContacts;
         }

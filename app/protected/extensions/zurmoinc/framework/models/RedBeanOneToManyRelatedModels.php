@@ -62,7 +62,7 @@
             foreach ($this->deferredRelateBeans as $bean)
             {
                 R::$linkManager->link($bean, $this->bean);
-                //if (!RedBeanDatabase::isFrozen())
+                if (!RedBeanDatabase::isFrozen())
                 {
                     $tableName  = RedBeanModel::getTableName($this->modelClassName);
                     $columnName = RedBeanModel::getTableName($this->relatedModelClassName) . '_id';

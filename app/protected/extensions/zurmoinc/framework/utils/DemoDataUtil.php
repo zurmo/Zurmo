@@ -18,7 +18,7 @@
             $demoDataByModelClassName = array();
             $loadedModules = array();
             $modules = Module::getModuleObjects();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 static::loadByModule($module, $messageLogger, $demoDataByModelClassName, $loadMagnitude);
             }
@@ -32,7 +32,7 @@
             assert('is_array($demoDataByModelClassName)');
             assert('$loadMagnitude == null || is_int($loadMagnitude)');
             $parentModule = $module->getParentModule();
-            if($parentModule != null)
+            if ($parentModule != null)
             {
                 Yii::import('application.modules.' . $parentModule::getDirectoryName() . '.data.*');
             }
@@ -41,12 +41,12 @@
                 Yii::import('application.modules.' . $module::getDirectoryName() . '.data.*');
             }
             $demoDataMakerClassName = $module::getDemoDataMakerClassName();
-            if($demoDataMakerClassName != null && !in_array($module->getName(), static::$loadedModules))
+            if ($demoDataMakerClassName != null && !in_array($module->getName(), static::$loadedModules))
             {
                 $dependencies = $demoDataMakerClassName::getDependencies();
-                foreach($dependencies as $dependentModuleName)
+                foreach ($dependencies as $dependentModuleName)
                 {
-                    if(!in_array($dependentModuleName, static::$loadedModules))
+                    if (!in_array($dependentModuleName, static::$loadedModules))
                     {
                         $dependentModule       = Yii::app()->findModule($dependentModuleName);
                         static::loadByModule($dependentModule, $messageLogger,
@@ -54,7 +54,7 @@
                     }
                 }
                 $dataMaker = new $demoDataMakerClassName(get_class($module));
-                if($loadMagnitude != null)
+                if ($loadMagnitude != null)
                 {
                     $dataMaker->setLoadMagnitude($loadMagnitude);
                 }

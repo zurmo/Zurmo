@@ -1,7 +1,7 @@
 
 ##### Default Settings ########################################################
 
-YII_DOWNLOAD=http://yii.googlecode.com/files/yii-1.1.7.r3135.tar.gz
+YII_DOWNLOAD=http://yii.googlecode.com/files/yii-1.1.8.r3324.tar.gz
 REDBEAN_DOWNLOAD=http://www.redbeanphp.com/downloads/RedBean132.tar.gz
 
 APACHE_DOCUMENT_ROOT=/var/www

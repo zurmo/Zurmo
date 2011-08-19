@@ -38,7 +38,7 @@
                 $menuItems
             );
             $description = strval($model);
-            if(strlen($description) > 100)
+            if (strlen($description) > 100)
             {
                 $description = substr($description, 0, 100) . '...';
             }

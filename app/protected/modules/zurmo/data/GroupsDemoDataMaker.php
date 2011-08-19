@@ -13,7 +13,6 @@
         {
             assert('is_array($demoDataByModelClassName)');
 
-
             $group1 = new Group();
             $group1->name = 'East';
             $saved = $group1->save();

@@ -26,7 +26,6 @@
 
     class DetailsViewFormLayout extends FormLayout
     {
-
         /**
          * Used by the render of the form layout when the panels are to be displayed in a tabbed format.
          * @see FormLayout::PANELS_DISPLAY_TYPE_TABBED
@@ -50,7 +49,7 @@
         public function render()
         {
             $content        = '';
-            if($this->shouldRenderTabbedPanels())
+            if ($this->shouldRenderTabbedPanels())
             {
                 $content .= $this->errorSummaryContent;
             }
@@ -84,7 +83,7 @@
                 $content .= $this->renderLastPanelRowsByPanelNumber($panelNumber);
                 $content .= '</tbody>';
                 $content .= '</table>';
-                if($this->shouldRenderTabbedPanels())
+                if ($this->shouldRenderTabbedPanels())
                 {
                     $content .= '</div>';
                 }
@@ -95,7 +94,7 @@
 
         protected function renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel)
         {
-            if($this->shouldRenderTabbedPanels())
+            if ($this->shouldRenderTabbedPanels())
             {
                 $tabId = $this->uniqueId . '-panel-tab-' . $panelNumber;
                 $content = '<div id="' . $tabId . '">';
@@ -148,7 +147,7 @@
 
         protected function renderScripts()
         {
-            if($this->shouldHidePanelsAfterFirstPanel())
+            if ($this->shouldHidePanelsAfterFirstPanel())
             {
             Yii::app()->clientScript->registerScript('showMorePanels', "
                 $('#show-more-panels-link-". $this->uniqueId ."').click( function()
@@ -163,21 +162,20 @@
 
         protected function resolveFormLayoutContent($content)
         {
-            if($this->shouldRenderTabbedPanels())
+            if ($this->shouldRenderTabbedPanels())
             {
                 $content = '<div id="' . $this->uniqueId . '-panel-tabs"><ul>' . $this->getTabsContent() . '</ul>' . $content . '</div>';
                 Yii::app()->clientScript->registerScript('initializeTabs' . $this->uniqueId, "
                     $(function() {
                         $( '#" . $this->uniqueId . "-panel-tabs' ).tabs({selected: 0});
                     });");
-
             }
             return $content;
         }
 
         protected function shouldHidePanelsAfterFirstPanel()
         {
-            if(isset($this->metadata['global']['panelsDisplayType']) &&
+            if (isset($this->metadata['global']['panelsDisplayType']) &&
             $this->metadata['global']['panelsDisplayType'] == FormLayout::PANELS_DISPLAY_TYPE_FIRST)
             {
                 return true;
@@ -187,7 +185,7 @@
 
         protected function shouldRenderTabbedPanels()
         {
-            if(isset($this->metadata['global']['panelsDisplayType']) &&
+            if (isset($this->metadata['global']['panelsDisplayType']) &&
             $this->metadata['global']['panelsDisplayType'] == FormLayout::PANELS_DISPLAY_TYPE_TABBED &&
             count($this->metadata['global']['panels']) > 1)
             {
@@ -213,7 +211,7 @@
 
         protected function getMorePanelsLinkLabel()
         {
-            if($this->morePanelsLinkLabel == null)
+            if ($this->morePanelsLinkLabel == null)
             {
                 Yii::t('Default', 'More Options');
             }

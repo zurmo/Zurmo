@@ -9,10 +9,10 @@
             assert('$messageLogger instanceof MessageLogger');
             Yii::import('application.extensions.zurmoinc.framework.data.*');
             $modules = Module::getModuleObjects();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 $parentModule = $module->getParentModule();
-                if($parentModule != null)
+                if ($parentModule != null)
                 {
                     Yii::import('application.modules.' . $parentModule::getDirectoryName() . '.data.*');
                 }
@@ -21,7 +21,7 @@
                     Yii::import('application.modules.' . $module::getDirectoryName() . '.data.*');
                 }
                 $defaultDataMakerClassName = $module::getDefaultDataMakerClassName();
-                if($defaultDataMakerClassName != null)
+                if ($defaultDataMakerClassName != null)
                 {
                     $dataMaker = new $defaultDataMakerClassName();
                     $dataMaker->make();

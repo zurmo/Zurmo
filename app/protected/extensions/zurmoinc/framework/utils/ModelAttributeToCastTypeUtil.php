@@ -40,11 +40,9 @@
          */
         public static function resolveValueForCast($model, $attributeName, $value)
         {
-
             $castType = self::getCastType($model, $attributeName);
             settype($value, $castType);
             return $value;
-
         }
 
         /**

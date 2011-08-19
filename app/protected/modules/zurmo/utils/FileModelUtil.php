@@ -15,7 +15,7 @@
             assert('is_string($filePath) && $filePath !=""');
             assert('is_string($fileName) && $fileName !=""');
             $contents = file_get_contents($filePath);
-            if($contents === false)
+            if ($contents === false)
             {
                 return false;
             }
@@ -26,7 +26,7 @@
             $file->name           = $fileName;
             $file->type           = ZurmoFileHelper::getMimeType($filePath);
             $file->size           = filesize($filePath);
-            if(!$file->save())
+            if (!$file->save())
             {
                 return false;
             }
@@ -47,7 +47,7 @@
             $file->name           = $uploadedFile->getName();
             $file->type           = $uploadedFile->getType();
             $file->size           = $uploadedFile->getSize();
-            if(!$file->save())
+            if (!$file->save())
             {
                 return null;
             }

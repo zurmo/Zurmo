@@ -57,7 +57,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -100,7 +100,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -144,7 +144,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -195,7 +195,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -247,7 +247,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -297,7 +297,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -308,7 +308,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -368,7 +368,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -407,7 +407,7 @@
             $attributeForm->isAudited           = true;
             $attributeForm->isRequired          = true;
             $attributeForm->defaultValueOrder   = 1;
-            $attributeForm->customFieldDataData = array('a','b', 'c');
+            $attributeForm->customFieldDataData = array('a', 'b', 'c');
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             $this->assertFalse($attributeForm->validate());
@@ -417,7 +417,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(Exception $e)
+            catch (Exception $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -450,7 +450,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -461,7 +461,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -518,7 +518,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -529,7 +529,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -587,7 +587,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -636,7 +636,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -682,7 +682,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -728,7 +728,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();
@@ -780,7 +780,7 @@
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
             }
-            catch(FailedDatabaseSchemaChangeException $e)
+            catch (FailedDatabaseSchemaChangeException $e)
             {
                 echo $e->getMessage();
                 $this->fail();

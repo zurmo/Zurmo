@@ -77,17 +77,17 @@
             $resultsData[self::CHECK_FAILED] [ServiceHelper::OPTIONAL_SERVICE] = array();
             $resultsData[self::CHECK_WARNING]                                  = array();
 
-            foreach($servicesToCheck as $service)
+            foreach ($servicesToCheck as $service)
             {
                 $serviceHelperClassName = $service . 'ServiceHelper';
                 $serviceHelper = new $serviceHelperClassName();
 
-                if($serviceHelper->runCheckAndGetIfSuccessful())
+                if ($serviceHelper->runCheckAndGetIfSuccessful())
                 {
                     $resultsData[self::CHECK_PASSED][] = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
                 }
-                elseif($serviceHelper->didCheckProduceWarningStatus())
+                elseif ($serviceHelper->didCheckProduceWarningStatus())
                 {
                     $resultsData[self::CHECK_WARNING][]  = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
@@ -98,7 +98,6 @@
                     $resultsData[self::CHECK_FAILED][$serviceType][] = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
                 }
-
             }
             return $resultsData;
         }

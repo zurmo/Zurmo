@@ -55,7 +55,7 @@
             }
             else
             {
-                if($name == get_class($this->relationModel))
+                if ($name == get_class($this->relationModel))
                 {
                     return $this->relationModel;
                 }
@@ -65,7 +65,7 @@
 
         public function getAttributeLabel($attributeName)
         {
-            if($attributeName == get_class($this->relationModel))
+            if ($attributeName == get_class($this->relationModel))
             {
                 return $this->relationModel->getModelLabelByTypeAndLanguage('Singular');
             }

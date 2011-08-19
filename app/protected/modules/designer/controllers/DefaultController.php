@@ -272,7 +272,7 @@
                     $attributesLayoutAdapter->getRequiredDerivedLayoutAttributeTypes()
                 );
                 $savableMetadata = array();
-                if( $designerRules->canConfigureLayoutPanelsType() &&
+                if ( $designerRules->canConfigureLayoutPanelsType() &&
                     !PanelsDisplayTypeLayoutMetadataUtil::populateSaveableMetadataFromPostData($savableMetadata,
                         $_POST['LayoutPanelsTypeForm']))
                 {

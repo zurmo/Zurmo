@@ -35,6 +35,7 @@
             assert('$model instanceof InstallSettingsForm');
             parent::__construct($model, $attribute, $form, $params);
         }
+
         protected function getDisabledValue()
         {
             if (!$this->model->getIsMemcacheAvailable())

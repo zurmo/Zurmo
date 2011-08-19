@@ -74,7 +74,7 @@
         {
             $showMoreLinkId = $this->getId(). '-list-view-show-more-link';
             $currentPage = $this->dataProvider->getPagination()->getCurrentPage(false) + 1;
-            if( $this->dataProvider->getPagination()->getPageCount() > $currentPage &&
+            if ( $this->dataProvider->getPagination()->getPageCount() > $currentPage &&
                 $this->dataProvider->getPagination()->getPageCount() > 1)
             {
                 $urlScript = 'js:$.param.querystring("' . $this->url . '", "' .

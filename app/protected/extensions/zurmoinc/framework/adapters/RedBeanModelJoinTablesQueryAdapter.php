@@ -283,7 +283,6 @@
 
         private function addTableCount($tableName)
         {
-
             if (isset($this->tableCounts[$tableName]))
             {
                 $this->tableCounts[$tableName] ++;

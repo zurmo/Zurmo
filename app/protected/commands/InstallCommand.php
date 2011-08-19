@@ -61,15 +61,15 @@ EOD;
      */
     public function run($args)
     {
-        if(!isset($args[0]) || !isset($args[1]) || !isset($args[2]) || !isset($args[3]) || !isset($args[4]))
+        if (!isset($args[0]) || !isset($args[1]) || !isset($args[2]) || !isset($args[3]) || !isset($args[4]))
         {
             $this->usageError('The database user, password, and host must be specified.');
         }
-        if(isset($args[5]) && $args[5] != 'demodata')
+        if (isset($args[5]) && $args[5] != 'demodata')
         {
             $this->usageError('Invalid parameter specified.  If specified the 6th parameter should be \'demodata\'');
         }
-        if(Yii::app()->isApplicationInstalled())
+        if (Yii::app()->isApplicationInstalled())
         {
             $this->usageError('The installation is marked as being already completed.  Cannot run the installer.');
         }
@@ -89,7 +89,7 @@ EOD;
         $messageStreamer = new MessageStreamer($template);
         $messageStreamer->setExtraRenderBytes(0);
         InstallUtil::runInstallation($form, $messageStreamer);
-        if(isset($args[5]))
+        if (isset($args[5]))
         {
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);

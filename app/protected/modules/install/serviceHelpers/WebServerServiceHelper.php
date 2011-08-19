@@ -50,7 +50,7 @@
             $actualVersion           = null;
             $minimumVersionLabel     = $this->getMinimumVersionLabel();
             $passed                  = $this->callCheckServiceMethod($methodName, $actualVersion);
-            if($passed)
+            if ($passed)
             {
                 $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
                 $this->message .= ' ' .Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
@@ -58,9 +58,9 @@
             }
             else
             {
-                if($actualVersion == null)
+                if ($actualVersion == null)
                 {
-                    if($_SERVER['SERVER_SOFTWARE'] == 'Apache')
+                    if ($_SERVER['SERVER_SOFTWARE'] == 'Apache')
                     {
                         $this->checkResultedInWarning = true;
                         $this->message  = $displayLabel . ' ' .

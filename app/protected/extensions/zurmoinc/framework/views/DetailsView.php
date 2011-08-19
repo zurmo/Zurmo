@@ -75,7 +75,7 @@
             $maxCellsPerRow               = $this->getMaxCellsPerRow();
             $metadata                     = $this->getFormLayoutMetadata();
             $metadataWithRenderedElements = $this->resolveMetadataWithRenderedElements($metadata, $maxCellsPerRow, $form);
-            if($form != null)
+            if ($form != null)
             {
                 $errorSummaryContent      = $form->errorSummary($this->model);
             }
@@ -237,7 +237,6 @@
          */
         protected function resolveElementDuringFormLayoutRender(& $element)
         {
-
         }
 
         /**

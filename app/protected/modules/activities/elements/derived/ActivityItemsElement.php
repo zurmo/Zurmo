@@ -72,7 +72,7 @@
                     {
                     }
                 }
-                if($activityItemForm == null)
+                if ($activityItemForm == null)
                 {
                     $relationModel     = new $relationModelClassName();
                     $activityItemForm  = new ActivityItemForm($relationModel);

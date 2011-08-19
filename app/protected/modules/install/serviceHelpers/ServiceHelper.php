@@ -94,7 +94,7 @@
 
         public function getMessage()
         {
-            if(!$this->serviceHasBeenChecked)
+            if (!$this->serviceHasBeenChecked)
             {
                 throw new NotSupportedException();
             }
@@ -108,7 +108,7 @@
 
         public function getServiceType()
         {
-            if($this->isRequired())
+            if ($this->isRequired())
             {
                 return self::REQUIRED_SERVICE;
             }
@@ -127,7 +127,7 @@
             $actualVersion           = null;
             $minimumVersionLabel     = $this->getMinimumVersionLabel();
             $passed                  = $this->callCheckServiceMethod($methodName, $actualVersion);
-            if($passed)
+            if ($passed)
             {
                 $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
                 $this->message .= ' ' .Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
@@ -135,7 +135,7 @@
             }
             else
             {
-                if($actualVersion == null)
+                if ($actualVersion == null)
                 {
                     $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
                 }

@@ -291,7 +291,6 @@
          */
         public function testUnionSqlAcrossMultipleModelsUsingManyManyRelationFilterWhichMakesSelectDistinct()
         {
-
         }
     }
 ?>

@@ -39,7 +39,7 @@
             $actualUploadSizeBytes = null;
             $uploadSizeBytesPassed = InstallUtil::checkPhpUploadSizeSetting($this->minimumUploadRequireBytes,
                                                                             $actualUploadSizeBytes);
-            if($uploadSizeBytesPassed)
+            if ($uploadSizeBytesPassed)
             {
                 $this->message .= "\n";
                 $this->message .= Yii::t('Default', 'Php Upload size meets minimum requirement.');

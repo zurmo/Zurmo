@@ -142,7 +142,7 @@ EOD;
             echo '<colgroup><col/><col/><col/></colgroup>' . "\n";
             echo '<tbody>'  . "\n";
             echo '<tr><td></td><td></td></tr>'. "\n";
-            foreach($this->existingFiles as $existingFile)
+            foreach ($this->existingFiles as $existingFile)
             {
                 echo '<tr><td>' . Yii::app()->format->text($existingFile['name']) . '</td>' . "\n";
                 echo '<td>' . Yii::app()->format->text($existingFile['size']) . '</td><td>';
@@ -163,7 +163,7 @@ EOD;
             $js = <<<EOD
 js:function (file, index) {
     $('#{$this->formName}').find('.file-upload-error-row').remove();
-    if(file.error != null)
+    if (file.error != null)
     {
         return $('<tr class="file-upload-error-row"><td colspan="3"><span class="error">' + file.error + '</span></td><tr>');
     }
@@ -182,7 +182,7 @@ EOD;
 
         private function makeUploadRowScriptContent()
         {
-            if($this->allowMultipleUpload)
+            if ($this->allowMultipleUpload)
             {
                 $params      = "file, index";
                 $file        = "file[index].name";

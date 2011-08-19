@@ -123,11 +123,11 @@
         {
             $metadata = $this->getexistingMetadataToMerge($viewClassName);
             $metadata['global']['panels'] = $savableMetadata['panels'];
-            if(count($savableMetadata) > 1)
+            if (count($savableMetadata) > 1)
             {
-                foreach($savableMetadata as $keyName => $notUsed)
+                foreach ($savableMetadata as $keyName => $notUsed)
                 {
-                    if($keyName != 'panels')
+                    if ($keyName != 'panels')
                     {
                         $metadata['global'][$keyName] = $savableMetadata[$keyName];
                     }

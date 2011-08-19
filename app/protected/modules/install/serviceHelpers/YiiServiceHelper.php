@@ -29,7 +29,7 @@
      */
     class YiiServiceHelper extends ServiceHelper
     {
-        protected $minimumVersion = '1.1.7';
+        protected $minimumVersion = '1.1.8';
 
         protected function checkService()
         {

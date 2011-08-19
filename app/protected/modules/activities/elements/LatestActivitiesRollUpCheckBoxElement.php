@@ -35,7 +35,7 @@
          */
         protected function renderLabel()
         {
-            if($this->model->{$this->attribute})
+            if ($this->model->{$this->attribute})
             {
                 $label = Yii::t('Default', 'Roll Up On');
             }

@@ -58,7 +58,6 @@
             throw new NotFoundException();
         }
 
-
         public static function cacheEntry($identifier, $entry)
         {
             assert('is_string($identifier)');

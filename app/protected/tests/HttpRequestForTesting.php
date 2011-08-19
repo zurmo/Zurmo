@@ -49,7 +49,7 @@
          * Override for testing since you cannot set headers during testing.
          * @see CHttpRequest::sendFile()
          */
-        public function sendFile($fileName, $content, $mimeType = null,$terminate = true)
+        public function sendFile($fileName, $content, $mimeType = null, $terminate = true)
         {
             echo 'Testing download.';
             Yii::app()->end(0, false);

@@ -62,7 +62,7 @@
         {
             $form = new InstallSettingsForm();
             $memcacheServiceHelper = new MemcacheServiceHelper();
-            if(!$memcacheServiceHelper->runCheckAndGetIfSuccessful())
+            if (!$memcacheServiceHelper->runCheckAndGetIfSuccessful())
             {
                 $form->setMemcacheIsNotAvailable();
             }
@@ -72,7 +72,7 @@
             }
             else
             {
-                if(isset($_POST['InstallSettingsForm']))
+                if (isset($_POST['InstallSettingsForm']))
                 {
                     $form->setAttributes($_POST['InstallSettingsForm']);
                     $this->actionRunInstallation($form);
@@ -106,7 +106,7 @@
             $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             InstallUtil::runInstallation($form, $messageStreamer);
-            if($form->installDemoData)
+            if ($form->installDemoData)
             {
                 echo CHtml::script('$("#progress-table").hide(); $("#demo-data-table").show();');
             }
