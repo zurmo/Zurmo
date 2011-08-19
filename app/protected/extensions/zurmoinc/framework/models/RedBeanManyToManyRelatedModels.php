@@ -77,7 +77,7 @@
             foreach ($this->deferredRelateBeans as $bean)
             {
                 R::associate($this->bean, $bean);
-                //if (!RedBeanDatabase::isFrozen())
+                if (!RedBeanDatabase::isFrozen())
                 {
                     $types = array($this->bean->getMeta("type"), $bean->getMeta("type"));
                     sort($types);
