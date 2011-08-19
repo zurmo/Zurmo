@@ -190,7 +190,7 @@
 
         'params' => array(
             'redBeanVersion'    => '1.3',
-            'yiiVersion'        => '1.1.7',
+            'yiiVersion'        => '1.1.8',
             'supportedLanguages' => array(
                 'en' => 'English',
                 'es' => 'Spanish',
