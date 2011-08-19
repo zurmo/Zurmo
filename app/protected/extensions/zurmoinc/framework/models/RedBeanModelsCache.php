@@ -145,5 +145,13 @@
             assert('is_string($modelClassName)');
             self::forgetAll();
         }
+
+        /**
+         * Used for testing purposes if you need to clear out just the php caching.
+         */
+        public static function forgetAllModelIdentifiersToModels()
+        {
+            self::$modelIdentifiersToModels = array();
+        }
     }
 ?>

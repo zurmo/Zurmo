@@ -450,6 +450,7 @@
                 $this->pseudoId,
                 $this->modelClassNameToBean,
                 $this->attributeNameToBeanAndClassName,
+                $this->attributeNamesNotBelongsToOrManyMany,
                 $this->relationNameToRelationTypeModelClassNameAndOwns,
                 $this->validators,
             ));
@@ -461,7 +462,7 @@
             {
                 $data = unserialize($data);
                 assert('is_array($data)');
-                if (count($data) != 5)
+                if (count($data) != 6)
                 {
                     return null;
                 }
@@ -469,8 +470,9 @@
                 $this->pseudoId                                        = $data[0];
                 $this->modelClassNameToBean                            = $data[1];
                 $this->attributeNameToBeanAndClassName                 = $data[2];
-                $this->relationNameToRelationTypeModelClassNameAndOwns = $data[3];
-                $this->validators                                      = $data[4];
+                $this->attributeNamesNotBelongsToOrManyMany            = $data[3];
+                $this->relationNameToRelationTypeModelClassNameAndOwns = $data[4];
+                $this->validators                                      = $data[5];
 
                 $this->relationNameToRelatedModel = array();
                 $this->unlinkedRelationNames      = array();
