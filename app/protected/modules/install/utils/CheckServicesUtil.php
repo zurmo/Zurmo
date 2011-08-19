@@ -94,7 +94,6 @@
                     $resultsData[self::CHECK_FAILED][$serviceType][] = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
                 }
-
             }
             return $resultsData;
         }

@@ -89,6 +89,7 @@
         {
             return Yii::t('Default', 'Attachments');
         }
+
         /**
          * Get the attributeNames of attributes used in
          * the derived element. For this element, there are no attributes from the model.

@@ -8,7 +8,6 @@
 
         public function analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData)
         {
-
             //$columnMappingData would have information like ["attributeNameOrDerivedTypeData"]
                 //$columnMappingData["attributeNameOrDerivedTypeData"]['ownerMappingAttributeType']
 

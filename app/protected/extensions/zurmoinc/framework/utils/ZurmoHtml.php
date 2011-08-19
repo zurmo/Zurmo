@@ -23,7 +23,7 @@
             }
             else
             {
-                $firstError=false;
+                $firstError = false;
             }
             foreach ($model as $m)
             {
@@ -52,11 +52,11 @@
                     }
                 }
             }
-            if ($content!=='')
+            if ($content !== '')
             {
-                if ($header===null)
+                if ($header === null)
                 {
-                    $header='<p>' . Yii::t('yii','Please fix the following input errors:') . '</p>';
+                    $header = '<p>' . Yii::t('yii', 'Please fix the following input errors:') . '</p>';
                 }
                 if (!isset($htmlOptions['class']))
                 {
@@ -70,5 +70,4 @@
             }
         }
     }
-
 ?>

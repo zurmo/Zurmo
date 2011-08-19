@@ -90,7 +90,7 @@
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $compareMetadata['structure'] = '1 or 2 or 3 or 4';
             $this->assertEquals($compareMetadata, $adaptedMetadata);
@@ -137,7 +137,7 @@
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $this->assertEquals($compareMetadata, $adaptedMetadata);
         }

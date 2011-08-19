@@ -122,7 +122,6 @@
                 {
                     //do nothing
                 }
-
             }
             return $existingContacts;
         }

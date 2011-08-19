@@ -59,7 +59,6 @@
 
         protected function renderNextPageLinkContent($form)
         {
-
         }
     }
 ?>

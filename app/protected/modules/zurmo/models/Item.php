@@ -93,7 +93,6 @@
         {
              if (parent::beforeSave())
              {
-
                 if ($this->unrestrictedGet('id') < 0)
                 {
                     if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)

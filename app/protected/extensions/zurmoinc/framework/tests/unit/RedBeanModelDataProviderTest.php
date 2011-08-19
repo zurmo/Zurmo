@@ -291,7 +291,6 @@
             $i->ls->add($l);
             $this->assertTrue($i->save());
 
-
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
                 1 => array(

@@ -65,7 +65,6 @@
                     //something like dropdowns requiring a fix
                     //something like owner notice that removal will occur, or optional if empty owner then which owner to use?
 
-
             //Now test that the clean data information is correct
             $this->assertTrue($importColumnDataSanitizationAnalyzer->isThereCleanData());
             $cleanDataItems = $importColumnDataSanitizationAnalyzer->getCleanDataItems();

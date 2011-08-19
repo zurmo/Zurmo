@@ -61,7 +61,6 @@
             $this->maxCellsPerRow      = $maxCellsPerRow;
             $this->errorSummaryContent = $errorSummaryContent;
             $this->uniqueId       = $this->makeUniqueId();
-
         }
 
         /**

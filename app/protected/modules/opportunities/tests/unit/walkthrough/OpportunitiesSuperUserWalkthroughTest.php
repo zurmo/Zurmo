@@ -228,7 +228,6 @@
             $this->assertEquals($contact,         $opportunity->contacts[0]);
             $this->assertEquals(1,                $contact->opportunities->count());
             $this->assertEquals($opportunity->id, $contact->opportunities[0]->id);
-
         }
 
         /**

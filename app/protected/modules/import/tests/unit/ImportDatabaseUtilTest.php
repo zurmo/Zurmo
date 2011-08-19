@@ -98,8 +98,6 @@
                 ),
             );
             $this->assertEquals($compareData, $tempTableData);
-
-
         }
 
         /**

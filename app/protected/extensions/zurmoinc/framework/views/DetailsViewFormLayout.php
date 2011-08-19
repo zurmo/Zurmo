@@ -1,7 +1,6 @@
 <?php
     class DetailsViewFormLayout extends FormLayout
     {
-
         /**
          * Used by the render of the form layout when the panels are to be displayed in a tabbed format.
          * @see FormLayout::PANELS_DISPLAY_TYPE_TABBED
@@ -145,7 +144,6 @@
                     $(function() {
                         $( '#" . $this->uniqueId . "-panel-tabs' ).tabs({selected: 0});
                     });");
-
             }
             return $content;
         }

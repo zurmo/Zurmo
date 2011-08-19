@@ -131,7 +131,6 @@
                 $this->assertEquals('text/plain',   $model->files[0]->type);
                 $this->assertEquals(6495,           $model->files[0]->size);
 
-
                 //Now try using CUploadedFile.
                 self::resetAndPopulateFilesArrayByFilePathAndName('aTest', $filePath, 'testNote.txt');
                 $uploadedFile = CUploadedFile::getInstanceByName('aTest');

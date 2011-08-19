@@ -284,7 +284,6 @@
                         }
                         break;
 
-
                     case 'CStringValidator':
                         if ($validator->min !== null)
                         {
@@ -333,7 +332,6 @@
 
                 if ($validator instanceof CStringValidator)
                 {
-
                 }
             }
             if (!$memberSet)

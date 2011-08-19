@@ -118,7 +118,6 @@
                     }
                 }
 
-
                 if ($this->databaseAdminUsername != null)
                 {
                     if ($this->databaseAdminPassword == null)
@@ -188,7 +187,6 @@
                 }
                 else
                 {
-
                     $connectionResult = InstallUtil::checkDatabaseConnection($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseUsername,

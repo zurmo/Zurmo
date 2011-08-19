@@ -147,7 +147,7 @@
                             preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches);
                             if ($matches != null)
                             {
-                                $actualVersion=  $matches[0];
+                                $actualVersion =  $matches[0];
                                 if ($actualVersion !== null)
                                 {
                                     return self::checkVersion($minimumRequiredVersion, $actualVersion);
@@ -592,7 +592,7 @@
                       "\$memcacheServers  = array( // An empty array means memcache is not used.
                             array(
                                 'host'   => '$memcacheHost',
-                                'port'   => $memcachePort,",
+                                'port'   => $memcachePort, ",
                                      $contents);
             $contents = preg_replace('/\s+\/\/ REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.*?>/s', // Not Coding Standard
                                      "\n?>",

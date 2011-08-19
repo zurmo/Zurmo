@@ -237,7 +237,6 @@
          */
         protected function resolveElementDuringFormLayoutRender(& $element)
         {
-
         }
 
         /**

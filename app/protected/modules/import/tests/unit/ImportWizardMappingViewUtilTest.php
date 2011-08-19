@@ -49,15 +49,15 @@
                 'column_0' => array('attributeNameOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'name',
-                                    'firstSampleValue' 			 => 'abc'),
+									'firstSampleValue'           => 'abc'),
                 'column_1' => array('attributeNameOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'phone',
-                                    'firstSampleValue' 			 => '123'),
+									'firstSampleValue' 			 => '123'),
                 'column_2' => array('attributeNameOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'industry',
-                                    'firstSampleValue' 			 => 'a'),
+									'firstSampleValue'           => 'a'),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
             $mappingDataMetadata = ImportWizardMappingViewUtil::
@@ -65,13 +65,13 @@
             $compareData = array(
                 'column_0' => array('attributeNameOrDerivedType' => null,
                                     'mappingRulesData'           => null,
-                                    'firstSampleValue' 			 => 'name'),
+									'firstSampleValue' 			 => 'name'),
                 'column_1' => array('attributeNameOrDerivedType' => null,
                                     'mappingRulesData'           => null,
-                                    'firstSampleValue' 			 => 'phone'),
+									'firstSampleValue' 			 => 'phone'),
                 'column_2' => array('attributeNameOrDerivedType' => null,
                                     'mappingRulesData'           => null,
-                                    'firstSampleValue' 			 => 'industry'),
+									'firstSampleValue'           => 'industry'),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
         }

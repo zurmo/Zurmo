@@ -136,7 +136,6 @@
             return $gridView;
         }
 
-
         protected function makeTitleBarAndEditAndDetailsView($model, $renderType,
                                 $titleBarAndEditViewClassName = 'TitleBarAndEditAndDetailsView')
         {

@@ -183,7 +183,6 @@
             $this->assertEquals(1, count($tasks));
         }
 
-
         public function testManyToManyRelationInTheMiddleOfTheInheritanceHierarchy()
         {
             if (!RedBeanDatabase::isFrozen())

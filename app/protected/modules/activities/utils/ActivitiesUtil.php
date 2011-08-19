@@ -47,7 +47,6 @@
                     break;
                 }
                 $modelDerivationPathToItem[] = $modelClassName;
-
             }
             return array_reverse($modelDerivationPathToItem);
         }

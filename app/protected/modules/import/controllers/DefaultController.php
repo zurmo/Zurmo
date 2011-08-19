@@ -216,7 +216,7 @@
                                                    $fileUploadData['size']);
                 $fileUploadData['id']            = $import->id;
             }
-            catch(FailedFileUploadException $e)
+            catch (FailedFileUploadException $e)
             {
                 $import->delete();
                 $fileUpload = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());

@@ -48,7 +48,7 @@
 
         public function actionConfigurationList()
         {
-            $redirectUrlParams = array('/zurmo/' . $this->getId() . '/ConfigurationList',);
+            $redirectUrlParams = array('/zurmo/' . $this->getId() . '/ConfigurationList');
             $currency          = new Currency();
             $currency = $this->attemptToSaveModelFromPost($currency, $redirectUrlParams);
             $view = new CurrencyTitleBarConfigurationListAndCreateView(

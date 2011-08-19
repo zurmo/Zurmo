@@ -58,7 +58,7 @@
                     'redirectUrl'      => Yii::app()->request->getRequestUri(),
             );
             $portletView = $portlet->getView();
-            if (!RightsUtil::canUserAccessModule($portletView::getModuleClassName(),Yii::app()->user->userModel))
+            if (!RightsUtil::canUserAccessModule($portletView::getModuleClassName(), Yii::app()->user->userModel))
             {
                 $messageView = new AccessFailureView();
                 $view        = new AccessFailurePageView($messageView);

@@ -30,7 +30,6 @@
      */
     class ModelDataProviderUtil
     {
-
         public static function resolveSortAttributeColumnName($modelClassName, &$joinTablesAdapter, $sortAttribute,
                                                               $sortRelatedAttribute = null)
         {
@@ -399,8 +398,6 @@
                                                         $onTableAliasName,
                                                         $attributeTableName . '_id');
 
-
-
             //if this is not the id column, then add an additional left join.
             if ($clauseInformation["relatedAttributeName"] != 'id')
             {
@@ -418,13 +415,6 @@
                 $whereClauseRelationColumnNameToUse = $relationTableName . '_id';
                 $relationAttributeTableAliasName = $relationJoiningTableAliasName;
             }
-
-
-
-
-
-
-
 
             $relationWhere                   = array();
             self::addWherePartByClauseInformation($clauseInformation['operatorType'], $clauseInformation['value'],

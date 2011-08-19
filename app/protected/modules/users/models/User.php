@@ -185,7 +185,6 @@
                 Yii::app()->languageHelper->setActive($this->language);
             }
             parent::afterSave();
-
         }
 
         protected function beforeSave()

@@ -81,7 +81,7 @@
                 {
                     $types = array($this->bean->getMeta("type"), $bean->getMeta("type"));
                     sort($types);
-            	    $tableName = implode("_", $types);
+                    $tableName = implode("_", $types);
                     foreach ($types as $type)
                     {
                         $columnName = "{$type}_id";

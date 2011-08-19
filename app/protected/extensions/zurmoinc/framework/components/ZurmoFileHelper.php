@@ -32,7 +32,7 @@
                     $options = FILEINFO_MIME;
                 }
 
-                if ($magicFile===null)
+                if ($magicFile === null)
                 {
                     $info =  finfo_open($options);
                 }
@@ -41,8 +41,7 @@
                     $info = finfo_open($options, $magicFile);
                 }
 
-
-                if ($info && ($result=finfo_file($info,$file))!==false)
+                if ($info && ($result = finfo_file($info, $file)) !== false)
                 {
                     return $result;
                 }
@@ -52,8 +51,6 @@
             {
                 return $result;
             }
-
-
         }
 
         /**
@@ -65,7 +62,7 @@
             static $extensions;
             if ($extensions === null)
             {
-                if ($magicFile===null)
+                if ($magicFile === null)
                 {
                     $extensions = require(Yii::getPathOfAlias('ext.zurmoinc.framework.utils.ZurmoMimeTypes') . '.php');
                 }

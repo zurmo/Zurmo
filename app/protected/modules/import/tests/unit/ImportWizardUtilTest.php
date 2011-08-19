@@ -105,20 +105,19 @@
             $this-assertEquals(null,  $importWizardForm->modelImportRulesType);
         }
 
-
         /**
          * @depends testSetFormByPostForStep1
          */
         public function testSetFormByFileUploadData()
         {
-            $fileUploadData   = array('a','b');
+            $fileUploadData   = array('a', 'b');
             $testTableName = 'testimporttable';
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $importWizardForm = new ImportWizardForm();
             $importWizardForm->modelImportRulesType = 'testAbc';
             $importWizardForm->modelPermissions     = 'somePermissions';
             ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $testTableName);
-            $this->assertEquals(array('a','b'),  $importWizardForm->fileUploadData);
+            $this->assertEquals(array('a', 'b'),  $importWizardForm->fileUploadData);
             $this->assertEquals('testAbc',       $importWizardForm->modelImportRulesType);
             $this->assertEquals(null,            $importWizardForm->modelPermissions);
             $compareData = array(
@@ -150,8 +149,6 @@
             ImportWizardUtil::setFormByPostForStep3($importWizardForm, $fakePostData);
             $this-assertEquals('abc', $importWizardForm->modelPermissions);
         }
-
-
 
         /**
          * @depends testSetFormByPostForStep3

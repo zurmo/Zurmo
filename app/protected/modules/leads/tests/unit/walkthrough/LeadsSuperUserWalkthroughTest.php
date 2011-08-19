@@ -324,7 +324,6 @@
             $contact = Contact::getById($leadId);
             $this->assertTrue($contact->state == $startingContactState);
 
-
             //Test trying to convert by creating a new account.
             $lead5 = LeadTestHelper::createLeadbyNameForOwner('superLead5', $super);
             $this->assertTrue($lead5->state == $startingLeadState);
@@ -338,7 +337,6 @@
             $contact5 = Contact::getById($lead5Id);
             $this->assertTrue($contact5->state == $startingContactState);
             $this->assertEquals('someAccountName', $contact5->account->name);
-
 
             //Test trying to convert by selecting an existing account
             $account = AccountTestHelper::createAccountbyNameForOwner('someNewAccount', $super);

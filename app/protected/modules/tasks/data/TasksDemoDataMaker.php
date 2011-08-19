@@ -40,7 +40,7 @@
             $name              = RandomDataUtil::getRandomValueFromArray($taskRandomData['names']);
             if (RandomDataUtil::getRandomBooleanValue())
             {
-                $dueTimeStamp             = time() - (mt_rand(1,50) * 60 * 60 * 24);
+                $dueTimeStamp             = time() - (mt_rand(1, 50) * 60 * 60 * 24);
                 $completedDateTime        = DateTimeUtil::convertTimestampToDbFormatDateTime(
                                             $dueTimeStamp + (mt_rand(1, 24) * 15));
                 $model->completedDateTime = $completedDateTime;
@@ -48,7 +48,7 @@
             }
             else
             {
-                $dueTimeStamp    = time() + (mt_rand(1,200) * 60 * 60 * 24);
+                $dueTimeStamp    = time() + (mt_rand(1, 200) * 60 * 60 * 24);
             }
             $dueDateTime        = DateTimeUtil::convertTimestampToDbFormatDateTime($dueTimeStamp);
             $model->name        = $name;

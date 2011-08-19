@@ -39,7 +39,7 @@
                                             FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
                                         'id' => $fileModel->id);
             }
-            catch(FailedFileUploadException $e)
+            catch (FailedFileUploadException $e)
             {
                 $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
             }

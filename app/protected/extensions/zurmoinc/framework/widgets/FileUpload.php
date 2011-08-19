@@ -89,7 +89,6 @@
          */
         public $existingFiles;
 
-
         /**
          * Initializes the widget.
          * This method will publish JUI assets if necessary.
@@ -139,7 +138,7 @@ EOD;
                 echo '<tr><td>' . Yii::app()->format->text($existingFile['name']) . '</td>' . "\n";
                 echo '<td>' . Yii::app()->format->text($existingFile['size']) . '</td><td>';
                 echo '<input name="' . $this->hiddenInputName . '[]" type="hidden" value="' . $existingFile['id'] . '"/>';
-                echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default','Delete');
+                echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default', 'Delete');
                 echo '</span></td>' . "\n";
                 echo '</tr>' . "\n";
             }
@@ -150,7 +149,7 @@ EOD;
 
         private function makeDownloadRowScriptContent()
         {
-            $deleteLabel = Yii::t('Default','Delete');
+            $deleteLabel = Yii::t('Default', 'Delete');
             $js = <<<EOD
 js:function (file, index) {
     $('#{$this->formName}').find('.file-upload-error-row').remove();
@@ -183,7 +182,7 @@ EOD;
                 $params = "file, index";
                 $file   = "file[0].name";
             }
-            $cancelLabel = Yii::t('Default','Cancel');
+            $cancelLabel = Yii::t('Default', 'Cancel');
             $js = <<<EOD
 js:function ($params) {
     return $('<tr>'+

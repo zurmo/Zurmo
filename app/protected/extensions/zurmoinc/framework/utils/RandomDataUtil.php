@@ -45,7 +45,7 @@
          */
         public static function getRandomBooleanValue()
         {
-            $value  = mt_rand(0,1);
+            $value  = mt_rand(0, 1);
             if ($value == 1)
             {
                 return true;
@@ -58,7 +58,7 @@
          */
         public static function makeRandomPhoneNumber()
         {
-            return mt_rand(200,899) . '-' . mt_rand(200,899) . '-' . mt_rand(1000,9999);
+            return mt_rand(200, 899) . '-' . mt_rand(200, 899) . '-' . mt_rand(1000, 9999);
         }
     }
 ?>

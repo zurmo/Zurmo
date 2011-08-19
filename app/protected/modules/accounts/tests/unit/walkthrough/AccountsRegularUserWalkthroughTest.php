@@ -196,7 +196,7 @@
                 'selectAll' => '',
                 'Account_page' => 1));
             $this->setPostArray(array(
-                'Account'  => array('name' => '7799','owner' => array('id' => $super->id)),
+                'Account'  => array('name' => '7799', 'owner' => array('id' => $super->id)),
                 'MassEdit' => array('name' => 1, 'owner' => 1)
             ));
             $content = $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
@@ -215,7 +215,6 @@
             $this->assertEquals ($super,         $account1->owner);
             $this->assertEquals ($super,         $account2->owner);
             $this->assertEquals ($billy,         $account3->owner);
-
         }
     }
 ?>

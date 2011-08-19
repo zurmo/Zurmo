@@ -60,9 +60,8 @@
                             $model->getAttributeLabel($attributeName);
                     }
                 }
-                catch(NotSupportedException $e)
+                catch (NotSupportedException $e)
                 {
-
                 }
             }
             return $data;
