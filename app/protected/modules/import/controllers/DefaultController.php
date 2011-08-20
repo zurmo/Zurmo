@@ -185,7 +185,8 @@
             assert('is_string($filesVariableName)');
             $import           = Import::getById($id);
             $importWizardForm = ImportWizardFormUtil::makeFormByImport($import);
-            try {
+            try
+            {
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
                 $fileHandle  = fopen($uploadedFile->getTempName(), 'r');

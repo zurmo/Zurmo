@@ -13,7 +13,7 @@
                 $freezeWhenComplete = true;
             }
             R::exec("drop table $tableName");
-            while (($data = fgetcsv($fileHandle, 0, ',')) !== false)
+            while (($data = fgetcsv($fileHandle, 0, ',')) !== false) // Not Coding Standard
             {
                 $newBean = R::dispense($tableName);
                 foreach ($data as $columnId => $value)

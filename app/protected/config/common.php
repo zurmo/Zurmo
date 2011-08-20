@@ -234,7 +234,7 @@
         $common_config['import'][] = "application.modules.$moduleName.rules.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.policies.*";            // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.*";                // Not Coding Standard
-        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";         // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.models.*";         // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.walkthrough.*";    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.*";                     // Not Coding Standard

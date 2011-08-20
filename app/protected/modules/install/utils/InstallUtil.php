@@ -144,7 +144,7 @@
                         if ($PhpDriverVersion !== null)
                         {
                             $output = shell_exec('mysql -V 2>&1');
-                            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches);
+                            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches); // Not Coding Standard
                             if ($matches != null)
                             {
                                 $actualVersion =  $matches[0];

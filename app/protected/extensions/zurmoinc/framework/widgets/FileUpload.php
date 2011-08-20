@@ -186,7 +186,7 @@ EOD;
             $js = <<<EOD
 js:function ($params) {
     return $('<tr>'+
-        '<td class="filename">'+$file+'</td>'+
+        '<td class="filename">' + $file + '</td>'+
         '<td class="file_upload_progress"><div></div></td>'+
         '<td class="file_upload_cancel">'+
             '<button class="ui-state-default ui-corner-all">'+

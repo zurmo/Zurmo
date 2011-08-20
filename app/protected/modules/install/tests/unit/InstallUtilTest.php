@@ -115,7 +115,7 @@
             $this->assertTrue  (                         InstallUtil::checkPhpMaxMemorySetting( 1   * 1024, $actualMemoryLimitBytes));
             $this->assertEquals(64 * 1024 * 1024,        $actualMemoryLimitBytes);
             ini_set('memory_limit', '64m');
-            $this->assertFalse  (    				     InstallUtil::checkPhpMaxMemorySetting(1024 * 1024 * 1024, $actualMemoryLimitBytes));
+            $this->assertFalse  (                        InstallUtil::checkPhpMaxMemorySetting(1024 * 1024 * 1024, $actualMemoryLimitBytes));
             $this->assertEquals(64 * 1024 * 1024,        $actualMemoryLimitBytes);
             $this->assertTrue  (                         InstallUtil::checkPhpMaxMemorySetting(64   * 1024 * 1024, $actualMemoryLimitBytes));
             $this->assertEquals(64 * 1024 * 1024,        $actualMemoryLimitBytes);
@@ -388,8 +388,8 @@
                                        $perInstanceConfiguration);
                 $this->assertRegExp   ('/\$password         = \'wacked\';/',
                                        $perInstanceConfiguration);
-                $this->assertRegExp   ('/\'host\'   => \'memcache.jason.com\',\n' .
-                                       '                                \'port\'   => 5432,/',
+                $this->assertRegExp   ('/\'host\'   => \'memcache.jason.com\',\n' .            // Not Coding Standard
+                                       '                                \'port\'   => 5432,/', // Not Coding Standard
                                        $perInstanceConfiguration);
                 $this->assertNotRegExp('/\/\/ REMOVE THE REMAINDER/',
                                        $perInstanceConfiguration);

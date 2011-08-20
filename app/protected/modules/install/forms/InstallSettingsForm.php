@@ -58,10 +58,10 @@
         public function rules()
         {
             return array(
-                array('databaseHostname', 	   'required'),
-                array('databaseName', 		   'required'),
+                array('databaseHostname',      'required'),
+                array('databaseName',          'required'),
                 array('databaseUsername',      'required'),
-                array('databasePassword', 	   'required'),
+                array('databasePassword',      'required'),
                 array('superUserPassword',     'required'),
                 array('databaseHostname',      'type', 'type' => 'string'),
                 array('databaseAdminUsername', 'type', 'type' => 'string'),

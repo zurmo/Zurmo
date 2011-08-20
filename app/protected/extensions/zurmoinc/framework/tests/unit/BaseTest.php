@@ -33,7 +33,7 @@
             if ($freeze)
             {
                 $schemaFile = sys_get_temp_dir() . '/autobuilt.sql';
-                $success = preg_match("/;dbname=([^;]+)/", Yii::app()->db->connectionString, $matches);
+                $success = preg_match("/;dbname=([^;]+)/", Yii::app()->db->connectionString, $matches); // Not Coding Standard
                 assert('$success == 1'); // Not Coding Standard
                 $databaseName = $matches[1];
                 if (file_exists($schemaFile) && filesize($schemaFile) > 0)

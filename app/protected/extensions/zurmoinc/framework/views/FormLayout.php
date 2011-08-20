@@ -69,7 +69,7 @@
          */
         protected static function makeUniqueId()
         {
-            return CHtml::ID_PREFIX . CHtml::$count ++;
+            return CHtml::ID_PREFIX . CHtml::$count++;
         }
 
         /**
