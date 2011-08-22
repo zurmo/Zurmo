@@ -61,7 +61,17 @@
             {
                 assert('$rowData["id"] != null');
                 $importRowDataResultsUtil = new ImportRowDataResultsUtil($rowData['id']);
-                $this->importByImportRulesRowData($importRules, $rowData, $mappingData, $importRowDataResultsUtil);
+                //todo: eventually handle security exceptions in a more graceful way instead of relying on a try/catch
+                //but explicity checking for security rights/permissions.
+                try
+                {
+                    $this->importByImportRulesRowData($importRules, $rowData, $mappingData, $importRowDataResultsUtil);
+                }
+                catch(AccessDeniedSecurityException $e)
+                {
+                    $importRowDataResultsUtil->addMessage(Yii::t('Default', 'You do not have permission to update this record and/or its related record.'));
+                    $importRowDataResultsUtil->setStatusToError();
+                }
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
             }
         }
