@@ -62,9 +62,15 @@
             );
         }
 
+        public static function getLinkedMappingRuleType()
+        {
+            return 'DefaultValueModelAttribute';
+        }
+
         /**
          * Given a value, attempt to convert the value to either true/false based on a mapping array of possible
-         * boolean values.  If the value presented is not a valid mapping value then a
+         * boolean values.  If the value is not present, attemp to utilize the default value specified.
+         * If the value presented is not a valid mapping value then a
          * InvalidValueToSanitizeException will be thrown.
          * @param string $modelClassName
          * @param string $attributeName
@@ -75,13 +81,20 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('$mappingRuleData == null');
+            assert('$mappingRuleData["defaultValue"] == null || $mappingRuleData["defaultValue"] == "1" ||
+                    $mappingRuleData["defaultValue"] == "0"');
+            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
             if($value == null)
             {
-                return $value;
+                if($mappingRuleData['defaultValue'] != null)
+                {
+                    return $acceptableValuesMapping[$mappingRuleData['defaultValue']];
+                }
+                else
+                {
+                    return $value;
+                }
             }
-            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
             if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid check box format.'));
@@ -89,7 +102,7 @@
             else
             {
                 $key = array_search(strtolower($value), $acceptableValuesMapping);
-                return $acceptableValuesMapping[$key];
+                return $acceptableValuesMapping[$value];
             }
         }
     }

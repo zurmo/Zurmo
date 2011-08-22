@@ -24,58 +24,30 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper class for working resulting messages from sanitizing a values in a row.
-     */
-    class ImportSanitizerResultsUtil
+    class ImportSanitizeResultsUtilTest extends ImportBaseTest
     {
-        /**
-         * Messages generated through sanitizing the row data.
-         * @var unknown_type
-         */
-        private $messages;
-
-        /**
-         * Some sanitization routines, if they run into an error, means the entire row should be skipped for
-         * making or updating a model.  Some sanitization does not require the entire row to be skipped, just the value.
-         * If the row is required to be skipped, this value should be set to false @see setModelShouldNotBeSaved()
-         * @var boolean
-         */
-        private $saveModel = true;
-
-        /**
-         * @see $saveModel
-         */
-        public function setModelShouldNotBeSaved()
+        public static function setUpBeforeClass()
         {
-            $this->saveModel = false;
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
 
-        /**
-         * Given a message, add it to the messages collection.
-         * @param string $message
-         */
-        public function addMessage($message)
+        public function testMessages()
         {
-            assert('is_string($message)');
-            $this->messages[] = $message;
-
+            $resultsUtil = new ImportSanitizeResultsUtil();
+            $this->assertEquals(0, count($resultsUtil->getMessages()));
+            $resultsUtil->addMessage('some message');
+            $messages = $resultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $this->assertEquals('some message', $messages[0]);
         }
 
-        /**
-         * @return An array of messages.
-         */
-        public function getMessages()
+        public function testShouldSaveModel()
         {
-            return $this->messages;
-        }
-
-        /**
-         * @return true/false if the model should be saved or skipped.
-         */
-        public function shouldSaveModel()
-        {
-            return $this->saveModel;
+            $resultsUtil = new ImportSanitizeResultsUtil();
+            $this->assertEquals(true, $resultsUtil->shouldSaveModel());
+            $resultsUtil->setModelShouldNotBeSaved();
+            $this->assertEquals(false, $resultsUtil->shouldSaveModel());
         }
     }
 ?>

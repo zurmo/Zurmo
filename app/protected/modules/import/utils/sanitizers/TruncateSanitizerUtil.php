@@ -51,7 +51,6 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('$value != ""');
             assert('$mappingRuleData == null');
             $model     = new $modelClassName(false);
             $maxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, $attributeName);
@@ -59,7 +58,7 @@
             {
                 return $value;
             }
-            if(strlen($value < $maxLength))
+            if(strlen($value) < $maxLength)
             {
                 return $value;
             }

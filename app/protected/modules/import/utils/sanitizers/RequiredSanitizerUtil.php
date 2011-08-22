@@ -63,21 +63,26 @@
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');
-            assert('$attributeName == null');
+            assert('$attributeName == null || is_string($attributeName)');
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
-            if($value == null)
+            if($value != null)
             {
-                if($mappingRuleData['defaultValue'] != '')
-                {
-                    $value = $mappingRuleData['defaultValue'];
-                }
-                else
-                {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default',
-                    'This field is required and neither a value nor a default value was specified.'));
-                }
+                return $value;
             }
-            return $value;
+            if($mappingRuleData['defaultValue'] != null)
+            {
+                return $mappingRuleData['defaultValue'];
+            }
+            else
+            {
+                $model = new $modelClassName(false);
+                if(!$model->isAttributeRequired($attributeName))
+                {
+                    return $value;
+                }
+                throw new InvalidValueToSanitizeException(Yii::t('Default',
+                'This field is required and neither a value nor a default value was specified.'));
+            }
         }
     }
 ?>

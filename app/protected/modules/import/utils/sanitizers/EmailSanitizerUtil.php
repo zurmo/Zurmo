@@ -59,7 +59,6 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('$value != ""');
             assert('$mappingRuleData == null');
             if($value == null)
             {

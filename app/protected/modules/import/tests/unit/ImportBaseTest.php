@@ -34,5 +34,15 @@
             R::exec('drop table if exists testimporttable4');
             parent::tearDownAfterClass();
         }
+
+        protected static function getStringByLength($length)
+        {
+            $string = chr(rand(ord('A'), ord('Z')));
+            while (strlen($string) < $length)
+            {
+                $string .= chr(rand(ord('a'), ord('z')));
+            }
+            return $string;
+        }
     }
 ?>

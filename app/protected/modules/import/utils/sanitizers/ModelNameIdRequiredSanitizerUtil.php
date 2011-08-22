@@ -47,35 +47,35 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            $model                  = new $modelClassName(false);
-            if(!$model->isAttributeRequired($this->$attributeName))
+            if($value != null)
             {
-                return false;
+                return $value;
             }
             assert('$model->isRelation($attributeName)');
             $relationModelClassName = $model->getRelationModelClassName($modelAttributeName);
             assert('$value == null || $value instanceof $relationModelClassName');
             assert('$mappingRuleData["defaultModelId"] == null || is_string($mappingRuleData["defaultModelId"])');
-            if($value == null)
+            if($mappingRuleData['defaultModelId'] != null)
             {
-                if($mappingRuleData['defaultModelId'] != null)
+                try
                 {
-                    try
-                    {
-                       $relationModel       = $relationModelClassName::getById($mappingRuleData['defaultModelId']);
-                    }
-                    catch(NotFoundException $e)
-                    {
-                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
-                    }
-                    return $relationModel;
+                   $relationModel       = $relationModelClassName::getById($mappingRuleData['defaultModelId']);
                 }
-                else
+                catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'This id is required and was not specified.'));
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                 }
+                return $relationModel;
             }
-            return $value;
+            else
+            {
+                $model = new $modelClassName(false);
+                if(!$model->isAttributeRequired($attributeName))
+                {
+                    return $value;
+                }
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'This id is required and was not specified.'));
+            }
         }
     }
 ?>

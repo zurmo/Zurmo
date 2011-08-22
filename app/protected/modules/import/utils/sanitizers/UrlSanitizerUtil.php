@@ -51,7 +51,6 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('$value != ""');
             assert('$mappingRuleData == null');
             if($value == null)
             {
@@ -63,11 +62,11 @@
             $validatedUrl = $validator->validateValue($value);
             if($validatedUrl === false)
             {
-                return null;
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid url format.'));
             }
             if(strlen($validatedUrl) > $maxLength)
             {
-                return null;
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Url was too large.'));
             }
             return $validatedUrl;
         }

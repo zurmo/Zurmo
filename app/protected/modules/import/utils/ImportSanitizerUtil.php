@@ -51,7 +51,7 @@
             foreach($sanitizerUtilTypes as $sanitizerUtilType)
             {
                 $sanitizerUtilClassName = $sanitizerUtilType . 'SanitizerUtil';
-                $mappingRuleType = $attributeValueSanitizerUtilClassName::getLinkedMappingRuleType();
+                $mappingRuleType = $sanitizerUtilClassName::getLinkedMappingRuleType();
                 if($mappingRuleType != null)
                 {
                     assert('$mappingRuleType != null');
@@ -98,6 +98,7 @@
                       {
                           $importSanitizeResultsUtil->setModelShouldNotBeSaved();
                       }
+                      break;
                   }
             }
             return $value;
