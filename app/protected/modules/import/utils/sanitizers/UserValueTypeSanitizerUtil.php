@@ -65,6 +65,14 @@
             return R::getCol($sql);
         }
 
+        /**
+         * Given a value that is either a zurmo user id, a username, or an external system user id, resolve that the
+         * value is valid.  If the value is not valid then an InvalidValueToSanitizeException is thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

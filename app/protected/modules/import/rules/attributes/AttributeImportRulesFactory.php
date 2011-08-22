@@ -98,8 +98,13 @@
             return $collection;
         }
 
+        /**
+         * Given an import rules type and attribute index or derived type, return the attribute import rules class name.
+         * @param string $importRulesType
+         * @param string $attributeIndexOrDerivedType
+         */
         public static function getClassNameByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
-                                                                                      $attributeIndexOrDerivedType)
+                                                                                           $attributeIndexOrDerivedType)
         {
             assert('is_string($importRulesType)');
             assert('is_string($attributeIndexOrDerivedType)');
@@ -148,6 +153,12 @@
             return $attributeName;
         }
 
+        /**
+         * Given an attribute index or derived type, get the actual attribute name.  If the value is not split by
+         * FormModelUtil::DELIMITER then the value passed in will be returned as is. Otherwise the left side of the
+         * delimiter will be returned.
+         * @param string $attributeIndexOrDerivedType
+         */
         public static function getAttributeNameFromAttributeNameByAttributeIndexOrDerivedType(
                                $attributeIndexOrDerivedType)
         {

@@ -99,6 +99,12 @@
             return parent::save($runValidation, $attributeNames);
         }
 
+        /**
+         * Special handling of the import scenario. When you are importing a model, you can potentially set the
+         * created/modified user/datetime which is normally not allowed since they are read-only attributes.  This
+         * logic helps to allow for this special use case.
+         * @see RedBeanModel::beforeSave()
+         */
         protected function beforeSave()
         {
              if (parent::beforeSave())
@@ -215,6 +221,12 @@
             return true;
         }
 
+        /**
+         * Override to handle the import scenario. During import you are allowed to externally set several read-only
+         * attributes.
+         * (non-PHPdoc)
+         * @see RedBeanModel::isAllowedToSetReadOnlyAttribute()
+         */
         public function isAllowedToSetReadOnlyAttribute($attributeName)
         {
             if($this->getScenario() == 'importModel')

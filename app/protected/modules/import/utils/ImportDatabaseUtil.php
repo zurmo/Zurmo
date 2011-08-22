@@ -198,7 +198,7 @@
             }
             $bean->status             = $status;
             $bean->serializedMessages = $serializedMessages;
-            R::store($newBean);
+            R::store($bean);
         }
 
         /**

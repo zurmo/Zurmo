@@ -24,44 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Truncate sanitizer specific for text area type attributes.
-     */
-    class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
+    class RedBeanModelErrorsToMessagesUtilTest extends BaseTest
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        public function testMakeMessagesByModelErrors()
         {
-            return 'TextAreaTruncate';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'TextAreaTruncate';
-        }
-
-        /**
-         * Given a value, resolve that the value not too large for a text area type attribute.  If
-         * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param array $mappingRuleData
-         */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
-        {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('$mappingRuleData == null');
-            if($value == null)
-            {
-                return $value;
-            }
-            if(strlen($value < 65000))
-            {
-                return $value;
-            }
-            return substr($value, 0, 65000);
+            $e    = new E();
+            $e->e = 'whduahsdiuhiuashdiuauishduihaiushdiuhaisudhiuasd';
+            $m    = new TestModelToMessagesModel();
+            $m->e = $e;
+            $this->assertFalse($m->validate());
+            $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModelErrors($m);
+            $compareData = array(
+                'TestModelToMessagesModel - Name - Name cannot be blank.',
+                'TestModelToMessagesModel - E - E is too long (maximum is 16 characters).',
+            );
+            $this->assertEquals($compareData, $messages);
         }
     }
 ?>

@@ -24,11 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class for working with sanitizers.
+     */
     class ImportSanitizerUtil
     {
-        protected static function sanitizeValueBySanitizerTypes($sanitizerUtilTypes, $modelClassName,
-                                                                $attributeName, $value, $columnMappingData,
-                                                                ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        /**
+         * Given an array of sanitizer util types, a value, as well as several other parameters, run through each
+         * sanitizer type on the value and process any sanitization messages or errors into the ImportSanitizeResultsUtil
+         * provided.
+         * @param array $sanitizerUtilTypes
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         */
+        public static function sanitizeValueBySanitizerTypes($sanitizerUtilTypes, $modelClassName,
+                                                             $attributeName, $value, $columnMappingData,
+                                                             ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($sanitizerUtilTypes)');
             assert('is_string($modelClassName)');
@@ -76,7 +90,7 @@
                   {
                       if($e->getMessage() != null)
                       {
-                          $label = LabelUtil::getModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
+                          $label = LabelUtil::makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
                           $importSanitizeResultsUtil->addMessage($label . ' ' . $e->getMessage());
                       }
                       $value = null;

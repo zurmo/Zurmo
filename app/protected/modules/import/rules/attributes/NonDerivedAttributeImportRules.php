@@ -48,11 +48,23 @@
             return $this->attributeName;
         }
 
+        /**
+         * Provides the same information as @see getModelAttributeName.  In the case of DerivedAttributeImportRules this
+         * produces only the attributes that the derived attribute corresponds to.
+         * @see AttributeImportRules::getRealModelAttributeNames()
+         */
         public function getRealModelAttributeNames()
         {
             return array($this->getModelAttributeName());
         }
 
+        /**
+         * Given a value and mapping data, run each sanitizer and process any messages or error information into the
+         * ImportSanitizeResultsUtil object provided.
+         * @param mixed $value
+         * @param array $columnMappingData
+         * @param object $importSanitizeResultsUtil
+         */
         public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($columnMappingData)');

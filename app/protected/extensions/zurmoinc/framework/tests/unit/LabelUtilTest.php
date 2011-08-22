@@ -45,5 +45,11 @@
             $content = LabelUtil::getUncapitalizedModelLabelByCountAndModelClassName(0, 'A');
             $this->assertEquals($content, 'as');
         }
+
+        public function testMakeModelAndAttributeNameCombinationLabel()
+        {
+            $label = LabelUtil::makeModelAndAttributeNameCombinationLabel('A', 'a');
+            $this->assertEquals('A - A', $label);
+        }
     }
 ?>

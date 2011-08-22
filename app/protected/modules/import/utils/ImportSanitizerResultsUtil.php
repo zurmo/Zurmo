@@ -57,7 +57,7 @@
          */
         public function addMessage($message)
         {
-            assert('is_string($message');
+            assert('is_string($message)');
             $this->messages[] = $message;
 
         }

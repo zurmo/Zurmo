@@ -39,6 +39,14 @@
             return 'Truncate';
         }
 
+        /**
+         * Given a value, resolve that the value not too large for the attribute based on the attribute's type.  If
+         * the value is too large, then it is truncated.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

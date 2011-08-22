@@ -57,6 +57,15 @@
             return 'ValueFormat';
         }
 
+        /**
+         * Given a value, attempt to convert the value to a db date format based on the format provided.  If the value
+         * does not convert properly, meaning the value is not really in the format specified, then a
+         * InvalidValueToSanitizeException will be thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

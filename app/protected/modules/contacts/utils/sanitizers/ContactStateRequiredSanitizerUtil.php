@@ -35,6 +35,14 @@
             return 'DefaultContactStateId';
         }
 
+        /**
+         * Contact state is required.  If the value provided is null then the sanitizer will attempt use a default
+         * value if provided.  If this is missing then a InvalidValueToSanitizeException will be thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

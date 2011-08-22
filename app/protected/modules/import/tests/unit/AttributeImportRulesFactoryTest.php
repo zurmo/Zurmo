@@ -58,5 +58,42 @@
             $this->assertTrue($collection['boolean'] instanceof CheckBoxAttributeImportRules);
             $this->assertTrue($collection['date']    instanceof DateAttributeImportRules);
         }
+
+        public function testGetAttributeNameFromAttributeNameByAttributeIndexOrDerivedType()
+        {
+            $attributeName = AttributeImportRulesFactory::
+                             getAttributeNameFromAttributeNameByAttributeIndexOrDerivedType('string');
+            $this->assertEquals('string', $attributeName);
+            $attributeName = AttributeImportRulesFactory::
+                             getAttributeNameFromAttributeNameByAttributeIndexOrDerivedType('something_string');
+            $this->assertEquals('something_string', $attributeName);
+            $attributeName = AttributeImportRulesFactory::
+                             getAttributeNameFromAttributeNameByAttributeIndexOrDerivedType('something__string');
+            $this->assertEquals('something', $attributeName);
+        }
+
+        public function testResolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType()
+        {
+            $modelClassName = 'ImportModelTestItem';
+            $attributeName  = AttributeImportRulesFactory::
+                              resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
+                              $modelClassName, 'primaryAddress__city');
+            $this->assertEquals('Address', $modelClassName);
+            $this->assertEquals('city',    $attributeName);
+
+            $modelClassName = 'ImportModelTestItem';
+            $attributeName  = AttributeImportRulesFactory::
+                              resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
+                              $modelClassName, 'string');
+            $this->assertEquals('ImportModelTestItem', $modelClassName);
+            $this->assertEquals('string',              $attributeName);
+
+            $modelClassName = 'ImportModelTestItem';
+            $attributeName  = AttributeImportRulesFactory::
+                              resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
+                              $modelClassName, 'FullName');
+            $this->assertEquals('ImportModelTestItem', $modelClassName);
+            $this->assertEquals('FullName',            $attributeName);
+        }
     }
 ?>

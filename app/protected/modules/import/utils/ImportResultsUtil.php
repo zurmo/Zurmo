@@ -25,7 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Helper class for working with import results as rows are processed.
+     * Helper class for working with import results as rows are processed. As rows are processed, their individual row
+     * results can be collected in this class.  Additionally methods in the class can be used to update the rows
+     * status and serialize messages for each row that is attempted to be imported.
      */
     class ImportResultsUtil
     {
@@ -55,7 +57,7 @@
          */
         public function addRowDataResults(ImportRowDataResultsUtil $importRowDataResultsUtil)
         {
-            $this->$rowResultsData[] = $importRowDataResultsUtil;
+            $this->rowResultsData[] = $importRowDataResultsUtil;
         }
 
         /**
@@ -65,11 +67,12 @@
          */
         public function processStatusAndMessagesForEachRow()
         {
-            foreach($this->$rowResultsData as $rowResult)
+            foreach($this->rowResultsData as $rowResult)
             {
                 assert('$rowResult instanceof ImportRowDataResultsUtil');
                 $tableName = $this->import->getTempTableName();
                 $status    = $rowResult->getStatus();
+                assert('$status != null');
                 $messages  = $rowResult->getMessages();
                 if($messages != null)
                 {

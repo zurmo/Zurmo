@@ -44,6 +44,18 @@
             return 'RelatedModelValueType';
         }
 
+        /**
+         * Given a value that is either a zurmo id or an external system id, resolve that the
+         * value is valid.  The value presented can also be a 'name' value.  If the name is not found as a model
+         * in the system, then a new related model will be created using this name.
+         * NOTE - If the related model has other required attributes that have no default values,
+         * then there will be a problem saving this new model. This is too be resolved at some point.
+         * If the value is not valid then an InvalidValueToSanitizeException is thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

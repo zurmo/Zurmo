@@ -24,44 +24,41 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Truncate sanitizer specific for text area type attributes.
-     */
-    class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
+    class RedBeanModelErrorsToMessagesUtil
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
-        {
-            return 'TextAreaTruncate';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'TextAreaTruncate';
-        }
-
         /**
-         * Given a value, resolve that the value not too large for a text area type attribute.  If
-         * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param array $mappingRuleData
+         * Make an array of message strings by RedBeanModel errors
+         * @param array $errors RedBeanModel errors
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public static function makeMessagesByModelErrors($model)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('$mappingRuleData == null');
-            if($value == null)
+            $messages = array();
+            foreach ($model->getErrors() as $attributeName => $errors)
             {
-                return $value;
+                foreach ($errors as $relationAttributeName => $errorOrRelatedError)
+                {
+                    if (is_array($errorOrRelatedError))
+                    {
+                        $relationModelClassName = $model->getRelationModelClassName($attributeName);
+                        foreach ($errorOrRelatedError as $relatedError)
+                        {
+                            if ($relatedError != '')
+                            {
+                                $messages[] = LabelUtil::
+                                              makeModelAndAttributeNameCombinationLabel(get_class($model), $attributeName)
+                                              .  ' - ' .$relatedError;
+                            }
+                        }
+                    }
+                    elseif ($errorOrRelatedError != '')
+                    {
+                        $messages[] = LabelUtil::
+                                      makeModelAndAttributeNameCombinationLabel(get_class($model), $attributeName)
+                                      .  ' - ' .$errorOrRelatedError;
+                    }
+                }
             }
-            if(strlen($value < 65000))
-            {
-                return $value;
-            }
-            return substr($value, 0, 65000);
+            return $messages;
         }
     }
 ?>

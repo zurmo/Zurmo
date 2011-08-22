@@ -24,44 +24,38 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Truncate sanitizer specific for text area type attributes.
-     */
-    class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
+    class ImportRowDataResultsUtilTest extends ImportBaseTest
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        public static function setUpBeforeClass()
         {
-            return 'TextAreaTruncate';
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
 
-        public static function getBatchAttributeValueDataAnalyzerType()
+        public function testMessages()
         {
-            return 'TextAreaTruncate';
+            $resultsUtil = new ImportRowDataResultsUtil(55);
+            $this->assertEquals(55, $resultsUtil->getId());
+            $this->assertEquals(0, count($resultsUtil->getMessages()));
+            $resultsUtil->addMessage('some message');
+            $messages = $resultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $this->assertEquals('some message', $messages[0]);
+            $resultsUtil->addMessages(array('some message2', 'something else'));
+            $messages = $resultsUtil->getMessages();
+            $this->assertEquals(3, count($messages));
         }
 
-        /**
-         * Given a value, resolve that the value not too large for a text area type attribute.  If
-         * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param array $mappingRuleData
-         */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function testSetAndGetStatus()
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('$mappingRuleData == null');
-            if($value == null)
-            {
-                return $value;
-            }
-            if(strlen($value < 65000))
-            {
-                return $value;
-            }
-            return substr($value, 0, 65000);
+            $resultsUtil = new ImportRowDataResultsUtil(55);
+            $this->assertNull($resultsUtil->getStatus());
+            $resultsUtil->setStatusToUpdated();
+            $this->assertEquals(1, $resultsUtil->getStatus());
+            $resultsUtil->setStatusToCreated();
+            $this->assertEquals(2, $resultsUtil->getStatus());
+            $resultsUtil->setStatusToError();
+            $this->assertEquals(3, $resultsUtil->getStatus());
         }
     }
 ?>

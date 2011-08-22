@@ -25,7 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Exception thrown when there is ...
+     * Exception thrown when there an import attempts to update an existing model based on an external system id
+     * that would have had to be already in place.
+     * @see ExternalSystemIdUtil
      */
     class ExternalSystemIdNotFoundException extends CException
     {

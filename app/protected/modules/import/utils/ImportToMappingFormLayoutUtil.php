@@ -24,8 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper utility for spliting $mappableAttributeIndicesAndDerivedTypes into one array for import columns and the
+     * other for extra columns.  Then making a MappingFormLayoutUtil from this information.
+     */
     class ImportToMappingFormLayoutUtil
     {
+        /**
+         * Given several parameters, make a MappingFormLayoutUtil object.
+         * @param string $modelClassName
+         * @param object $form
+         * @param string $importRulesType
+         * @param array $mappableAttributeIndicesAndDerivedTypes
+         */
         public static function make($modelClassName, $form, $importRulesType, $mappableAttributeIndicesAndDerivedTypes)
         {
             assert('is_string($modelClassName)');
@@ -42,10 +53,11 @@
         }
 
         /**
-         *
-         * Enter description here ...
+         * Based on the column type, filter down (sanitize) the array of $mappableAttributeIndicesAndDerivedTypes
+         * based on which attribute indices and derived types are available.
          * @param array $mappableAttributeIndicesAndDerivedTypes
          * @param string $columnType
+         * @return a sanitized array of $mappableAttributeIndicesAndDerivedTypes for the column type.
          */
         protected static function resolveMappableAttributeIndicesAndDerivedTypesByColumnType(
                                   $mappableAttributeIndicesAndDerivedTypes, $columnType, $importRulesType)

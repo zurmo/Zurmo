@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportRulesTest extends ImportBaseTest
+    class ImportToMappingFormLayoutUtilTest extends ImportBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -71,74 +71,42 @@
                 'url'                         => 'Url',
             );
             $this->assertEquals(serialize($compareData), serialize($data));
-        }
-
-        public function testGetModelClassNameByAttributeIndexOrDerivedType()
-        {
-            $modelClassName = ImportModelTestItemImportRules::
-                              getModelClassNameByAttributeIndexOrDerivedType('boolean');
-            $this->assertEquals('ImportModelTestItem', $modelClassName);
-        }
-
-
-        public function testGetAttributeImportRulesTypeBy()
-        {
-            Yii::app()->user->userModel     = User::getByUsername('super');
-            $attributeImportRulesType       = ImportModelTestItemImportRules::getAttributeImportRulesType('boolean');
-            $this->assertEquals('CheckBox',   $attributeImportRulesType);
-        }
-
-        public function testGetImportRulesTypesForCurrentUser()
-        {
-            Yii::app()->user->userModel = User::getByUsername('super');
-            $data = ImportRulesUtil::getImportRulesTypesForCurrentUser();
-            $compareData = array(
-                'Accounts'      => 'Accounts',
-                'Contacts'      => 'Contacts',
-                'Leads'         => 'Leads',
-                'Meetings'      => 'Meetings',
-                'Notes'         => 'Notes',
-                'Opportunities' => 'Opportunities',
-                'Tasks'         => 'Tasks',
-                'Users'         => 'Users',
+            $mappingFormLayoutUtil = ImportToMappingFormLayoutUtil::
+                                     make('ImportModelTestItem', new ZurmoActiveForm(), 'ImportModelTestItem', $data);
+            $this->assertEquals(serialize($compareData),
+                                serialize($mappingFormLayoutUtil->getMappableAttributeIndicesAndDerivedTypesForImportColumns()));
+            $compareData2 = array(
+                'boolean'                     => 'Boolean',
+                'currencyValue'			      => 'Currency Value',
+                'date'                        => 'Date',
+                'dateTime'                    => 'Date Time',
+                'dropDown'                    => 'Drop Down',
+                'firstName'					  => 'First Name',
+                'float'                       => 'Float',
+                'FullName'					  => 'Full Name',
+                'hasOne'					  => 'Has One',
+                'hasOneAlso'				  => 'Has One Also',
+                'ImportModelTestItem3Derived' => 'ImportModelTestItem3',
+                'integer'                     => 'Integer',
+                'lastName'					  => 'Last Name',
+                'owner' 				      => 'Owner',
+                'phone'                       => 'Phone',
+                'primaryAddress__city'        => 'Primary Address - City',
+                'primaryAddress__country'     => 'Primary Address - Country',
+                'primaryAddress__postalCode'  => 'Primary Address - Postal Code',
+                'primaryAddress__state'       => 'Primary Address - State',
+                'primaryAddress__street1'     => 'Primary Address - Street 1',
+                'primaryAddress__street2'     => 'Primary Address - Street 2',
+                'primaryEmail__emailAddress'  => 'Primary Email - Email Address',
+                'primaryEmail__isInvalid'     => 'Primary Email - Is Invalid',
+                'primaryEmail__optOut'        => 'Primary Email - Opt Out',
+                'radioDropDown'				  => 'Radio Drop Down',
+                'string'                      => 'String',
+                'textArea'                    => 'Text Area',
+                'url'                         => 'Url',
             );
-            $this->assertEquals($compareData, $data);
-        }
-
-        public function testGetType()
-        {
-            $this->assertEquals('ImportModelTestItem', ImportModelTestItemImportRules::getType());
-        }
-
-        public function testGetRequiredAttributesCollectionNotIncludingReadOnly()
-        {
-            Yii::app()->user->userModel   = User::getByUsername('super');
-            $requiredAttributesCollection = ImportModelTestItemImportRules::
-                                            getRequiredAttributesCollectionNotIncludingReadOnly();
-            $this->assertEquals(3, count($requiredAttributesCollection));
-            $compareData = array(
-                'lastName' => array(
-                        'attributeLabel'           => 'Last Name',
-                        'attributeName'            => 'lastName',
-                        'relationAttributeName'    => null,
-                        'attributeImportRulesType' => 'Text',
-                        'isRequired'               => true
-                ),
-                'owner' => array(
-                        'attributeLabel'           => 'Owner',
-                        'attributeName'            => 'owner',
-                        'relationAttributeName'    => null,
-                        'attributeImportRulesType' => 'User',
-                        'isRequired'               => true
-                ),
-                'string' => array(
-                        'attributeLabel'           => 'String',
-                        'attributeName'            => 'string',
-                        'relationAttributeName'    => null,
-                        'attributeImportRulesType' => 'Text',
-                        'isRequired'			   => true
-                ));
-            $this->assertEquals($compareData, $requiredAttributesCollection);
+            $this->assertEquals(serialize($compareData2),
+                                serialize($mappingFormLayoutUtil->getMappableAttributeIndicesAndDerivedTypesForExtraColumns()));
         }
     }
 ?>

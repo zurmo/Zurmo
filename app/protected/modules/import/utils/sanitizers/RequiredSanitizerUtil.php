@@ -52,6 +52,14 @@
             return true;
         }
 
+        /**
+         * Resolves that the value is not null or the value is null and a valid default value is available for
+         * the model id. If not, then an InvalidValueToSanitizeException is thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');
@@ -65,7 +73,8 @@
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'This field is required and neither a value nor a default value was specified.'));
+                    throw new InvalidValueToSanitizeException(Yii::t('Default',
+                    'This field is required and neither a value nor a default value was specified.'));
                 }
             }
             return $value;

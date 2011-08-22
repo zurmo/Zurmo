@@ -47,6 +47,14 @@
             return true;
         }
 
+        /**
+         * Given a value, resolve that the value is a correctly formatted email address. If not, an
+         * InvalidValueToSanitizeException is thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

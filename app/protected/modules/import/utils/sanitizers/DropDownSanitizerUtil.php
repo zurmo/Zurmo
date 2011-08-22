@@ -56,13 +56,17 @@
         }
 
         /**
+         * Given a value, resolve that the value is a valid custom field data value. If the value does not exist yet,
+         * check the import instructions data to determine how to handle the missing value.
+         *
          * Example of importInstructionsData
          * array('DropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array('neverPresent', 'notPresent')))
-         * @param unknown_type $modelClassName
-         * @param unknown_type $attributeName
-         * @param unknown_type $value
-         * @param unknown_type $mappingRuleData
-         * @param unknown_type $importInstructionsData
+         *
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         * @param array $importInstructionsData
          */
         public static function sanitizeValueWithInstructions($modelClassName, $attributeName, $value, $mappingRuleData,
                                              $importInstructionsData)

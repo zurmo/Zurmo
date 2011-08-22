@@ -35,6 +35,15 @@
             return 'DefaultValueDropDownModelAttribute';
         }
 
+        /**
+         * If the attribute specified is required and the value is null, attempt to utilize a default value if it is
+         * specified. If it is not specified or the default value specified is not a valid custom field data value, then
+         * an InvalidValueToSanitizeException will be thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

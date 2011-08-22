@@ -34,9 +34,6 @@
 
         public function testOptionalAndRequiredFixInputData()
         {
-            //setting the settings for this by form.
-            //todo: set form from serialized data, if you come back via prev button? can you come back here or is it too late?
-            //todo: after u are done here is there like a final page to show you everything going down.
         }
 
         /**
@@ -44,9 +41,6 @@
          */
         public function testImportAndCreateModels()
         {
-            //paging loop?
-
-            //header vs. no header row?
         }
 
         /**
@@ -54,8 +48,6 @@
          */
         public function testUndoImport()
         {
-            //test that you have joining import information in an import.
-            //test undo import.
         }
     }
 ?>

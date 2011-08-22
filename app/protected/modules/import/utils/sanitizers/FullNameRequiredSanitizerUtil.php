@@ -25,7 +25,9 @@
      ********************************************************************************/
 
     /**
-     *
+     * Sanitizer for processing when a full name is required.  The part of the full name that is required is the
+     * last name.  When the full name splits, if it is missing the last name part, then the entire full name value
+     * is considered missing.
      */
     class FullNameRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
@@ -44,6 +46,14 @@
             return 'FullNameDefaultValueModelAttribute';
         }
 
+        /**
+         * Resolves that the value is not null or the value is null and a valid default value is available for the full
+         * name. If not, then an InvalidValueToSanitizeException is thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

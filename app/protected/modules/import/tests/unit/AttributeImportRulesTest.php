@@ -113,5 +113,17 @@
                                     'ImportModelTestItem', 'modifiedDateTime');
             $this->assertTrue($attributeImportRules instanceof ModifiedDateTimeAttributeImportRules);
         }
+
+        public function testGetExtraColumnUsableCountOfModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
+                                    'ImportModelTestItem', 'modifiedByUser');
+            $count = $attributeImportRules->getExtraColumnUsableCountOfModelAttributeMappingRuleFormTypesAndElementTypes();
+            $this->assertEquals(0, $count);
+            $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(
+                                    'ImportModelTestItem', 'dropDown');
+            $count = $attributeImportRules->getExtraColumnUsableCountOfModelAttributeMappingRuleFormTypesAndElementTypes();
+            $this->assertEquals(1, $count);
+        }
     }
 ?>

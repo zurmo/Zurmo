@@ -91,7 +91,7 @@
          */
         public function addMessage($message)
         {
-            assert('is_string($message');
+            assert('is_string($message)');
             $this->messages[] = $message;
 
         }
@@ -127,6 +127,14 @@
         }
 
         /**
+         * Sets the status to created, which should be used when a row was successfully made into a new model.
+         */
+        public function setStatusToCreated()
+        {
+            $this->status = self::CREATED;
+        }
+
+        /**
          *
          * Sets the status to created, which should be used when a row had an error when trying to either update or
          * create a model.
@@ -136,13 +144,7 @@
             $this->status = self::ERROR;
         }
 
-        /**
-         * Sets the status to created, which should be used when a row was successfully made into a new model.
-         */
-        public function setStatusToCreated()
-        {
-            $this->status = self::CREATED;
-        }
+
 
         /**
          * @return status.

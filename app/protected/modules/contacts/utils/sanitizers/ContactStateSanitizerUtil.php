@@ -39,6 +39,14 @@
             return 'ContactState';
         }
 
+        /**
+         * Given a contact state id, attempt to get and return a contact state object. If the id is invalid, then an
+         * InvalidValueToSanitizeException will be thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

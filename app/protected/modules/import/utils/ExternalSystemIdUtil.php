@@ -29,6 +29,10 @@
      */
     class ExternalSystemIdUtil
     {
+        /**
+         * Database column name for the external system id on each model.
+         * @var string
+         */
         const EXTERNAL_SYSTEM_ID_COLUMN_NAME = 'external_system_id';
 
         /**

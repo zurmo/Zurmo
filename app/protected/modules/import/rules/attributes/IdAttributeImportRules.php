@@ -50,6 +50,12 @@
             return array('SelfIdValueType');
         }
 
+        /**
+         * Given an 'id' value, sanitize this value based on the id being either a zurmo model id or an external
+         * system id.  This methods requires that there is only one sanitizer type to process.
+         * (non-PHPdoc)
+         * @see NonDerivedAttributeImportRules::resolveValueForImport()
+         */
         public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($columnMappingData)');

@@ -47,6 +47,15 @@
             return true;
         }
 
+        /**
+         * Given a value that is a full name, split the full name into the first and last name parts.  Validate that
+         * the first and last name are not too large for their attributes.  If they are too large or the full name
+         * does not valid properly, then an InvalidValueToSanitizeException is thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

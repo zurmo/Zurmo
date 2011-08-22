@@ -58,6 +58,22 @@
             $this->mappableAttributeIndicesAndDerivedTypesForExtraColumns  = $mappableAttributeIndicesAndDerivedTypesForExtraColumns;
         }
 
+        /**
+         * Used for testing purposes.
+         */
+        public function getMappableAttributeIndicesAndDerivedTypesForImportColumns()
+        {
+            return $this->mappableAttributeIndicesAndDerivedTypesForImportColumns;
+        }
+
+        /**
+         * Used for testing purposes.
+         */
+        public function getMappableAttributeIndicesAndDerivedTypesForExtraColumns()
+        {
+            return $this->mappableAttributeIndicesAndDerivedTypesForExtraColumns;
+        }
+
         public function renderAttributeAndColumnTypeContent  ($columnName,
                                                               $columnType,
                                                               $attributeIndexOrDerivedType,

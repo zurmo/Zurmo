@@ -52,7 +52,13 @@
             $import->serializedData = serialize($serializedData);
         }
 
-
+        /**
+         * Given a data provider, call getData and for each row, attempt to import the data.
+         * @param object $dataProvider
+         * @param object $importRules
+         * @param array $mappingData
+         * @param object $importResultsUtil
+         */
         public static function importByDataProvider(ImportDataProvider $dataProvider, ImportRules $importRules,
                                                     $mappingData, ImportResultsUtil $importResultsUtil)
         {
@@ -76,7 +82,13 @@
             }
         }
 
-
+        /**
+         * Given a row of data, resolve each value of the row for import and either create or update an existing model.
+         * @param object $importRules
+         * @param array $rowData
+         * @param array $mappingData
+         * @param object $importRowDataResultsUtil
+         */
         public static function importByImportRulesRowData(ImportRules $importRules, $rowData, $mappingData,
                                                           ImportRowDataResultsUtil $importRowDataResultsUtil)
         {
@@ -181,7 +193,7 @@
                 }
                 else
                 {
-                    $importRowDataResultsUtil->addMessage('something to indicate failure');
+                    $importRowDataResultsUtil->addMessage('The record failed to save. Reason unknown.');
                     $importRowDataResultsUtil->setStatusToError();
                 }
             }
@@ -191,7 +203,7 @@
                 {
                     $importRowDataResultsUtil->addMessages($importSanitizeResultsUtil->getMessages());
                 }
-                $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByErrors($model->getErrors());
+                $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByErrors($model);
                 $importRowDataResultsUtil->addMessages($messages);
                 $importRowDataResultsUtil->setStatusToError();
             }

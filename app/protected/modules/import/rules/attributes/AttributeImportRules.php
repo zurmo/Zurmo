@@ -52,6 +52,10 @@
             return get_class($this->model);
         }
 
+        /**
+         * Since the attributes can be derived or real, this method provides a uniform api that can be called regardless
+         * of whether the attribute is derived or not, and will produce the real model attribute names if available.
+         */
         abstract public function getRealModelAttributeNames();
 
         public function getDisplayLabelByAttributeName($attributeName)
@@ -117,6 +121,11 @@
             return array();
         }
 
+        /**
+         * @return count of usable mapping rule form types. This count is different than for import columns because
+         * some mapping rules only show for import columns and not extra columns.  This is the columnType in the
+         * mapping data.
+         */
         public static function getExtraColumnUsableCountOfModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return count(static::getAllModelAttributeMappingRuleFormTypesAndElementTypes()) +

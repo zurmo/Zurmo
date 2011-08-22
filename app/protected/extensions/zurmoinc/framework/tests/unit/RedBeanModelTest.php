@@ -1480,5 +1480,34 @@
             $this->assertEquals($binaryStuff, $model->binaryStuff);
             $this->assertEquals($bigBinaryStuff, $model->bigBinaryStuff);
         }
+
+        public function testSwappingSameRelationModelsForSaving()
+        {
+            $j          = new J();
+            $j->jMember = 'b';
+            $this->assertTrue($j->save());
+            $jId = $j->id;
+            $j->forget();
+            unset($j);
+
+            $i          = new I();
+            $i->iMember = 'a';
+            $i->j       = J::getById($jId);
+            $this->assertTrue($i->save());
+            $iId = $i->id;
+            $i->forget();
+            unset($i);
+
+            $jSame = J::getById($jId);
+            $i     = I::getById($iId);
+            $i->j  = $jSame;
+            $this->assertTrue($i->save());
+            $i->forget();
+            unset($i);
+
+            $i     = I::getById($iId);
+            $this->assertEquals($i->j, $jSame);
+            $this->assertEquals($i->j, J::getById($jId));
+        }
     }
 ?>

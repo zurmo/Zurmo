@@ -34,6 +34,11 @@
             throw new NotSupportedException();
         }
 
+        /**
+         * Override by the specific derived attribute import rules when there are real model attributes that the
+         * derived attribute correspond to.
+         * @see AttributeImportRules::getRealModelAttributeNames()
+         */
         public function getRealModelAttributeNames()
         {
             return null;

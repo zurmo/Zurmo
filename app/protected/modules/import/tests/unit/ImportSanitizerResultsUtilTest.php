@@ -24,44 +24,30 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Truncate sanitizer specific for text area type attributes.
-     */
-    class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
+    class ImportSanitizerResultsUtilTest extends ImportBaseTest
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        public static function setUpBeforeClass()
         {
-            return 'TextAreaTruncate';
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
 
-        public static function getBatchAttributeValueDataAnalyzerType()
+        public function testMessages()
         {
-            return 'TextAreaTruncate';
+            $resultsUtil = new ImportSanitizerResultsUtil();
+            $this->assertEquals(0, count($resultsUtil->getMessages()));
+            $resultsUtil->addMessage('some message');
+            $messages = $resultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $this->assertEquals('some message', $messages[0]);
         }
 
-        /**
-         * Given a value, resolve that the value not too large for a text area type attribute.  If
-         * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param array $mappingRuleData
-         */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function testShouldSaveModel()
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('$mappingRuleData == null');
-            if($value == null)
-            {
-                return $value;
-            }
-            if(strlen($value < 65000))
-            {
-                return $value;
-            }
-            return substr($value, 0, 65000);
+            $resultsUtil = new ImportSanitizerResultsUtil();
+            $this->assertEquals(true, $resultsUtil->shouldSaveModel());
+            $resultsUtil->setModelShouldNotBeSaved();
+            $this->assertEquals(false, $resultsUtil->shouldSaveModel());
         }
     }
 ?>

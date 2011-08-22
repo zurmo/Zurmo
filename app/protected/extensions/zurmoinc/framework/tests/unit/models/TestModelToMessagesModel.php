@@ -24,44 +24,47 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Truncate sanitizer specific for text area type attributes.
-     */
-    class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
+    class TestModelToMessagesModel extends RedBeanModel
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        public static function getByName($name)
         {
-            return 'TextAreaTruncate';
+            assert('is_string($name)');
+            assert('$name != ""');
+            $bean = R::findOne('a', "name = '$name'");
+            assert('$bean === false || $bean instanceof RedBean_OODBBean');
+            if ($bean === false)
+            {
+                throw new NotFoundException();
+            }
+            return self::makeModel($bean);
         }
 
-        public static function getBatchAttributeValueDataAnalyzerType()
+        public static function canSaveMetadata()
         {
-            return 'TextAreaTruncate';
+            return true;
         }
 
-        /**
-         * Given a value, resolve that the value not too large for a text area type attribute.  If
-         * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param array $mappingRuleData
-         */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public static function getDefaultMetadata()
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$value != ""');
-            assert('$mappingRuleData == null');
-            if($value == null)
-            {
-                return $value;
-            }
-            if(strlen($value < 65000))
-            {
-                return $value;
-            }
-            return substr($value, 0, 65000);
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'name',
+                ),
+                'relations' => array(
+                    'e' => array(RedBeanModel::HAS_ONE, 'E'),
+                ),
+                'rules' => array(
+                    array('name',    'required'),
+                    array('name', 'type', 'type' => 'string'),
+                ),
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
         }
     }
 ?>

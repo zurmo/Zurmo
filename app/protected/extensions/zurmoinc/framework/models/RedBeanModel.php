@@ -1318,6 +1318,11 @@
             return false;
         }
 
+        /**
+         * @param boolean $attributeName
+         * @return true/false whether the attributeName specified, it is allowed to be set externally even though it is
+         * a read-only attribute.
+         */
         public function isAllowedToSetReadOnlyAttribute($attributeName)
         {
             return false;

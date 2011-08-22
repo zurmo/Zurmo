@@ -25,10 +25,16 @@
      ********************************************************************************/
 
     /**
-     *
+     * Sanitizers that support the use of external system ids as possible values should extend this class.
      */
     abstract class ExternalSystemIdSuppportedSanitizerUtil extends SanitizerUtil
     {
+        /**
+         * Given an external system id and model class name, try to find the associated model if it exists. If it is
+         * not found, a NotFoundException will be thrown.  Otherwise the model will be made and returned.
+         * @param string $id
+         * @param string $modelClassName
+         */
         public static function getModelByExternalSystemIdAndModelClassName($id, $modelClassName)
         {
             assert('$id != null && is_string($id)');

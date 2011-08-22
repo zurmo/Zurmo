@@ -62,6 +62,15 @@
             );
         }
 
+        /**
+         * Given a value, attempt to convert the value to either true/false based on a mapping array of possible
+         * boolean values.  If the value presented is not a valid mapping value then a
+         * InvalidValueToSanitizeException will be thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
             assert('is_string($modelClassName)');

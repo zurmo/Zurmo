@@ -170,6 +170,14 @@
             return array('CurrencyValue');
         }
 
+        /**
+         * Resolves against special attributes.  Some attributes, even though they have a 'type' that matches an existing
+         * generic attribute import rule, require their own attribute import rule.  These attributes are not derived and
+         * this is why their attribute import type must be adjusted here.  If the attribute was derived, then the derived
+         * attribute name becomes the type and this wouldn't be required.
+         * @param string $type
+         * @param string $attributeName
+         */
         protected static function resolveAttributeImportTypeByAttributeName($type, $attributeName)
         {
             assert('is_string($type)');
