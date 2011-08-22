@@ -57,7 +57,8 @@
             $modelClassName = $this->getModelClassName();
             $value = ImportSanitizerUtil::
                      sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                   $modelClassName, null, $value, $columnMappingData, object $importSanitizeResultsUtil);
+                                                   $modelClassName, null, $value, $columnMappingData,
+                                                   $importSanitizeResultsUtil);
             list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
             if($firstName == null)
             {

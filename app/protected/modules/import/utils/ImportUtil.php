@@ -96,10 +96,10 @@
                     $model        = $modelClassName::getById($attributeValueData['id']);
                     $makeNewModel = false;
                 }
-                elseif($attributeValueData[ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
+                elseif($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
                 {
                     $externalSystemId = $attributeValueData
-                                        [ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME];
+                                        [ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME];
                 }
             }
             if($makeNewModel)
@@ -157,7 +157,7 @@
                 {
                     if($externalSystemId!= null)
                     {
-                        ExternalSystemIdUtil::updateByModel($model);
+                        ExternalSystemIdUtil::updateByModel($model, $externalSystemId);
                     }
                     $importRowDataResultsUtil->addMessage(Yii::t('Default', 'AccountsModuleSingularLabel saved correctly.'));
                     if($makeNewModel)

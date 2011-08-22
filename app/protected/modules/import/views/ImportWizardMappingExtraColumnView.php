@@ -51,15 +51,17 @@
 
         protected function renderContent()
         {
-            $form                                    = new ZurmoActiveForm();
-            $mappingFormLayoutUtil                   = new MappingFormLayoutUtil(get_class($this->model), $form,
+            $mappingFormLayoutUtil                   = ImportToMappingFormLayoutUtil::make(
+                                                       get_class($this->model),
+                                                       new ZurmoActiveForm(),
+                                                       $this->model->importRulesType,
                                                        $this->mappableAttributeIndicesAndDerivedTypes);
             $mappingDataMetadataWithRenderedElements = $this->resolveMappingDataMetadataWithRenderedElements(
-                                                                                  $mappingFormLayoutUtil,
-                                                                                  $this->mappingDataMetadata,
-                                                                                  $this->model->firstRowIsHeaderRow,
-                                                                                  $this->model->importRulesType,
-                                                                                  $this->model->id);
+                                                       $mappingFormLayoutUtil,
+                                                       $this->mappingDataMetadata,
+                                                       $this->model->firstRowIsHeaderRow,
+                                                       $this->model->importRulesType,
+                                                       $this->model->id);
             return MappingFormLayoutUtil::renderMappingDataMetadataWithRenderedElements(
                    $mappingDataMetadataWithRenderedElements);
         }

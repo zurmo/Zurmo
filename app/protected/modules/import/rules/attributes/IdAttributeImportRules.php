@@ -79,7 +79,7 @@
                 {
                     if($value != null)
                     {
-                        return array(ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME => $value);
+                        return array(ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME => $value);
                     }
                     else
                     {

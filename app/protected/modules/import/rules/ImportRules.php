@@ -31,6 +31,13 @@
     abstract class ImportRules
     {
         /**
+         * Array of cached data to avoid multiple calls to make the attriubte import rules data.  Indexed by the model
+         * class name.
+         * @var array
+         */
+        private static $attributeImportRulesDataByModelClassName = array();
+
+        /**
          * @return string - If the class name is TestImportRules, then 'Test' will be returned.
          */
         public static function getType()
@@ -178,12 +185,35 @@
         {
             assert('is_string($attributeIndexOrDerivedType)');
             $modelClassName           = static::getModelClassName();
-            $attributeImportRulesData = static::getAttributeIndexOrDerivedTypeAndAttributeImportRuleTypes($modelClassName);
+            $attributeImportRulesData = static::resolveAttributeImportRulesDataByModelClassNameAndCache($modelClassName);
             if(isset($attributeImportRulesData[$attributeIndexOrDerivedType]))
             {
                 return $attributeImportRulesData[$attributeIndexOrDerivedType];
             }
             throw new NotSupportedException();
+        }
+
+        /**
+         * Get the attributeImportRulesData either from an existing cached value or by calling another method to make it.
+         * Values are cached in an array indexed my model class name.
+         * @see self::$attributeImportRulesDataByModelClassName;
+         * @param string $modelClassName
+         * @return array $attributeImportRulesData
+         */
+        protected static function resolveAttributeImportRulesDataByModelClassNameAndCache($modelClassName)
+        {
+            assert('is_string($modelClassName)');
+            if(isset(self::$attributeImportRulesDataByModelClassName[$modelClassName]))
+            {
+                return self::$attributeImportRulesDataByModelClassName[$modelClassName];
+            }
+            else
+            {
+                $attributeImportRulesData = static::
+                                            getAttributeIndexOrDerivedTypeAndAttributeImportRuleTypes($modelClassName);
+                self::$attributeImportRulesDataByModelClassName[$modelClassName] = $attributeImportRulesData;
+                return $attributeImportRulesData;
+            }
         }
 
         /**

@@ -35,6 +35,8 @@
         /**
          * Used to define the real attribute name that the derived attribute corresponds to.
          */
-        abstract static function getActualModelAttributeNameForDerivedAttribute();
+        public static function getActualModelAttributeNameForDerivedAttribute()
+        {
+        }
     }
 ?>

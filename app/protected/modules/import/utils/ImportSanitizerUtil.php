@@ -82,7 +82,7 @@
                       $value = null;
                       if($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
                       {
-                          $importSanitizeResultsUtil->setShouldNotSaveModel();
+                          $importSanitizeResultsUtil->setModelShouldNotBeSaved();
                       }
                   }
             }

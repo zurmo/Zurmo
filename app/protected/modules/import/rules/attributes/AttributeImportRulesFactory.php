@@ -30,6 +30,14 @@
     class AttributeImportRulesFactory
     {
         /**
+         * Cached array of data in order to avoid multiple newing up a model when it is just used to access basic
+         * attribute or relation information.  Eventually some sort of static model utility will be available so
+         * models don't have to be newed up to retrieve information like: isAttribute or getAttributeLabel.
+         * @var array
+         */
+        private static $modelsByClassName = array();
+
+        /**
          * Given an import rules type and an attribute index or derived type string, make an AttributeImportRules object.
          * @param string $importRulesType
          * @param string $attributeIndexOrDerivedType
@@ -45,16 +53,25 @@
                                         $attributeIndexOrDerivedType);
             $modelClassName           = $importRulesTypeClassName::getModelClassNameByAttributeIndexOrDerivedType(
                                         $attributeIndexOrDerivedType);
+            $attributeName            = self::resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
+                                        $modelClassName,
+                                        $attributeIndexOrDerivedType);
+            if(isset(self::$modelsByClassName[$modelClassName]))
+            {
+                $model = self::$modelsByClassName[$modelClassName];
+            }
+            else
+            {
+                $model                                    = new $modelClassName(false);
+                self::$modelsByClassName[$modelClassName] = $model;
+            }
             assert('$attributeImportRulesType !== null');
             $attributeImportRulesClassName = $attributeImportRulesType . 'AttributeImportRules';
             if(is_subclass_of($attributeImportRulesClassName, 'DerivedAttributeImportRules'))
             {
-                return new $attributeImportRulesClassName(new $modelClassName(false));
+                return new $attributeImportRulesClassName($model);
             }
-            $attributeName = self::resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
-                             $modelClassName,
-                             $attributeIndexOrDerivedType);
-            return new $attributeImportRulesClassName(new $modelClassName(false), $attributeName);
+            return new $attributeImportRulesClassName($model, $attributeName);
         }
 
         /**
@@ -117,7 +134,15 @@
             {
                 list($relationName, $attributeName) = $relationNameAndAttributeName;
             }
-            $model          = new $modelClassName(false);
+            if(isset(self::$modelsByClassName[$modelClassName]))
+            {
+                $model = self::$modelsByClassName[$modelClassName];
+            }
+            else
+            {
+                $model                                    = new $modelClassName(false);
+                self::$modelsByClassName[$modelClassName] = $model;
+            }
             $modelClassName = $model->getRelationModelClassName($relationName);
             assert('$modelClassName != null');
             return $attributeName;

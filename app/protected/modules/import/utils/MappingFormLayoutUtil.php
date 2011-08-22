@@ -39,16 +39,23 @@
 
         protected $form;
 
-        protected $mappableAttributeIndicesAndDerivedTypes;
+        protected $mappableAttributeIndicesAndDerivedTypesForImportColumns;
 
-        public function __construct($mappingFormModelClassName, $form, $mappableAttributeIndicesAndDerivedTypes)
+        protected $mappableAttributeIndicesAndDerivedTypesForExtraColumns;
+
+        public function __construct($mappingFormModelClassName, $form,
+                                    $mappableAttributeIndicesAndDerivedTypesForImportColumns,
+                                    $mappableAttributeIndicesAndDerivedTypesForExtraColumns)
         {
+
             assert('is_string($mappingFormModelClassName)');
             assert('$form instanceof ZurmoActiveForm');
-            assert('is_array($mappableAttributeIndicesAndDerivedTypes)');
-            $this->mappingFormModelClassName               = $mappingFormModelClassName;
-            $this->form                                    = $form;
-            $this->mappableAttributeIndicesAndDerivedTypes = $mappableAttributeIndicesAndDerivedTypes;
+            assert('is_array($mappableAttributeIndicesAndDerivedTypesForImportColumns)');
+            assert('is_array($mappableAttributeIndicesAndDerivedTypesForExtraColumns)');
+            $this->mappingFormModelClassName                               = $mappingFormModelClassName;
+            $this->form                                                    = $form;
+            $this->mappableAttributeIndicesAndDerivedTypesForImportColumns = $mappableAttributeIndicesAndDerivedTypesForImportColumns;
+            $this->mappableAttributeIndicesAndDerivedTypesForExtraColumns  = $mappableAttributeIndicesAndDerivedTypesForExtraColumns;
         }
 
         public function renderAttributeAndColumnTypeContent  ($columnName,
@@ -85,9 +92,18 @@
                                                      $columnName,
                                                      $columnType,
                                                      $ajaxOnChangeUrl));
+
+                                                     if($columnType == 'importColumn')
+            {
+                $mappableAttributeIndicesAndDerivedTypes = $this->mappableAttributeIndicesAndDerivedTypesForImportColumns;
+            }
+            else
+            {
+                $mappableAttributeIndicesAndDerivedTypes = $this->mappableAttributeIndicesAndDerivedTypesForExtraColumns;
+            }
             $content = CHtml::dropDownList($name,
                                        $attributeIndexOrDerivedType,
-                                       $this->mappableAttributeIndicesAndDerivedTypes,
+                                       $mappableAttributeIndicesAndDerivedTypes,
                                        $htmlOptions);
             if($columnType == 'extraColumn')
             {

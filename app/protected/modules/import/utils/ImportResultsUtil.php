@@ -29,21 +29,41 @@
      */
     class ImportResultsUtil
     {
+        /**
+         * Import object.
+         * @var object
+         */
         protected $import;
 
+        /**
+         * Array of row results data which includes row results status  and any messages.
+         * @var array
+         */
         protected $rowResultsData;
 
+        /**
+         * @param object $import
+         */
         public function __construct(Import $import)
         {
             $this->import = $import;
         }
 
+        /**
+         * Given an ImportRowDataResultsUtil, add it to the row results data collection.
+         * @param object $importRowDataResultsUtil
+         */
         public function addRowDataResults(ImportRowDataResultsUtil $importRowDataResultsUtil)
         {
             $this->$rowResultsData[] = $importRowDataResultsUtil;
         }
 
-        public function processResultsToImportData()
+        /**
+         * After the rows have been imported or attempted to be imported, process the status and messages of each
+         * row to the temporary table where these rows are stored. This information can then be used later as feedback
+         * in the user interface on any issues that need resolving any of the rows.
+         */
+        public function processStatusAndMessagesForEachRow()
         {
             foreach($this->$rowResultsData as $rowResult)
             {
@@ -51,8 +71,16 @@
                 $tableName = $this->import->getTempTableName();
                 $status    = $rowResult->getStatus();
                 $messages  = $rowResult->getMessages();
+                if($messages != null)
+                {
+                    $serializedMessagesOrNull = serialize($messages);
+                }
+                else
+                {
+                    $serializedMessagesOrNull = null;
+                }
                 $rowId     = $rowResult->getId();
-                ImportDatabaseUtil::updateRowAfterProcessing($tableName, $rowId, $status, serialize($messages));
+                ImportDatabaseUtil::updateRowAfterProcessing($tableName, $rowId, $status, $serializedMessagesOrNull);
             }
         }
     }

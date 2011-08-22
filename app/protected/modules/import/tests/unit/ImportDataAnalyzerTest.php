@@ -46,7 +46,7 @@
             assert('$saved');
 
             //Ensure the external system id column is present.
-            $columnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             RedBean_Plugin_Optimizer_ExternalSystemId::
             ensureColumnIsVarchar(User::getTableName('User'), $columnName);
             $userTableName = User::getTableName('User');
@@ -74,7 +74,7 @@
             R::exec("update " . $import->getTempTableName() . " set column_8 = " .
                      Yii::app()->user->userModel->id ." where id != 1 limit 4");
 
-            $externalSystemIdColumnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             //Add test ImportModelTestItem models for use in this test.
             $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa','aba');
             $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw','daf');

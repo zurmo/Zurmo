@@ -25,23 +25,57 @@
      ********************************************************************************/
 
     /**
-     * Import rules for the created by user model.
+     * Helper class for working resulting messages from sanitizing a values in a row.
      */
-    class CreatedByUserAttributeImportRules extends NonDerivedAttributeImportRules
+    class ImportSanitizerResultsUtil
     {
-        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
+        /**
+         * Messages generated through sanitizing the row data.
+         * @var unknown_type
+         */
+        private $messages;
+
+        /**
+         * Some sanitization routines, if they run into an error, means the entire row should be skipped for
+         * making or updating a model.  Some sanitization does not require the entire row to be skipped, just the value.
+         * If the row is required to be skipped, this value should be set to false @see setModelShouldNotBeSaved()
+         * @var boolean
+         */
+        private $saveModel = true;
+
+        /**
+         * @see $saveModel
+         */
+        public function setModelShouldNotBeSaved()
         {
-            return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
+            $this->saveModel = false;
         }
 
-        public static function getSanitizerUtilTypesInProcessingOrder()
+        /**
+         * Given a message, add it to the messages collection.
+         * @param string $message
+         */
+        public function addMessage($message)
         {
-            return array('UserValueType');
+            assert('is_string($message');
+            $this->messages[] = $message;
+
         }
 
-        public function getDisplayLabel()
+        /**
+         * @return An array of messages.
+         */
+        public function getMessages()
         {
-            return Yii::t('Default', 'Created By User');
+            return $this->messages;
+        }
+
+        /**
+         * @return true/false if the model should be saved or skipped.
+         */
+        public function shouldSaveModel()
+        {
+            return $this->saveModel;
         }
     }
 ?>

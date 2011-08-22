@@ -59,7 +59,7 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $importResultsUtil = new ImportResultsUtil($import);
             ImportUtil::importByDataProvider($dataProvider, $importRules, $mappingData, $importResultsUtil);
-            $importResulstUtil->processResultsToImportData();
+            $importResulstUtil->processStatusAndMessagesForEachRow();
         }
     }
 ?>

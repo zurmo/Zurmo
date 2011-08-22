@@ -58,15 +58,31 @@
                         $columnName = 'column_' . $columnId;
                         $newBean->{$columnName} = $value;
                     }
+                    $newBean->status             = null;
+                    $newBean->serializedmessages = null;
                     R::store($newBean);
                     unset($newBean);
                 }
             }
+            self::optimizeTable($tableName);
             if($freezeWhenComplete)
             {
                 RedBeanDatabase::freeze();
             }
             return true;
+        }
+
+        protected static function optimizeTable($tableName)
+        {
+            $bean         = R::dispense($tableName);
+            $bean->status = '2147483647'; //Creates an integer todo: optimize to status SET
+            $s            = chr(rand(ord('A'), ord('Z')));
+            while (strlen($bean->serializedmessages) < '1024')
+            {
+                $bean->serializedmessages .= chr(rand(ord('a'), ord('z')));
+            }
+            R::store($bean);
+            R::trash($bean);
         }
 
         /**
@@ -158,6 +174,41 @@
                 $count = 0;
             }
             return $count;
+        }
+
+        /**
+         * Update the row in the table with status and message information after the row is attempted or successfully
+         * imported.
+         * @param string         $tableName
+         * @param integer        $id
+         * @param integer        $status
+         * @param string or null $serializedMessages
+         */
+        public static function updateRowAfterProcessing($tableName, $id, $status, $serializedMessages)
+        {
+            assert('is_string($tableName)');
+            assert('is_int($id)');
+            assert('is_int($status)');
+            assert('is_string($serializedMessages) || $serializedMessages == null');
+
+            $bean = R::findOne($tableName, "id = :id", array('id' => $id));
+            if($bean == null)
+            {
+                throw new NotFoundException();
+            }
+            $bean->status             = $status;
+            $bean->serializedMessages = $serializedMessages;
+            R::store($newBean);
+        }
+
+        /**
+         * For the temporary import tables, some of the columns are reserved and not used by any of the import data
+         * coming from a csv.  This includes the id, status, and serializedMessages columns.
+         * @return array of column names.
+         */
+        public static function getReservedColumnNames()
+        {
+            return array('id', 'status', 'serializedmessages');
         }
     }
 ?>

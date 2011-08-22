@@ -29,7 +29,7 @@
      */
     class ModifiedByUserAttributeImportRules extends NonDerivedAttributeImportRules
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
         {
             return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
         }

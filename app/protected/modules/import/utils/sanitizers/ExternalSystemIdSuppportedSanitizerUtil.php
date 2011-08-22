@@ -29,8 +29,6 @@
      */
     abstract class ExternalSystemIdSuppportedSanitizerUtil extends SanitizerUtil
     {
-        const EXTERNAL_SYSTEM_ID_COLUMN_NAME = 'external_system_id';
-
         public static function getModelByExternalSystemIdAndModelClassName($id, $modelClassName)
         {
             assert('$id != null && is_string($id)');

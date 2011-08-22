@@ -50,7 +50,7 @@
             {
                 foreach($firstRowData as $columnName => $value)
                 {
-                    if($columnName != 'id' && $value == null)
+                    if(!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()) && $value == null)
                     {
                         if(ImportDatabaseUtil::getCount($tableName) == 1)
                         {
@@ -62,7 +62,7 @@
             $mappingData = array();
             foreach($firstRowData as $columnName => $notUsed)
             {
-                if($columnName != 'id')
+                if(!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()))
                 {
                     $mappingData[$columnName] = array('type'                        => 'importColumn',
                                                       'attributeIndexOrDerivedType' => null,

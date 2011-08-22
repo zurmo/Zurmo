@@ -71,6 +71,9 @@
                 'url'                         => 'Url',
             );
             $this->assertEquals(serialize($compareData), serialize($data));
+
+            //Test the mappable attributes and derived types for extra columns. If there are no mapping rules
+            //for the attribute or derived type, it should not be available for extra columns.
         }
 
         public function testGetModelClassNameByAttributeIndexOrDerivedType()

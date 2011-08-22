@@ -293,9 +293,10 @@
                                                        getImportRulesClassNameByType($importWizardForm->importRulesType);
             $mappableAttributeIndicesAndDerivedTypes = $importRulesClassName::
                                                        getMappableAttributeIndicesAndDerivedTypes();
-            $mappingFormLayoutUtil                   = new MappingFormLayoutUtil(
+            $mappingFormLayoutUtil                   = ImportToMappingFormLayoutUtil::make(
                                                        get_class($importWizardForm),
                                                        new ZurmoActiveForm(),
+                                                       $importWizardForm->importRulesType,
                                                        $mappableAttributeIndicesAndDerivedTypes);
             $content                                 = $mappingFormLayoutUtil->renderMappingRulesElements(
                                                        $columnName,
@@ -347,7 +348,7 @@
             {
                 foreach($sampleColumnData as $columnName => $value)
                 {
-                    if($columnName != 'id')
+                    if(!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()))
                     {
                         $renderedContentData[MappingFormLayoutUtil::
                         resolveSampleColumnIdByColumnName($columnName)] = MappingFormLayoutUtil::

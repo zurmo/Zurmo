@@ -25,23 +25,26 @@
      ********************************************************************************/
 
     /**
-     * Import rules for the created by user model.
+     * Helper utility for handling the external system id and models.
      */
-    class CreatedByUserAttributeImportRules extends NonDerivedAttributeImportRules
+    class ExternalSystemIdUtil
     {
-        protected static function getImportColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes()
-        {
-            return array('UserValueTypeModelAttribute' => 'ImportMappingUserValueTypeDropDown');
-        }
+        const EXTERNAL_SYSTEM_ID_COLUMN_NAME = 'external_system_id';
 
-        public static function getSanitizerUtilTypesInProcessingOrder()
+        /**
+         * Given a model and external system id, update the external system id in the database for that model
+         * @param object $model
+         * @param string $externalSystemId
+         */
+        public static function updateByModel(RedBeanModel $model, $externalSystemId)
         {
-            return array('UserValueType');
-        }
-
-        public function getDisplayLabel()
-        {
-            return Yii::t('Default', 'Created By User');
+            assert('$externalSystemId == null || is_string($externalSystemId)');
+            $columnName = self::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            $tableName  = $model::getTableName(get_class_name($model));
+            RedBean_Plugin_Optimizer_ExternalSystemId::
+            ensureColumnIsVarchar($tableName, $columnName);
+            R::exec("update " . $tableName . " set $columnName = ':externalSystemId' where id = :id",
+                    array('externalSystemId' => $externalSystemId, 'id' => $model->id));
         }
     }
 ?>

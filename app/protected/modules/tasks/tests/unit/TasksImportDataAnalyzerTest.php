@@ -35,7 +35,7 @@
             $accountTableName     = Account::getTableName('Account');
             $contactTableName     = Contact::getTableName('Contact');
             $opportunityTableName = Opportunity::getTableName('Opportunity');
-            $columnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             RedBean_Plugin_Optimizer_ExternalSystemId::
             ensureColumnIsVarchar($accountTableName,     $columnName);
             RedBean_Plugin_Optimizer_ExternalSystemId::
@@ -70,7 +70,7 @@
             $opportunity3 = OpportunityTestHelper::createOpportunityByNameForOwner('opportunity3', $super);
 
             //Make models externally linked for testing.
-            $columnName = ExternalSystemIdSuppportedSanitizerUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             R::exec("update " . $accountTableName     . " set $columnName = 'ACC' where id = {$account2->id}");
             R::exec("update " . $contactTableName     . " set $columnName = 'CON' where id = {$contact2->id}");
             R::exec("update " . $opportunityTableName . " set $columnName = 'OPP' where id = {$opportunity2->id}");

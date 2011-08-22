@@ -116,5 +116,11 @@
         {
             return array();
         }
+
+        public static function getExtraColumnUsableCountOfModelAttributeMappingRuleFormTypesAndElementTypes()
+        {
+            return count(static::getAllModelAttributeMappingRuleFormTypesAndElementTypes()) +
+                   count(static::getExtraColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes());
+        }
     }
 ?>
