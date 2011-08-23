@@ -73,9 +73,8 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('$value != ""');
             assert('$mappingRuleData == null');
-            assert('is_array($importInstructionsData["DropDown"][DropDownSanitizerUtil::ADD_MISSING_VALUE]');
+            assert('is_array($importInstructionsData["DropDown"][DropDownSanitizerUtil::ADD_MISSING_VALUE])');
             if($value == null)
             {
                 return $value;
@@ -86,9 +85,9 @@
             $dropDownValues                      = unserialize($customFieldData->serializedData);
             $lowerCaseDropDownValues             = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             //does the value already exist in the custom field data
-            if(in_array(lower($value), $lowerCaseDropDownValues))
+            if(in_array(mb_strtolower($value), $lowerCaseDropDownValues))
             {
-                $keyToUse                        = array_search(lower($value), $lowerCaseDropDownValues);
+                $keyToUse                        = array_search(mb_strtolower($value), $lowerCaseDropDownValues);
                 $resolvedValueToUse              = $dropDownValues[$keyToUse];
             }
             else
@@ -97,15 +96,15 @@
                 $lowerCaseValuesToAdd                = ArrayUtil::resolveArrayToLowerCase(
                                                        $importInstructionsData['DropDown']
                                                        [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-                if(in_array(lower($value), $lowerCaseValuesToAdd))
+                if(in_array(mb_strtolower($value), $lowerCaseValuesToAdd))
                 {
-                    $keyToAddAndUse                  = array_search(lower($value), $lowerCaseValuesToAdd);
+                    $keyToAddAndUse                  = array_search(mb_strtolower($value), $lowerCaseValuesToAdd);
                     $resolvedValueToUse              = $importInstructionsData['DropDown']
                                                        [DropDownSanitizerUtil::ADD_MISSING_VALUE][$keyToAddAndUse];
                     $unserializedData                = unserialize($customFieldData->serializedData);
                     $unserializedData[]              = $resolvedValueToUse;
                     $customFieldData->serializedData = serialize($unserializedData);
-                    $saved                           = $customFieldData->saved();
+                    $saved                           = $customFieldData->save();
                     assert('$saved');
                 }
                 else

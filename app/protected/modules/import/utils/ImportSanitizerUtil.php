@@ -90,7 +90,14 @@
                   {
                       if($e->getMessage() != null)
                       {
-                          $label = LabelUtil::makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
+                          if($attributeName != null)
+                          {
+                              $label = LabelUtil::makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
+                          }
+                          else
+                          {
+                              $label = $modelClassName::getModelLabelByTypeAndLanguage('Singular') . ' -';
+                          }
                           $importSanitizeResultsUtil->addMessage($label . ' ' . $e->getMessage());
                       }
                       $value = null;

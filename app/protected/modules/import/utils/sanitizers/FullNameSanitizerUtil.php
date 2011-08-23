@@ -60,14 +60,13 @@
         {
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
-            assert('$value != ""');
             assert('$mappingRuleData == null');
             if($value == null)
             {
                 return $value;
             }
-            list($firstName, $lastName) = explode(' ', trim($value));
-            if($firstName == null)
+            @list($firstName, $lastName) = explode(' ', trim($value));
+            if($lastName == null)
             {
                 $lastName  = $firstName;
                 $firstName = null;
@@ -87,6 +86,7 @@
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'First name specified is too large.'));
             }
+            return $value;
         }
     }
 ?>

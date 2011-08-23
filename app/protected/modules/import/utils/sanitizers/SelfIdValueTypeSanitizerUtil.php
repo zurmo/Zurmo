@@ -56,20 +56,21 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName) && $attributeName == "id"');
-            assert('$value != ""');
             assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                     $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
             if($value == null)
             {
                 return $value;
             }
-            $model                   = new $modelClassName(false);
-            $attributeModelClassName = $this->resolveAttributeModelClassName($model,$attributeName);
             if($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try
                 {
-                    $attributeModelClassName::getById((int)$value);
+                    if((int)$value <= 0)
+                    {
+                        throw new NotFoundException();
+                    }
+                    $modelClassName::getById((int)$value);
                     return (int)$value;
                 }
                 catch(NotFoundException $e)
@@ -81,7 +82,7 @@
             {
                 try
                 {
-                    $model = static::getModelByExternalSystemIdAndModelClassName($value, $attributeModelClassName);
+                    $model = static::getModelByExternalSystemIdAndModelClassName($value, $modelClassName);
                     return $model->id;
                 }
                 catch(NotFoundException $e)

@@ -48,36 +48,35 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            $model                  = new $modelClassName(false);
-            if(!$model->isAttributeRequired($this->$attributeName))
+            if($value != null)
             {
-                return false;
+                return $value;
             }
-            assert('$model->isRelation($attributeName)');
-            $relationModelClassName = $model->getRelationModelClassName($modelAttributeName);
-            assert('$value == null || $value instanceof $relationModelClassName');
+            assert('$value == null || $value instanceof OwnedCustomField');
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
-            if($value == null)
+            if($mappingRuleData['defaultValue'] != null)
             {
-                if($mappingRuleData['defaultValue'] != null)
+                try
                 {
-                    try
-                    {
-                        $customField = new CustomField();
-                        $customField->value = $mappingRuleData['defaultValue'];
-                        $customField->data  = CustomFieldDataModelUtil::
-                                              getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
-                    }
-                    catch(NotSupportedException $e)
-                    {
-                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list is missing corresponding custom field data.'));
-                    }
-                    return $customField;
+                    $customField = new CustomField();
+                    $customField->value = $mappingRuleData['defaultValue'];
+                    $customField->data  = CustomFieldDataModelUtil::
+                                          getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
                 }
-                else
+                catch(NotSupportedException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list value required, but missing.'));
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list is missing corresponding custom field data.'));
                 }
+                return $customField;
+            }
+            else
+            {
+                $model = new $modelClassName(false);
+                if(!$model->isAttributeRequired($attributeName))
+                {
+                    return $value;
+                }
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list value required, but missing.'));
             }
             return $value;
         }

@@ -78,8 +78,8 @@
             {
                 return;
             }
-            list($firstName, $lastName) = explode(' ', trim($value));
-            if($firstName == null)
+            @list($firstName, $lastName) = explode(' ', trim($value));
+            if($lastName == null)
             {
                 $lastName  = $firstName;
                 $firstName = null;

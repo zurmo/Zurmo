@@ -66,26 +66,33 @@
         {
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
-            assert('$value != ""');
             assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                     $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
-            $derivedModelClassName = $this->getDerivedModelClassName();
+            $derivedModelClassName = static::getDerivedModelClassName();
             if($value == null)
             {
                 return $value;
             }
-            if($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_MODEL_ID)
+            if($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try
                 {
-                    return $derivedModelClassName::getById($value);
+                    if((int)$value <= 0)
+                    {
+                        throw new NotFoundException();
+                    }
+                    return $derivedModelClassName::getById((int)$value);
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
+                    $derivedModelClassName = static::getDerivedModelClassName();
+                    $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
+                    throw new InvalidValueToSanitizeException(
+                    Yii::t('Default', '{modelLabel} id specified did not match any existing records.',
+                    array('{modelLabel}' => $modelLabel)));
                 }
             }
-            elseif($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            elseif($mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 try
                 {
@@ -93,7 +100,11 @@
                 }
                 catch(NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other id specified did not match any existing records.'));
+                    $derivedModelClassName = static::getDerivedModelClassName();
+                    $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
+                    throw new InvalidValueToSanitizeException(
+                    Yii::t('Default', '{modelLabel} other id specified did not match any existing records.',
+                    array('{modelLabel}' => $modelLabel)));
                 }
             }
         }

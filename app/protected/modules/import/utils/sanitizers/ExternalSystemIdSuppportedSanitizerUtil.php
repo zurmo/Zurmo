@@ -39,8 +39,8 @@
         {
             assert('$id != null && is_string($id)');
             assert('is_string($modelClassName)');
-            $tableName = self::getTableName($modelClassName);
-            $beans = RedBean_Plugin_Finder::where($tableName, self::EXTERNAL_SYSTEM_ID_COLUMN_NAME . " = '$id'");
+            $tableName = $modelClassName::getTableName($modelClassName);
+            $beans = RedBean_Plugin_Finder::where($tableName, ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME . " = '$id'");
             assert('count($beans) <= 1');
             if (count($beans) == 0)
             {

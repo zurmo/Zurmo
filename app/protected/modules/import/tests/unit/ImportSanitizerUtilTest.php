@@ -30,6 +30,18 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+
+            $values = array(
+                'Test1',
+                'Test2',
+                'Test3',
+                'Sample',
+                'Demo',
+            );
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert('$saved');
         }
 
         public function testSanitizeValueBySanitizerTypesForBooleanTypeThatIsNotRequired()
@@ -323,6 +335,104 @@
             $this->assertEquals(0, count($messages));
         }
 
+        public function testSanitizeValueBySanitizerTypesForDropDownTypeThatIsNotRequired()
+        {
+            $importInstructionsData = array('DropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array()));
+
+            //Test a non-required dropDown with no value and no default value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => null)),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required dropDown with no value and a default value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test1')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('Test1', $sanitizedValue->value);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required dropDown with a valid value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test2')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'Demo',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('Demo', $sanitizedValue->value);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required email with a missing value and a default value.  The default value should not
+            //be picked up, it should be ignored.  On the first sanitization failure, sanitization will stop, this is
+            //why the default value is not set.
+            //Since there are no missing value instructions, the sanitization will result in an error message.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test3')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'NotThere',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals(null, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Drop Down Pick list value specified is missing from existing pick ' .
+                              'list and no valid instructions were provided on how to resolve this.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Now use a value that is missing, but there are instructions to add it, and confirm it is added.
+            $importInstructionsData = array('DropDown' =>
+                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array('NewValue')));
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $this->assertEquals(5, count(unserialize($customFieldData->serializedData)));
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test1')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'NewValue',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('NewValue', $sanitizedValue->value);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $values = unserialize($customFieldData->serializedData);
+            $this->assertEquals(6, count($values));
+            $this->assertEquals('NewValue', $values[5]);
+        }
 
         public function testSanitizeValueBySanitizerTypesForEmailTypeThatIsNotRequired()
         {
@@ -389,6 +499,205 @@
             $this->assertEquals(1, count($messages));
             $compareMessage = 'Email - Email Address Invalid email format.';
             $this->assertEquals($compareMessage, $messages[0]);
+        }
+
+        public function testSanitizeValueBySanitizerTypesForFullNameTypeThatIsRequired()
+        {
+            //Test a non-required FullName with no value or default value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => null)));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - A full name value is required but missing.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test a non-required FullName with no value, but a valid default value
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'something valid')));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('something valid', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required FullName with a valid value, and a default value. The valid value should come through.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'something valid')));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, 'aValue',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('aValue', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required FullName with a valid value and no default value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => null)));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, 'first last',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('first last', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required FullName with a value that is too long and no specified default value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => null)));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $value                     = self::getStringByLength(85);
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, $value,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals(null, $sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Last name specified is too large.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test a non-required FullName with a value that is too long and a specified default value. The specified
+            //default value should be ignored in this scenario.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'willNotMatter')));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $value                     = self::getStringByLength(85);
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, $value,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals(null, $sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Last name specified is too large.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //A first name that is too large, but the last name is ok.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'willNotMatter')));
+            $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $value                     = self::getStringByLength(85) . ' okLastName';
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, $value,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals(null, $sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - First name specified is too large.';
+            $this->assertEquals($compareMessage, $messages[0]);
+        }
+
+        public function testSanitizeValueBySanitizerTypesForModelDerivedIdTypeThatNotIsRequired()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $importModelTestItem3Model1 = ImportTestHelper::createImportModelTestItem3('aaa');
+            $importModelTestItem3Model2 = ImportTestHelper::createImportModelTestItem3('bbb');
+            $importModelTestItem3Model3 = ImportTestHelper::createImportModelTestItem3('ccc');
+
+            //Update the external system id.
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            RedBean_Plugin_Optimizer_ExternalSystemId::
+            ensureColumnIsVarchar(ImportModelTestItem3::getTableName('ImportModelTestItem3'), $columnName);
+            $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            R::exec("update " . ImportModelTestItem3::getTableName('ImportModelTestItem3')
+            . " set $externalSystemIdColumnName = 'Q' where id = {$importModelTestItem3Model3->id}");
+
+            //Test a non-required related model with an invalid value
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, 'qweqwe',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - ImportModelTestItem3 id specified did not match any existing records.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test a non-required related model with no value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required related model with a valid zurmo model id
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null,
+                                         $importModelTestItem3Model2->id,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem3Model2, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required related model with a valid external system id
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', null, 'Q',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem3Model3, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
         }
 
         public function testSanitizeValueBySanitizerTypesForNumberTypesThatAreaNotRequired()
@@ -555,6 +864,193 @@
             $compareMessage = 'ImportModelTestItem - Integer Invalid number format.';
             $this->assertEquals($compareMessage, $messages[0]);
 
+        }
+
+        public function testSanitizeValueBySanitizerTypesForRelatedModelIdTypeThatNotIsRequired()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $importModelTestItem2Model1 = ImportTestHelper::createImportModelTestItem2('aaa');
+            $importModelTestItem2Model2 = ImportTestHelper::createImportModelTestItem2('bbb');
+            $importModelTestItem2Model3 = ImportTestHelper::createImportModelTestItem2('ccc');
+
+            //Update the external system id.
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            RedBean_Plugin_Optimizer_ExternalSystemId::
+            ensureColumnIsVarchar(ImportModelTestItem2::getTableName('ImportModelTestItem2'), $columnName);
+            $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            R::exec("update " . ImportModelTestItem2::getTableName('ImportModelTestItem2')
+            . " set $externalSystemIdColumnName = 'R' where id = {$importModelTestItem2Model3->id}");
+
+            //Test a non-required related model with an invalid value
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'RelatedModelValueTypeMappingRuleForm' =>
+                                               array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'qweqwe',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Has One The id specified did not match any existing records.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test a non-required related model with no value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'RelatedModelValueTypeMappingRuleForm' =>
+                                               array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required related model with a valid zurmo model id
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'RelatedModelValueTypeMappingRuleForm' =>
+                                               array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', $importModelTestItem2Model2->id,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem2Model2, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required related model with a valid external system id
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'RelatedModelValueTypeMappingRuleForm' =>
+                                               array('type' => RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)));
+            $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'R',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem2Model3, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required related model with a valid model name
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'RelatedModelValueTypeMappingRuleForm' =>
+                                               array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)));
+            $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'bbb',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem2Model2, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a non-required related model with a model name for a new model.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'RelatedModelValueTypeMappingRuleForm' =>
+                                               array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)));
+            $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'rrr',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('rrr', $sanitizedValue->name);
+            $this->assertEquals('ImportModelTestItem2', get_class($sanitizedValue));
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+        }
+
+        public function testSanitizeValueBySanitizerTypesForSelfIdTypeThatIsRequired()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $importModelTestItem1Model1 = ImportTestHelper::createImportModelTestItem('aaa', 'xxxx');
+            $importModelTestItem1Model2 = ImportTestHelper::createImportModelTestItem('bbb', 'yyyy');
+            $importModelTestItem1Model3 = ImportTestHelper::createImportModelTestItem('ccc', 'zzzz');
+
+            //Update the external system id.
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            RedBean_Plugin_Optimizer_ExternalSystemId::
+            ensureColumnIsVarchar(ImportModelTestItem::getTableName('ImportModelTestItem'), $columnName);
+            $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            R::exec("update " . ImportModelTestItem::getTableName('ImportModelTestItem')
+            . " set $externalSystemIdColumnName = 'J' where id = {$importModelTestItem1Model3->id}");
+
+            //Test the id attribute with an invalid value
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'id', 'xasdasd',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Id The id specified did not match any existing records.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test the id attribute with no value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'id', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a required string with a valid zurmo model id
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
+            $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'id', $importModelTestItem1Model2->id,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem1Model2->id, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a required string with a valid external system id
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'IdValueTypeMappingRuleForm' =>
+                                               array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)));
+            $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'id', 'J',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($importModelTestItem1Model3->id, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
         }
 
         public function testSanitizeValueBySanitizerTypesForStringTypeThatIsRequired()
@@ -860,6 +1356,112 @@
             $this->assertEquals(1, count($messages));
             $compareMessage = 'ImportModelTestItem - Url Invalid url format.';
             $this->assertEquals($compareMessage, $messages[0]);
+        }
+
+        public function testSanitizeValueBySanitizerTypesForUserTypeThatIsRequired()
+        {
+            $billy = UserTestHelper::createBasicUser('billy');
+            $jimmy = UserTestHelper::createBasicUser('jimmy');
+            $sally = UserTestHelper::createBasicUser('sally');
+
+            //Update the external system id.
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            RedBean_Plugin_Optimizer_ExternalSystemId::ensureColumnIsVarchar(User::getTableName('User'), $columnName);
+            $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            R::exec("update " . User::getTableName('User')
+            . " set $externalSystemIdColumnName = 'K' where id = {$jimmy->id}");
+
+            //Test a required user with no value or default value.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultModelNameIdMappingRuleForm' =>
+                                               array('defaultModelId' => null),
+                                               'UserValueTypeModelAttributeMappingRuleForm' =>
+                                               array('type' =>
+                                               UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)));
+            $sanitizerUtilTypes        = UserAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
+            $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Owner This id is required and was not specified.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test a required string with no value, but a valid default value, a user id.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultModelNameIdMappingRuleForm' =>
+                                               array('defaultModelId' => $billy->id),
+                                               'UserValueTypeModelAttributeMappingRuleForm' =>
+                                               array('type' =>
+                                               UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)));
+            $sanitizerUtilTypes        = UserAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($billy, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a required string with a valid user id.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultModelNameIdMappingRuleForm' =>
+                                               array('defaultModelId' => null),
+                                               'UserValueTypeModelAttributeMappingRuleForm' =>
+                                               array('type' =>
+                                               UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)));
+            $sanitizerUtilTypes        = UserAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', $billy->id,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($billy, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a required string with a valid external system user id.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultModelNameIdMappingRuleForm' =>
+                                               array('defaultModelId' => null),
+                                               'UserValueTypeModelAttributeMappingRuleForm' =>
+                                               array('type' =>
+                                               UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)));
+            $sanitizerUtilTypes        = UserAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', 'K',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($jimmy, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test a required string with a valid username.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('mappingRulesData' => array(
+                                               'DefaultModelNameIdMappingRuleForm' =>
+                                               array('defaultModelId' => null),
+                                               'UserValueTypeModelAttributeMappingRuleForm' =>
+                                               array('type' =>
+                                               UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME)));
+            $sanitizerUtilTypes        = UserAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', 'sally',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals($sally, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
         }
     }
 ?>
