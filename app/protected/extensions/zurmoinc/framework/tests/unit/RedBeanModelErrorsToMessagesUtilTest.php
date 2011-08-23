@@ -26,14 +26,14 @@
 
     class RedBeanModelErrorsToMessagesUtilTest extends BaseTest
     {
-        public function testMakeMessagesByModelErrors()
+        public function testMakeMessagesByModel()
         {
             $e    = new E();
             $e->e = 'whduahsdiuhiuashdiuauishduihaiushdiuhaisudhiuasd';
             $m    = new TestModelToMessagesModel();
             $m->e = $e;
             $this->assertFalse($m->validate());
-            $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModelErrors($m);
+            $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModel($m);
             $compareData = array(
                 'TestModelToMessagesModel - Name - Name cannot be blank.',
                 'TestModelToMessagesModel - E - E is too long (maximum is 16 characters).',

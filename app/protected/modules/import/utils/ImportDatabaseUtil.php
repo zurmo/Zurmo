@@ -197,7 +197,7 @@
                 throw new NotFoundException();
             }
             $bean->status             = $status;
-            $bean->serializedMessages = $serializedMessages;
+            $bean->serializedmessages = $serializedMessages;
             R::store($bean);
         }
 

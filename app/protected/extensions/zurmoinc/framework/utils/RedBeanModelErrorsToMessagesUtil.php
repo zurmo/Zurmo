@@ -30,7 +30,7 @@
          * Make an array of message strings by RedBeanModel errors
          * @param array $errors RedBeanModel errors
          */
-        public static function makeMessagesByModelErrors($model)
+        public static function makeMessagesByModel(RedBeanModel $model)
         {
             $messages = array();
             foreach ($model->getErrors() as $attributeName => $errors)

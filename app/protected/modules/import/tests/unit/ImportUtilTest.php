@@ -50,16 +50,90 @@
             $this->assertEquals(array('d' => 'e', 'k' => 'j'), $unserializedData['dataAnalyzerMessagesData']);
         }
 
-        public function testSomething()
+        public function testSimpleImportWithStringAndFullNameWhichAreRequiredAttributeOnImportTestModelItem()
         {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+
+            //Unfreeze since the test model is not part of the standard schema.
+            if(RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freezeWhenComplete = true;
+            }
+
+            $testModels                        = ImportModelTestItem::getAll();
+            $this->assertEquals(0, count($testModels));
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'ImportModelTestItem';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
+
+
+            $this->assertEquals(13, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $mappingData = array(
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'DefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+                'column_23' => array('attributeIndexOrDerivedType' => 'FullName',     'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+                                        );
+
             $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
-            $page         = 'some page value??';
-            $config       = array('pagination' => array('pageSize' => 2));
-            $dataProvider->getPagination()->setCurrentPage($page);
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
             ImportUtil::importByDataProvider($dataProvider, $importRules, $mappingData, $importResultsUtil);
-            $importResulstUtil->processStatusAndMessagesForEachRow();
+            $importResultsUtil->processStatusAndMessagesForEachRow();
+
+            //Confirm that 10 models where created.
+            $testModels = ImportModelTestItem::getAll();
+            $this->assertEquals(10, count($testModels));
+
+            //Confirm 10 rows were processed as 'created'.
+            $this->assertEquals(10, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
+                                                                 . ImportRowDataResultsUtil::CREATED));
+
+            //Confirm that 0 rows were processed as 'updated'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::UPDATED));
+
+            //Confirm 2 rows were processed as 'errors'.
+            $this->assertEquals(2, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR));
+
+            $beansWithErrors = ImportDatabaseUtil::getSubset($import->getTempTableName(),     "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR);
+            $this->assertEquals(2, count($beansWithErrors));
+
+            //Confirm the messages are as expected.
+            $compareMessages = array(
+                'ImportModelTestItem - Last name specified is too large.',
+                'ImportModelTestItem - Last Name - Last Name cannot be blank.',
+            );
+            $this->assertEquals($compareMessages, unserialize(current($beansWithErrors)->serializedmessages));
+
+            $compareMessages = array(
+                'ImportModelTestItem - String This field is required and neither a value nor a default value was specified.',
+                'ImportModelTestItem - A full name value is required but missing.',
+                'ImportModelTestItem - Last Name - Last Name cannot be blank.',
+                'ImportModelTestItem - String - String cannot be blank.',
+            );
+            $this->assertEquals($compareMessages, unserialize(next($beansWithErrors)->serializedmessages));
+
+            //Re-freeze if needed.
+            if($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
+            }
         }
     }
 ?>
