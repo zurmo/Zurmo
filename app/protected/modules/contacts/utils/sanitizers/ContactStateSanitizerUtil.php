@@ -40,6 +40,14 @@
         }
 
         /**
+         * If a state is invalid, then skip the entire row during import.
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
+        {
+            return true;
+        }
+
+        /**
          * Given a contact state id, attempt to get and return a contact state object. If the id is invalid, then an
          * InvalidValueToSanitizeException will be thrown.
          * @param string $modelClassName
@@ -51,7 +59,6 @@
         {
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
-            assert('$value != ""');
             assert('$mappingRuleData == null');
             if($value == null)
             {
@@ -59,12 +66,31 @@
             }
             try
             {
-                return ContactState::getById($value);
+                if((int)$value <= 0)
+                {
+                    throw new NotFoundException();
+                }
+                $state = ContactState::getById($value);
+                $startingState = ContactsUtil::getStartingState();
+                if(!static::resolvesValidStateByOrder($state->order, $startingState->order))
+                {
+                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is invalid.'));
+                }
+                return $state;
             }
             catch(NotFoundException $e)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified does not exist.'));
             }
+        }
+
+        protected static function resolvesValidStateByOrder($stateOrder, $startingOrder)
+        {
+            if($stateOrder >= $startingOrder)
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>

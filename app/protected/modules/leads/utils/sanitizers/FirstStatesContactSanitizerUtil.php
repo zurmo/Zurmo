@@ -38,5 +38,14 @@
         {
             return 'FirstStatesContact';
         }
+
+        protected static function resolvesValidStateByOrder($stateOrder, $startingOrder)
+        {
+            if($stateOrder < $startingOrder)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 ?>

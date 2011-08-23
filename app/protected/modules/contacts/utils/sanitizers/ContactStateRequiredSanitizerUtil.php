@@ -49,7 +49,8 @@
             assert('$attributeName == null');
             assert('is_string($value) || $value == null || $value instanceof ContactState');
             $model                  = new $modelClassName(false);
-            assert('$mappingRuleData["defaultStateId"] == null || is_string($mappingRuleData["defaultStateId"])');
+            assert('$mappingRuleData["defaultStateId"] == null || is_string($mappingRuleData["defaultStateId"]) ||
+                    is_int($mappingRuleData["defaultStateId"])');
             if($value == null)
             {
                 if($mappingRuleData['defaultStateId'] != null)
