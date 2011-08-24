@@ -41,6 +41,8 @@
                 is_integer(BooleanUtil::boolIntVal($this->model->{$this->attribute}))'
             );
             $htmlOptions             = array();
+            $htmlOptions['id']       = $this->getEditableInputId();
+            $htmlOptions['name']     = $this->getEditableInputName();
             if ($this->getDisabledValue())
             {
                 $htmlOptions['disabled'] = $this->getDisabledValue();
@@ -59,6 +61,8 @@
         protected function renderControlNonEditable()
         {
             $htmlOptions             = array();
+            $htmlOptions['id']       = $this->getEditableInputId();
+            $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = 'disabled';
             return CHtml::activeCheckBox($this->model, $this->attribute, $htmlOptions);
         }

@@ -88,17 +88,17 @@
 
         protected function getNameForHelperInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . FormModelUtil::DELIMITER . 'helper]';
+            return $this->getEditableInputName($this->attribute . FormModelUtil::DELIMITER . 'helper');
         }
 
         protected function getIdForHelperInput()
         {
-            return get_class($this->model) . '_' . $this->attribute . FormModelUtil::DELIMITER . 'helper';
+            return $this->getEditableInputId($this->attribute . FormModelUtil::DELIMITER . 'helper');
         }
 
         protected function getIdForInput()
         {
-            return get_class($this->model) . '_' . $this->attribute;
+            return $this->getEditableInputId();
         }
 
         protected function getHelperDropDownArray()

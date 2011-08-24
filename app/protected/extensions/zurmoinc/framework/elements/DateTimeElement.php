@@ -46,8 +46,8 @@
                 'language'   => YiiToJqueryUIDatePickerLocalization::getLanguage(),
                 'value'      => $value,
                 'htmlOptions' => array(
-                    'id'         => $this->getIdForInput(),
-                    'name'       => $this->getNameForInput(),
+                    'id'              => $this->getEditableInputId(),
+                    'name'            => $this->getEditableInputName(),
                 ),
                 'options'    => array(
                     'stepMinute'      => 5,
@@ -80,16 +80,6 @@
         {
             $content = Yii::app()->dateFormatter->formatDateTime($this->model->{$this->attribute}, 'short');
             return CHtml::encode($content);
-        }
-
-        protected function getIdForInput()
-        {
-            return get_class($this->model) . '_' . $this->attribute;
-        }
-
-        protected function getNameForInput()
-        {
-            return get_class($this->model) . '[' . $this->attribute . ']';
         }
     }
 ?>

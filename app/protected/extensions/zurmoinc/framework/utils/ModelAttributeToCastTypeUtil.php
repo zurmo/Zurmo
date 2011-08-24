@@ -96,6 +96,7 @@
                             return 'string';
 
                         case 'RedBeanModelTypeValidator':
+                        case 'TypeValidator':
                             switch ($validator->type)
                             {
                                 case 'date':

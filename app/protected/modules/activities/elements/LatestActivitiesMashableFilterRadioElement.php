@@ -60,15 +60,15 @@
             {
                 throw new NotImplementedException();
             }
-            $for = CHtml::ID_PREFIX . $this->getIdForSelectInput();
+            $for = CHtml::ID_PREFIX . $this->getEditableInputId();
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $for));
         }
 
         public function getEditableHtmlOptions()
         {
             $htmlOptions = array(
-                'name'      => $this->getNameForSelectInput(),
-                'id'        => $this->getIdForSelectInput(),
+                'name'      => $this->getEditableInputName(),
+                'id'        => $this->getEditableInputId(),
                 'separator' => '',
                 'template'  => '{input}{label}',
             );
@@ -83,16 +83,6 @@
                 $data[$modelClassName] = $displayLabel;
             }
             return $data;
-        }
-
-        protected function getIdForSelectInput()
-        {
-            return get_class($this->model) . '_' . $this->attribute;
-        }
-
-        protected function getNameForSelectInput()
-        {
-            return get_class($this->model) . '[' . $this->attribute . ']';
         }
     }
 ?>

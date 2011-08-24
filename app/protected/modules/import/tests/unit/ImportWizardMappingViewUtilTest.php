@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportWizardMappingViewUtilTest extends BaseTest
+    class ImportWizardMappingViewUtilTest extends ImportBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -38,42 +38,78 @@
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $mappingData = ImportMappingUtil::makeMappingDataByTableName($testTableName);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_0' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' => null,
+                                    'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' => null,
+                                    'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' =>null,
+                                    'mappingRulesData' => null),
             );
             $this->assertEquals($compareData, $mappingData);
-            $mappingDataMetadata = ImportWizardMappingViewUtil::
-                                   resolveMappingDataForView($mappingData, $testTableName, true);
+            $mappingData['column_3'] = array('type' => 'extraColumn', 'attributeIndexOrDerivedType' => 'xyz',
+                                             'mappingRulesData' => null);
+            $headerRow               = ImportDatabaseUtil::getFirstRowByTableName($testTableName);
+            $sampleBean              = ImportDatabaseUtil::getSubset($testTableName, null, 1, 1);
+            $mappingDataMetadata     = ImportWizardMappingViewUtil::
+                                       resolveMappingDataForView($mappingData, current($sampleBean), $headerRow);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null,
+                'column_0' => array('type'                       => 'importColumn',
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'name',
-                                    'firstSampleValue'           => 'abc'),
-                'column_1' => array('attributeNameOrDerivedType' => null,
+                                    'sampleValue' 			     => 'abc'),
+                'column_1' => array('type' => 'importColumn',
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'phone',
-                                    'firstSampleValue'           => '123'),
-                'column_2' => array('attributeNameOrDerivedType' => null,
+                                    'sampleValue' 			     => '123'),
+                'column_2' => array('type'                       => 'importColumn',
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
                                     'headerValue'                => 'industry',
-                                    'firstSampleValue'           => 'a'),
+                                    'sampleValue' 			     => 'a'),
+                'column_3' => array('type'                       => 'extraColumn',
+                                    'attributeIndexOrDerivedType' => 'xyz',
+                                    'mappingRulesData'           => null,
+                                    'headerValue'                => null,
+                                    'sampleValue' 			     => null),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
+            $sampleBean = ImportDatabaseUtil::getSubset($testTableName, null, 1);
             $mappingDataMetadata = ImportWizardMappingViewUtil::
-                                   resolveMappingDataForView($mappingData, $testTableName, false);
+                                   resolveMappingDataForView($mappingData, current($sampleBean), null);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null,
+                'column_0' => array('type' => 'importColumn',
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
-                                    'firstSampleValue'           => 'name'),
-                'column_1' => array('attributeNameOrDerivedType' => null,
+                                    'sampleValue' 			     => 'name'),
+                'column_1' => array('type' => 'importColumn',
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
-                                    'firstSampleValue'           => 'phone'),
-                'column_2' => array('attributeNameOrDerivedType' => null,
+                                    'sampleValue' 			     => 'phone'),
+                'column_2' => array('type' => 'importColumn',
+                                    'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData'           => null,
-                                    'firstSampleValue'           => 'industry'),
+                                    'sampleValue' 			     => 'industry'),
+                'column_3' => array('type'                       => 'extraColumn',
+                                    'attributeIndexOrDerivedType' => 'xyz',
+                                    'mappingRulesData'           => null,
+                                    'sampleValue' 			     => null),
             );
             $this->assertEquals($compareData, $mappingDataMetadata);
+        }
+
+        public function testMakeExtraColumnMappingDataForViewByColumnName()
+        {
+            $data = ImportWizardMappingViewUtil::
+                    makeExtraColumnMappingDataForViewByColumnName('abc');
+            $compareData = array(
+                      'abc' => array('type'                        => 'extraColumn',
+                                     'attributeIndexOrDerivedType' => null,
+                                     'mappingRulesData'            => null,
+                                     'headerValue'                 => null,
+                                     'sampleValue'                 => null));
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

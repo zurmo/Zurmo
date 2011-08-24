@@ -672,6 +672,7 @@
                         switch ($validatorName)
                         {
                             case 'RedBeanModelTypeValidator':
+                            case 'TypeValidator':
                                 $columnName = strtolower($attributeName);
                                 if (array_key_exists($columnName, $hints))
                                 {
@@ -1148,7 +1149,8 @@
          */
         public function __set($attributeName, $value)
         {
-            if ($attributeName == 'id' || $this->isAttributeReadOnly($attributeName))
+            if ($attributeName == 'id' ||
+                ($this->isAttributeReadOnly($attributeName) && !$this->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 throw new NotSupportedException();
             }
@@ -1315,6 +1317,16 @@
                     }
                 }
             }
+            return false;
+        }
+
+        /**
+         * @param boolean $attributeName
+         * @return true/false whether the attributeName specified, it is allowed to be set externally even though it is
+         * a read-only attribute.
+         */
+        public function isAllowedToSetReadOnlyAttribute($attributeName)
+        {
             return false;
         }
 

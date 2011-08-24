@@ -90,6 +90,25 @@
         public $existingFiles;
 
         /**
+         * The maximum size allowed for file uploads.
+         * @var integer
+         */
+        public $maxSize;
+
+        /**
+         * Javascript string of an action to be performed before the upload of a file begins.
+         * @var string
+         */
+        public $beforeUploadAction;
+
+        /**
+         * Javascript string of an action to be performed after a file is deleted.
+         * @var string
+         */
+        public $afterDeleteAction;
+
+
+        /**
          * Initializes the widget.
          * This method will publish JUI assets if necessary.
          * It will also register jquery and JUI JavaScript files and the theme CSS file.
@@ -121,14 +140,18 @@
             $javaScript = <<<EOD
 jQuery('#{$this->formName}').fileUploadUI({$encodedOptions});
 $('#{$this->formName}').find('.delete-file-link').live('click', function () {
+    $.ajax({
+      url: "{$this->deleteUrl}&id=" + $(this).prev().val(),
+    });
     $(this).parent().parent().remove();
+    {$this->afterDeleteAction}
 });
 EOD;
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);
 
             $htmlOptions = array('id' => $this->inputId);
             echo '<div class="multiple-file-upload">' . "\n";
-            echo CHtml::fileField($this->inputName, null, $htmlOptions);
+            echo CHtml::fileField($this->inputName, null, $htmlOptions) . $this->renderMaxSizeContent($this->maxSize);
             echo '<table id="files' . $id . '">' . "\n";
             echo '<colgroup><col/><col/><col/></colgroup>' . "\n";
             echo '<tbody>'  . "\n";
@@ -137,6 +160,7 @@ EOD;
             {
                 echo '<tr><td>' . Yii::app()->format->text($existingFile['name']) . '</td>' . "\n";
                 echo '<td>' . Yii::app()->format->text($existingFile['size']) . '</td><td>';
+                //Keep thie hidden input right before the delete link. This will ensure the delete link works properly.
                 echo '<input name="' . $this->hiddenInputName . '[]" type="hidden" value="' . $existingFile['id'] . '"/>';
                 echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default', 'Delete');
                 echo '</span></td>' . "\n";
@@ -174,17 +198,21 @@ EOD;
         {
             if ($this->allowMultipleUpload)
             {
-                $params = "file, index";
-                $file   = "file[index].name";
+                $params      = "file, index";
+                $file        = "file[index].name";
+                $extraAction = null;
             }
             else
             {
-                $params = "file, index";
-                $file   = "file[0].name";
+                $params      = "file, index";
+                $file        = "file[0].name";
+                $extraAction = "$('#{$this->formName}').find('.delete-file-link').parent().parent().remove()";
             }
             $cancelLabel = Yii::t('Default', 'Cancel');
             $js = <<<EOD
 js:function ($params) {
+    {$this->beforeUploadAction}
+    $extraAction
     return $('<tr>'+
         '<td class="filename">' + $file + '</td>'+
         '<td class="file_upload_progress"><div></div></td>'+
@@ -197,6 +225,18 @@ js:function ($params) {
 }
 EOD;
         return $js;
+        }
+
+        protected static function renderMaxSizeContent($maxSize)
+        {
+            assert('is_int($maxSize) || $maxSize == null');
+            if($maxSize == null)
+            {
+                return;
+            }
+            $content = '&#160;' . Yii::t('Default', 'Max upload size: {maxSize}',
+                       array('{maxSize}' => FileModelDisplayUtil::convertSizeToHumanReadableAndGet($maxSize)));
+            return $content;
         }
     }
 ?>

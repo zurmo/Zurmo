@@ -43,12 +43,11 @@
             $cClipWidget->beginClip("EditableDateElement");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.JuiDatePicker', array(
                 'attribute'           => $this->attribute,
-                'model'               => $this->model,
+                'value'          	  => $value,
                 'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
                 'htmlOptions'         => array(
-                    'id'              => $this->getIdForInput(),
-                    'name'            => $this->getNameForInput(),
-                    'value'           => $value,
+                    'id'              => $this->getEditableInputId(),
+                    'name'            => $this->getEditableInputName(),
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
@@ -71,16 +70,6 @@
         {
             return DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
                         $this->model->{$this->attribute});
-        }
-
-        protected function getIdForInput()
-        {
-            return get_class($this->model) . '_' . $this->attribute;
-        }
-
-        protected function getNameForInput()
-        {
-            return get_class($this->model) . '[' . $this->attribute . ']';
         }
     }
 ?>

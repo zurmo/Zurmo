@@ -26,12 +26,6 @@
 
     class Meeting extends MashableActivity
     {
-        public static function getByName($name)
-        {
-            assert('is_string($name) && $name != ""');
-            return self::getSubset(null, null, null, "name = '$name'");
-        }
-
         public function __toString()
         {
             if (trim($this->name) == '')

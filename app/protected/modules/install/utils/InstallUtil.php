@@ -86,6 +86,11 @@
             return !empty($timezone);
         }
 
+        public static function isMbStringInstalled()
+        {
+            return function_exists('mb_strlen');
+        }
+
         /**
          * @returns true, or the max memory setting is less than the minimum required.
          */
@@ -97,13 +102,36 @@
         }
 
         /**
-         * @returns true, or the max memory setting is less than the minimum required.
+         * @returns true if the max file size is sufficient.
          */
         public static function checkPhpUploadSizeSetting($minimumUploadRequireBytes, /* out */ & $actualUploadLimitBytes)
         {
-            $memoryLimit            = ini_get('upload_max_filesize');
-            $actualUploadLimitBytes = self::getBytes($memoryLimit);
+            $maxFileSize            = ini_get('upload_max_filesize');
+            $actualUploadLimitBytes = self::getBytes($maxFileSize);
             return $minimumUploadRequireBytes <= $actualUploadLimitBytes;
+        }
+
+        /**
+         * @returns true if the max post size is sufficient.
+         */
+        public static function checkPhpPostSizeSetting($minimumPostRequireBytes, /* out */ & $actualPostLimitBytes)
+        {
+            $maxPostSize            = ini_get('post_max_size');
+            $actualPostLimitBytes = self::getBytes($maxPostSize);
+            return $minimumPostRequireBytes <= $actualPostLimitBytes;
+        }
+
+        /**
+         * @returns true if file uploads is set to on.
+         */
+        public static function isFileUploadsOn()
+        {
+            $value = ini_get('file_uploads');
+            if($value)
+            {
+                return true;
+            }
+            return false;
         }
 
         protected static function getBytes($size)
@@ -268,6 +296,25 @@
                 return true;
             }
             return array($errorNumber, $errorString);
+        }
+
+        public static function getDatabaseMaxAllowedPacketsSize($databaseType, $minimumRequireBytes, /* out */ & $actualBytes)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
+                    $row    = @mysql_fetch_row($result);
+                    if(isset($row[1]))
+                    {
+                        $actualBytes = $row[1];
+                        return $minimumRequireBytes <= $actualBytes;
+                    }
+                    return false;
+                default:
+                    throw new NotSupportedException();
+            }
         }
 
         /**
@@ -699,6 +746,22 @@
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
+        }
+
+        /**
+         * Looks at the post max size, upload max size, and database max allowed packets
+         * @return integer of max allowed file size for uploads.
+         */
+        public static function getMaxAllowedFileSize()
+        {
+            //todo: cache this information.
+            $actualPostLimitBytes   = null;
+            InstallUtil::checkPhpPostSizeSetting(1, $actualPostLimitBytes);
+            $actualUploadLimitBytes = null;
+            InstallUtil::checkPhpUploadSizeSetting(1, $actualUploadLimitBytes);
+            $actualMaxAllowedBytes  = null;
+            InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualMaxAllowedBytes);
+            return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
     }
 ?>

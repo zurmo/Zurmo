@@ -52,8 +52,8 @@
         protected function renderEditableEmailAddressTextField($model, $form, $inputNameIdPrefix, $attribute)
         {
             $htmlOptions = array(
-                'name' => get_class($this->model) . '[' . $inputNameIdPrefix . '][' . $attribute . ']',
-                'id'   => get_class($this->model) . '_' . $inputNameIdPrefix . '_' . $attribute,
+                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
+                'id'   => $this->getEditableInputId($inputNameIdPrefix, $attribute),
             );
             $textField = $form->textField($model, $attribute, $htmlOptions);
             $error     = $form->error    ($model, $attribute);
@@ -62,9 +62,9 @@
 
         protected function renderEditableEmailAddressCheckBoxField($model, $form, $inputNameIdPrefix, $attribute)
         {
-            $id = get_class($this->model) . '_' . $inputNameIdPrefix . '_' . $attribute;
+            $id = $this->getEditableInputId($inputNameIdPrefix, $attribute);
             $htmlOptions = array(
-                'name' => get_class($this->model) . '[' . $inputNameIdPrefix . '][' . $attribute . ']',
+                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
                 'id'   => $id,
             );
             $label         = $form->labelEx ($model, $attribute, array('for'   => $id));
@@ -124,7 +124,7 @@
             {
                 return $this->getFormattedAttributeLabel();
             }
-            $id = get_class($this->model) . '_' . $this->attribute . '_' . 'emailAddress';
+            $id = $this->getEditableInputId($this->attribute, 'emailAddress');
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $id));
         }
     }

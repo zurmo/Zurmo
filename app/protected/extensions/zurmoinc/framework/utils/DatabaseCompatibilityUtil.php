@@ -32,6 +32,16 @@
     class DatabaseCompatibilityUtil
     {
         /**
+         * Returns the database character length equivalent string function by a column name.
+         * @param string $columnName
+         */
+        public static function charLength($columnName)
+        {
+            assert('is_string($columnName)');
+            return 'char_length(' . $columnName . ')';
+        }
+
+        /**
          * Returns sql to concatentate the given strings for
          * the current database.
          */
@@ -107,6 +117,25 @@
         }
 
         /**
+         * Returns the maximum varchar column type value.
+         */
+        public static function getMaxVarCharLength()
+        {
+            return 255;
+        }
+
+        /**
+         * Returns the database string to lower equivalent string function by a column name and adds quotes
+         * to it.
+         * @param string $columnName
+         */
+        public static function lower($columnName)
+        {
+            assert('is_string($columnName)');
+            return 'lower(' . $columnName . ')';
+        }
+
+        /**
          * Get the quote used for quoting table and column names.
          * for the current database.
          * Note: ' is always used for strings.
@@ -139,6 +168,16 @@
             {
                 return 'true';
             }
+        }
+
+        /**
+         * Returns the database length equivalent string function by a column name.
+         * @param string $columnName
+         */
+        public static function length($columnName)
+        {
+            assert('is_string($columnName)');
+            return 'length(' . $columnName . ')';
         }
 
         /**

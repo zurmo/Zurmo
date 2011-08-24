@@ -30,9 +30,11 @@
             'import' => array(
                 'application.extensions.zurmoinc.framework.tests.common.*',
                 'application.extensions.zurmoinc.framework.tests.unit.*',
+                'application.extensions.zurmoinc.framework.tests.unit.components.*',
                 'application.extensions.zurmoinc.framework.tests.unit.forms.*',
                 'application.extensions.zurmoinc.framework.tests.unit.models.*',
                 'application.extensions.zurmoinc.framework.tests.unit.modules.*',
+                'application.extensions.zurmoinc.framework.tests.unit.views.*',
                 'application.modules.zurmo.tests.components.*',
                 'application.tests.unit.*',
 ////////////////////////////////////////////////////////////////////////////////

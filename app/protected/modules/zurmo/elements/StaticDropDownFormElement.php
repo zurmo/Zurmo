@@ -39,7 +39,7 @@
          */
         protected function getNameForSelectInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . ']';
+            return $this->getEditableInputName($this->attribute);
         }
     }
 ?>

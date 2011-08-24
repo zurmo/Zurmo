@@ -217,7 +217,7 @@
             ModelMetadataUtil::removeAttribute($modelClassName, $attributeName);
         }
 
-        protected function resolveDatabaseSchemaForModel($modelClassName)
+        public function resolveDatabaseSchemaForModel($modelClassName)
         {
             assert('is_string($modelClassName) && $modelClassName != ""');
             if (RedBeanDatabase::isFrozen())

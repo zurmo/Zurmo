@@ -49,7 +49,7 @@
             $file->size           = $uploadedFile->getSize();
             if (!$file->save())
             {
-                return false;
+                return null;
             }
             return $file;
         }

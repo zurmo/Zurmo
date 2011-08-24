@@ -24,42 +24,60 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Utility class for adapting mappingData from the import into a mapping view ready array. This would include
+     * sample values and header values if specified.
+     */
     class ImportWizardMappingViewUtil
     {
-        public static function resolveMappingDataForView($mappingData, $tableName, $firstRowIsHeaderRow)
+        /**
+         * @param array   $mappingData
+         * @param object  $sample RedBean_OODBBean
+         * @param mixed   $headerRow
+         */
+        public static function resolveMappingDataForView($mappingData, RedBean_OODBBean $sample, $headerRow = null)
         {
             assert('is_array($mappingData)');
-            assert('is_string($tableName)');
-            assert('is_bool($firstRowIsHeaderRow)');
-            if ($firstRowIsHeaderRow)
+            assert('$headerRow == null || is_array($headerRow)');
+            foreach($mappingData as $columnName => $columnData)
             {
-                $rowData = ImportDatabaseUtil::getRowsByTableNameAndCount($tableName, 2, 0);
-                if (count($rowData) <= 1)
+                if($columnData['type'] == 'importColumn')
                 {
-                    throw new notSupportedException();
-                }
-            }
-            else
-            {
-                $rowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
-                if ($rowData == null)
-                {
-                    throw new notSupportedException();
-                }
-            }
-            foreach ($mappingData as $columnName => $columnData)
-            {
-                if ($firstRowIsHeaderRow)
-                {
-                    $mappingData[$columnName]['headerValue']      = $rowData[0][$columnName];
-                    $mappingData[$columnName]['firstSampleValue'] = $rowData[1][$columnName];
+                    if($headerRow != null)
+                    {
+                        $mappingData[$columnName]['headerValue'] = $headerRow[$columnName];
+                        $mappingData[$columnName]['sampleValue'] = $sample->$columnName;
+                    }
+                    else
+                    {
+                        $mappingData[$columnName]['sampleValue'] = $sample->$columnName;
+                    }
                 }
                 else
                 {
-                    $mappingData[$columnName]['firstSampleValue'] = $rowData[$columnName];
+                    if($headerRow != null)
+                    {
+                        $mappingData[$columnName]['headerValue'] = null;
+                    }
+                    $mappingData[$columnName]['sampleValue']     = null;
                 }
             }
             return $mappingData;
+        }
+
+        /**
+         * Given a column name, make the basic mapping data array with all the sub array indexes present.
+         * @param string $columnName
+         */
+        public static function makeExtraColumnMappingDataForViewByColumnName($columnName)
+        {
+            assert('is_string($columnName)');
+            return array(
+                $columnName => array('type'                        => 'extraColumn',
+                                     'attributeIndexOrDerivedType' => null,
+                                     'mappingRulesData'            => null,
+                                     'headerValue'                 => null,
+                                     'sampleValue'                 => null));
         }
     }
 ?>

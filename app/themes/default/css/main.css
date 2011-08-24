@@ -168,4 +168,34 @@ div.multiple-file-upload .file_upload_progress div {
   width: 150px;
   height: 15px;
 }
+
+/*
+Radio input buttons and text
+*/
+div.radio-input
+{
+    margin: 3px;
+}
+
+div.radio-input input
+{
+    float:left;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+div.radio-input label
+{
+    padding-left:3px;
+}
+
+/*
+Process view classes
+*/
+.process-container-view
+{
+    align:center;
+    margin:0 auto;
+    width:800px;
+}
 /* End Misc Classes */

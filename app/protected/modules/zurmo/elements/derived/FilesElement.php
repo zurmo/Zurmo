@@ -58,7 +58,7 @@
                                                                                     (int)$existingFile->size),
                                                     'id'   => $existingFile->id);
             }
-            $inputNameAndId = get_class($this->model) . '_files';
+            $inputNameAndId = $this->getEditableInputId('files');
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("filesElement");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.FileUpload', array(
@@ -70,8 +70,10 @@
                 'hiddenInputName'      => 'filesIds',
                 'formName'             => $this->form->id,
                 'allowMultipleUpload'  => true,
-                'existingFiles'        => $existingFilesInformation
+                'existingFiles'        => $existingFilesInformation,
+                'maxSize'			   => (int)InstallUtil::getMaxAllowedFileSize()
             ));
+
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['filesElement'];
         }

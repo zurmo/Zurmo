@@ -49,7 +49,7 @@
     </p>
     <p>
         Visit <b>Zurmo Inc.</b> online at
-        <a href="http://www.zurmoinc.com">http://www.zurmoinc.com</a>.<br />
+        <a href="http://www.zurmo.com">http://www.zurmo.com</a>.<br />
     </p>
     <p>
         Insert licensing information.

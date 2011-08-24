@@ -72,7 +72,8 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'startingStateOrder', 'type' => 'AllContactStatesDropDown'),
+                                                array('attributeName' => 'startingStateOrder', 'type' => 'AllContactStatesDropDown',
+                                                'relatedAttributeName' => 'contactStatesData'),
                                             ),
                                         ),
                                     )

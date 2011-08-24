@@ -29,26 +29,31 @@
      */
     class PhpUploadSizeServiceHelper extends ServiceHelper
     {
+        protected $required = false;
+
         protected $minimumUploadRequireBytes = 20000000;
 
         protected function checkService()
         {
+            $passed = true;
             $actualUploadSizeBytes = null;
             $uploadSizeBytesPassed = InstallUtil::checkPhpUploadSizeSetting($this->minimumUploadRequireBytes,
                                                                             $actualUploadSizeBytes);
             if ($uploadSizeBytesPassed)
             {
-                $this->message = Yii::t('Default', 'Php Upload size meets minimum requirement.');
-                return true;
+                $this->message .= "\n";
+                $this->message .= Yii::t('Default', 'Php Upload size meets minimum requirement.');
             }
             else
             {
-                $this->message  = Yii::t('Default', 'Php Upload size setting is:') . ' ';
+                $this->message .= "\n";
+                $this->message .= Yii::t('Default', 'Php Upload size setting is:') . ' ';
                 $this->message .= round($actualUploadSizeBytes / 1024000) . 'M ';
                 $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
-                return false;
+                $passed = false;
             }
+            return $passed;
         }
     }
 ?>

@@ -101,7 +101,7 @@
         }
 
         /**
-         * Get an array of only the states from the starting state onwards, order/name pairings of the
+         * Get an array of only the states from the starting state onwards, id/name pairings of the
          * existing contact states ordered by order.
          * @return array
          */

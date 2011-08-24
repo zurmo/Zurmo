@@ -131,12 +131,12 @@
             }
         }
 
-        public static function resolveOperatorAndValueForOneOf($operatorType, $value)
+        public static function resolveOperatorAndValueForOneOf($operatorType, $values)
         {
             assert('$operatorType == "oneOf"');
-            assert('is_array($value) && count($value) > 0');
+            assert('is_array($values) && count($values) > 0');
             $inPart = null;
-            foreach ($value as $theValue)
+            foreach ($values as $theValue)
             {
                 if ($inPart != null)
                 {
@@ -148,6 +148,14 @@
                 }
                 elseif (is_numeric($theValue))
                 {
+                    $inPart .= $theValue;
+                }
+                elseif(is_bool($theValue))
+                {
+                    if(!$theValue)
+                    {
+                        $theValue = 0;
+                    }
                     $inPart .= $theValue;
                 }
                 else

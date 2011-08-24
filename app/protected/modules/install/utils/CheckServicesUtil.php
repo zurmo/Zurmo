@@ -29,9 +29,9 @@
      */
     class CheckServicesUtil
     {
-        const CHECK_PASSED  = 1;
+        const CHECK_PASSED = 1;
 
-        const CHECK_FAILED  = 2;
+        const CHECK_FAILED = 2;
 
         /**
          * Utilize if a check does not pass or fail but is able to ascertain partial information, thus resulting in
@@ -46,15 +46,19 @@
                          'Php',
                          'PhpTimeZone',
                          'PhpMemoryBytes',
+                         'PhpFileUploads',
                          'PhpUploadSize',
+                         'PhpPostSize',
                          'FilePermissions',
                          'Database',
+                         'DatabaseMaxAllowedPacketSize',
                          'APC',
                          'Soap',
                          'Tidy',
                          'Curl',
                          'Yii',
                          'RedBean',
+                         'MbString',
                          'Memcache',
             );
         }
@@ -65,10 +69,10 @@
          */
         public static function checkServicesAndGetResultsDataForDisplay()
         {
-            $servicesToCheck                                                   = self::getServicesToCheck();
-            $resultsData                                                       = array();
-            $resultsData[self::CHECK_PASSED]                                   = array();
-            $resultsData[self::CHECK_FAILED]                                   = array();
+            $servicesToCheck                                                  = self::getServicesToCheck();
+            $resultsData                                                      = array();
+            $resultsData[self::CHECK_PASSED]                                  = array();
+            $resultsData[self::CHECK_FAILED]                                  = array();
             $resultsData[self::CHECK_FAILED] [ServiceHelper::REQUIRED_SERVICE] = array();
             $resultsData[self::CHECK_FAILED] [ServiceHelper::OPTIONAL_SERVICE] = array();
             $resultsData[self::CHECK_WARNING]                                  = array();

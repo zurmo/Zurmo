@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportMappingUtilTest extends BaseTest
+    class ImportMappingUtilTest extends ImportBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -38,11 +38,76 @@
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $mappingData = ImportMappingUtil::makeMappingDataByTableName($testTableName);
             $compareData = array(
-                'column_0' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_1' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
-                'column_2' => array('attributeNameOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
             );
             $this->assertEquals($compareData, $mappingData);
+        }
+
+        /**
+         * @expectedException NoRowsInTableException
+         */
+        public function testMakeMappingDataOnFileWithNoRows()
+        {
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest3.csv', $testTableName));
+            ImportMappingUtil::makeMappingDataByTableName($testTableName);
+        }
+
+        public function testGetMappedAttributeIndicesOrDerivedAttributeTypesByMappingData()
+        {
+            $mappingData = array(
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'a', 'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'b', 'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'c', 'mappingRulesData' => null),
+            );
+            $data = ImportMappingUtil::getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData);
+            $this->assertEquals(array('a', 'b', 'c'), $data);
+
+            $mappingData = array(
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+            );
+            $data = ImportMappingUtil::getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData($mappingData);
+            $this->assertNull($data);
+        }
+
+        public function testMakeExtraColumnNameByColumnCount()
+        {
+            $this->assertEquals('column_5', ImportMappingUtil::makeExtraColumnNameByColumnCount(4));
+        }
+
+        public function testReIndexExtraColumnNamesByPostData()
+        {
+            $postData = array(
+                'column_0'  => array('type' => 'importColumn'),
+                'column_1'  => array('type' => 'importColumn'),
+                'column_2'  => array('type' => 'importColumn'),
+                'column_5'  => array('type' => 'extraColumn'),
+                'column_55' => array('type' => 'extraColumn'),
+            );
+            $reIndexedPostData = ImportMappingUtil::reIndexExtraColumnNamesByPostData($postData);
+            $compareData = array(
+                'column_0'  => array('type' => 'importColumn'),
+                'column_1'  => array('type' => 'importColumn'),
+                'column_2'  => array('type' => 'importColumn'),
+                'column_3'  => array('type' => 'extraColumn'),
+                'column_4'  => array('type' => 'extraColumn'),
+            );
+            $this->assertEquals($compareData, $reIndexedPostData);
+        }
+
+        public function testMakeColumnNamesAndAttributeIndexOrDerivedTypeLabels()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $mappingData = array(
+                'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'string', 'mappingRulesData' => null),
+                'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => null, 'mappingRulesData' => null),
+                'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'FullName', 'mappingRulesData' => null),
+            );
+            $data = ImportMappingUtil::makeColumnNamesAndAttributeIndexOrDerivedTypeLabels($mappingData, 'ImportModelTestItem');
+            $compareData = array('column_0' => 'String', 'column_1' => null, 'column_2' => 'Full Name');
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

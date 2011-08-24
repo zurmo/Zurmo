@@ -44,8 +44,8 @@
             $this->temporaryDatabaseName = "{$this->rootUsername}_wacky";
             if ($this->rootUsername == 'zurmo')
             {
-                $this->rootUsername          = 'zurmoroot';
-                $this->rootPassword          = 'somepass';
+                $this->rootUsername          = 'root';
+                $this->rootPassword          = 'wacko';
                 $this->temporaryDatabaseName = 'wacky';
             }
         }
@@ -208,6 +208,44 @@
         public function testCheckRedBeanPatched()
         {
             $this->assertTrue(InstallUtil::checkRedBeanPatched());
+        }
+
+        public function testIsMbStringInstalled()
+        {
+            $this->assertTrue(InstallUtil::isMbStringInstalled());
+        }
+
+        public function testIsFileUploadsOn()
+        {
+            $this->assertTrue(InstallUtil::isFileUploadsOn());
+        }
+
+        /**
+         * Setting the upload_max_filesize doesn't seem to do anything.
+         */
+        public function testCheckPhpUploadSizeSetting()
+        {
+            $this->assertFalse  (InstallUtil::checkPhpUploadSizeSetting(1024 * 1024 * 1024, $actualUploadLimitBytes));
+            $this->assertTrue  (InstallUtil::checkPhpUploadSizeSetting(1 * 1024 * 1024, $actualUploadLimitBytes));
+        }
+
+        /**
+         * Setting the post_max_size doesn't seem to do anything.
+         */
+        public function testCheckPhpPostSizeSetting()
+        {
+            $this->assertFalse (InstallUtil::checkPhpPostSizeSetting(1024 * 1024 * 1024, $actualPostLimitBytes));
+            $this->assertTrue  (InstallUtil::checkPhpPostSizeSetting(1 * 1024 * 1024, $actualPostLimitBytes));
+        }
+
+        /**
+         * Simple test to confirm the check doesnt break.
+         */
+        public function testGetDatabaseMaxAllowedPacketsSize()
+        {
+            $minimumRequireBytes = 1;
+            $actualBytes         = null;
+            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualBytes));
         }
 
         public function testCheckMemcacheConnection()
