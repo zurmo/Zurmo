@@ -239,10 +239,13 @@
             assert('$nextParams == null || is_array($nextParams)');
 
             $import               = Import::getById((int)$id);
+            $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
             $unserializedData     = unserialize($import->serializedData);
             $pageSize             = Yii::app()->pagination->resolveActiveForCurrentUserByType('importPageSize');
             $config               = array('pagination' => array('pageSize' => $pageSize));
-            $dataProvider         = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider         = new ImportDataProvider($import->getTempTableName(),
+                                                           (bool)$importWizardForm->firstRowIsHeaderRow,
+                                                           $config);
             $sequentialProcess    = new ImportDataAnalysisSequentialProcess($import, $dataProvider);
             $sequentialProcess->run($step, $nextParams);
             $nextStep             = $sequentialProcess->getNextStep();
@@ -253,7 +256,6 @@
                                                                   makeColumnNamesAndAttributeIndexOrDerivedTypeLabels(
                                                                   $unserializedData['mappingData'],
                                                                   $unserializedData['importRulesType']);
-                $importWizardForm         = ImportWizardUtil::makeFormByImport($import);
                 $dataAnalysisCompleteView = new ImportWizardDataAnalysisCompleteView($this->getId(),
                                                 $this->getModule()->getId(),
                                                 $importWizardForm,
@@ -269,7 +271,7 @@
             {
                 $gridView     = new GridView(2, 1);
                 $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 5 of 6'));
-                $wrapperView  = new SequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
+                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
                 $gridView->setView($titleBarView, 0, 0);
                 $gridView->setView($wrapperView, 1, 0);
                 $view        = new ImportPageView($this, $gridView);
@@ -280,6 +282,68 @@
             }
             echo $view->render();
         }
+
+        /**
+         * Step 6. Sanitize and create/update models using a sequential process.
+         * @param integer id - Import model id
+         * @param string $step
+         */
+        function actionStep6($id, $step = null)
+        {
+            if(isset($_GET['nextParams']))
+            {
+                $nextParams = $_GET['nextParams'];
+            }
+            else
+            {
+                $nextParams = null;
+            }
+            assert('$step == null || is_string($step)');
+            assert('$nextParams == null || is_array($nextParams)');
+
+            $import               = Import::getById((int)$id);
+            $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
+            $unserializedData     = unserialize($import->serializedData);
+            $pageSize             = Yii::app()->pagination->resolveActiveForCurrentUserByType('importPageSize');
+            $config               = array('pagination' => array('pageSize' => $pageSize));
+            $dataProvider         = new ImportDataProvider($import->getTempTableName(),
+                                                           (bool)$importWizardForm->firstRowIsHeaderRow,
+                                                           $config);
+            $sequentialProcess    = new ImportCreateUpdateModelsSequentialProcess($import, $dataProvider);
+            $sequentialProcess->run($step, $nextParams);
+            $nextStep             = $sequentialProcess->getNextStep();
+            $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step6';
+            if($sequentialProcess->isComplete())
+            {
+                $dataAnalysisCompleteView = new ImportWizardCreateUpdateModelsCompleteView($this->getId(),
+                                                $this->getModule()->getId(),
+                                                $importWizardForm,
+                                                (int)ImportRowDataResultsUtil::getCreatedCount($import->getTempTableName()),
+                                                (int)ImportRowDataResultsUtil::getUpdatedCount($import->getTempTableName()),
+                                                (int)ImportRowDataResultsUtil::getErrorCount($import->getTempTableName()));
+
+                $sequenceView = new ContainedViewCompleteSequentialProcessView($dataAnalysisCompleteView);
+            }
+            else
+            {
+                $sequenceView = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
+            }
+            if($step == null)
+            {
+                $gridView     = new GridView(2, 1);
+                $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 6 of 6'));
+                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
+                $gridView->setView($titleBarView, 0, 0);
+                $gridView->setView($wrapperView, 1, 0);
+                $view        = new ImportPageView($this, $gridView);
+            }
+            else
+            {
+                $view        = new AjaxPageView($sequenceView);
+            }
+            echo $view->render();
+        }
+
 
         /**
          * Step 4 ajax process.  When you change the attribute dropdown, new mapping rule information is retrieved
@@ -293,11 +357,13 @@
                                                        getImportRulesClassNameByType($importWizardForm->importRulesType);
             $mappableAttributeIndicesAndDerivedTypes = $importRulesClassName::
                                                        getMappableAttributeIndicesAndDerivedTypes();
+
             $mappingFormLayoutUtil                   = ImportToMappingFormLayoutUtil::make(
                                                        get_class($importWizardForm),
                                                        new ZurmoActiveForm(),
                                                        $importWizardForm->importRulesType,
                                                        $mappableAttributeIndicesAndDerivedTypes);
+
             $content                                 = $mappingFormLayoutUtil->renderMappingRulesElements(
                                                        $columnName,
                                                        $attributeIndexOrDerivedType,

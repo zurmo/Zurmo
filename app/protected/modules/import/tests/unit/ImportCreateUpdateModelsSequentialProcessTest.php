@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportDataAnalysisSequentialProcessTest extends BaseTest
+    class ImportCreateUpdateModelsSequentialProcessTest extends BaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -36,42 +36,65 @@
         public function testSequentialProcessViewFactory()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
+
+            //Unfreeze since the test model is not part of the standard schema.
+            if(RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freezeWhenComplete = true;
+            }
+
+            $testModels                        = ImportModelTestItem::getAll();
+            $this->assertEquals(0, count($testModels));
+
             $import                            = new Import();
             $mappingData = array(
                 'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
-
-                'column_1' => array('attributeIndexOrDerivedType' => 'phone',    	  'type' => 'importColumn',
+                'column_23' => array('attributeIndexOrDerivedType' => 'FullName',     'type' => 'importColumn',
                                     'mappingRulesData' => array(
-                                        'DefaultValueModelAttributeMappingRuleForm' =>
-                                        array('defaultValue' => null))));
-
-            $serializedData['importRulesType'] = 'ImportModelTestItem';
-            $serializedData['mappingData']     = $mappingData;
-            $import->serializedData            = serialize($serializedData);
+                                        'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+                                        );
+            $serializedData['importRulesType']     = 'ImportModelTestItem';
+            $serializedData['mappingData']         = $mappingData;
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
             $config            = array('pagination' => array('pageSize' => 2));
             $dataProvider      = new ImportDataProvider($import->getTempTableName(), true, $config);
-            $sequentialProcess = new ImportDataAnalysisSequentialProcess($import, $dataProvider);
+            $sequentialProcess = new ImportCreateUpdateModelsSequentialProcess($import, $dataProvider);
             $sequentialProcess->run(null, null);
-            $route = 'default/someAction';
-            $view = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
-            $content = $view->render();
-            $this->assertNotNull($content);
-            $this->assertEquals('SequentialProcessView', get_class($view));
-
-            //Now process the first run. Will process page 0.
-            $sequentialProcess = new ImportDataAnalysisSequentialProcess($import, $dataProvider);
-            $sequentialProcess->run('processColumns', null);
             $route   = 'default/someAction';
             $view    = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
             $content = $view->render();
             $this->assertNotNull($content);
             $this->assertEquals('SequentialProcessView', get_class($view));
-            $this->assertEquals(array('columnNameToProcess' => 'column_1'),  $sequentialProcess->getNextParams());
+            $this->assertEquals('processRows', $sequentialProcess->getNextStep());
+
+            //Now process the first run. Will process page 0.
+            $sequentialProcess = new ImportCreateUpdateModelsSequentialProcess($import, $dataProvider);
+            $sequentialProcess->run('processRows', null);
+            $route   = 'default/someAction';
+            $view    = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
+            $content = $view->render();
+            $this->assertNotNull($content);
+            $this->assertEquals('SequentialProcessView', get_class($view));
+            $this->assertEquals(array('page' => 1),  $sequentialProcess->getNextParams());
+
+            //Confirm 2 models were successfully added.
+            $testModels = ImportModelTestItem::getAll();
+            $this->assertEquals(2, count($testModels));
+
+
+            //Re-freeze if needed.
+            if($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
+            }
         }
     }
 ?>

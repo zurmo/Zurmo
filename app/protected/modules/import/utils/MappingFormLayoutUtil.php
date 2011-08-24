@@ -187,6 +187,7 @@
                                                            $attributeIndexOrDerivedType,
                                                            $columnType);
                 }
+
                 foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {
                     $mappingRuleForm        = $ruleFormAndElementType['mappingRuleForm'];

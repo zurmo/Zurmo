@@ -153,5 +153,20 @@
         {
             return $this->status;
         }
+
+        public static function getCreatedCount($tableName)
+        {
+            return ImportDatabaseUtil::getCount($tableName, "status = " . ImportRowDataResultsUtil::CREATED);
+        }
+
+        public static function getUpdatedCount($tableName)
+        {
+            return ImportDatabaseUtil::getCount($tableName, "status = " . ImportRowDataResultsUtil::UPDATED);
+        }
+
+        public static function getErrorCount($tableName)
+        {
+            return ImportDatabaseUtil::getCount($tableName, "status = " . ImportRowDataResultsUtil::ERROR);
+        }
     }
 ?>

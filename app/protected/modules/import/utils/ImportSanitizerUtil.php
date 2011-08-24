@@ -50,14 +50,30 @@
             assert('is_array($columnMappingData)');
             foreach($sanitizerUtilTypes as $sanitizerUtilType)
             {
+
                 $sanitizerUtilClassName = $sanitizerUtilType . 'SanitizerUtil';
+                //For extra columns, only process sanitization for 'required' since that will add the default values.
+                //Other sanitization is not required since extra columns are not fed from external data.
+                if($columnMappingData["type"] = 'extraColumn' &&
+                   !is_subclass_of($sanitizerUtilClassName, 'RequiredSanitizerUtil') &&
+                   $sanitizerUtilClassName != 'RequiredSanitizerUtil')
+                {
+                   continue;
+                }
                 $mappingRuleType = $sanitizerUtilClassName::getLinkedMappingRuleType();
                 if($mappingRuleType != null)
                 {
                     assert('$mappingRuleType != null');
                     $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
-                    $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
-                    assert('$mappingRuleData != null');
+                    if(!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
+                    {
+                        assert('$columnMappingData["type"] = "extraColumn"');
+                        $mappingRuleData = null;
+                    }
+                    else
+                    {
+                        $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
+                    }
                 }
                 else
                 {

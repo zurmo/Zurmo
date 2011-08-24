@@ -24,30 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportTest extends ImportBaseTest
+    /**
+     * Override to handle registry of the yii js file.  This is required for the next/previous links to operate
+     * correctly.
+     *
+     */
+    class ImportSequentialProcessContainerView extends SequentialProcessContainerView
     {
-        public static function setUpBeforeClass()
+        protected function renderContent()
         {
-            parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
-        }
-
-        public function testOptionalAndRequiredFixInputData()
-        {
-        }
-
-        /**
-         * @depends testOptionalAndRequiredFixInputData
-         */
-        public function testImportAndCreateModels()
-        {
-        }
-
-        /**
-         * @depends testImportAndCreateModels
-         */
-        public function testUndoImport()
-        {
+            $content = parent::renderContent();
+            Yii::app()->clientScript->registerCoreScript('yii');
+            return $content;
         }
     }
 ?>

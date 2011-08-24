@@ -61,7 +61,7 @@
             {
                 try
                 {
-                   $relationModel       = $relationModelClassName::getById($mappingRuleData['defaultModelId']);
+                   $relationModel       = $relationModelClassName::getById((int)$mappingRuleData['defaultModelId']);
                 }
                 catch(NotFoundException $e)
                 {
