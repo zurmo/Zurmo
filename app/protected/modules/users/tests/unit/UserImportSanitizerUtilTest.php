@@ -36,7 +36,7 @@
         {
             //Test a non-required password with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'PasswordDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = PasswordAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -51,7 +51,7 @@
 
             //Test a non-required password with a valid value, and a default value. The valid value should come through.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'PasswordDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = PasswordAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -66,7 +66,7 @@
 
             //Test a non-required password with a value that is too long and no specified default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'PasswordDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = PasswordAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();

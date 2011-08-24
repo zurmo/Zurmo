@@ -40,7 +40,7 @@
 
             //Test a required contact state with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultContactStateIdMappingRuleForm' =>
                                                array('defaultStateId' => null)));
             $sanitizerUtilTypes        = ContactStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -57,7 +57,7 @@
 
             //Test a required contact state with a valid value, and a default value. The valid value should come through.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultContactStateIdMappingRuleForm' =>
                                                array('defaultStateId' => $contactStates[4]->id)));
             $sanitizerUtilTypes        = ContactStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -72,7 +72,7 @@
 
             //Test a required contact state with no value, and a default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultContactStateIdMappingRuleForm' =>
                                                array('defaultStateId' => $contactStates[4]->id)));
             $sanitizerUtilTypes        = ContactStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -87,7 +87,7 @@
 
             //Test a required contact state with a value that is invalid
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultContactStateIdMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = ContactStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -103,7 +103,7 @@
 
             //Test a required contact state with a state that is for leads, not contacts.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultContactStateIdMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = ContactStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
