@@ -90,7 +90,7 @@
                     }
                     elseif (!empty($relationData['ids']))
                     {
-                        $relationIds = explode(",", $relationData['ids']);
+                        $relationIds = explode(",", $relationData['ids']);  // Not Coding Standard
                         foreach ($relationIds as $relationIdFromElementStoringMultiples)
                         {
                             $aModel = $modelClassName::getById((int)$relationIdFromElementStoringMultiples);

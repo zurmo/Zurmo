@@ -228,10 +228,10 @@
             $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/theme.css', 'screen, projection');
             foreach ($this->getStyles() as $style)
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/' . $style. '.css');
+                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/' . $style. '.css'); // Not Coding Standard
                 if ($theme != $defaultTheme && file_exists("$theme/css/$style.css"))
                 {
-                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/' . $style. '.css');
+                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/' . $style. '.css'); // Not Coding Standard
                 }
             }
             if (file_exists("$theme/ico/favicon.ico"))

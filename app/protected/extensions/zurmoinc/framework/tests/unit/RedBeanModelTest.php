@@ -1481,6 +1481,40 @@
             $this->assertEquals($bigBinaryStuff, $model->bigBinaryStuff);
         }
 
+        /**
+         * Issue came up because attributeNamesNotBelongsToOrManyMany wasn't being cached and as a result
+         * an existing model, if you tried to save it, it would not validate correctly and allow required attributes
+         * to pass.
+         */
+        public function testModelCachesProperlyAndValidationWorksBasedOnAllNecessaryPropertiesCaching()
+        {
+            $m = new M();
+            $m->m = 'aValue';
+            $this->assertTrue($m->validate());
+            $this->assertTrue($m->save());
+            $mId = $m->id;
+            $m->forget(); //need this here to demonstrate that the caching is working correctly
+
+            $m = new M();
+            $this->assertFalse($m->validate());
+            $this->assertFalse($m->save());
+            $m->forget(); //need this here to demonstrate that the caching is working correctly
+
+            //Now edit the existing M and clear the required attribute m. It should fail validation.
+            $m = M::getById($mId);
+            unset($m);
+            RedBeanModelsCache::forgetAllModelIdentifiersToModels();
+
+            //Now reretrieve.
+            $m = M::getById($mId);
+            $m->m = null;
+            $this->assertFalse($m->validate());
+            $this->assertFalse($m->save());
+            $m->m = 'aNewValue';
+            $this->assertTrue($m->validate());
+            $this->assertTrue($m->save());
+        }
+
         public function testSwappingSameRelationModelsForSaving()
         {
             $j          = new J();

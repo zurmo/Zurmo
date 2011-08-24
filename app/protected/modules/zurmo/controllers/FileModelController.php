@@ -28,7 +28,8 @@
     {
         public function actionUpload($filesVariableName)
         {
-            try {
+            try
+            {
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
                 $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);

@@ -545,7 +545,7 @@
                 else                                                            # Not Coding Standard
                     begin
                         declare continue handler for 1054, 1146 # Column, table doesn\'t exist.
-                        begin                           		# RedBean hasn\'t created it yet.
+                        begin                                   # RedBean hasn\'t created it yet.
                             set is_owner = 0;
                         end;
                         select _securableitem_id in
@@ -816,7 +816,7 @@
                     end;
                 begin
                     declare continue handler for 1054, 1146 # Column, table doesn\'t exist.
-                    begin                           		# RedBean hasn\'t created it yet.
+                    begin                                   # RedBean hasn\'t created it yet.
                         set is_owner = 0;
                     end;
                     select _securableitem_id in

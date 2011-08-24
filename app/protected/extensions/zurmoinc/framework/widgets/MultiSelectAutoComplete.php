@@ -50,7 +50,7 @@
 
         /**
          * The text to show in the dropdown label which appears when you first click in the search field. default:
-         * “Type in a search term”
+         * ï¿½Type in a search termï¿½
          */
         public $hintText;
 
@@ -74,7 +74,7 @@
             }
             if ($this->jsonEncodedIdsAndLabels != null)
             {
-                $javaScript .= "prePopulate: " . $this->jsonEncodedIdsAndLabels . ",";
+                $javaScript .= "prePopulate: " . $this->jsonEncodedIdsAndLabels . ","; // Not Coding Standard
             }
             $javaScript .= "preventDuplicates: 'true'";
             $javaScript .= "});";

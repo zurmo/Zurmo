@@ -54,12 +54,12 @@
                     MashableActivityRulesFactory::createMashableActivityRulesByModel($modelClassName);
                 if (count($relationItemIds) > 1)
                 {
-                    $searchAttributesData  =
+                    $searchAttributesData =
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemIds($relationItemIds);
                 }
                 else
                 {
-                    $searchAttributesData  =
+                    $searchAttributesData =
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemId($relationItemIds[0]);
                 }
                 $modelClassNamesAndSearchAttributeData[$modelClassName] = $searchAttributesData;

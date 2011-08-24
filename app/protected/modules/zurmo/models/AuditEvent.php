@@ -97,7 +97,7 @@
                                 '$eventName',
                                 {$user->id}, " .
                                 ($model !== null ? "'" . get_class($model) . "', " : 'null, ') .
-                                ($model !== null ? "{$model->id},"                 : 'null, ') .
+                                ($model !== null ? "{$model->id}, "                 : 'null, ') .
                                 ":data)";
                 R::exec($sql, array('data' => serialize($data))) !== null;
                 $saved = true;

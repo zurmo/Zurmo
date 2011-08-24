@@ -55,7 +55,7 @@
             $rightTopMetadataForPortlets['global']   = $metadata['global']['rightTopView'];
 
             $detailsViewClassName = $metadata['global']['leftTopView']['viewClassName'];
-            $leftTopView = new $detailsViewClassName(				    'Details',
+            $leftTopView = new $detailsViewClassName(                  'Details',
                                                                         $this->params["controllerId"],
                                                                         $this->params["relationModuleId"],
                                                                         $this->params["relationModel"]);

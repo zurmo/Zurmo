@@ -46,7 +46,7 @@
             $this->assertTrue($account->save());
             for ($i = 0; $i < self::CONTACTS; $i++)
             {
-                $contact = ContactTestHelper::createContactByNameForOwner('sampleContact' .$i,
+                $contact = ContactTestHelper::createContactByNameForOwner('sampleContact' . $i,
                                                                                 Yii::app()->user->userModel);
                 $account->contacts->add($contact);
             }
