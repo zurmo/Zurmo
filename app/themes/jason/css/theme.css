@@ -7,6 +7,21 @@
 }*/
 
 /* Begin Template Classes */
+.zurmo-logo
+{
+    width: 170px;
+    height: 53px;
+    background-image: url(../images/ZurmoLogo.png);
+}
+
+.performance-info
+{
+    margin-top: -7px;
+    font-size: 0.75em;
+    text-align: center;
+    color: #CCCCCC;
+}
+
 #MainLogo
 {
     float: left;

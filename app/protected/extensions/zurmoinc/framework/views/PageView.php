@@ -58,10 +58,11 @@
                        $this->renderXHtmlBodyEnd()   .
                        $this->renderXHtmlEnd();
             Yii::app()->getClientScript()->render($content);
-            if (SHOW_PERFORMANCE)
+            $performanceMessage = null;
+            if (YII_DEBUG && SHOW_PERFORMANCE)
             {
                 $endTime = microtime(true);
-                $performanceMessage = '<span style="background-color: lightgreen; color: green">Page render time: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                $performanceMessage .= 'Page render time: ' . number_format(($endTime - $startTime), 3) . ' seconds.<br />';
             }
             if (YII_DEBUG)
             {
@@ -78,8 +79,8 @@
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
-                    $performanceMessage .= '<span style="background-color: lightgreen; color: green">Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
-                    $performanceMessage .= '<span style="background-color: lightgreen; color: green">Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= 'Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= 'Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
                 }
             }
             else
@@ -89,13 +90,12 @@
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
-                    $performanceMessage .= '<span style="background-color: lightgreen; color: green">Total page view time including tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
-                    $performanceMessage .= '<span style="background-color: lightgreen; color: green">Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= 'Load time: ' . number_format(($endTotalTime), 3) . ' seconds.<br />';
                 }
             }
             if (SHOW_PERFORMANCE)
             {
-                $content .= $performanceMessage;
+                $content .= '<div class="performance-info">' . $performanceMessage . '</div>';
             }
             if (YII_DEBUG && Yii::app()->isApplicationInstalled())
             {
