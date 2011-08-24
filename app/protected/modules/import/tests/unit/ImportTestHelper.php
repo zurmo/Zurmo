@@ -26,7 +26,11 @@
 
     class ImportTestHelper
     {
-        public static function createTempTableByFileNameAndTableName($fileName, $tableName, $pathToFiles = null)
+        public static function createTempTableByFileNameAndTableName($fileName,
+                                                                     $tableName,
+                                                                     $pathToFiles = null,
+                                                                     $delimiter = ',',
+                                                                     $enclosure = "'")
         {
             assert('is_string($fileName)');
             assert('is_string($tableName)');
@@ -38,7 +42,8 @@
             $fileHandle  = fopen($filePath, 'r');
             if ($fileHandle !== false)
             {
-                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName);
+                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName,
+                                                                                         $delimiter, $enclosure);
                 assert('$created');
                 return true;
             }

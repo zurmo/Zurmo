@@ -156,6 +156,15 @@
             return null;
         }
 
+        protected function getHtmlOptions()
+        {
+            if (!isset($this->params['htmlOptions']))
+            {
+                return array();
+            }
+            return $this->params['htmlOptions'];
+        }
+
         /**
          * Get the collection of id/names of inputs and other
          * parts of the element.

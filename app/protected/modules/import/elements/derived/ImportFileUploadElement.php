@@ -37,6 +37,7 @@
         protected function renderControlEditable()
         {
             assert('$this->model instanceof ImportWizardForm');
+            assert('$this->attribute == null');
             $existingFilesInformation = array();
             if(!empty($this->model->fileUploadData))
             {
@@ -44,6 +45,13 @@
                 $existingFilesInformation[0]['id'] = $this->model->id;
             }
             $inputNameAndId = $this->getEditableInputId('file');
+
+            $beforeUploadAction  = "$('#{$this->getEditableInputId('rowColumnDelimiter')}').attr('readonly', true);";
+            $beforeUploadAction .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').attr('readonly', true);";
+
+            $afterDeleteAction    = "$('#{$this->getEditableInputId('rowColumnDelimiter')}').removeAttr('readonly');";
+            $afterDeleteAction   .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').removeAttr('readonly');";
+
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("filesElement");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.FileUpload', array(
@@ -56,10 +64,31 @@
                 'hiddenInputName'      => 'fileId',
                 'formName'             => $this->form->id,
                 'existingFiles'        => $existingFilesInformation,
-                'maxSize'  	 		   => (int)InstallUtil::getMaxAllowedFileSize()
+                'maxSize'  	 		   => (int)InstallUtil::getMaxAllowedFileSize(),
+                'beforeUploadAction'   => $beforeUploadAction,
+                'afterDeleteAction'    => $afterDeleteAction,
             ));
             $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['filesElement'];
+            $content = $cClipWidget->getController()->clips['filesElement'];
+
+            $params = array('htmlOptions' => array('size' => 5));
+            if(count($existingFilesInformation) == 1)
+            {
+                $params['disabled'] = true;
+            }
+
+            $delimiterElement                          = new TextElement($this->model, 'rowColumnDelimiter',
+                                                         $this->form, $params);
+            $delimiterElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
+            $enclosureElement                          = new TextElement($this->model, 'rowColumnEnclosure',
+                                                         $this->form, $params);
+            $enclosureElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
+            $content .= $delimiterElement->render();
+            $content .= $enclosureElement->render();
+            $content .= '<div style="clear:both;"></div>' . "\n";
+
+
+            return $content;
         }
 
         protected function renderError()

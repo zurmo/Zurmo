@@ -80,6 +80,8 @@
             ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
             $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
                                                              'fileUploadData'       => array('aa' => 'bb'),
+                                                             'rowColumnDelimiter'  => ',',
+                                                             'rowColumnEnclosure'  => "'",
                                                              'firstRowIsHeaderRow'  => true,
                                                              'explicitReadWriteModelPermissions'     => null,
                                                              'mappingData'          => array('xx' => 'yy'),
@@ -150,7 +152,7 @@
          */
         public function testSetFormByPostForStep2()
         {
-            $fakePostData = array('firstRowIsHeaderRow' => 'xyz');
+            $fakePostData = array('firstRowIsHeaderRow' => 'xyz', 'rowColumnDelimiter' => ',', 'rowColumnEnclosure' => '"');
             $importWizardForm = new ImportWizardForm();
             ImportWizardUtil::setFormByPostForStep2($importWizardForm, $fakePostData);
             $this->assertEquals('xyz', $importWizardForm->firstRowIsHeaderRow);

@@ -36,11 +36,14 @@
          * @param string $tableName
          * @return true on success.
          */
-        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName)
+        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName, $delimiter = ',',
+                                                                         $enclosure = "'")
         {
             assert('gettype($fileHandle) == "resource"');
             assert('is_string($tableName)');
             assert('$tableName == strtolower($tableName)');
+            assert('$delimiter != null && is_string($delimiter)');
+            assert('$enclosure != null && is_string($enclosure)');
             $freezeWhenComplete = false;
             if(RedBeanDatabase::isFrozen())
             {
@@ -48,7 +51,7 @@
                 $freezeWhenComplete = true;
             }
             R::exec("drop table if exists $tableName");
-            while (($data = fgetcsv($fileHandle, 0, ',')) !== false)
+            while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
                 if(count($data) > 0)
                 {

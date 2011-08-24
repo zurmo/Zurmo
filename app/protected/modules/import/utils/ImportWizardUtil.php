@@ -36,6 +36,8 @@
          */
         private static $importToFormAttributeMap = array('importRulesType',
                                                          'fileUploadData',
+                                                         'rowColumnDelimiter',
+                                                         'rowColumnEnclosure',
                                                          'firstRowIsHeaderRow',
                                                          'mappingData',
                                                          'dataAnalyzerMessagesData');
@@ -104,8 +106,13 @@
         public static function setFormByPostForStep2($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["firstRowIsHeaderRow"])');
-            $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow']));
+            assert('is_array($postData)');
+            assert('isset($postData["firstRowIsHeaderRow"])');
+            assert('isset($postData["rowColumnDelimiter"])');
+            assert('isset($postData["rowColumnEnclosure"])');
+            $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow'],
+                                                   'rowColumnDelimiter'  => $postData['rowColumnDelimiter'],
+                                                   'rowColumnEnclosure'  => $postData['rowColumnEnclosure']));
         }
 
         /**

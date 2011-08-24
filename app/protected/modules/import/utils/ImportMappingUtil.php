@@ -40,7 +40,23 @@
         {
             assert('is_string($tableName)');
             $firstRowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
+
             if(count($firstRowData) == 1 || count($firstRowData) == 0)
+            {
+                throw new NoRowsInTableException();
+            }
+            //Handle scenario where every column is null. Similiar to scenario below it with no data in file but
+            //making a row anyways.
+            $allValuesAreNull = true;
+            foreach($firstRowData as $columnName => $value)
+            {
+                if($value != null && $columnName != 'id')
+                {
+                    $allValuesAreNull = false;
+                    break;
+                }
+            }
+            if($allValuesAreNull)
             {
                 throw new NoRowsInTableException();
             }

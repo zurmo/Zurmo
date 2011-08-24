@@ -38,9 +38,9 @@
         protected function renderFormLayout($form = null)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $fileUploadElement                         = new ImportFileUploadElement($this->model, 'fileUploadData',
-                                                         $form);
+            $fileUploadElement                         = new ImportFileUploadElement($this->model, null, $form);
             $fileUploadElement->editableTemplate       = '{label}<br/>{content}';
+
             $firstRowIsHeaderElement                   = new CheckBoxElement($this->model, 'firstRowIsHeaderRow', $form);
             $firstRowIsHeaderElement->editableTemplate = '{content}{label}';
             $content  = $form->errorSummary($this->model);

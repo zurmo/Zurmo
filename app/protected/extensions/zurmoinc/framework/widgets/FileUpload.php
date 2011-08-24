@@ -96,6 +96,19 @@
         public $maxSize;
 
         /**
+         * Javascript string of an action to be performed before the upload of a file begins.
+         * @var string
+         */
+        public $beforeUploadAction;
+
+        /**
+         * Javascript string of an action to be performed after a file is deleted.
+         * @var string
+         */
+        public $afterDeleteAction;
+
+
+        /**
          * Initializes the widget.
          * This method will publish JUI assets if necessary.
          * It will also register jquery and JUI JavaScript files and the theme CSS file.
@@ -131,6 +144,7 @@ $('#{$this->formName}').find('.delete-file-link').live('click', function () {
       url: "{$this->deleteUrl}&id=" + $(this).prev().val(),
     });
     $(this).parent().parent().remove();
+    {$this->afterDeleteAction}
 });
 EOD;
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);
@@ -197,6 +211,7 @@ EOD;
             $cancelLabel = Yii::t('Default', 'Cancel');
             $js = <<<EOD
 js:function ($params) {
+    {$this->beforeUploadAction}
     $extraAction
     return $('<tr>'+
         '<td class="filename">' + $file + '</td>'+

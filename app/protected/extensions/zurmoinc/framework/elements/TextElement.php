@@ -42,6 +42,7 @@
             $htmlOptions['id']       = $this->getEditableInputId();
             $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = $this->getDisabledValue();
+            $htmlOptions             = array_merge($this->getHtmlOptions(), $htmlOptions);
             return $this->form->textField($this->model, $this->attribute, $htmlOptions);
         }
 

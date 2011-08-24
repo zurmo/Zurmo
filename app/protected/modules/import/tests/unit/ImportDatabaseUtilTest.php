@@ -112,6 +112,54 @@
                 ),
             );
             $this->assertEquals($compareData, $tempTableData);
+
+            //Now test using a file with a different enclosure/delimiter schema.
+
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::
+                              createTempTableByFileNameAndTableName('importWithDifferentEnclosureAndDelimiterTest.csv',
+                                                                    $testTableName, null, "#", '"'));
+            $sql = 'select * from ' . $testTableName;
+            $tempTableData = R::getAll($sql);
+            $compareData   = array(
+                array
+                (
+                    'id' => 1,
+                    'column_0'           => 'name',
+                    'column_1'           => 'phone',
+                    'column_2'           => 'industry',
+                    'status'			 => null,
+                    'serializedmessages' => null,
+                ),
+                array
+                (
+                    'id' => 2,
+                    'column_0'           => 'some',
+                    'column_1'           => 'thing',
+                    'column_2'           => 'else',
+                    'status'			 => null,
+                    'serializedmessages' => null,
+                ),
+                array
+                (
+                    'id' => 3,
+                    'column_0'           => 'some2',
+                    'column_1'           => 'thing2',
+                    'column_2'           => 'else2',
+                    'status'			 => null,
+                    'serializedmessages' => null,
+                ),
+                array
+                (
+                    'id' => 4,
+                    'column_0'           => 'some3',
+                    'column_1'           => 'thing3',
+                    'column_2'           => 'else3',
+                    'status'			 => null,
+                    'serializedmessages' => null,
+                ),
+            );
+            $this->assertEquals($compareData, $tempTableData);
         }
 
         /**
@@ -130,9 +178,9 @@
             $firstRowData = ImportDatabaseUtil::getFirstRowByTableName('testimporttable');
             $compareData   = array(
                     'id' => 1,
-                    'column_0'           => 'def',
-                    'column_1'           => '563',
-                    'column_2'           => 'b',
+                    'column_0'           => 'name',
+                    'column_1'           => 'phone',
+                    'column_2'           => 'industry',
                     'status'			 => null,
                     'serializedmessages' => null,
             );
@@ -148,9 +196,9 @@
             $firstBean = current($firstBean);
             $this->assertTrue($firstBean instanceof RedBean_OODBBean);
             $this->assertEquals(2, $firstBean->id);
-            $this->assertEquals('efg', $firstBean->column_0);
-            $this->assertEquals('456', $firstBean->column_1);
-            $this->assertEquals('a', $firstBean->column_2);
+            $this->assertEquals('some', $firstBean->column_0);
+            $this->assertEquals('thing', $firstBean->column_1);
+            $this->assertEquals('else', $firstBean->column_2);
         }
 
         /**
@@ -161,7 +209,7 @@
             $testTableName = 'testimporttable';
             $sql           = 'select * from ' . $testTableName;
             $tempTableData = R::getAll($sql);
-            $this->assertEquals(2, count($tempTableData));
+            $this->assertEquals(4, count($tempTableData));
             if(RedBeanDatabase::isFrozen())
             {
                 ImportDatabaseUtil::dropTableByTableName($testTableName);

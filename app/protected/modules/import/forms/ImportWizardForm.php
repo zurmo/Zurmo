@@ -50,6 +50,18 @@
         public $fileUploadData;
 
         /**
+         * String of delimiter character to use for each row column.  Defaults to ,
+         * @var string
+         */
+        public $rowColumnDelimiter = ',';
+
+        /**
+         * String of the enclosure character to use for each row column.  Defaults to "
+         * @var string
+         */
+        public $rowColumnEnclosure = "'";
+
+        /**
          * True/false whether the import file's first row is a header row or not.
          * @var boolean
          */
@@ -80,11 +92,19 @@
         public function rules()
         {
             return array(
+                //default validators must come before the required validators
+                array('rowColumnDelimiter',  'default', 'value' => ',', 'setOnEmpty' => true),
+                array('rowColumnEnclosure',  'default', 'value' => "'", 'setOnEmpty' => true),
                 array('importRulesType',     'required'),
+                array('rowColumnDelimiter',  'required'),
+                array('rowColumnEnclosure',  'required'),
                 array('fileUploadData', 	 'type', 'type' => 'string'),
+                array('rowColumnDelimiter',  'type', 'type' => 'string'),
+                array('rowColumnEnclosure',  'type', 'type' => 'string'),
+
                 array('firstRowIsHeaderRow', 'boolean'),
                 array('mappingData', 		 'type', 'type' => 'string'),
-                array('newPassword',        'validateMappingData', 'on'   => 'saveMappingData'),
+                array('newPassword',         'validateMappingData', 'on'   => 'saveMappingData'),
             );
         }
 
@@ -93,6 +113,8 @@
             return array(
                 'importRulesType'                   => Yii::t('Default', 'Module To Import To'),
                 'fileUploadData'                    => Yii::t('Default', 'File Upload Data'),
+                'rowColumnDelimiter'                => Yii::t('Default', 'Delimiter'),
+                'rowColumnEnclosure'                => Yii::t('Default', 'Enclosure'),
                 'firstRowIsHeaderRow'               => Yii::t('Default', 'First Row is Header Row'),
                 'explicitReadWriteModelPermissions' => Yii::t('Default', 'Model Permissions'),
                 'mappingData'                       => Yii::t('Default', 'Mapping Data'),

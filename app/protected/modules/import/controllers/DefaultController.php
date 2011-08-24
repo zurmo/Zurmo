@@ -437,42 +437,57 @@
             assert('is_string($filesVariableName)');
             $import           = Import::getById((int)$id);
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
-            try {
-                $uploadedFile = ImportUploadedFileUtil::getByNameCatchErrorAndEnsureFileIsACSV($filesVariableName);
-                assert('$uploadedFile instanceof CUploadedFile');
-                $fileHandle  = fopen($uploadedFile->getTempName(), 'r');
-                if ($fileHandle !== false)
-                {
-                    $tempTableName = $import->getTempTableName();
-                    if(!ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName))
-                    {
-                        throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
-                    }
-                    $fileUploadData = array(
-                        'name' => $uploadedFile->getName(),
-                        'type' => $uploadedFile->getType(),
-                        'size' => $uploadedFile->getSize(),
-                    );
-                    ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData,
-                                                                          $tempTableName);
-                    ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
-                    if(!$import->save())
-                    {
-                        throw new FailedFileUploadException(Yii::t('Default', 'Import model failed to save.'));
-                    }
-                }
-                else
-                {
-                    throw new FailedFileUploadException(Yii::t('Default', 'Failed to open the uploaded file.'));
-                }
-                $fileUploadData['humanReadableSize'] = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(
-                                                       $fileUploadData['size']);
-                $fileUploadData['id']                = $import->id;
-            }
-            catch(FailedFileUploadException $e)
+            $importWizardForm->setAttributes($_POST['ImportWizardForm']);
+            if(!$importWizardForm->validate(array('rowColumnDelimiter')))
             {
-                $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
-                ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
+                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid delimiter'));
+            }
+            elseif(!$importWizardForm->validate(array('rowColumnDelimiter')))
+            {
+                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid enclosure'));
+            }
+            else
+            {
+                try {
+                    $uploadedFile = ImportUploadedFileUtil::getByNameCatchErrorAndEnsureFileIsACSV($filesVariableName);
+                    assert('$uploadedFile instanceof CUploadedFile');
+                    $fileHandle  = fopen($uploadedFile->getTempName(), 'r');
+                    if ($fileHandle !== false)
+                    {
+                        $tempTableName = $import->getTempTableName();
+                        if(!ImportDatabaseUtil::
+                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
+                                                                      $importWizardForm->rowColumnDelimiter,
+                                                                      $importWizardForm->rowColumnEnclosure))
+                        {
+                            throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
+                        }
+                        $fileUploadData = array(
+                            'name' => $uploadedFile->getName(),
+                            'type' => $uploadedFile->getType(),
+                            'size' => $uploadedFile->getSize(),
+                        );
+                        ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData,
+                                                                              $tempTableName);
+                        ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
+                        if(!$import->save())
+                        {
+                            throw new FailedFileUploadException(Yii::t('Default', 'Import model failed to save.'));
+                        }
+                    }
+                    else
+                    {
+                        throw new FailedFileUploadException(Yii::t('Default', 'Failed to open the uploaded file.'));
+                    }
+                    $fileUploadData['humanReadableSize'] = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(
+                                                           $fileUploadData['size']);
+                    $fileUploadData['id']                = $import->id;
+                }
+                catch(FailedFileUploadException $e)
+                {
+                    $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
+                    ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
+                }
             }
             echo CJSON::encode($fileUploadData);
             Yii::app()->end(0, false);
@@ -514,6 +529,13 @@
                     echo $view->render();
                     Yii::app()->end(0, false);
                 }
+            }
+            else
+            {
+                echo "<pre>";
+                print_r($importWizardForm->getErrors());
+                echo "</pre>";
+                exit;
             }
         }
 
