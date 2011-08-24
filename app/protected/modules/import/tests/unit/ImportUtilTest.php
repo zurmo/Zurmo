@@ -55,6 +55,7 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
 
             //Unfreeze since the test model is not part of the standard schema.
+            $freezeWhenComplete = false;
             if(RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();

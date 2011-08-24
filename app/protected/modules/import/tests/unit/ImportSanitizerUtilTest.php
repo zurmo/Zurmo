@@ -48,7 +48,7 @@
         {
             //Test a non-required boolean with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -63,7 +63,7 @@
 
             //Test a non-required boolean with no value, but a valid default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '1')));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -78,7 +78,7 @@
 
             //Test a non-required boolean with a valid value, and a default value. The valid value should come through.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '0')));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -93,7 +93,7 @@
 
             //Test a non-required boolean with a valid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -108,7 +108,7 @@
 
             //Test a non-required boolean with a value that is not a valid mapped value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -126,7 +126,7 @@
             //Test a non-required boolean with a value that is invalidly mapped and a specified default value. The specified
             //default value should be ignored in this scenario.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '1')));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -146,7 +146,7 @@
             //Test a non-required boolean with a value that is invalidly mapped and a specified default value. The specified
             //default value should be ignored in this scenario.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '1')));
             $sanitizerUtilTypes        = CheckBoxAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -165,7 +165,7 @@
         {
             //Test a non-required date with no value or a default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null),
                                                'ValueFormatMappingRuleForm'                =>
@@ -182,7 +182,7 @@
 
             //Test a non-required date with no value but a default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2010-05-04'),
                                                'ValueFormatMappingRuleForm'                =>
@@ -199,7 +199,7 @@
 
             //Test a non-required date with a value and a default value.  The default value will be ignored.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2010-05-04'),
                                                'ValueFormatMappingRuleForm'                =>
@@ -216,7 +216,7 @@
 
             //Test a non-required date with an invalid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null),
                                                'ValueFormatMappingRuleForm'                =>
@@ -233,7 +233,7 @@
             //Test a non-required date with an invalid value and a default value which will not be used since the
             //first sanitization of the date format will fail.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2010-05-04'),
                                                'ValueFormatMappingRuleForm'                =>
@@ -252,7 +252,7 @@
         {
             //Test a non-required dateTime with no value or a default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null),
                                                'ValueFormatMappingRuleForm'                =>
@@ -269,7 +269,7 @@
 
             //Test a non-required dateTime with no value but a default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2010-05-04 05:00'),
                                                'ValueFormatMappingRuleForm'                =>
@@ -286,7 +286,7 @@
 
             //Test a non-required dateTime with a value and a default value.  The default value will be ignored.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2010-05-04 00:00'),
                                                'ValueFormatMappingRuleForm'                =>
@@ -303,7 +303,7 @@
 
             //Test a non-required dateTime with an invalid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null),
                                                'ValueFormatMappingRuleForm'                =>
@@ -320,7 +320,7 @@
             //Test a non-required dateTime with an invalid value and a default value which will not be used since the
             //first sanitization of the datetime format will fail.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2010-05-04 00:00'),
                                                'ValueFormatMappingRuleForm'                =>
@@ -341,7 +341,7 @@
 
             //Test a non-required dropDown with no value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)),
                                                'importInstructionsData' => $importInstructionsData);
@@ -357,7 +357,7 @@
 
             //Test a non-required dropDown with no value and a default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
                                                'importInstructionsData' => $importInstructionsData);
@@ -373,7 +373,7 @@
 
             //Test a non-required dropDown with a valid value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test2')),
                                                'importInstructionsData' => $importInstructionsData);
@@ -392,7 +392,7 @@
             //why the default value is not set.
             //Since there are no missing value instructions, the sanitization will result in an error message.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test3')),
                                                'importInstructionsData' => $importInstructionsData);
@@ -415,7 +415,7 @@
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $this->assertEquals(5, count(unserialize($customFieldData->serializedData)));
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
                                                'importInstructionsData' => $importInstructionsData);
@@ -438,7 +438,7 @@
         {
             //Test a non-required email with no value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = EmailAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -453,7 +453,7 @@
 
             //Test a non-required email with no value and a default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'a@a.com')));
             $sanitizerUtilTypes        = EmailAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -468,7 +468,7 @@
 
             //Test a non-required email with a valid value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'b@b.com')));
             $sanitizerUtilTypes        = EmailAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -485,7 +485,7 @@
             //be picked up, it should be ignored.  On the first sanitization failure, sanitization will stop, this is
             //why the default value is not set.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'c@c.com')));
             $sanitizerUtilTypes        = EmailAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -505,7 +505,7 @@
         {
             //Test a non-required FullName with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -522,7 +522,7 @@
 
             //Test a non-required FullName with no value, but a valid default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -537,7 +537,7 @@
 
             //Test a non-required FullName with a valid value, and a default value. The valid value should come through.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -567,7 +567,7 @@
 
             //Test a non-required FullName with a value that is too long and no specified default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -586,7 +586,7 @@
             //Test a non-required FullName with a value that is too long and a specified default value. The specified
             //default value should be ignored in this scenario.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'willNotMatter')));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -604,7 +604,7 @@
 
             //A first name that is too large, but the last name is ok.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'willNotMatter')));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -638,7 +638,7 @@
 
             //Test a non-required related model with an invalid value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -655,7 +655,7 @@
 
             //Test a non-required related model with no value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -670,7 +670,7 @@
 
             //Test a non-required related model with a valid zurmo model id
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -686,7 +686,7 @@
 
             //Test a non-required related model with a valid external system id
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem3DerivedAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -704,7 +704,7 @@
         {
             //Test a non-required decimal with no value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = DecimalAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -719,7 +719,7 @@
 
             //Test a non-required decimal with no value and a default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '45.65')));
             $sanitizerUtilTypes        = DecimalAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -734,7 +734,7 @@
 
             //Test a non-required decimal with a valid value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '45.65')));
             $sanitizerUtilTypes        = DecimalAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -767,7 +767,7 @@
             //be picked up, it should be ignored.  On the first sanitization failure, sanitization will stop, this is
             //why the default value is not set.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '45.65')));
             $sanitizerUtilTypes        = DecimalAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -786,7 +786,7 @@
             //Now test Integer
             //Test a non-required integer with no value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = IntegerAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -801,7 +801,7 @@
 
             //Test a non-required integer with no value and a default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '41')));
             $sanitizerUtilTypes        = IntegerAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -816,7 +816,7 @@
 
             //Test a non-required integer with a valid value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '2342')));
             $sanitizerUtilTypes        = IntegerAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -849,7 +849,7 @@
             //be picked up, it should be ignored.  On the first sanitization failure, sanitization will stop, this is
             //why the default value is not set.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => '45')));
             $sanitizerUtilTypes        = IntegerAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -883,7 +883,7 @@
 
             //Test a non-required related model with an invalid value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'RelatedModelValueTypeMappingRuleForm' =>
                                                array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -900,7 +900,7 @@
 
             //Test a non-required related model with no value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'RelatedModelValueTypeMappingRuleForm' =>
                                                array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -915,7 +915,7 @@
 
             //Test a non-required related model with a valid zurmo model id
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'RelatedModelValueTypeMappingRuleForm' =>
                                                array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -930,7 +930,7 @@
 
             //Test a non-required related model with a valid external system id
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'RelatedModelValueTypeMappingRuleForm' =>
                                                array('type' => RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)));
             $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -945,7 +945,7 @@
 
             //Test a non-required related model with a valid model name
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'RelatedModelValueTypeMappingRuleForm' =>
                                                array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)));
             $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -960,7 +960,7 @@
 
             //Test a non-required related model with a model name for a new model.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'RelatedModelValueTypeMappingRuleForm' =>
                                                array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)));
             $sanitizerUtilTypes        = ImportModelTestItem2AttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -992,7 +992,7 @@
 
             //Test the id attribute with an invalid value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1009,7 +1009,7 @@
 
             //Test the id attribute with no value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1024,7 +1024,7 @@
 
             //Test a required string with a valid zurmo model id
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)));
             $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1039,7 +1039,7 @@
 
             //Test a required string with a valid external system id
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'IdValueTypeMappingRuleForm' =>
                                                array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)));
             $sanitizerUtilTypes        = IdAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1057,7 +1057,7 @@
         {
             //Test a required string with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = TextAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1075,7 +1075,7 @@
 
             //Test a required string with no value, but a valid default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = TextAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1090,7 +1090,7 @@
 
             //Test a required string with a valid value, and a default value. The valid value should come through.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = TextAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1105,7 +1105,7 @@
 
             //Test a required string with a valid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = TextAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1120,7 +1120,7 @@
 
             //Test a required string with a value that is too long and no specified default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = TextAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1137,7 +1137,7 @@
             //Test a required string with a value that is too long and a specified default value. The specified
             //default value should be ignored in this scenario.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'willNotMatter')));
             $sanitizerUtilTypes        = TextAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1156,7 +1156,7 @@
         {
             //Test a non-required phone with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = PhoneAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1171,7 +1171,7 @@
 
             //Test a non-required phone with no value, but a valid default value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = PhoneAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1186,7 +1186,7 @@
 
             //Test a non-required phone with a valid value, and a default value. The valid value should come through.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'something valid')));
             $sanitizerUtilTypes        = PhoneAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1201,7 +1201,7 @@
 
             //Test a non-required phone with a valid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = PhoneAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1216,7 +1216,7 @@
 
             //Test a non-required phone with a value that is too long and no specified default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = PhoneAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1233,7 +1233,7 @@
             //Test a non-required phone with a value that is too long and a specified default value. The specified
             //default value should be ignored in this scenario.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'willNotMatter')));
             $sanitizerUtilTypes        = PhoneAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1295,7 +1295,7 @@
         {
             //Test a non-required email with no value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = UrlAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1310,7 +1310,7 @@
 
             //Test a non-required email with no value and a default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'abc.com')));
             $sanitizerUtilTypes        = UrlAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1325,7 +1325,7 @@
 
             //Test a non-required email with a valid value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'def.com')));
             $sanitizerUtilTypes        = UrlAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1342,7 +1342,7 @@
             //be picked up, it should be ignored.  On the first sanitization failure, sanitization will stop, this is
             //why the default value is not set.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'ggggga.com')));
             $sanitizerUtilTypes        = UrlAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1373,7 +1373,7 @@
 
             //Test a required user with no value or default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultModelNameIdMappingRuleForm' =>
                                                array('defaultModelId' => null),
                                                'UserValueTypeModelAttributeMappingRuleForm' =>
@@ -1393,7 +1393,7 @@
 
             //Test a required string with no value, but a valid default value, a user id.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultModelNameIdMappingRuleForm' =>
                                                array('defaultModelId' => $billy->id),
                                                'UserValueTypeModelAttributeMappingRuleForm' =>
@@ -1411,7 +1411,7 @@
 
             //Test a required string with a valid user id.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultModelNameIdMappingRuleForm' =>
                                                array('defaultModelId' => null),
                                                'UserValueTypeModelAttributeMappingRuleForm' =>
@@ -1429,7 +1429,7 @@
 
             //Test a required string with a valid external system user id.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultModelNameIdMappingRuleForm' =>
                                                array('defaultModelId' => null),
                                                'UserValueTypeModelAttributeMappingRuleForm' =>
@@ -1447,7 +1447,7 @@
 
             //Test a required string with a valid username.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultModelNameIdMappingRuleForm' =>
                                                array('defaultModelId' => null),
                                                'UserValueTypeModelAttributeMappingRuleForm' =>
