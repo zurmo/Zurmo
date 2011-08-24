@@ -22,6 +22,14 @@
     color: #CCCCCC;
 }
 
+.xhtml-validation-info
+{
+    font-size: 0.75em;
+    text-align: center;
+    color: #CCCCCC;
+    margin-bottom: 7px;
+}
+
 #MainLogo
 {
     float: left;

@@ -69,7 +69,7 @@
                 if ($this->validate($content))
                 {
                     $content = $this->tidy($content);
-                    $content .= '<span style="background-color: lightgreen; color: green">Page is valid XHTML and has been tidied.</span><br />';
+                    $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has been tidied.</div>';
                 }
                 else
                 {
