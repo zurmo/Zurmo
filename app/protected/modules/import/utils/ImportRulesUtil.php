@@ -70,7 +70,11 @@
                         foreach($moduleClassNames as $moduleClassNameToCheckAccess)
                         {
                             if (!RightsUtil::canUserAccessModule($moduleClassNameToCheckAccess,
-                                                                Yii::app()->user->userModel))
+                                                                Yii::app()->user->userModel) ||
+                                !RightsUtil::
+                                doesUserHaveAllowByRightName($moduleClassNameToCheckAccess,
+                                                             $moduleClassNameToCheckAccess::getCreateRight(),
+                                                             Yii::app()->user->userModel))
                             {
                                 $addToArray = false;
                             }

@@ -38,6 +38,8 @@
 
         protected $dataProvider;
 
+        protected $explicitReadWriteModelPermissions;
+
         public function __construct(Import $import, $dataProvider)
         {
             assert('$dataProvider instanceof AnalyzerSupportedDataProvider');
@@ -46,6 +48,16 @@
             $this->mappingData            = $unserializedData['mappingData'];
             $this->importRules            = ImportRulesUtil::makeImportRulesByType($unserializedData['importRulesType']);
             $this->dataProvider           = $dataProvider;
+            if(isset($unserializedData['explicitReadWriteModelPermissions']))
+            {
+                $this->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                           makeByMixedPermitablesData(
+                                                           $unserializedData['explicitReadWriteModelPermissions']);
+            }
+            else
+            {
+                $this->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            }
         }
 
         public function getAllStepsMessage()
@@ -76,7 +88,11 @@
             }
             $this->dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($this->import);
-            ImportUtil::importByDataProvider($this->dataProvider, $this->importRules, $this->mappingData, $importResultsUtil);
+            ImportUtil::importByDataProvider($this->dataProvider,
+                                             $this->importRules,
+                                             $this->mappingData,
+                                             $importResultsUtil,
+                                             $this->explicitReadWriteModelPermissions);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             $pageCount                             = $this->dataProvider->getPagination()->getPageCount();

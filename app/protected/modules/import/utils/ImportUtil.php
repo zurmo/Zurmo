@@ -59,8 +59,11 @@
          * @param array $mappingData
          * @param object $importResultsUtil
          */
-        public static function importByDataProvider(ImportDataProvider $dataProvider, ImportRules $importRules,
-                                                    $mappingData, ImportResultsUtil $importResultsUtil)
+        public static function importByDataProvider(ImportDataProvider $dataProvider,
+                                                    ImportRules $importRules,
+                                                    $mappingData,
+                                                    ImportResultsUtil $importResultsUtil,
+                                                    ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
         {
             $data = $dataProvider->getData();
             foreach($data as $rowBean)
@@ -71,7 +74,8 @@
                 //but explicity checking for security rights/permissions.
                 try
                 {
-                    static::importByImportRulesRowData($importRules, $rowBean, $mappingData, $importRowDataResultsUtil);
+                    static::importByImportRulesRowData($importRules, $rowBean, $mappingData,
+                                                       $importRowDataResultsUtil, $explicitReadWriteModelPermissions);
                 }
                 catch(AccessDeniedSecurityException $e)
                 {
@@ -89,8 +93,11 @@
          * @param array $mappingData
          * @param object $importRowDataResultsUtil
          */
-        public static function importByImportRulesRowData(ImportRules $importRules, $rowBean, $mappingData,
-                                                          ImportRowDataResultsUtil $importRowDataResultsUtil)
+        public static function importByImportRulesRowData(ImportRules $importRules,
+                                                          $rowBean,
+                                                          $mappingData,
+                                                          ImportRowDataResultsUtil $importRowDataResultsUtil,
+                                                          ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
         {
             assert('$rowBean instanceof RedBean_OODBBean');
             assert('is_array($mappingData)');
@@ -187,7 +194,17 @@
                     $importRowDataResultsUtil->addMessage(Yii::t('Default', 'Record saved correctly.'));
                     if($makeNewModel)
                     {
-                        $importRowDataResultsUtil->setStatusToCreated();
+                        try
+                        {
+                            static::resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
+                            $importRowDataResultsUtil->setStatusToCreated();
+                        }
+                        catch(AccessDeniedSecurityException $e)
+                        {
+                            $importRowDataResultsUtil->addMessage('The record saved, but you do not have permissions '.
+                            'to set the security the way you did. As a result this record has been removed.');
+                            $importRowDataResultsUtil->setStatusToError();
+                        }
                     }
                     else
                     {
@@ -209,6 +226,25 @@
                 $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModel($model);
                 $importRowDataResultsUtil->addMessages($messages);
                 $importRowDataResultsUtil->setStatusToError();
+            }
+        }
+
+        protected static function resolveExplicitReadWriteModelPermissions($model,
+                                  ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
+        {
+            if($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
+            {
+                foreach($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
+                {
+                    $model->addPermissions($permitable, Permission::READ);
+                }
+            }
+            if($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
+            {
+                foreach($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
+                {
+                    $model->addPermissions($permitable, Permission::READ_WRITE);
+                }
             }
         }
 
