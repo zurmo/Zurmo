@@ -552,7 +552,7 @@
 
             //Test a non-required FullName with a valid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array('mappingRulesData' => array(
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)));
             $sanitizerUtilTypes        = FullNameAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
@@ -1252,7 +1252,7 @@
         {
             //Test a non-required textArea with no value
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array();
+            $columnMappingData         = array('type' => 'importColumn');
             $sanitizerUtilTypes        = TextAreaAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
@@ -1265,7 +1265,7 @@
 
             //Test a non-required textArea with a valid value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array();
+            $columnMappingData         = array('type' => 'importColumn');
             $sanitizerUtilTypes        = TextAreaAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
@@ -1278,7 +1278,7 @@
 
             //Test a non-required textArea with a value that is too long.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
-            $columnMappingData         = array();
+            $columnMappingData         = array('type' => 'importColumn');
             $sanitizerUtilTypes        = TextAreaAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $value                     = self::getStringByLength(65070);
             $sanitizedValue            = ImportSanitizerUtil::

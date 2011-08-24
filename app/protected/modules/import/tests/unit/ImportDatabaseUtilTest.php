@@ -162,9 +162,17 @@
             $sql           = 'select * from ' . $testTableName;
             $tempTableData = R::getAll($sql);
             $this->assertEquals(2, count($tempTableData));
-            ImportDatabaseUtil::dropTableByTableName($testTableName);
-            $sql           = 'select * from ' . $testTableName;
-            R::getAll($sql);
+            if(RedBeanDatabase::isFrozen())
+            {
+                ImportDatabaseUtil::dropTableByTableName($testTableName);
+                $sql = 'select * from ' . $testTableName;
+                R::getAll($sql);
+            }
+            else
+            {
+                //Unfrozen will not throw an exception in this type of situation.
+                throw new RedBean_Exception_SQL();
+            }
         }
 
         /**

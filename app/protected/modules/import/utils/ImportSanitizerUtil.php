@@ -54,7 +54,7 @@
                 $sanitizerUtilClassName = $sanitizerUtilType . 'SanitizerUtil';
                 //For extra columns, only process sanitization for 'required' since that will add the default values.
                 //Other sanitization is not required since extra columns are not fed from external data.
-                if($columnMappingData["type"] = 'extraColumn' &&
+                if($columnMappingData["type"] == 'extraColumn' &&
                    !is_subclass_of($sanitizerUtilClassName, 'RequiredSanitizerUtil') &&
                    $sanitizerUtilClassName != 'RequiredSanitizerUtil')
                 {
