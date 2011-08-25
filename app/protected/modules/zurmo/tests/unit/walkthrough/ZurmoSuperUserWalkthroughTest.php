@@ -175,6 +175,18 @@
                 $this->assertEquals($compareContent, $content);
             }
             //todo: test all file errors.
+
+
+            //Test deleting a file.
+            $this->assertEquals(1, count(FileModel::getAll()));
+            $this->assertEquals(1, count(FileContent::getAll()));
+            $this->setGetArray(array('id' => $fileModels[0]->id));
+            $this->resetPostArray();
+            $content = $this->runControllerWithExitExceptionAndGetContent('zurmo/fileModel/delete');
+
+            //Now confirm that there are no file models or content in the system.
+            $this->assertEquals(0, count(FileModel::getAll()));
+            $this->assertEquals(0, count(FileContent::getAll()));
         }
     }
 ?>
