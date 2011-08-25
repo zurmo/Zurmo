@@ -42,11 +42,28 @@
             return $content;
         }
 
+        /**
+         * Clear out html options for 'empty' since it is not applicable for a rado dropdown.
+         * @see DropDownElement::getEditableHtmlOptions()
+         */
         protected function getEditableHtmlOptions()
         {
             $htmlOptions = parent::getEditableHtmlOptions();
             $htmlOptions['template'] =  '<div class="radio-input">{input}{label}</div>';
+            if(isset($htmlOptions['empty']))
+            {
+                unset($htmlOptions['empty']);
+            }
             return $htmlOptions;
+        }
+
+        /**
+         * Override to remove the label 'for' property since it will not be valid XHTML.
+         * @see DropDownElement::renderLabel()
+         */
+        protected function renderLabel()
+        {
+            return $this->getFormattedAttributeLabel();
         }
     }
 ?>

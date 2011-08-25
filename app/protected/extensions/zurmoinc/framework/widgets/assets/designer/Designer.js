@@ -201,9 +201,9 @@ var designer = {
     },
     updateLayoutElementWidth : function()
     {
-    	var total_elem_width = 0;
+        var total_elem_width = 0;
         $('.layout-elements-column-container').each(function() {
-        	total_elem_width += $(this).outerWidth( true );
+            total_elem_width += $(this).outerWidth( true );
         });
         $('.layout-elements').css('width', total_elem_width + 150);
     },
@@ -415,6 +415,7 @@ var designer = {
             cursor: 'pointer',
             start: function(event,ui)
             {
+                $(ui.helper).attr('id', $(this).attr('id'));
                 $(ui.helper).css('height', '20px');
                 $(ui.helper).css('width', '260px');
             },
