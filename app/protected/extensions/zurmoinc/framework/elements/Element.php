@@ -261,6 +261,10 @@
             return $name;
         }
 
+        /**
+         * @see $this->getEditableInputName()
+         * @param string $attributeName
+         */
         public static function resolveInputNameForEditableInput($attributeName)
         {
             assert('is_string($attributeName)');
