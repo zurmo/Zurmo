@@ -39,13 +39,14 @@
             return "
                 function enableDisablePolicyTextField(helperValue, textFieldId, compareValue)
                 {
+
                     if (helperValue == compareValue)
                     {
-                        $('#' + textFieldId).attr('disabled', '');
+                        $('#' + textFieldId).removeAttr('readonly');
                     }
                     else
                     {
-                        $('#' + textFieldId).attr('disabled', 'disabled');
+                        $('#' + textFieldId).attr('readonly', 'readonly');
                         $('#' + textFieldId).val('');
                     }
                 }
