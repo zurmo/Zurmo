@@ -74,7 +74,7 @@
             $params = array('htmlOptions' => array('size' => 5));
             if(count($existingFilesInformation) == 1)
             {
-                $params['disabled'] = true;
+                $params['htmlOptions']['readonly'] = 'readonly';
             }
 
             $delimiterElement                          = new TextElement($this->model, 'rowColumnDelimiter',

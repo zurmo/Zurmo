@@ -148,28 +148,6 @@ Modal Select Link.  Show loading icon after click
 }
 
 /*
-Multiple file upload element in user interface.
-*/
-div.multiple-file-upload table
-{
-    width: auto;
-}
-
-div.multiple-file-upload .file_upload_progress
-{
-    width: 200px;
-}
-div.multiple-file-upload table th, div.multiple-file-upload table td
-{
-    border: 0px;
-}
-
-div.multiple-file-upload .file_upload_progress div {
-  width: 150px;
-  height: 15px;
-}
-
-/*
 Radio input buttons and text
 */
 div.radio-input

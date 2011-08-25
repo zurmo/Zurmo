@@ -225,10 +225,3 @@ div.latest-activity-view-type
     padding-top:5px;
     float: left;
 }
-
-/*
-File upload progress bar
-*/
-div.multiple-file-upload .file_upload_progress .ui-progressbar-value {
-  background: url(../images/pbar-ani.gif);
-}

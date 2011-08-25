@@ -27,10 +27,14 @@
     /**
      * Render a file upload element that can allow for multiple file uploads and calls ajax to upload the files to
      * the server as you add them.
+     * Utilizes file upload plpugin here: https://github.com/blueimp/jQuery-File-Upload
      */
     class FileUpload extends ZurmoWidget
     {
-        public $scriptFile = array('jquery.fileupload.js', 'jquery.fileupload-ui.js');
+        public $scriptFile = array('jquery.fileupload.js',
+                                   'jquery.fileupload-ui.js', 'jquery.tmpl.min.js', 'jquery.iframe-transport.js');
+
+        public $cssFile    = 'jquery.fileupload-ui.css';
 
         public $assetFolderName = 'fileUpload';
 
@@ -123,108 +127,156 @@
             assert('is_string($this->inputName) && $this->inputName != ""');
             assert('is_string($this->hiddenInputName) && $this->hiddenInputName != ""');
             assert('is_array($this->existingFiles)');
+            Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
             parent::init();
         }
 
         public function run()
         {
             $id = $this->getId();
-            $options                     = $this->options;
-            $options['url']              = $this->uploadUrl;
-            $options['uploadTable']      = "#files{$id}";
-            $options['downloadTable']    = "#files{$id}";
-            $options['buildUploadRow']   = $this->makeUploadRowScriptContent();
-            $options['buildDownloadRow'] = $this->makeDownloadRowScriptContent();
+            $jsonEncodedExistingFiles = CJSON::encode($this->existingFiles);
 
-            $encodedOptions  = CJavaScript::encode($options);
+            if($this->allowMultipleUpload)
+            {
+                $sendAction = null;
+                $addLabel   = Yii::t('Default', 'Add Files');
+            }
+            else
+            {
+                $sendAction = "\$('#{$this->formName}').find('.files > tbody').children().remove();";
+                $addLabel = Yii::t('Default', 'Add File');
+            }
+
             $javaScript = <<<EOD
-jQuery('#{$this->formName}').fileUploadUI({$encodedOptions});
-$('#{$this->formName}').find('.delete-file-link').live('click', function () {
-    $.ajax({
-      url: "{$this->deleteUrl}&id=" + $(this).prev().val(),
+$(function () {
+    'use strict';
+
+    // Initialize the jQuery File Upload widget:
+    $('#fileUpload{$id}').fileupload({
+        dataType: 'json',
+        url: '{$this->uploadUrl}',
+        autoUpload: true,
+        sequentialUploads: true,
+        add: function (e, data) {
+            {$this->beforeUploadAction}
+            {$sendAction}
+            var that = $(this).data('fileupload');
+            that._adjustMaxNumberOfFiles(-data.files.length);
+            data.isAdjusted = true;
+            data.isValidated = that._validate(data.files);
+            data.context = that._renderUpload(data.files)
+                .appendTo($(this).find('.files')).fadeIn(function () {
+                    // Fix for IE7 and lower:
+                    $(this).show();
+                }).data('data', data);
+            if ((that.options.autoUpload || data.autoUpload) &&
+                    data.isValidated) {
+                data.jqXHR = data.submit();
+            }
+        }
     });
-    $(this).parent().parent().remove();
-    {$this->afterDeleteAction}
+    // Open download dialogs via iframes,
+    // to prevent aborting current uploads:
+    $('#fileUpload{$id} .files a:not([target^=_blank])').live('click', function (e) {
+        e.preventDefault();
+        $('<iframe style="display:none;"></iframe>')
+            .prop('src', this.href)
+            .appendTo('body');
+    });
+    $('.fileupload-buttonbar').removeClass('ui-widget-header ui-corner-top');
+    $('.fileupload-content').removeClass('ui-widget-content ui-corner-bottom');
+    $('#fileUpload{$id}').bind('fileuploaddestroy', function (e, data) {
+    $('#ImportWizardForm_rowColumnDelimiter').removeAttr('readonly');
+            {$this->afterDeleteAction}
+    });
+    $('#fileUpload{$id}').bind('fileuploadalways', function (e, data) {
+        if(data == undefined || data.result == undefined ||
+          ((data.result[0] != undefined && data.result[0].error != undefined) || data.result.error != undefined))
+        {
+            setTimeout(function () {
+               $('#{$this->formName}').find('.files > tbody').children(':last').fadeOut('slow', function() { $(this).remove();});
+               {$this->afterDeleteAction}
+            }, 1000);
+        }
+    });
+    //load existing files
+    var existingFiles = {$jsonEncodedExistingFiles};
+    var fu = $('#fileUpload{$id}').data('fileupload');
+    fu._adjustMaxNumberOfFiles(-existingFiles.length);
+    fu._renderDownload(existingFiles)
+        .appendTo($('#fileUpload{$id} .files'))
+        .fadeIn(function () {
+            // Fix for IE7 and lower:
+            $(this).show();
+    });
 });
+
 EOD;
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);
 
             $htmlOptions = array('id' => $this->inputId);
-            echo '<div class="multiple-file-upload">' . "\n";
-            echo CHtml::fileField($this->inputName, null, $htmlOptions) . $this->renderMaxSizeContent($this->maxSize);
-            echo '<table id="files' . $id . '">' . "\n";
-            echo '<colgroup><col/><col/><col/></colgroup>' . "\n";
-            echo '<tbody>'  . "\n";
-            echo '<tr><td></td><td></td></tr>'. "\n";
-            foreach ($this->existingFiles as $existingFile)
-            {
-                echo '<tr><td>' . Yii::app()->format->text($existingFile['name']) . '</td>' . "\n";
-                echo '<td>' . Yii::app()->format->text($existingFile['size']) . '</td><td>';
-                //Keep thie hidden input right before the delete link. This will ensure the delete link works properly.
-                echo '<input name="' . $this->hiddenInputName . '[]" type="hidden" value="' . $existingFile['id'] . '"/>';
-                echo '<span class="ui-icon ui-icon-trash delete-file-link">' . Yii::t('Default', 'Delete');
-                echo '</span></td>' . "\n";
-                echo '</tr>' . "\n";
-            }
-            echo '</tbody>' . "\n";
-            echo '</table>' . "\n";
-            echo '</div>'   . "\n";
+            echo '<div id="fileUpload' . $id . '">'                         . "\n";
+            echo '<div class="fileupload-buttonbar">'           	        . "\n";
+            echo '<label class="fileinput-button">'                         . "\n";
+            echo '<span>' . $addLabel . '</span>'                           . "\n";
+            echo CHtml::fileField($this->inputName, null, $htmlOptions);
+            echo '</label>' . $this->renderMaxSizeContent($this->maxSize)   . "\n";
+            echo '</div><div class="clear"></div>'                          . "\n";
+            echo '<div class="fileupload-content">'                         . "\n";
+            echo '<table class="files"><tbody><tr><td colspan="6">'         . "\n";
+            echo '</td></tr></tbody></table>'                               . "\n";
+            echo '</div>'                                                   . "\n";
+            echo '</div>'                                                   . "\n";
+            echo $this->makeUploadRowScriptContent()                        . "\n";
+            echo $this->makeDownloadRowScriptContent()                      . "\n";
         }
 
         private function makeDownloadRowScriptContent()
         {
             $deleteLabel = Yii::t('Default', 'Delete');
-            $js = <<<EOD
-js:function (file, index) {
-    $('#{$this->formName}').find('.file-upload-error-row').remove();
-    if (file.error != null)
-    {
-        return $('<tr class="file-upload-error-row"><td colspan="3"><span class="error">' + file.error + '</span></td><tr>');
-    }
-    else
-    {
-        return $('<tr><td>' + file.name + '<\/td>' +
-            '<td>' + file.humanReadableSize + '</td>' +
-            '<td><input name="{$this->hiddenInputName}[]" type="hidden" value="' + file.id + '"/>' +
-            '<span class="ui-icon ui-icon-trash delete-file-link">$deleteLabel<\/span><\/td>' +
-            '<\/tr>');
-    }
-}
+$scriptContent = <<<EOD
+<script id="template-download" type="text/x-jquery-tmpl">
+    <tr class="template-download{{if error}} ui-state-error{{/if}}">
+        {{if error}}
+            <td class="error" colspan="4">\${error}</td>
+        {{else}}
+            <input name="{$this->hiddenInputName}[]" type="hidden" value="\${id}"/>
+            <td class="name" colspan="4">\${name}</td>
+            <td class="size">\${size}</td>
+            <td class="delete">
+                <button data-type="DELETE" data-url="{$this->deleteUrl}&id=\${id}">{$deleteLabel}</button>
+            </td>
+        {{/if}}
+
+    </tr>
+</script>
+
 EOD;
+            return $scriptContent;
             return $js;
         }
 
         private function makeUploadRowScriptContent()
         {
-            if ($this->allowMultipleUpload)
-            {
-                $params      = "file, index";
-                $file        = "file[index].name";
-                $extraAction = null;
-            }
-            else
-            {
-                $params      = "file, index";
-                $file        = "file[0].name";
-                $extraAction = "$('#{$this->formName}').find('.delete-file-link').parent().parent().remove()";
-            }
+            $startLabel  = Yii::t('Default', 'Start');
             $cancelLabel = Yii::t('Default', 'Cancel');
-            $js = <<<EOD
-js:function ($params) {
-    {$this->beforeUploadAction}
-    $extraAction
-    return $('<tr>'+
-        '<td class="filename">' + $file + '</td>'+
-        '<td class="file_upload_progress"><div></div></td>'+
-        '<td class="file_upload_cancel">'+
-            '<button class="ui-state-default ui-corner-all">'+
-                '<span class="ui-icon ui-icon-cancel">$cancelLabel</span>'+
-            '</button>'+
-        '</td>'+
-    '</tr>');
-}
+$scriptContent = <<<EOD
+<script id="template-upload" type="text/x-jquery-tmpl">
+    <tr class="template-upload{{if error}} ui-state-error{{/if}}">
+        <td class="preview"></td>
+        <td class="name">\${name}</td>
+        <td class="size">\${sizef}</td>
+        {{if error}}
+            <td class="error" colspan="2">\${error}</td>
+        {{else}}
+            <td class="progress"><div></div></td>
+            <td class="start"><button>{$startLabel}</button></td>
+        {{/if}}
+        <td class="cancel"><button>{$cancelLabel}</button></td>
+    </tr>
+</script>
 EOD;
-        return $js;
+            return $scriptContent;
         }
 
         protected static function renderMaxSizeContent($maxSize)

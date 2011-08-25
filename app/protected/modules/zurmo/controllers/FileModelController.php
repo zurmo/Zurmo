@@ -28,6 +28,9 @@
     {
         public function actionUpload($filesVariableName)
         {
+          //  $fileUploadData = array(array('error' => Yii::t('Default', 'Error:')));
+          // echo CJSON::encode($fileUploadData);
+          //  Yii::app()->end(0, false);
             try
             {
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
@@ -40,7 +43,7 @@
                 assert('$fileModel instanceof FileModel');
                 $fileUploadData = array('name' => $fileModel->name,
                                         'type' => $fileModel->type,
-                                        'humanReadableSize' =>
+                                        'size' =>
                                         FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
                                         'id' => $fileModel->id);
             }
@@ -48,7 +51,7 @@
             {
                 $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
             }
-            echo CJSON::encode($fileUploadData);
+            echo CJSON::encode(array($fileUploadData));
             Yii::app()->end(0, false);
         }
 

@@ -167,7 +167,7 @@
             {
                 $importWizardForm->mappingData = ImportMappingUtil::makeMappingDataByTableName($tableName);
             }
-            catch(NoRowsInTableExceptionException $e)
+            catch(NoRowsInTableException $e)
             {
                 throw new FailedFileUploadException(Yii::t('Default', 'Import file has no rows to use.'));
             }

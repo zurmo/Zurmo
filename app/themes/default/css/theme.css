@@ -234,13 +234,6 @@ div.latest-activity-view-type
 }
 
 /*
-File upload progress bar
-*/
-div.multiple-file-upload .file_upload_progress .ui-progressbar-value {
-  background: url(../images/pbar-ani.gif);
-}
-
-/*
 Import module styles
 */
 div.mapping-rules

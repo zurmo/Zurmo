@@ -489,7 +489,7 @@
                     ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
                 }
             }
-            echo CJSON::encode($fileUploadData);
+            echo CJSON::encode(array($fileUploadData));
             Yii::app()->end(0, false);
         }
 
