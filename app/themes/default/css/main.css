@@ -118,6 +118,11 @@ a:hover
     width: 32em;
 }
 
+#AboutView a
+{
+    text-decoration: underline;
+}
+
 /*
 Jquery UI datepicker trigger icon.  This style is not declared
 in the jquery-ui.css file.  The margin-bottom value causes the
