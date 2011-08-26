@@ -29,41 +29,24 @@
      * This element is used by the designer for managing
      * the contact state attribute.
      */
-    class AllContactStatesDropDownElement extends DropDownElement implements DerivedElementInterface
+    class AllContactStatesDropDownElement extends StaticDropDownFormElement implements DerivedElementInterface
     {
         /**
-         * Renders the editable dropdown content.
-         * @return A string containing the element's content.
+         * Override because in the user interface, the dynamic way in which this drop down is changed based on changes
+         * in the user interface relies on the id of the drop down being a structured a certain way.
+         * The example usage is in the designer tool -> Contacts -> fields -> status -> edit.
+         * @see DropDownElement::getIdForSelectInput()
          */
-        protected function renderControlEditable()
+        protected function getIdForSelectInput()
         {
-            $dropDownArray            = $this->getDropDownArray();
-            $htmlOptions              = array();
-            $htmlOptions['id']        = $this->getEditableInputId();
-            $htmlOptions['name']      = $this->getEditableInputName();
-            if ($this->getAddBlank())
-            {
-                $htmlOptions['empty'] = Yii::t('Default', 'None');
-            }
-            $htmlOptions['disabled']  = $this->getDisabledValue();
-            return $this->form->dropDownList($this->model, $this->attribute, $dropDownArray, $htmlOptions);
-        }
-
-        protected function renderLabel()
-        {
-            if ($this->form === null)
-            {
-                return $this->getFormattedAttributeLabel();
-            }
-            return $this->form->labelEx($this->model, $this->attribute, array('for' => $this->getEditableInputId()));
+            return $this->getEditableInputId($this->attribute);
         }
 
         protected function renderControlNonEditable()
         {
             $relatedAttributeName = $this->getRelatedAttributeName();
             assert('$relatedAttributeName != null');
-            $dropDownArray = $this->getDropDownArray();
-            return Yii::app()->format->text(ArrayUtil::getArrayValue($dropDownArray, $this->model->{$this->attribute}));
+            return parent::renderControlNonEditable();
         }
 
         protected function getRelatedAttributeName()
