@@ -44,8 +44,8 @@
             $this->temporaryDatabaseName = "{$this->rootUsername}_wacky";
             if ($this->rootUsername == 'zurmo')
             {
-                $this->rootUsername          = 'root';
-                $this->rootPassword          = 'wacko';
+                $this->rootUsername          = 'zurmoroot';
+                $this->rootPassword          = 'somepass';
                 $this->temporaryDatabaseName = 'wacky';
             }
         }
