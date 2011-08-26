@@ -36,10 +36,6 @@
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
                 $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);
-                if($fileModel == null)
-                {
-                    throw new FailedFileUploadException(Yii::t('Default', 'File failed to upload. The file is empty.'));
-                }
                 assert('$fileModel instanceof FileModel');
                 $fileUploadData = array('name' => $fileModel->name,
                                         'type' => $fileModel->type,

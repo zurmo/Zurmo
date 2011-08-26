@@ -103,6 +103,20 @@
             $this->assertEquals(0, count(FileContent::getAll()));
         }
 
+        /**
+         * @expectedException FailedFileUploadException
+         */
+        public function testMakeFileViaUploadWhereFileIsAnEmptyFile()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $pathToFiles = Yii::getPathOfAlias('application.modules.zurmo.tests.unit.files');
+            $contents    = file_get_contents($pathToFiles . DIRECTORY_SEPARATOR . 'testEmptyNote.txt');
+            $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . 'testEmptyNote.txt';
+            self::resetAndPopulateFilesArrayByFilePathAndName('test', $filePath, 'testEmptyNote.txt');
+            $uploadedFile = CUploadedFile::getInstanceByName('test');
+            $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);
+        }
+
         public function testModelWithAttachmentTestItem()
         {
             if (!RedBeanDatabase::isFrozen())

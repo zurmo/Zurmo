@@ -35,6 +35,7 @@
 
         /**
          * Given an instance of a CUploadedFile, make a FileModel, save it, and return it.
+         * If the file is empty, an exception is thrown otherwise the fileModel is returned.
          * @param object $uploadedFile CUploadedFile
          */
         public static function makeByUploadedFile($uploadedFile)
@@ -49,7 +50,7 @@
             $file->size           = $uploadedFile->getSize();
             if (!$file->save())
             {
-                return null;
+                throw new FailedFileUploadException(Yii::t('Default', 'File failed to upload. The file is empty.'));
             }
             return $file;
         }
