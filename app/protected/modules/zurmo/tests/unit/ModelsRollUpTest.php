@@ -48,8 +48,8 @@
                                 'div2 small opp', $super, $division2);
 
             //attach divisions to headquarters
-            $headquarters->members->add($division1);
-            $headquarters->members->add($division2);
+            $headquarters->accounts->add($division1);
+            $headquarters->accounts->add($division2);
             assert($headquarters->save()); // Not Coding Standard
 
             //attach opportunities to contacts
@@ -90,7 +90,7 @@
             $opportunityDiv2 = $opportunityDiv2[0];
 
             //Headquarter rollup should include all items created so far.
-            $this->assertEquals(2, $headquarters->members->count());
+            $this->assertEquals(2, $headquarters->accounts->count());
             $itemIds = ModelRollUpUtil::getItemIdsByModelAndUser($headquarters, $super);
             $compareItemIds = array();
             $this->assertEquals(9, count($itemIds));
