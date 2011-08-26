@@ -194,7 +194,7 @@
 
         protected function resetGetArray()
         {
-            $_GET = null;
+            $_GET = array();
         }
 
         protected function setGetArray($data)
@@ -208,7 +208,7 @@
 
         protected function resetPostArray()
         {
-            $_POST = null;
+            $_POST = array();
         }
 
         protected function setPostArray($data)
