@@ -33,7 +33,7 @@
         {
             assert('is_string($importRulesType)');
             $importRulesClassName = $importRulesType . 'ImportRules';
-            if(@class_exists($importRulesClassName) === false)
+            if (@class_exists($importRulesClassName) === false)
             {
                 throw new NotSupportedException();
             }
@@ -57,17 +57,17 @@
             //todo: cache results to improve performance if needed.
             $importRulesTypes = array();
             $modules = Module::getModuleObjects();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 $rulesClassNames = $module::getAllClassNamesByPathFolder('rules');
-                foreach($rulesClassNames as $ruleClassName)
+                foreach ($rulesClassNames as $ruleClassName)
                 {
                     $classToEvaluate     = new ReflectionClass($ruleClassName);
                     if (is_subclass_of($ruleClassName, 'ImportRules') && !$classToEvaluate->isAbstract())
                     {
                         $moduleClassNames = $ruleClassName::getModuleClassNames();
                         $addToArray       = true;
-                        foreach($moduleClassNames as $moduleClassNameToCheckAccess)
+                        foreach ($moduleClassNames as $moduleClassNameToCheckAccess)
                         {
                             if (!RightsUtil::canUserAccessModule($moduleClassNameToCheckAccess,
                                                                 Yii::app()->user->userModel) ||
@@ -79,7 +79,7 @@
                                 $addToArray = false;
                             }
                         }
-                        if($addToArray)
+                        if ($addToArray)
                         {
                             $importRulesTypes[$ruleClassName::getType()] = $ruleClassName::getDisplayLabel();
                         }
@@ -103,14 +103,14 @@
         {
             assert('is_array($requiredAttributeCollection)');
             assert('is_array($mappedAttributeImportRulesCollection)');
-            foreach($mappedAttributeImportRulesCollection as $attributeIndex => $attributeImportRules)
+            foreach ($mappedAttributeImportRulesCollection as $attributeIndex => $attributeImportRules)
             {
                 $modelAttributeNames        = array();
-                if($attributeImportRules instanceof DerivedAttributeImportRules)
+                if ($attributeImportRules instanceof DerivedAttributeImportRules)
                 {
                     $modelAttributeNames    = $attributeImportRules->getRealModelAttributeNames();
                 }
-                elseif($attributeImportRules instanceof NonDerivedAttributeImportRules)
+                elseif ($attributeImportRules instanceof NonDerivedAttributeImportRules)
                 {
                     $modelAttributeNames[0] = $attributeIndex;
                 }
@@ -118,15 +118,15 @@
                 {
                     throw new NotSupportedException();
                 }
-                foreach($modelAttributeNames as $modelAttributeName)
+                foreach ($modelAttributeNames as $modelAttributeName)
                 {
-                    if(isset($requiredAttributeCollection[$modelAttributeName]))
+                    if (isset($requiredAttributeCollection[$modelAttributeName]))
                     {
                         unset($requiredAttributeCollection[$modelAttributeName]);
                     }
                 }
             }
-            if(count($requiredAttributeCollection) > 0)
+            if (count($requiredAttributeCollection) > 0)
             {
                 return false;
             }
@@ -150,14 +150,14 @@
         {
             assert('is_array($mappedAttributeImportRulesCollection)');
             $mappedModelAttributeNames = array();
-            foreach($mappedAttributeImportRulesCollection as $attributeImportRules)
+            foreach ($mappedAttributeImportRulesCollection as $attributeImportRules)
             {
-                if($attributeImportRules instanceof AttributeImportRules)
+                if ($attributeImportRules instanceof AttributeImportRules)
                 {
                     $modelAttributeNames       = $attributeImportRules->getRealModelAttributeNames();
-                    foreach($modelAttributeNames as $modelAttributeName)
+                    foreach ($modelAttributeNames as $modelAttributeName)
                     {
-                        if(in_array($modelAttributeName, $mappedModelAttributeNames))
+                        if (in_array($modelAttributeName, $mappedModelAttributeNames))
                         {
                             $displayLabel = $attributeImportRules->getDisplayLabelByAttributeName($modelAttributeName);
                             throw new ImportAttributeMappedMoreThanOnceException($displayLabel);

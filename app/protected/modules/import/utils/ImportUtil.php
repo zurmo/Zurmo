@@ -40,7 +40,7 @@
             assert('$import instanceof Import');
             assert('is_array($messagesData) || $messagesData == null');
             $serializedData = unserialize($import->serializedData);
-            if($merge && isset($serializedData['dataAnalyzerMessagesData']))
+            if ($merge && isset($serializedData['dataAnalyzerMessagesData']))
             {
                 $serializedData['dataAnalyzerMessagesData'] = array_merge($serializedData['dataAnalyzerMessagesData'],
                                                                           $messagesData);
@@ -66,7 +66,7 @@
                                                     ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
         {
             $data = $dataProvider->getData();
-            foreach($data as $rowBean)
+            foreach ($data as $rowBean)
             {
                 assert('$rowBean->id != null');
                 $importRowDataResultsUtil = new ImportRowDataResultsUtil((int)$rowBean->id);
@@ -107,7 +107,7 @@
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
 
             //Process the 'id' column first if available.
-            if(false !== $idColumnName = static::getIdColumnNameByMappingData($mappingData))
+            if (false !== $idColumnName = static::getIdColumnNameByMappingData($mappingData))
             {
                 $columnMappingData = $mappingData[$idColumnName];
                 $attributeImportRules = AttributeImportRulesFactory::
@@ -120,29 +120,29 @@
                                                                                              $columnMappingData,
                                                                                              $importSanitizeResultsUtil);
                 assert('count($attributeValueData) == 0 || count($attributeValueData) == 1');
-                if($attributeValueData['id'] != null)
+                if ($attributeValueData['id'] != null)
                 {
                     $model        = $modelClassName::getById($attributeValueData['id']);
                     $makeNewModel = false;
                 }
-                elseif($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
+                elseif ($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
                 {
                     $externalSystemId = $attributeValueData
                                         [ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME];
                 }
             }
-            if($makeNewModel)
+            if ($makeNewModel)
             {
                 $model = new $modelClassName();
                 $model->setScenario('importModel');
             }
 
             //Process the rest of the mapped colummns.
-            foreach($mappingData as $columnName => $columnMappingData)
+            foreach ($mappingData as $columnName => $columnMappingData)
             {
                 assert('$columnMappingData["type"] == "importColumn" ||
                         $columnMappingData["type"] == "extraColumn"');
-                if($columnMappingData['attributeIndexOrDerivedType'] != null)
+                if ($columnMappingData['attributeIndexOrDerivedType'] != null)
                 {
                     $attributeImportRules = AttributeImportRulesFactory::
                                             makeByImportRulesTypeAndAttributeIndexOrDerivedType(
@@ -151,7 +151,7 @@
                                             resolveValueToSanitizeByValueAndColumnType($rowBean->$columnName,
                                                                                        $columnMappingData['type']);
 
-                    if($attributeImportRules instanceof NonDerivedAttributeImportRules &&
+                    if ($attributeImportRules instanceof NonDerivedAttributeImportRules &&
                        $attributeImportRules->getModelClassName() != $modelClassName)
                     {
                         static::resolveModelForAttributeIndexWithMultipleNonDerivedAttributes($model,
@@ -160,7 +160,7 @@
                                                                                               $columnMappingData,
                                                                                               $importSanitizeResultsUtil);
                     }
-                    elseif($attributeImportRules instanceof DerivedAttributeSupportedImportRules)
+                    elseif ($attributeImportRules instanceof DerivedAttributeSupportedImportRules)
                     {
                         static::resolveModelForModelDerivedAttribute(                      $model,
                                                                                            $importRules::getType(),
@@ -182,17 +182,17 @@
             }
 
             $validated = $model->validate();
-            if($validated && $importSanitizeResultsUtil->shouldSaveModel())
+            if ($validated && $importSanitizeResultsUtil->shouldSaveModel())
             {
                 $saved = $model->save();
-                if($saved)
+                if ($saved)
                 {
-                    if($externalSystemId!= null)
+                    if ($externalSystemId!= null)
                     {
                         ExternalSystemIdUtil::updateByModel($model, $externalSystemId);
                     }
                     $importRowDataResultsUtil->addMessage(Yii::t('Default', 'Record saved correctly.'));
-                    if($makeNewModel)
+                    if ($makeNewModel)
                     {
                         try
                         {
@@ -219,7 +219,7 @@
             }
             else
             {
-                if(!$importSanitizeResultsUtil->shouldSaveModel())
+                if (!$importSanitizeResultsUtil->shouldSaveModel())
                 {
                     $importRowDataResultsUtil->addMessages($importSanitizeResultsUtil->getMessages());
                 }
@@ -232,16 +232,16 @@
         protected static function resolveExplicitReadWriteModelPermissions($model,
                                   ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
         {
-            if($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
+            if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
             {
-                foreach($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
+                foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
                 {
                     $model->addPermissions($permitable, Permission::READ);
                 }
             }
-            if($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
+            if ($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
             {
-                foreach($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
+                foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
                 {
                     $model->addPermissions($permitable, Permission::READ_WRITE);
                 }
@@ -253,11 +253,11 @@
             assert('is_array($mappingData)');
             $idColumnName = null;
             $valueFound   = false;
-            foreach($mappingData as $columnName => $columnMappingData)
+            foreach ($mappingData as $columnName => $columnMappingData)
             {
-                if($columnMappingData['attributeIndexOrDerivedType'] == 'id')
+                if ($columnMappingData['attributeIndexOrDerivedType'] == 'id')
                 {
-                    if($valueFound || $columnMappingData['type'] != 'importColumn')
+                    if ($valueFound || $columnMappingData['type'] != 'importColumn')
                     {
                         throw new NotSupportedException();
                     }
@@ -265,7 +265,7 @@
                     $valueFound   = true;
                 }
             }
-            if($idColumnName != null)
+            if ($idColumnName != null)
             {
                 return $idColumnName;
             }
@@ -281,7 +281,7 @@
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($columnMappingData)');
-            if($attributeImportRules->getModelClassName() == null)
+            if ($attributeImportRules->getModelClassName() == null)
             {
                 throw new NotSupportedException();
             }
@@ -292,15 +292,15 @@
                                       getAttributeNameFromAttributeNameByAttributeIndexOrDerivedType(
                                       $columnMappingData['attributeIndexOrDerivedType']);
             $relationModelClassName = $attributeImportRules->getModelClassName();
-            if($model->$attributeName == null)
+            if ($model->$attributeName == null)
             {
                 $model->$attributeName = new $relationModelClassName();
             }
-            elseif(!$model->$attributeName instanceof $relationModelClassName)
+            elseif (!$model->$attributeName instanceof $relationModelClassName)
             {
                 throw new NotSupportedException();
             }
-            foreach($attributeValueData as $relationAttributeName => $value)
+            foreach ($attributeValueData as $relationAttributeName => $value)
             {
                 assert('$model->$attributeName->isAttribute($relationAttributeName)');
                 static::resolveReadOnlyAndSetValueToAttribute($model->$attributeName, $relationAttributeName, $value);
@@ -319,7 +319,7 @@
             $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
                                                                                  $columnMappingData,
                                                                                  $importSanitizeResultsUtil);
-            foreach($attributeValueData as $attributeName => $value)
+            foreach ($attributeValueData as $attributeName => $value)
             {
                 assert('$model->isAttribute($attributeName)');
                 static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
@@ -342,11 +342,11 @@
                                                                                  $importSanitizeResultsUtil);
             assert('count($attributeValueData) == 1');
             assert('isset($attributeValueData["getDerivedAttributeName()"])');
-            if($attributeValueData[$attributeImportRules::getDerivedAttributeName()] != null)
+            if ($attributeValueData[$attributeImportRules::getDerivedAttributeName()] != null)
             {
                 $actualAttributeName = $importRulesType::getActualModelAttributeNameForDerivedAttribute();
                 $actualModel         = $attributeValueData[$attributeImportRules::getDerivedAttributeName()];
-                if(!$model->$actualAttributeName->contains($actualModel))
+                if (!$model->$actualAttributeName->contains($actualModel))
                 {
                     $model->$actualAttributeName->add($actualModel);
                 }
@@ -356,7 +356,7 @@
         protected static function resolveReadOnlyAndSetValueToAttribute(RedBeanModel $model, $attributeName, $value)
         {
             assert('is_string($attributeName)');
-            if(!$model->isAttributeReadOnly($attributeName) || ($model->isAttributeReadOnly($attributeName)
+            if (!$model->isAttributeReadOnly($attributeName) || ($model->isAttributeReadOnly($attributeName)
                    && $model->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 $model->$attributeName = $value;
@@ -366,7 +366,7 @@
         protected static function resolveValueToSanitizeByValueAndColumnType($value, $columnType)
         {
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
-            if($columnType == 'importColumn')
+            if ($columnType == 'importColumn')
             {
                 return static::resolveValueToSanitize($value);
             }
@@ -378,7 +378,7 @@
 
         protected static function resolveValueToSanitize($value)
         {
-            if($value == '' || $value == null)
+            if ($value == '' || $value == null)
             {
                return null;
             }

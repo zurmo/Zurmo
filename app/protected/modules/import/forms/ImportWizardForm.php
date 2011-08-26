@@ -149,12 +149,12 @@
             $mappedAttributes                      = array();
             $importRulesClassName                  = ImportRulesUtil::
                                                      getImportRulesClassNameByType($this->importRulesType);
-            foreach($this->mappingData as $columnName => $data)
+            foreach ($this->mappingData as $columnName => $data)
             {
-                if($data['attributeIndexOrDerivedType'] != null)
+                if ($data['attributeIndexOrDerivedType'] != null)
                 {
                     $atLeastOneAttributeMappedOrHasRules = true;
-                    if(in_array($data['attributeIndexOrDerivedType'], $mappedAttributes))
+                    if (in_array($data['attributeIndexOrDerivedType'], $mappedAttributes))
                     {
                         $attributeMappedOrHasRulesMoreThanOnce = true;
                     }
@@ -164,11 +164,11 @@
                     }
                 }
             }
-            if($attributeMappedOrHasRulesMoreThanOnce)
+            if ($attributeMappedOrHasRulesMoreThanOnce)
             {
                 $this->addError('mappingData', Yii::t('Default', 'You can only map each attribute once.'));
             }
-            if(!$atLeastOneAttributeMappedOrHasRules)
+            if (!$atLeastOneAttributeMappedOrHasRules)
             {
                 $this->addError('mappingData', Yii::t('Default', 'You must map at least one of your import columns.'));
             }
@@ -180,7 +180,7 @@
             $mappedAttributeImportRulesCollection          = AttributeImportRulesFactory::makeCollection(
                                                              $this->importRulesType,
                                                              $mappedAttributeIndicesOrDerivedAttributeTypes);
-            if(!ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
+            if (!ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
                                                                            $mappedAttributeImportRulesCollection))
             {
                 $this->addError('mappingData', Yii::t('Default', 'All required attributes must be mapped or added.'));

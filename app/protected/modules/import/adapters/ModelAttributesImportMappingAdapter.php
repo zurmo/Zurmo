@@ -73,7 +73,7 @@
                         $this->model->isAttributeRequired($attributeName)
                     );
                 }
-                elseif($this->isAttributeAHasOneOwnedRelation($attributeName))
+                elseif ($this->isAttributeAHasOneOwnedRelation($attributeName))
                 {
                     foreach ($this->model->{$attributeName}->getAttributes() as $relationAttributeName => $notUsed)
                     {
@@ -105,7 +105,7 @@
         protected function isAttributeAHasOneOwnedRelation($attributeName)
         {
             assert('is_string($attributeName)');
-            if($this->model->isRelation($attributeName) &&
+            if ($this->model->isRelation($attributeName) &&
                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
                        $this->model->isOwnedRelation($attributeName))
             {
@@ -117,7 +117,7 @@
         protected function isAttributeAHasOneNotOwnedRelation($attributeName)
         {
             assert('is_string($attributeName)');
-            if($this->model->isRelation($attributeName) &&
+            if ($this->model->isRelation($attributeName) &&
                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
                        !$this->model->isOwnedRelation($attributeName))
             {
@@ -129,7 +129,7 @@
         protected function isAttributeAnOwnedCustomFieldRelation($attributeName)
         {
             assert('is_string($attributeName)');
-            if($this->model->isRelation($attributeName) &&
+            if ($this->model->isRelation($attributeName) &&
                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
                        $this->model->isOwnedRelation($attributeName) &&
                        $this->model->{$attributeName} instanceof OwnedCustomField)
@@ -147,7 +147,7 @@
         protected function isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation($attributeName)
         {
             assert('is_string($attributeName)');
-            if($this->model->isRelation($attributeName) &&
+            if ($this->model->isRelation($attributeName) &&
                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
                        $this->model->isOwnedRelation($attributeName) &&
                        in_array($this->model->getRelationModelClassName($attributeName),
@@ -182,19 +182,19 @@
         {
             assert('is_string($type)');
             assert('is_string($attributeName)');
-            if($attributeName =='createdByUser')
+            if ($attributeName =='createdByUser')
             {
                 return 'CreatedByUser';
             }
-            if($attributeName =='modifiedByUser')
+            if ($attributeName =='modifiedByUser')
             {
                 return 'ModifiedByUser';
             }
-            if($attributeName =='createdDateTime')
+            if ($attributeName =='createdDateTime')
             {
                 return 'CreatedDateTime';
             }
-            if($attributeName =='modifiedDateTime')
+            if ($attributeName =='modifiedDateTime')
             {
                 return 'ModifiedDateTime';
             }

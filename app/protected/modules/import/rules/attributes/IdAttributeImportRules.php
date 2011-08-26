@@ -60,7 +60,7 @@
         {
             assert('is_array($columnMappingData)');
             $sanitizerUtilTypes = static::getSanitizerUtilTypesInProcessingOrder();
-            if(count($sanitizerUtilTypes) == 1 && $sanitizerUtilTypes[0] == 'SelfIdValueType')
+            if (count($sanitizerUtilTypes) == 1 && $sanitizerUtilTypes[0] == 'SelfIdValueType')
             {
                 $modelClassName =$this->getModelClassName();
                 try
@@ -72,7 +72,7 @@
                                                             $value,
                                                             $columnMappingData,
                                                             $importSanitizeResultsUtil);
-                    if($value != null)
+                    if ($value != null)
                     {
                         return array($this->getModelAttributeName() => $value);
                     }
@@ -83,7 +83,7 @@
                 }
                 catch (ExternalSystemIdNotFoundException $e)
                 {
-                    if($value != null)
+                    if ($value != null)
                     {
                         return array(ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME => $value);
                     }

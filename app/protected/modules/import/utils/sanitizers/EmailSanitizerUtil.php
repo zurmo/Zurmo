@@ -60,18 +60,18 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('$mappingRuleData == null');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
             $maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
             $validator = new CEmailValidator();
             $validatedEmail = $validator->validateValue($value);
-            if($validatedEmail === false)
+            if ($validatedEmail === false)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid email format.'));
             }
-            if(strlen($validatedEmail) > $maxLength)
+            if (strlen($validatedEmail) > $maxLength)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Email was too large.'));
             }

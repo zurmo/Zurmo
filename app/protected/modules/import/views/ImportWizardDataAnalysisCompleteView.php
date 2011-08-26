@@ -53,7 +53,7 @@
             $content  = '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
             $content .= '<tr><td><h3>'    . "\n";
-            if(count($this->model->dataAnalyzerMessagesData) == 0)
+            if (count($this->model->dataAnalyzerMessagesData) == 0)
             {
                 $content .= Yii::t('Default',
                                 'Data Analysis is complete. Click "Next" to import your data.');
@@ -65,12 +65,12 @@
                                 'When you are ready, click "Next" to import your data.');
             }
             $content .= '</h3></td></tr>'   . "\n";
-            foreach($this->model->dataAnalyzerMessagesData as $columnName => $messagesData)
+            foreach ($this->model->dataAnalyzerMessagesData as $columnName => $messagesData)
             {
                 $label =  $this->columnNamesAndAttributeIndexOrDerivedTypeLabels[$columnName];
                 $content .= '<tr><td>'    . "\n";
                 $content .= '<b>' . $columnName . ' >>> ' . $label . '</b></br>';
-                foreach($messagesData as $messageData)
+                foreach ($messagesData as $messageData)
                 {
                     $content .= $messageData['message'] . "</br>";
                 }

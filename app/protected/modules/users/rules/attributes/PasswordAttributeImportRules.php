@@ -60,12 +60,12 @@
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, 'hash', $value, $columnMappingData,
                                                             $importSanitizeResultsUtil);
-            if($value == null)
+            if ($value == null)
             {
                 $mappingRuleFormClassName = 'PasswordDefaultValueModelAttributeMappingRuleForm';
                 $mappingRuleData          = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
                 assert('$mappingRuleData != null');
-                if(isset($mappingRuleData['defaultValue']))
+                if (isset($mappingRuleData['defaultValue']))
                 {
                     $value = $mappingRuleData['defaultValue'];
                 }

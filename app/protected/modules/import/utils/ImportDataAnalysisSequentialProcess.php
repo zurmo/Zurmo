@@ -73,7 +73,7 @@
         protected function processColumns($params)
         {
             $completionPosition = 1;
-            if(!isset($params["columnNameToProcess"]))
+            if (!isset($params["columnNameToProcess"]))
             {
                 $params["columnNameToProcess"] = $this->getNextMappedColumnName($this->mappingData);
             }
@@ -82,13 +82,13 @@
                 assert('is_string($params["columnNameToProcess"])');
             }
             $completionPosition = array_search($params["columnNameToProcess"], $this->sanitizableColumnNames) + 1;
-            if($completionPosition != count($this->sanitizableColumnNames))
+            if ($completionPosition != count($this->sanitizableColumnNames))
             {
                 $completionPosition ++;
             }
             $this->subSequenceCompletionPercentage = ($completionPosition / count($this->sanitizableColumnNames)) * 100;
             //Run data analyzer
-            if($this->mappingData[$params["columnNameToProcess"]]['attributeIndexOrDerivedType'] == null)
+            if ($this->mappingData[$params["columnNameToProcess"]]['attributeIndexOrDerivedType'] == null)
             {
                 throw new NotSupportedException();
             }
@@ -106,7 +106,7 @@
             $saved = $this->import->save();
             assert('$saved');
             $nextColumnName = $this->getNextMappedColumnName($this->mappingData, $params['columnNameToProcess']);
-            if($nextColumnName == null)
+            if ($nextColumnName == null)
             {
                 $this->nextStep    = null;
                 $this->nextMessage = null;
@@ -130,7 +130,7 @@
         {
             assert('is_array($mappingData)');
             assert('$currentColumnName == null || is_string($currentColumnName)');
-            if($currentColumnName == null)
+            if ($currentColumnName == null)
             {
                 $currentIndexPassed = true;
             }
@@ -138,13 +138,13 @@
             {
                 $currentIndexPassed = false;
             }
-            foreach($mappingData as $columnName => $notUsed)
+            foreach ($mappingData as $columnName => $notUsed)
             {
-                if($currentIndexPassed && $mappingData[$columnName]['attributeIndexOrDerivedType'] != null)
+                if ($currentIndexPassed && $mappingData[$columnName]['attributeIndexOrDerivedType'] != null)
                 {
                     return $columnName;
                 }
-                if(!$currentIndexPassed && $columnName == $currentColumnName)
+                if (!$currentIndexPassed && $columnName == $currentColumnName)
                 {
                     $currentIndexPassed = true;
                 }
@@ -156,9 +156,9 @@
         {
             assert('is_array($mappingData)');
             $sanitizableColumnNames = array();
-            foreach($mappingData as $columnName => $notUsed)
+            foreach ($mappingData as $columnName => $notUsed)
             {
-                if($mappingData[$columnName]['attributeIndexOrDerivedType'] != null)
+                if ($mappingData[$columnName]['attributeIndexOrDerivedType'] != null)
                 {
                     $sanitizableColumnNames[] = $columnName;
                 }

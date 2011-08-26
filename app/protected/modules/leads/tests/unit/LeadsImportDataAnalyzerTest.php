@@ -65,7 +65,7 @@
 
             //Run data analyzer
             $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider);
-            foreach($mappingData as $columnName => $columnMappingData)
+            foreach ($mappingData as $columnName => $columnMappingData)
             {
                 $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
             }

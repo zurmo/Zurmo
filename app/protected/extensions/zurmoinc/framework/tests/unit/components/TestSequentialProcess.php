@@ -62,7 +62,7 @@
             //Example setting the pager page
             //$dataProvider->getPagination()->setPageSize($params['page']);
             $this->subSequenceCompletionPercentage = ($params['subStep'] / 10) * 100;
-            if($params['subStep'] == 10)
+            if ($params['subStep'] == 10)
             {
                 $this->nextStep = 'stepC';
                 $this->setNextMessageByStep($this->nextStep);

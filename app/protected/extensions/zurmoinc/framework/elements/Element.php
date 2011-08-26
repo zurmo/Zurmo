@@ -221,13 +221,13 @@
         {
             assert('$attributeName == null || is_string($attributeName)');
             assert('$relationAttributeName == null || is_string($relationAttributeName)');
-            if($attributeName == null)
+            if ($attributeName == null)
             {
                 $attributeName = $this->attribute;
             }
             $inputPrefix = $this->resolveInputIdPrefix();
             $id          = $inputPrefix . '_' . $attributeName;
-            if($relationAttributeName != null)
+            if ($relationAttributeName != null)
             {
                 $id .= '_' . $relationAttributeName;
             }
@@ -247,13 +247,13 @@
         {
             assert('$attributeName == null || is_string($attributeName)');
             assert('$relationAttributeName == null || is_string($relationAttributeName)');
-            if($attributeName == null)
+            if ($attributeName == null)
             {
                 $attributeName = $this->attribute;
             }
             $inputPrefix = $this->resolveInputNamePrefix();
             $name        = $inputPrefix . static::resolveInputNameForEditableInput($attributeName);
-            if($relationAttributeName != null)
+            if ($relationAttributeName != null)
             {
                 assert('strpos($relationAttributeName, "[") === false && strpos($relationAttributeName, "]") === false');
                 $name .= '[' . $relationAttributeName . ']';
@@ -294,14 +294,14 @@
         protected function resolveInputIdPrefix()
         {
             $inputIdPrefix = $this->resolveInputPrefix();
-            if(is_array($inputIdPrefix))
+            if (is_array($inputIdPrefix))
             {
-                if(count($inputIdPrefix) > 1)
+                if (count($inputIdPrefix) > 1)
                 {
                     $inputPrefixContent = null;
-                    foreach($inputIdPrefix as $value)
+                    foreach ($inputIdPrefix as $value)
                     {
-                        if($inputPrefixContent != null)
+                        if ($inputPrefixContent != null)
                         {
                             $inputPrefixContent .= '_';
                         }
@@ -310,7 +310,7 @@
                     return $inputPrefixContent;
                 }
             }
-            elseif(!is_string($inputIdPrefix))
+            elseif (!is_string($inputIdPrefix))
             {
                 throw notSupportedException();
             }
@@ -319,15 +319,15 @@
         protected function resolveInputNamePrefix()
         {
             $inputIdPrefix = $this->resolveInputPrefix();
-            if(is_array($inputIdPrefix))
+            if (is_array($inputIdPrefix))
             {
-                if(count($inputIdPrefix) > 1)
+                if (count($inputIdPrefix) > 1)
                 {
                     $inputPrefixContent = null;
                     $firstPrefixPlaced  = false;
-                    foreach($inputIdPrefix as $value)
+                    foreach ($inputIdPrefix as $value)
                     {
-                        if(!$firstPrefixPlaced)
+                        if (!$firstPrefixPlaced)
                         {
                             $inputPrefixContent .= $value;
                             $firstPrefixPlaced   = true;
@@ -341,7 +341,7 @@
                     return $inputPrefixContent;
                 }
             }
-            elseif(!is_string($inputIdPrefix))
+            elseif (!is_string($inputIdPrefix))
             {
                 throw notSupportedException();
             }

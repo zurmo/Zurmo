@@ -64,7 +64,7 @@
                 $limit  = null;
             }
             $where = null;
-            if($this->excludeFirstRow)
+            if ($this->excludeFirstRow)
             {
                 $where = 'id != 1';
             }
@@ -77,7 +77,7 @@
         public function calculateTotalItemCount()
         {
             $where = null;
-            if($this->excludeFirstRow)
+            if ($this->excludeFirstRow)
             {
                 $where = 'id != 1';
             }
@@ -103,7 +103,7 @@
         public function getCountByWhere($where)
         {
             assert('$where != null');
-            if($this->excludeFirstRow)
+            if ($this->excludeFirstRow)
             {
                 $where .= ' and id != 1';
             }
@@ -118,15 +118,15 @@
             assert(is_string($groupbyColumnName));
             assert('is_string($where) || $where == null');
             $sql = "select count(*) count, {$groupbyColumnName} from {$this->tableName} ";
-            if($this->excludeFirstRow)
+            if ($this->excludeFirstRow)
             {
-                if($where != null)
+                if ($where != null)
                 {
                     $where .= 'and ';
                 }
                 $where .= 'id != 1';
             }
-            if($where != null)
+            if ($where != null)
             {
                 $sql .= 'where ' . $where . ' ';
             }

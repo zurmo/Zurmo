@@ -109,7 +109,7 @@
                                                      $columnType,
                                                      $ajaxOnChangeUrl));
 
-                                                     if($columnType == 'importColumn')
+                                                     if ($columnType == 'importColumn')
             {
                 $mappableAttributeIndicesAndDerivedTypes = $this->mappableAttributeIndicesAndDerivedTypesForImportColumns;
             }
@@ -121,7 +121,7 @@
                                        $attributeIndexOrDerivedType,
                                        $mappableAttributeIndicesAndDerivedTypes,
                                        $htmlOptions);
-            if($columnType == 'extraColumn')
+            if ($columnType == 'extraColumn')
             {
                 $content .= '&#160;' . CHtml::link(Yii::t('Default', 'Remove Column'),
                             '#', array('class' => 'remove-extra-column-link'));
@@ -173,9 +173,9 @@
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             assert('is_array($mappingRuleFormsAndElementTypes) || $mappingRuleFormsAndElementTypes == null');
             $content = '<div id="' . self::getMappingRulesDivIdByColumnName($columnName) . '" class="mapping-rules">';
-            if($attributeIndexOrDerivedType != null)
+            if ($attributeIndexOrDerivedType != null)
             {
-                if($mappingRuleFormsAndElementTypes == null)
+                if ($mappingRuleFormsAndElementTypes == null)
                 {
                     $attributeImportRules            = AttributeImportRulesFactory::
                                                        makeByImportRulesTypeAndAttributeIndexOrDerivedType(
@@ -188,7 +188,7 @@
                                                            $columnType);
                 }
 
-                foreach($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
+                foreach ($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {
                     $mappingRuleForm        = $ruleFormAndElementType['mappingRuleForm'];
                     $elementClassName       = $ruleFormAndElementType['elementType'] . 'Element';
@@ -227,11 +227,11 @@
         {
             assert('is_array($metadata)');
             $content = null;
-            foreach($metadata['rows'] as $row)
+            foreach ($metadata['rows'] as $row)
             {
                 $content .= '<tr>';
                 assert('count($row["cells"]) > 0');
-                foreach($row['cells'] as $cellContent)
+                foreach ($row['cells'] as $cellContent)
                 {
                     $content .= '<td>';
                     $content .= $cellContent;
@@ -285,7 +285,7 @@
          */
         public static function renderChoppedStringContent($string)
         {
-            if(strlen($string) <= 22)
+            if (strlen($string) <= 22)
             {
                 return $string;
             }

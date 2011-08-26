@@ -61,28 +61,28 @@
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
             assert('$mappingRuleData == null');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
             @list($firstName, $lastName) = explode(' ', trim($value));
-            if($lastName == null)
+            if ($lastName == null)
             {
                 $lastName  = $firstName;
                 $firstName = null;
             }
-            if($lastName == null)
+            if ($lastName == null)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'The full name specified did not resolve to have a last name, which is required.'));
             }
             $model              = new $modelClassName(false);
             $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
             $lastNameMaxLength  = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'lastName');
-            if(strlen($lastName) > $lastNameMaxLength)
+            if (strlen($lastName) > $lastNameMaxLength)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too large.'));
             }
-            if($firstName != null && strlen($firstName) > $firstNameMaxLength)
+            if ($firstName != null && strlen($firstName) > $firstNameMaxLength)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'First name specified is too large.'));
             }

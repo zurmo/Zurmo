@@ -64,7 +64,7 @@
         {
             $dropDownData = array();
             $formats      = DateTimeSanitizerUtil::getAcceptableFormats();
-            foreach($formats as $format)
+            foreach ($formats as $format)
             {
                 $firstDate  = Yii::app()->dateFormatter->format($format, strtotime('30 May 1950 4 hours 2 minutes'));
                 $secondDate = Yii::app()->dateFormatter->format($format, strtotime('15 December 2011 14 hours 45 minutes'));

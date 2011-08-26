@@ -38,7 +38,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) have invalid date time formats. ';
                 $label  .= 'These values will be cleared during import.';

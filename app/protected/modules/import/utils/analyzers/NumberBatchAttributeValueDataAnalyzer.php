@@ -67,14 +67,14 @@
          */
         protected function analyzeByValue($value)
         {
-            if($value == null)
+            if ($value == null)
             {
                 return;
             }
             $validator = new RedBeanModelNumberValidator();
-            if($this->type == 'Integer')
+            if ($this->type == 'Integer')
             {
-                if(!preg_match($validator->integerPattern, $value))
+                if (!preg_match($validator->integerPattern, $value))
                 {
                     $this->messageCountData[static::INVALID] ++;
                     return;
@@ -82,7 +82,7 @@
             }
             else
             {
-                if(!preg_match($validator->numberPattern, $value))
+                if (!preg_match($validator->numberPattern, $value))
                 {
                     $this->messageCountData[static::INVALID] ++;
                     return;
@@ -97,7 +97,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) are invalid. ';
                 $label  .= 'These rows will be skipped during import.';

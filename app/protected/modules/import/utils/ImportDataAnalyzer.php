@@ -83,12 +83,12 @@
                     $columnMappingData["attributeIndexOrDerivedType"] == null');
                     assert('$columnMappingData["type"] == "importColumn" ||
             $columnMappingData["type"] == "extraColumn"');
-            if($columnMappingData['attributeIndexOrDerivedType'] == null)
+            if ($columnMappingData['attributeIndexOrDerivedType'] == null)
             {
                 return;
             }
             //Currently does not support data analysis on extra columns.
-            if($columnMappingData['type'] =='extraColumn')
+            if ($columnMappingData['type'] =='extraColumn')
             {
                 return;
             }
@@ -98,7 +98,7 @@
                                     $columnMappingData['attributeIndexOrDerivedType']);
             $modelClassName       = $attributeImportRules->getModelClassName();
             $attributeNames       = $attributeImportRules->getRealModelAttributeNames();
-            if(count($attributeNames) > 1 || $attributeNames == null)
+            if (count($attributeNames) > 1 || $attributeNames == null)
             {
                 $dataAnalyzerAttributeName = null;
             }
@@ -106,13 +106,13 @@
             {
                 $dataAnalyzerAttributeName = $attributeNames[0];
             }
-            if(null != $attributeValueSanitizerUtilTypes = $attributeImportRules->getSanitizerUtilTypesInProcessingOrder())
+            if (null != $attributeValueSanitizerUtilTypes = $attributeImportRules->getSanitizerUtilTypesInProcessingOrder())
             {
                 assert('is_array($attributeValueSanitizerUtilTypes)');
-                foreach($attributeValueSanitizerUtilTypes as $attributeValueSanitizerUtilType)
+                foreach ($attributeValueSanitizerUtilTypes as $attributeValueSanitizerUtilType)
                 {
                     $attributeValueSanitizerUtilClassName = $attributeValueSanitizerUtilType . 'SanitizerUtil';
-                    if($attributeValueSanitizerUtilClassName::supportsSqlAttributeValuesDataAnalysis())
+                    if ($attributeValueSanitizerUtilClassName::supportsSqlAttributeValuesDataAnalysis())
                     {
                         $sqlAttributeValuesDataAnalyzer = $attributeValueSanitizerUtilClassName::
                                                           makeSqlAttributeValueDataAnalyzer($modelClassName,
@@ -122,9 +122,9 @@
                                           $attributeValueSanitizerUtilClassName,
                                           $sqlAttributeValuesDataAnalyzer);
                         $messages       = $sqlAttributeValuesDataAnalyzer->getMessages();
-                        if($messages != null)
+                        if ($messages != null)
                         {
-                            foreach($messages as $message)
+                            foreach ($messages as $message)
                             {
                                 $moreAvailable     = $sqlAttributeValuesDataAnalyzer::supportsAdditionalResultInformation();
                                 $sanitizerUtilType = $attributeValueSanitizerUtilClassName::getType();
@@ -132,12 +132,12 @@
                             }
                         }
                         $instructionsData = $sqlAttributeValuesDataAnalyzer->getInstructionsData();
-                        if($instructionsData != null)
+                        if ($instructionsData != null)
                         {
                             $this->addInstructionDataByColumnName($columnName, $instructionsData, $sanitizerUtilType);
                         }
                     }
-                    elseif($attributeValueSanitizerUtilClassName::supportsBatchAttributeValuesDataAnalysis())
+                    elseif ($attributeValueSanitizerUtilClassName::supportsBatchAttributeValuesDataAnalysis())
                     {
                         $batchAttributeValuesDataAnalyzer = $attributeValueSanitizerUtilClassName::
                                                             makeBatchAttributeValueDataAnalyzer($modelClassName,
@@ -147,9 +147,9 @@
                                                        $attributeValueSanitizerUtilClassName,
                                                        $batchAttributeValuesDataAnalyzer);
                         $messages                    = $batchAttributeValuesDataAnalyzer->getMessages();
-                        if($messages != null)
+                        if ($messages != null)
                         {
-                            foreach($messages as $message)
+                            foreach ($messages as $message)
                             {
                                 $moreAvailable     = $batchAttributeValuesDataAnalyzer::
                                                      supportsAdditionalResultInformation();
@@ -158,7 +158,7 @@
                             }
                         }
                         $instructionsData = $batchAttributeValuesDataAnalyzer->getInstructionsData();
-                        if($instructionsData != null)
+                        if ($instructionsData != null)
                         {
                             $this->addInstructionDataByColumnName($columnName, $instructionsData, $sanitizerUtilType);
                         }
@@ -176,7 +176,7 @@
             assert('$dataAnalyzer instanceof BatchAttributeValueDataAnalyzer ||
                     $dataAnalyzer instanceof SqlAttributeValueDataAnalyzer');
             $classToEvaluate = new ReflectionClass(get_class($dataAnalyzer));
-            if($classToEvaluate->implementsInterface('LinkedToMappingRuleDataAnalyzerInterface'))
+            if ($classToEvaluate->implementsInterface('LinkedToMappingRuleDataAnalyzerInterface'))
             {
                 $mappingRuleType = $attributeValueSanitizerUtilClassName::getLinkedMappingRuleType();
                 assert('$mappingRuleType != null');

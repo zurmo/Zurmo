@@ -63,17 +63,17 @@
             assert('$mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                     $mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID ||
                     $mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
             $model                   = new $modelClassName(false);
             $relationModelClassName = $model->getRelationModelClassName($attributeName);
-            if($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try
                 {
-                    if((int)$value <= 0)
+                    if ((int)$value <= 0)
                     {
                         throw new NotFoundException();
                     }
@@ -84,7 +84,7 @@
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                 }
             }
-            elseif($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            elseif ($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 try
                 {
@@ -97,12 +97,12 @@
             }
             else
             {
-                if(!method_exists($relationModelClassName, 'getByName'))
+                if (!method_exists($relationModelClassName, 'getByName'))
                 {
                     throw new NotSupportedException();
                 }
                 $modelsFound = $relationModelClassName::getByName($value);
-                if(count($modelsFound) == 0)
+                if (count($modelsFound) == 0)
                 {
                     $newRelatedModel       = new $relationModelClassName();
                     $newRelatedModel->name = $value;
@@ -110,7 +110,7 @@
                     //Todo: need to handle this more gracefully. The use case where a related model is needed to be made
                     //but there are some required attributes that do not have defaults. As a result, since those extra
                     //defaults cannot be specified at this time, an error must be thrown.
-                    if(!$saved)
+                    if (!$saved)
                     {
                         throw new InvalidValueToSanitizeException(Yii::t('Default',
                         'A new related model could not be created because there are unspecified required attributes on that related model.'));

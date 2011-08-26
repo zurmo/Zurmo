@@ -47,7 +47,7 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            if($value != null)
+            if ($value != null)
             {
                 return $value;
             }
@@ -57,7 +57,7 @@
             assert('$value == null || $value instanceof $relationModelClassName');
             assert('$mappingRuleData["defaultModelId"] == null || is_string($mappingRuleData["defaultModelId"]) ||
                     is_int($mappingRuleData["defaultModelId"])');
-            if($mappingRuleData['defaultModelId'] != null)
+            if ($mappingRuleData['defaultModelId'] != null)
             {
                 try
                 {
@@ -71,7 +71,7 @@
             }
             else
             {
-                if(!$model->isAttributeRequired($attributeName))
+                if (!$model->isAttributeRequired($attributeName))
                 {
                     return $value;
                 }

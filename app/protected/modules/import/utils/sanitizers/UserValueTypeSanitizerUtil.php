@@ -80,11 +80,11 @@
             assert('$mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID ||
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
-            if($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
+            if ($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
             {
                 try
                 {
@@ -95,7 +95,7 @@
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The user id specified did not match any existing records.'));
                 }
             }
-            elseif($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
+            elseif ($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
             {
                 try
                 {

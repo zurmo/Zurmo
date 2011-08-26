@@ -56,7 +56,7 @@
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
             $this->type = $mappingRuleData["type"];
-            if($mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
+            if ($mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
             {
                 $this->acceptableValues = UserValueTypeSanitizerUtil::getUserIds();
             }
@@ -77,7 +77,7 @@
          */
         protected function analyzeByValue($value)
         {
-            if($this->type == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME)
+            if ($this->type == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME)
             {
                 $compareValue = mb_strtolower($value);
             }
@@ -85,7 +85,7 @@
             {
                 $compareValue = $value;
             }
-            if($value != null && !in_array($compareValue, $this->acceptableValues))
+            if ($value != null && !in_array($compareValue, $this->acceptableValues))
             {
                 $this->messageCountData[static::INVALID] ++;
             }
@@ -97,7 +97,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) have invalid user values. ';
                 $label  .= 'These values will not be used during the import.';

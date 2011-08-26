@@ -39,13 +39,13 @@
             assert('is_string($columnName)');
             assert('is_string($this->attributeName)');
             $maxLength = $this->resolveMaxLength($this->modelClassName, $this->attributeName);
-            if($maxLength == null)
+            if ($maxLength == null)
             {
                 return;
             }
             $where = static::resolvColumnNameSqlLengthFunction($columnName) . ' > ' . $maxLength;
             $count = $dataProvider->getCountByWhere($where);
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These values will be truncated to a length of {length} upon import.';

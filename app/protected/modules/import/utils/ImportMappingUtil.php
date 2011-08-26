@@ -41,34 +41,34 @@
             assert('is_string($tableName)');
             $firstRowData = ImportDatabaseUtil::getFirstRowByTableName($tableName);
 
-            if(count($firstRowData) == 1 || count($firstRowData) == 0)
+            if (count($firstRowData) == 1 || count($firstRowData) == 0)
             {
                 throw new NoRowsInTableException();
             }
             //Handle scenario where every column is null. Similiar to scenario below it with no data in file but
             //making a row anyways.
             $allValuesAreNull = true;
-            foreach($firstRowData as $columnName => $value)
+            foreach ($firstRowData as $columnName => $value)
             {
-                if($value != null && $columnName != 'id')
+                if ($value != null && $columnName != 'id')
                 {
                     $allValuesAreNull = false;
                     break;
                 }
             }
-            if($allValuesAreNull)
+            if ($allValuesAreNull)
             {
                 throw new NoRowsInTableException();
             }
             //handles scenario where there is no data in the file, but because there are a few bytes,
             //it creates a single row.
-            if(count($firstRowData) == 2)
+            if (count($firstRowData) == 2)
             {
-                foreach($firstRowData as $columnName => $value)
+                foreach ($firstRowData as $columnName => $value)
                 {
-                    if(!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()) && $value == null)
+                    if (!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()) && $value == null)
                     {
-                        if(ImportDatabaseUtil::getCount($tableName) == 1)
+                        if (ImportDatabaseUtil::getCount($tableName) == 1)
                         {
                             throw new NoRowsInTableException();
                         }
@@ -76,9 +76,9 @@
                 }
             }
             $mappingData = array();
-            foreach($firstRowData as $columnName => $notUsed)
+            foreach ($firstRowData as $columnName => $notUsed)
             {
-                if(!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()))
+                if (!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()))
                 {
                     $mappingData[$columnName] = array('type'                        => 'importColumn',
                                                       'attributeIndexOrDerivedType' => null,
@@ -99,9 +99,9 @@
         {
             assert('is_array($mappingData)');
             $mappedAttributeIndicesOrDerivedAttributeTypes = null;
-            foreach($mappingData as $data)
+            foreach ($mappingData as $data)
             {
-                if($data['attributeIndexOrDerivedType'] != null)
+                if ($data['attributeIndexOrDerivedType'] != null)
                 {
                     $mappedAttributeIndicesOrDerivedAttributeTypes[] = $data['attributeIndexOrDerivedType'];
                 }
@@ -133,10 +133,10 @@
             $reIndexedData     = array();
             $importColumnCount = 0;
             $tempData          = array();
-            foreach($postData as $columnName => $data)
+            foreach ($postData as $columnName => $data)
             {
                 assert('$data["type"] == "importColumn" || $data["type"] == "extraColumn"');
-                if($data['type'] == 'extraColumn')
+                if ($data['type'] == 'extraColumn')
                 {
                     $tempData[] = $data;
                 }
@@ -147,7 +147,7 @@
                 }
             }
             $extraColumnStartingCount = $importColumnCount - 1;
-            foreach($tempData as $data)
+            foreach ($tempData as $data)
             {
                 $reIndexedData[self::makeExtraColumnNameByColumnCount($extraColumnStartingCount)] = $data;
                 $extraColumnStartingCount ++;
@@ -164,13 +164,13 @@
         {
             assert('is_array($mappingData)');
             assert('is_array($importInstructionsData) || $importInstructionsData == null');
-            foreach($mappingData as $columnName => $columnMappingData)
+            foreach ($mappingData as $columnName => $columnMappingData)
             {
-                if($importInstructionsData == null && isset($columnMappingData['importInstructionsData']))
+                if ($importInstructionsData == null && isset($columnMappingData['importInstructionsData']))
                 {
                     unset($mappingData[$columnName]['importInstructionsData']);
                 }
-                elseif($importInstructionsData != null && isset($importInstructionsData[$columnName]))
+                elseif ($importInstructionsData != null && isset($importInstructionsData[$columnName]))
                 {
                     $mappingData[$columnName]['importInstructionsData'] = $importInstructionsData[$columnName];
                 }
@@ -189,9 +189,9 @@
             assert('is_array($mappingData)');
             assert('is_string($importRulesType)');
             $columnNamesAndAttributeIndexOrDerivedTypeLabels = array();
-            foreach($mappingData as $columnName => $columnData)
+            foreach ($mappingData as $columnName => $columnData)
             {
-                if($columnData['attributeIndexOrDerivedType'] != null)
+                if ($columnData['attributeIndexOrDerivedType'] != null)
                 {
                     $attributeImportRules = AttributeImportRulesFactory::
                                             makeByImportRulesTypeAndAttributeIndexOrDerivedType(

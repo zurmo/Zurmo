@@ -45,7 +45,7 @@
             assert('$delimiter != null && is_string($delimiter)');
             assert('$enclosure != null && is_string($enclosure)');
             $freezeWhenComplete = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
@@ -53,10 +53,10 @@
             R::exec("drop table if exists $tableName");
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
-                if(count($data) > 0)
+                if (count($data) > 0)
                 {
                     $newBean = R::dispense($tableName);
-                    foreach($data as $columnId => $value)
+                    foreach ($data as $columnId => $value)
                     {
                         $columnName = 'column_' . $columnId;
                         $newBean->{$columnName} = $value;
@@ -68,7 +68,7 @@
                 }
             }
             self::optimizeTable($tableName);
-            if($freezeWhenComplete)
+            if ($freezeWhenComplete)
             {
                 RedBeanDatabase::freeze();
             }
@@ -142,7 +142,7 @@
             assert('$offset  === null || is_integer($offset)  && $offset  >= 0');
             assert('$offset  === null || is_integer($count)   && $count   >= 1');
             $sql = 'select id from ' . $tableName;
-            if($where != null)
+            if ($where != null)
             {
                 $sql .= ' where ' . $where;
             }
@@ -167,7 +167,7 @@
         {
             $sql = 'select count(*) count from ' . $tableName;
 
-            if($where != null)
+            if ($where != null)
             {
                 $sql .= ' where ' . $where;
             }
@@ -195,7 +195,7 @@
             assert('is_string($serializedMessages) || $serializedMessages == null');
 
             $bean = R::findOne($tableName, "id = :id", array('id' => $id));
-            if($bean == null)
+            if ($bean == null)
             {
                 throw new NotFoundException();
             }

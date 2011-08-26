@@ -64,7 +64,7 @@
          */
         public function rules()
         {
-            if($this->getScenario() == 'extraColumn')
+            if ($this->getScenario() == 'extraColumn')
             {
                 $requiredRuleIsApplicable = true;
             }
@@ -106,11 +106,11 @@
          */
         public function getDefaultModelName()
         {
-            if($this->defaultModelName != null)
+            if ($this->defaultModelName != null)
             {
                 return $this->defaultModelName;
             }
-            elseif($this->defaultModelId != null)
+            elseif ($this->defaultModelId != null)
             {
                 $modelClassName                    = $this->modelClassName;
                 $this->defaultModelStringifiedName = strval($modelClassName::getById($this->defaultModelId));

@@ -32,7 +32,7 @@
         protected function checkService()
         {
             $passed = InstallUtil::isMbStringInstalled();
-            if($passed)
+            if ($passed)
             {
                 $this->message .= Yii::t('Default', 'Mb String is installed.');
             }

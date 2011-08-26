@@ -127,7 +127,7 @@
         public static function isFileUploadsOn()
         {
             $value = ini_get('file_uploads');
-            if($value)
+            if ($value)
             {
                 return true;
             }
@@ -306,7 +306,7 @@
                 case 'mysql':
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
                     $row    = @mysql_fetch_row($result);
-                    if(isset($row[1]))
+                    if (isset($row[1]))
                     {
                         $actualBytes = $row[1];
                         return $minimumRequireBytes <= $actualBytes;

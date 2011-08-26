@@ -51,9 +51,9 @@
             $model                  = new $modelClassName(false);
             assert('$mappingRuleData["defaultStateId"] == null || is_string($mappingRuleData["defaultStateId"]) ||
                     is_int($mappingRuleData["defaultStateId"])');
-            if($value == null)
+            if ($value == null)
             {
-                if($mappingRuleData['defaultStateId'] != null)
+                if ($mappingRuleData['defaultStateId'] != null)
                 {
                     try
                     {

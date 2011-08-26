@@ -74,7 +74,7 @@
             assert('$type == "importColumn" || $type == "extraColumn"');
 
             $forAllData = static::getAllModelAttributeMappingRuleFormTypesAndElementTypes();
-            if($type == 'extraColumn')
+            if ($type == 'extraColumn')
             {
                 $typeBasedData  = static::getExtraColumnOnlyModelAttributeMappingRuleFormTypesAndElementTypes();
             }

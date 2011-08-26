@@ -49,7 +49,7 @@
 
         protected function analyzeByValue($value)
         {
-            if($value != null && !CDateTimeParser::parse($value, $this->exceptedFormat))
+            if ($value != null && !CDateTimeParser::parse($value, $this->exceptedFormat))
             {
                 $this->messageCountData[static::INVALID] ++;
             }
@@ -61,7 +61,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) have invalid date formats. ';
                 $label  .= 'These values will be cleared during import.';

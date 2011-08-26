@@ -78,28 +78,28 @@
         protected function analyzeByValue($value)
         {
             $modelClassName = $this->attributeModelClassName;
-            if($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 $found = $this->resolveFoundIdByValue($value);
             }
-            elseif($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)
+            elseif ($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME)
             {
-                if($value == null)
+                if ($value == null)
                 {
                     $found = false;
                 }
                 else
                 {
                     $modelClassName = $this->attributeModelClassName;
-                    if(!method_exists($modelClassName, 'getByName'))
+                    if (!method_exists($modelClassName, 'getByName'))
                     {
                         throw new NotSupportedException();
                     }
                     $modelsFound = $modelClassName::getByName($value);
-                    if(count($modelsFound) == 0)
+                    if (count($modelsFound) == 0)
                     {
                         $found = false;
-                        if(strlen($value) > $this->maxNameLength)
+                        if (strlen($value) > $this->maxNameLength)
                         {
                             $this->messageCountData[static::NEW_NAME_TO0_LONG] ++;
                         }
@@ -115,7 +115,7 @@
             {
                 $found = $this->resolveFoundExternalSystemIdByValue($value);
             }
-            if($found)
+            if ($found)
             {
                 $this->messageCountData[static::FOUND] ++;
             }
@@ -123,9 +123,9 @@
             {
                 $this->messageCountData[static::UNFOUND] ++;
             }
-            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            if ($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
-                if(strlen($value) > $this->externalSystemIdMaxLength)
+                if (strlen($value) > $this->externalSystemIdMaxLength)
                 {
                     $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] ++;
                 }
@@ -137,7 +137,7 @@
          */
         protected function makeMessages()
         {
-            if($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+            if ($this->type == RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                $this->type == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 $label   = '{found} record(s) will be updated ';
@@ -151,7 +151,7 @@
             $this->addMessage(Yii::t('Default', $label,
                               array('{found}' => $this->messageCountData[static::FOUND],
                                     '{unfound}' => $this->messageCountData[static::UNFOUND])));
-            if($this->messageCountData[static::NEW_NAME_TO0_LONG] > 0)
+            if ($this->messageCountData[static::NEW_NAME_TO0_LONG] > 0)
             {
                 $label   = '{invalid} name value(s) is/are too long.';
                 $label  .= 'These records will be skipped during import.';

@@ -39,11 +39,11 @@
         {
             assert('is_array($mappingData)');
             assert('$headerRow == null || is_array($headerRow)');
-            foreach($mappingData as $columnName => $columnData)
+            foreach ($mappingData as $columnName => $columnData)
             {
-                if($columnData['type'] == 'importColumn')
+                if ($columnData['type'] == 'importColumn')
                 {
-                    if($headerRow != null)
+                    if ($headerRow != null)
                     {
                         $mappingData[$columnName]['headerValue'] = $headerRow[$columnName];
                         $mappingData[$columnName]['sampleValue'] = $sample->$columnName;
@@ -55,7 +55,7 @@
                 }
                 else
                 {
-                    if($headerRow != null)
+                    if ($headerRow != null)
                     {
                         $mappingData[$columnName]['headerValue'] = null;
                     }

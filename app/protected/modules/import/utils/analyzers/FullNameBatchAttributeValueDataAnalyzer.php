@@ -74,17 +74,17 @@
          */
         protected function analyzeByValue($value)
         {
-            if($value == null)
+            if ($value == null)
             {
                 return;
             }
             @list($firstName, $lastName) = explode(' ', trim($value));
-            if($lastName == null)
+            if ($lastName == null)
             {
                 $lastName  = $firstName;
                 $firstName = null;
             }
-            if(strlen($lastName) > $this->lastNameMaxLength || strlen($firstName) > $this->firstNameMaxLength)
+            if (strlen($lastName) > $this->lastNameMaxLength || strlen($firstName) > $this->firstNameMaxLength)
             {
                 $this->messageCountData[static::FULL_NAME_TOO_LONG] ++;
             }
@@ -96,7 +96,7 @@
         protected function makeMessages()
         {
             $tooLarge = $this->messageCountData[static::FULL_NAME_TOO_LONG];
-            if($tooLarge > 0)
+            if ($tooLarge > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These rows will be skipped during import.';

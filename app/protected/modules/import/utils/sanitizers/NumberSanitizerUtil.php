@@ -60,23 +60,23 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('$mappingRuleData == null');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
             $model    = new $modelClassName(false);
             $type     = ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
             $validator = new RedBeanModelNumberValidator();
-            if($validator->integerOnly === true)
+            if ($validator->integerOnly === true)
             {
-                if(!preg_match($validator->integerPattern, $value))
+                if (!preg_match($validator->integerPattern, $value))
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid integer format.'));
                 }
             }
             else
             {
-                if(!preg_match($validator->numberPattern, $value))
+                if (!preg_match($validator->numberPattern, $value))
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid number format.'));
                 }

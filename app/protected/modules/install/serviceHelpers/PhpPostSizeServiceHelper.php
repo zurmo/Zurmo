@@ -39,7 +39,7 @@
             $actualPostSizeBytes = null;
             $postSizeBytesPassed = InstallUtil::checkPhpPostSizeSetting($this->minimumUploadRequireBytes,
                                                                             $actualPostSizeBytes);
-            if($postSizeBytesPassed)
+            if ($postSizeBytesPassed)
             {
                 $this->message .= "\n";
                 $this->message = Yii::t('Default', 'Php post max size meets minimum requirement.');

@@ -43,7 +43,7 @@
         protected function analyzeByValue($value)
         {
             $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
-            if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            if (!array_key_exists(strtolower($value), $acceptableValuesMapping))
             {
                 $this->messageCountData[static::INVALID] ++;
             }
@@ -53,7 +53,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) have invalid check box values. ';
                 $label  .= 'These values will be set to false upon import.';

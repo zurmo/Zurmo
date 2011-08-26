@@ -59,9 +59,9 @@
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
-            if($value == null)
+            if ($value == null)
             {
-                if($mappingRuleData['defaultValue'] != '')
+                if ($mappingRuleData['defaultValue'] != '')
                 {
                     $value = $mappingRuleData['defaultValue'];
                 }

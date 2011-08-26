@@ -40,7 +40,7 @@
             $inPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array_keys($acceptableValuesMapping));
             $where  = DatabaseCompatibilityUtil::lower($columnName) . ' NOT ' . $inPart;
             $count  = $dataProvider->getCountByWhere($where);
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} value(s) have invalid check box values. ';
                 $label  .= 'These values will be set to false upon import.';

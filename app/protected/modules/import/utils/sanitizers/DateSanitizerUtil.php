@@ -71,12 +71,12 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('isset($mappingRuleData["format"])');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
             $sanitizedValue = CDateTimeParser::parse($value, $mappingRuleData['format']);
-            if($sanitizedValue === false)
+            if ($sanitizedValue === false)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid date format.'));
             }

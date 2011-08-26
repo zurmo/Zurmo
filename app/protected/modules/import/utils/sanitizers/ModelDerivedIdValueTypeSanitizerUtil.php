@@ -45,7 +45,7 @@
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
             $batchAttributeValueDataAnalyzerType = static::getBatchAttributeValueDataAnalyzerType();
-            if($batchAttributeValueDataAnalyzerType == null)
+            if ($batchAttributeValueDataAnalyzerType == null)
             {
                 throw new NotSupportedException();
             }
@@ -69,15 +69,15 @@
             assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
                     $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
             $derivedModelClassName = static::getDerivedModelClassName();
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
-            if($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try
                 {
-                    if((int)$value <= 0)
+                    if ((int)$value <= 0)
                     {
                         throw new NotFoundException();
                     }
@@ -92,7 +92,7 @@
                     array('{modelLabel}' => $modelLabel)));
                 }
             }
-            elseif($mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            elseif ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 try
                 {

@@ -48,7 +48,7 @@
             $this->mappingData            = $unserializedData['mappingData'];
             $this->importRules            = ImportRulesUtil::makeImportRulesByType($unserializedData['importRulesType']);
             $this->dataProvider           = $dataProvider;
-            if(isset($unserializedData['explicitReadWriteModelPermissions']))
+            if (isset($unserializedData['explicitReadWriteModelPermissions']))
             {
                 $this->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                            makeByMixedPermitablesData(
@@ -78,7 +78,7 @@
         protected function processRows($params)
         {
             $completionPosition = 1;
-            if(!isset($params['page']))
+            if (!isset($params['page']))
             {
                 $page = 0;
             }
@@ -100,7 +100,7 @@
             $totalItemCount                        = $this->dataProvider->getTotalItemCount();
             $this->subSequenceCompletionPercentage = (($page + 1) / $pageCount) * 100;
 
-            if(($page + 1) == $pageCount)
+            if (($page + 1) == $pageCount)
             {
                 $this->nextStep    = null;
                 $this->nextMessage = null;
@@ -113,7 +113,7 @@
                 $this->nextStep = 'processRows';
                 $this->setNextMessageByStep($this->nextStep);
                 $startItemCount = (($page + 1) * $pageSize) + 1;
-                if(($startItemCount + ($pageSize - 1) > $totalItemCount))
+                if (($startItemCount + ($pageSize - 1) > $totalItemCount))
                 {
                     $endItemCount = $totalItemCount;
                 }

@@ -67,14 +67,14 @@
          */
         public function processStatusAndMessagesForEachRow()
         {
-            foreach($this->rowResultsData as $rowResult)
+            foreach ($this->rowResultsData as $rowResult)
             {
                 assert('$rowResult instanceof ImportRowDataResultsUtil');
                 $tableName = $this->import->getTempTableName();
                 $status    = $rowResult->getStatus();
                 assert('$status != null');
                 $messages  = $rowResult->getMessages();
-                if($messages != null)
+                if ($messages != null)
                 {
                     $serializedMessagesOrNull = serialize($messages);
                 }

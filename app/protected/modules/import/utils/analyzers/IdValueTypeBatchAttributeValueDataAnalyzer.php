@@ -97,7 +97,7 @@
             assert('is_int($mappingRuleData["type"])');
             $this->ensureTypeValueIsValid($mappingRuleData["type"]);
             $this->type = $mappingRuleData["type"];
-            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            if ($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 $modelClassName  = $this->attributeModelClassName;
                 $tableColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
@@ -144,15 +144,15 @@
             $itemsProcessed = 0;
             $totalItemCount =  $dataProvider->getTotalItemCount(true);
             $dataProvider->getPagination()->setCurrentPage($page);
-            while(null != $data = $dataProvider->getData(true))
+            while (null != $data = $dataProvider->getData(true))
             {
-                foreach($data as $rowData)
+                foreach ($data as $rowData)
                 {
                     $this->analyzeByValue($rowData->$columnName);
                     $itemsProcessed ++;
                 }
 
-                if($itemsProcessed < $totalItemCount)
+                if ($itemsProcessed < $totalItemCount)
                 {
                     $page ++;
                     $dataProvider->getPagination()->setCurrentPage($page);
@@ -171,7 +171,7 @@
         protected function analyzeByValue($value)
         {
             $modelClassName = $this->attributeModelClassName;
-            if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 $found = $this->resolveFoundIdByValue($value);
             }
@@ -179,7 +179,7 @@
             {
                 $found = $this->resolveFoundExternalSystemIdByValue($value);
             }
-            if($found)
+            if ($found)
             {
                 $this->messageCountData[static::FOUND] ++;
             }
@@ -187,9 +187,9 @@
             {
                 $this->messageCountData[static::UNFOUND] ++;
             }
-            if($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            if ($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
-                if(strlen($value) > $this->externalSystemIdMaxLength)
+                if (strlen($value) > $this->externalSystemIdMaxLength)
                 {
                     $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] ++;
                 }
@@ -203,11 +203,11 @@
         protected function resolveFoundIdByValue($value)
         {
             assert('is_int($value) || is_string($value) || $value == null');
-            if($value == null)
+            if ($value == null)
             {
                 return false;
             }
-            elseif(is_int($value))
+            elseif (is_int($value))
             {
                 $sqlReadyString = $value;
             }
@@ -220,7 +220,7 @@
             ' where id = ' . $sqlReadyString . ' limit 1';
             $ids =  R::getCol($sql);
             assert('count($ids) <= 1');
-            if(count($ids) == 0)
+            if (count($ids) == 0)
             {
                 return false;
             }
@@ -234,7 +234,7 @@
         protected function resolveFoundExternalSystemIdByValue($value)
         {
             assert('is_int($value) || is_string($value) || $value == null');
-            if($value == null)
+            if ($value == null)
             {
                 return false;
             }
@@ -244,7 +244,7 @@
             ' where ' . $columnName . ' = \'' . $value . '\' limit 1';
             $ids =  R::getCol($sql);
             assert('count($ids) <= 1');
-            if(count($ids) == 0)
+            if (count($ids) == 0)
             {
                 return false;
             }
@@ -271,7 +271,7 @@
 
         protected function resolveMakeExternalSystemIdTooLargeMessage()
         {
-            if($this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] > 0)
+            if ($this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] > 0)
             {
                 $label   = '{invalid} value(s) were too large. ';
                 $label  .= 'These rows will be skipped during the import.';

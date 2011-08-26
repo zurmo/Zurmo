@@ -39,7 +39,7 @@
 
             $freezeWhenComplete = false;
             //Unfreeze since the test model is not part of the standard schema.
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
@@ -92,7 +92,7 @@
 
 
             //Re-freeze if needed.
-            if($freezeWhenComplete)
+            if ($freezeWhenComplete)
             {
                 RedBeanDatabase::freeze();
             }

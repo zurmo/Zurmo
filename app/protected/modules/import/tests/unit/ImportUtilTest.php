@@ -57,7 +57,7 @@
 
             //Unfreeze since the test model is not part of the standard schema.
             $freezeWhenComplete = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
@@ -104,7 +104,7 @@
             $testModels = ImportModelTestItem::getAll();
             $this->assertEquals(10, count($testModels));
             $jim = User::getByUsername('jim');
-            foreach($testModels as $model)
+            foreach ($testModels as $model)
             {
                 $this->assertEquals(array(Permission::NONE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
             }
@@ -144,7 +144,7 @@
             R::exec("delete from " . ImportModelTestItem::getTableName('ImportModelTestItem'));
 
             //Re-freeze if needed.
-            if($freezeWhenComplete)
+            if ($freezeWhenComplete)
             {
                 RedBeanDatabase::freeze();
             }
@@ -166,7 +166,7 @@
 
             //Unfreeze since the test model is not part of the standard schema.
             $freezeWhenComplete = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freezeWhenComplete = true;
@@ -213,7 +213,7 @@
             $testModels = ImportModelTestItem::getAll();
             $this->assertEquals(3, count($testModels));
             $jim = User::getByUsername('jim');
-            foreach($testModels as $model)
+            foreach ($testModels as $model)
             {
                 $this->assertEquals(array(Permission::READ, Permission::NONE), $model->getExplicitActualPermissions ($jim));
             }
@@ -239,13 +239,13 @@
             $testModels = ImportModelTestItem::getAll();
             $this->assertEquals(3, count($testModels));
             $jim = User::getByUsername('jim');
-            foreach($testModels as $model)
+            foreach ($testModels as $model)
             {
                 $this->assertEquals(array(Permission::READ_WRITE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
             }
 
             //Re-freeze if needed.
-            if($freezeWhenComplete)
+            if ($freezeWhenComplete)
             {
                 RedBeanDatabase::freeze();
             }

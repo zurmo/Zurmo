@@ -39,12 +39,12 @@
             $content = null;
             $content .= Yii::t('Default', 'Sample Row');
             $previousStyle = null;
-            if(!($currentPage > 0))
+            if (!($currentPage > 0))
             {
                 $previousStyle = 'display:none;';
             }
             $nextStyle     = null;
-            if(!(($currentPage + 1) < $pageCount))
+            if (!(($currentPage + 1) < $pageCount))
             {
                 $nextStyle = 'display:none;';
             }

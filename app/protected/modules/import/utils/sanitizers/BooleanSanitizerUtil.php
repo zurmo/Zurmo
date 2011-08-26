@@ -84,9 +84,9 @@
             assert('$mappingRuleData["defaultValue"] == null || $mappingRuleData["defaultValue"] == "1" ||
                     $mappingRuleData["defaultValue"] == "0"');
             $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
-            if($value == null)
+            if ($value == null)
             {
-                if($mappingRuleData['defaultValue'] != null)
+                if ($mappingRuleData['defaultValue'] != null)
                 {
                     return $acceptableValuesMapping[$mappingRuleData['defaultValue']];
                 }
@@ -95,7 +95,7 @@
                     return $value;
                 }
             }
-            if(!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            if (!array_key_exists(strtolower($value), $acceptableValuesMapping))
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid check box format.'));
             }

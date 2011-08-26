@@ -69,7 +69,7 @@
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, null,
                                                             $value, $columnMappingData, $importSanitizeResultsUtil);
-             if($sanitizedValue == null &&
+             if ($sanitizedValue == null &&
                 $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
              {
 

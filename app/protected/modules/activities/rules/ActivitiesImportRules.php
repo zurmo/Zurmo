@@ -57,10 +57,10 @@
             $metadata                     = Activity::getMetadata();
             $derivedAttributeTypes        = array();
             $activityItemsModelClassNames = $metadata['Activity']['activityItemsModelClassNames'];
-            foreach($activityItemsModelClassNames as $modelClassName)
+            foreach ($activityItemsModelClassNames as $modelClassName)
             {
                 $moduleClassName = $modelClassName::getModuleClassName();
-                if(RightsUtil::canUserAccessModule($moduleClassName, Yii::app()->user->userModel))
+                if (RightsUtil::canUserAccessModule($moduleClassName, Yii::app()->user->userModel))
                 {
                     $derivedAttributeTypes[] = $modelClassName . 'Derived';
                 }

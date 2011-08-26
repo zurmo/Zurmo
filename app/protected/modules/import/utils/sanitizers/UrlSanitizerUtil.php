@@ -52,7 +52,7 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('$mappingRuleData == null');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
@@ -60,11 +60,11 @@
             $validator = new CUrlValidator();
             $validator->defaultScheme = 'http';
             $validatedUrl = $validator->validateValue($value);
-            if($validatedUrl === false)
+            if ($validatedUrl === false)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid url format.'));
             }
-            if(strlen($validatedUrl) > $maxLength)
+            if (strlen($validatedUrl) > $maxLength)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Url was too large.'));
             }

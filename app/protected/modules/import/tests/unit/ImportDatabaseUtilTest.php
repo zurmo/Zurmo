@@ -210,7 +210,7 @@
             $sql           = 'select * from ' . $testTableName;
             $tempTableData = R::getAll($sql);
             $this->assertEquals(4, count($tempTableData));
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 ImportDatabaseUtil::dropTableByTableName($testTableName);
                 $sql = 'select * from ' . $testTableName;

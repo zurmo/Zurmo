@@ -48,7 +48,7 @@
         public function actionStep1()
         {
             $importWizardForm = new ImportWizardForm();
-            if(isset($_GET['id']))
+            if (isset($_GET['id']))
             {
                 $import = Import::getById((int)$_GET['id']);
             }
@@ -82,14 +82,14 @@
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep2($importWizardForm, $_POST[get_class($importWizardForm)]);
-                if($importWizardForm->fileUploadData == null)
+                if ($importWizardForm->fileUploadData == null)
                 {
                     $importWizardForm->addError('fileUploadData',
                     Yii::t('Default', 'A file must be uploaded in order to continue the import process.'));
                 }
-                elseif(!ImportWizardUtil::importFileHasAtLeastOneImportRow($importWizardForm, $import))
+                elseif (!ImportWizardUtil::importFileHasAtLeastOneImportRow($importWizardForm, $import))
                 {
-                    if($importWizardForm->firstRowIsHeaderRow)
+                    if ($importWizardForm->firstRowIsHeaderRow)
                     {
                         $importWizardForm->addError('fileUploadData',
                         Yii::t('Default', 'The file that has been uploaded only has a header row and no additional rows to import.'));
@@ -163,7 +163,7 @@
                 $validated                                  = MappingRuleFormAndElementTypeUtil::
                                                               validateMappingRuleForms(
                                                               $mappingDataMappingRuleFormsAndElementTypes);
-                if($validated)
+                if ($validated)
                 {
                     //Still validate even if MappingRuleForms fails, so all errors are captured and returned.
                     $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step5');
@@ -184,7 +184,7 @@
             }
             $dataProvider                                   = $this->makeDataProviderForSampleRow($import,
                                                               (bool)$importWizardForm->firstRowIsHeaderRow);
-            if($importWizardForm->firstRowIsHeaderRow)
+            if ($importWizardForm->firstRowIsHeaderRow)
             {
                 $headerRow = ImportDatabaseUtil::getFirstRowByTableName($import->getTempTableName());
                 assert('$headerRow != null');
@@ -227,7 +227,7 @@
          */
         function actionStep5($id, $step = null)
         {
-            if(isset($_GET['nextParams']))
+            if (isset($_GET['nextParams']))
             {
                 $nextParams = $_GET['nextParams'];
             }
@@ -250,7 +250,7 @@
             $sequentialProcess->run($step, $nextParams);
             $nextStep             = $sequentialProcess->getNextStep();
             $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step5';
-            if($sequentialProcess->isComplete())
+            if ($sequentialProcess->isComplete())
             {
                 $columnNamesAndAttributeIndexOrDerivedTypeLabels = ImportMappingUtil::
                                                                   makeColumnNamesAndAttributeIndexOrDerivedTypeLabels(
@@ -267,7 +267,7 @@
             {
                 $sequenceView = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
             }
-            if($step == null)
+            if ($step == null)
             {
                 $gridView     = new GridView(2, 1);
                 $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 5 of 6'));
@@ -290,7 +290,7 @@
          */
         function actionStep6($id, $step = null)
         {
-            if(isset($_GET['nextParams']))
+            if (isset($_GET['nextParams']))
             {
                 $nextParams = $_GET['nextParams'];
             }
@@ -313,7 +313,7 @@
             $sequentialProcess->run($step, $nextParams);
             $nextStep             = $sequentialProcess->getNextStep();
             $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step6';
-            if($sequentialProcess->isComplete())
+            if ($sequentialProcess->isComplete())
             {
                 $dataAnalysisCompleteView = new ImportWizardCreateUpdateModelsCompleteView($this->getId(),
                                                 $this->getModule()->getId(),
@@ -328,7 +328,7 @@
             {
                 $sequenceView = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
             }
-            if($step == null)
+            if ($step == null)
             {
                 $gridView     = new GridView(2, 1);
                 $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 6 of 6'));
@@ -410,11 +410,11 @@
             $pagerUrl            = Yii::app()->createUrl('import/default/sampleRow', array('id' => $import->id));
             $headerContent       = ImportDataProviderPagerUtil::renderPagerAndHeaderTextContent($dataProvider, $pagerUrl);
             $renderedContentData[MappingFormLayoutUtil::getSampleColumnHeaderId()] = $headerContent;
-            foreach($data as $sampleColumnData)
+            foreach ($data as $sampleColumnData)
             {
-                foreach($sampleColumnData as $columnName => $value)
+                foreach ($sampleColumnData as $columnName => $value)
                 {
-                    if(!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()))
+                    if (!in_array($columnName, ImportDatabaseUtil::getReservedColumnNames()))
                     {
                         $renderedContentData[MappingFormLayoutUtil::
                         resolveSampleColumnIdByColumnName($columnName)] = MappingFormLayoutUtil::
@@ -438,11 +438,11 @@
             $import           = Import::getById((int)$id);
             $importWizardForm = ImportWizardUtil::makeFormByImport($import);
             $importWizardForm->setAttributes($_POST['ImportWizardForm']);
-            if(!$importWizardForm->validate(array('rowColumnDelimiter')))
+            if (!$importWizardForm->validate(array('rowColumnDelimiter')))
             {
                 $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid delimiter'));
             }
-            elseif(!$importWizardForm->validate(array('rowColumnDelimiter')))
+            elseif (!$importWizardForm->validate(array('rowColumnDelimiter')))
             {
                 $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid enclosure'));
             }
@@ -455,7 +455,7 @@
                     if ($fileHandle !== false)
                     {
                         $tempTableName = $import->getTempTableName();
-                        if(!ImportDatabaseUtil::
+                        if (!ImportDatabaseUtil::
                             makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
                                                                       $importWizardForm->rowColumnDelimiter,
                                                                       $importWizardForm->rowColumnEnclosure))
@@ -470,7 +470,7 @@
                         ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData,
                                                                               $tempTableName);
                         ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
-                        if(!$import->save())
+                        if (!$import->save())
                         {
                             throw new FailedFileUploadException(Yii::t('Default', 'Import model failed to save.'));
                         }
@@ -514,10 +514,10 @@
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('$import instanceof Import');
             assert('is_string($redirectAction)');
-            if($importWizardForm->validate())
+            if ($importWizardForm->validate())
             {
                 ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
-                if($import->save())
+                if ($import->save())
                 {
                     $this->redirect(array($this->getId() . '/' . $redirectAction, 'id' => $import->id));
                     Yii::app()->end(0, false);

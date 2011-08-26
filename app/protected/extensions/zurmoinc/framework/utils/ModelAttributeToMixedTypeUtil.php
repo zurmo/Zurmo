@@ -59,7 +59,7 @@
             else
             {
                 $typeByValidator = static::getTypeByModelUsingValidator($model, $attributeName);
-                if($typeByValidator != null)
+                if ($typeByValidator != null)
                 {
                     return $typeByValidator;
                 }

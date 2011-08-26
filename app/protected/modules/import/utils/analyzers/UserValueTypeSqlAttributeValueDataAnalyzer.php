@@ -43,7 +43,7 @@
             assert('$mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID ||
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
                     $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
-            if($mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
+            if ($mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
             {
                 $this->resolveForTypeZurmoUserId($dataProvider, $columnName);
             }
@@ -69,19 +69,19 @@
             $data  = $dataProvider->getCountDataByGroupByColumnName($columnName);
             $count    = 0;
             $rowCount = 0;
-            foreach($data as $valueCountData)
+            foreach ($data as $valueCountData)
             {
-                if($valueCountData[$columnName] == null)
+                if ($valueCountData[$columnName] == null)
                 {
                     continue;
                 }
-                if(!in_array($valueCountData[$columnName], $userIds))
+                if (!in_array($valueCountData[$columnName], $userIds))
                 {
                     $count ++;
                     $rowCount = $rowCount + $valueCountData['count'];
                 }
             }
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} zurmo user id(s) across {rowCount} row(s) were not found. ';
                 $label  .= 'These values will not be used during the import.';
@@ -100,18 +100,18 @@
             $userIds = UserValueTypeSanitizerUtil::getUserExternalSystemIds();
             $data  = $dataProvider->getCountDataByGroupByColumnName($columnName);
             $count = 0;
-            foreach($data as $valueCountData)
+            foreach ($data as $valueCountData)
             {
-                if($valueCountData[$columnName] == null)
+                if ($valueCountData[$columnName] == null)
                 {
                     continue;
                 }
-                if(!in_array($valueCountData[$columnName], $userIds))
+                if (!in_array($valueCountData[$columnName], $userIds))
                 {
                     $count ++;
                 }
             }
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} external system user id(s) specified were not found. ';
                 $label  .= 'These values will not be used during the import.';
@@ -131,18 +131,18 @@
             $usernameValues = ArrayUtil::resolveArrayToLowerCase($usernameValues);
             $data  = $dataProvider->getCountDataByGroupByColumnName($columnName);
             $count = 0;
-            foreach($data as $valueCountData)
+            foreach ($data as $valueCountData)
             {
-                if($valueCountData[$columnName] == null)
+                if ($valueCountData[$columnName] == null)
                 {
                     continue;
                 }
-                if(!in_array(mb_strtolower($valueCountData[$columnName]), $usernameValues))
+                if (!in_array(mb_strtolower($valueCountData[$columnName]), $usernameValues))
                 {
                     $count ++;
                 }
             }
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} username(s) specified were not found. ';
                 $label  .= 'These values will not be used during the import.';

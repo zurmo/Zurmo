@@ -48,7 +48,7 @@
             if (!$this->insideOnModified)
             {
                 $this->insideOnModified = true;
-                if(!($this->unrestrictedGet('id') < 0 &&
+                if (!($this->unrestrictedGet('id') < 0 &&
                      $this->getScenario() == 'importModel' &&
                      array_key_exists('modifiedDateTime', $this->originalAttributeValues)))
                 {
@@ -56,7 +56,7 @@
                 }
                 if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
                 {
-                    if(!($this->unrestrictedGet('id') < 0 &&
+                    if (!($this->unrestrictedGet('id') < 0 &&
                          $this->getScenario() == 'importModel' &&
                          array_key_exists('modifiedByUser', $this->originalAttributeValues)))
                     {
@@ -111,7 +111,7 @@
              {
                 if ($this->unrestrictedGet('id') < 0)
                 {
-                    if($this->getScenario() != 'importModel' ||
+                    if ($this->getScenario() != 'importModel' ||
                       ($this->getScenario() == 'importModel' && $this->createdByUser->id  < 0))
                     {
                         if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
@@ -229,13 +229,13 @@
          */
         public function isAllowedToSetReadOnlyAttribute($attributeName)
         {
-            if($this->getScenario() == 'importModel')
+            if ($this->getScenario() == 'importModel')
             {
-                if($this->unrestrictedGet('id') > 0)
+                if ($this->unrestrictedGet('id') > 0)
                 {
                     return false;
                 }
-                if( in_array($attributeName, array('createdByUser', 'modifiedByUser', 'createdDateTime', 'modifiedDateTime')))
+                if ( in_array($attributeName, array('createdByUser', 'modifiedByUser', 'createdDateTime', 'modifiedDateTime')))
                 {
                     return true;
                 }

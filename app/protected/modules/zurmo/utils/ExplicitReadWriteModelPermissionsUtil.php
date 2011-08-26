@@ -55,13 +55,13 @@
             assert('isset($mixedPermitablesData["readOnly"])');
             assert('isset($mixedPermitablesData["readWrite"])');
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
-            foreach($mixedPermitablesData['readOnly'] as $permitableData)
+            foreach ($mixedPermitablesData['readOnly'] as $permitableData)
             {
                 $permitableClassName = key($permitableData);
                 $permitableId        = $permitableData[$permitableClassName];
                 $explicitReadWriteModelPermissions->addReadOnlyPermitable($permitableClassName::getById($permitableId));
             }
-            foreach($mixedPermitablesData['readWrite'] as $permitableData)
+            foreach ($mixedPermitablesData['readWrite'] as $permitableData)
             {
                 $permitableClassName = key($permitableData);
                 $permitableId        = $permitableData[$permitableClassName];
@@ -79,11 +79,11 @@
         {
             assert('$explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions ||
                     $explicitReadWriteModelPermissions == null');
-            if($explicitReadWriteModelPermissions == null)
+            if ($explicitReadWriteModelPermissions == null)
             {
                 return null;
             }
-            if($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() == 0 &&
+            if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() == 0 &&
                $explicitReadWriteModelPermissions->getReadWritePermitablesCount() == 0)
             {
                return null;
@@ -91,11 +91,11 @@
             $mixedPermitablesData = array();
             $mixedPermitablesData['readOnly'] = array();
             $mixedPermitablesData['readWrite'] = array();
-            foreach($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
+            foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
             {
                 $mixedPermitablesData['readOnly'][] = array(get_class($permitable) => $permitable->id);
             }
-            foreach($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
+            foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
             {
                 $mixedPermitablesData['readWrite'][] = array(get_class($permitable) => $permitable->id);
             }
@@ -113,16 +113,16 @@
         {
             assert('is_array($postData)');
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
-            if($postData['type'] == null)
+            if ($postData['type'] == null)
             {
                 return $explicitReadWriteModelPermissions;
             }
-            elseif($postData['type'] == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP)
+            elseif ($postData['type'] == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP)
             {
                 $explicitReadWriteModelPermissions->addReadWritePermitable(Group::getByName(Group::EVERYONE_GROUP_NAME));
                 return $explicitReadWriteModelPermissions;
             }
-            elseif($postData['type'] == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP)
+            elseif ($postData['type'] == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP)
             {
                 assert('isset($postData["nonEveryoneGroup"])');
                 $explicitReadWriteModelPermissions->addReadWritePermitable(

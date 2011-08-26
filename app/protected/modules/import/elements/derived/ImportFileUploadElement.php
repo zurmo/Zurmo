@@ -39,7 +39,7 @@
             assert('$this->model instanceof ImportWizardForm');
             assert('$this->attribute == null');
             $existingFilesInformation = array();
-            if(!empty($this->model->fileUploadData))
+            if (!empty($this->model->fileUploadData))
             {
                 $existingFilesInformation[]        = $this->model->fileUploadData;
                 $existingFilesInformation[0]['id'] = $this->model->id;
@@ -72,7 +72,7 @@
             $content = $cClipWidget->getController()->clips['filesElement'];
 
             $params = array('htmlOptions' => array('size' => 5));
-            if(count($existingFilesInformation) == 1)
+            if (count($existingFilesInformation) == 1)
             {
                 $params['htmlOptions']['readonly'] = 'readonly';
             }

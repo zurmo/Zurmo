@@ -65,18 +65,18 @@
             assert('is_string($modelClassName)');
             assert('$attributeName == null || is_string($attributeName)');
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
-            if($value != null)
+            if ($value != null)
             {
                 return $value;
             }
-            if($mappingRuleData['defaultValue'] != null)
+            if ($mappingRuleData['defaultValue'] != null)
             {
                 return $mappingRuleData['defaultValue'];
             }
             else
             {
                 $model = new $modelClassName(false);
-                if(!$model->isAttributeRequired($attributeName))
+                if (!$model->isAttributeRequired($attributeName))
                 {
                     return $value;
                 }

@@ -65,16 +65,16 @@
             assert('is_array($mappableAttributeIndicesAndDerivedTypes)');
             assert('$columnType == "importColumn" || $columnType == "extraColumn"');
             assert('is_string($importRulesType)');
-            if($columnType == 'importColumn')
+            if ($columnType == 'importColumn')
             {
                 return $mappableAttributeIndicesAndDerivedTypes;
             }
             $attributeImportRules = AttributeImportRulesFactory::
                                     makeCollection($importRulesType, array_keys($mappableAttributeIndicesAndDerivedTypes));
             $sanitizedMappableAttributeIndicesAndDerivedTypes = array();
-            foreach($mappableAttributeIndicesAndDerivedTypes as $attributeIndicesAndDerivedType => $label)
+            foreach ($mappableAttributeIndicesAndDerivedTypes as $attributeIndicesAndDerivedType => $label)
             {
-                if($attributeImportRules[$attributeIndicesAndDerivedType]->
+                if ($attributeImportRules[$attributeIndicesAndDerivedType]->
                    getExtraColumnUsableCountOfModelAttributeMappingRuleFormTypesAndElementTypes() > 0)
                 {
                     $sanitizedMappableAttributeIndicesAndDerivedTypes[$attributeIndicesAndDerivedType] = $label;

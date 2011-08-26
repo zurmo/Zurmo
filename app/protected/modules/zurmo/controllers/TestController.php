@@ -46,7 +46,7 @@
          */
         function actionSequentialProcess($step)
         {
-            if(isset($_GET['nextParams']))
+            if (isset($_GET['nextParams']))
             {
                 $nextParams = $_GET['nextParams'];
             }
@@ -67,7 +67,7 @@
             $sequentialProcess->run($step, $nextParams);
             $nextStep          = $sequentialProcess->getNextStep();
             $route             = $this->getModule()->getId() . '/' . $this->getId() . '/sequentialProcess';
-            if($sequentialProcess->isComplete())
+            if ($sequentialProcess->isComplete())
             {
                 //////Do completion logic here if needed
                 $sequenceView = new TestCompleteSequentialProcessView($a, $b);
@@ -76,7 +76,7 @@
             {
                 $sequenceView = SequentialProcessViewFactory::makeBySequentialProcess($sequentialProcess, $route);
             }
-            if($step == null)
+            if ($step == null)
             {
                 $gridView     = new GridView(2, 1);
                 $titleBarView = new TitleBarView ('Zurmo', 'Test Sequential Process');

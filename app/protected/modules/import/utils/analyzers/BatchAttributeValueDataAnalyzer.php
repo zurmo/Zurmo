@@ -55,14 +55,14 @@
             $itemsProcessed = 0;
             $totalItemCount =  $dataProvider->getTotalItemCount(true);
             $dataProvider->getPagination()->setCurrentPage($page);
-            while(null != $data = $dataProvider->getData(true))
+            while (null != $data = $dataProvider->getData(true))
             {
-                foreach($data as $rowData)
+                foreach ($data as $rowData)
                 {
                     $this->analyzeByValue($rowData->$columnName);
                     $itemsProcessed ++;
                 }
-                if($itemsProcessed < $totalItemCount)
+                if ($itemsProcessed < $totalItemCount)
                 {
                     $page ++;
                     $dataProvider->getPagination()->setCurrentPage($page);

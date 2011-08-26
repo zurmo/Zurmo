@@ -60,19 +60,19 @@
             assert('is_string($modelClassName)');
             assert('$attributeName == null');
             assert('$mappingRuleData == null');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
             try
             {
-                if((int)$value <= 0)
+                if ((int)$value <= 0)
                 {
                     throw new NotFoundException();
                 }
                 $state = ContactState::getById($value);
                 $startingState = ContactsUtil::getStartingState();
-                if(!static::resolvesValidStateByOrder($state->order, $startingState->order))
+                if (!static::resolvesValidStateByOrder($state->order, $startingState->order))
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is invalid.'));
                 }
@@ -86,7 +86,7 @@
 
         protected static function resolvesValidStateByOrder($stateOrder, $startingOrder)
         {
-            if($stateOrder >= $startingOrder)
+            if ($stateOrder >= $startingOrder)
             {
                 return true;
             }

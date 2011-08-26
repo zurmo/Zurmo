@@ -51,16 +51,16 @@
          */
         public static function getAvailableDesignerTypes()
         {
-            if(self::$availableDesignerTypes != null)
+            if (self::$availableDesignerTypes != null)
             {
                 return self::$availableDesignerTypes;
             }
             $modules = Module::getModuleObjects();
             $designerTypes = array();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 $formsClassNames = $module::getAllClassNamesByPathFolder('forms');
-                foreach($formsClassNames as $formClassName)
+                foreach ($formsClassNames as $formClassName)
                 {
                     $classToEvaluate     = new ReflectionClass($formClassName);
                     if (is_subclass_of($formClassName, 'AttributeForm') && !$classToEvaluate->isAbstract())

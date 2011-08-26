@@ -37,18 +37,18 @@
             $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
             $count           = 0;
-            foreach($data as $valueCountData)
+            foreach ($data as $valueCountData)
             {
-                if($valueCountData[$columnName] == null)
+                if ($valueCountData[$columnName] == null)
                 {
                     continue;
                 }
-                if(!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
+                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
                 {
                     $count ++;
                 }
             }
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} pick list value(s) are not valid. ';
                 $label  .= 'Rows that have these values will be skipped upon import.';

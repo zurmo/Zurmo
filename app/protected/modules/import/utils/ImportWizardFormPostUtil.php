@@ -43,16 +43,16 @@
             assert('is_array($postMappingData)');
             foreach ($postMappingData as $columnName => $mappingData)
             {
-                if(!isset($mappingData['mappingRulesData']))
+                if (!isset($mappingData['mappingRulesData']))
                 {
                     continue;
                 }
-                foreach($mappingData['mappingRulesData'] as $mappingRuleFormClassName => $mappingRuleFormData)
+                foreach ($mappingData['mappingRulesData'] as $mappingRuleFormClassName => $mappingRuleFormData)
                 {
                     $model = MappingRuleFormAndElementTypeUtil::
                              makeForm($importRulesType, $mappingData['attributeIndexOrDerivedType'],
                              $mappingRuleFormClassName);
-                    foreach($mappingRuleFormData as $attributeName => $value)
+                    foreach ($mappingRuleFormData as $attributeName => $value)
                     {
                         if ($value !== null)
                         {

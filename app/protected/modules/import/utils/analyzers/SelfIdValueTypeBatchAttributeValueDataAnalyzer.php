@@ -46,7 +46,7 @@
          */
         protected function makeMessages()
         {
-            if($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($this->type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 $label   = '{found} record(s) will be updated ';
                 $label  .= 'and {unfound} record(s) will be skipped during import.';

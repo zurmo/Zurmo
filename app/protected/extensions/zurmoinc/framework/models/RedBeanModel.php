@@ -633,7 +633,7 @@
 
                         $relationType           = $relationTypeModelClassNameAndOwns[0];
                         $relationModelClassName = $relationTypeModelClassNameAndOwns[1];
-                        if($relationType == self::HAS_MANY_BELONGS_TO &&
+                        if ($relationType == self::HAS_MANY_BELONGS_TO &&
                            strtolower($relationName) != strtolower($relationModelClassName))
                         {
                             $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
@@ -1675,7 +1675,7 @@
                                 {
                                     $linkName = null;
                                 }
-                                elseif($relationType == RedBeanModel::HAS_MANY_BELONGS_TO)
+                                elseif ($relationType == RedBeanModel::HAS_MANY_BELONGS_TO)
                                 {
                                     $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
                                              'the same as the related model class name. Relation: {relationName} ' .

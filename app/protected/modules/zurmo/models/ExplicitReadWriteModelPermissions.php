@@ -53,7 +53,7 @@
         public function addReadOnlyPermitable($permitable)
         {
             assert('$permitable instanceof Permitable');
-            if(!isset($this->readOnlyPermitables[$permitable->id]))
+            if (!isset($this->readOnlyPermitables[$permitable->id]))
             {
                 $this->readOnlyPermitables[$permitable->id] = $permitable;
             }
@@ -70,7 +70,7 @@
         public function addReadWritePermitable($permitable)
         {
             assert('$permitable instanceof Permitable');
-            if(!isset($this->readWritePermitables[$permitable->id]))
+            if (!isset($this->readWritePermitables[$permitable->id]))
             {
                 $this->readWritePermitables[$permitable->id] = $permitable;
             }

@@ -136,7 +136,7 @@
             $id = $this->getId();
             $jsonEncodedExistingFiles = CJSON::encode($this->existingFiles);
 
-            if($this->allowMultipleUpload)
+            if ($this->allowMultipleUpload)
             {
                 $sendAction = null;
                 $addLabel   = Yii::t('Default', 'Add Files');
@@ -190,7 +190,7 @@ $(function () {
             {$this->afterDeleteAction}
     });
     $('#fileUpload{$id}').bind('fileuploadalways', function (e, data) {
-        if(data == undefined || data.result == undefined ||
+        if (data == undefined || data.result == undefined ||
           ((data.result[0] != undefined && data.result[0].error != undefined) || data.result.error != undefined))
         {
             setTimeout(function () {
@@ -282,7 +282,7 @@ EOD;
         protected static function renderMaxSizeContent($maxSize)
         {
             assert('is_int($maxSize) || $maxSize == null');
-            if($maxSize == null)
+            if ($maxSize == null)
             {
                 return;
             }

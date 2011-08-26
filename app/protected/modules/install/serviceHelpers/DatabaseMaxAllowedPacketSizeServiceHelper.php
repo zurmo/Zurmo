@@ -37,9 +37,9 @@
         {
             $passed = true;
             $actualBytes = null;
-            if(!InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', $this->minimumUploadRequireBytes, $actualBytes))
+            if (!InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', $this->minimumUploadRequireBytes, $actualBytes))
             {
-                if($actualBytes == null)
+                if ($actualBytes == null)
                 {
 
                 }else

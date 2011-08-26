@@ -122,15 +122,15 @@
             $modelClassName                          = static::getModelClassName();
             $attributesCollection                    = static::getAttributesCollectionByModelClassName($modelClassName);
             $model                                   = new $modelClassName(false);
-            foreach($attributesCollection as $attributeIndex => $attributeData)
+            foreach ($attributesCollection as $attributeIndex => $attributeData)
             {
-                if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
+                if (!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
                     !in_array($attributeData['attributeImportRulesType'], static::getNonImportableAttributeImportRulesTypes()))
                 {
                     $mappableAttributeIndicesAndDerivedTypes[$attributeIndex] = $attributeData['attributeLabel'];
                 }
             }
-            foreach(static::getDerivedAttributeTypes() as $derivedType)
+            foreach (static::getDerivedAttributeTypes() as $derivedType)
             {
                 $attributeImportRulesClassName                         = $derivedType . 'AttributeImportRules';
                 $attributeImportRules                                  = new $attributeImportRulesClassName($model);
@@ -186,7 +186,7 @@
             assert('is_string($attributeIndexOrDerivedType)');
             $modelClassName           = static::getModelClassName();
             $attributeImportRulesData = static::resolveAttributeImportRulesDataByModelClassNameAndCache($modelClassName);
-            if(isset($attributeImportRulesData[$attributeIndexOrDerivedType]))
+            if (isset($attributeImportRulesData[$attributeIndexOrDerivedType]))
             {
                 return $attributeImportRulesData[$attributeIndexOrDerivedType];
             }
@@ -203,7 +203,7 @@
         protected static function resolveAttributeImportRulesDataByModelClassNameAndCache($modelClassName)
         {
             assert('is_string($modelClassName)');
-            if(isset(self::$attributeImportRulesDataByModelClassName[$modelClassName]))
+            if (isset(self::$attributeImportRulesDataByModelClassName[$modelClassName]))
             {
                 return self::$attributeImportRulesDataByModelClassName[$modelClassName];
             }
@@ -227,15 +227,15 @@
             $attributesCollection = static::getAttributesCollectionByModelClassName($modelClassName);
 
             $attributeIndexOrDerivedTypeAndRuleTypes = array();
-            foreach($attributesCollection as $attributeIndex => $attributeData)
+            foreach ($attributesCollection as $attributeIndex => $attributeData)
             {
-                if(!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
+                if (!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
                     !in_array($attributeData['attributeImportRulesType'], static::getNonImportableAttributeImportRulesTypes()))
                 {
                     $attributeIndexOrDerivedTypeAndRuleTypes[$attributeIndex] = $attributeData['attributeImportRulesType'];
                 }
             }
-            foreach(static::getDerivedAttributeTypes() as $derivedType)
+            foreach (static::getDerivedAttributeTypes() as $derivedType)
             {
                 $attributeIndexOrDerivedTypeAndRuleTypes[$derivedType] = $derivedType;
             }
@@ -255,9 +255,9 @@
             $model                                 = new $modelClassName(false);
             $attributesCollection                  = static::getAttributesCollectionByModelClassName($modelClassName);
             $requireAttributesCollection           = array();
-            foreach($attributesCollection as $attributeIndex => $attributeData)
+            foreach ($attributesCollection as $attributeIndex => $attributeData)
             {
-                if($attributeData['isRequired'] && !$model->isAttributeReadOnly($attributeData['attributeName']))
+                if ($attributeData['isRequired'] && !$model->isAttributeReadOnly($attributeData['attributeName']))
                 {
                     $requireAttributesCollection[$attributeIndex] = $attributeData;
                 }
@@ -272,7 +272,7 @@
         {
             $requireAttributesCollection = static::getRequiredAttributesCollectionNotIncludingReadOnly();
             $labelsData                  = array();
-            foreach($requireAttributesCollection as $attributeData)
+            foreach ($requireAttributesCollection as $attributeData)
             {
                 $labelsData[] = $attributeData['attributeLabel'];
             }

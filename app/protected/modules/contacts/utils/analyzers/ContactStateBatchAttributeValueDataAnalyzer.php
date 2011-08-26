@@ -49,7 +49,7 @@
         protected function analyzeByValue($value)
         {
 
-            if($value != null && !in_array(strtolower($value), $this->states))
+            if ($value != null && !in_array(strtolower($value), $this->states))
             {
                 $this->messageCountData[static::INVALID] ++;
             }
@@ -58,7 +58,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} pick list value(s) are not valid. ';
                 $label  .= 'Rows that have these values will be skipped upon import.';

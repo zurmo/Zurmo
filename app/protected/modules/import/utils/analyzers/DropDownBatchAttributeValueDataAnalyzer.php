@@ -53,7 +53,7 @@
         {
             assert('is_string($columnName)');
             $this->processAndMakeMessage($dataProvider, $columnName);
-            if($this->missingDropDownInstructions != null)
+            if ($this->missingDropDownInstructions != null)
             {
                 $this->setInstructionsData($this->missingDropDownInstructions);
             }
@@ -65,7 +65,7 @@
         protected function analyzeByValue($value)
         {
 
-            if($value != null && !in_array(strtolower($value), $this->dropDownValues))
+            if ($value != null && !in_array(strtolower($value), $this->dropDownValues))
             {
                 $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $value;
                 $this->messageCountData[static::INVALID] ++;
@@ -78,7 +78,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} dropdown value(s) are missing from the field. ';
                 $label  .= 'These values will be added upon import.';

@@ -39,7 +39,7 @@
 
         public function rules()
         {
-            if($this->getScenario() == 'extraColumn')
+            if ($this->getScenario() == 'extraColumn')
             {
                 $requiredRuleIsApplicable = true;
             }

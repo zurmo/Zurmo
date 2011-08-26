@@ -41,7 +41,7 @@
             {
                 throw new FailedFileUploadException(Yii::t('Default', 'The file did not exist'));
             }
-            elseif($uploadedFile->getHasError())
+            elseif ($uploadedFile->getHasError())
             {
                 $error = $file->getError();
                 $messageParams = array('{file}' => $uploadedFile->getName(), '{limit}' => self::getSizeLimit());

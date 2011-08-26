@@ -56,7 +56,7 @@
             $attributeName            = self::resolveModelClassNameAndAttributeNameByAttributeIndexOrDerivedType(
                                         $modelClassName,
                                         $attributeIndexOrDerivedType);
-            if(isset(self::$modelsByClassName[$modelClassName]))
+            if (isset(self::$modelsByClassName[$modelClassName]))
             {
                 $model = self::$modelsByClassName[$modelClassName];
             }
@@ -67,7 +67,7 @@
             }
             assert('$attributeImportRulesType !== null');
             $attributeImportRulesClassName = $attributeImportRulesType . 'AttributeImportRules';
-            if(is_subclass_of($attributeImportRulesClassName, 'DerivedAttributeImportRules'))
+            if (is_subclass_of($attributeImportRulesClassName, 'DerivedAttributeImportRules'))
             {
                 return new $attributeImportRulesClassName($model);
             }
@@ -86,9 +86,9 @@
             assert('is_string($importRulesType)');
             assert('$attributeIndicesOrDerivedTypes == null || is_array($attributeIndicesOrDerivedTypes)');
             $collection   = array();
-            if($attributeIndicesOrDerivedTypes != null)
+            if ($attributeIndicesOrDerivedTypes != null)
             {
-                foreach($attributeIndicesOrDerivedTypes as $attributeIndexOrDerivedAttributeType)
+                foreach ($attributeIndicesOrDerivedTypes as $attributeIndexOrDerivedAttributeType)
                 {
                     $collection[$attributeIndexOrDerivedAttributeType] =
                                     self::makeByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
@@ -131,7 +131,7 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeIndexOrDerivedType)');
             $relationNameAndAttributeName = explode(FormModelUtil::DELIMITER, $attributeIndexOrDerivedType);
-            if(count($relationNameAndAttributeName) == 1)
+            if (count($relationNameAndAttributeName) == 1)
             {
                 return $attributeIndexOrDerivedType;
             }
@@ -139,7 +139,7 @@
             {
                 list($relationName, $attributeName) = $relationNameAndAttributeName;
             }
-            if(isset(self::$modelsByClassName[$modelClassName]))
+            if (isset(self::$modelsByClassName[$modelClassName]))
             {
                 $model = self::$modelsByClassName[$modelClassName];
             }
@@ -164,7 +164,7 @@
         {
             assert('is_string($attributeIndexOrDerivedType)');
                     $relationNameAndAttributeName = explode(FormModelUtil::DELIMITER, $attributeIndexOrDerivedType);
-            if(count($relationNameAndAttributeName) == 1)
+            if (count($relationNameAndAttributeName) == 1)
             {
                 return $attributeIndexOrDerivedType;
             }

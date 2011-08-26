@@ -87,7 +87,7 @@
 
         protected function registerAjaxScript()
         {
-            if($this->nextParams != null)
+            if ($this->nextParams != null)
             {
                 $urlParams = array_merge($_GET, array('nextParams' => $this->nextParams));
             }

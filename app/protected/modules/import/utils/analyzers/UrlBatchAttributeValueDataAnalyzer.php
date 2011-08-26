@@ -68,19 +68,19 @@
          */
         protected function analyzeByValue($value)
         {
-            if($value == null)
+            if ($value == null)
             {
                 return;
             }
             $validator = new CUrlValidator();
             $validator->defaultScheme = 'http';
             $validatedUrl = $validator->validateValue($value);
-            if($validatedUrl === false)
+            if ($validatedUrl === false)
             {
                 $this->messageCountData[static::INVALID] ++;
                 return;
             }
-            if(strlen($validatedUrl) > $this->maxLength)
+            if (strlen($validatedUrl) > $this->maxLength)
             {
                 $this->messageCountData[static::URL_TOO_LONG] ++;
             }
@@ -93,13 +93,13 @@
         {
             $invalid  = $this->messageCountData[static::INVALID];
             $tooLarge = $this->messageCountData[static::URL_TOO_LONG];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) have urls that are invalid. ';
                 $label  .= 'These values will be cleared during import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }
-            if($tooLarge > 0)
+            if ($tooLarge > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These values will be cleared during import.';

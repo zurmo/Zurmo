@@ -42,19 +42,19 @@
             assert('is_array($mappingRuleData)');
             $modelClassName = $this->modelClassName;
             $model = new $modelClassName(false);
-            if(!$model->isAttributeRequired($this->attributeName))
+            if (!$model->isAttributeRequired($this->attributeName))
             {
                 return false;
             }
             $mappingRuleFormClassName  = $mappingRuleType . 'MappingRuleForm';
             $defaultValueAttributeName = $mappingRuleFormClassName::getAttributeName();
-            if($mappingRuleData[$defaultValueAttributeName] == null)
+            if ($mappingRuleData[$defaultValueAttributeName] == null)
             {
                 return;
             }
             $where = $columnName . ' IS NULL OR ' . $columnName . "=''";
             $count = $dataProvider->getCountByWhere($where);
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} value(s) are missing and are required. ';
                 $label  .= 'These rows will be skipped on import.';

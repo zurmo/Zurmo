@@ -50,7 +50,7 @@
         {
             $htmlOptions = parent::getEditableHtmlOptions();
             $htmlOptions['template'] =  '<div class="radio-input">{input}{label}</div>';
-            if(isset($htmlOptions['empty']))
+            if (isset($htmlOptions['empty']))
             {
                 unset($htmlOptions['empty']);
             }

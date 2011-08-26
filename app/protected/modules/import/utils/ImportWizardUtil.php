@@ -52,17 +52,17 @@
             assert('$import instanceof Import');
             $form     = new ImportWizardForm();
             $form->id = $import->id;
-            if($import->serializedData != null)
+            if ($import->serializedData != null)
             {
                 $unserializedData = unserialize($import->serializedData);
-                foreach(self::$importToFormAttributeMap as $attributeName)
+                foreach (self::$importToFormAttributeMap as $attributeName)
                 {
-                    if(isset($unserializedData[$attributeName]))
+                    if (isset($unserializedData[$attributeName]))
                     {
                         $form->$attributeName = $unserializedData[$attributeName];
                     }
                 }
-                if(isset($unserializedData['explicitReadWriteModelPermissions']))
+                if (isset($unserializedData['explicitReadWriteModelPermissions']))
                 {
                     $form->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                                makeByMixedPermitablesData(
@@ -87,9 +87,9 @@
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData) && isset($postData["importRulesType"])');
-            if($importWizardForm->importRulesType != $postData["importRulesType"])
+            if ($importWizardForm->importRulesType != $postData["importRulesType"])
             {
-                foreach(self::$importToFormAttributeMap as $attributeName)
+                foreach (self::$importToFormAttributeMap as $attributeName)
                 {
                     $importWizardForm->$attributeName = null;
                 }
@@ -154,9 +154,9 @@
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($fileUploadData)');
             assert('is_string($tableName)');
-            foreach(self::$importToFormAttributeMap as $attributeName)
+            foreach (self::$importToFormAttributeMap as $attributeName)
             {
-                if($attributeName != 'importRulesType')
+                if ($attributeName != 'importRulesType')
                 {
                     $importWizardForm->$attributeName = null;
                 }
@@ -184,7 +184,7 @@
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('$import instanceof Import');
             $dataToSerialize = array();
-            foreach(self::$importToFormAttributeMap as $attributeName)
+            foreach (self::$importToFormAttributeMap as $attributeName)
             {
                 $dataToSerialize[$attributeName] = $importWizardForm->$attributeName;
             }
@@ -206,7 +206,7 @@
             assert('$import instanceof Import');
             $unserializedData                       = $import->serializedData;
             $newUnserializedData['importRulesType'] = $unserializedData['importRulesType'];
-            if($import->save())
+            if ($import->save())
             {
                 ImportDatabaseUtil::dropTableByTableName($import->getTempTableName());
                 return true;
@@ -228,11 +228,11 @@
             assert('$import instanceof Import');
             $count = ImportDatabaseUtil::getCount($import->getTempTableName());
             $minimumRows = 1;
-            if($importWizardForm->firstRowIsHeaderRow)
+            if ($importWizardForm->firstRowIsHeaderRow)
             {
                 $minimumRows = 2;
             }
-            if($count >= $minimumRows)
+            if ($count >= $minimumRows)
             {
                 return true;
             }

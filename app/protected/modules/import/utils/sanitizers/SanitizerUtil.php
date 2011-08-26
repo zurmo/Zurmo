@@ -70,7 +70,7 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName) || $attributeName == null');
             $sqlAttributeValueDataAnalyzerType = static::getSqlAttributeValueDataAnalyzerType();
-            if($sqlAttributeValueDataAnalyzerType == null)
+            if ($sqlAttributeValueDataAnalyzerType == null)
             {
                 throw new NotSupportedException();
             }
@@ -89,7 +89,7 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName) || $attributeName == null');
             $batchAttributeValueDataAnalyzerType = static::getBatchAttributeValueDataAnalyzerType();
-            if($batchAttributeValueDataAnalyzerType == null)
+            if ($batchAttributeValueDataAnalyzerType == null)
             {
                 throw new NotSupportedException();
             }

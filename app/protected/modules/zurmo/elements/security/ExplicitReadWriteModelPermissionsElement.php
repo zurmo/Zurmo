@@ -89,7 +89,7 @@
             $selectableGroupsDropDownContent     = $this->renderSelectableGroupsContent();
             $data                                = $this->getPermissionTypes();
             $dataIndex                           = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP;
-            if($selectableGroupsDropDownContent != null)
+            if ($selectableGroupsDropDownContent != null)
             {
 
                 $data[$dataIndex]                = $data[$dataIndex] . '&#160;' . $selectableGroupsDropDownContent;
@@ -109,14 +109,14 @@
         protected function resolveSelectedType()
         {
             $permitables = $this->model->{$this->attribute}->getReadWritePermitables();
-            if($permitables == null)
+            if ($permitables == null)
             {
                 return null;
             }
             else
             {
                 assert(current($permitables) instanceof Group);
-                if(current($permitables)->name == Group::EVERYONE_GROUP_NAME)
+                if (current($permitables)->name == Group::EVERYONE_GROUP_NAME)
                 {
                     return ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
                 }
@@ -135,14 +135,14 @@
         protected function resolveSelectedGroup()
         {
             $permitables = $this->model->{$this->attribute}->getReadWritePermitables();
-            if($permitables == null)
+            if ($permitables == null)
             {
                 return null;
             }
             else
             {
                 assert($permitables[0] instanceof Group);
-                if($permitables[0]->name == Group::EVERYONE_GROUP_NAME)
+                if ($permitables[0]->name == Group::EVERYONE_GROUP_NAME)
                 {
                     return null;
                 }
@@ -168,7 +168,7 @@
             );
             $name        = $this->getEditableInputName($this->attribute, 'nonEveryoneGroup');
             $dropDownArray = $this->getSelectableGroupsData();
-            if($dropDownArray == null)
+            if ($dropDownArray == null)
             {
                 return null;
             }
@@ -179,9 +179,9 @@
         {
             $groups     = Group::getAll();
             $groupsData = array();
-            foreach($groups as $group)
+            foreach ($groups as $group)
             {
-                if($group->name != Group::EVERYONE_GROUP_NAME && $group->name != Group::SUPER_ADMINISTRATORS_GROUP_NAME)
+                if ($group->name != Group::EVERYONE_GROUP_NAME && $group->name != Group::SUPER_ADMINISTRATORS_GROUP_NAME)
                 {
                     $groupsData[$group->id] = strval($group);
                 }

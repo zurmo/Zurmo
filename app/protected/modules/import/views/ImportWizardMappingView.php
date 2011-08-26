@@ -98,7 +98,7 @@
             $content .= '<colgroup>';
             $content .= '<col style="width:20%" />';
             $content .= '<col style="width:20%" />';
-            if(count($headerColumns) == 4)
+            if (count($headerColumns) == 4)
             {
                 $content .= '<col style="width:20%" />';
                 $content .= '<col style="width:40%" />';
@@ -131,10 +131,10 @@
         protected function renderRequiredAttributesLabelsDataContent()
         {
             $content = null;
-            if(count($this->requiredAttributesLabelsData) > 0)
+            if (count($this->requiredAttributesLabelsData) > 0)
             {
                 $content .= '<b>' . Yii::t('Default', 'Required Fields') . '</b>' . '<br/>';
-                foreach($this->requiredAttributesLabelsData as $label)
+                foreach ($this->requiredAttributesLabelsData as $label)
                 {
                     $content .= $label. '<br/>';
                 }
@@ -147,7 +147,7 @@
         {
             $headerColumns = array();
             $headerColumns[] = Yii::t('Default', 'Zurmo Field');
-            if($this->model->firstRowIsHeaderRow)
+            if ($this->model->firstRowIsHeaderRow)
             {
                 $headerColumns[] = Yii::t('Default', 'Header');
             }
@@ -175,7 +175,7 @@
                                                                        $mappingDataRow['type'],
                                                                        $mappingDataRow['attributeIndexOrDerivedType'],
                                                                        $ajaxOnChangeUrl);
-                if($firstRowIsHeaderRow)
+                if ($firstRowIsHeaderRow)
                 {
                     assert('$mappingDataRow["headerValue"] == null || is_string($mappingDataRow["headerValue"])');
                     $row['cells'][] = $mappingFormLayoutUtil->renderHeaderColumnContent($columnName,
@@ -216,7 +216,7 @@
         protected function resolveMappingRuleFormsAndElementTypesByColumn($columnName)
         {
             assert('is_string($columnName)');
-            if(isset($this->mappingDataMappingRuleFormsAndElementTypes[$columnName]))
+            if (isset($this->mappingDataMappingRuleFormsAndElementTypes[$columnName]))
             {
                 return $this->mappingDataMappingRuleFormsAndElementTypes[$columnName];
             }

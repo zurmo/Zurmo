@@ -48,13 +48,13 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            if($value != null)
+            if ($value != null)
             {
                 return $value;
             }
             assert('$value == null || $value instanceof OwnedCustomField');
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
-            if($mappingRuleData['defaultValue'] != null)
+            if ($mappingRuleData['defaultValue'] != null)
             {
                 try
                 {
@@ -72,7 +72,7 @@
             else
             {
                 $model = new $modelClassName(false);
-                if(!$model->isAttributeRequired($attributeName))
+                if (!$model->isAttributeRequired($attributeName))
                 {
                     return $value;
                 }

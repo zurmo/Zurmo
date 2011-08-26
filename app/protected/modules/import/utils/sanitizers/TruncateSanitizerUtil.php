@@ -54,11 +54,11 @@
             assert('$mappingRuleData == null');
             $model     = new $modelClassName(false);
             $maxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, $attributeName);
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
-            if(strlen($value) < $maxLength)
+            if (strlen($value) < $maxLength)
             {
                 return $value;
             }

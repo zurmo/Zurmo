@@ -100,7 +100,7 @@
         {
             assert('$step == null || is_string($step)');
             assert('$params == null || is_array($params)');
-            if($step == null)
+            if ($step == null)
             {
                 $steps          = $this->steps();
                 $this->nextStep = array_shift($steps);
@@ -117,7 +117,7 @@
             $steps        = $this->steps();
             $currentKey   = array_search($step, $steps);
             $nextKey      = $currentKey + 1;
-            if(count($steps) == 1)
+            if (count($steps) == 1)
             {
                 $this->completionPercentage = $this->subSequenceCompletionPercentage;
             }

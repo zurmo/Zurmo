@@ -34,7 +34,7 @@
         protected function checkService()
         {
             $passed = true;
-            if(!InstallUtil::isFileUploadsOn())
+            if (!InstallUtil::isFileUploadsOn())
             {
                 $this->message .= "\n";
                 $this->message .= Yii::t('Default', 'Php File Uploads is Off.  This should be on.');

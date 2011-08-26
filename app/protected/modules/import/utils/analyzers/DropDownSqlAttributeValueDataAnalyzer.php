@@ -45,26 +45,26 @@
             $data             = $dataProvider->getCountDataByGroupByColumnName($columnName);
             $count            = 0;
             $missingDropDowns = null;
-            foreach($data as $valueCountData)
+            foreach ($data as $valueCountData)
             {
-                if($valueCountData[$columnName] == null)
+                if ($valueCountData[$columnName] == null)
                 {
                     continue;
                 }
-                if(!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
+                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
                 {
                     $missingDropDowns[] = $valueCountData[$columnName];
                     $count ++;
                 }
             }
-            if($count > 0)
+            if ($count > 0)
             {
                 $label   = '{count} dropdown value(s) are missing from the field. ';
                 $label  .= 'These values will be added upon import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
             }
 
-            if($missingDropDowns != null)
+            if ($missingDropDowns != null)
             {
                 $instructionsData = array(DropDownSanitizerUtil::ADD_MISSING_VALUE => $missingDropDowns);
                 $this->setInstructionsData($instructionsData);

@@ -34,7 +34,7 @@
         {
             assert('is_string($fileName)');
             assert('is_string($tableName)');
-            if($pathToFiles == null)
+            if ($pathToFiles == null)
             {
                 $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
             }
@@ -53,7 +53,7 @@
         public static function createImportModelTestItem($string, $lastName)
         {
             $freeze = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freeze = true;
@@ -63,7 +63,7 @@
             $model->lastName = $lastName;
             $saved           = $model->save();
             assert('$saved');
-            if($freeze)
+            if ($freeze)
             {
                 RedBeanDatabase::unfreeze();
             }
@@ -73,7 +73,7 @@
         public static function createImportModelTestItem2($name)
         {
             $freeze = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freeze = true;
@@ -82,7 +82,7 @@
             $model->name = $name;
             $saved = $model->save();
             assert('$saved');
-            if($freeze)
+            if ($freeze)
             {
                 RedBeanDatabase::unfreeze();
             }
@@ -92,7 +92,7 @@
         public static function createImportModelTestItem3($name)
         {
             $freeze = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freeze = true;
@@ -101,7 +101,7 @@
             $model->name = $name;
             $saved = $model->save();
             assert('$saved');
-            if($freeze)
+            if ($freeze)
             {
                 RedBeanDatabase::unfreeze();
             }
@@ -111,7 +111,7 @@
         public static function createImportModelTestItem4($name)
         {
             $freeze = false;
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $freeze = true;
@@ -120,7 +120,7 @@
             $model->name = $name;
             $saved = $model->save();
             assert('$saved');
-            if($freeze)
+            if ($freeze)
             {
                 RedBeanDatabase::unfreeze();
             }

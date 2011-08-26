@@ -150,9 +150,9 @@
                 {
                     $inPart .= $theValue;
                 }
-                elseif(is_bool($theValue))
+                elseif (is_bool($theValue))
                 {
-                    if(!$theValue)
+                    if (!$theValue)
                     {
                         $theValue = 0;
                     }

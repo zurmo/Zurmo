@@ -82,7 +82,7 @@
                 {
                     foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
                     {
-                        if($attributeName == $customFieldName)
+                        if ($attributeName == $customFieldName)
                         {
                             return CustomFieldData::getByName($customFieldDataName);
                         }

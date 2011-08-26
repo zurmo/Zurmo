@@ -48,24 +48,24 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName) || $attributeName == null');
             assert('is_array($columnMappingData)');
-            foreach($sanitizerUtilTypes as $sanitizerUtilType)
+            foreach ($sanitizerUtilTypes as $sanitizerUtilType)
             {
 
                 $sanitizerUtilClassName = $sanitizerUtilType . 'SanitizerUtil';
                 //For extra columns, only process sanitization for 'required' since that will add the default values.
                 //Other sanitization is not required since extra columns are not fed from external data.
-                if($columnMappingData["type"] == 'extraColumn' &&
+                if ($columnMappingData["type"] == 'extraColumn' &&
                    !is_subclass_of($sanitizerUtilClassName, 'RequiredSanitizerUtil') &&
                    $sanitizerUtilClassName != 'RequiredSanitizerUtil')
                 {
                    continue;
                 }
                 $mappingRuleType = $sanitizerUtilClassName::getLinkedMappingRuleType();
-                if($mappingRuleType != null)
+                if ($mappingRuleType != null)
                 {
                     assert('$mappingRuleType != null');
                     $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
-                    if(!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
+                    if (!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
                     {
                         assert('$columnMappingData["type"] = "extraColumn"');
                         $mappingRuleData = null;
@@ -81,9 +81,9 @@
                 }
                   try
                   {
-                      if($sanitizerUtilClassName::supportsSanitizingWithInstructions())
+                      if ($sanitizerUtilClassName::supportsSanitizingWithInstructions())
                       {
-                        if($columnMappingData['importInstructionsData'] != null)
+                        if ($columnMappingData['importInstructionsData'] != null)
                         {
                             assert('isset($columnMappingData["importInstructionsData"])');
                             $importInstructionsData = $columnMappingData['importInstructionsData'];
@@ -104,9 +104,9 @@
                   }
                   catch(InvalidValueToSanitizeException $e)
                   {
-                      if($e->getMessage() != null)
+                      if ($e->getMessage() != null)
                       {
-                          if($attributeName != null)
+                          if ($attributeName != null)
                           {
                               $label = LabelUtil::makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
                           }
@@ -117,7 +117,7 @@
                           $importSanitizeResultsUtil->addMessage($label . ' ' . $e->getMessage());
                       }
                       $value = null;
-                      if($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
+                      if ($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
                       {
                           $importSanitizeResultsUtil->setModelShouldNotBeSaved();
                       }

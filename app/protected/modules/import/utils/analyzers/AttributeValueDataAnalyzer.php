@@ -113,7 +113,7 @@
         public function setInstructionsData($instructionsData)
         {
             assert('$instructionsData != null');
-            if($this->instructionsData != null)
+            if ($this->instructionsData != null)
             {
                 throw new NotSupportedException();
             }

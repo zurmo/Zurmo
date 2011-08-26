@@ -56,18 +56,18 @@
          */
         protected function analyzeByValue($value)
         {
-            if($value == null)
+            if ($value == null)
             {
                 return;
             }
             $validator = new CEmailValidator();
             $validatedEmail = $validator->validateValue($value);
-            if($validatedEmail === false)
+            if ($validatedEmail === false)
             {
                 $this->messageCountData[static::INVALID] ++;
                 return;
             }
-            if(strlen($validatedEmail) > $this->maxLength)
+            if (strlen($validatedEmail) > $this->maxLength)
             {
                 $this->messageCountData[static::EMAIL_TOO_LONG] ++;
             }
@@ -80,13 +80,13 @@
         {
             $invalid  = $this->messageCountData[static::INVALID];
             $tooLarge = $this->messageCountData[static::EMAIL_TOO_LONG];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) have emails that are invalid. ';
                 $label  .= 'These rows will be skipped during import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }
-            if($tooLarge > 0)
+            if ($tooLarge > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These rows will be skipped during import.';

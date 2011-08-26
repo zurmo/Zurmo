@@ -84,7 +84,7 @@
                                                                        $mappingDataRow['type'],
                                                                        $mappingDataRow['attributeIndexOrDerivedType'],
                                                                        $ajaxOnChangeUrl);
-                if($firstRowIsHeaderRow)
+                if ($firstRowIsHeaderRow)
                 {
                     $row['cells'][] = '&#160;';
                 }

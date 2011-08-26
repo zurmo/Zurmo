@@ -76,7 +76,7 @@
          */
         protected function analyzeByValue($value)
         {
-            if(strlen($value) > $this->maxLength)
+            if (strlen($value) > $this->maxLength)
             {
                 $this->messageCountData[static::INVALID] ++;
             }
@@ -88,7 +88,7 @@
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];
-            if($invalid > 0)
+            if ($invalid > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These values will be truncated to a length of {length} upon import.';

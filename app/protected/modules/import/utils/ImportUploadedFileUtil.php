@@ -40,7 +40,7 @@
             assert('is_string($filesVariableName)');
             $uploadedFile = static::getByNameAndCatchError($filesVariableName);
             $extension = $uploadedFile->getExtensionName();
-            if(strtolower($extension) != 'csv')
+            if (strtolower($extension) != 'csv')
             {
                 $message = Yii::t('Default', 'The file that was uploaded was not a csv.');
                 throw new FailedFileUploadException($message);

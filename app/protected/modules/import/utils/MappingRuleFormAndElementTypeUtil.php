@@ -42,15 +42,15 @@
             $mappingRuleFormsAndElementTypes = array();
             $mappingRuleFormTypesAndElementTypes = $attributeImportRules::
                                                    getModelAttributeMappingRuleFormTypesAndElementTypes($columnType);
-            foreach($mappingRuleFormTypesAndElementTypes as $mappingRuleFormType => $elementType)
+            foreach ($mappingRuleFormTypesAndElementTypes as $mappingRuleFormType => $elementType)
             {
                 $mappingRuleFormClassName          = $mappingRuleFormType . 'MappingRuleForm';
                 $modelClassName                    = $attributeImportRules->getModelClassName();
-                if($attributeImportRules instanceof NonDerivedAttributeImportRules)
+                if ($attributeImportRules instanceof NonDerivedAttributeImportRules)
                 {
                     $attributeNameOrDerivedType = $attributeImportRules->getModelAttributeName();
                 }
-                elseif($attributeImportRules instanceof DerivedAttributeImportRules)
+                elseif ($attributeImportRules instanceof DerivedAttributeImportRules)
                 {
                     $attributeNameOrDerivedType = $attributeImportRules::getType();
                 }
@@ -79,17 +79,17 @@
             assert('is_array($mappingData)');
             assert('is_string($importRulesType)');
             $mappingRuleFormsAndElementTypes = array();
-            foreach($mappingData as $columnName => $mappingDataByColumn)
+            foreach ($mappingData as $columnName => $mappingDataByColumn)
             {
                 $mappingRuleFormsAndElementTypes[$columnName] = array();
                 assert('$mappingDataByColumn["type"] == "importColumn" || $mappingDataByColumn["type"] == "extraColumn"');
-                if($mappingDataByColumn['attributeIndexOrDerivedType'] != null)
+                if ($mappingDataByColumn['attributeIndexOrDerivedType'] != null)
                 {
                     $attributeImportRulesClassName = AttributeImportRulesFactory::
                                                      getClassNameByImportRulesTypeAndAttributeIndexOrDerivedType(
                                                      $importRulesType,
                                                      $mappingDataByColumn['attributeIndexOrDerivedType']);
-                    foreach($mappingDataByColumn["mappingRulesData"] as $mappingRuleFormClassName => $mappingRuleFormData)
+                    foreach ($mappingDataByColumn["mappingRulesData"] as $mappingRuleFormClassName => $mappingRuleFormData)
                     {
                         $mappingRuleFormAndElementTypes = $attributeImportRulesClassName::
                                                           getModelAttributeMappingRuleFormTypesAndElementTypes(
@@ -99,7 +99,7 @@
                         $mappingRuleForm                = static::makeForm($importRulesType,
                                                           $mappingDataByColumn['attributeIndexOrDerivedType'],
                                                           $mappingRuleFormClassName);
-                        if($mappingDataByColumn['type'] == "extraColumn")
+                        if ($mappingDataByColumn['type'] == "extraColumn")
                         {
                             $mappingRuleForm->setScenario('extraColumn');
                         }
@@ -145,12 +145,12 @@
         {
             assert('is_array($mappingDataMappingRuleFormsData)');
             $anyValidatedFalse = false;
-            foreach($mappingDataMappingRuleFormsData as $notUsed => $mappingRuleFormsData)
+            foreach ($mappingDataMappingRuleFormsData as $notUsed => $mappingRuleFormsData)
             {
-                foreach($mappingRuleFormsData as $mappingRuleFormData)
+                foreach ($mappingRuleFormsData as $mappingRuleFormData)
                 {
                     assert('$mappingRuleFormData["mappingRuleForm"] instanceof MappingRuleForm');
-                    if(!$mappingRuleFormData["mappingRuleForm"]->validate())
+                    if (!$mappingRuleFormData["mappingRuleForm"]->validate())
                     {
                         $anyValidatedFalse = true;
                     }

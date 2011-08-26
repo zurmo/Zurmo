@@ -52,11 +52,11 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('$mappingRuleData == null');
-            if($value == null)
+            if ($value == null)
             {
                 return $value;
             }
-            if(strlen($value) < 65000)
+            if (strlen($value) < 65000)
             {
                 return $value;
             }

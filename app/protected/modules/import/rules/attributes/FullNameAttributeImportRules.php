@@ -60,7 +60,7 @@
                                                    $modelClassName, null, $value, $columnMappingData,
                                                    $importSanitizeResultsUtil);
             @list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
-            if($lastName == null)
+            if ($lastName == null)
             {
                 $lastName  = $firstName;
                 $firstName = null;
