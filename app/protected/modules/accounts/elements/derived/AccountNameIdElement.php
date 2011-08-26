@@ -28,7 +28,7 @@
      * Display the name and hidden id of the account model.
      * Displays a select button and auto-complete input
      */
-    class AccountNameIdElement extends NameIdElement implements DerivedElementInterface
+    class AccountNameIdElement extends NameIdElement
     {
         protected static $moduleId = 'accounts';
 

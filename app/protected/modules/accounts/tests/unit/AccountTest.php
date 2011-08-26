@@ -39,6 +39,12 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        public function testConfirmAccountNameIdElementStillImplementsCorrectInterfaceFromParent()
+        {
+            $classToEvaluate        = new ReflectionClass('AccountNameIdElement');
+            $this->assertTrue($classToEvaluate->implementsInterface('DerivedElementInterface'));
+        }
+
         public function testCreateAndGetAccountById()
         {
             $user = UserTestHelper::createBasicUser('Steven');
