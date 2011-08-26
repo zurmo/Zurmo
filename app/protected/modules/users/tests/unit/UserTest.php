@@ -872,5 +872,29 @@
             $this->assertEquals('User', $modelClassNames[0]);
             $this->assertEquals('UserModelSearch', $modelClassNames[1]);
         }
+
+        public function testLogAuditEventsListForCreatedAndModifedCreatingFirstUser()
+        {
+            Yii::app()->user->userModel = null;
+            $user = new User();
+            $user->username           = 'myuser';
+            $user->title->value       = 'Mr';
+            $user->firstName          = 'My';
+            $user->lastName           = 'Userson';
+            $user->setPassword('myuser');
+            $saved = $user->save();
+            $this->assertTrue($saved);
+            $this->assertEquals(Yii::app()->user->userModel, $user);
+
+            //Create a second user and confirm the first user is still the current user.
+            $user2 = new User();
+            $user2->username           = 'myuser2';
+            $user2->title->value       = 'Mr';
+            $user2->firstName          = 'My';
+            $user2->lastName           = 'Userson2';
+            $user2->setPassword('myuser2');
+            $this->assertTrue($user2->save());
+            $this->assertEquals(Yii::app()->user->userModel, $user);
+        }
     }
 ?>
