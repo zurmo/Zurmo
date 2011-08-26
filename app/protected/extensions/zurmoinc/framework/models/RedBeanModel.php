@@ -633,11 +633,15 @@
 
                         $relationType           = $relationTypeModelClassNameAndOwns[0];
                         $relationModelClassName = $relationTypeModelClassNameAndOwns[1];
-                        if($relationType == self::HAS_MANY_BELONGS_TO && $relationName != strtolower($relationModelClassName))
+                        if($relationType == self::HAS_MANY_BELONGS_TO &&
+                           strtolower($relationName) != strtolower($relationModelClassName))
                         {
                             $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
-                                     'the same as the related model class name';
-                            throw new NotSupportedException(Yii::t('Default', $label));
+                                     'the same as the related model class name. Relation: {relationName} ' .
+                                     'Relation model class name: {relationModelClassName}';
+                            throw new NotSupportedException(Yii::t('Default', $label,
+                                      array('{relationName}' => $relationName,
+                                            '{relationModelClassName}' => $relationModelClassName)));
                         }
                         if (count($relationTypeModelClassNameAndOwns) == 3)
                         {
@@ -1667,15 +1671,18 @@
                                 $bean                  = $this->attributeNameToBeanAndClassName                [$relationName][0];
                                 $relatedModelClassName = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][1];
                                 $linkName = strtolower($relationName);
-                                if ($linkName == strtolower($relatedModelClassName))
+                                if (strtolower($linkName) == strtolower($relatedModelClassName))
                                 {
                                     $linkName = null;
                                 }
                                 elseif($relationType == RedBeanModel::HAS_MANY_BELONGS_TO)
                                 {
                                     $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
-                                             'the same as the related model class name';
-                                    throw new NotSupportedException(Yii::t('Default', $label));
+                                             'the same as the related model class name. Relation: {relationName} ' .
+                                             'Relation model class name: {relationModelClassName}';
+                                    throw new NotSupportedException(Yii::t('Default', $label,
+                                              array('{relationName}' => $linkName,
+                                                    '{relationModelClassName}' => $relatedModelClassName)));
                                 }
                                 if ($relatedModel->isModified() ||
                                     $relatedModel->id > 0       ||
