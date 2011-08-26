@@ -100,7 +100,7 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Test contact state sanitization by batch.
-            $dataAnalyzer = new ContactStateBatchAttributeValueDataAnalyzer('Contacts', array('state'));
+            $dataAnalyzer = new ContactStateBatchAttributeValueDataAnalyzer('Contacts', null);
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_0');
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));

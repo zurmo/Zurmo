@@ -38,41 +38,41 @@
             $i = new I();
             $i->iMember = 'iString1';
             $i->name    = 'd';
-            assert('$i->save()'); // Not Coding Standard
+            assert($i->save()); // Not Coding Standard
             $i = new I();
             $i->iMember = 'xString1';
             $i->name    = 'e';
-            assert('$i->save()'); // Not Coding Standard
+            assert($i->save()); // Not Coding Standard
             $i = new I();
             $i->iMember = 'yString1';
             $i->name    = 'f';
-            assert('$i->save()'); // Not Coding Standard
+            assert($i->save()); // Not Coding Standard
 
             $j = new J();
             $j->jMember = 'jString1';
             $j->name    = 'a';
-            assert('$j->save()'); // Not Coding Standard
+            assert($j->save()); // Not Coding Standard
             $j = new J();
             $j->jMember = 'xString1';
             $j->name    = 'b';
-            assert('$j->save()'); // Not Coding Standard
+            assert($j->save()); // Not Coding Standard
             $j = new J();
             $j->jMember = 'yString1';
             $j->name    = 'c';
-            assert('$j->save()'); // Not Coding Standard
+            assert($j->save()); // Not Coding Standard
 
             $k = new K();
             $k->kMember = 'kString1';
             $k->name    = 'g';
-            assert('$k->save()'); // Not Coding Standard
+            assert($k->save()); // Not Coding Standard
             $k = new K();
             $k->kMember = 'xString1';
             $k->name    = 'i';
-            assert('$k->save()'); // Not Coding Standard
+            assert($k->save()); // Not Coding Standard
             $k = new K();
             $k->kMember = 'yString1';
             $k->name    = 'h';
-            assert('$k->save()'); // Not Coding Standard
+            assert($k->save()); // Not Coding Standard
         }
 
         public function testUnionSqlAcrossMultipleModels()
