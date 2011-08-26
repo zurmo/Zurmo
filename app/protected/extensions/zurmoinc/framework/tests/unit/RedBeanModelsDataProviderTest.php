@@ -267,14 +267,14 @@
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= "left join {$quote}k{$quote} on {$quote}k{$quote}.{$quote}i_id{$quote} = ";
             $compareSubsetSql .= "{$quote}i{$quote}.{$quote}id{$quote} ";
-            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN(lower('d'), lower('e'), lower('f')))";
+            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN(lower('d'),lower('e'),lower('f')))"; // Not Coding Standard
             $compareSubsetSql .= " and {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
             $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id ";
             $compareSubsetSql .= ", 'J' modelClassName , {$quote}j{$quote}.{$quote}jmember{$quote} orderByColumn ";
             $compareSubsetSql .= "from {$quote}j{$quote} ";
-            $compareSubsetSql .= "where ({$quote}j{$quote}.{$quote}jmember{$quote} IN(lower('a'), lower('b'), lower('c')))";
+            $compareSubsetSql .= "where ({$quote}j{$quote}.{$quote}jmember{$quote} IN(lower('a'),lower('b'),lower('c')))"; // Not Coding Standard
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "order by orderByColumn desc ";
             $compareSubsetSql .= 'limit 7 offset 2';

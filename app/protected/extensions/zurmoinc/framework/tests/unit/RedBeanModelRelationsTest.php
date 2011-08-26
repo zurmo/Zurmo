@@ -382,18 +382,21 @@
             $this->assertEquals(self::MANY_COUNT, $firstI->ls->count());
         }
 
+        /**
+         * MemberOf/Members attribute names are i and is.
+         */
         public function testMemberMemberOfRelation()
         {
             $i1 = new I();
             $i2 = new I();
             $i3 = new I();
-            $i1->members->add($i2);
-            $i1->members->add($i3);
+            $i1->is->add($i2);
+            $i1->is->add($i3);
             $this->assertTrue($i1->save());
             $this->assertTrue($i2->id > 0);
             $this->assertTrue($i3->id > 0);
-            $this->assertTrue($i2->isSame($i1->members[0]));
-            $this->assertTrue($i3->isSame($i1->members[1]));
+            $this->assertTrue($i2->isSame($i1->is[0]));
+            $this->assertTrue($i3->isSame($i1->is[1]));
             $i1Id = $i1->id;
             $i2Id = $i2->id;
             $i3Id = $i3->id;
@@ -403,8 +406,17 @@
             $i1 = I::getById($i1Id);
             $i2 = I::getById($i2Id);
             $i3 = I::getById($i3Id);
-            $this->assertTrue($i1->isSame($i2->memberOf));
-            $this->assertTrue($i1->isSame($i3->memberOf));
+            $this->assertTrue($i1->isSame($i2->i));
+            $this->assertTrue($i1->isSame($i3->i));
+
+            $this->assertEquals(0, $i3->is->count());
+            $i4 = new I();
+            $i4->i = $i3;
+            $this->assertTrue($i4->save());
+            $i3Id = $i3->id;
+            $i3->forget();
+            $i3 = I::getById($i3Id);
+            $this->assertEquals(1, $i3->is->count());
         }
 
         public function testChangingBelongsToSideOfHasManyRelation()

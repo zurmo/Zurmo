@@ -41,7 +41,7 @@
         {
             //Test member of search.
             $_FAKEPOST['Account'] = array();
-            $_FAKEPOST['Account']['memberOf']['id'] = '4';
+            $_FAKEPOST['Account']['account']['id'] = '4';
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
                 new Account(false),
                 1,
@@ -51,7 +51,7 @@
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Account');
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('Account', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}account{$quote}.{$quote}memberof_account_id{$quote} = 4)";
+            $compareWhere = "({$quote}account{$quote}.{$quote}account_id{$quote} = 4)";
             $this->assertEquals($compareWhere, $where);
 
             //Now test that the joinTablesAdapter has correct information.
@@ -63,9 +63,9 @@
             $dataProvider = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data = $dataProvider->getData();
 
-            //Test members search.
+            //Test accounts search.
             $_FAKEPOST['Account'] = array();
-            $_FAKEPOST['Account']['members']['id'] = '5';
+            $_FAKEPOST['Account']['accounts']['id'] = '5';
             $metadataAdapter     = new SearchDataProviderMetadataAdapter(new Account(false), 1, $_FAKEPOST['Account']);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Account');
