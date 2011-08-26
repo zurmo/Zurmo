@@ -25,36 +25,19 @@
      ********************************************************************************/
 
     /**
-     * Element used by the import mapping process.
+     * Element used by mapping rules that need to display data in a dropdown.
      */
-    class ImportMappingRuleDateFormatDropDownElement extends ImportMappingRuleStaticDropDownFormElement
+    abstract class ImportMappingRuleStaticDropDownFormElement extends StaticDropDownFormElement
     {
-        /**
-         * Override to ensure the model is an ValueFormatMappingRuleForm.
-         */
-        public function __construct($model, $attribute, $form = null, array $params = array())
+
+        protected function renderControlNonEditable()
         {
-            assert('$model instanceof ValueFormatMappingRuleForm');
-            parent::__construct($model, $attribute, $form, $params);
+            throw new NotImplementedException();
         }
 
-        /**
-         * The static dates are just sample data for the user interface to help illustrate the available formats.
-         * @see DropDownElement::getDropDownArray()
-         */
-        protected function getDropDownArray()
+        protected function getIdForSelectInput()
         {
-            $dropDownData = array();
-            $formats      = DateSanitizerUtil::getAcceptableFormats();
-            foreach ($formats as $format)
-            {
-                $firstDate  = Yii::app()->dateFormatter->format($format, strtotime('30 May 1950'));
-                $secondDate = Yii::app()->dateFormatter->format($format, strtotime('15 December 2011'));
-                $label = Yii::t('Default', '{firstDate} or {secondDate}', array('{firstDate}' =>  $firstDate,
-                                                                                '{secondDate}' => $secondDate));
-                $dropDownData[$format] = $label;
-            }
-            return $dropDownData;
+            return $this->getEditableInputId($this->attribute);
         }
     }
 ?>

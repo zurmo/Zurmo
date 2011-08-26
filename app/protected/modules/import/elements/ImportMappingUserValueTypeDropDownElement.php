@@ -29,7 +29,7 @@
      * when mapped can be mapped either as a username, zurmo user id, or an external system id.
      * @see UserValueTypeModelAttributeMappingRuleForm
      */
-    class ImportMappingUserValueTypeDropDownElement extends DropDownElement
+    class ImportMappingUserValueTypeDropDownElement extends ImportMappingRuleStaticDropDownFormElement
     {
         /**
          * Override to ensure the model is an UserValueTypeModelAttributeMappingRuleForm.
@@ -40,40 +40,12 @@
             parent::__construct($model, $attribute, $form, $params);
         }
 
-        /**
-         * Override to utilize the correct attribute from the model as the value.
-         */
-        protected function renderControlEditable()
-        {
-            return $this->form->dropDownList(
-                $this->model,
-                $this->attribute,
-                $this->getDropDownArray(),
-                $this->getEditableHtmlOptions()
-            );
-        }
-
-        protected function renderControlNonEditable()
-        {
-            throw new NotImplementedException();
-        }
-
         protected function getDropDownArray()
         {
             return array(
                 UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID            => yii::t('Default', 'Zurmo Id'),
                 UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID  => yii::t('Default', 'Other id'),
                 UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME           => yii::t('Default', 'Zurmo Username'));
-        }
-
-        protected function getIdForSelectInput()
-        {
-            return $this->getEditableInputId();
-        }
-
-        protected function getNameForSelectInput()
-        {
-            return $this->getEditableInputName();
         }
     }
 ?>

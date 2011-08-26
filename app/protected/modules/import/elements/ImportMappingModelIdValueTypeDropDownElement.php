@@ -27,7 +27,7 @@
     /**
      * Element used by the import mapping process.
      */
-    class ImportMappingModelIdValueTypeDropDownElement extends DropDownElement
+    class ImportMappingModelIdValueTypeDropDownElement extends ImportMappingRuleStaticDropDownFormElement
     {
         /**
          * Override to ensure the model is an IdValueTypeMappingRuleForm.
@@ -38,39 +38,11 @@
             parent::__construct($model, $attribute, $form, $params);
         }
 
-        /**
-         * Override to utilize the correct attribute from the model as the value.
-         */
-        protected function renderControlEditable()
-        {
-            return $this->form->dropDownList(
-                $this->model,
-                $this->attribute,
-                $this->getDropDownArray(),
-                $this->getEditableHtmlOptions()
-            );
-        }
-
-        protected function renderControlNonEditable()
-        {
-            throw new NotImplementedException();
-        }
-
         protected function getDropDownArray()
         {
             return array(
                 IdValueTypeMappingRuleForm::ZURMO_MODEL_ID     => yii::t('Default', 'Zurmo Id'),
                 IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID => yii::t('Default', 'Other Id'));
-        }
-
-        protected function getIdForSelectInput()
-        {
-            return $this->getEditableInputId();
-        }
-
-        protected function getNameForSelectInput()
-        {
-            return $this->getEditableInputName();
         }
     }
 ?>

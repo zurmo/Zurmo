@@ -27,7 +27,7 @@
     /**
      * Element used by the import mapping process.
      */
-    class ImportMappingRuleDateTimeFormatDropDownElement extends DropDownElement
+    class ImportMappingRuleDateTimeFormatDropDownElement extends ImportMappingRuleStaticDropDownFormElement
     {
         /**
          * Override to ensure the model is an ValueFormatMappingRuleForm.
@@ -36,24 +36,6 @@
         {
             assert('$model instanceof ValueFormatMappingRuleForm');
             parent::__construct($model, $attribute, $form, $params);
-        }
-
-        /**
-         * Override to utilize the correct attribute from the model as the value.
-         */
-        protected function renderControlEditable()
-        {
-            return $this->form->dropDownList(
-                $this->model,
-                $this->attribute,
-                $this->getDropDownArray(),
-                $this->getEditableHtmlOptions()
-            );
-        }
-
-        protected function renderControlNonEditable()
-        {
-            throw new NotImplementedException();
         }
 
         /**
@@ -73,16 +55,6 @@
                 $dropDownData[$format] = $label;
             }
             return $dropDownData;
-        }
-
-        protected function getIdForSelectInput()
-        {
-            return $this->getEditableInputId();
-        }
-
-        protected function getNameForSelectInput()
-        {
-            return $this->getEditableInputName();
         }
     }
 ?>

@@ -27,7 +27,7 @@
     /**
      * Display a drop down of contact states specifically for mapping rules during the import process.
      */
-    class ImportMappingRuleContactStatesDropDownElement extends DropDownElement
+    class ImportMappingRuleContactStatesDropDownElement extends ImportMappingRuleStaticDropDownFormElement
     {
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
@@ -36,23 +36,12 @@
         }
 
         /**
-         * Renders the editable dropdown content.
-         * @return A string containing the element's content.
+         * Override to always return true since a blank should always be here.
+         * @see DropDownElement::getAddBlank()
          */
-        protected function renderControlEditable()
+        protected function getAddBlank()
         {
-            $dropDownArray = $this->getDropDownArray();
-            $htmlOptions = array(
-                'name' => $this->getEditableInputName(),
-                'id'   => $this->getEditableInputId(),
-            );
-            $htmlOptions['empty'] = Yii::t('Default', 'None');
-            return $this->form->dropDownList($this->model, $this->attribute, $dropDownArray, $htmlOptions);
-        }
-
-        protected function renderControlNonEditable()
-        {
-            throw new NotImplementedException();
+            return true;
         }
 
         protected function getDropDownArray()
