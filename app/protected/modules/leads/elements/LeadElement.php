@@ -31,7 +31,7 @@
      * to search on contact.  Also includes a hidden input for the user
      * id.
      */
-    class FirstStatesContactElement extends ContactElement
+    class LeadElement extends ContactElement
     {
         protected static $moduleId = 'leads';
 

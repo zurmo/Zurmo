@@ -25,13 +25,18 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for contact state values that are before the starting state. This means it is a lead value.
+     * Import rules for the contact state attribute. This is used for the states that are the starting state or after.
      */
-    class FirstStatesContactSqlAttributeValueDataAnalyzer extends ContactStateSqlAttributeValueDataAnalyzer
+    class LeadStateAttributeImportRules extends ContactStateAttributeImportRules
     {
-        protected function resolveStates()
+        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return LeadsUtil::getLeadStateDataFromStartingStateOnAndKeyedById();
+            return array('DefaultLeadStateId' => 'ImportMappingRuleContactStatesDropDown');
+        }
+
+        public static function getSanitizerUtilTypesInProcessingOrder()
+        {
+            return array('LeadState', 'LeadStateRequired');
         }
     }
 ?>

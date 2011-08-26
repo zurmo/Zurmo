@@ -45,7 +45,7 @@
                 }
                 elseif (!$canAccessContacts && $canAccessLeads)
                 {
-                    return 'FirstStatesElement';
+                    return 'LeadElement';
                 }
                 elseif ($canAccessContacts && !$canAccessLeads)
                 {

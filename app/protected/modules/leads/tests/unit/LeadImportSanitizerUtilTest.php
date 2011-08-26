@@ -43,7 +43,7 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultLeadStateIdMappingRuleForm' =>
                                                array('defaultStateId' => null)));
-            $sanitizerUtilTypes        = FirstStatesContactAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizerUtilTypes        = LeadStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Contact', null, null,
@@ -60,7 +60,7 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultLeadStateIdMappingRuleForm' =>
                                                array('defaultStateId' => $contactStates[0]->id)));
-            $sanitizerUtilTypes        = FirstStatesContactAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizerUtilTypes        = LeadStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Contact', null, $contactStates[1]->id,
@@ -75,7 +75,7 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultLeadStateIdMappingRuleForm' =>
                                                array('defaultStateId' => $contactStates[0]->id)));
-            $sanitizerUtilTypes        = FirstStatesContactAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizerUtilTypes        = LeadStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Contact', null, null,
@@ -90,7 +90,7 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultLeadStateIdMappingRuleForm' =>
                                                array('defaultValue' => null)));
-            $sanitizerUtilTypes        = FirstStatesContactAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizerUtilTypes        = LeadStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Contact', null, 'somethingnotright',
@@ -106,7 +106,7 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultLeadStateIdMappingRuleForm' =>
                                                array('defaultValue' => null)));
-            $sanitizerUtilTypes        = FirstStatesContactAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizerUtilTypes        = LeadStateAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Contact', null, $contactStates[5]->id,

@@ -25,27 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Sanitizer for contact states that are before the starting state. Used by the leads module.
+     * Data analyzer for contact state values that are before the starting state. This means it is a lead value.
      */
-    class FirstStatesContactSanitizerUtil extends ContactStateSanitizerUtil
+    class LeadStateBatchAttributeValueDataAnalyzer extends ContactStateBatchAttributeValueDataAnalyzer
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        protected function resolveStates()
         {
-            return 'FirstStatesContact';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'FirstStatesContact';
-        }
-
-        protected static function resolvesValidStateByOrder($stateOrder, $startingOrder)
-        {
-            if($stateOrder < $startingOrder)
-            {
-                return true;
-            }
-            return false;
+            return LeadsUtil::getLeadStateDataFromStartingStateOnAndKeyedById();
         }
     }
 ?>

@@ -49,7 +49,7 @@
          */
         public static function getDerivedAttributeTypes()
         {
-            return array_merge(parent::getDerivedAttributeTypes(), array('FirstStatesContact', 'FullName'));
+            return array_merge(parent::getDerivedAttributeTypes(), array('LeadState', 'FullName'));
         }
 
         /**

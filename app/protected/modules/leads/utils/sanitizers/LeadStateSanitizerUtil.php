@@ -25,14 +25,27 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for contact state values that are before the starting state. Manages if the value is empty
-     * or null and resolves against if the state attribute is required.
+     * Sanitizer for contact states that are before the starting state. Used by the leads module.
      */
-    class FirstStatesContactRequiredSanitizerUtil extends ContactStateRequiredSanitizerUtil
+    class LeadStateSanitizerUtil extends ContactStateSanitizerUtil
     {
-        public static function getLinkedMappingRuleType()
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            return 'DefaultLeadStateId';
+            return 'LeadState';
+        }
+
+        public static function getBatchAttributeValueDataAnalyzerType()
+        {
+            return 'LeadState';
+        }
+
+        protected static function resolvesValidStateByOrder($stateOrder, $startingOrder)
+        {
+            if($stateOrder < $startingOrder)
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>

@@ -47,7 +47,7 @@
             createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName(),
                                                   Yii::getPathOfAlias('application.modules.leads.tests.unit.files'));
             $mappingData = array(
-                'column_0'  => array('attributeIndexOrDerivedType' => 'FirstStatesContact',
+                'column_0'  => array('attributeIndexOrDerivedType' => 'LeadState',
                                      'type' => 'importColumn',
                                       'mappingRulesData' => array(
                                           'DefaultLeadStateIdMappingRuleForm' =>
@@ -73,7 +73,7 @@
             $compareData = array(
                 'column_0' => array(
                     array('message'=> '3 pick list value(s) are not valid. Rows that have these values will be skipped upon import.',
-                          'sanitizerUtilType' => 'FirstStatesContact', 'moreAvailable' => false),
+                          'sanitizerUtilType' => 'LeadState', 'moreAvailable' => false),
                 ),
             );
             $this->assertEquals($compareData, $messagesData);
@@ -101,7 +101,7 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Test contact state sanitization by batch.
-            $dataAnalyzer = new FirstStatesContactBatchAttributeValueDataAnalyzer('Leads', null);
+            $dataAnalyzer = new LeadStateBatchAttributeValueDataAnalyzer('Leads', null);
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_0');
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
