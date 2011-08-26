@@ -41,7 +41,7 @@
 
         public static function getSanitizerUtilTypesInProcessingOrder()
         {
-            return array('UserValueType', 'ModelNameIdRequired');
+            return array('UserValueType', 'ModelIdRequired');
         }
     }
 ?>
