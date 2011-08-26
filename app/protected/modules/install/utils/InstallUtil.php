@@ -713,7 +713,7 @@
         {
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
-            ZurmoGeneralCache::forgetAll();
+            ForgetAllCacheUtil::forgetAllCaches();
             $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,

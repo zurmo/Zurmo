@@ -127,9 +127,7 @@
         {
             if (isset($_GET['clearCache']) && $_GET['clearCache'] == 1)
             {
-                RedBeanModelsCache::forgetAll();
-                PermissionsCache::forgetAll();
-                ZurmoGeneralCache::forgetAll();
+                ForgetAllCacheUtil::forgetAllCaches();
             }
         }
 
