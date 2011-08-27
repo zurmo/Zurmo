@@ -34,14 +34,15 @@
             $content  = '<div class="latest-activity-feed">';
             $content .= '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:50px" /><col style="width:100%" />';
+            //$content .= '<col style="width:50px" />'; //re-enable once ready with icons.
+            $content .= '<col style="width:100%" />';
             $content .= '</colgroup>';
             $content .= '<tbody id="' . $this->getViewContainerId() . '" >';
             $data = $this->dataProvider->getData();
             if (count($data) == 0)
             {
                 $content .= '<tr>';
-                $content .= '<td colspan="3">';
+                $content .= '<td colspan="2">';  //Set to 3 once avatar/icon column is re-enabled.
                 $content .= Yii::t('Default', 'No Activities found.');
                 $content .= '</td>';
                 $content .= '</tr>';
@@ -54,12 +55,12 @@
                                                  get_class($model));
                     $orderByAttributeName = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
                     $content .= '<tr>';
-                    $content .= '<td>';
-                    $content .= 'avatar/icon';
-                    $content .= '</td>';
+                    //$content .= '<td>';
+                    //$content .= 'avatar/icon';    //re-enable once ready with icons.
+                    //$content .= '</td>';
                     $content .= '<td>';
                     $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                    $model->{$orderByAttributeName}, 'medium', null);
+                                    $model->{$orderByAttributeName}, 'short', null);
                     $content .= '<br/>';
                     $content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
                     $content .= '<br/>';
@@ -82,7 +83,7 @@
                     $content .= '</tr>';
                 }
                 $content .= '<tr>';
-                $content .= '<td colspan="3">';
+                $content .= '<td colspan="2">'; //Set to 3 once avatar/icon column is re-enabled.
                 $content .= $this->renderPaginationContent();
                 $content .= '</td>';
                 $content .= '</tr>';

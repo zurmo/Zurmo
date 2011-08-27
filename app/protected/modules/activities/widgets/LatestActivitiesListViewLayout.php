@@ -77,7 +77,7 @@
                     $content .= '</td>';
                     $content .= '<td nowrap="nowrap">';
                     $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                    $model->{$orderByAttributeName}, 'medium', null);
+                                    $model->{$orderByAttributeName}, 'short', null);
                     $content .= '</td>';
                     $content .= '</tr>';
                 }
