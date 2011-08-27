@@ -44,7 +44,7 @@
      * interface this wouldn't be an issue so this is removed for testing.
      * @see CWebUser::changeIdentity()
      */
-    protected function changeIdentity($id,$name,$states)
+    protected function changeIdentity($id, $name, $states)
     {
         //Yii::app()->getSession()->regenerateID();  //This was causing problems for tests.
         $this->setId($id);

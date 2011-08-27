@@ -48,11 +48,11 @@
                     ),
                 )
             );
-            $usernameLabel      = $form->labelEx      ($this->formModel, 'username');
+            $usernameLabel      = $form->label        ($this->formModel, 'username');
             $usernameTextField  = $form->textField    ($this->formModel, 'username');
             $usernameError      = $form->error        ($this->formModel, 'username');
 
-            $passwordLabel      = $form->labelEx      ($this->formModel, 'password');
+            $passwordLabel      = $form->label        ($this->formModel, 'password');
             $passwordField      = $form->passwordField($this->formModel, 'password');
             $passwordError      = $form->error        ($this->formModel, 'password');
 
@@ -60,20 +60,20 @@
             $rememberMeLabel    = $form->label        ($this->formModel, 'rememberMe');
             $rememberMeError    = $form->error        ($this->formModel, 'rememberMe');
 
-            $submitButton       = CHtml::submitButton(Yii::t('Default', 'Login'), array('name' => 'Login', 'id' => 'Login'));
+            $submitButton       = CHtml::submitButton(Yii::t('Default', 'Login'),
+                                                      array('name' => 'Login', 'id' => 'Login'));
 
-            $fieldsRequiredLabel = Yii::t('Default', 'Fields with') .
-                                                      ' <span class="required">*</span> ' .
+            $fieldsRequiredLabel = Yii::t('Default', 'Fields with') . ' <span class="required">*</span> ' .
                                    Yii::t('Default', 'are required.');
 
             $formEnd = $this->controller->renderEndWidget();
 
-            $content = "<div class=\"form\">$formStart"                                                          .
-                       "<div class=\"row\">$usernameLabel$usernameTextField$usernameError</div>"                 .
-                       "<div class=\"row\">$passwordLabel$passwordField$passwordError</div>"                     .
-                       "<div class=\"row rememberMe\">$rememberMeCheckBox$rememberMeLabel$rememberMeError</div>" .
-                       "<div class=\"row buttons\">$submitButton</div>"                                          .
-                       "<div class=\"row\"><p class=\"note\">$fieldsRequiredLabel</p></div>"                     .
+            $content = "<div class=\"form\">$formStart"                                            .
+                       "<div>$usernameLabel$usernameTextField$usernameError</div>"                 .
+                       "<div>$passwordLabel$passwordField$passwordError</div>"                     .
+                       "<div style = 'float:left; padding-right:3px;'>$rememberMeCheckBox</div>"   .
+                       "<div>$rememberMeLabel$rememberMeError</div>"                               .
+                       "<div style = 'clear:both;'>$submitButton</div>"                            .
                        "$formEnd</div>";
             return $content;
         }
