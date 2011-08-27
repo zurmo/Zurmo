@@ -85,7 +85,6 @@
             }
             else
             {
-                $content = $this->tidy($content);
                 if (SHOW_PERFORMANCE)
                 {
                     $endTime      = microtime(true);
