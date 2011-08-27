@@ -30,7 +30,7 @@
         {
             return array(
                 Permission::DENY  => Yii::t('Default', 'Owner Only'),
-                ''                => Yii::t('Default', 'Not Set - Ad Hoc / Owner'),
+                ''                => Yii::t('Default', 'Not Set - Ad-hoc / Owner'),
                 Permission::ALLOW => Yii::t('Default', 'All'),
             );
         }

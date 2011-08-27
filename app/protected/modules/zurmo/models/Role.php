@@ -49,6 +49,13 @@
             return $this->name;
         }
 
+        protected function untranslatedAttributeLabels()
+        {
+            return array_merge(parent::untranslatedAttributeLabels(), array(
+                'role' => 'Parent Role',
+            ));
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();

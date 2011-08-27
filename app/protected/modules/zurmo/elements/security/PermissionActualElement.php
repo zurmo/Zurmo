@@ -47,7 +47,7 @@
             {
                 return Yii::app()->format->text(yii::t('Default', 'All'));
             }
-            return Yii::app()->format->text    (yii::t('Default', 'Ad Hoc / Owner'));
+            return Yii::app()->format->text    (yii::t('Default', 'Ad-hoc / Owner'));
         }
     }
 ?>
