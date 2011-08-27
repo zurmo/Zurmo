@@ -246,6 +246,7 @@
             $this->assertEquals($nowStamp, $task->latestDateTime);
             $completedStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() + 1);
             $this->assertNotEquals($nowStamp, $completedStamp);
+            sleep(1); //Some servers are too fast and the test will fail if we don't have this.
             $this->assertTrue($task->save());
             $this->assertNotEquals($nowStamp, $task->completedDateTime);
             $this->assertNotEquals($nowStamp, $task->latestDateTime);
@@ -257,6 +258,7 @@
             $this->assertNotEquals($existingStamp, $newStamp);
             $task = Task::getById($task->id);
             $task->name = 'aNewName';
+            sleep(1); //Some servers are too fast and the test will fail if we don't have this.
             $this->assertTrue($task->save());
             $this->assertEquals($existingStamp, $task->completedDateTime);
             $this->assertEquals($existingStamp, $task->latestDateTime);
