@@ -28,7 +28,7 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Url');
+            return yii::t('Default', 'URL');
         }
 
         public function getAttributeTypeName()

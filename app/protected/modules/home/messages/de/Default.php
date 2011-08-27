@@ -39,8 +39,6 @@
             => '??',
         'Add Portlet'
             => '??',
-        'Add Widget'
-            => '??',
         'Are you sure want to delete this dashboard?'
             => '??',
         'Create Dashboard'

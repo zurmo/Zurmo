@@ -75,7 +75,7 @@
         /**
          * Render a toolbar above the form layout. This includes
          * a link to edit the dashboard as well as a link to add
-         * widgets to the dashboard
+         * portlets to the dashboard
          * @return A string containing the element's content.
           */
         protected function renderActionElementBar($renderedInForm)

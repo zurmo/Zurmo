@@ -33,7 +33,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Add Widget');
+            return Yii::t('Default', 'Add Portlet');
         }
 
         protected function getDefaultRoute()

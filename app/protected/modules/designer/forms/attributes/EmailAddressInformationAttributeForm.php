@@ -28,7 +28,7 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Email Adress Information');
+            return yii::t('Default', 'Email Adresss Information');
         }
 
         public static function getAttributeTypeDisplayDescription()

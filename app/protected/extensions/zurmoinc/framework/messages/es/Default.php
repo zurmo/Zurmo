@@ -117,6 +117,8 @@
             => 'Este módulo no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
             => '??',
+        'This portlet will be removed, ok?'
+            => '??',
         'Title/First/LastName'
             => '??',
         'to'
