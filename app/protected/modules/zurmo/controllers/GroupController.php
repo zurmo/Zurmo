@@ -274,5 +274,25 @@
             }
             return $model;
         }
+
+        /**
+         * Override to make sure the correct module label is used in the titlebar.
+         * @see Controller::makeTitleBarAndEditAndDetailsView()
+         */
+        protected function makeTitleBarAndEditAndDetailsView($model, $renderType,
+                                $titleBarAndEditViewClassName = 'TitleBarAndEditAndDetailsView')
+        {
+            assert('$model != null');
+            assert('$renderType == "Edit"');
+            assert('$titleBarAndEditViewClassName != null && is_string($titleBarAndEditViewClassName)');
+            return new $titleBarAndEditViewClassName(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $model,
+                GroupsModule::getModuleLabelByTypeAndLanguage('Plural'),
+                $renderType
+            );
+        }
     }
+
 ?>
