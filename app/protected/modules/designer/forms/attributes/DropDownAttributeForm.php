@@ -132,9 +132,21 @@
         public function validateCustomFieldDataData($attribute, $params)
         {
             $data = $this->$attribute;
-            if (!empty($data) && array_diff_key( $data , array_unique( $data )) )
+            if (!empty($data) && $nonUniqueData = array_diff_key( $data , ArrayUtil::array_iunique( $data )) )
             {
-                $this->addError('customFieldDataData', Yii::t('Default', 'Each item must be uniquely named'));
+                $nonUniqueValuesString = null;
+                foreach($nonUniqueData as $nonUniqueValue)
+                {
+                    if($nonUniqueValuesString != null)
+                    {
+                       $nonUniqueValuesString .= ', ';
+                    }
+                    $nonUniqueValuesString .= $nonUniqueValue;
+                }
+                $this->addError('customFieldDataData',
+                Yii::t('Default',
+                'Each item must be uniquely named and the following are not: {values}',
+                array('{values}' => $nonUniqueValuesString)));
             }
         }
 

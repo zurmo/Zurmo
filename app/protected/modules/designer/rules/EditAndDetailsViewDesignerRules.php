@@ -35,7 +35,7 @@
 
         public function getDisplayName()
         {
-            return Yii::t('Default', 'Details And Edit View');
+            return Yii::t('Default', 'Detail and Edit View');
         }
 
         public function getNonPlaceableLayoutAttributeNames()
