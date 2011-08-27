@@ -40,25 +40,46 @@
         }
 
         /**
+         * THE KEYS MUST MATCH THE KEYS IN getAcceptableValues() to have the correct mapping
+         * This method and getAcceptableValues() to be split because of some type casting
+         * issues in php where the keys were getting turned into integers instead of remaining as strings.
          * Lowercase array of mappable boolean values. These values if found in an import, will be converted correctly
          * to false/true. All other values are not valid.
+         * @see getAcceptableValues()
          */
-        public static function getAcceptableValuesMapping()
+        public static function getAcceptableValuesResolvingValues()
         {
             return array(
-                'false' => false,
-                'true'  => true,
-                'y'     => true,
-                'n'		=> false,
-                'yes'	=> true,
-                'no'	=> false,
-                false   => false,
-                true    => true,
-                0       => false,
-                1       => true,
-                '0'		=> false,
-                '1'		=> true,
-                ''		=> false,
+                0 => false,
+                1 => true,
+                2 => true,
+                3 => false,
+                4 => true,
+                5 => false,
+                6 => false,
+                7 => true,
+                8 => false,
+            );
+        }
+
+        /**
+         * THE KEYS MUST MATCH THE KEYS IN getAcceptableValuesResolvingValues() to have the correct mapping
+         * This method and getAcceptableValuesResolvingValue() needed to be split because of some type casting
+         * issues in php where the keys were getting turned into integers instead of remaining as strings.
+         * @see getAcceptableValuesResolvingValues()
+         */
+        public static function getAcceptableValues()
+        {
+            return array(
+                0 => 'false',
+                1 => 'true',
+                2 => 'y',
+                3 => 'n',
+                4 => 'yes',
+                5 => 'no',
+                6 => '0',
+                7 => '1',
+                8 => '',
             );
         }
 
@@ -83,26 +104,28 @@
             assert('is_string($attributeName)');
             assert('$mappingRuleData["defaultValue"] == null || $mappingRuleData["defaultValue"] == "1" ||
                     $mappingRuleData["defaultValue"] == "0"');
-            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
+            $acceptableValues = BooleanSanitizerUtil::getAcceptableValues();
+            $acceptableValuesResolvingValues = BooleanSanitizerUtil::getAcceptableValuesResolvingValues();
             if ($value == null)
             {
                 if ($mappingRuleData['defaultValue'] != null)
                 {
-                    return $acceptableValuesMapping[$mappingRuleData['defaultValue']];
+                    $key = array_search($mappingRuleData['defaultValue'], $acceptableValues);
+                    return $acceptableValuesResolvingValues[$mappingRuleData['defaultValue']];
                 }
                 else
                 {
                     return $value;
                 }
             }
-            if (!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            if (!in_array(strtolower($value), $acceptableValues))
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid check box format.'));
             }
             else
             {
-                $key = array_search(strtolower($value), $acceptableValuesMapping);
-                return $acceptableValuesMapping[$value];
+                $key = array_search(strtolower($value), $acceptableValues);
+                return $acceptableValuesResolvingValues[$key];
             }
         }
     }

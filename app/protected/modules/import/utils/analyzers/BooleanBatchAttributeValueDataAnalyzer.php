@@ -42,8 +42,9 @@
 
         protected function analyzeByValue($value)
         {
-            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
-            if (!array_key_exists(strtolower($value), $acceptableValuesMapping))
+            $acceptableValues        = BooleanSanitizerUtil::getAcceptableValues();
+            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesResolvingValues();
+            if (!in_array(strtolower($value), $acceptableValues))
             {
                 $this->messageCountData[static::INVALID] ++;
             }

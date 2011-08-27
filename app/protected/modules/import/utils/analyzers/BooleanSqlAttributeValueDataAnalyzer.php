@@ -26,7 +26,7 @@
 
     /**
      * Data analyzer for columns mapped to boolean type attributes.  There is a variety of values that are accepted and
-     * converted into the boolean values at import time. @see BooleanSanitizerUtil::getAcceptableValuesMapping
+     * converted into the boolean values at import time. @see BooleanSanitizerUtil::getAcceptableValues
      */
     class BooleanSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
                                                 implements DataAnalyzerInterface
@@ -36,8 +36,8 @@
          */
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
-            $acceptableValuesMapping = BooleanSanitizerUtil::getAcceptableValuesMapping();
-            $inPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array_keys($acceptableValuesMapping));
+            $acceptableValues = BooleanSanitizerUtil::getAcceptableValues();
+            $inPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', $acceptableValues);
             $where  = DatabaseCompatibilityUtil::lower($columnName) . ' NOT ' . $inPart;
             $count  = $dataProvider->getCountByWhere($where);
             if ($count > 0)

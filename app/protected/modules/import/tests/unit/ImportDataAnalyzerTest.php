@@ -32,7 +32,6 @@
             $super = SecurityTestHelper::createSuperAdmin();
             Yii::app()->user->userModel = $super;
             $jim = UserTestHelper::createBasicUser('jim');
-
             $values = array(
                 'Test1',
                 'Test2',
@@ -63,6 +62,23 @@
             ensureColumnIsVarchar(ImportModelTestItem4::getTableName('ImportModelTestItem4'), $columnName);
         }
 
+        /**
+         * This test was needed because of the wierd type casting issues with 0 and 1 and '1' and '0' as keys in an array.
+         * '0' and '1' turn into integers which they shouldn't and this messes up the oneOf sql query builder. Additionally
+         * on some versions of MySQL, 0,1 in a NOT IN, will evaluate true to 'abc' which it shouldn't.  As a result
+         * the 0/1 boolean values have been removed from the BooleanSanitizerUtil::getAcceptableValues().
+         */
+        public function testBooleanAcceptableValuesMappingAndSqlOneOfString()
+        {
+            $string = SQLOperatorUtil::
+                      resolveOperatorAndValueForOneOf('oneOf', BooleanSanitizerUtil::getAcceptableValues());
+            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))";
+            $this->assertEquals($compareString, $string);
+        }
+
+        /**
+         * @depends testBooleanAcceptableValuesMappingAndSqlOneOfString
+         */
         public function testImportDataAnalysisResults()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
