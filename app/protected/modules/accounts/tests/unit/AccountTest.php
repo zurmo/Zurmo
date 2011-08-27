@@ -92,7 +92,6 @@
 
             $account->primaryEmail->optOut = 0;
             $this->assertTrue($account->save());
-            $id = $email->id;
             unset($email);
 
             $account = Account::getById($id);

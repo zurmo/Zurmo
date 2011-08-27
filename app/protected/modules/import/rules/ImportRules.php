@@ -35,7 +35,7 @@
          * class name.
          * @var array
          */
-        private static $attributeImportRulesDataByModelClassName = array();
+        private static $attributeImportRulesDataByModelAndImportRulesClassName = array();
 
         /**
          * @return string - If the class name is TestImportRules, then 'Test' will be returned.
@@ -203,15 +203,19 @@
         protected static function resolveAttributeImportRulesDataByModelClassNameAndCache($modelClassName)
         {
             assert('is_string($modelClassName)');
-            if (isset(self::$attributeImportRulesDataByModelClassName[$modelClassName]))
+            $importRulesClassName = get_called_class();
+            if (isset(self::$attributeImportRulesDataByModelAndImportRulesClassName
+                            [$modelClassName . $importRulesClassName]))
             {
-                return self::$attributeImportRulesDataByModelClassName[$modelClassName];
+                return self::$attributeImportRulesDataByModelAndImportRulesClassName
+                             [$modelClassName . $importRulesClassName];
             }
             else
             {
                 $attributeImportRulesData = static::
                                             getAttributeIndexOrDerivedTypeAndAttributeImportRuleTypes($modelClassName);
-                self::$attributeImportRulesDataByModelClassName[$modelClassName] = $attributeImportRulesData;
+                self::$attributeImportRulesDataByModelAndImportRulesClassName
+                      [$modelClassName . $importRulesClassName] = $attributeImportRulesData;
                 return $attributeImportRulesData;
             }
         }

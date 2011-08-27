@@ -341,7 +341,7 @@
             $this->assertWithinPercentage($memoryBefore, $memoryAfter, 10);
         }
 
-        public function testMemcachingAccountsDirectly()
+        public function disabled_testMemcachingAccountsDirectly()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $count = 50;
