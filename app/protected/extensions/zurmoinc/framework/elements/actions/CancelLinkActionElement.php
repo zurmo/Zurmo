@@ -55,7 +55,7 @@
             }
             else
             {
-                return Yii::app()->createUrl($this->moduleId);
+                return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId);
             }
         }
     }

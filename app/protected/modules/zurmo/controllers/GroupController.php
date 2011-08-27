@@ -77,9 +77,11 @@
 
         public function actionEdit($id)
         {
+            $group = Group::getById(intval($id));
+            $this->resolveCanGroupBeEdited($group);
             $view = new GroupsPageView($this,
                 $this->makeTitleBarAndEditAndDetailsView(
-                            $this->attemptToSaveModelFromPost(Group::getById(intval($id))), 'Edit'));
+                            $this->attemptToSaveModelFromPost($group), 'Edit'));
             echo $view->render();
         }
 
@@ -292,6 +294,18 @@
                 GroupsModule::getModuleLabelByTypeAndLanguage('Plural'),
                 $renderType
             );
+        }
+
+        protected function resolveCanGroupBeEdited($group)
+        {
+            if (!$group->isEveryone && !$group->isSuperAdministrators)
+            {
+                return;
+            }
+            $messageView = new AccessFailureView();
+            $view = new AccessFailurePageView($messageView);
+            echo $view->render();
+            Yii::app()->end(0, false);
         }
     }
 
