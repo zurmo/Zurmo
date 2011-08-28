@@ -56,7 +56,7 @@
         'Is Default'
             => 'Défault',
         'Layout Id'
-            => '?? layout id',
+            => 'ID mise en page',
         'Layout Type'
             => 'Format des colonnes',
         'Return to Home'

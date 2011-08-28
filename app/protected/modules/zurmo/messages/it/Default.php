@@ -81,6 +81,10 @@
             => '??',
         'Are you sure you want to remove this role?'
             => '??',
+        'Attachment'
+            => '??',
+        'Attachments'
+            => '??',
         'Audit Event'
             => '??',
         'Audit Trail'
@@ -128,8 +132,6 @@
         'Description'
             => '??',
         'Email Address'
-            => '??',
-        'Event Name'
             => '??',
         'every'
             => '??',

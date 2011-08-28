@@ -81,8 +81,12 @@
             => 'Êtes-vous sûr(e) de vouloir supprimer ce groupe?',
         'Are you sure you want to remove this role?'
             => 'Êtes-vous sûr(e) de vouloir supprimer ce rôle?',
+        'Attachment'
+            => 'Pièce jointe',
+        'Attachments'
+            => 'Pièces jointes',
         'Audit Event'
-            => '?? Audit Event',
+            => 'Liste de modifications',
         'Audit Trail'
             => 'Log de modifications',
         'Cancel'
@@ -129,8 +133,6 @@
             => 'Description',
         'Email Address'
             => 'Addresse e-mail',
-        'Event Name'
-            => '?? Event Name',
         'every'
             => 'chaque',
         'Everyone'
@@ -142,9 +144,9 @@
         'Files'
             => 'Fichiers',
         'Filter By Created User'
-            => '?? Filter By Created User',
+            => 'Filtrer la liste par Créé par',
         'Filtered Lists'
-            => '?? Filtered Lists',
+            => 'Listes Filtrées',
         'First Name'
             => 'Prénom',
         'Global Configuration'
@@ -172,9 +174,9 @@
         'Industry'
             => 'Secteur',
         'Inherited - All'
-            => '?? inherited-tous',
+            => 'Hériter-Tous',
         'Inherited - Allow'
-            => '?? inherited-allow',
+            => 'Hériter-Permettre',
         'Invalid currency code.'
             => 'Le code de devise est invalide.',
         'Is Invalid'
@@ -194,7 +196,7 @@
         'List page size'
             => 'Dimension de la liste',
         'Load'
-            => '?? Charger',
+            => '?? ',
         'Login'
             => 'Connexion',
         'Logout'
@@ -230,7 +232,7 @@
         'Not Set'
             => 'Défaut',
         'Not Set - Ad Hoc / Owner'
-            => '?? not set adhoc',
+            => 'Défaut - de circonstance / propriétaire',
         'Office Fax'
             => 'Fax de Bureau',
         'Office Phone'
@@ -264,9 +266,9 @@
         'Primary Email'
             => 'Adresse e-mail',
         'Rate to'
-            => 'Taux de change a l\'',
+            => 'Taux de change à l\'',
         'Rate To Base'
-            => '?? Rate To Base',
+            => 'Taux de base',
         'Remember me next time'
             => 'Retenir le nom d\'utilisateur',
         'Return to Admin Menu'
@@ -288,9 +290,9 @@
         'Security'
             => 'Sécurité',
         'Select a Parent Group'
-            => 'Sélectionner un groupe ??',
+            => 'Sélectionner le groupe Parent',
         'Select a Parent Role'
-            => 'Sélectionner un rôle ??',
+            => 'Sélectionner le rôle Parent',
         'Select a Role'
             => 'Selectionner un rôle',
         'Shipping Address'
@@ -324,7 +326,7 @@
          'Title'
             => 'Fonction',
         'to continue to the home page. If the error persists please do something or other.'
-            => 'pour continuer à l\'accueil. ??' ,
+            => 'pour continuer à l\'accueil. Veuillez contacter votre administrateur système si l\'erreur continue',
         'User Membership'
             => 'Membres du groupe',
         'Username'

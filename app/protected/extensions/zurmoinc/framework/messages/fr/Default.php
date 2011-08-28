@@ -52,9 +52,9 @@
         'Created By User'
             => 'Crée par',
         'Created Date and User'
-            => '?? Crée',
+            => 'Date Crée',
         'Created Date Time'
-            => '?? Created Date Time',
+            => 'Date Crée',
         'Created On'
             => 'Crée',
         'Date'
@@ -78,11 +78,11 @@
         'Fahrenheit'
             => 'Fahrenheit',
         'Filtered List'
-            => '?? filtered list',
+            => 'Liste Filtrée',
         'firstDateTime must occur after  secondDateTime'
-            => '?? firstDateTime must occur after  secondDateTime',
+            => 'firstDateTime doit être après secondDateTime',
         'firstDateTime must occur before secondDateTime'
-            => '?? firstDateTime must occur before secondDateTime',
+            => 'firstDateTime doit être avant secondDateTime',
         'Float'
             => 'Float',
         'from'
@@ -92,7 +92,7 @@
         'Go to Details'
             => 'Au détails',
         'Inline Edit View'
-            => '?? Inline Edit View',
+            => 'Formulaire de saisie Inline',
         'Integer'
             => 'Nombre entier',
         'Invalid'
@@ -100,23 +100,23 @@
         'Last Modified'
             => 'Dernière modification',
         'Last Modified Date and User'
-            => '?? Dernière modification par',
+            => 'Dernière modification',
         'List'
             => 'Liste',
         'Model Class Name'
-            => '??',
+            => 'Nom de la classe du modèle',
         'Model Id'
-            => '?? model id',
+            => 'ID du modèle',
         'Modified By User'
-            => '?? modified by user',
+            => 'Dernière modification par',
         'Modified Date Time'
-            => '?? Modified Date Time',
+            => 'Dernière modification',
         'Module Name'
-            => '?? Module Name',
+            => 'Nom du Module',
         'More Details'
-            => '?? more details',
+            => 'Plus de détails',
         'More Options'
-            => '?? more options',
+            => 'Plus d\'options',
         'Name'
             => 'Nom',
         'No'
@@ -154,9 +154,9 @@
         'selected for updating.'
             => 'sélectionnée(s)',
         'Serialized Data'
-            => '??',
+            => 'Serialized Data',
         'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
-            => '?? some values cannot be removed...',
+            => 'Certain éléments ne peuvent être supprimés car ils sont actuellement utilisés. Veuillez modifier la valeur des champs contenant ces éléments avant de supprimer.',
         'Tab'
             => 'Onglet',
         'This module doesn\'t have anything to configure.'
@@ -188,8 +188,8 @@
         'You must enter a value'
             => 'Ce champ est obligatoire',
         'You must specify a value.'
-            => '?? you must specify a value',
+            => 'Vous devez spécifier une valeur',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '?? attribute too precise',
+            => '{attribute} est trop précis(e) (la précision maximale est {precision})',
     );
 ?>

@@ -31,8 +31,6 @@
     return array(
         'Account'
             => '??',
-        'Account Revenue'
-            => '??',
         'Accounts'
             => '??',
         'AccountsModulePluralLabel'
@@ -47,6 +45,8 @@
             => 'AccountsModuleSingularLabel ??',
         'AccountsModuleSingularLabel Search'
             => 'AccountsModuleSingularLabel ??',
+        'Annual Revenue'
+            => '??',
         'Billing Address'
             => 'Rechnungsadresse',
         'Create AccountsModuleSingularLabel'

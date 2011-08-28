@@ -56,7 +56,7 @@
         'Order'
             => 'Ordre',
         'Related ContactsModulePluralLabel'
-            => '?? ContactsModulePluralLabel',
+            => 'ContactsModulePluralLabel liés',
         'Starting Status'
             => 'Valeur par défaut',
         'Status'

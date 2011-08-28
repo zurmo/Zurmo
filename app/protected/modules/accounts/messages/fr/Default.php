@@ -31,8 +31,6 @@
     return array(
         'Account'
             => 'Compte',
-        'Account Revenue'
-            => 'Chiffres d\'affaires annuel',
         'Accounts'
             => 'Comptes',
         'AccountsModulePluralLabel'
@@ -47,6 +45,8 @@
             => 'Nom du AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Search'
             => 'Recherche du AccountsModuleSingularLabel',
+        'Annual Revenue'
+            => 'Chiffres d\'affaires annuel',
         'Billing Address'
             => 'Adresse de facturation',
         'Create AccountsModuleSingularLabel'
