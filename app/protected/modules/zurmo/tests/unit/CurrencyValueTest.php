@@ -103,7 +103,6 @@
             $this->assertTrue($opportunity->save());
             $this->assertEquals(1, $opportunity->amount->rateToBase);
             $this->assertEquals(Currency::getByCode('USD'), $opportunity->amount->currency);
-
         }
 
         /**

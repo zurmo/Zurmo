@@ -65,6 +65,4 @@
             $this->redirect($redirectUrl);
         }
     }
-
-
 ?>

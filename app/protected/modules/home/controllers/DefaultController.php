@@ -95,6 +95,7 @@
                 $dashboard->owner = Yii::app()->user->userModel;
                 $dashboard->layoutId = Dashboard::getNextLayoutId();
                 $dashboard->setAttributes($_POST['Dashboard']);
+                assert('in_array($dashboard->layoutType, array_keys(Dashboard::getLayoutTypesData()))');
                 if ($dashboard->save())
                 {
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
@@ -117,7 +118,7 @@
             {
                 $oldLayoutType = $dashboard->layoutType;
                 $dashboard->setAttributes($_POST['Dashboard']);
-                assert('$dashboard->layoutType == "100" || $dashboard->layoutType == "50,50"'); // Not Coding Standard
+                assert('in_array($dashboard->layoutType, array_keys(Dashboard::getLayoutTypesData()))');
                 if ($dashboard->save())
                 {
                     if ($oldLayoutType != $dashboard->layoutType && $dashboard->layoutType == '100')

@@ -36,8 +36,10 @@
             assert('empty($this->model->{$this->attribute}) || is_string($this->model->{$this->attribute}) ||
             is_integer($this->model->{$this->attribute})');
             $htmlOptions             = array();
+            $htmlOptions['id']       = $this->getEditableInputId();
+            $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = $this->getDisabledValue();
-            if($this->model->{$this->attribute} == 0)
+            if ($this->model->{$this->attribute} == 0)
             {
                 $htmlOptions['value'] = '';
             }
@@ -46,7 +48,7 @@
 
         protected function renderControlNonEditable()
         {
-            if($this->model->{$this->attribute} == 0)
+            if ($this->model->{$this->attribute} == 0)
             {
                 return null;
             }

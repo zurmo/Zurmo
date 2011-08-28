@@ -99,9 +99,9 @@
 
         protected function renderEditableAddressTextField($model, $form, $inputNameIdPrefix, $attribute)
         {
-            $id          = get_class($this->model) . '_' . $inputNameIdPrefix . '_' . $attribute;
+            $id          = $this->getEditableInputId($inputNameIdPrefix, $attribute);
             $htmlOptions = array(
-                'name' => get_class($this->model) . '[' . $inputNameIdPrefix . '][' . $attribute . ']',
+                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
                 'id'   => $id,
             );
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));

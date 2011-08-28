@@ -12,18 +12,18 @@
          */
         public static function getMimeType($file, $magicFile = null, $checkExtension = true)
         {
-            if($checkExtension)
+            if ($checkExtension)
             {
                 $mimeType = static::getMimeTypeByExtension($file);
-                if($mimeType != null)
+                if ($mimeType != null)
                 {
                     return $mimeType;
                 }
             }
 
-            if(function_exists('finfo_open'))
+            if (function_exists('finfo_open'))
             {
-                if(defined('FILEINFO_MIME_TYPE'))
+                if (defined('FILEINFO_MIME_TYPE'))
                 {
                     $options = FILEINFO_MIME_TYPE;
                 }
@@ -32,7 +32,7 @@
                     $options = FILEINFO_MIME;
                 }
 
-                if($magicFile===null)
+                if ($magicFile === null)
                 {
                     $info =  finfo_open($options);
                 }
@@ -41,19 +41,16 @@
                     $info = finfo_open($options, $magicFile);
                 }
 
-
-                if($info && ($result=finfo_file($info,$file))!==false)
+                if ($info && ($result = finfo_file($info, $file)) !== false)
                 {
                     return $result;
                 }
             }
 
-            if(function_exists('mime_content_type') && ($result = mime_content_type($file)) !== false)
+            if (function_exists('mime_content_type') && ($result = mime_content_type($file)) !== false)
             {
                 return $result;
             }
-
-
         }
 
         /**
@@ -63,9 +60,9 @@
         public static function getMimeTypeByExtension($file, $magicFile = null)
         {
             static $extensions;
-            if($extensions === null)
+            if ($extensions === null)
             {
-                if($magicFile===null)
+                if ($magicFile === null)
                 {
                     $extensions = require(Yii::getPathOfAlias('ext.zurmoinc.framework.utils.ZurmoMimeTypes') . '.php');
                 }
@@ -74,10 +71,10 @@
                     $extensions = $magicFile;
                 }
             }
-            if(($ext = pathinfo($file, PATHINFO_EXTENSION)) !== '')
+            if (($ext = pathinfo($file, PATHINFO_EXTENSION)) !== '')
             {
                 $ext = strtolower($ext);
-                if(isset($extensions[$ext]))
+                if (isset($extensions[$ext]))
                 {
                     return $extensions[$ext];
                 }

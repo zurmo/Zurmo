@@ -64,11 +64,11 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'serializedMetadata',
+                    'serializedData',
                 ),
                 'rules' => array(
-                    array('serializedMetadata',  'required'),
-                    array('serializedMetadata',  'type', 'type' => 'string'),
+                    array('serializedData',  'required'),
+                    array('serializedData',  'type', 'type' => 'string'),
                 )
             );
             return $metadata;
@@ -77,6 +77,20 @@
         public static function isTypeDeletable()
         {
             return true;
+        }
+
+        /**
+         * Returns the string name of the temp table in the database used for the import data.
+         * @throws NotSupportedException
+         * @return Temporary table id if the import model has a valid id.
+         */
+        public function getTempTableName()
+        {
+            if ($this->id <= 0 )
+            {
+                throw new NotSupportedException();
+            }
+            return 'importtable' . $this->id;
         }
     }
 ?>

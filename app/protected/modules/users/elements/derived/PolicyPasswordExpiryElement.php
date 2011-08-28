@@ -45,19 +45,20 @@
             assert('$this->attribute == "null"');
             $this->registerScripts();
             $dropDownArray = $this->getExpiresDropDownArray();
-            $inputId = $this->getIdForInput();
+            $inputId = $this->getEditableInputId  ($this->getExpiresAttributeName());
             $compareValue = Policy::YES;
             $htmlOptions = array(
-                'name' => $this->getNameForExpiresInput(),
-                'id'   => $this->getIdForExpiresInput(),
+                'name' => $this->getEditableInputName($this->getExpiresAttributeName()),
+                'id'   => $this->getEditableInputId  ($this->getExpiresAttributeName(), 'value'),
                 'onchange' => 'enableDisablePolicyTextField($(this).val(), \''. $inputId . '\', \''. $compareValue . '\');',
             );
             $content  = $this->getInheritedContent();
             $content .= $this->form->dropDownList($this->model, $this->getExpiresAttributeName(), $dropDownArray, $htmlOptions);
             $content .= '&#160;' . Yii::t('Default', 'every') . '&#160;';
             $htmlOptions = array(
-                'id'   => $inputId,
-                'disabled' => $this->getDisabledValue(),
+                'id'       => $inputId,
+                'name'     => $this->getEditableInputName($this->getExpiryAttributeName()),
+                'readonly' => $this->getReadOnlyValue(),
             );
             $content .= $this->form->textField($this->model, $this->getExpiryAttributeName(), $htmlOptions);
             $content .= '&#160;' . Yii::t('Default', 'days');
@@ -94,16 +95,6 @@
             return $this->form->error($this->model, $this->getExpiryAttributeName());
         }
 
-        protected function getNameForExpiresInput()
-        {
-            return get_class($this->model) . '[' . $this->getExpiresAttributeName() . ']';
-        }
-
-        protected function getIdForExpiresInput()
-        {
-            return get_class($this->model) . '_' . $this->getExpiresAttributeName() . '_value';
-        }
-
         protected static function getExpiresAttributeName()
         {
             return FormModelUtil::getDerivedAttributeNameFromTwoStrings('UsersModule', 'POLICY_PASSWORD_EXPIRES');
@@ -114,11 +105,6 @@
             return FormModelUtil::getDerivedAttributeNameFromTwoStrings('UsersModule', 'POLICY_PASSWORD_EXPIRY_DAYS');
         }
 
-        protected function getIdForInput()
-        {
-            return get_class($this->model) . '_' . $this->getExpiryAttributeName();
-        }
-
         protected function getExpiresDropDownArray()
         {
             return array(
@@ -127,14 +113,14 @@
             );
         }
 
-        protected function getDisabledValue()
+        protected function getReadOnlyValue()
         {
             $expires = $this->getExpiryAttributeName();
             $expiry = $this->getExpiresAttributeName();
             if ($this->model->{$expiry} == null &&
             $expires != Policy::YES)
             {
-                return 'disabled';
+                return 'readonly';
             }
             return null;
         }

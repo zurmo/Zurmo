@@ -31,7 +31,7 @@
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
-            if(!Yii::app()->isApplicationInstalled())
+            if (!Yii::app()->isApplicationInstalled())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
@@ -127,9 +127,7 @@
         {
             if (isset($_GET['clearCache']) && $_GET['clearCache'] == 1)
             {
-                RedBeanModelsCache::forgetAll();
-                PermissionsCache::forgetAll();
-                ZurmoGeneralCache::forgetAll();
+                ForgetAllCacheUtil::forgetAllCaches();
             }
         }
 
@@ -144,7 +142,7 @@
                                    Yii::app()->db->username,
                                    Yii::app()->db->password);
 
-            if(Yii::app()->isApplicationInstalled())
+            if (Yii::app()->isApplicationInstalled())
             {
                 if (!FORCE_NO_FREEZE)
                 {

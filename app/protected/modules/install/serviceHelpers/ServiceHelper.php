@@ -66,7 +66,20 @@
          */
         protected $minimumVersion;
 
+        /**
+         * In some cases, the check for a service version or presence of a service might only result in partial
+         * information. An example is the Apache server check. The check might be able to ascertain apache is in
+         * fact installed, but the version of apache remains unknown.
+         * @var boolean
+         */
+        protected $checkResultedInWarning = false;
+
         abstract protected function checkService();
+
+        public function didCheckProduceWarningStatus()
+        {
+            return $this->checkResultedInWarning;
+        }
 
         /**
          * Called to check service.  Will check service and populate message.
@@ -81,7 +94,7 @@
 
         public function getMessage()
         {
-            if(!$this->serviceHasBeenChecked)
+            if (!$this->serviceHasBeenChecked)
             {
                 throw new NotSupportedException();
             }
@@ -95,7 +108,7 @@
 
         public function getServiceType()
         {
-            if($this->isRequired())
+            if ($this->isRequired())
             {
                 return self::REQUIRED_SERVICE;
             }
@@ -114,7 +127,7 @@
             $actualVersion           = null;
             $minimumVersionLabel     = $this->getMinimumVersionLabel();
             $passed                  = $this->callCheckServiceMethod($methodName, $actualVersion);
-            if($passed)
+            if ($passed)
             {
                 $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
                 $this->message .= ' ' .Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
@@ -122,7 +135,7 @@
             }
             else
             {
-                if($actualVersion == null)
+                if ($actualVersion == null)
                 {
                     $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
                 }

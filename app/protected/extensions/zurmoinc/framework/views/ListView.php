@@ -295,7 +295,6 @@
 
         protected function getMassActionMenuForCurrentUser()
         {
-
             if (Right::ALLOW == Yii::app()->user->userModel->getEffectiveRight(
                     'ZurmoModule', ZurmoModule::RIGHT_BULK_WRITE))
             {

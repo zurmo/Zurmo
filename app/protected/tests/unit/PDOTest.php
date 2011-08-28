@@ -35,8 +35,7 @@
             $id = $wukka->id;
             unset($wukka);
 
-            require('protected/config/perInstance.php');
-            $pdo = new PDO($connectionString, $username, $password); // Not Coding Standard
+            $pdo = new PDO(Yii::app()->db->connectionString, Yii::app()->db->username, Yii::app()->db->password); // Not Coding Standard
 
             $phpVersion = substr(phpversion(), 0, 5);
 
@@ -59,16 +58,16 @@
             $statement = $pdo->prepare('select * from wukka;');
             $statement->execute();
             $rows = $statement->fetchAll();
-            if ($phpVersion == '5.3.6' && $mysqlVersion == '5.5')
-            {
-                $this->assertEquals('integer', gettype($rows[0]['integer'])); // Good! This is what we want!!!
-                $this->assertEquals('string',  gettype($wukka->integer));     // Dodgy!!!
-            }
-            else
-            {
-                $this->assertEquals('string',  gettype($rows[0]['integer'])); // Dodgy!!!
-                $this->assertEquals('string',  gettype($wukka->integer));     // Dodgy!!!
-            }
+             if (($phpVersion == '5.3.6' || $phpVersion == '5.3.5') && $mysqlVersion == '5.5')
+             {
+                 $this->assertEquals('integer', gettype($rows[0]['integer'])); // Good! This is what we want!!!
+                 $this->assertEquals('string',  gettype($wukka->integer));     // Dodgy!!!
+             }
+             else
+             {
+                 $this->assertEquals('string',  gettype($rows[0]['integer'])); // Dodgy!!!
+                 $this->assertEquals('string',  gettype($wukka->integer));     // Dodgy!!!
+             }
         }
     }
 ?>

@@ -60,12 +60,36 @@
                             $model->getAttributeLabel($attributeName);
                     }
                 }
-                catch(NotSupportedException $e)
+                catch (NotSupportedException $e)
                 {
-
                 }
             }
             return $data;
+        }
+
+        /**
+         * Given a model class name and an attribute name, get the CustomFieldData object associated with this
+         * attribute.  Requires the attribute to be a customField type attribute otherwise it will throw an error.
+         * @param string $modelClassName
+         * @param string $attributeName
+         */
+        public static function getDataByModelClassNameAndAttributeName($modelClassName, $attributeName)
+        {
+            $metadata = $modelClassName::getMetadata();
+            foreach ($metadata as $unused => $classMetadata)
+            {
+                if (isset($classMetadata['customFields']))
+                {
+                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
+                    {
+                        if ($attributeName == $customFieldName)
+                        {
+                            return CustomFieldData::getByName($customFieldDataName);
+                        }
+                    }
+                }
+            }
+            throw new NotSupportedException();
         }
     }
 ?>

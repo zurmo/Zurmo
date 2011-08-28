@@ -23,7 +23,7 @@
             }
             else
             {
-                $firstError=false;
+                $firstError = false;
             }
             foreach ($model as $m)
             {
@@ -31,32 +31,32 @@
                 {
                     foreach ($errors as $errorOrRelatedError)
                     {
-                        if(is_array($errorOrRelatedError))
+                        if (is_array($errorOrRelatedError))
                         {
                             foreach ($errorOrRelatedError as $relatedError)
                             {
-                                if($relatedError != '')
+                                if ($relatedError != '')
                                 {
                                     $content .= "<li>$relatedError</li>\n";
                                 }
                             }
                         }
-                        elseif($errorOrRelatedError != '')
+                        elseif ($errorOrRelatedError != '')
                         {
                             $content .= "<li>$errorOrRelatedError</li>\n";
                         }
-                        if($firstError)
+                        if ($firstError)
                         {
                             break;
                         }
                     }
                 }
             }
-            if ($content!=='')
+            if ($content !== '')
             {
-                if ($header===null)
+                if ($header === null)
                 {
-                    $header='<p>' . Yii::t('yii','Please fix the following input errors:') . '</p>';
+                    $header = '<p>' . Yii::t('yii', 'Please fix the following input errors:') . '</p>';
                 }
                 if (!isset($htmlOptions['class']))
                 {
@@ -70,5 +70,4 @@
             }
         }
     }
-
 ?>

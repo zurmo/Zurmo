@@ -152,7 +152,7 @@
             $disableInputsScript = "";
             foreach ($elementIds as $id)
             {
-                $enableInputsScript  .= "$('#" . $id . "').attr('disabled', ''); \n";
+                $enableInputsScript  .= "$('#" . $id . "').removeAttr('disabled'); \n";
                 $enableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
                 {
                     if ($('#" . $id . "').attr('href') != undefined)

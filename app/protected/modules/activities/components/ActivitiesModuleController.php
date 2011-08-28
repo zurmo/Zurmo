@@ -90,7 +90,7 @@
                     }
                     elseif (!empty($relationData['ids']))
                     {
-                        $relationIds = explode(",", $relationData['ids']);
+                        $relationIds = explode(",", $relationData['ids']);  // Not Coding Standard
                         foreach ($relationIds as $relationIdFromElementStoringMultiples)
                         {
                             $aModel = $modelClassName::getById((int)$relationIdFromElementStoringMultiples);
@@ -139,7 +139,7 @@
             assert('is_string($relationModuleId)');
 
             $metadata = Activity::getMetadata();
-            if(in_array($relationModelClassName, $metadata['Activity']['activityItemsModelClassNames']))
+            if (in_array($relationModelClassName, $metadata['Activity']['activityItemsModelClassNames']))
             {
                 $model->activityItems->add($relationModelClassName::getById((int)$relationModelId));
             }

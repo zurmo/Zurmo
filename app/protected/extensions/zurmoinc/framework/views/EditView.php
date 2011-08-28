@@ -86,7 +86,7 @@
             protected function resolveFormHtmlOptions()
         {
             $data = array();
-            if($this->viewContainsFileUploadElement)
+            if ($this->viewContainsFileUploadElement)
             {
                 $data['enctype'] = 'multipart/form-data';
             }

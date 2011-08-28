@@ -32,7 +32,7 @@
             $user = SecurityTestHelper::createSuperAdmin();
             Yii::app()->user->userModel = $user;
             $loaded = ContactsModule::loadStartingData();
-            assert('$loaded'); // Not Coding Standard
+            assert($loaded); // Not Coding Standard
             $contactData = array(
                 'Sam',
                 'Sally',
@@ -57,7 +57,7 @@
                 $contact->primaryEmail->emailAddress = $key . '@zurmoland.com';
                 $contact->secondaryEmail = new Email();
                 $contact->secondaryEmail->emailAddress = 'a' . $key . $firstName . '@zurmoworld.com';
-                assert('$contact->save()'); // Not Coding Standard
+                assert($contact->save()); // Not Coding Standard
             }
         }
 

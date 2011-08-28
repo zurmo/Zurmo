@@ -58,7 +58,7 @@
                 if (!$this->model->isRelation($attributeName) ||
                     $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                 {
-                    if($this->model instanceof Item)
+                    if ($this->model instanceof Item)
                     {
                         $isAudited = $this->model->isAttributeAudited($attributeName);
                     }
@@ -217,16 +217,16 @@
             ModelMetadataUtil::removeAttribute($modelClassName, $attributeName);
         }
 
-        protected function resolveDatabaseSchemaForModel($modelClassName)
+        public function resolveDatabaseSchemaForModel($modelClassName)
         {
             assert('is_string($modelClassName) && $modelClassName != ""');
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
                 $messageLogger = new MessageLogger();
                 RedBeanDatabaseBuilderUtil::autoBuildModels(array('User', $modelClassName), $messageLogger);
                 RedBeanDatabase::freeze();
-                if($messageLogger->isErrorMessagePresent())
+                if ($messageLogger->isErrorMessagePresent())
                 {
                     throw new FailedDatabaseSchemaChangeException($messageLogger->printMessages(true, true));
                 }

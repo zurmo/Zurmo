@@ -66,5 +66,18 @@
         {
             return Yii::app()->languageHelper->getAllModuleLabelsAsTranslationParameters();
         }
+
+        /**
+         * Given a model class name and an attribute name, make a label that combines the translated model
+         * and attribute names.
+         * @param string $modelClassName
+         * @param string $attributeName
+         */
+        public static function makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName)
+        {
+            $model = new $modelClassName(false);
+            return $modelClassName::getModelLabelByTypeAndLanguage('Singular') .
+                   ' - ' . $model->getAttributeLabel($attributeName);
+        }
     }
 ?>

@@ -62,7 +62,7 @@
             $content      .= '&#160;';
             $htmlOptions   = array(
                                 'id'       => $inputId,
-                                'disabled' => $this->getDisabledValue());
+                                'readonly' => $this->getReadOnlyValue());
             $content      .= $this->form->textField($this->model, $this->attribute, $htmlOptions);
             return $content;
         }
@@ -88,17 +88,17 @@
 
         protected function getNameForHelperInput()
         {
-            return get_class($this->model) . '[' . $this->attribute . FormModelUtil::DELIMITER . 'helper]';
+            return $this->getEditableInputName($this->attribute . FormModelUtil::DELIMITER . 'helper');
         }
 
         protected function getIdForHelperInput()
         {
-            return get_class($this->model) . '_' . $this->attribute . FormModelUtil::DELIMITER . 'helper';
+            return $this->getEditableInputId($this->attribute . FormModelUtil::DELIMITER . 'helper');
         }
 
         protected function getIdForInput()
         {
-            return get_class($this->model) . '_' . $this->attribute;
+            return $this->getEditableInputId();
         }
 
         protected function getHelperDropDownArray()
@@ -122,12 +122,12 @@
             return $helperValue;
         }
 
-        protected function getDisabledValue()
+        protected function getReadOnlyValue()
         {
             if ($this->model->{$this->attribute} == null &&
             $this->getHelperValue() != PolicyIntegerAndStaticDropDownElement::HELPER_DROPDOWN_VALUE_YES)
             {
-                return 'disabled';
+                return 'readonly';
             }
             return null;
         }

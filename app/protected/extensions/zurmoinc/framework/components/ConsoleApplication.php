@@ -46,9 +46,9 @@
         protected function registerCoreComponents()
         {
             parent::registerCoreComponents();
-            $components=array(
-                'session'=>array(
-                    'class'=>'CHttpSession',
+            $components = array(
+                'session' => array(
+                    'class' => 'CHttpSession',
                 ),
             );
 

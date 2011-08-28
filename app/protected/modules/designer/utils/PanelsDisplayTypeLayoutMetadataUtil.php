@@ -12,7 +12,7 @@
          */
         public static function makeFormFromEditableMetadata($metadata)
         {
-            assert(isset($metadata['global']['panelsDisplayType']));
+            assert('isset($metadata["global"]["panelsDisplayType"])');
             $formModel = new LayoutPanelsTypeForm();
             $panelsDisplayType = $metadata['global']['panelsDisplayType'];
             assert('$panelsDisplayType == FormLayout::PANELS_DISPLAY_TYPE_ALL ||
@@ -34,7 +34,7 @@
             $panelsDisplayTypeForm = new LayoutPanelsTypeForm();
             $panelsDisplayTypeForm->setAttributes($layoutPanelsTypeFormPostData);
             $validated = $panelsDisplayTypeForm->validate();
-            if(!$validated)
+            if (!$validated)
             {
                 return false;
             }

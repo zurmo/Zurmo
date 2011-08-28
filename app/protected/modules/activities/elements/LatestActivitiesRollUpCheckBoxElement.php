@@ -35,7 +35,7 @@
          */
         protected function renderLabel()
         {
-            if($this->model->{$this->attribute})
+            if ($this->model->{$this->attribute})
             {
                 $label = Yii::t('Default', 'Roll Up On');
             }
@@ -47,7 +47,9 @@
             {
                 return Yii::app()->format->text($label);
             }
-            return $this->form->labelEx($this->model, $this->attribute, array('label' => $label));
+            return $this->form->labelEx($this->model,
+                                        $this->attribute,
+                                        array('label' => $label, 'for' => $this->getEditableInputId()));
         }
     }
 ?>

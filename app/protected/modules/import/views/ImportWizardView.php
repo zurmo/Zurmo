@@ -24,33 +24,73 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base View for import wizard user interfaces.  Supports previous and next links in the bottom of each view.
+     */
     abstract class ImportWizardView extends EditView
     {
-        protected function renderActionLinksContent($form)
+        public function __construct($controllerId, $moduleId, ImportWizardForm $model)
         {
-            $previousPageLinkContent = $this->renderPreviousPageLinkContent($form);
-            $nextPageLinkContent     = $this->renderNextPageLinkContent($form);
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            $this->controllerId = $controllerId;
+            $this->moduleId     = $moduleId;
+            $this->model        = $model;
+        }
+
+        /**
+         * Given a form, render the content for the action links at the bottom of the view and return the content as
+         * a string.
+         * @param object $form
+         */
+        protected function renderActionLinksContent()
+        {
+            $previousPageLinkContent = $this->renderPreviousPageLinkContent();
+            $nextPageLinkContent     = $this->renderNextPageLinkContent();
             $content  = '<div class="view-toolbar">'; //change to different class?
-            if($previousPageLinkContent)
+            if ($previousPageLinkContent)
             {
-                $content .= '<div id="previous-page-link">' . $previousPageLinkContent . '</div>'; //float left //should be a form submit link.
+                $content .= '<div id="previous-page-link" class="import-previous-page-link">' .
+                $previousPageLinkContent . '</div>';
             }
-            if($nextPageLinkContent)
+            if ($nextPageLinkContent)
             {
-                $content .= '<div id="next-page-link">' . $nextPageLinkContent . '</div>'; //float right //should be a form submit link.
+                $content .= '<div id="next-page-link" class="import-next-page-link">' .
+                $nextPageLinkContent . '</div>';
             }
             $content .= '</div>';
             return $content;
         }
 
-        protected function renderPreviousPageLinkContent($form)
+        /**
+         * Override if the view should show a previous link.
+         */
+        protected function renderPreviousPageLinkContent()
         {
             return null;
         }
 
-        protected function renderNextPageLinkContent($form)
+        /**
+         * Override if the view should show a next link.
+         */
+        protected function renderNextPageLinkContent()
         {
-            return null;
+            return CHtml::linkButton(Yii::t('Default', 'Next'));
+        }
+
+        protected function getPreviousPageLinkContentByControllerAction($action)
+        {
+            assert('is_string($action)');
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $action . '/',
+                                           array('id' => $this->model->id));
+            return CHtml::link(Yii::t('Default', 'Previous'), $route);
+        }
+
+        /**
+         * There are no special requirements for this view's metadata.
+         */
+        protected static function assertMetadataIsValid(array $metadata)
+        {
         }
 
         public function isUniqueToAPage()

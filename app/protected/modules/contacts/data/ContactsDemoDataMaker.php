@@ -60,11 +60,11 @@
         protected static function resolveDomainName(& $model)
         {
             assert('$model instanceof Contact');
-            if($model->account->id > 0)
+            if ($model->account->id > 0)
             {
                 $domainName = static::makeDomainByName(strval($model->account));
             }
-            elseif($model->companyName != null)
+            elseif ($model->companyName != null)
             {
                 $domainName = static::makeDomainByName($model->companyName);
             }

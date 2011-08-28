@@ -33,6 +33,11 @@
            return array('zurmo');
         }
 
+        public function getRootModelNames()
+        {
+            return array('Import');
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();
@@ -42,7 +47,7 @@
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
                         'titleLabel'       => 'Import',
                         'descriptionLabel' => 'Import data into Zurmo',
-                        'route'            => '/designer/default',
+                        'route'            => '/import/default',
                         'right'            => self::RIGHT_ACCESS_IMPORT,
                     ),
                 ),

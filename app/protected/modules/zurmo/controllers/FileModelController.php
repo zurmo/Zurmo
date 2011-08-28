@@ -28,29 +28,33 @@
     {
         public function actionUpload($filesVariableName)
         {
-            try {
+          //  $fileUploadData = array(array('error' => Yii::t('Default', 'Error:')));
+          // echo CJSON::encode($fileUploadData);
+          //  Yii::app()->end(0, false);
+            try
+            {
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
                 assert('$uploadedFile instanceof CUploadedFile');
                 $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);
                 assert('$fileModel instanceof FileModel');
                 $fileUploadData = array('name' => $fileModel->name,
                                         'type' => $fileModel->type,
-                                        'humanReadableSize' =>
-                                            FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
+                                        'size' =>
+                                        FileModelDisplayUtil::convertSizeToHumanReadableAndGet($fileModel->size),
                                         'id' => $fileModel->id);
             }
-            catch(FailedFileUploadException $e)
+            catch (FailedFileUploadException $e)
             {
                 $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
             }
-            echo CJSON::encode($fileUploadData);
+            echo CJSON::encode(array($fileUploadData));
             Yii::app()->end(0, false);
         }
 
         public function actionDownload($id, $modelId, $modelClassName)
         {
             $model = $modelClassName::getById((int)$modelId);
-            if(!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
+            if (!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
             {
                 $messageView = new AccessFailureView();
                 $view        = new AccessFailurePageView($messageView);
@@ -58,7 +62,14 @@
                 Yii::app()->end(0, false);
             }
             $fileModel = FileModel::getById((int)$id);
-            Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type);
+            Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type, false);
+        }
+
+        public function actionDelete($id)
+        {
+            $fileModel = FileModel::getById((int)$id);
+            $fileModel->delete();
+            //todo: add error handling.
         }
     }
 ?>

@@ -118,6 +118,11 @@ a:hover
     width: 32em;
 }
 
+#AboutView a
+{
+    text-decoration: underline;
+}
+
 /*
 Jquery UI datepicker trigger icon.  This style is not declared
 in the jquery-ui.css file.  The margin-bottom value causes the
@@ -148,24 +153,32 @@ Modal Select Link.  Show loading icon after click
 }
 
 /*
-Multiple file upload element in user interface.
+Radio input buttons and text
 */
-div.multiple-file-upload table
+div.radio-input
 {
-    width: auto;
+    margin: 3px;
 }
 
-div.multiple-file-upload .file_upload_progress
+div.radio-input input
 {
-    width: 200px;
-}
-div.multiple-file-upload table th, div.multiple-file-upload table td
-{
-    border: 0px;
+    float:left;
+    vertical-align: middle;
+    margin: 0px;
 }
 
-div.multiple-file-upload .file_upload_progress div {
-  width: 150px;
-  height: 15px;
+div.radio-input label
+{
+    padding-left:3px;
+}
+
+/*
+Process view classes
+*/
+.process-container-view
+{
+    align:center;
+    margin:0 auto;
+    width:800px;
 }
 /* End Misc Classes */

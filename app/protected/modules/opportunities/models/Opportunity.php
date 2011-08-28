@@ -105,7 +105,6 @@
                     'amount'      => 'CurrencyValue',
                     'closeDate'   => 'Date',
                     'description' => 'TextArea',
-                    'owner'       => 'User',
                     'account'     => 'Account',
                 ),
                 'customFields' => array(

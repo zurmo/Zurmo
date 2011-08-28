@@ -33,7 +33,7 @@
             $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue('startsWith', 5));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('greaterThan', 5));
             $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue('doesNotMatter', null));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('oneOf', array(4,5,6)));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('oneOf', array(4, 5, 6)));
             $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue('oneOf', null));
         }
 
@@ -44,11 +44,11 @@
 
         public function testResolveOperatorAndValueForOneOf()
         {
-            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array(5,6,7));
-            $compareQueryPart = "IN(5,6,7)";
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array(5, 6, 7));
+            $compareQueryPart = "IN(5,6,7)"; //Not Coding Standard
             $this->assertEquals($compareQueryPart, $queryPart);
-            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array('a','b','c'));
-            $compareQueryPart = "IN(lower('a'),lower('b'),lower('c'))";
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array('a', 'b', 'c'));
+            $compareQueryPart = "IN(lower('a'),lower('b'),lower('c'))"; //Not Coding Standard
             $this->assertEquals($compareQueryPart, $queryPart);
         }
 

@@ -24,99 +24,219 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class with import wizard related functions.
+     */
     class ImportWizardUtil
     {
-        private static $importToFormAttributeMap = array('modelImportRulesType',
+        /**
+         * Mapping array to map the serialized data elements from the import object back and forth from the
+         * import wizard form.
+         * @var array
+         */
+        private static $importToFormAttributeMap = array('importRulesType',
                                                          'fileUploadData',
+                                                         'rowColumnDelimiter',
+                                                         'rowColumnEnclosure',
                                                          'firstRowIsHeaderRow',
-                                                         'modelPermissions',
-                                                         'mappingData');
+                                                         'mappingData',
+                                                         'dataAnalyzerMessagesData');
 
+        /**
+         * Given an import object, make an ImportWizardForm, mapping the attributes from the import object into the
+         * form.
+         * @param object $import
+         */
         public static function makeFormByImport($import)
         {
             assert('$import instanceof Import');
-            $form = new ImportWizardForm();
-            if($import->serializedData != null)
+            $form     = new ImportWizardForm();
+            $form->id = $import->id;
+            if ($import->serializedData != null)
             {
                 $unserializedData = unserialize($import->serializedData);
-                foreach(self::$importToFormAttributeMap as $attributeName)
+                foreach (self::$importToFormAttributeMap as $attributeName)
                 {
-                    if(isset($unserializedData[$attributeName]))
+                    if (isset($unserializedData[$attributeName]))
                     {
                         $form->$attributeName = $unserializedData[$attributeName];
                     }
+                }
+                if (isset($unserializedData['explicitReadWriteModelPermissions']))
+                {
+                    $form->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                               makeByMixedPermitablesData(
+                                                               $unserializedData['explicitReadWriteModelPermissions']);
+                }
+                else
+                {
+                    $form->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
                 }
             }
             return $form;
         }
 
         /**
-         * Given a form and an array of post data, set the form for the step 1 process. If the modelImportRulesType
+         * Given a form and an array of post data, set the form for the step 1 process. If the importRulesType
          * is already set and the new value is different, all other form attribute values should be emptied since this
-         * means the modelImportRulesType is different and for the next steps, we can't use existing saved data.
+         * means the importRulesType is different and for the next steps, we can't use existing saved data.
          * @param object $importWizardForm
          * @param array $postData
          */
-        public static function setFormByPostForStep1(& $importWizardForm, $postData)
+        public static function setFormByPostForStep1($importWizardForm, $postData)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["modelImportRulesType"])');
-            if($importWizardForm->modelImportRulesType != null &&
-               $importWizardForm->modelImportRulesType != $postData["modelImportRulesType"])
+            assert('is_array($postData) && isset($postData["importRulesType"])');
+            if ($importWizardForm->importRulesType != $postData["importRulesType"])
             {
-                foreach(self::$importToFormAttributeMap as $attributeName)
+                foreach (self::$importToFormAttributeMap as $attributeName)
                 {
                     $importWizardForm->$attributeName = null;
                 }
+                $importWizardForm->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             }
-            $importWizardForm->modelImportRulesType = $postData['modelImportRulesType'];
-        }
-
-        public static function setFormByPostForStep2(& $importWizardForm, $postData)
-        {
-            assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["firstRowIsHeaderRow"])');
-            $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow']));
-        }
-
-        public static function setFormByPostForStep3(& $importWizardForm, $postData)
-        {
-            assert('$importWizardForm instanceof ImportWizardForm');
-            assert('is_array($postData) && isset($postData["modelPermissions"])');
-            $importWizardForm->setAttributes(array('modelPermissions' => $postData['modelPermissions']));
+            $importWizardForm->importRulesType = $postData['importRulesType'];
         }
 
         /**
-         * Given an array of file upload data, set the form from this.  Keep the existing modelImportRulesType value
+         * Step 2 is where the import file is uploaded and the user checks if the first column is a header row.
+         * @param object $importWizardForm
+         * @param array $postData
+         */
+        public static function setFormByPostForStep2($importWizardForm, $postData)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('is_array($postData)');
+            assert('isset($postData["firstRowIsHeaderRow"])');
+            assert('isset($postData["rowColumnDelimiter"])');
+            assert('isset($postData["rowColumnEnclosure"])');
+            $importWizardForm->setAttributes(array('firstRowIsHeaderRow' => $postData['firstRowIsHeaderRow'],
+                                                   'rowColumnDelimiter'  => $postData['rowColumnDelimiter'],
+                                                   'rowColumnEnclosure'  => $postData['rowColumnEnclosure']));
+        }
+
+        /**
+         * Step 3 is where the explicit permissions are decided for the models that will be imported.
+         * @param object $importWizardForm
+         * @param array $postData
+         */
+        public static function setFormByPostForStep3($importWizardForm, $postData)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('is_array($postData) && isset($postData["explicitReadWriteModelPermissions"])');
+            $importWizardForm->explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                                   makeByPostData(
+                                                                   $postData['explicitReadWriteModelPermissions']);
+        }
+
+        /**
+         * Step 4 is where the import mapping is done along with any mapping rules.
+         * @param object $importWizardForm
+         * @param array $postData
+         */
+        public static function setFormByPostForStep4($importWizardForm, $postData)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('is_array($postData)');
+            $importWizardForm->mappingData = $postData;
+        }
+
+
+        /**
+         * Given an array of file upload data, set the form from this.  Keep the existing importRulesType value
          * but clear out any other form attributes since with a new file uploaded, those other attribute values will
          * need to be redone.
          * @param object $importWizardForm
          * @param array $fileUploadData
          */
-        public static function setFormByFileUploadDataAndTableName(& $importWizardForm, $fileUploadData, $tableName)
+        public static function setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $tableName)
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($fileUploadData)');
-            assert('is_string($tableName');
-            foreach(self::$importToFormAttributeMap as $attributeName)
+            assert('is_string($tableName)');
+            foreach (self::$importToFormAttributeMap as $attributeName)
             {
-                if($attributeName != 'modelImportRulesType')
+                if ($attributeName != 'importRulesType')
                 {
                     $importWizardForm->$attributeName = null;
                 }
             }
-            $importWizardForm->fileUploadData = $fileUploadData;
-            $importWizardForm->mappingData    = ImportMappingUtil::makeMappingDataByTableName($tableName);
+            $importWizardForm->explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            $importWizardForm->fileUploadData                    = $fileUploadData;
+            try
+            {
+                $importWizardForm->mappingData = ImportMappingUtil::makeMappingDataByTableName($tableName);
+            }
+            catch(NoRowsInTableException $e)
+            {
+                throw new FailedFileUploadException(Yii::t('Default', 'Import file has no rows to use.'));
+            }
         }
 
-        public static function setImportSerializedDataFromForm($importWizardForm, & $import)
+        /**
+         * Based on the self::$importToFormAttributeMap, create an array of elements from the
+         * import wizard form.  Serialize the array and set the import serializedData attribute.
+         * @param object $importWizardForm
+         * @param object $import
+         */
+        public static function setImportSerializedDataFromForm($importWizardForm, $import)
         {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('$import instanceof Import');
             $dataToSerialize = array();
-            foreach(self::$importToFormAttributeMap as $attributeName)
+            foreach (self::$importToFormAttributeMap as $attributeName)
             {
                 $dataToSerialize[$attributeName] = $importWizardForm->$attributeName;
             }
+            $dataToSerialize['explicitReadWriteModelPermissions'] =
+                ExplicitReadWriteModelPermissionsUtil::
+                makeMixedPermitablesDataByExplicitReadWriteModelPermissions(
+                $importWizardForm->explicitReadWriteModelPermissions);
             $import->serializedData = serialize($dataToSerialize);
+        }
+
+        /**
+         * Use this method to remove the existing temp table associated with this import model.  Will also remove
+         * data from serializedData that is created after a file is normally attached to an import model. It will
+         * leave the importRulesType in place since that is created prior to uploading a new file.
+         * @param object $import model.
+         */
+        public static function clearFileAndRelatedDataFromImport($import)
+        {
+            assert('$import instanceof Import');
+            $unserializedData                       = $import->serializedData;
+            $newUnserializedData['importRulesType'] = $unserializedData['importRulesType'];
+            if ($import->save())
+            {
+                ImportDatabaseUtil::dropTableByTableName($import->getTempTableName());
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Given an importWizardForm and an import object, ascertain whether there is a sufficient number of rows
+         * to do an import. If there is a header row present, then the minimum row count must be 2, otherwise it only
+         * has to be 1.
+         * @param object $importWizardForm
+         * @param object $import
+         * @return boolean true/false
+         */
+        public static function importFileHasAtLeastOneImportRow($importWizardForm, $import)
+        {
+            assert('$importWizardForm instanceof ImportWizardForm');
+            assert('$import instanceof Import');
+            $count = ImportDatabaseUtil::getCount($import->getTempTableName());
+            $minimumRows = 1;
+            if ($importWizardForm->firstRowIsHeaderRow)
+            {
+                $minimumRows = 2;
+            }
+            if ($count >= $minimumRows)
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>

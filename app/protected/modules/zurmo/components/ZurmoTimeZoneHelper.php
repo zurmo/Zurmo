@@ -42,7 +42,10 @@
         public function setTimeZone($value)
         {
             assert('is_string($value)');
-            assert('new DateTimeZone($value) !== false');
+            if (new DateTimeZone($value) === false)
+            {
+                throw new NotSupportedException();
+            }
             $this->_timeZone = $value;
         }
 

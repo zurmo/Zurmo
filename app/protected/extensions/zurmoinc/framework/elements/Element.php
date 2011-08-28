@@ -82,7 +82,7 @@
             {
                 return $this->getFormattedAttributeLabel();
             }
-            return $this->form->labelEx($this->model, $this->attribute);
+            return $this->form->labelEx($this->model, $this->attribute, array('for' => $this->getEditableInputId()));
         }
 
         protected function getFormattedAttributeLabel()
@@ -156,6 +156,15 @@
             return null;
         }
 
+        protected function getHtmlOptions()
+        {
+            if (!isset($this->params['htmlOptions']))
+            {
+                return array();
+            }
+            return $this->params['htmlOptions'];
+        }
+
         /**
          * Get the collection of id/names of inputs and other
          * parts of the element.
@@ -199,6 +208,144 @@
         public function getAttribute()
         {
             return $this->attribute;
+        }
+
+        /**
+         * An input Id is typically formed like: modelClassName_attributeName or
+         * modelClassName_attributeName_relationAttributeName.  This method resolves the input Id string.
+         * @param string $attributeName
+         * @param string $relationAttributeName
+         * @return string representing the content of the input id.
+         */
+        protected function getEditableInputId($attributeName = null, $relationAttributeName = null)
+        {
+            assert('$attributeName == null || is_string($attributeName)');
+            assert('$relationAttributeName == null || is_string($relationAttributeName)');
+            if ($attributeName == null)
+            {
+                $attributeName = $this->attribute;
+            }
+            $inputPrefix = $this->resolveInputIdPrefix();
+            $id          = $inputPrefix . '_' . $attributeName;
+            if ($relationAttributeName != null)
+            {
+                $id .= '_' . $relationAttributeName;
+            }
+            return CHtml::getIdByName($id);
+        }
+
+        /**
+         * An input name is typically formed like: modelClassName[attributeName] or
+         * modelClassName[attributeName][relationAttributeName].  This method resolves the input name string.
+         * Also handles scenarios where attributeName has something like abc[def]. This method will properly account
+         * for that.
+         * @param string $attributeName
+         * @param string $relationAttributeName
+         * @return string representing the content of the input name.
+         */
+        protected function getEditableInputName($attributeName = null, $relationAttributeName = null)
+        {
+            assert('$attributeName == null || is_string($attributeName)');
+            assert('$relationAttributeName == null || is_string($relationAttributeName)');
+            if ($attributeName == null)
+            {
+                $attributeName = $this->attribute;
+            }
+            $inputPrefix = $this->resolveInputNamePrefix();
+            $name        = $inputPrefix . static::resolveInputNameForEditableInput($attributeName);
+            if ($relationAttributeName != null)
+            {
+                assert('strpos($relationAttributeName, "[") === false && strpos($relationAttributeName, "]") === false');
+                $name .= '[' . $relationAttributeName . ']';
+            }
+            return $name;
+        }
+
+        /**
+         * @see $this->getEditableInputName()
+         * @param string $attributeName
+         */
+        public static function resolveInputNameForEditableInput($attributeName)
+        {
+            assert('is_string($attributeName)');
+            $modifiedAttributeName = str_replace('[', '][', $attributeName);
+            $modifiedAttributeName = '[' . $modifiedAttributeName . ']';
+            $modifiedAttributeName = str_replace(']]', ']', $modifiedAttributeName);
+            return $modifiedAttributeName;
+        }
+
+        /**
+         * An input Id or name is typically constructed like: modelClassName[attributeName].  The 'modelClassName'
+         * is considered the prefix of the input.  Any inputPrefix specified in the parameters coming into the element
+         * will be used, otherwise the model class name will be utilized.
+         * @return string representing the content of the input prefix.
+         */
+        protected function resolveInputPrefix()
+        {
+            if (isset($this->params['inputPrefix']) && $this->params['inputPrefix'])
+            {
+                assert('(is_array($this->params["inputPrefix"]) && count($this->params["inputPrefix"]) > 0)
+                        || (is_string($this->params["inputPrefix"]) && $this->params["inputPrefix"] != "")');
+                return $this->params['inputPrefix'];
+            }
+            return get_class($this->model);
+        }
+
+        protected function resolveInputIdPrefix()
+        {
+            $inputIdPrefix = $this->resolveInputPrefix();
+            if (is_array($inputIdPrefix))
+            {
+                if (count($inputIdPrefix) > 1)
+                {
+                    $inputPrefixContent = null;
+                    foreach ($inputIdPrefix as $value)
+                    {
+                        if ($inputPrefixContent != null)
+                        {
+                            $inputPrefixContent .= '_';
+                        }
+                        $inputPrefixContent .= $value;
+                    }
+                    return $inputPrefixContent;
+                }
+            }
+            elseif (!is_string($inputIdPrefix))
+            {
+                throw notSupportedException();
+            }
+            return $inputIdPrefix;
+        }
+        protected function resolveInputNamePrefix()
+        {
+            $inputIdPrefix = $this->resolveInputPrefix();
+            if (is_array($inputIdPrefix))
+            {
+                if (count($inputIdPrefix) > 1)
+                {
+                    $inputPrefixContent = null;
+                    $firstPrefixPlaced  = false;
+                    foreach ($inputIdPrefix as $value)
+                    {
+                        if (!$firstPrefixPlaced)
+                        {
+                            $inputPrefixContent .= $value;
+                            $firstPrefixPlaced   = true;
+                        }
+                        else
+                        {
+                            $inputPrefixContent .= '[' . $value . ']';
+                        }
+
+                    }
+                    return $inputPrefixContent;
+                }
+            }
+            elseif (!is_string($inputIdPrefix))
+            {
+                throw notSupportedException();
+            }
+            return $inputIdPrefix;
         }
     }
 ?>

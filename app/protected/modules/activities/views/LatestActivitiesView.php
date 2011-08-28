@@ -158,7 +158,7 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $urlScript = 'js:$.param.querystring("' . $this->portletDetailsUrl . '", "' .
-                         $this->dataProvider->getPagination()->pageVar . '=1")';
+                         $this->dataProvider->getPagination()->pageVar . '=1")'; // Not Coding Standard
             $ajaxSubmitScript = CHtml::ajax(array(
                     'type' => 'GET',
                     'data' => 'js:$("#' . $form->getId() . '").serialize()',
@@ -193,11 +193,11 @@
 
         protected function getViewLayoutWidgetPath()
         {
-            if($this->configurationForm->viewType == self::VIEW_TYPE_LISTVIEW)
+            if ($this->configurationForm->viewType == self::VIEW_TYPE_LISTVIEW)
             {
                 return 'application.modules.activities.widgets.LatestActivitiesListViewLayout';
             }
-            elseif($this->configurationForm->viewType == self::VIEW_TYPE_SUMMARY)
+            elseif ($this->configurationForm->viewType == self::VIEW_TYPE_SUMMARY)
             {
                 return 'application.modules.activities.widgets.LatestActivitiesSummaryViewLayout';
             }

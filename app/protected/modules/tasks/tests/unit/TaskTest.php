@@ -61,7 +61,7 @@
             $this->assertEquals($user,                 $task->owner);
             $this->assertEquals(1, $task->activityItems->count());
             $this->assertEquals($accounts[0], $task->activityItems->offsetGet(0));
-            foreach($task->activityItems as $existingItem)
+            foreach ($task->activityItems as $existingItem)
             {
                 $castedDownModel = $existingItem->castDown(array('Account')); //this should not fail
             }
@@ -78,7 +78,7 @@
             $accounts[0]->forget();
             $task = new Task();
             $task->activityItems->add(Account::getById($accountId));
-            foreach($task->activityItems as $existingItem)
+            foreach ($task->activityItems as $existingItem)
             {
                 try
                 {
@@ -89,7 +89,7 @@
                     $this->fail();
                 }
             }
-            foreach($task->activityItems as $existingItem)
+            foreach ($task->activityItems as $existingItem)
             {
                 try
                 {
@@ -183,7 +183,6 @@
             $this->assertEquals(1, count($tasks));
         }
 
-
         public function testManyToManyRelationInTheMiddleOfTheInheritanceHierarchy()
         {
             if (!RedBeanDatabase::isFrozen())
@@ -247,6 +246,7 @@
             $this->assertEquals($nowStamp, $task->latestDateTime);
             $completedStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() + 1);
             $this->assertNotEquals($nowStamp, $completedStamp);
+            sleep(1); //Some servers are too fast and the test will fail if we don't have this.
             $this->assertTrue($task->save());
             $this->assertNotEquals($nowStamp, $task->completedDateTime);
             $this->assertNotEquals($nowStamp, $task->latestDateTime);
@@ -258,6 +258,7 @@
             $this->assertNotEquals($existingStamp, $newStamp);
             $task = Task::getById($task->id);
             $task->name = 'aNewName';
+            sleep(1); //Some servers are too fast and the test will fail if we don't have this.
             $this->assertTrue($task->save());
             $this->assertEquals($existingStamp, $task->completedDateTime);
             $this->assertEquals($existingStamp, $task->latestDateTime);

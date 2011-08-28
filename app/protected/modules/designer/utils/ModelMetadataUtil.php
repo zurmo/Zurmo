@@ -334,16 +334,16 @@
             assert('is_bool($isAudited)');
             assert('is_array($modelMetadata)');
             assert('is_string($attributeName)');
-            if(!$isAudited)
+            if (!$isAudited)
             {
-                if(!isset($modelMetadata['noAudit']) || !in_array($attributeName, $modelMetadata['noAudit']))
+                if (!isset($modelMetadata['noAudit']) || !in_array($attributeName, $modelMetadata['noAudit']))
                 {
                     $modelMetadata['noAudit'][] = $attributeName;
                 }
             }
             else
             {
-                if(isset($modelMetadata['noAudit']) && in_array($attributeName, $modelMetadata['noAudit']))
+                if (isset($modelMetadata['noAudit']) && in_array($attributeName, $modelMetadata['noAudit']))
                 {
                     $key = array_search($attributeName, $modelMetadata['noAudit']);
                     unset($modelMetadata['noAudit'][$key]);

@@ -46,7 +46,7 @@
             $opportunity->closeDate      = '2011-01-01';
             $opportunity->stage->value   = 'Negotiating';
             $opportunity->source->value  = 'Outbound';
-            assert('$opportunity->save()'); // Not Coding Standard
+            assert($opportunity->save()); // Not Coding Standard
             $currencyValue = new CurrencyValue();
             $currencyValue->value = 350;
             $currencyValue->currency = $currencies[0];
@@ -57,7 +57,7 @@
             $opportunity->closeDate      = '2011-01-01';
             $opportunity->stage->value   = 'Negotiating';
             $opportunity->source->value  = 'Trade Show';
-            assert('$opportunity->save()'); // Not Coding Standard
+            assert($opportunity->save()); // Not Coding Standard
             $currencyValue = new CurrencyValue();
             $currencyValue->value = 100;
             $currencyValue->currency = $currencies[0];
@@ -68,7 +68,7 @@
             $opportunity->closeDate      = '2011-01-01';
             $opportunity->stage->value   = 'Verbal';
             $opportunity->source->value  = 'Trade Show';
-            assert('$opportunity->save()'); // Not Coding Standard
+            assert($opportunity->save()); // Not Coding Standard
         }
 
         public function setUp()

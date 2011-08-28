@@ -42,7 +42,7 @@
             $category          = RandomDataUtil::getRandomValueFromArray(
                                  static::getCustomFieldDataByName('MeetingCategories'));
             $location          = RandomDataUtil::getRandomValueFromArray($meetingRandomData['locations']);
-            $startTimeStamp    = time() + (mt_rand(1,200) * 60 * 60 * 24);
+            $startTimeStamp    = time() + (mt_rand(1, 200) * 60 * 60 * 24);
             $startDateTime     = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp);
             $endDateTime       = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp + (mt_rand(1, 24) * 15));
 

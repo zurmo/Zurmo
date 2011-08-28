@@ -121,6 +121,9 @@
          * Used in an extending class's getDefaultMetadata() method to specify
          * that a relation is 1:M and that the class on the M side of the
          * relation.
+         * Note: Currently if you have a relation that is set to HAS_MANY_BELONGS_TO, then that relation name
+         * must be the strtolower() same as the related model class name.  This is the current support for this
+         * relation type.  If something different is set, an exception will be thrown.
          */
         const HAS_MANY_BELONGS_TO = 1;
 
@@ -450,6 +453,7 @@
                 $this->pseudoId,
                 $this->modelClassNameToBean,
                 $this->attributeNameToBeanAndClassName,
+                $this->attributeNamesNotBelongsToOrManyMany,
                 $this->relationNameToRelationTypeModelClassNameAndOwns,
                 $this->validators,
             ));
@@ -461,7 +465,7 @@
             {
                 $data = unserialize($data);
                 assert('is_array($data)');
-                if (count($data) != 5)
+                if (count($data) != 6)
                 {
                     return null;
                 }
@@ -469,8 +473,9 @@
                 $this->pseudoId                                        = $data[0];
                 $this->modelClassNameToBean                            = $data[1];
                 $this->attributeNameToBeanAndClassName                 = $data[2];
-                $this->relationNameToRelationTypeModelClassNameAndOwns = $data[3];
-                $this->validators                                      = $data[4];
+                $this->attributeNamesNotBelongsToOrManyMany            = $data[3];
+                $this->relationNameToRelationTypeModelClassNameAndOwns = $data[4];
+                $this->validators                                      = $data[5];
 
                 $this->relationNameToRelatedModel = array();
                 $this->unlinkedRelationNames      = array();
@@ -625,8 +630,19 @@
                     foreach ($metadata[$modelClassName]['relations'] as $relationName => $relationTypeModelClassNameAndOwns)
                     {
                         assert('in_array(count($relationTypeModelClassNameAndOwns), array(2, 3))');
+
                         $relationType           = $relationTypeModelClassNameAndOwns[0];
                         $relationModelClassName = $relationTypeModelClassNameAndOwns[1];
+                        if ($relationType == self::HAS_MANY_BELONGS_TO &&
+                           strtolower($relationName) != strtolower($relationModelClassName))
+                        {
+                            $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
+                                     'the same as the related model class name. Relation: {relationName} ' .
+                                     'Relation model class name: {relationModelClassName}';
+                            throw new NotSupportedException(Yii::t('Default', $label,
+                                      array('{relationName}' => $relationName,
+                                            '{relationModelClassName}' => $relationModelClassName)));
+                        }
                         if (count($relationTypeModelClassNameAndOwns) == 3)
                         {
                             $relationTypeModelClassNameAndOwns[2] == self::OWNED;
@@ -670,6 +686,7 @@
                         switch ($validatorName)
                         {
                             case 'RedBeanModelTypeValidator':
+                            case 'TypeValidator':
                                 $columnName = strtolower($attributeName);
                                 if (array_key_exists($columnName, $hints))
                                 {
@@ -1088,15 +1105,16 @@
                                 }
                                 else
                                 {
+
                                     $linkName = null;
                                 }
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
                                 {
                                 $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
                                     if ($relatedBean !== null && $relatedBean->id > 0)
-                                {
+                                    {
                                         $relatedModel = self::makeModel($relatedBean, $relatedModelClassName, true);
-                                }
+                                    }
                                 }
                                 if (!isset($relatedModel))
                                 {
@@ -1146,7 +1164,8 @@
          */
         public function __set($attributeName, $value)
         {
-            if ($attributeName == 'id' || $this->isAttributeReadOnly($attributeName))
+            if ($attributeName == 'id' ||
+                ($this->isAttributeReadOnly($attributeName) && !$this->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 throw new NotSupportedException();
             }
@@ -1313,6 +1332,16 @@
                     }
                 }
             }
+            return false;
+        }
+
+        /**
+         * @param boolean $attributeName
+         * @return true/false whether the attributeName specified, it is allowed to be set externally even though it is
+         * a read-only attribute.
+         */
+        public function isAllowedToSetReadOnlyAttribute($attributeName)
+        {
             return false;
         }
 
@@ -1636,14 +1665,24 @@
                         assert('count($this->unlinkedRelationNames) == 0');
                         foreach ($this->relationNameToRelatedModel as $relationName => $relatedModel)
                         {
+                            $relationType = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][0];
                             if ($relatedModel instanceof RedBeanModel)
                             {
                                 $bean                  = $this->attributeNameToBeanAndClassName                [$relationName][0];
                                 $relatedModelClassName = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][1];
                                 $linkName = strtolower($relationName);
-                                if ($linkName == strtolower($relatedModelClassName))
+                                if (strtolower($linkName) == strtolower($relatedModelClassName))
                                 {
                                     $linkName = null;
+                                }
+                                elseif ($relationType == RedBeanModel::HAS_MANY_BELONGS_TO)
+                                {
+                                    $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
+                                             'the same as the related model class name. Relation: {relationName} ' .
+                                             'Relation model class name: {relationModelClassName}';
+                                    throw new NotSupportedException(Yii::t('Default', $label,
+                                              array('{relationName}' => $linkName,
+                                                    '{relationModelClassName}' => $relatedModelClassName)));
                                 }
                                 if ($relatedModel->isModified() ||
                                     $relatedModel->id > 0       ||
@@ -1652,7 +1691,7 @@
                                     $relatedModel = $this->relationNameToRelatedModel[$relationName];
                                     $relatedBean  = $relatedModel->getClassBean($relatedModelClassName);
                                     R::$linkManager->link($bean, $relatedBean, $linkName);
-                                    //if (!RedBeanDatabase::isFrozen())
+                                    if (!RedBeanDatabase::isFrozen())
                                     {
                                         $tableName  = self::getTableName($this->getAttributeModelClassName($relationName));
                                         $columnName = self::getForeignKeyName(get_class($this), $relationName);
@@ -1660,7 +1699,6 @@
                                     }
                                 }
                             }
-                            $relationType = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][0];
                             if (!in_array($relationType, array(self::HAS_ONE_BELONGS_TO,
                                                                self::HAS_MANY_BELONGS_TO)))
                             {
@@ -1681,7 +1719,7 @@
                         {
                             R::store($bean);
                             assert('$bean->id > 0');
-                            //if (!RedBeanDatabase::isFrozen())
+                            if (!RedBeanDatabase::isFrozen())
                             {
                                 if ($baseModelClassName !== null)
                                 {
@@ -1727,7 +1765,7 @@
                 if ($baseBean !== null)
                 {
                     R::$linkManager->link($bean, $baseBean);
-                    //if (!RedBeanDatabase::isFrozen())
+                    if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = self::getTableName($modelClassName);
                         $columnName = self::getTableName($baseModelClassName) . '_id';

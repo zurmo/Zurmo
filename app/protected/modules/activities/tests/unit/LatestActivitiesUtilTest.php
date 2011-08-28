@@ -92,9 +92,9 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $modelClassNames = array('Meeting', 'Task', 'Note');
             $sortAttributeData = LatestActivitiesUtil::getSortAttributesByMashableModelClassNames($modelClassNames);
-            $compareSortAttributeData = array('Meeting'=> 'latestDateTime',
-                                              'Note'   => 'latestDateTime',
-                                              'Task'   => 'latestDateTime');
+            $compareSortAttributeData = array('Meeting' => 'latestDateTime',
+                                              'Note'    => 'latestDateTime',
+                                              'Task'    => 'latestDateTime');
             $this->assertEquals($compareSortAttributeData, $sortAttributeData);
         }
 

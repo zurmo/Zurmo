@@ -763,7 +763,6 @@
          */
         public function testLayoutsLoadOkAfterCustomFieldsPlacedForAccountsModule()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             //Load create, edit, and details views.
@@ -837,7 +836,6 @@
          */
         public function testLayoutsLoadOkAfterCustomFieldsPlacedForContactsModule()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superContactId = self::getModelIdByModelNameAndName ('Contact', 'superContact superContactson');
@@ -917,7 +915,6 @@
          */
         public function testLayoutsLoadOkAfterCustomFieldsPlacedForLeadsModule()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superLeadId  = self::getModelIdByModelNameAndName('Contact', 'superLead superLeadson');
             //Load create, edit, and details views.
@@ -991,7 +988,6 @@
          */
         public function testLayoutsLoadOkAfterCustomFieldsPlacedForOpportunitiesModule()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superOpportunityId = self::getModelIdByModelNameAndName ('Opportunity', 'superOpp');

@@ -83,8 +83,8 @@
                     'description',
                 ),
                 'relations' => array(
-                    'memberOf'         => array(RedBeanModel::HAS_MANY_BELONGS_TO,  'Account'),
-                    'members'          => array(RedBeanModel::HAS_MANY,             'Account'),
+                    'account'          => array(RedBeanModel::HAS_MANY_BELONGS_TO,  'Account'),
+                    'accounts'         => array(RedBeanModel::HAS_MANY,             'Account'),
                     'primaryEmail'     => array(RedBeanModel::HAS_ONE,              'Email',            RedBeanModel::OWNED),
                     'secondaryEmail'   => array(RedBeanModel::HAS_ONE,              'Email',            RedBeanModel::OWNED),
                     'billingAddress'   => array(RedBeanModel::HAS_ONE,              'Address',          RedBeanModel::OWNED),
@@ -124,7 +124,7 @@
                 'rollupRelations' => array(
                     'contacts',
                     'opportunities',
-                    'members' => array('contacts', 'opportunities')
+                    'accounts' => array('contacts', 'opportunities')
                 ),
                 'noAudit' => array(
                     'employees',

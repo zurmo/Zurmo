@@ -150,8 +150,8 @@
             $content = $this->runControllerWithExitExceptionAndGetContent('zurmo/fileModel/upload');
             //Confirm the file has actually been uploaded
             $files = FileModel::getAll();
-            $compareJsonString = '{"name":"testNote.txt","type":"text\/plain","humanReadableSize":"6.34Kb","id":' .
-                                    $files[0]->id . '}';
+            $compareJsonString = '[{"name":"testNote.txt","type":"text\/plain","size":"6.34Kb","id":' . // Not Coding Standard
+                                    $files[0]->id . '}]';
             $this->assertEquals($compareJsonString, $content);
             $fileModels = FileModel::getAll();
             $this->assertEquals(1, count($fileModels));
@@ -175,6 +175,18 @@
                 $this->assertEquals($compareContent, $content);
             }
             //todo: test all file errors.
+
+
+            //Test deleting a file.
+            $this->assertEquals(1, count(FileModel::getAll()));
+            $this->assertEquals(1, count(FileContent::getAll()));
+            $this->setGetArray(array('id' => $fileModels[0]->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('zurmo/fileModel/delete', true);
+
+            //Now confirm that there are no file models or content in the system.
+            $this->assertEquals(0, count(FileModel::getAll()));
+            $this->assertEquals(0, count(FileContent::getAll()));
         }
     }
 ?>

@@ -26,24 +26,105 @@
 
     class ImportTestHelper
     {
-        public static function createTempTableByFileNameAndTableName($fileName, $tableName)
+        public static function createTempTableByFileNameAndTableName($fileName,
+                                                                     $tableName,
+                                                                     $pathToFiles = null,
+                                                                     $delimiter = ',',
+                                                                     $enclosure = "'")
         {
             assert('is_string($fileName)');
             assert('is_string($tableName)');
-            $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
+            if ($pathToFiles == null)
+            {
+                $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
+            }
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
             $fileHandle  = fopen($filePath, 'r');
             if ($fileHandle !== false)
             {
-                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName);
+                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName,
+                                                                                         $delimiter, $enclosure);
                 assert('$created');
                 return true;
             }
             return false;
         }
 
-        public static function createAccountsForSearchWithDataProviderTests()
+        public static function createImportModelTestItem($string, $lastName)
         {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ImportModelTestItem();
+            $model->string   = $string;
+            $model->lastName = $lastName;
+            $saved           = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
+
+        public static function createImportModelTestItem2($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ImportModelTestItem2();
+            $model->name = $name;
+            $saved = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
+
+        public static function createImportModelTestItem3($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ImportModelTestItem3();
+            $model->name = $name;
+            $saved = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
+
+        public static function createImportModelTestItem4($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ImportModelTestItem4();
+            $model->name = $name;
+            $saved = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
         }
     }
 ?>

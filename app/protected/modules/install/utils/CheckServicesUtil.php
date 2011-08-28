@@ -33,21 +33,32 @@
 
         const CHECK_FAILED = 2;
 
+        /**
+         * Utilize if a check does not pass or fail but is able to ascertain partial information, thus resulting in
+         * a warning.
+         * @var integer
+         */
+        const CHECK_WARNING = 3;
+
         private static function getServicesToCheck()
         {
             return array('WebServer',
                          'Php',
                          'PhpTimeZone',
                          'PhpMemoryBytes',
+                         'PhpFileUploads',
                          'PhpUploadSize',
+                         'PhpPostSize',
                          'FilePermissions',
                          'Database',
+                         'DatabaseMaxAllowedPacketSize',
                          'APC',
                          'Soap',
                          'Tidy',
                          'Curl',
                          'Yii',
                          'RedBean',
+                         'MbString',
                          'Memcache',
             );
         }
@@ -62,16 +73,23 @@
             $resultsData                                                      = array();
             $resultsData[self::CHECK_PASSED]                                  = array();
             $resultsData[self::CHECK_FAILED]                                  = array();
-            $resultsData[self::CHECK_FAILED][ServiceHelper::REQUIRED_SERVICE] = array();
-            $resultsData[self::CHECK_FAILED][ServiceHelper::OPTIONAL_SERVICE] = array();
-            foreach($servicesToCheck as $service)
+            $resultsData[self::CHECK_FAILED] [ServiceHelper::REQUIRED_SERVICE] = array();
+            $resultsData[self::CHECK_FAILED] [ServiceHelper::OPTIONAL_SERVICE] = array();
+            $resultsData[self::CHECK_WARNING]                                  = array();
+
+            foreach ($servicesToCheck as $service)
             {
                 $serviceHelperClassName = $service . 'ServiceHelper';
                 $serviceHelper = new $serviceHelperClassName();
 
-                if($serviceHelper->runCheckAndGetIfSuccessful())
+                if ($serviceHelper->runCheckAndGetIfSuccessful())
                 {
                     $resultsData[self::CHECK_PASSED][] = array('service' => $service,
+                                                                      'message' => $serviceHelper->getMessage());
+                }
+                elseif ($serviceHelper->didCheckProduceWarningStatus())
+                {
+                    $resultsData[self::CHECK_WARNING][]  = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
                 }
                 else
@@ -80,7 +98,6 @@
                     $resultsData[self::CHECK_FAILED][$serviceType][] = array('service' => $service,
                                                                       'message' => $serviceHelper->getMessage());
                 }
-
             }
             return $resultsData;
         }

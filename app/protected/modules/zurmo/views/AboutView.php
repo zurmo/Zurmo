@@ -28,8 +28,7 @@
     {
         protected function renderContent()
         {
-            $zurmoVersion    = '???';
-            $changeSet      = '??????????';
+            $zurmoVersion    = VERSION;
             $yiiVersion     = YiiBase::getVersion();
             if (method_exists('R', 'getVersion'))
             {
@@ -41,18 +40,23 @@
             }
             // TODO - put the strings in Yii::t().
             return <<<END
+    <div id="LoginLogo" class="zurmo-logo"></div>
     <p>
-        This is <b>version $zurmoVersion</b> ($changeSet), of <b>Zurmo</b>.
+        This is <b>version $zurmoVersion</b>, of <b>Zurmo</b>.
     </p>
     <p>
         <b>Zurmo</b> is a <b>Customer Relation Management</b> system by <b>Zurmo Inc.</b>
     </p>
     <p>
-        Visit <b>Zurmo Inc.</b> online at
-        <a href="http://www.zurmoinc.com">http://www.zurmoinc.com</a>.<br />
+        Visit the <b>Zurmo Open Source Project</b> at
+        <a href="http://www.zurmo.org">http://www.zurmo.org</a>.<br />
     </p>
     <p>
-        Insert licensing information.
+        Visit <b>Zurmo Inc.</b> at
+        <a href="http://www.zurmo.com">http://www.zurmo.com</a>.<br />
+    </p>
+    <p>
+        Zurmo is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>.
     </p>
     <p>
         <b>Zurmo</b> uses the following great Open Source tools and frameworks...

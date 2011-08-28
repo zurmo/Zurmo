@@ -60,7 +60,7 @@
             $bobby->setRight('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS);
             $this->assertTrue($bobby->save());
             $elementName = ActivityItemRelationToModelElementUtil::resolveModelElementClassNameByActionSecurity('Contact', $bobby);
-            $this->assertEquals('FirstStatesElement', $elementName);
+            $this->assertEquals('LeadElement', $elementName);
 
             //test Contact model where user has access to only the contacts module
             $bobby->removeRight('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS);

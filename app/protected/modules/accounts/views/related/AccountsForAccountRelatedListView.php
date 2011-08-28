@@ -28,7 +28,7 @@
     {
         protected function getRelationAttributeName()
         {
-            return 'memberOf';
+            return 'account';
         }
 
         public static function getDisplayDescription()

@@ -33,14 +33,7 @@
         protected function renderControlEditable()
         {
             $dropDownArray = $this->getDropDownArray();
-            $htmlOptions = array(
-                'name' => $this->getNameForSelectInput(),
-                'id'   => $this->getIdForSelectInput(),
-            );
-            if ($this->getAddBlank())
-            {
-                $htmlOptions['empty'] = Yii::t('Default', 'None');
-            }
+            $htmlOptions   = $this->getEditableHtmlOptions();
             return $this->form->dropDownList($this->model, $this->attribute, $dropDownArray, $htmlOptions);
         }
 

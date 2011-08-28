@@ -50,7 +50,7 @@
             $stage     = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
             $model->stage->value  = $stage;
             $model->source->value = $source;
-            $futureTimeStamp      = time() + (mt_rand(1,200) * 60 * 60 * 24);
+            $futureTimeStamp      = time() + (mt_rand(1, 200) * 60 * 60 * 24);
             $closeDate            = Yii::app()->dateFormatter->format(
                                     DatabaseCompatibilityUtil::getDateFormat(), $futureTimeStamp);
             $model->closeDate     = $closeDate;

@@ -33,17 +33,8 @@
             parent::__construct($model, $attributeName);
             if ($model !== null)
             {
-                $validators = $model->getValidators($attributeName);
-                foreach ($validators as $validator)
-                {
-                    if ($validator instanceof CStringValidator)
-                    {
-                        if ($validator->max !== null)
-                        {
-                            $this->maxLength = $validator->max;
-                        }
-                    }
-                }
+                $this->maxLength = StringValidatorHelper::
+                                   getMaxLengthByModelAndAttributeName($model, $attributeName);
             }
         }
 

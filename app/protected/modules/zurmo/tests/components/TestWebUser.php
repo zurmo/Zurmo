@@ -37,5 +37,19 @@
                 parent::__set($attributeName, $value);
             }
         }
+
+    /**
+     * Override for testing framework.  The regenerateId call was causing issues with a walkthrough test that logged out
+     * and logged back in.  It would complain about headers already being sent. Under normal usage through the user
+     * interface this wouldn't be an issue so this is removed for testing.
+     * @see CWebUser::changeIdentity()
+     */
+    protected function changeIdentity($id,$name,$states)
+    {
+        //Yii::app()->getSession()->regenerateID();  //This was causing problems for tests.
+        $this->setId($id);
+        $this->setName($name);
+        $this->loadIdentityStates($states);
+    }
     }
 ?>

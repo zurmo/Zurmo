@@ -38,41 +38,41 @@
             $i = new I();
             $i->iMember = 'iString1';
             $i->name    = 'd';
-            assert('$i->save()'); // Not Coding Standard
+            assert($i->save()); // Not Coding Standard
             $i = new I();
             $i->iMember = 'xString1';
             $i->name    = 'e';
-            assert('$i->save()'); // Not Coding Standard
+            assert($i->save()); // Not Coding Standard
             $i = new I();
             $i->iMember = 'yString1';
             $i->name    = 'f';
-            assert('$i->save()'); // Not Coding Standard
+            assert($i->save()); // Not Coding Standard
 
             $j = new J();
             $j->jMember = 'jString1';
             $j->name    = 'a';
-            assert('$j->save()'); // Not Coding Standard
+            assert($j->save()); // Not Coding Standard
             $j = new J();
             $j->jMember = 'xString1';
             $j->name    = 'b';
-            assert('$j->save()'); // Not Coding Standard
+            assert($j->save()); // Not Coding Standard
             $j = new J();
             $j->jMember = 'yString1';
             $j->name    = 'c';
-            assert('$j->save()'); // Not Coding Standard
+            assert($j->save()); // Not Coding Standard
 
             $k = new K();
             $k->kMember = 'kString1';
             $k->name    = 'g';
-            assert('$k->save()'); // Not Coding Standard
+            assert($k->save()); // Not Coding Standard
             $k = new K();
             $k->kMember = 'xString1';
             $k->name    = 'i';
-            assert('$k->save()'); // Not Coding Standard
+            assert($k->save()); // Not Coding Standard
             $k = new K();
             $k->kMember = 'yString1';
             $k->name    = 'h';
-            assert('$k->save()'); // Not Coding Standard
+            assert($k->save()); // Not Coding Standard
         }
 
         public function testUnionSqlAcrossMultipleModels()
@@ -267,14 +267,14 @@
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= "left join {$quote}k{$quote} on {$quote}k{$quote}.{$quote}i_id{$quote} = ";
             $compareSubsetSql .= "{$quote}i{$quote}.{$quote}id{$quote} ";
-            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN(lower('d'),lower('e'),lower('f')))";
+            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN(lower('d'),lower('e'),lower('f')))"; // Not Coding Standard
             $compareSubsetSql .= " and {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
             $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id ";
             $compareSubsetSql .= ", 'J' modelClassName , {$quote}j{$quote}.{$quote}jmember{$quote} orderByColumn ";
             $compareSubsetSql .= "from {$quote}j{$quote} ";
-            $compareSubsetSql .= "where ({$quote}j{$quote}.{$quote}jmember{$quote} IN(lower('a'),lower('b'),lower('c')))";;
+            $compareSubsetSql .= "where ({$quote}j{$quote}.{$quote}jmember{$quote} IN(lower('a'),lower('b'),lower('c')))"; // Not Coding Standard
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "order by orderByColumn desc ";
             $compareSubsetSql .= 'limit 7 offset 2';
@@ -291,7 +291,6 @@
          */
         public function testUnionSqlAcrossMultipleModelsUsingManyManyRelationFilterWhichMakesSelectDistinct()
         {
-
         }
     }
 ?>

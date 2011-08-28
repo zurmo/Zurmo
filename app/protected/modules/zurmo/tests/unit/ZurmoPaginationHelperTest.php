@@ -43,6 +43,7 @@
             $pager->setModalListPageSize(13);
             $pager->setMassEditProgressPageSize(14);
             $pager->setAutoCompleteListPageSize(15);
+            $pager->setImportPageSize(16);
 
             //Retrieve settings for different current users.
             Yii::app()->user->userModel =  User::getByUsername('super');
@@ -55,6 +56,7 @@
             $this->assertEquals(13, $pager->resolveActiveForCurrentUserByType('modalListPageSize'));
             $this->assertEquals(14, $pager->resolveActiveForCurrentUserByType('massEditProgressPageSize'));
             $this->assertEquals(15, $pager->resolveActiveForCurrentUserByType('autoCompleteListPageSize'));
+            $this->assertEquals(16, $pager->resolveActiveForCurrentUserByType('importPageSize'));
 
             //Retrieve settings for different specific users
             $sally = User::getByUsername('sally');
@@ -72,18 +74,22 @@
             $this->assertEquals(14, $pager->getByUserAndType($billy, 'massEditProgressPageSize'));
             $this->assertEquals(15, $pager->getByUserAndType($super, 'autoCompleteListPageSize'));
             $this->assertEquals(15, $pager->getByUserAndType($billy, 'autoCompleteListPageSize'));
+            $this->assertEquals(16, $pager->getByUserAndType($super, 'importPageSize'));
+            $this->assertEquals(16, $pager->getByUserAndType($billy, 'importPageSize'));
 
             $pager->setByUserAndType($billy, 'listPageSize',             88);
             $pager->setByUserAndType($billy, 'subListPageSize',          89);
             $pager->setByUserAndType($billy, 'modalListPageSize',        90);
             $pager->setByUserAndType($billy, 'massEditProgressPageSize', 91);
-            $pager->setByUserAndType($billy, 'autoCompleteListPageSize',     92);
+            $pager->setByUserAndType($billy, 'autoCompleteListPageSize', 92);
+            $pager->setByUserAndType($billy, 'importPageSize',           93);
 
             $this->assertEquals(88, $pager->getByUserAndType($billy, 'listPageSize'));
             $this->assertEquals(89, $pager->getByUserAndType($billy, 'subListPageSize'));
             $this->assertEquals(90, $pager->getByUserAndType($billy, 'modalListPageSize'));
             $this->assertEquals(91, $pager->getByUserAndType($billy, 'massEditProgressPageSize'));
             $this->assertEquals(92, $pager->getByUserAndType($billy, 'autoCompleteListPageSize'));
+            $this->assertEquals(93, $pager->getByUserAndType($billy, 'importPageSize'));
         }
 
         public function testSetGetGlobalValueByType()
@@ -94,21 +100,25 @@
             $pager->setModalListPageSize(13);
             $pager->setMassEditProgressPageSize(14);
             $pager->setAutoCompleteListPageSize(15);
+            $pager->setImportPageSize(16);
             $this->assertEquals         (11, $pager->getGlobalValueByType('listPageSize'));
             $this->assertEquals         (12, $pager->getGlobalValueByType('subListPageSize'));
             $this->assertEquals         (13, $pager->getGlobalValueByType('modalListPageSize'));
             $this->assertEquals         (14, $pager->getGlobalValueByType('massEditProgressPageSize'));
             $this->assertEquals         (15, $pager->getGlobalValueByType('autoCompleteListPageSize'));
+            $this->assertEquals         (16, $pager->getGlobalValueByType('importPageSize'));
             $pager->setGlobalValueByType('listPageSize',             88);
             $pager->setGlobalValueByType('subListPageSize',          89);
             $pager->setGlobalValueByType('modalListPageSize',        90);
             $pager->setGlobalValueByType('massEditProgressPageSize', 91);
-            $pager->setGlobalValueByType('autoCompleteListPageSize',     92);
+            $pager->setGlobalValueByType('autoCompleteListPageSize', 92);
+            $pager->setGlobalValueByType('importPageSize',           93);
             $this->assertEquals         (88, $pager->getGlobalValueByType('listPageSize'));
             $this->assertEquals         (89, $pager->getGlobalValueByType('subListPageSize'));
             $this->assertEquals         (90, $pager->getGlobalValueByType('modalListPageSize'));
             $this->assertEquals         (91, $pager->getGlobalValueByType('massEditProgressPageSize'));
             $this->assertEquals         (92, $pager->getGlobalValueByType('autoCompleteListPageSize'));
+            $this->assertEquals         (93, $pager->getGlobalValueByType('importPageSize'));
         }
 
         public function testSetForCurrentUserByType()

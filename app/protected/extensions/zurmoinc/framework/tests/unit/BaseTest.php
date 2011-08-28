@@ -33,7 +33,7 @@
             if ($freeze)
             {
                 $schemaFile = sys_get_temp_dir() . '/autobuilt.sql';
-                $success = preg_match("/;dbname=([^;]+)/", Yii::app()->db->connectionString, $matches);
+                $success = preg_match("/;dbname=([^;]+)/", Yii::app()->db->connectionString, $matches); // Not Coding Standard
                 assert('$success == 1'); // Not Coding Standard
                 $databaseName = $matches[1];
                 if (file_exists($schemaFile) && filesize($schemaFile) > 0)
@@ -120,6 +120,24 @@
         protected function isDebug()
         {
             return in_array('--debug', $_SERVER['argv']);
+        }
+
+        /**
+         * Get the value of a property using reflection.
+         *
+         * @param object|string $class
+         *     The object or classname to reflect. An object must be provided
+         *     if accessing a non-static property.
+         * @param string $propertyName The property to reflect.
+         * @return mixed The value of the reflected property.
+         */
+        public static function getReflectedPropertyValue($object, $propertyName)
+        {
+            assert('is_object($object)');
+            $reflectedClass = new ReflectionClass($object);
+            $property       = $reflectedClass->getProperty($propertyName);
+            $property->setAccessible(true);
+            return $property->getValue($object);
         }
     }
 ?>

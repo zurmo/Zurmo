@@ -116,7 +116,7 @@
         {
             //Test member of search.
             $_FAKEPOST['I'] = array();
-            $_FAKEPOST['I']['memberOf']['id'] = '4';
+            $_FAKEPOST['I']['i']['id'] = '4';
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
                 new I(false),
                 1,
@@ -126,7 +126,7 @@
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}i{$quote}.{$quote}memberof_i_id{$quote} = 4)";
+            $compareWhere = "({$quote}i{$quote}.{$quote}i_id{$quote} = 4)";
             $this->assertEquals($compareWhere, $where);
 
             //Now test that the joinTablesAdapter has correct information.
@@ -144,7 +144,7 @@
         public function testSearchHasManyRelationWhenRelationIsSameModelType()
         {
             $_FAKEPOST['I'] = array();
-            $_FAKEPOST['I']['members']['id'] = '5';
+            $_FAKEPOST['I']['is']['id'] = '5';
             $metadataAdapter     = new SearchDataProviderMetadataAdapter(new I(false), 1, $_FAKEPOST['I']);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
@@ -290,7 +290,6 @@
             $i->iMember = 'abc';
             $i->ls->add($l);
             $this->assertTrue($i->save());
-
 
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(

@@ -96,7 +96,6 @@
                 ),
                 'elements' => array(
                     'description'      => 'TextArea',
-                    'owner'            => 'User',
                     'account'          => 'Account',
                     'secondaryEmail'   => 'EmailAddressInformation',
                     'secondaryAddress' => 'Address',

@@ -40,5 +40,10 @@
             }
             return null;
         }
+
+        public static function resolveArrayToLowerCase($array)
+        {
+            return unserialize(mb_strtolower(serialize($array)));
+        }
     }
 ?>

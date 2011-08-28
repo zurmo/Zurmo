@@ -143,7 +143,7 @@
                     }
                     for ($i = 0; $i < $modelCount; $i += $subset)
                     {
-                        $models = $modelClassName::getSubset($i, $subset);
+                        $models = $modelClassName::getSubset(null, $i, $subset);
                         foreach ($models as $model)
                         {
                             assert('$model instanceof SecurableItem');
@@ -500,7 +500,6 @@
                         }
                     }
                 }
-
             }
             if (!$isAdd)
             {
@@ -676,10 +675,17 @@
                         }
                     }
                     $permitableIds = array_unique($permitableIds);
-                    $sql = 'select securableitem_id
-                            from   permission
-                            where  permitable_id in (' . join(', ', $permitableIds) . ')';
-                    $securableItemIds = R::getCol($sql);
+                    if (count($permitableIds) > 0)
+                    {
+                        $sql = 'select securableitem_id
+                                from   permission
+                                where  permitable_id in (' . join(', ', $permitableIds) . ')';
+                        $securableItemIds = R::getCol($sql);
+                    }
+                    else
+                    {
+                        $securableItemIds = array();
+                    }
                     self::$countMethod($mungeTableName, $securableItemIds, $role);
                 }
                 if (!$isSet)
@@ -991,10 +997,10 @@
         {
             $mungableModelClassNames = array();
             $modules = Module::getModuleObjects();
-            foreach($modules as $module)
+            foreach ($modules as $module)
             {
                 $modelClassNames = $module::getModelClassNames();
-                foreach($modelClassNames as $modelClassName)
+                foreach ($modelClassNames as $modelClassName)
                 {
                     if (is_subclass_of($modelClassName, 'SecurableItem') &&
                         $modelClassName::hasReadPermissionsOptimization())

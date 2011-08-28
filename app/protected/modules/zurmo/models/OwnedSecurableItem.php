@@ -132,7 +132,7 @@
 
         protected function afterSave()
         {
-            if($this->hasReadPermissionsOptimization())
+            if ($this->hasReadPermissionsOptimization())
             {
                 if ($this->isNewModel)
                 {
@@ -150,7 +150,7 @@
         protected function beforeDelete()
         {
             parent::beforeDelete();
-            if($this->hasReadPermissionsOptimization())
+            if ($this->hasReadPermissionsOptimization())
             {
                 ReadPermissionsOptimizationUtil::securableItemBeingDeleted($this);
             }

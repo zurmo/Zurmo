@@ -379,14 +379,14 @@
             $compareMetadata['clauses'] = array();
             $compareMetadata['structure'] = null;
             $index = 1;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $compareMetadata['structure'] = '1 or 2 or 3 or 4 or 5 or 6';
             $this->assertEquals($compareMetadata, $adaptedMetadata);
@@ -426,14 +426,14 @@
                 'structure' => '(1 and 2) and (3 or 4 or 5 or 6 or 7 or 8)',
             );
             $index = 3;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $this->assertEquals($compareMetadata, $adaptedMetadata);
         }
@@ -541,14 +541,14 @@
             $compareMetadata['clauses'] = array();
             $compareMetadata['structure'] = '1 or 2 or 3 or 4 or 5 or 6 or 7';
             $index = 1;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $this->assertEquals($compareMetadata, $adaptedMetadata);
         }

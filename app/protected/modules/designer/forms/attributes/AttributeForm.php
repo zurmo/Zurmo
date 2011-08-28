@@ -62,7 +62,7 @@
                         }
                     }
                 }
-                if($model instanceof Item && $attributeName != null)
+                if ($model instanceof Item && $attributeName != null)
                 {
                     $this->isAudited = $model->isAttributeAudited($attributeName);
                 }

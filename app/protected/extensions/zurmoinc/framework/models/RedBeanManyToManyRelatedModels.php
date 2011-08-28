@@ -77,11 +77,11 @@
             foreach ($this->deferredRelateBeans as $bean)
             {
                 R::associate($this->bean, $bean);
-                //if (!RedBeanDatabase::isFrozen())
+                if (!RedBeanDatabase::isFrozen())
                 {
                     $types = array($this->bean->getMeta("type"), $bean->getMeta("type"));
                     sort($types);
-            	    $tableName = implode("_", $types);
+                    $tableName = implode("_", $types);
                     foreach ($types as $type)
                     {
                         $columnName = "{$type}_id";

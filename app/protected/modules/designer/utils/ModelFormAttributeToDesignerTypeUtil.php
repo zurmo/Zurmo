@@ -52,6 +52,7 @@
                         return 'Email';
 
                     case 'RedBeanModelTypeValidator':
+                    case 'TypeValidator':
                         switch ($validator->type)
                         {
                             case 'date':

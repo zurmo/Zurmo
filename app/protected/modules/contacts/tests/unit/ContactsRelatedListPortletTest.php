@@ -41,7 +41,6 @@
 
         public function testSaveAndRetrievePortlet()
         {
-
             $user = UserTestHelper::createBasicUser('Billy');
             $contacts = Contact::getByName('superContact superContactson');
             $portlet = new Portlet();

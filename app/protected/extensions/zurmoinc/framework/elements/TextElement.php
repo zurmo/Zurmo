@@ -39,7 +39,10 @@
             assert('empty($this->model->{$this->attribute}) || is_string($this->model->{$this->attribute}) ||
             is_integer($this->model->{$this->attribute})');
             $htmlOptions             = array();
+            $htmlOptions['id']       = $this->getEditableInputId();
+            $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = $this->getDisabledValue();
+            $htmlOptions             = array_merge($this->getHtmlOptions(), $htmlOptions);
             return $this->form->textField($this->model, $this->attribute, $htmlOptions);
         }
 

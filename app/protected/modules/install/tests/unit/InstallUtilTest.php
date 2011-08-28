@@ -44,8 +44,8 @@
             $this->temporaryDatabaseName = "{$this->rootUsername}_wacky";
             if ($this->rootUsername == 'zurmo')
             {
-                $this->rootUsername          = 'root';
-                $this->rootPassword          = 'wacko';
+                $this->rootUsername          = 'zurmoroot';
+                $this->rootPassword          = 'somepass';
                 $this->temporaryDatabaseName = 'wacky';
             }
         }
@@ -76,6 +76,8 @@
             $this->assertEquals($expectedVersion, $actualVersion);
             $this->assertFalse (InstallUtil::checkWebServer(array('iis'    => '5.0.0'),  $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
+            $_SERVER['SERVER_SOFTWARE'] = 'Apache';
+            $this->assertFalse (InstallUtil::checkWebServer(array('apache' => '1.0.0'),  $actualVersion));
         }
 
         public function testCheckPhp()
@@ -113,7 +115,7 @@
             $this->assertTrue  (                         InstallUtil::checkPhpMaxMemorySetting( 1   * 1024, $actualMemoryLimitBytes));
             $this->assertEquals(64 * 1024 * 1024,        $actualMemoryLimitBytes);
             ini_set('memory_limit', '64m');
-            $this->assertFalse  (    				     InstallUtil::checkPhpMaxMemorySetting(1024 * 1024 * 1024, $actualMemoryLimitBytes));
+            $this->assertFalse  (                        InstallUtil::checkPhpMaxMemorySetting(1024 * 1024 * 1024, $actualMemoryLimitBytes));
             $this->assertEquals(64 * 1024 * 1024,        $actualMemoryLimitBytes);
             $this->assertTrue  (                         InstallUtil::checkPhpMaxMemorySetting(64   * 1024 * 1024, $actualMemoryLimitBytes));
             $this->assertEquals(64 * 1024 * 1024,        $actualMemoryLimitBytes);
@@ -161,10 +163,13 @@
             InstallUtil::checkAPC('10.1.3', $expectedVersion);
             $this->assertFalse(InstallUtil::checkAPC('5.1.3',          $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue (InstallUtil::checkAPC($expectedVersion, $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue (InstallUtil::checkAPC('2.0.5',          $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
+            if (phpversion('apc') !== false)
+            {
+                $this->assertTrue (InstallUtil::checkAPC($expectedVersion, $actualVersion));
+                $this->assertEquals($expectedVersion, $actualVersion);
+                $this->assertTrue (InstallUtil::checkAPC('2.0.5',          $actualVersion));
+                $this->assertEquals($expectedVersion, $actualVersion);
+            }
         }
 
         public function testCheckTidy()
@@ -203,6 +208,44 @@
         public function testCheckRedBeanPatched()
         {
             $this->assertTrue(InstallUtil::checkRedBeanPatched());
+        }
+
+        public function testIsMbStringInstalled()
+        {
+            $this->assertTrue(InstallUtil::isMbStringInstalled());
+        }
+
+        public function testIsFileUploadsOn()
+        {
+            $this->assertTrue(InstallUtil::isFileUploadsOn());
+        }
+
+        /**
+         * Setting the upload_max_filesize doesn't seem to do anything.
+         */
+        public function testCheckPhpUploadSizeSetting()
+        {
+            $this->assertFalse  (InstallUtil::checkPhpUploadSizeSetting(1024 * 1024 * 1024, $actualUploadLimitBytes));
+            $this->assertTrue  (InstallUtil::checkPhpUploadSizeSetting(1 * 1024 * 1024, $actualUploadLimitBytes));
+        }
+
+        /**
+         * Setting the post_max_size doesn't seem to do anything.
+         */
+        public function testCheckPhpPostSizeSetting()
+        {
+            $this->assertFalse (InstallUtil::checkPhpPostSizeSetting(1024 * 1024 * 1024, $actualPostLimitBytes));
+            $this->assertTrue  (InstallUtil::checkPhpPostSizeSetting(1 * 1024 * 1024, $actualPostLimitBytes));
+        }
+
+        /**
+         * Simple test to confirm the check doesnt break.
+         */
+        public function testGetDatabaseMaxAllowedPacketsSize()
+        {
+            $minimumRequireBytes = 1;
+            $actualBytes         = null;
+            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualBytes));
         }
 
         public function testCheckMemcacheConnection()
@@ -383,8 +426,8 @@
                                        $perInstanceConfiguration);
                 $this->assertRegExp   ('/\$password         = \'wacked\';/',
                                        $perInstanceConfiguration);
-                $this->assertRegExp   ('/\'host\'   => \'memcache.jason.com\',\n' .
-                                       '                                \'port\'   => 5432,/',
+                $this->assertRegExp   ('/\'host\'   => \'memcache.jason.com\',\n' .            // Not Coding Standard
+                                       '                                \'port\'   => 5432,/', // Not Coding Standard
                                        $perInstanceConfiguration);
                 $this->assertNotRegExp('/\/\/ REMOVE THE REMAINDER/',
                                        $perInstanceConfiguration);

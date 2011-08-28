@@ -37,7 +37,7 @@
     define('MAJOR_VERSION', 0);                           // Update for marketing purposes.
     define('MINOR_VERSION', 5);                           // Update when functionality changes.
     define('PATCH_VERSION', 0);                           // Update when fixes are made that does not change functionality.
-    define('REPO_ID',       '$Revision$'); // Updated by Mercurial. Numbers like 3650 have no meaning across
+    define('REPO_ID',       '$Revision$');                // Updated by Mercurial. Numbers like 3650 have no meaning across
                                                           // clones. This tells us the actual changeset that is universally
                                                           // meaningful.
 

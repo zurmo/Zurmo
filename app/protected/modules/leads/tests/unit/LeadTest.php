@@ -83,14 +83,14 @@
             $compareMetadata['clauses'] = array();
             $compareMetadata['structure'] = null;
             $index = 1;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $compareMetadata['structure'] = '1 or 2 or 3 or 4';
             $this->assertEquals($compareMetadata, $adaptedMetadata);
@@ -130,14 +130,14 @@
                 'structure' => '(1 and 2) and (3 or 4 or 5 or 6)',
             );
             $index = 3;
-            foreach($statesToInclude as $stateId => $notUsed)
+            foreach ($statesToInclude as $stateId => $notUsed)
             {
                 $compareMetadata['clauses'][$index] = array(
                         'attributeName' => 'state',
                         'operatorType' => 'equals',
                         'value' => $stateId
                 );
-                $index ++;
+                $index++;
             }
             $this->assertEquals($compareMetadata, $adaptedMetadata);
         }
@@ -168,7 +168,7 @@
             $contact->lastName        = 'Man';
             $contact->companyName     = 'ABC Company';
             $stateIds = ContactsUtil::getContactStateDataKeyedById();
-            foreach($stateIds as $stateId => $notUsed)
+            foreach ($stateIds as $stateId => $notUsed)
             {
                 $stateToUse = ContactState::getById($stateId);
                 break;

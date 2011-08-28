@@ -48,10 +48,20 @@
             if (!$this->insideOnModified)
             {
                 $this->insideOnModified = true;
-                $this->unrestrictedSet('modifiedDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+                if (!($this->unrestrictedGet('id') < 0 &&
+                     $this->getScenario() == 'importModel' &&
+                     array_key_exists('modifiedDateTime', $this->originalAttributeValues)))
+                {
+                    $this->unrestrictedSet('modifiedDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+                }
                 if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
                 {
-                    $this->unrestrictedSet('modifiedByUser', Yii::app()->user->userModel);
+                    if (!($this->unrestrictedGet('id') < 0 &&
+                         $this->getScenario() == 'importModel' &&
+                         array_key_exists('modifiedByUser', $this->originalAttributeValues)))
+                    {
+                        $this->unrestrictedSet('modifiedByUser', Yii::app()->user->userModel);
+                    }
                 }
                 $this->insideOnModified = false;
             }
@@ -89,16 +99,25 @@
             return parent::save($runValidation, $attributeNames);
         }
 
+        /**
+         * Special handling of the import scenario. When you are importing a model, you can potentially set the
+         * created/modified user/datetime which is normally not allowed since they are read-only attributes.  This
+         * logic helps to allow for this special use case.
+         * @see RedBeanModel::beforeSave()
+         */
         protected function beforeSave()
         {
              if (parent::beforeSave())
              {
-
                 if ($this->unrestrictedGet('id') < 0)
                 {
-                    if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
+                    if ($this->getScenario() != 'importModel' ||
+                      ($this->getScenario() == 'importModel' && $this->createdByUser->id  < 0))
                     {
-                        $this->unrestrictedSet('createdByUser', Yii::app()->user->userModel);
+                        if (Yii::app()->user->userModel != null && Yii::app()->user->userModel->id > 0)
+                        {
+                            $this->unrestrictedSet('createdByUser', Yii::app()->user->userModel);
+                        }
                     }
                 }
                 $this->isNewModel = $this->id < 0;
@@ -155,8 +174,8 @@
                     array('modifiedDateTime', 'required'),
                     array('modifiedDateTime', 'readOnly'),
                     array('modifiedDateTime', 'type', 'type' => 'datetime'),
-                    array('createdByUser',   'readOnly'),
-                    array('modifiedByUser',  'readOnly'),
+                    array('createdByUser',    'readOnly'),
+                    array('modifiedByUser',   'readOnly'),
                 ),
                 'elements' => array(
                     'createdDateTime'  => 'DateTime',
@@ -194,12 +213,38 @@
             assert('$attributeName != "id"');
             $attributeModelClassName = $this->getAttributeModelClassName($attributeName);
             $metadata = static::getMetadata();
-            if(isset($metadata[$attributeModelClassName]['noAudit']) &&
+            if (isset($metadata[$attributeModelClassName]['noAudit']) &&
                 in_array($attributeName, $metadata[$attributeModelClassName]['noAudit']))
             {
                 return false;
             }
             return true;
+        }
+
+        /**
+         * Override to handle the import scenario. During import you are allowed to externally set several read-only
+         * attributes.
+         * (non-PHPdoc)
+         * @see RedBeanModel::isAllowedToSetReadOnlyAttribute()
+         */
+        public function isAllowedToSetReadOnlyAttribute($attributeName)
+        {
+            if ($this->getScenario() == 'importModel')
+            {
+                if ($this->unrestrictedGet('id') > 0)
+                {
+                    return false;
+                }
+                if ( in_array($attributeName, array('createdByUser', 'modifiedByUser', 'createdDateTime', 'modifiedDateTime')))
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            return false;
         }
     }
 ?>

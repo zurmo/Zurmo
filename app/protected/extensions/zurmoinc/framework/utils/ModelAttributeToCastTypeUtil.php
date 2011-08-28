@@ -40,11 +40,9 @@
          */
         public static function resolveValueForCast($model, $attributeName, $value)
         {
-
             $castType = self::getCastType($model, $attributeName);
             settype($value, $castType);
             return $value;
-
         }
 
         /**
@@ -98,6 +96,7 @@
                             return 'string';
 
                         case 'RedBeanModelTypeValidator':
+                        case 'TypeValidator':
                             switch ($validator->type)
                             {
                                 case 'date':

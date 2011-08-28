@@ -199,6 +199,14 @@ var designer = {
         }
         return '';
     },
+    updateLayoutElementWidth : function()
+    {
+        var total_elem_width = 0;
+        $('.layout-elements-column-container').each(function() {
+            total_elem_width += $(this).outerWidth( true );
+        });
+        $('.layout-elements').css('width', total_elem_width + 150);
+    },
     init : function (
         canAddPanels,
         canModifyPanelSettings,
@@ -228,6 +236,7 @@ var designer = {
         this.settings.panelSettingsContent          = panelSettingsContent;
         this.settings.cellSettingsContent           = cellSettingsContent;
         this.setupLayout();
+        this.updateLayoutElementWidth();
     },
     initDroppableCells : function(selector)
     {
@@ -406,6 +415,7 @@ var designer = {
             cursor: 'pointer',
             start: function(event,ui)
             {
+                $(ui.helper).attr('id', $(this).attr('id'));
                 $(ui.helper).css('height', '20px');
                 $(ui.helper).css('width', '260px');
             },
@@ -515,6 +525,7 @@ var designer = {
             $('a.ui-dialog-titlebar-close').remove();
         });
         $( "ul, li" ).disableSelection();
+
     },
     updateFlashBarAfterSaveLayout : function(data, flashBarId)
     {

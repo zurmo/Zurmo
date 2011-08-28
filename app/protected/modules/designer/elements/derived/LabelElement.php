@@ -38,13 +38,14 @@
             $content = null;
             foreach ($this->getElementViewMetadata() as $elementInformation)
             {
-                $editableTemplate = '{content}&#160;' . $elementInformation['label']. '{error}<br/>';
-                $elementclassname = $elementInformation['type'] . 'Element';
-                $element  = new $elementclassname($this->model,
-                    $elementInformation['attributeName'],
-                    $this->form,
-                    array_slice($elementInformation, 2)
-                );
+                $editableTemplate      = '{content}&#160;' . $elementInformation['label']. '{error}<br/>';
+                $elementclassname      = $elementInformation['type'] . 'Element';
+                $params                = array_slice($elementInformation, 2);
+                $params['inputPrefix'] = $this->resolveInputPrefix();
+                $element               = new $elementclassname($this->model,
+                                             $elementInformation['attributeName'],
+                                             $this->form,
+                                             $params);
                 $element->editableTemplate = $editableTemplate;
                 $content .= $element->render();
             }

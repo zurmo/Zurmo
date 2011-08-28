@@ -85,7 +85,7 @@
                 $account2CastedDown = $account2->castDown(array(array('SecurableItem', 'OwnedSecurableItem', 'Person', 'Contact')));
                 $this->fail();
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 //success
             }
@@ -99,7 +99,7 @@
                 $account2CastedDown = $account2->castDown(array(array('SecurableItem', 'OwnedSecurableItem', 'Person', 'Contact')));
                 $this->fail();
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 //success
             }

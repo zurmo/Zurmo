@@ -38,7 +38,7 @@
             $taskRandomData            = ZurmoRandomDataUtil::
                                          getRandomDataByModuleAndModelClassNames('NotesModule', 'Note');
             $description               = RandomDataUtil::getRandomValueFromArray($taskRandomData['descriptions']);
-            $occurredOnTimeStamp       = time() - (mt_rand(1,200) * 60 * 60 * 24);
+            $occurredOnTimeStamp       = time() - (mt_rand(1, 200) * 60 * 60 * 24);
             $occurredOnDateTime        = DateTimeUtil::convertTimestampToDbFormatDateTime($occurredOnTimeStamp);
             $model->description        = $description;
             $model->occurredOnDateTime = $occurredOnDateTime;

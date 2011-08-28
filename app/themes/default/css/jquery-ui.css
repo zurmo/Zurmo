@@ -244,9 +244,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  * http://jquery.org/license
  *
  * http://docs.jquery.com/UI/Progressbar#theming
+ * Zurmo added pbar-ani.gif to animate the bar
  */
-.ui-progressbar { height:2em; text-align: left; }
-.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }/*
+.ui-progressbar { height:2em; text-align: left;}
+.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; background: url(../images/pbar-ani.gif);}/*
  * jQuery UI Resizable 1.8.6
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)

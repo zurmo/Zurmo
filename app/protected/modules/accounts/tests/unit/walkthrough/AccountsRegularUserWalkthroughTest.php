@@ -169,7 +169,7 @@
             Yii::app()->user->userModel = $confused;
 
             //Load MassEdit view for the 3 accounts.
-            $selectedIds = $account1->id . ',' . $account2->id . ',' . $account3->id ;
+            $selectedIds = $account1->id . ',' . $account2->id . ',' . $account3->id ;    // Not Coding Standard
             $this->setGetArray(array('selectedIds' => $selectedIds, 'selectAll' => ''));  // Not Coding Standard
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
@@ -196,7 +196,7 @@
                 'selectAll' => '',
                 'Account_page' => 1));
             $this->setPostArray(array(
-                'Account'  => array('name' => '7799','owner' => array('id' => $super->id)),
+                'Account'  => array('name' => '7799', 'owner' => array('id' => $super->id)),
                 'MassEdit' => array('name' => 1, 'owner' => 1)
             ));
             $content = $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
@@ -215,7 +215,6 @@
             $this->assertEquals ($super,         $account1->owner);
             $this->assertEquals ($super,         $account2->owner);
             $this->assertEquals ($billy,         $account3->owner);
-
         }
     }
 ?>

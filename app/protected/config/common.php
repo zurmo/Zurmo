@@ -89,6 +89,7 @@
                 'modalListPageSize'        => 5,
                 'massEditProgressPageSize' => 5,
                 'autoCompleteListPageSize' => 5,
+                'importPageSize'           => 50,
             ),
             'performance' => array(
                 'class'          => 'application.extensions.zurmoinc.framework.components.PerformanceMeasurement',
@@ -159,6 +160,7 @@
             'application.extensions.zurmoinc.framework.portlets.*',
             'application.extensions.zurmoinc.framework.portlets.rules.*',
             'application.extensions.zurmoinc.framework.utils.*',
+            'application.extensions.zurmoinc.framework.validators.*',
             'application.extensions.zurmoinc.framework.views.*',
             'application.extensions.zurmoinc.framework.widgets.*',
         ),
@@ -190,7 +192,7 @@
 
         'params' => array(
             'redBeanVersion'    => '1.3',
-            'yiiVersion'        => '1.1.7',
+            'yiiVersion'        => '1.1.8',
             'supportedLanguages' => array(
                 'en' => 'English',
                 'es' => 'Spanish',
@@ -232,13 +234,16 @@
         $common_config['import'][] = "application.modules.$moduleName.models.*";                    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.modules.*";                   // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.*";                     // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.rules.attributes.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.policies.*";            // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.*";                // Not Coding Standard
-        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";         // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.models.*";         // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.walkthrough.*";    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.charts.*";              // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.sanitizers.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.analyzers.*";           // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.attributetypes.*";      // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.charts.*";              // Not Coding Standard
