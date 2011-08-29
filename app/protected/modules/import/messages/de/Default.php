@@ -29,5 +29,43 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Import Wizard: Step 1 of 6'
+            => '??',
+        'Import Wizard: Step 2 of 6'
+            => '??',
+        'Import Wizard: Step 3 of 6'
+            => '??',
+        'Import Wizard: Step 4 of 6'
+            => '??',
+        'Import Wizard: Step 5 of 6'
+            => '??',
+        'Import Wizard: Step 6 of 6'
+            => '??',
+        'Importing data...'
+            => '??',
+        'Invalid check box format'
+            => '??',
+        'Invalid date format'
+            => '??',
+        'Invalid datetime format'
+            => '??',
+        'Invalid email format'
+            => '??',
+        'Invalid integer format'
+            => '??',
+        'Invalid number format'
+            => '??',
+        'Invalid url format'
+            => '??',
+        'Last name specified is too large.'
+            => '??',
+        'Mapping Data'
+            => '??',
+        'Model Permissions'
+            => '??',
+        'Module To Import To'
+            => '??',
+        'Next'
+            => '??',
     );
 ?>
