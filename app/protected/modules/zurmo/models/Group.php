@@ -63,6 +63,13 @@
             return $group;
         }
 
+        public static function getById($id, $modelClassName = null)
+        {
+            $group = parent::getById($id, $modelClassName);
+            $group->setSpecialGroup();
+            return $group;
+        }
+
         protected function constructDerived($bean, $setDefaults)
         {
             assert('$bean === null || $bean instanceof RedBean_OODBBean');

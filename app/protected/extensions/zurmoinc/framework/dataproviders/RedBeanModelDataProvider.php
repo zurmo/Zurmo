@@ -33,6 +33,7 @@
         private $sortAttribute;
         private $sortDescending;
         private $searchAttributeData;
+        private $calculatedTotalItemCount;
 
         /**
          * @sortAttribute - Currently supports only non-related attributes.
@@ -62,6 +63,8 @@
         }
 
         /**
+         * If the count query results in 0, the data query will not be run and an empty array will be returned. This
+         * helps to reduce queries to the database.
          * See the yii documentation.
          */
         protected function fetchData()
@@ -69,7 +72,8 @@
             $pagination = $this->getPagination();
             if (isset($pagination))
             {
-                $pagination->setItemCount($this->getTotalItemCount());
+                $totalItemCount = $this->getTotalItemCount();
+                $pagination->setItemCount($totalItemCount);
                 $offset = $pagination->getOffset();
                 $limit  = $pagination->getLimit();
             }
@@ -77,6 +81,10 @@
             {
                 $offset = 0;
                 $limit  = null;
+            }
+            if($totalItemCount == 0)
+            {
+                return array();
             }
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($this->modelClassName);
             $where = $this->makeWhere($this->modelClassName, $this->searchAttributeData, $joinTablesAdapter);

@@ -45,7 +45,7 @@
         {
             return array(
                 'title' => Yii::t('Default', 'The Title'),
-                'url'   => Yii::t('Default', 'Rss Url'),
+                'url'   => Yii::t('Default', 'RSS URL'),
             );
         }
 

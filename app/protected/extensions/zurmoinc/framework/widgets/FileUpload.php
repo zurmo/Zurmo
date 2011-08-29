@@ -157,6 +157,7 @@ $(function () {
         url: '{$this->uploadUrl}',
         autoUpload: true,
         sequentialUploads: true,
+        maxFileSize: {$this->maxSize},
         add: function (e, data) {
             {$this->beforeUploadAction}
             {$sendAction}

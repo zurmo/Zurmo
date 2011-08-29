@@ -85,7 +85,6 @@
             }
             else
             {
-                $content = $this->tidy($content);
                 if (SHOW_PERFORMANCE)
                 {
                     $endTime      = microtime(true);
@@ -95,6 +94,10 @@
             }
             if (SHOW_PERFORMANCE)
             {
+                foreach(Yii::app()->performance->getTimings() as $id => $time)
+                {
+                    $performanceMessage .= 'Timing: ' . $id . ' total time: ' . number_format(($time), 3) . "</br>";
+                }
                 $content .= '<div class="performance-info">' . $performanceMessage . '</div>';
             }
             if (YII_DEBUG && Yii::app()->isApplicationInstalled())

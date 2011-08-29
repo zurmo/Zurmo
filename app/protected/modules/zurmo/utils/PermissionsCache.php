@@ -36,6 +36,8 @@
     {
         private static $securableItemToPermitableToCombinedPermissions = array();
 
+        private static $namedSecurableItemActualPermissions = array();
+
         public static function getCombinedPermissions(SecurableItem $securableItem, Permitable $permitable)
         {
             if ($securableItem->getClassId('SecurableItem') == 0 ||
@@ -131,6 +133,60 @@
             // them so php does not need to explicitly cache them here.
         }
 
+        /**
+         * Cache the actual permissions for a permitable against a named securable item.  The actual permissions against
+         * a named securable item do not change very often making this cache useful to speed up performance.
+         * @param string $namedSecurableItemName
+         * @param object $permitable
+         * @param array $actualPermissions
+         */
+        public static function cacheNamedSecurableItemActualPermissions($namedSecurableItemName, $permitable, $actualPermissions)
+        {
+            assert('is_string($namedSecurableItemName)');
+            assert('$permitable instanceof Permitable');
+            assert('is_array($actualPermissions)');
+            $cacheKeyName = $namedSecurableItemName . get_class($permitable) . $permitable->id . 'ActualPermissions';
+            if (PHP_CACHING_ON)
+            {
+                self::$namedSecurableItemActualPermissions[$cacheKeyName] = $actualPermissions;
+            }
+            if (MEMCACHE_ON && Yii::app()->cache !== null)
+            {
+                Yii::app()->cache->set('P:' . $cacheKeyName, serialize($actualPermissions));
+            }
+        }
+
+        /**
+         * Given the name of a named securable item, return the cached entry if available.
+         * @param string $namedSecurableItemName
+         * @param object $permitable
+         * @throws NotFoundException
+         */
+        public static function getNamedSecurableItemActualPermissions($namedSecurableItemName, $permitable)
+        {
+            assert('is_string($namedSecurableItemName)');
+            assert('$permitable instanceof Permitable');
+            $cacheKeyName = $namedSecurableItemName . get_class($permitable) . $permitable->id . 'ActualPermissions';
+            if (PHP_CACHING_ON)
+            {
+                if (isset(self::$namedSecurableItemActualPermissions[$cacheKeyName]))
+                {
+                    return self::$namedSecurableItemActualPermissions[$cacheKeyName];
+                }
+            }
+            if (MEMCACHE_ON && Yii::app()->cache !== null)
+            {
+                $serializedData = Yii::app()->cache->get('P:' . $cacheKeyName);
+                if ($serializedData !== false)
+                {
+                    $actualPermissions = unserialize($serializedData);
+                    assert('is_array($actualPermissions)');
+                    return $actualPermissions;
+                }
+            }
+            throw new NotFoundException();
+        }
+
         // The $forgetDbLevel cache is for testing.
         public static function forgetSecurableItem(SecurableItem $securableItem, $forgetDbLevelCache = true)
         {
@@ -164,6 +220,7 @@
             if (PHP_CACHING_ON)
             {
                 self::$securableItemToPermitableToCombinedPermissions = array();
+                self::$namedSecurableItemActualPermissions = array();
             }
 
             if (SECURITY_OPTIMIZED && DB_CACHING_ON && $forgetDbLevelCache)

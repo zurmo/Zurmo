@@ -26,22 +26,36 @@
 
     class CustomFieldData extends RedBeanModel
     {
+        /**
+         * Given a name, get the custom field data model.  Attempts to retrieve from cache, if it is not available,
+         * will attempt to retrieve from persistent storage, cache the model, and return.
+         * @param string $name
+         */
         public static function getByName($name)
         {
-            assert('is_string($name)');
-            assert('$name != ""');
-            $bean = R::findOne('customfielddata', "name = '$name'");
-            assert('$bean === false || $bean instanceof RedBean_OODBBean');
-            if ($bean === false)
+            try
             {
-                $customFieldData = new CustomFieldData();
-                $customFieldData->name = $name;
-                $customFieldData->serializedData = serialize(array());
-                // An unused custom field data does not present as needing saving.
-                $customFieldData->setNotModified();
-                return $customFieldData;
+                return ZurmoGeneralCache::getEntry('CustomFieldData' . $name);
             }
-            return self::makeModel($bean);
+            catch (NotFoundException $e)
+            {
+                assert('is_string($name)');
+                assert('$name != ""');
+                $bean = R::findOne('customfielddata', "name = '$name'");
+                assert('$bean === false || $bean instanceof RedBean_OODBBean');
+                if ($bean === false)
+                {
+                    $customFieldData = new CustomFieldData();
+                    $customFieldData->name = $name;
+                    $customFieldData->serializedData = serialize(array());
+                    // An unused custom field data does not present as needing saving.
+                    $customFieldData->setNotModified();
+                    return $customFieldData;
+                }
+                $model = self::makeModel($bean);
+                ZurmoGeneralCache::cacheEntry('CustomFieldData' . $name, $model);
+                return $model;
+            }
         }
 
         public function __toString()
@@ -71,6 +85,20 @@
                 )
             );
             return $metadata;
+        }
+
+        /**
+         * Any changes to the model must be re-cached.
+         * @see RedBeanModel::save()
+         */
+        public function save($runValidation = true, array $attributeNames = null)
+        {
+            $saved = parent::save($runValidation, $attributeNames);
+            if ($saved)
+            {
+                ZurmoGeneralCache::cacheEntry('CustomFieldData' . $this->name, $this);
+            }
+            return $saved;
         }
     }
 ?>

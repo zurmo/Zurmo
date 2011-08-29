@@ -24,52 +24,31 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class PerformanceMeasurement extends CApplicationComponent
+    class DropDownAttributeFormTest extends BaseTest
     {
-        protected $startTime;
-
-        /**
-         * Can be used during development to benchmark certain areas of code for how long they take to execute.  It is
-         * recommeded to use something like xdebug, although this can be helpful as well.
-         * @var array
-         */
-        protected $timings = array();
-
-        public function startClock()
+        public static function setUpBeforeClass()
         {
-            $this->startTime = microtime(true);
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
 
-        public function endClockAndGet()
+        public function testValidateCustomFieldDataData()
         {
-            $endTime = microtime(true);
-            return $endTime - $this->startTime;
-        }
+            //First test a clean array with no errors.
+            $form = new DropDownAttributeForm();
+            $form->customFieldDataData = array('a','b','c');
+            $form->validateCustomFieldDataData('customFieldDataData', null);
+            $errors = $form->getErrors();
+            $this->assertEquals(0, count($errors));
 
-        /**
-         * Given a time in seconds and an indentifier, add the time to the existing timings array data. This will add to
-         * the existing value.
-         * @param string $identifer
-         * @param number $time
-         */
-        public function addTimingById($identifer, $time)
-        {
-            if(isset($this->timings[$identifer]))
-            {
-                $this->timings[$identifer] = $this->timings[$identifer] + $time;
-            }
-            else
-            {
-                $this->timings[$identifer] = $time;
-            }
-        }
-
-        /**
-         * @return array of timings data.
-         */
-        public function getTimings()
-        {
-            return $this->timings;
+            //First test a duplicate value that is of a different case and one of the same case
+            $form = new DropDownAttributeForm();
+            $form->customFieldDataData = array('a','b','c', 'C', 'b');
+            $form->validateCustomFieldDataData('customFieldDataData', null);
+            $errors = $form->getErrors();
+            $this->assertEquals(1, count($errors));
+            $compareData = array(0 => 'Each item must be uniquely named and the following are not: C, b');
+            $this->assertEquals($compareData, $errors['customFieldDataData']);
         }
     }
 ?>

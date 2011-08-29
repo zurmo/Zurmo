@@ -124,5 +124,24 @@
             }
             return true;
         }
+
+        /**
+         * Override to handle everyone and super admin special groups since they cannot be edited.
+         */
+        protected function resolveElementInformationDuringFormLayoutRender(& $elementInformation)
+        {
+            if ($elementInformation['attributeName'] =='name' &&
+               ($this->model->isEveryone || $this->model->isSuperAdministrators))
+            {
+                $elementInformation['disabled']          = true;
+            }
+
+            if ($elementInformation['attributeName'] =='group' &&
+               ($this->model->isEveryone || $this->model->isSuperAdministrators))
+            {
+                    $elementInformation['attributeName'] = null;
+                    $elementInformation['type']          = 'Null';
+            }
+        }
     }
 ?>

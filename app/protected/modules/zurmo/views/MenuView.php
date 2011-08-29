@@ -33,9 +33,23 @@
          */
         const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = false;
 
+        /**
+         * Will attemp to get the menu items from cache, otherwise from the appropriate storage, and cache the information
+         * for the next call to this method.
+         * @see View::renderContent()
+         */
         protected function renderContent()
         {
-            $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
+            try
+            {
+                $items = ZurmoGeneralCache::getEntry('MenuViewItems');
+            }
+            catch (NotFoundException $e)
+            {
+                $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
+                ZurmoGeneralCache::cacheEntry('MenuViewItems', $items);
+            }
+
             if (count($items) == 0)
             {
                 return null;

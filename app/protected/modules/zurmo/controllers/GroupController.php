@@ -77,9 +77,11 @@
 
         public function actionEdit($id)
         {
+            $group = Group::getById(intval($id));
+            $this->resolveCanGroupBeEdited($group);
             $view = new GroupsPageView($this,
                 $this->makeTitleBarAndEditAndDetailsView(
-                            $this->attemptToSaveModelFromPost(Group::getById(intval($id))), 'Edit'));
+                            $this->attemptToSaveModelFromPost($group), 'Edit'));
             echo $view->render();
         }
 
@@ -274,5 +276,37 @@
             }
             return $model;
         }
+
+        /**
+         * Override to make sure the correct module label is used in the titlebar.
+         * @see Controller::makeTitleBarAndEditAndDetailsView()
+         */
+        protected function makeTitleBarAndEditAndDetailsView($model, $renderType,
+                                $titleBarAndEditViewClassName = 'TitleBarAndEditAndDetailsView')
+        {
+            assert('$model != null');
+            assert('$renderType == "Edit"');
+            assert('$titleBarAndEditViewClassName != null && is_string($titleBarAndEditViewClassName)');
+            return new $titleBarAndEditViewClassName(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $model,
+                GroupsModule::getModuleLabelByTypeAndLanguage('Plural'),
+                $renderType
+            );
+        }
+
+        protected function resolveCanGroupBeEdited($group)
+        {
+            if (!$group->isEveryone && !$group->isSuperAdministrators)
+            {
+                return;
+            }
+            $messageView = new AccessFailureView();
+            $view = new AccessFailurePageView($messageView);
+            echo $view->render();
+            Yii::app()->end(0, false);
+        }
     }
+
 ?>

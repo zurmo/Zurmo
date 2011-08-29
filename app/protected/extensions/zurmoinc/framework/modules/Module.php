@@ -416,6 +416,8 @@
 
         /**
          * Returns metadata for the module.
+         * Does caching only if the user is not specified. This can potentially be changed to cache when the user is
+         * specified but must be investigated further before doing this.
          * @see getDefaultMetadata()
          * @param $user The current user.
          * @returns An array of metadata.
@@ -423,10 +425,24 @@
         public static function getMetadata(User $user = null)
         {
             $className = get_called_class();
+            if($user == null)
+            {
+                try
+                {
+                    return ZurmoGeneralCache::getEntry($className . 'Metadata');
+                }
+                catch (NotFoundException $e)
+                {
+                }
+            }
             $metadata = MetadataUtil::getMetadata($className, $user);
             if (YII_DEBUG)
             {
                 $className::assertMetadataIsValid($metadata);
+            }
+            if($user == null)
+            {
+                ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
             }
             return $metadata;
         }
@@ -444,6 +460,10 @@
                 self::assertMetadataIsValid($metadata);
             }
             MetadataUtil::setMetadata($className, $metadata, $user);
+            if($user == null)
+            {
+                ZurmoGeneralCache::forgetEntry($className . 'Metadata');
+            }
         }
 
         /**

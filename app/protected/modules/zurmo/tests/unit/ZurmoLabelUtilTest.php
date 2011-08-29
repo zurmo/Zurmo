@@ -42,7 +42,7 @@
             $metadata['global']['singularModuleLabels'] = array('en' => 'company');
             $metadata['global']['pluralModuleLabels']   = array('en' => 'companies');
             AccountsModule::setMetadata($metadata);
-            Yii::app()->languageHelper->resetModuleLabelTranslationParameters();
+            Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
             $params = LabelUtil::getTranslationParamsForAllModules();
             $this->assertEquals('Company',  $params['AccountsModuleSingularLabel']);
             $this->assertEquals('company',  $params['AccountsModuleSingularLowerCaseLabel']);

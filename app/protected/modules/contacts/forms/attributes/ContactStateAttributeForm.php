@@ -59,7 +59,7 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'State');
+            return yii::t('Default', 'Contact Stage');
         }
 
         public static function getAttributeTypeDisplayDescription()

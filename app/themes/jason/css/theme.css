@@ -125,7 +125,7 @@
     width: 100%;
     border-collapse: collapse;
     color: #2e7db2; /* theme, highlight text */
-    margin-bottom: 2px;
+    margin-bottom: 10px;
 }
 
 .MetadataView table th

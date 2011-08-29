@@ -15,6 +15,7 @@ var juiPortlets = {
         moduleId: null,
         saveUrl: null,
         columnsClass : null,
+        removalMessage: 'This portlet will be removed, ok?',
         widgetSelector: '.juiportlet-widget',
         handleSelector: '.juiportlet-widget-head',
         contentSelector: '.juiportlet-widget-content',
@@ -26,15 +27,17 @@ var juiPortlets = {
         }
     },
 
-    init : function (uniqueLayoutId, moduleId, saveUrl, csrfTokenName, csrfToken, columnsClass, collapsible, movable) {
-        this.uniqueLayoutId = uniqueLayoutId;
-        this.moduleId       = moduleId;
-        this.saveUrl        = saveUrl;
-        this.csrfTokenName  = csrfTokenName;
-        this.csrfToken      = csrfToken;
-        this.columnsClass   = columnsClass;
+    init : function (uniqueLayoutId, moduleId, saveUrl, csrfTokenName, csrfToken, columnsClass, collapsible, movable,
+                     removalMessage) {
+        this.uniqueLayoutId 					= uniqueLayoutId;
+        this.moduleId       					= moduleId;
+        this.saveUrl        					= saveUrl;
+        this.csrfTokenName 			 			= csrfTokenName;
+        this.csrfToken      					= csrfToken;
+        this.columnsClass   					= columnsClass;
         this.settings.widgetDefault.collapsible = collapsible;
-        this.settings.widgetDefault.movable = movable;
+        this.settings.widgetDefault.movable 	= movable;
+        this.removalMessage 				    = removalMessage;
         this.addWidgetControls();
         if(movable)
         {
@@ -64,7 +67,7 @@ var juiPortlets = {
                     $('#' + this.id).find(settings.handleSelector).find(':contains("CLOSE")').mousedown(function (e) {
                         e.stopPropagation();
                     }).click(function () {
-                        if(confirm('This widget will be removed, ok?')) {
+                        if(confirm(juiPortlets.removalMessage)) {
                             $(this).parents(settings.widgetSelector).animate({
                                 opacity: 0
                             },function () {

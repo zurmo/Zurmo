@@ -41,12 +41,12 @@
             $this->rootUsername          = Yii::app()->db->username;
             $this->rootPassword          = Yii::app()->db->password;
             $this->existingDatabaseName  = $matches[2];
-            $this->temporaryDatabaseName = "{$this->rootUsername}_wacky";
+            $this->temporaryDatabaseName = "zurmo_wacky";
             if ($this->rootUsername == 'zurmo')
             {
                 $this->rootUsername          = 'zurmoroot';
                 $this->rootPassword          = 'somepass';
-                $this->temporaryDatabaseName = 'wacky';
+                $this->temporaryDatabaseName = 'zurmo_wacky';
             }
         }
 

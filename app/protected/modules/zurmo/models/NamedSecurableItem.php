@@ -26,19 +26,35 @@
 
     class NamedSecurableItem extends SecurableItem
     {
+        /**
+         * Given a name, check the cache if the model is cached and return. Otherwise check the database for the record,
+         * cache and return this model.
+         * @param string $name
+         */
         public static function getByName($name)
         {
             assert('is_string($name)');
             assert('$name != ""');
-            $bean = R::findOne('namedsecurableitem', "name = '$name'");
-            assert('$bean === false || $bean instanceof RedBean_OODBBean');
-            if ($bean === false)
+            try
             {
-                $item = new NamedSecurableItem();
-                $item->unrestrictedSet('name', $name);
-                return $item;
+                return ZurmoGeneralCache::getEntry('NamedSecurableItem' . $name);
             }
-            return self::makeModel($bean);
+            catch (NotFoundException $e)
+            {
+                $bean = R::findOne('namedsecurableitem', "name = '$name'");
+                assert('$bean === false || $bean instanceof RedBean_OODBBean');
+                if ($bean === false)
+                {
+                    $model = new NamedSecurableItem();
+                    $model->unrestrictedSet('name', $name);
+                }
+                else
+                {
+                    $model = self::makeModel($bean);
+                }
+            }
+            ZurmoGeneralCache::cacheEntry('NamedSecurableItem' . $name, $model);
+            return $model;
         }
 
         public static function getDefaultMetadata()
@@ -61,6 +77,65 @@
         public static function isTypeDeletable()
         {
             return true;
+        }
+
+        /**
+         * Any changes to the model must be re-cached.
+         * @see RedBeanModel::save()
+         */
+        public function save($runValidation = true, array $attributeNames = null)
+        {
+            $saved = parent::save($runValidation, $attributeNames);
+            if ($saved)
+            {
+                ZurmoGeneralCache::cacheEntry('NamedSecurableItem' . $this->name, $this);
+            }
+            return $saved;
+        }
+
+        /**
+         * Override to add caching capabilities of this information.
+         * @see SecurableItem::getActualPermissions()
+         */
+        public function getActualPermissions($permitable = null)
+        {
+            assert('$permitable === null || $permitable instanceof Permitable');
+            if ($permitable === null)
+            {
+                $permitable = Yii::app()->user->userModel;
+                if (!$permitable instanceof User)
+                {
+                    throw new NoCurrentUserSecurityException();
+                }
+            }
+            if($this->name != null)
+            {
+                try
+                {
+                    return PermissionsCache::getNamedSecurableItemActualPermissions($this->name, $permitable);
+                }
+                catch (NotFoundException $e)
+                {
+                    $actualPermissions = parent::getActualPermissions($permitable);
+                }
+                PermissionsCache::cacheNamedSecurableItemActualPermissions($this->name, $permitable, $actualPermissions);
+                return $actualPermissions;
+            }
+            return parent::getActualPermissions($permitable);
+        }
+
+        /**
+         * Override for the 'name' attribute since 'name' can be retrieved regardless of permissions of the user asking
+         * for it.
+         * @see SecurableItem::__get()
+         */
+        public function __get($attributeName)
+        {
+            if ($attributeName == 'name')
+            {
+                return $this->unrestrictedGet('name');
+            }
+            return parent::__get($attributeName);
         }
     }
 ?>

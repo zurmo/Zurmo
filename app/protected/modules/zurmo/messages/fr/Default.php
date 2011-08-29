@@ -231,7 +231,7 @@
             => 'La permission de sécurité de vue liste a été reconstruite.',
         'Not Set'
             => 'Défaut',
-        'Not Set - Ad Hoc / Owner'
+        'Not Set - Ad-hoc / Owner'
             => 'Défaut - de circonstance / propriétaire',
         'Office Fax'
             => 'Fax de Bureau',

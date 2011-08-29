@@ -29,8 +29,6 @@
      */
     class ZurmoLanguageHelper extends CApplicationComponent
     {
-        private $_moduleLabelTranslationParameters;
-
         /**
          * Sets active language.
          */
@@ -38,6 +36,7 @@
         {
             assert('is_string($language)');
             Yii::app()->user->setState('language', $language);
+            $this->flushModuleLabelTranslationParameters();
         }
 
         /**
@@ -55,6 +54,7 @@
                 {
                     $language = $this->getForCurrentUser();
                     Yii::app()->user->setState('language', $language);
+                    $this->flushModuleLabelTranslationParameters();
                 }
             }
             Yii::app()->language = $language;
@@ -93,37 +93,41 @@
          * Module translation parameters are used by Yii::t as the third parameter to define the module labels.  These
          * parameter values resolve any custom module label names that have been specified in the module metadata.
          * @return array of key/value module label pairings.
-         * TODO: cache results after first retrieval on each page load. Potentially across mulitple page loads
+         * Caches results to improve performance.
          */
         public function getAllModuleLabelsAsTranslationParameters()
         {
-            if ($this->_moduleLabelTranslationParameters != null)
+            try
             {
-                return $this->_moduleLabelTranslationParameters;
+                $moduleLabelTranslationParameters = ZurmoGeneralCache::getEntry('moduleLabelTranslationParameters');
+                return $moduleLabelTranslationParameters;
             }
-            $modules = Module::getModuleObjects();
-            $params  = array();
-            foreach ($modules as $module)
+            catch (NotFoundException $e)
             {
-                $params[get_class($module) . 'SingularLabel']
-                    = $module::getModuleLabelByTypeAndLanguage('Singular');
-                $params[get_class($module) . 'SingularLowerCaseLabel']
-                    = $module::getModuleLabelByTypeAndLanguage('SingularLowerCase');
-                $params[get_class($module) . 'PluralLabel']
-                    = $module::getModuleLabelByTypeAndLanguage('Plural');
-                $params[get_class($module) . 'PluralLowerCaseLabel']
-                    = $module::getModuleLabelByTypeAndLanguage('PluralLowerCase');
+                $modules = Module::getModuleObjects();
+                $params  = array();
+                foreach ($modules as $module)
+                {
+                    $params[get_class($module) . 'SingularLabel']
+                        = $module::getModuleLabelByTypeAndLanguage('Singular');
+                    $params[get_class($module) . 'SingularLowerCaseLabel']
+                        = $module::getModuleLabelByTypeAndLanguage('SingularLowerCase');
+                    $params[get_class($module) . 'PluralLabel']
+                        = $module::getModuleLabelByTypeAndLanguage('Plural');
+                    $params[get_class($module) . 'PluralLowerCaseLabel']
+                        = $module::getModuleLabelByTypeAndLanguage('PluralLowerCase');
+                }
+                ZurmoGeneralCache::cacheEntry('moduleLabelTranslationParameters', $params);
+                return $params;
             }
-            $this->_moduleLabelTranslationParameters = $params;
-            return $params;
         }
 
         /**
          * Used by tests to reset value between tests.
          */
-        public function resetModuleLabelTranslationParameters()
+        public function flushModuleLabelTranslationParameters()
         {
-            $this->_moduleLabelTranslationParameters = null;
+            ZurmoGeneralCache::forgetEntry('moduleLabelTranslationParameters');
         }
     }
 ?>

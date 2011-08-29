@@ -785,25 +785,39 @@
         }
 
         /**
-         * Returns metadata for the model.
+         * Returns metadata for the model.  Attempts to cache metadata, if it is not already cached.
          * @see getDefaultMetadata()
          * @returns An array of metadata.
          */
         public static function getMetadata()
         {
-            $className = get_called_Class();
-            $defaultMetadata = $className::getDefaultMetadata();
-            $metadata = array();
-            foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, 'RedBeanModel')) as $modelClassName)
+            try
             {
-                if ($modelClassName::canSaveMetadata())
+                return ZurmoGeneralCache::getEntry(get_called_class() . 'Metadata');
+            }
+            catch (NotFoundException $e)
+            {
+                $className = get_called_Class();
+                $defaultMetadata = $className::getDefaultMetadata();
+                $metadata = array();
+                foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, 'RedBeanModel')) as $modelClassName)
                 {
-                    try
+                    if ($modelClassName::canSaveMetadata())
                     {
-                        $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
-                        $metadata[$modelClassName] = unserialize($globalMetadata->serializedMetadata);
+                        try
+                        {
+                            $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
+                            $metadata[$modelClassName] = unserialize($globalMetadata->serializedMetadata);
+                        }
+                        catch (NotFoundException $e)
+                        {
+                            if (isset($defaultMetadata[$modelClassName]))
+                            {
+                                $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
+                            }
+                        }
                     }
-                    catch (NotFoundException $e)
+                    else
                     {
                         if (isset($defaultMetadata[$modelClassName]))
                         {
@@ -811,19 +825,14 @@
                         }
                     }
                 }
-                else
+                if (YII_DEBUG)
                 {
-                    if (isset($defaultMetadata[$modelClassName]))
-                    {
-                        $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
-                    }
+                    self::assertMetadataIsValid($metadata);
                 }
+                ZurmoGeneralCache::cacheEntry(get_called_class() . 'Metadata', $metadata);
+                return $metadata;
             }
-            if (YII_DEBUG)
-            {
-                self::assertMetadataIsValid($metadata);
-            }
-            return $metadata;
+
         }
 
         /**
@@ -876,6 +885,7 @@
                 }
             }
             RedBeanModelsCache::forgetAllByModelType(get_called_class());
+            ZurmoGeneralCache::forgetEntry(get_called_class() . 'Metadata');
         }
 
         /**
@@ -1110,7 +1120,7 @@
                                 }
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
                                 {
-                                $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
+                                    $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
                                     if ($relatedBean !== null && $relatedBean->id > 0)
                                     {
                                         $relatedModel = self::makeModel($relatedBean, $relatedModelClassName, true);
@@ -2597,6 +2607,7 @@
             $modelIdentifier = $modelClassName . strval($bean->id);
             try
             {
+
                 return RedBeanModelsCache::getModel($modelIdentifier);
             }
             catch (NotFoundException $e)

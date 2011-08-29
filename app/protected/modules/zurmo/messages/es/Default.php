@@ -231,7 +231,7 @@
             => '??',
         'Not Set'
             => '??',
-        'Not Set - Ad Hoc / Owner'
+        'Not Set - Ad-hoc / Owner'
             => '??',
         'Office Fax'
             => 'Fax de la Oficina',

@@ -207,8 +207,8 @@
             {
                 $script .= "null, null, ";
             }
-            $script .= "'" .  $columnsClass . "', '" . $this->collapsible . "', '" . $this->movable . "'";
-            $script .= ");";
+            $script .= "'" .  $columnsClass . "', '" . $this->collapsible . "', '" . $this->movable . "', ";
+            $script .= "'" . Yii::t('Default', 'This portlet will be removed, ok?') . "');";
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $script);
             $content = "";
             $content .= "<div class=\"juiportlet-columns\"> \n";

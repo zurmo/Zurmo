@@ -111,7 +111,17 @@
             $this->attemptToValidateAjaxFromPost($user, 'User');
             if ($user == Yii::app()->user->userModel)
             {
-                $redirectUrlParams = array($this->getId() . '/details', 'id' => $user->id, $user->language);
+                if(isset($_POST['User']) &&
+                   !empty($_POST['User']['language']) &&
+                   $_POST['User']['language'] != $user->language)
+               {
+                   $lang = $_POST['User']['language'];
+               }
+               else
+               {
+                   $lang = null;
+               }
+                $redirectUrlParams = array($this->getId() . '/details', 'id' => $user->id, 'lang' => $lang);
             }
             else
             {
