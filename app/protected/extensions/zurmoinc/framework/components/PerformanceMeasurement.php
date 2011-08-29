@@ -52,7 +52,7 @@
          * @param string $identifer
          * @param number $time
          */
-        public function addTimeById($identifer, $time)
+        public function addTimingById($identifer, $time)
         {
             if(isset($this->timings[$identifer]))
             {

@@ -713,13 +713,13 @@
         {
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
-            ForgetAllCacheUtil::forgetAllCaches();
             $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,
                                             $form->databaseName,
                                             $form->databaseUsername,
                                             $form->databasePassword);
+            ForgetAllCacheUtil::forgetAllCaches();
             $messageStreamer->add(Yii::t('Default', 'Dropping existing tables.'));
             InstallUtil::dropAllTables();
             $messageStreamer->add(Yii::t('Default', 'Creating super user.'));
