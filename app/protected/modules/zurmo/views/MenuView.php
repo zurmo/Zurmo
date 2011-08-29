@@ -42,12 +42,12 @@
         {
             try
             {
-                $items = ZurmoGeneralCache::getEntry('MenuViewItems');
+                $items = GeneralCache::getEntry('MenuViewItems');
             }
             catch (NotFoundException $e)
             {
                 $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
-                ZurmoGeneralCache::cacheEntry('MenuViewItems', $items);
+                GeneralCache::cacheEntry('MenuViewItems', $items);
             }
 
             if (count($items) == 0)

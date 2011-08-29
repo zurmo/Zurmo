@@ -35,6 +35,6 @@
         {
             RedBeanModelsCache::forgetAll();
             PermissionsCache::forgetAll();
-            ZurmoGeneralCache::forgetAll();
+            GeneralCache::forgetAll();
         }
     }

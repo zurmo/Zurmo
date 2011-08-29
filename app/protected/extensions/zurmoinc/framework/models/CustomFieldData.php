@@ -35,7 +35,7 @@
         {
             try
             {
-                return ZurmoGeneralCache::getEntry('CustomFieldData' . $name);
+                return GeneralCache::getEntry('CustomFieldData' . $name);
             }
             catch (NotFoundException $e)
             {
@@ -53,7 +53,7 @@
                     return $customFieldData;
                 }
                 $model = self::makeModel($bean);
-                ZurmoGeneralCache::cacheEntry('CustomFieldData' . $name, $model);
+                GeneralCache::cacheEntry('CustomFieldData' . $name, $model);
                 return $model;
             }
         }
@@ -96,7 +96,7 @@
             $saved = parent::save($runValidation, $attributeNames);
             if ($saved)
             {
-                ZurmoGeneralCache::cacheEntry('CustomFieldData' . $this->name, $this);
+                GeneralCache::cacheEntry('CustomFieldData' . $this->name, $this);
             }
             return $saved;
         }

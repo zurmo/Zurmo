@@ -67,7 +67,7 @@
             {
                 try
                 {
-                    return ZurmoGeneralCache::getEntry($className . 'Metadata');
+                    return GeneralCache::getEntry($className . 'Metadata');
                 }
                 catch (NotFoundException $e)
                 {
@@ -80,7 +80,7 @@
             }
             if($user == null)
             {
-                ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
+                GeneralCache::cacheEntry($className . 'Metadata', $metadata);
             }
             return $metadata;
         }
@@ -100,7 +100,7 @@
             MetadataUtil::setMetadata($className, $metadata, $user);
             if($user == null)
             {
-                ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
+                GeneralCache::cacheEntry($className . 'Metadata', $metadata);
             }
         }
 

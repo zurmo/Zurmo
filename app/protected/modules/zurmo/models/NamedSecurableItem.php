@@ -37,7 +37,7 @@
             assert('$name != ""');
             try
             {
-                return ZurmoGeneralCache::getEntry('NamedSecurableItem' . $name);
+                return GeneralCache::getEntry('NamedSecurableItem' . $name);
             }
             catch (NotFoundException $e)
             {
@@ -53,7 +53,7 @@
                     $model = self::makeModel($bean);
                 }
             }
-            ZurmoGeneralCache::cacheEntry('NamedSecurableItem' . $name, $model);
+            GeneralCache::cacheEntry('NamedSecurableItem' . $name, $model);
             return $model;
         }
 
@@ -88,7 +88,7 @@
             $saved = parent::save($runValidation, $attributeNames);
             if ($saved)
             {
-                ZurmoGeneralCache::cacheEntry('NamedSecurableItem' . $this->name, $this);
+                GeneralCache::cacheEntry('NamedSecurableItem' . $this->name, $this);
             }
             return $saved;
         }

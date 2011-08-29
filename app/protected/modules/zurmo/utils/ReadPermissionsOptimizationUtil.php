@@ -982,12 +982,12 @@
         {
             try
             {
-                return ZurmoGeneralCache::getEntry('mungableModelClassNames');
+                return GeneralCache::getEntry('mungableModelClassNames');
             }
             catch (NotFoundException $e)
             {
                 $mungableClassNames = self::findMungableModelClassNames();
-                ZurmoGeneralCache::cacheEntry('mungableModelClassNames', $mungableClassNames);
+                GeneralCache::cacheEntry('mungableModelClassNames', $mungableClassNames);
                 return $mungableClassNames;
             }
         }
