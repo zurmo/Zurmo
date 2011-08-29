@@ -131,7 +131,9 @@
                     // for what the optimized way is doing.
                     $mungeTableName  = self::getMungeTableName($modelClassName);
                     self::recreateTable($mungeTableName);
-                    $modelCount = $modelClassName::getCount();
+                    //Specifically call RedBeanModel to avoid the use of the security in OwnedSecurableItem since for
+                    //rebuild it needs to look at all models regardless of permissions of the current user.
+                    $modelCount = RedBeanModel::getCount(null, null, $modelClassName);
                     $subset = intval($modelCount / 20);
                     if ($subset < 100)
                     {
@@ -143,12 +145,13 @@
                     }
                     for ($i = 0; $i < $modelCount; $i += $subset)
                     {
-                        $models = $modelClassName::getSubset(null, $i, $subset);
+                        //Specifically call RedBeanModel to avoid the use of the security in OwnedSecurableItem since for
+                        //rebuild it needs to look at all models regardless of permissions of the current user.
+                        $models = RedBeanModel::getSubset(null, $i, $subset, null, null, $modelClassName);
                         foreach ($models as $model)
                         {
                             assert('$model instanceof SecurableItem');
                             $securableItemId = $model->getClassId('SecurableItem');
-
                             $users = User::getAll();
                             foreach ($users as $user)
                             {
@@ -159,7 +162,6 @@
                                     self::incrementCount($mungeTableName, $securableItemId, $user);
                                 }
                             }
-
                             $groups = Group::getAll();
                             foreach ($groups as $group)
                             {
@@ -177,11 +179,11 @@
                                     }
                                     foreach ($group->groups as $subGroup)
                                     {
-                                        self::readPermissionsAddedToSecurableItem($model, $subGroup);
+                                        self::processNestedGroupWhereParentHasReadPermissionOnSecurableItem(
+                                              $mungeTableName, $securableItemId, $subGroup);
                                     }
                                 }
                             }
-
                             $roles = Role::getAll();
                             foreach ($roles as $role)
                             {
@@ -202,6 +204,26 @@
                     ZurmoDatabaseCompatibilityUtil::
                         callProcedureWithoutOuts("rebuild('$modelTableName', '$mungeTableName')");
                 }
+            }
+        }
+
+        protected static function processNestedGroupWhereParentHasReadPermissionOnSecurableItem(
+                                  $mungeTableName, $securableItemId, Group $group)
+        {
+            assert('is_string($mungeTableName) && $mungeTableName != ""');
+            assert('is_int($securableItemId) && $securableItemId > 0');
+            self::incrementCount($mungeTableName, $securableItemId, $group);
+            foreach ($group->users as $user)
+            {
+                if ($user->role->id > 0)
+                {
+                    self::incrementParentRolesCounts($mungeTableName, $securableItemId, $user->role);
+                }
+            }
+            foreach ($group->groups as $subGroup)
+            {
+                self::processNestedGroupWhereParentHasReadPermissionOnSecurableItem(
+                      $mungeTableName, $securableItemId, $subGroup);
             }
         }
 

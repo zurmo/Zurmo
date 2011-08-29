@@ -615,7 +615,6 @@
                                         array('A3', 'G1', 1),
                                     ),
                                     self::getAccountMungeRows());
-
                 $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
 
                 $u2->role = $r4;
