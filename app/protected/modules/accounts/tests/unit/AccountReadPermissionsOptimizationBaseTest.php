@@ -181,6 +181,9 @@
 
         protected static function accountMungeDoesntChangeWhenRebuilt()
         {
+            //Need to forget all since sometimes the related information is cached from
+            //before something occurred during a test.
+            RedBeanModelsCache::forgetAll();
             $beforeRows = self::getAccountMungeRows();
             ReadPermissionsOptimizationUtil::rebuild();
             $afterRows  = self::getAccountMungeRows();
