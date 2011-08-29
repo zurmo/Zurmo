@@ -38,6 +38,7 @@
         public function testGetValidCastTypesForAllAttributeTypes()
         {
             $model = new TestOperatorTypeModel();
+
             $this->assertEquals('int',     ModelAttributeToCastTypeUtil::getCastType($model, 'integerStandard'));
             $this->assertEquals('string',  ModelAttributeToCastTypeUtil::getCastType($model, 'dateStandard'));
             $this->assertEquals('string',  ModelAttributeToCastTypeUtil::getCastType($model, 'dateTimeStandard'));

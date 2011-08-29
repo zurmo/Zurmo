@@ -68,7 +68,9 @@
             )
         {
             $listModel = $searchModel->getModel();
-            $filteredListData = $filteredListModelClassName::getRowsByCreatedUserId($userId);
+            $filteredListData = array();
+            //Add back in once filtered lists is completed.
+            //$filteredListData = $filteredListModelClassName::getRowsByCreatedUserId($userId);
             $filteredListId = null;
             if (!empty($_GET['filteredListId']) && empty($_POST['search']))
             {

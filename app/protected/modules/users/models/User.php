@@ -229,25 +229,34 @@
 
         public static function getMetadata()
         {
-            $defaultMetadata = self::getDefaultMetadata();
-            $metadata        = parent::getMetadata();
-            $modelClassName = 'Person';
+            $className = get_called_class();
             try
             {
-                $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
-                $metadata[$modelClassName] = unserialize($globalMetadata->serializedMetadata);
+                return ZurmoGeneralCache::getEntry($className . 'Metadata');
             }
             catch (NotFoundException $e)
             {
-                if (isset($defaultMetadata[$modelClassName]))
+                $defaultMetadata = self::getDefaultMetadata();
+                $metadata        = parent::getMetadata();
+                $modelClassName = 'Person';
+                try
                 {
-                    $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
+                    $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
+                    $metadata[$modelClassName] = unserialize($globalMetadata->serializedMetadata);
+                }
+                catch (NotFoundException $e)
+                {
+                    if (isset($defaultMetadata[$modelClassName]))
+                    {
+                        $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
+                    }
+                }
+                if (YII_DEBUG)
+                {
+                    self::assertMetadataIsValid($metadata);
                 }
             }
-            if (YII_DEBUG)
-            {
-                self::assertMetadataIsValid($metadata);
-            }
+            ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
             return $metadata;
         }
 
@@ -278,6 +287,7 @@
             {
                 parent::setMetadata($metadata);
             }
+            ZurmoGeneralCache::forgetEntry(get_called_class() . 'Metadata');
         }
 
         public function setPassword($password)
@@ -307,23 +317,38 @@
             assert('is_string($rightName)');
             assert('$moduleName != ""');
             assert('$rightName  != ""');
-            if (!SECURITY_OPTIMIZED)
+            try
             {
-                // The slow way will remain here as documentation
-                // for what the optimized way is doing.
-                if (Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME)->contains($this))
-                {
-                    return Right::ALLOW;
-                }
-                return parent::getActualRight($moduleName, $rightName);
+                throw new NotFoundException(); //undo once we figure this out.
+                //TODO: this key entry is wrong because it is a PER USER thing. i have a feeling this caching might
+                //need to be removed entirely.... since i am not sure this will be very practical...
+                //return ZurmoGeneralCache::getEntry($moduleName . $rightName . 'ActualRight');
             }
-            else
+            catch (NotFoundException $e)
             {
-                // Optimizations work on the database,
-                // anything not saved will not work.
-                assert('$this->id > 0');
-                return intval(ZurmoDatabaseCompatibilityUtil::
-                                callFunction("get_user_actual_right({$this->id}, '$moduleName', '$rightName')"));
+                if (!SECURITY_OPTIMIZED)
+                {
+                    // The slow way will remain here as documentation
+                    // for what the optimized way is doing.
+                    if (Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME)->contains($this))
+                    {
+                        $actualRight = Right::ALLOW;
+                    }
+                    else
+                    {
+                        $actualRight = parent::getActualRight($moduleName, $rightName);
+                    }
+                }
+                else
+                {
+                    // Optimizations work on the database,
+                    // anything not saved will not work.
+                    assert('$this->id > 0');
+                    $actualRight     = intval(ZurmoDatabaseCompatibilityUtil::
+                                       callFunction("get_user_actual_right({$this->id}, '$moduleName', '$rightName')"));
+                }
+                //ZurmoGeneralCache::cacheEntry($moduleName . $rightName . 'ActualRight', $actualRight);
+                return $actualRight;
             }
         }
 

@@ -54,7 +54,8 @@
         }
 
         /**
-         * Returns metadata for use in automatically generating the view.
+         * Returns metadata for use in automatically generating the view.  Will attempt to retrieve from cache if
+         * available, otherwill retrieve from database and cache.
          * @see getDefaultMetadata()
          * @param $user The current user.
          * @returns An array of metadata.
@@ -62,10 +63,24 @@
         public static function getMetadata(User $user = null)
         {
             $className = get_called_class();
+            if($user == null)
+            {
+                try
+                {
+                    return ZurmoGeneralCache::getEntry($className . 'Metadata');
+                }
+                catch (NotFoundException $e)
+                {
+                }
+            }
             $metadata = MetadataUtil::getMetadata($className, $user);
             if (YII_DEBUG)
             {
                 $className::assertMetadataIsValid($metadata);
+            }
+            if($user == null)
+            {
+                ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
             }
             return $metadata;
         }
@@ -83,6 +98,10 @@
                 $className::assertMetadataIsValid($metadata);
             }
             MetadataUtil::setMetadata($className, $metadata, $user);
+            if($user == null)
+            {
+                ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
+            }
         }
 
         protected static function assertMetadataIsValid(array $metadata)

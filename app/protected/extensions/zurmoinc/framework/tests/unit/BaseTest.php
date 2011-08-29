@@ -48,6 +48,7 @@
                                    Yii::app()->db->username,
                                    Yii::app()->db->password);
             assert('RedBeanDatabase::isSetup()'); // Not Coding Standard
+            ZurmoGeneralCache::forgetAll();
             if ($freeze)
             {
                 RedBeanDatabase::freeze();
@@ -61,7 +62,7 @@
             Yii::app()->user->clearStates(); //reset session.
             Yii::app()->language        = Yii::app()->getConfigLanguageValue();
             Yii::app()->timeZoneHelper->setTimeZone(Yii::app()->getConfigTimeZoneValue());
-            Yii::app()->languageHelper->resetModuleLabelTranslationParameters();
+            Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
         }
 
         public static function tearDownAfterClass()
@@ -77,6 +78,7 @@
             RedBeanModel::forgetAll();
             RedBeanDatabase::close();
             assert('!RedBeanDatabase::isSetup()'); // Not Coding Standard
+            ZurmoGeneralCache::forgetAll();
         }
 
         public static function resetAndPopulateFilesArrayByFilePathAndName($arrayName, $filePath, $fileName)

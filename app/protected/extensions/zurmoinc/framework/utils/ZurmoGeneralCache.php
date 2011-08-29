@@ -61,7 +61,7 @@
         public static function cacheEntry($identifier, $entry)
         {
             assert('is_string($identifier)');
-            assert('is_string($entry) || is_array($entry) || numeric($entry)');
+            assert('is_string($entry) || is_array($entry) || is_numeric($entry) || is_object($entry)');
             if (PHP_CACHING_ON)
             {
                 self::$cachedEntries[$identifier] = $entry;
@@ -69,6 +69,21 @@
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
                 Yii::app()->cache->set('G:' . $identifier, serialize($entry));
+            }
+        }
+
+        public static function forgetEntry($identifier)
+        {
+            if (PHP_CACHING_ON)
+            {
+                if(isset(self::$cachedEntries[$identifier]))
+                {
+                    unset(self::$cachedEntries[$identifier]);
+                }
+            }
+            if (MEMCACHE_ON && Yii::app()->cache !== null)
+            {
+                Yii::app()->cache->delete('G:' . $identifier);
             }
         }
 

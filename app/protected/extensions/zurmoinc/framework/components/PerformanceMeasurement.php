@@ -28,6 +28,13 @@
     {
         protected $startTime;
 
+        /**
+         * Can be used during development to benchmark certain areas of code for how long they take to execute.  It is
+         * recommeded to use something like xdebug, although this can be helpful as well.
+         * @var array
+         */
+        protected $timings = array();
+
         public function startClock()
         {
             $this->startTime = microtime(true);
@@ -37,6 +44,32 @@
         {
             $endTime = microtime(true);
             return $endTime - $this->startTime;
+        }
+
+        /**
+         * Given a time in seconds and an indentifier, add the time to the existing timings array data. This will add to
+         * the existing value.
+         * @param string $identifer
+         * @param number $time
+         */
+        public function addTimeById($identifer, $time)
+        {
+            if(isset($this->timings[$identifer]))
+            {
+                $this->timings[$identifer] = $this->timings[$identifer] + $time;
+            }
+            else
+            {
+                $this->timings[$identifer] = $time;
+            }
+        }
+
+        /**
+         * @return array of timings data.
+         */
+        public function getTimings()
+        {
+            return $this->timings;
         }
     }
 ?>
