@@ -171,7 +171,11 @@
         {
             if (get_class($this->permitable) == 'Permitable')
             {
-                $this->permitable = $this->permitable->castDown(array('Group', 'User'));
+                //Set the permitable to null first otherwise it will not take the new casted down permitable and
+                //remains uncasted down.
+                $permitable = $this->permitable->castDown(array('Group', 'User'));
+                $this->permitable = null;
+                $this->permitable = $permitable;
             }
         }
 

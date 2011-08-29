@@ -35,7 +35,7 @@
             SecurityTestHelper::createGroups();
             SecurityTestHelper::createRoles();
             //Forget the cache, otherwise user/role/group information is not properly reflected in the cache.
-            RedBeanModelsCache::forgetAll();
+            RedBeanModel::forgetAll();
         }
 
         public function setUp()
