@@ -32,7 +32,7 @@
     {
         public static function renderPagerAndHeaderTextContent(ImportDataProvider $dataProvider, $url)
         {
-            $cs=Yii::app()->getClientScript();
+            $cs = Yii::app()->getClientScript();
             $cs->registerCoreScript('bbq');
             $currentPage = $dataProvider->getPagination()->getCurrentPage();
             $pageCount   = $dataProvider->getPagination()->getPageCount();

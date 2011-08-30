@@ -154,7 +154,6 @@
                     {
                         $anyValidatedFalse = true;
                     }
-
                 }
             }
             return !$anyValidatedFalse;

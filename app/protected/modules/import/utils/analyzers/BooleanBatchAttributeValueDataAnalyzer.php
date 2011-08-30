@@ -50,7 +50,6 @@
             }
         }
 
-
         protected function makeMessages()
         {
             $invalid  = $this->messageCountData[static::INVALID];

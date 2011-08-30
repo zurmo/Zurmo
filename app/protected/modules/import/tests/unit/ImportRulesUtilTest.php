@@ -95,7 +95,6 @@
                       areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
                                                                 $mappedAttributeImportRulesCollection);
             $this->assertTrue($passed);
-
         }
 
         public function testCheckIfAnyAttributesAreDoubleMappedWhenTheyAreDobuleMapped()

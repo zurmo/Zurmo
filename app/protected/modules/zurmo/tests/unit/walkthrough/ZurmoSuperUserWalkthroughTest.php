@@ -176,7 +176,6 @@
             }
             //todo: test all file errors.
 
-
             //Test deleting a file.
             $this->assertEquals(1, count(FileModel::getAll()));
             $this->assertEquals(1, count(FileContent::getAll()));

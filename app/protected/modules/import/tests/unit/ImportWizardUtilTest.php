@@ -117,7 +117,6 @@
             $this->assertEquals(null,  $importWizardForm->fileUploadData);
         }
 
-
         /**
          * @depends testSetFormByPostForStep1
          */

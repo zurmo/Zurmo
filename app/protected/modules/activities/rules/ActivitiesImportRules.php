@@ -67,7 +67,6 @@
                 //todo: add support for leads.
             }
             return $derivedAttributeTypes;
-
         }
 
         /**

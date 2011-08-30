@@ -344,7 +344,6 @@
             echo $view->render();
         }
 
-
         /**
          * Step 4 ajax process.  When you change the attribute dropdown, new mapping rule information is retrieved
          * and displayed in the user interface.

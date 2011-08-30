@@ -863,7 +863,6 @@
             $this->assertEquals(1, count($messages));
             $compareMessage = 'ImportModelTestItem - Integer Invalid number format.';
             $this->assertEquals($compareMessage, $messages[0]);
-
         }
 
         public function testSanitizeValueBySanitizerTypesForRelatedModelIdTypeThatNotIsRequired()

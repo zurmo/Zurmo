@@ -42,7 +42,7 @@
                                     'mappingRulesData' => null),
                 'column_1' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
-                'column_2' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' =>null,
+                'column_2' => array('type' => 'importColumn',   'attributeIndexOrDerivedType' => null,
                                     'mappingRulesData' => null),
             );
             $this->assertEquals($compareData, $mappingData);

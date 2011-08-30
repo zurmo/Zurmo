@@ -79,13 +79,11 @@
             createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName(),
                                                   Yii::getPathOfAlias('application.modules.tasks.tests.unit.files'));
             R::exec("update " . $import->getTempTableName() . " set column_0 = " .
-                    $account3->id ." where id != 1 limit 3");
+                    $account3->id . " where id != 1 limit 3");
             R::exec("update " . $import->getTempTableName() . " set column_2 = " .
-                    $contact3->id ." where id != 1 limit 4");
+                    $contact3->id . " where id != 1 limit 4");
             R::exec("update " . $import->getTempTableName() . " set column_4 = " .
-                    $opportunity3->id ." where id != 1 limit 5");
-
-
+                    $opportunity3->id . " where id != 1 limit 5");
 
             $mappingData = array(
                 'column_0'  => array('attributeIndexOrDerivedType' => 'AccountDerived',
@@ -141,27 +139,27 @@
             $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
-                    array('message'=> '3 record(s) will be updated and 7 record(s) will be skipped during import.',
+                    array('message' => '3 record(s) will be updated and 7 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'AccountDerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_1' => array(
-                    array('message'=> '3 record(s) will be updated and 7 record(s) will be skipped during import.',
+                    array('message' => '3 record(s) will be updated and 7 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'AccountDerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_2' => array(
-                    array('message'=> '4 record(s) will be updated and 6 record(s) will be skipped during import.',
+                    array('message' => '4 record(s) will be updated and 6 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'ContactDerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_3' => array(
-                    array('message'=> '3 record(s) will be updated and 7 record(s) will be skipped during import.',
+                    array('message' => '3 record(s) will be updated and 7 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'ContactDerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_4' => array(
-                    array('message'=> '5 record(s) will be updated and 5 record(s) will be skipped during import.',
+                    array('message' => '5 record(s) will be updated and 5 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'OpportunityDerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_5' => array(
-                    array('message'=> '3 record(s) will be updated and 7 record(s) will be skipped during import.',
+                    array('message' => '3 record(s) will be updated and 7 record(s) will be skipped during import.',
                            'sanitizerUtilType' => 'OpportunityDerivedIdValueType', 'moreAvailable' => false),
                 ),
             );

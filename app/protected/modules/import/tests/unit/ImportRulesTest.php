@@ -80,7 +80,6 @@
             $this->assertEquals('ImportModelTestItem', $modelClassName);
         }
 
-
         public function testGetAttributeImportRulesTypeBy()
         {
             Yii::app()->user->userModel     = User::getByUsername('super');

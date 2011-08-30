@@ -29,7 +29,6 @@
      */
     class ModelIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
     {
-
         /**
          * Given a value that is either a zurmo id or an external system id, resolve that the
          * value is valid.  If the value is not valid then an InvalidValueToSanitizeException is thrown.

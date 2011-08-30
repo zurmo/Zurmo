@@ -91,7 +91,6 @@
             $dataIndex                           = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP;
             if ($selectableGroupsDropDownContent != null)
             {
-
                 $data[$dataIndex]                = $data[$dataIndex] . '&#160;' . $selectableGroupsDropDownContent;
             }
             else

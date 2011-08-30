@@ -29,7 +29,6 @@
      */
     abstract class ImportMappingRuleStaticDropDownFormElement extends StaticDropDownFormElement
     {
-
         protected function renderControlNonEditable()
         {
             throw new NotImplementedException();

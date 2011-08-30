@@ -90,7 +90,6 @@
             $testModels = ImportModelTestItem::getAll();
             $this->assertEquals(2, count($testModels));
 
-
             //Re-freeze if needed.
             if ($freezeWhenComplete)
             {

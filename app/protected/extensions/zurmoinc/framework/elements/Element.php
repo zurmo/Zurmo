@@ -336,7 +336,6 @@
                         {
                             $inputPrefixContent .= '[' . $value . ']';
                         }
-
                     }
                     return $inputPrefixContent;
                 }
