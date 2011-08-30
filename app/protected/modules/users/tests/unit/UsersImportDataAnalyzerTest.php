@@ -78,11 +78,11 @@
             $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
-                    array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.',
+                    array('message' => '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.',
                            'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
                 ),
                 'column_1' => array(
-                    array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 32 upon import.',
+                    array('message' => '1 value(s) are too large for this field. These values will be truncated to a length of 32 upon import.',
                            'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
                 ),
             );

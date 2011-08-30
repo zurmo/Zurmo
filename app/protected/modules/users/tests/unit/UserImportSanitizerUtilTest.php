@@ -75,7 +75,7 @@
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'User', 'hash', $value,
                                          $columnMappingData, $importSanitizeResultsUtil);
-            $this->assertEquals(substr($value,0, 32), $sanitizedValue);
+            $this->assertEquals(substr($value, 0, 32), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));

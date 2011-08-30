@@ -205,6 +205,5 @@
             }
             return $columnNamesAndAttributeIndexOrDerivedTypeLabels;
         }
-
     }
 ?>

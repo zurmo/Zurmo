@@ -111,7 +111,6 @@
          */
         public $afterDeleteAction;
 
-
         /**
          * Initializes the widget.
          * This method will publish JUI assets if necessary.

@@ -47,7 +47,6 @@
                                     $mappableAttributeIndicesAndDerivedTypesForImportColumns,
                                     $mappableAttributeIndicesAndDerivedTypesForExtraColumns)
         {
-
             assert('is_string($mappingFormModelClassName)');
             assert('$form instanceof ZurmoActiveForm');
             assert('is_array($mappableAttributeIndicesAndDerivedTypesForImportColumns)');
@@ -100,7 +99,7 @@
             assert('is_string($ajaxOnChangeUrl)');
             $name        = $this->mappingFormModelClassName . '[' . $columnName . '][attributeIndexOrDerivedType]';
             $id          = $this->mappingFormModelClassName . '_' . $columnName . '_attributeIndexOrDerivedType';
-            $htmlOptions = array('id'=> $id,
+            $htmlOptions = array('id' => $id,
                 'empty' => Yii::t('Default', 'Do not map this field')
             );
             Yii::app()->clientScript->registerScript('AttributeDropDown' . $id,

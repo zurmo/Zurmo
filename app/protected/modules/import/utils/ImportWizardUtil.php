@@ -141,7 +141,6 @@
             $importWizardForm->mappingData = $postData;
         }
 
-
         /**
          * Given an array of file upload data, set the form from this.  Keep the existing importRulesType value
          * but clear out any other form attributes since with a new file uploaded, those other attribute values will

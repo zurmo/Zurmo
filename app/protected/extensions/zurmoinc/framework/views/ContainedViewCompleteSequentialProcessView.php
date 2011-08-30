@@ -30,7 +30,6 @@
      */
     class ContainedViewCompleteSequentialProcessView extends CompleteSequentialProcessView
     {
-
         protected $view;
 
         public function __construct($view)

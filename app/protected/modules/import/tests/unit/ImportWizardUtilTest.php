@@ -80,7 +80,7 @@
             ImportWizardUtil::setImportSerializedDataFromForm($importWizardForm, $import);
             $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
                                                              'fileUploadData'       => array('aa' => 'bb'),
-                                                             'rowColumnDelimiter'  => ',',
+                                                             'rowColumnDelimiter'  => ',', // Not Coding Standard
                                                              'rowColumnEnclosure'  => "'",
                                                              'firstRowIsHeaderRow'  => true,
                                                              'explicitReadWriteModelPermissions'     => null,
@@ -117,7 +117,6 @@
             $this->assertEquals(null,  $importWizardForm->fileUploadData);
         }
 
-
         /**
          * @depends testSetFormByPostForStep1
          */
@@ -126,14 +125,14 @@
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             $explicitReadWriteModelPermissions->addReadOnlyPermitable(new Group());
             $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
-            $fileUploadData                                      = array('a','b');
+            $fileUploadData                                      = array('a', 'b');
             $testTableName                                       = 'testimporttable';
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
             $importWizardForm                                    = new ImportWizardForm();
             $importWizardForm->importRulesType                   = 'testAbc';
             $importWizardForm->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
             ImportWizardUtil::setFormByFileUploadDataAndTableName($importWizardForm, $fileUploadData, $testTableName);
-            $this->assertEquals(array('a','b'),  $importWizardForm->fileUploadData);
+            $this->assertEquals(array('a', 'b'),  $importWizardForm->fileUploadData);
             $this->assertEquals('testAbc',       $importWizardForm->importRulesType);
             $this->assertEquals(0, $importWizardForm->explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
             $compareData = array(
@@ -152,7 +151,7 @@
          */
         public function testSetFormByPostForStep2()
         {
-            $fakePostData = array('firstRowIsHeaderRow' => 'xyz', 'rowColumnDelimiter' => ',', 'rowColumnEnclosure' => '"');
+            $fakePostData = array('firstRowIsHeaderRow' => 'xyz', 'rowColumnDelimiter' => ',', 'rowColumnEnclosure' => '"'); // Not Coding Standard
             $importWizardForm = new ImportWizardForm();
             ImportWizardUtil::setFormByPostForStep2($importWizardForm, $fakePostData);
             $this->assertEquals('xyz', $importWizardForm->firstRowIsHeaderRow);

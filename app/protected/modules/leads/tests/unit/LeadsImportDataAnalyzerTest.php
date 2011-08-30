@@ -72,7 +72,7 @@
             $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
-                    array('message'=> '3 pick list value(s) are not valid. Rows that have these values will be skipped upon import.',
+                    array('message' => '3 pick list value(s) are not valid. Rows that have these values will be skipped upon import.',
                           'sanitizerUtilType' => 'LeadState', 'moreAvailable' => false),
                 ),
             );

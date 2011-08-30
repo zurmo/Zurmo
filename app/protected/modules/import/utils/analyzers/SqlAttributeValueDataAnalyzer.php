@@ -31,6 +31,5 @@
      */
     abstract class SqlAttributeValueDataAnalyzer extends AttributeValueDataAnalyzer
     {
-
     }
 ?>

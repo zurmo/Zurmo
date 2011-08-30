@@ -31,6 +31,7 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
+
         public function testMakeCollectionByAttributeImportRules()
         {
             $attributeImportRules = new PhoneAttributeImportRules(new ImportModelTestItem(), 'phone');

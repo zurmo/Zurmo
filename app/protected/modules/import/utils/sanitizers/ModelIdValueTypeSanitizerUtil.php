@@ -29,7 +29,6 @@
      */
     class ModelIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
     {
-
         /**
          * Given a value that is either a zurmo id or an external system id, resolve that the
          * value is valid.  If the value is not valid then an InvalidValueToSanitizeException is thrown.
@@ -50,7 +49,7 @@
                 return $value;
             }
             $model                   = new $modelClassName(false);
-            $attributeModelClassName = $this->resolveAttributeModelClassName($model,$attributeName);
+            $attributeModelClassName = $this->resolveAttributeModelClassName($model, $attributeName);
             if ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try

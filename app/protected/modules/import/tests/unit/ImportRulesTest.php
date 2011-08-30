@@ -37,24 +37,24 @@
             $data = ImportModelTestItemImportRules::getMappableAttributeIndicesAndDerivedTypes();
             $compareData = array(
                 'boolean'                     => 'Boolean',
-                'createdByUser'				  => 'Created By User',
-                'createdDateTime'			  => 'Created Date Time',
-                'currencyValue'			      => 'Currency Value',
+                'createdByUser'               => 'Created By User',
+                'createdDateTime'             => 'Created Date Time',
+                'currencyValue'               => 'Currency Value',
                 'date'                        => 'Date',
                 'dateTime'                    => 'Date Time',
                 'dropDown'                    => 'Drop Down',
-                'firstName'					  => 'First Name',
+                'firstName'                   => 'First Name',
                 'float'                       => 'Float',
-                'FullName'					  => 'Full Name',
-                'hasOne'					  => 'Has One',
-                'hasOneAlso'				  => 'Has One Also',
+                'FullName'                    => 'Full Name',
+                'hasOne'                      => 'Has One',
+                'hasOneAlso'                  => 'Has One Also',
                 'id'                          => 'Id',
                 'ImportModelTestItem3Derived' => 'ImportModelTestItem3',
                 'integer'                     => 'Integer',
-                'lastName'					  => 'Last Name',
-                'modifiedByUser'		      => 'Modified By User',
-                'modifiedDateTime'		      => 'Modified Date Time',
-                'owner' 				      => 'Owner',
+                'lastName'                    => 'Last Name',
+                'modifiedByUser'              => 'Modified By User',
+                'modifiedDateTime'            => 'Modified Date Time',
+                'owner'                       => 'Owner',
                 'phone'                       => 'Phone',
                 'primaryAddress__city'        => 'Primary Address - City',
                 'primaryAddress__country'     => 'Primary Address - Country',
@@ -65,7 +65,7 @@
                 'primaryEmail__emailAddress'  => 'Primary Email - Email Address',
                 'primaryEmail__isInvalid'     => 'Primary Email - Is Invalid',
                 'primaryEmail__optOut'        => 'Primary Email - Opt Out',
-                'radioDropDown'				  => 'Radio Drop Down',
+                'radioDropDown'               => 'Radio Drop Down',
                 'string'                      => 'String',
                 'textArea'                    => 'Text Area',
                 'url'                         => 'Url',
@@ -79,7 +79,6 @@
                               getModelClassNameByAttributeIndexOrDerivedType('boolean');
             $this->assertEquals('ImportModelTestItem', $modelClassName);
         }
-
 
         public function testGetAttributeImportRulesTypeBy()
         {
@@ -136,7 +135,7 @@
                         'attributeName'            => 'string',
                         'relationAttributeName'    => null,
                         'attributeImportRulesType' => 'Text',
-                        'isRequired'			   => true
+                        'isRequired'               => true
                 ));
             $this->assertEquals($compareData, $requiredAttributesCollection);
         }

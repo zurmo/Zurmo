@@ -72,7 +72,6 @@
              if ($sanitizedValue == null &&
                 $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
              {
-
                 $modelId               = $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']
                                          ['defaultModelId'];
                 $sanitizedValue        = $derivedModelClassName::getById((int)$modelId);

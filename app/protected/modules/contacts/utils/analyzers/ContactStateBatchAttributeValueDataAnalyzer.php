@@ -48,7 +48,6 @@
 
         protected function analyzeByValue($value)
         {
-
             if ($value != null && !in_array(strtolower($value), $this->states))
             {
                 $this->messageCountData[static::INVALID] ++;

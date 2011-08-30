@@ -272,7 +272,6 @@
             return false;
         }
 
-
         protected static function resolveModelForAttributeIndexWithMultipleNonDerivedAttributes(
                                   RedBeanModel $model,
                                   AttributeImportRules $attributeImportRules,

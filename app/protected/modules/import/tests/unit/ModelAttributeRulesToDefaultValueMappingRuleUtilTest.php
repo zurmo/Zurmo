@@ -31,6 +31,7 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
+
         public function testGetApplicableRulesByModelClassNameAndAttributeName()
         {
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
@@ -106,7 +107,6 @@
                                  array('defaultValue',  'type', 'type' => 'string'),
                                  array('defaultValue',  'length',  'min'  => 2, 'max' => 32));
             $this->assertEquals($compareData, $rules);
-
         }
     }
 ?>

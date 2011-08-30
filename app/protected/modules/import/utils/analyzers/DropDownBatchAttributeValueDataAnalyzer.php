@@ -64,7 +64,6 @@
          */
         protected function analyzeByValue($value)
         {
-
             if ($value != null && !in_array(strtolower($value), $this->dropDownValues))
             {
                 $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $value;

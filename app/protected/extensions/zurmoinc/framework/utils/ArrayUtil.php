@@ -50,7 +50,8 @@
          * Case insensitive version of @link http://www.php.net/manual/en/function.array-unique.php
          * @param array $array
          */
-        public static function array_iunique($array) {
+        public static function array_iunique($array)
+        {
             return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
         }
     }

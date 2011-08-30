@@ -29,7 +29,7 @@
         public static function createTempTableByFileNameAndTableName($fileName,
                                                                      $tableName,
                                                                      $pathToFiles = null,
-                                                                     $delimiter = ',',
+                                                                     $delimiter = ',', // Not Coding Standard
                                                                      $enclosure = "'")
         {
             assert('is_string($fileName)');

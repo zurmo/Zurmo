@@ -45,7 +45,7 @@
                     'column_0'           => 'name',
                     'column_1'           => 'phone',
                     'column_2'           => 'industry',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -54,7 +54,7 @@
                     'column_0'           => 'abc',
                     'column_1'           => '123',
                     'column_2'           => 'a',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -63,7 +63,7 @@
                     'column_0'           => 'def',
                     'column_1'           => '563',
                     'column_2'           => 'b',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -72,7 +72,7 @@
                     'column_0'           => 'efg',
                     'column_1'           => '456',
                     'column_2'           => 'a',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -81,7 +81,7 @@
                     'column_0'           => 'we1s',
                     'column_1'           => null,
                     'column_2'           => 'b',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
             );
@@ -95,19 +95,19 @@
                 array
                 (
                     'id'                 => 1,
-                    'column_0'			 => 'def',
-                    'column_1'		     => '563',
+                    'column_0'           => 'def',
+                    'column_1'           => '563',
                     'column_2'           => 'b',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
                 (
                     'id' => 2,
                     'column_0'           => 'efg',
-                    'column_1'			 => '456',
-                    'column_2'			 => 'a',
-                    'status'			 => null,
+                    'column_1'           => '456',
+                    'column_2'           => 'a',
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
             );
@@ -128,7 +128,7 @@
                     'column_0'           => 'name',
                     'column_1'           => 'phone',
                     'column_2'           => 'industry',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -137,7 +137,7 @@
                     'column_0'           => 'some',
                     'column_1'           => 'thing',
                     'column_2'           => 'else',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -146,7 +146,7 @@
                     'column_0'           => 'some2',
                     'column_1'           => 'thing2',
                     'column_2'           => 'else2',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
@@ -155,7 +155,7 @@
                     'column_0'           => 'some3',
                     'column_1'           => 'thing3',
                     'column_2'           => 'else3',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
                 ),
             );
@@ -181,7 +181,7 @@
                     'column_0'           => 'name',
                     'column_1'           => 'phone',
                     'column_2'           => 'industry',
-                    'status'			 => null,
+                    'status'             => null,
                     'serializedmessages' => null,
             );
             $this->assertEquals($compareData, $firstRowData);

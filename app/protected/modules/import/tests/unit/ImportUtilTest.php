@@ -73,7 +73,6 @@
 
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
 
-
             $this->assertEquals(13, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
@@ -182,7 +181,6 @@
 
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
 
-
             $this->assertEquals(13, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
@@ -220,7 +218,6 @@
 
             //Clear out data in table
             R::exec("delete from " . ImportModelTestItem::getTableName('ImportModelTestItem'));
-
 
             //Now test with read/write permissions being set.
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();

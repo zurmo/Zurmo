@@ -72,7 +72,7 @@
         {
             $string = SQLOperatorUtil::
                       resolveOperatorAndValueForOneOf('oneOf', BooleanSanitizerUtil::getAcceptableValues());
-            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))";
+            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))"; // Not Coding Standard
             $this->assertEquals($compareString, $string);
         }
 
@@ -88,15 +88,15 @@
             $this->assertTrue($import->save());
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
             R::exec("update " . $import->getTempTableName() . " set column_8 = " .
-                     Yii::app()->user->userModel->id ." where id != 1 limit 4");
+                     Yii::app()->user->userModel->id . " where id != 1 limit 4");
 
             $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             //Add test ImportModelTestItem models for use in this test.
-            $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa','aba');
-            $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw','daf');
+            $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa', 'aba');
+            $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw', 'daf');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_10 = " .
-                     $importModelTestItemModel1->id ." where id != 1 limit 3");
+                     $importModelTestItemModel1->id . " where id != 1 limit 3");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem::getTableName('ImportModelTestItem')
             . " set $externalSystemIdColumnName = 'B' where id = {$importModelTestItemModel2->id}");
@@ -107,7 +107,7 @@
             $importModelTestItem2Model3 = ImportTestHelper::createImportModelTestItem2('ccc');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping.
             R::exec("update " . $import->getTempTableName() . " set column_14 = " .
-                     $importModelTestItem2Model1->id ." where id != 1 limit 4");
+                     $importModelTestItem2Model1->id . " where id != 1 limit 4");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem2::getTableName('ImportModelTestItem2')
             . " set $externalSystemIdColumnName = 'B' where id = {$importModelTestItem2Model2->id}");
@@ -117,7 +117,7 @@
             $importModelTestItem3Model2 = ImportTestHelper::createImportModelTestItem3('dd');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_17 = " .
-                     $importModelTestItem3Model1->id ." where id != 1 limit 3");
+                     $importModelTestItem3Model1->id . " where id != 1 limit 3");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem3::getTableName('ImportModelTestItem3')
             . " set $externalSystemIdColumnName = 'K' where id = {$importModelTestItem3Model2->id}");
@@ -127,37 +127,37 @@
             $importModelTestItem4Model2 = ImportTestHelper::createImportModelTestItem4('dd');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_12 = " .
-                     $importModelTestItem4Model1->id ." where id != 1 limit 5");
+                     $importModelTestItem4Model1->id . " where id != 1 limit 5");
             //Update model2 to have an externalSystemId.
             R::exec("update " . ImportModelTestItem3::getTableName('ImportModelTestItem4')
             . " set $externalSystemIdColumnName = 'J' where id = {$importModelTestItem4Model2->id}");
 
             $mappingData = array(
-                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',        'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_1' => array('attributeIndexOrDerivedType' => 'phone',    	  'type' => 'importColumn',
+                'column_1' => array('attributeIndexOrDerivedType' => 'phone',          'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_2' => array('attributeIndexOrDerivedType' => 'float',    	  'type' => 'importColumn',
+                'column_2' => array('attributeIndexOrDerivedType' => 'float',          'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_3' => array('attributeIndexOrDerivedType' => 'boolean',  	  'type' => 'importColumn'),
+                'column_3' => array('attributeIndexOrDerivedType' => 'boolean',        'type' => 'importColumn'),
 
-                'column_4' => array('attributeIndexOrDerivedType' => 'date', 	 	  'type' => 'importColumn',
+                'column_4' => array('attributeIndexOrDerivedType' => 'date',           'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null),
                                         'ValueFormatMappingRuleForm'                =>
                                         array('format' => 'MM-dd-yyyy'))),
 
-                'column_5' => array('attributeIndexOrDerivedType' => 'dateTime', 	  'type' => 'importColumn',
+                'column_5' => array('attributeIndexOrDerivedType' => 'dateTime',       'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null),
@@ -179,27 +179,27 @@
                                     'UserValueTypeModelAttributeMappingRuleForm' =>
                                         array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID))),
 
-                'column_9' => array('attributeIndexOrDerivedType' => 'owner', 		   'type' => 'importColumn',
+                'column_9' => array('attributeIndexOrDerivedType' => 'owner',           'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                     'DefaultModelNameIdMappingRuleForm' => array('defaultModelId' => null),
                                     'UserValueTypeModelAttributeMappingRuleForm' =>
                                         array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID))),
 
-                'column_10' => array('attributeIndexOrDerivedType' => 'id', 		   'type' => 'importColumn',
+                'column_10' => array('attributeIndexOrDerivedType' => 'id',             'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'IdValueTypeMappingRuleForm' =>
                                         array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
 
-                'column_11' => array('attributeIndexOrDerivedType' => 'id', 		   'type' => 'importColumn',
+                'column_11' => array('attributeIndexOrDerivedType' => 'id',             'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'IdValueTypeMappingRuleForm' =>
                                         array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
-                'column_12' => array('attributeIndexOrDerivedType' => 'hasOneAlso', 'type' => 'importColumn',
+                'column_12' => array('attributeIndexOrDerivedType' => 'hasOneAlso',     'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultModelNameIdMappingRuleForm' => array('defaultModelId' => null),
                                         'IdValueTypeMappingRuleForm' => array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
-                'column_13' => array('attributeIndexOrDerivedType' => 'hasOneAlso', 'type' => 'importColumn',
+                'column_13' => array('attributeIndexOrDerivedType' => 'hasOneAlso',     'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultModelNameIdMappingRuleForm' => array('defaultModelId' => null),
                                         'IdValueTypeMappingRuleForm' =>
@@ -232,24 +232,24 @@
                                           'IdValueTypeMappingRuleForm' =>
                                           array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
 
-                'column_19' => array('attributeIndexOrDerivedType' => 'url',   	  'type' => 'importColumn',
+                'column_19' => array('attributeIndexOrDerivedType' => 'url',            'type' => 'importColumn',
                                      'mappingRulesData' => array(
                                          'DefaultValueModelAttributeMappingRuleForm' =>
                                           array('defaultValue' => null))),
 
                 'column_20' => array('attributeIndexOrDerivedType' => 'textArea', 'type' => 'importColumn'),
 
-                'column_21' => array('attributeIndexOrDerivedType' => 'integer',    	  'type' => 'importColumn',
+                'column_21' => array('attributeIndexOrDerivedType' => 'integer',        'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_22' => array('attributeIndexOrDerivedType' => 'currencyValue',    	  'type' => 'importColumn',
+                'column_22' => array('attributeIndexOrDerivedType' => 'currencyValue',  'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_23' => array('attributeIndexOrDerivedType' => 'FullName',    	  'type' => 'importColumn',
+                'column_23' => array('attributeIndexOrDerivedType' => 'FullName',       'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
@@ -381,7 +381,6 @@
             $compareMappingData       = $mappingData;
             $compareMappingData['column_6']['importInstructionsData'] = $compareInstructionsData['column_6'];
             $this->assertEquals($compareMappingData, $newMappingData);
-
         }
 
         /**
@@ -397,7 +396,7 @@
             $this->assertTrue($import->save());
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
             R::exec("update " . $import->getTempTableName() . " set column_8 = " .
-                     Yii::app()->user->userModel->id ." where id != 1 limit 6");
+                     Yii::app()->user->userModel->id . " where id != 1 limit 6");
 
             $config       = array('pagination' => array('pageSize' => 2));
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);

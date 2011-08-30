@@ -36,7 +36,7 @@
         {
             parent::__construct();
             $matches = array();
-            assert('preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1'); // Not Coding Standard
+            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
             $this->hostname              = $matches[1];
             $this->rootUsername          = Yii::app()->db->username;
             $this->rootPassword          = Yii::app()->db->password;
