@@ -31,6 +31,7 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
+
         public function testGetAttributes()
         {
             $modelAttributesAdapter = new ModelAttributesImportMappingAdapter(new ImportModelTestItem(false));

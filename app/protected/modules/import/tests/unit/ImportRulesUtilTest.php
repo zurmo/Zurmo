@@ -124,7 +124,7 @@
          */
         public function testInvalidDataPassedToAreAllRequiredAttributesMappedOrHaveRules()
         {
-            ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules(array('a','b'), array('d','e'));
+            ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules(array('a', 'b'), array('d', 'e'));
         }
 
         /**
@@ -132,7 +132,7 @@
          */
         public function testInvalidDataPassedToCheckIfAnyAttributesAreDoubleMapped()
         {
-            ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped(array('a','b'));
+            ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped(array('a', 'b'));
         }
 
         public function testGetImportRulesClassNameByType()

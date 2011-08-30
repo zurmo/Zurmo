@@ -40,6 +40,7 @@
             assert('Yii::app()->user->userModel != null');
             $this->id = Yii::app()->user->userModel->currency->id;
         }
+
         public function rules()
         {
             return array(

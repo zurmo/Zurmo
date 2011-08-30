@@ -49,7 +49,7 @@
                 return $value;
             }
             $model                   = new $modelClassName(false);
-            $attributeModelClassName = $this->resolveAttributeModelClassName($model,$attributeName);
+            $attributeModelClassName = $this->resolveAttributeModelClassName($model, $attributeName);
             if ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try

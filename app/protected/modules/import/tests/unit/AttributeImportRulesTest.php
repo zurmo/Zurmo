@@ -31,6 +31,7 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
         }
+
         public function testMakeByImportRulesTypeAndAttributeIndexOrDerivedType()
         {
             $attributeImportRules = AttributeImportRulesFactory::makeByImportRulesTypeAndAttributeIndexOrDerivedType(

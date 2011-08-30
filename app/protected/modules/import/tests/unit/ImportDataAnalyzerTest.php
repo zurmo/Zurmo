@@ -72,7 +72,7 @@
         {
             $string = SQLOperatorUtil::
                       resolveOperatorAndValueForOneOf('oneOf', BooleanSanitizerUtil::getAcceptableValues());
-            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))";
+            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))"; // Not Coding Standard
             $this->assertEquals($compareString, $string);
         }
 
@@ -92,8 +92,8 @@
 
             $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             //Add test ImportModelTestItem models for use in this test.
-            $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa','aba');
-            $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw','daf');
+            $importModelTestItemModel1 = ImportTestHelper::createImportModelTestItem('aaa', 'aba');
+            $importModelTestItemModel2 = ImportTestHelper::createImportModelTestItem('ddw', 'daf');
             //Update for of the import rows to point to model 1.  This is for the ZURMO_MODEL_ID mapping rule form type value.
             R::exec("update " . $import->getTempTableName() . " set column_10 = " .
                      $importModelTestItemModel1->id . " where id != 1 limit 3");

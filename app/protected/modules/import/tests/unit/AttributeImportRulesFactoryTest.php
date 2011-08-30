@@ -52,7 +52,7 @@
             $this->assertEquals(array(), $collection);
 
             $collection = AttributeImportRulesFactory::
-                          makeCollection('ImportModelTestItem', array('string','boolean','date'));
+                          makeCollection('ImportModelTestItem', array('string', 'boolean', 'date'));
             $this->assertEquals(3, count($collection));
             $this->assertTrue($collection['string']  instanceof TextAttributeImportRules);
             $this->assertTrue($collection['boolean'] instanceof CheckBoxAttributeImportRules);

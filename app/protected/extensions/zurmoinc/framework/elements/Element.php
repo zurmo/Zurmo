@@ -316,6 +316,7 @@
             }
             return $inputIdPrefix;
         }
+
         protected function resolveInputNamePrefix()
         {
             $inputIdPrefix = $this->resolveInputPrefix();
