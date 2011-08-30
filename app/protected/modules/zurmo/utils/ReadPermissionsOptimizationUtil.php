@@ -421,6 +421,8 @@
                 $securableItemIds = R::getCol($sql);
                 self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
                 /*
+                 * This extra step is not needed. See slide 21.  This is similar to userBeingRemovedFromRole in that
+                 * the above query already is trapping the information needed.
                     Follow the same process for any upstream groups that the group is a member of.
                 */
             }
@@ -438,6 +440,8 @@
                 $securableItemIds = R::getCol($sql);
                 self::bulkDecrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
                 /*
+                 * This extra step is not needed. See slide 22. This is similar to userBeingRemovedFromRole or
+                 * userAddedToGroup in that the above query is already trapping the information needed.
                     Follow the same process for any upstream groups that the group is a member of.
                 */
                 self::garbageCollect($mungeTableName);
@@ -746,19 +750,27 @@
                         from   ownedsecurableitem
                         where  owner__user_id = $userId";
                 $securableItemIds = R::getCol($sql);
+                //Increment the parent roles for securableItems that the user is the owner on.
                 self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
 
-                $sql = "select $mungeTableName.securableitem_id
-                        from   $mungeTableName, _group__user
-                        where  $mungeTableName.munge_id = concat('G', _group__user._group_id) and
-                               _group__user._user_id = $userId";
-                $securableItemIds = R::getCol($sql);
-                self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
-                /*
-                    What groups are the user part of and what groups are those groups children of
-                    recursively? Do any of those groups have weight on the ownedSecurableItem?
-                    If so then add weight for the user's upstream roles on those models.
-                */
+                //Get all downstream groups the user is in including any groups that are in those groups recursively.
+                //Then for each group found, add weight for the user's upstream roles.
+                $groupMungeIds = array();
+                foreach($user->groups as $group)
+                {
+                    $groupMungeIds[] = 'G' . $group->id;
+                    self::getAllUpstreamGroupsRecursively($group, $groupMungeIds);
+                }
+                if(count($groupMungeIds) > 0)
+                {
+                    $inSqlPart = SqlOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', $groupMungeIds, true);
+                    $sql = "select distinct $mungeTableName.securableitem_id
+                            from   $mungeTableName
+                            where  $mungeTableName.munge_id $inSqlPart";
+                    $securableItemIds = R::getCol($sql);
+                    self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
+                }
+
             }
         }
 
@@ -781,6 +793,9 @@
                 $securableItemIds = R::getCol($sql);
                 self::bulkDecrementParentRolesCounts($mungeTableName, $securableItemIds, $role);
                 /*
+                 * This additional step I don't think is needed because the sql query above actually traps
+                 * the upstream explicit securableItems because the lower level groups will already have a point for
+                 * each of them.
                     What groups are the user part of and what groups are those groups children of recursively?
                     For any models that have that group explicity for read, subtract 1 point for the user's
                     upstream roles from the disconnected role.
@@ -790,6 +805,23 @@
         }
 
         ///////////////////////////////////////////////////////////////////////
+
+        public static function getAllUpstreamGroupsRecursively(Group $group, & $groupMungeIds)
+        {
+            assert('is_array($groupMungeIds)');
+            if($group->group->id > 0 )
+            {
+                $groupMungeIds[] = 'G' . $group->group->id;
+                if (!RedBeanDatabase::isFrozen() && $group->isSame($group->group))
+                {
+                    //Do Nothing. Prevent cycles in database auto build.
+                }
+                else
+                {
+                    self::getAllUpstreamGroupsRecursively($group->group, $groupMungeIds);
+                }
+            }
+        }
 
         public static function getUserRoleIdAndGroupIds(User $user)
         {
