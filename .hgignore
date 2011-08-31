@@ -14,3 +14,5 @@ glob:demodata.sql
 .buildpath
 .project
 .settings/org.eclipse.php.core.prefs
+app/protected/config/perInstance.php
+app/protected/config/debug.php

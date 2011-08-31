@@ -26,12 +26,26 @@
 
     // Used in a symlinked configuration where
     // multiple instances use the same source code.
-    $perInstanceConfigWithSymlinkedMainConfig = INSTANCE_ROOT . '/protected/config/perInstance.php';
+    if(is_file(INSTANCE_ROOT . '/protected/config/perInstance.php'))
+    {
+        $perInstanceConfigWithSymlinkedMainConfig          = INSTANCE_ROOT . '/protected/config/perInstance.php';
+    }
+    else
+    {
+        $perInstanceConfigWithSymlinkedMainConfig          = INSTANCE_ROOT . '/protected/config/perInstanceDIST.php';
+    }
 
     // Used in a non-symlinked configuration such
     // as in running unit tests directly in the
     // checked out source code.
-    $perInstanceConfigInSameDirAsMainConfig   = COMMON_ROOT   . '/protected/config/perInstance.php';
+    if(is_file(COMMON_ROOT   . '/protected/config/perInstance.php'))
+    {
+        $perInstanceConfigInSameDirAsMainConfig          = COMMON_ROOT   . '/protected/config/perInstance.php';
+    }
+    else
+    {
+        $perInstanceConfigInSameDirAsMainConfig          = COMMON_ROOT   . '/protected/config/perInstanceDIST.php';
+    }
 
     // The per instance version is used in preference.
     if (file_exists($perInstanceConfigWithSymlinkedMainConfig))
