@@ -763,7 +763,7 @@
                 }
                 if(count($groupMungeIds) > 0)
                 {
-                    $inSqlPart = SqlOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', $groupMungeIds, true);
+                    $inSqlPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', $groupMungeIds, true);
                     $sql = "select distinct $mungeTableName.securableitem_id
                             from   $mungeTableName
                             where  $mungeTableName.munge_id $inSqlPart";
