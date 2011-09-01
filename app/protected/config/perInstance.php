@@ -38,7 +38,7 @@
                             ),
                         );
     $adminEmail       = 'info@zurmo.com';
-    $installed        = false; // Set to true by the installation process.
+    $installed        = true; // Set to true by the installation process.
 
     // REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.
     // This configuration is for development and testing.

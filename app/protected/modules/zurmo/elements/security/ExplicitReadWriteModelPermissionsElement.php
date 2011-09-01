@@ -35,6 +35,16 @@
      */
     class ExplicitReadWriteModelPermissionsElement extends Element
     {
+        protected function getExplicitReadWriteModelPermissions()
+        {
+            return $this->model->{$this->attribute};
+        }
+
+        protected function getAttributeName()
+        {
+            return $this->attribute;
+        }
+
         /**
          * Renders the setting as a radio list.  The second radio option also has a dropdown of available groups
          * as part of the label.
@@ -42,21 +52,41 @@
          */
         protected function renderControlEditable()
         {
-            assert('$this->model instanceof ModelForm || $this->model instanceof ConfigurableMetadataModel');
-            assert('$this->model->{$this->attribute} instanceof ExplicitReadWriteModelPermissions');
-            assert('$this->model->{$this->attribute}->getReadOnlyPermitablesCount() == 0');
-            assert('$this->model->{$this->attribute}->getReadWritePermitablesCount() >= 0');
-            assert('$this->model->{$this->attribute}->getReadWritePermitablesCount() < 2');
-            $content      = CHtml::radioButtonList($this->getEditableInputName($this->attribute, 'type'),
+            $this->assertModelIsValid();
+            $content      = CHtml::radioButtonList($this->getEditableInputName($this->getAttributeName(), 'type'),
                                                    $this->resolveSelectedType(),
                                                    $this->resolveData(),
                                                    $this->getEditableHtmlOptions());
             return $content;
         }
 
+        protected function assertModelIsValid()
+        {
+            assert('$this->model instanceof ModelForm || $this->model instanceof ConfigurableMetadataModel ||
+                    $this->model instanceof SecurableItem');
+            assert('$this->getExplicitReadWriteModelPermissions() instanceof ExplicitReadWriteModelPermissions');
+            assert('$this->getExplicitReadWriteModelPermissions()->getReadOnlyPermitablesCount() == 0');
+            assert('$this->getExplicitReadWriteModelPermissions()->getReadWritePermitablesCount() >= 0');
+            assert('$this->getExplicitReadWriteModelPermissions()->getReadWritePermitablesCount() < 2');
+        }
+
         protected function renderControlNonEditable()
         {
-            throw new NotImplementedException();
+            $selectedType = $this->resolveSelectedType();
+
+            $permissionTypes = $this->getPermissionTypes();
+            if($selectedType == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP)
+            {
+                $selectedGroups = $this->getSelectableGroupsData();
+                $stringContent  = ArrayUtil::getArrayValue($permissionTypes, $selectedType);
+                $stringContent .= '&#160;';
+                $stringContent  = ArrayUtil::getArrayValue($selectedGroups, $this->resolveSelectedGroup());
+            }
+            else
+            {
+                $stringContent = ArrayUtil::getArrayValue($permissionTypes, $selectedType);
+            }
+            return Yii::app()->format->text($stringContent);
         }
 
         /**
@@ -72,10 +102,19 @@
             return Yii::t('Default', 'Who can read and write');
         }
 
+        /**
+         * This type of element does not support ActiveForm errors
+         * @return error content
+         */
+        protected function renderError()
+        {
+            return null;
+        }
+
         public function getEditableHtmlOptions()
         {
             $htmlOptions = array(
-                'id'   => $this->getEditableInputId($this->attribute, 'type'),
+                'id'   => $this->getEditableInputId($this->getAttributeName(), 'type'),
             );
             $htmlOptions['template'] =  '<div class="radio-input">{input}{label}</div>';
             return $htmlOptions;
@@ -107,7 +146,7 @@
          */
         protected function resolveSelectedType()
         {
-            $permitables = $this->model->{$this->attribute}->getReadWritePermitables();
+            $permitables = $this->getExplicitReadWriteModelPermissions()->getReadWritePermitables();
             if ($permitables == null)
             {
                 return null;
@@ -133,7 +172,7 @@
          */
         protected function resolveSelectedGroup()
         {
-            $permitables = $this->model->{$this->attribute}->getReadWritePermitables();
+            $permitables = $this->getExplicitReadWriteModelPermissions()->getReadWritePermitables();
             if ($permitables == null)
             {
                 return null;
@@ -163,9 +202,9 @@
         protected function renderSelectableGroupsContent()
         {
             $htmlOptions = array(
-                'id'   => $this->getEditableInputId   ($this->attribute, 'nonEveryoneGroup'),
+                'id'   => $this->getEditableInputId   ($this->getAttributeName(), 'nonEveryoneGroup'),
             );
-            $name        = $this->getEditableInputName($this->attribute, 'nonEveryoneGroup');
+            $name        = $this->getEditableInputName($this->getAttributeName(), 'nonEveryoneGroup');
             $dropDownArray = $this->getSelectableGroupsData();
             if ($dropDownArray == null)
             {

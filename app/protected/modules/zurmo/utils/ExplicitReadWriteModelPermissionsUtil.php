@@ -134,5 +134,113 @@
                 throw notSupportedException();
             }
         }
+
+        public static function resolveByModelAndMake($postData, SecurableItem $model)
+        {
+            if(isset($postData['explicitReadWriteModelPermissions']))
+            {
+                $explicitReadWriteModelPermissions = self::
+                                                     makeByPostData($postData['explicitReadWriteModelPermissions']);
+                self::resolveForDifferencesBySecurableItem($explicitReadWriteModelPermissions, $model);
+                return $explicitReadWriteModelPermissions;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected static function resolveForDifferencesBySecurableItem($explicitReadWriteModelPermissions,
+                                                                       SecurableItem $securableItem)
+        {
+            foreach ($securableItem->permissions as $permission)
+            {
+                $permission->castDownPermitable();
+                if($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
+                {
+                    if(Permission::READ == ($permission->permissions & Permission::READ))
+                    {
+                        if(!$explicitReadWriteModelPermissions->isReadOrReadWritePermitable($permission->permitable))
+                        {
+                            $explicitReadWriteModelPermissions->addReadWritePermitableToRemove($permission->permitable);
+                        }
+                    }
+                    elseif(Permission::WRITE == ($permission->permissions & Permission::WRITE))
+                    {
+                        if(!$explicitReadWriteModelPermissions->isReadOrReadWritePermitable($permission->permitable))
+                        {
+                            $explicitReadWriteModelPermissions->addReadWritePermitableToRemove($permission->permitable);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        public static function removeIfExistsFromPostData($postData)
+        {
+            assert('is_array($postData)');
+            if(isset($postData['explicitReadWriteModelPermissions']))
+            {
+                unset($postData['explicitReadWriteModelPermissions']);
+            }
+            return $postData;
+        }
+
+        public static function resolveExplicitReadWriteModelPermissions(SecurableItem $model,
+                                  ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
+        {
+
+            if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
+            {
+                foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
+                {
+                    $model->addPermissions($permitable, Permission::READ);
+                }
+            }
+            if ($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
+            {
+                foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
+                {
+                    $model->addPermissions($permitable, Permission::READ_WRITE);
+                }
+            }
+            if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemoveCount() > 0)
+            {
+                foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemove() as $permitable)
+                {
+                    $model->removePermissions($permitable, Permission::READ, Permission::ALLOW);
+                }
+            }
+            if ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemoveCount() > 0)
+            {
+                foreach ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove() as $permitable)
+                {
+                    $model->removePermissions($permitable, Permission::READ_WRITE, Permission::ALLOW);
+                }
+            }
+        }
+
+        public static function makeBySecurableItem(SecurableItem $securableItem)
+        {
+            $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            foreach ($securableItem->permissions as $permission)
+            {
+                $permission->castDownPermitable();
+                if($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
+                {
+                    if(Permission::READ == ($permission->permissions & Permission::READ))
+                    {
+                        $explicitReadWriteModelPermissions->addReadPermitable($permission->permitable);
+                    }
+                    elseif(Permission::WRITE == ($permission->permissions & Permission::WRITE))
+                    {
+                        $explicitReadWriteModelPermissions->addReadWritePermitable($permission->permitable);
+                    }
+                    break;
+                }
+            }
+            return $explicitReadWriteModelPermissions;
+        }
     }
 ?>

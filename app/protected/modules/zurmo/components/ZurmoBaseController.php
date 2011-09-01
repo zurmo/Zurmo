@@ -391,9 +391,17 @@
             $postVariableName = get_class($model);
             if (isset($_POST[$postVariableName]))
             {
-                $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($model, $_POST[$postVariableName]);
-                $sanitizedOwnerPostData = PostUtil::sanitizePostDataToJustHavingElementForSavingModel($sanitizedPostData, 'owner');
-                $sanitizedPostDataWithoutOwner = PostUtil::removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
+                $postData = $_POST[$postVariableName];
+                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                     resolveByModelAndMake($_POST[$postVariableName], $model);
+                $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
+                                                     removeIfExistsFromPostData($_POST[$postVariableName]);
+                $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
+                                                     $model, $readyToUsePostData);
+                $sanitizedOwnerPostData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
+                                                     $sanitizedPostData, 'owner');
+                $sanitizedPostDataWithoutOwner     = PostUtil::
+                                                     removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
                 $model->setAttributes($sanitizedPostDataWithoutOwner);
                 if ($model->validate())
                 {
@@ -412,6 +420,11 @@
                     }
                     if ($passedOwnerValidation && $model->save(false))
                     {
+                        if($explicitReadWriteModelPermissions != null)
+                        {
+                            ExplicitReadWriteModelPermissionsUtil::
+                            resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
+                        }
                         $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                     }
                 }

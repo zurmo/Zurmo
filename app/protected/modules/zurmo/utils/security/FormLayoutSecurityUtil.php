@@ -109,6 +109,17 @@
                     $elementInformation['type']          = 'Null'; // Not Coding Standard
                 }
             }
+            elseif (is_subclass_of($elementclassname, 'ExplicitReadWriteModelPermissionsElement'))
+            {
+                if(ActionSecurityUtil::canUserPerformAction('Edit', $model, $user))
+                {
+                    return;
+                }
+                else
+                {
+                    $elementInformation['type'] = 'Null'; // Not Coding Standard
+                }
+            }
         }
     }
 ?>

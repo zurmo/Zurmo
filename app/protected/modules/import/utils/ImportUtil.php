@@ -196,7 +196,8 @@
                     {
                         try
                         {
-                            static::resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
+                            ExplicitReadWriteModelPermissionsUtil::
+                            resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
                             $importRowDataResultsUtil->setStatusToCreated();
                         }
                         catch(AccessDeniedSecurityException $e)
@@ -229,24 +230,7 @@
             }
         }
 
-        protected static function resolveExplicitReadWriteModelPermissions($model,
-                                  ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
-        {
-            if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
-            {
-                foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
-                {
-                    $model->addPermissions($permitable, Permission::READ);
-                }
-            }
-            if ($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
-            {
-                foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
-                {
-                    $model->addPermissions($permitable, Permission::READ_WRITE);
-                }
-            }
-        }
+
 
         protected static function getIdColumnNameByMappingData($mappingData)
         {
