@@ -29,5 +29,17 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Related'
+            => '??',
+        'Related to'
+            => '??',
+        'Roll Up Off'
+            => '??',
+        'Roll Up On'
+            => '??',
+        'Show more'
+            => '??',
+        'Summary'
+            => '??',
     );
 ?>

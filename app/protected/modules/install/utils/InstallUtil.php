@@ -276,7 +276,7 @@
         public static function checkRedBeanPatched()
         {
             $contents = file_get_contents('../redbean/rb.php');
-            return preg_match('/public function __call\(\$method, \$args\) {\n\s+return null;/', $contents) != 0; // Not Coding Standard
+            return preg_match('/public function __call\(\$method, \$args\) {\s+return null;/', $contents) != 0; // Not Coding Standard
         }
 
         /**
