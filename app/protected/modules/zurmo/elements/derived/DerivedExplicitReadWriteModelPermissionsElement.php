@@ -30,6 +30,7 @@
      * object is created on the fly based on the SecurableItem model data.
      */
     class DerivedExplicitReadWriteModelPermissionsElement extends ExplicitReadWriteModelPermissionsElement
+    implements DerivedElementInterface
     {
         /**
          * Dynamically created ExplicitReadWriteModelPermissions based on the model data.
@@ -65,6 +66,20 @@
          * @return A string containing the element's label
          */
         protected function renderLabel()
+        {
+            return Yii::t('Default', 'Who can read and write');
+        }
+
+        /**
+         * Method required by interface. Returns empty array since there are no real model
+         * atttribute names for this element.
+         */
+        public static function getModelAttributeNames()
+        {
+            return array();
+        }
+
+        public static function getDisplayName()
         {
             return Yii::t('Default', 'Who can read and write');
         }
