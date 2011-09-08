@@ -167,7 +167,7 @@
         // See comments on RedBeanModel::castDown() and
         // RedBeanModel::testDownCast() to see why
         // this (apparent/actual dodginess) is needed.
-        private function castDownPermitable()
+        public function castDownPermitable()
         {
             if (get_class($this->permitable) == 'Permitable')
             {

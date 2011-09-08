@@ -393,7 +393,7 @@
             {
                 $postData = $_POST[$postVariableName];
                 $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                     resolveByModelAndMake($_POST[$postVariableName], $model);
+                                                     resolveByPostDataAndModelThenMake($_POST[$postVariableName], $model);
                 $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
                                                      removeIfExistsFromPostData($_POST[$postVariableName]);
                 $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
@@ -422,8 +422,9 @@
                     {
                         if($explicitReadWriteModelPermissions != null)
                         {
-                            ExplicitReadWriteModelPermissionsUtil::
+                            $success = ExplicitReadWriteModelPermissionsUtil::
                             resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
+                            //todo: handle if success is false, means adding/removing permissions save failed.
                         }
                         $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                     }

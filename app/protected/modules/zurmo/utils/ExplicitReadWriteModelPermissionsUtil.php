@@ -72,7 +72,7 @@
 
         /**
          * Given a explicitReadWriteModelPermissions object, make a $mixedPermitablesData array.
-         * @param object $explicitReadWriteModelPermissions
+         * @param ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions
          */
         public static function makeMixedPermitablesDataByExplicitReadWriteModelPermissions(
                                $explicitReadWriteModelPermissions)
@@ -135,13 +135,23 @@
             }
         }
 
-        public static function resolveByModelAndMake($postData, SecurableItem $model)
+        /**
+         * Given an array of post data and a securable item, if the post data has the
+         * 'explicitReadWriteModelPermissions' present, then make a explicitReadWriteModelPermissions
+         * from that data and then resolve against any differences in the securable item.  This means if the
+         * post data says a group is read/write, but the existing securable item does not have that, then this
+         * signals this will need to be added.  Whereas if the securable item has a read/write group that the
+         * post data does not have, this signals that this read/write needs to be removed.
+         * @param array $postData
+         * @param SecurableItem $securableItem
+         */
+        public static function resolveByPostDataAndModelThenMake($postData, SecurableItem $securableItem)
         {
             if(isset($postData['explicitReadWriteModelPermissions']))
             {
                 $explicitReadWriteModelPermissions = self::
                                                      makeByPostData($postData['explicitReadWriteModelPermissions']);
-                self::resolveForDifferencesBySecurableItem($explicitReadWriteModelPermissions, $model);
+                self::resolveForDifferencesBySecurableItem($explicitReadWriteModelPermissions, $securableItem);
                 return $explicitReadWriteModelPermissions;
             }
             else
@@ -150,6 +160,14 @@
             }
         }
 
+        /**
+         * If the ExplicitReadWriteModelPermissions says a group is read/write, but the existing securable item
+         * does not have that, then this signals this group will need to be added.  Whereas if the securable item has a
+         * read/write group that the ExplicitReadWriteModelPermissions does not have, this signals that this read/write
+         * needs to be removed.
+         * @param ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions
+         * @param SecurableItem $securableItem
+         */
         protected static function resolveForDifferencesBySecurableItem($explicitReadWriteModelPermissions,
                                                                        SecurableItem $securableItem)
         {
@@ -177,6 +195,11 @@
             }
         }
 
+        /**
+         * Unset the 'explicitReadWriteModelPermissions' array of data in a post data array if it exists.
+         * @param array $postData
+         * @return array of post data with the 'explicitReadWriteModelPermissions' removed.
+         */
         public static function removeIfExistsFromPostData($postData)
         {
             assert('is_array($postData)');
@@ -187,40 +210,60 @@
             return $postData;
         }
 
-        public static function resolveExplicitReadWriteModelPermissions(SecurableItem $model,
+        /**
+         * Given a SecurableItem, add and remove permissions
+         * based on what the provided ExplicitReadWriteModelPermissions indicates should be done.
+         * @param SecurableItem $securableItem
+         * @param ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions
+         */
+        public static function resolveExplicitReadWriteModelPermissions(SecurableItem $securableItem,
                                   ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
         {
-
+            assert('$securableItem->id > 0');
+            $saveSecurableItem = false;
             if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
             {
+                $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
                 {
-                    $model->addPermissions($permitable, Permission::READ);
+                    $securableItem->addPermissions($permitable, Permission::READ);
                 }
             }
             if ($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
             {
+                $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
                 {
-                    $model->addPermissions($permitable, Permission::READ_WRITE);
+                    $securableItem->addPermissions($permitable, Permission::READ_WRITE);
                 }
             }
             if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemoveCount() > 0)
             {
+                $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemove() as $permitable)
                 {
-                    $model->removePermissions($permitable, Permission::READ, Permission::ALLOW);
+                    $securableItem->removePermissions($permitable, Permission::READ, Permission::ALLOW);
                 }
             }
             if ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemoveCount() > 0)
             {
+                $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove() as $permitable)
                 {
-                    $model->removePermissions($permitable, Permission::READ_WRITE, Permission::ALLOW);
+                    $securableItem->removePermissions($permitable, Permission::READ_WRITE, Permission::ALLOW);
                 }
             }
+            if($saveSecurableItem)
+            {
+                return $securableItem->save();
+            }
+            return true;
         }
 
+        /**
+         * Make an ExplicitReadWriteModelPermissions by SecurableItem.
+         * @param SecurableItem $securableItem
+         */
         public static function makeBySecurableItem(SecurableItem $securableItem)
         {
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
@@ -229,15 +272,14 @@
                 $permission->castDownPermitable();
                 if($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
                 {
-                    if(Permission::READ == ($permission->permissions & Permission::READ))
-                    {
-                        $explicitReadWriteModelPermissions->addReadPermitable($permission->permitable);
-                    }
-                    elseif(Permission::WRITE == ($permission->permissions & Permission::WRITE))
+                    if(Permission::WRITE == ($permission->permissions & Permission::WRITE))
                     {
                         $explicitReadWriteModelPermissions->addReadWritePermitable($permission->permitable);
                     }
-                    break;
+                    elseif(Permission::READ == ($permission->permissions & Permission::READ))
+                    {
+                        $explicitReadWriteModelPermissions->addReadOnlyPermitable($permission->permitable);
+                    }
                 }
             }
             return $explicitReadWriteModelPermissions;

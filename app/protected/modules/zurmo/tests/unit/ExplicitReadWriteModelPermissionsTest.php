@@ -48,6 +48,19 @@
             $group3->name = 'Group3';
             $this->assertTrue($group3->save());
 
+            $group4 = new Group();
+            $group4->name = 'Group4';
+            $this->assertTrue($group4->save());
+
+            $group5 = new Group();
+            $group5->name = 'Group5';
+            $this->assertTrue($group5->save());
+
+            $group6 = new Group();
+            $group6->name = 'Group6';
+            $this->assertTrue($group6->save());
+
+
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             $this->assertEquals(0, $explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
             $this->assertEquals(0, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
@@ -56,8 +69,12 @@
             $explicitReadWriteModelPermissions->addReadOnlyPermitable($group1);
             $explicitReadWriteModelPermissions->addReadWritePermitable($group2);
             $explicitReadWriteModelPermissions->addReadWritePermitable($group3);
+            $explicitReadWriteModelPermissions->addReadOnlyPermitableToRemove($group4);
+            $explicitReadWriteModelPermissions->addReadWritePermitableToRemove($group5);
             $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
             $this->assertEquals(2, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+            $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadWritePermitablesToRemoveCount());
+            $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadWritePermitablesToRemoveCount());
 
             $readOnlyPermitables = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
@@ -66,6 +83,17 @@
             $this->assertEquals($group1, $readOnlyPermitables[$group1->id]);
             $this->assertEquals($group2, $readWritePermitables[$group2->id]);
             $this->assertEquals($group3, $readWritePermitables[$group3->id]);
+            $readOnlyPermitablesToRemove  = $explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemove();
+            $readWritePermitablesToRemove = $explicitReadWriteModelPermissions->getReadWritePermitablesToRemove();
+            $this->assertEquals($group4, $readOnlyPermitablesToRemove[$group4->id]);
+            $this->assertEquals($group5, $readWritePermitablesToRemove[$group5->id]);
+
+            $this->assertTrue ($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group1));
+            $this->assertTrue ($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group2));
+            $this->assertTrue ($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group3));
+            $this->assertFalse($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group4));
+            $this->assertFalse($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group5));
+            $this->assertFalse($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group6));
         }
     }
 ?>
