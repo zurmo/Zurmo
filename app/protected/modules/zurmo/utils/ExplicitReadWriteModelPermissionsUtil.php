@@ -226,7 +226,9 @@
                 $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
                 {
+                    assert('$permitable instanceof Group');
                     $securableItem->addPermissions($permitable, Permission::READ);
+                    ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($securableItem, $permitable);
                 }
             }
             if ($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
@@ -234,7 +236,9 @@
                 $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
                 {
+                    assert('$permitable instanceof Group');
                     $securableItem->addPermissions($permitable, Permission::READ_WRITE);
+                    ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($securableItem, $permitable);
                 }
             }
             if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemoveCount() > 0)
@@ -242,7 +246,10 @@
                 $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemove() as $permitable)
                 {
+                    assert('$permitable instanceof Group');
                     $securableItem->removePermissions($permitable, Permission::READ, Permission::ALLOW);
+                    ReadPermissionsOptimizationUtil::securableItemLostPermissionsForGroup($securableItem, $permitable);
+
                 }
             }
             if ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemoveCount() > 0)
@@ -250,7 +257,9 @@
                 $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove() as $permitable)
                 {
+                    assert('$permitable instanceof Group');
                     $securableItem->removePermissions($permitable, Permission::READ_WRITE, Permission::ALLOW);
+                    ReadPermissionsOptimizationUtil::securableItemLostPermissionsForGroup($securableItem, $permitable);
                 }
             }
             if($saveSecurableItem)

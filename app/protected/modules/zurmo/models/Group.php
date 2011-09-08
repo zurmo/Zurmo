@@ -180,11 +180,6 @@
                 {
                     return null;
                 }
-                if (in_array($attributeName, array('users',
-                                                   'groups')))
-                {
-                    throw new NotSupportedException();
-                }
             }
             if ($this->isSuperAdministrators)
             {

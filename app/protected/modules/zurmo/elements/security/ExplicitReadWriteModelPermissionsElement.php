@@ -179,14 +179,16 @@
             }
             else
             {
-                assert($permitables[0] instanceof Group);
-                if ($permitables[0]->name == Group::EVERYONE_GROUP_NAME)
+                assert(count($permitables) == 1);
+                reset($permitables);
+                $permitable = current($permitables);
+                if ($permitable->name == Group::EVERYONE_GROUP_NAME)
                 {
                     return null;
                 }
                 else
                 {
-                    return $permitables[0]->id;
+                    return $permitable->id;
                 }
             }
         }
