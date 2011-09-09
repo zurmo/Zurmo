@@ -608,19 +608,13 @@
             $group->name = 'Something';
         }
 
-        /**
-         * @expectedException NotSupportedException
-         */
-        public function testCannotGetUsersFromTheEveryoneGroup()
+        public function testCanGetUsersFromTheEveryoneGroup()
         {
             $group = Group::getByName(Group::EVERYONE_GROUP_NAME);
             $this->assertFalse($group->canModifyMemberships());
             $group->users;
         }
 
-        /**
-         * @expectedException NotSupportedException
-         */
         public function testCannotAddUsersToTheEveryoneGroup()
         {
             SecurityTestHelper::createUsers();
@@ -628,30 +622,22 @@
             $user = $users[0];
             $group = Group::getByName(Group::EVERYONE_GROUP_NAME);
             $this->assertFalse($group->canModifyMemberships());
-            $group->users->add($user);
         }
 
-        /**
-         * @expectedException NotSupportedException
-         */
-        public function testCannotGetGroupsFromTheEveryoneGroup()
+        public function testCanGetGroupsFromTheEveryoneGroupButItIsEmptyArray()
         {
             $group = Group::getByName(Group::EVERYONE_GROUP_NAME);
             $this->assertFalse($group->canModifyMemberships());
-            $group->groups;
+            $this->assertEquals(array(), $group->groups);
         }
 
-        /**
-         * @expectedException NotSupportedException
-         */
-        public function testCannotAddGroupsToTheEveryoneGroup()
+        public function testCannotModifyGroupMembershipForTheTheEveryoneGroup()
         {
             SecurityTestHelper::createGroups();
             $groups = Group::getAll();
             $group = $groups[0];
             $everyone = Group::getByName(Group::EVERYONE_GROUP_NAME);
             $this->assertFalse($everyone->canModifyMemberships());
-            $everyone->groups->add($group);
         }
 
         /**
@@ -672,7 +658,7 @@
         }
 
         /**
-         * @depends testCannotAddGroupsToTheEveryoneGroup
+         * @depends testCannotModifyGroupMembershipForTheTheEveryoneGroup
          */
         public function testEveryoneImplicitlyContainsAllGroups()
         {
@@ -708,7 +694,7 @@
         }
 
         /**
-         * @depends testCannotAddGroupsToTheEveryoneGroup
+         * @depends testCannotModifyGroupMembershipForTheTheEveryoneGroup
          * @expectedException NotSupportedException
          */
         public function testCannotSetRightsOnTheSuperAdministratorsGroup()
@@ -719,7 +705,7 @@
         }
 
         /**
-         * @depends testCannotAddGroupsToTheEveryoneGroup
+         * @depends testCannotModifyGroupMembershipForTheTheEveryoneGroup
          * @expectedException NotSupportedException
          */
         public function testCannotRemoveRightsOnTheSuperAdministratorsGroup()
@@ -729,7 +715,7 @@
         }
 
         /**
-         * @depends testCannotAddGroupsToTheEveryoneGroup
+         * @depends testCannotModifyGroupMembershipForTheTheEveryoneGroup
          * @expectedException NotSupportedException
          */
         public function testCannotRemoveAllRightsOnTheSuperAdministratorsGroup()
@@ -739,7 +725,7 @@
         }
 
         /**
-         * @depends testCannotAddGroupsToTheEveryoneGroup
+         * @depends testCannotModifyGroupMembershipForTheTheEveryoneGroup
          */
         public function testSuperAdministratorsImplicitlyHasAllRights()
         {

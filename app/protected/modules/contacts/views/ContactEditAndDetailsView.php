@@ -48,6 +48,7 @@
                         'DateTimeModifiedUser',
                         'TitleFullName',
                         'ContactStateDropDown',
+                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'title',
@@ -120,6 +121,21 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'owner', 'type' => 'User'),
+                                            ),
+                                        ),
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null',
+                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => null, 'type' => 'Null'),
                                             ),
                                         ),
                                         array(

@@ -46,6 +46,7 @@
                     'derivedAttributeTypes' => array(
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
+                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
@@ -97,12 +98,13 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
+                                                array('attributeName' => 'owner', 'type' => 'User'),
                                             ),
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
+                                                array('attributeName' => 'null',
+                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
                                             ),
                                         ),
                                     )

@@ -47,6 +47,20 @@
         protected $readWritePermitables = array();
 
         /**
+         * Array of permitable objects that are explicity set to read only that need to be
+         * removed from a securable item.
+         * @var array
+         */
+        protected $readOnlyPermitablesToRemove  = array();
+
+        /**
+         * Array of permitable objects that are explicity set to read and write that need to
+         * be removed from a securable item.
+         * @var array
+         */
+        protected $readWritePermitablesToRemove = array();
+
+        /**
          * Add a permitable object to the read only array.
          * @param object $permitable
          */
@@ -80,6 +94,40 @@
             }
         }
 
+            /**
+         * Add a permitable object that needs to be removed from the securable item.
+         * @param object $permitable
+         */
+        public function addReadOnlyPermitableToRemove($permitable)
+        {
+            assert('$permitable instanceof Permitable');
+            if (!isset($this->readOnlyPermitablesToRemove[$permitable->id]))
+            {
+                $this->readOnlyPermitablesToRemove[$permitable->id] = $permitable;
+            }
+            else
+            {
+                throw notSupportedException();
+            }
+        }
+
+        /**
+         * Add a permitable object that needs to be removed from the securable item.
+         * @param object $permitable
+         */
+        public function addReadWritePermitableToRemove($permitable)
+        {
+            assert('$permitable instanceof Permitable');
+            if (!isset($this->readWritePermitablesToRemove[$permitable->id]))
+            {
+                $this->readWritePermitablesToRemove[$permitable->id] = $permitable;
+            }
+            else
+            {
+                throw notSupportedException();
+            }
+        }
+
         /**
          * @return integer count of read only permitables
          */
@@ -97,6 +145,22 @@
         }
 
         /**
+         * @return integer count of read only permitables to remove from a securable item.
+         */
+        public function getReadOnlyPermitablesToRemoveCount()
+        {
+            return count($this->readOnlyPermitablesToRemove);
+        }
+
+            /**
+         * @return integer count of read/write permitables to remove from a securable item.
+         */
+        public function getReadWritePermitablesToRemoveCount()
+        {
+            return count($this->readWritePermitablesToRemove);
+        }
+
+        /**
          * @return array of read only permitables
          */
         public function getReadOnlyPermitables()
@@ -110,6 +174,38 @@
         public function getReadWritePermitables()
         {
             return $this->readWritePermitables;
+        }
+
+        /**
+         * @return array of read only permitables to remove from a securable item.
+         */
+        public function getReadOnlyPermitablesToRemove()
+        {
+            return $this->readOnlyPermitablesToRemove;
+        }
+
+        /**
+         * @return array of read/write permitables to remove to remove from a securable item.
+         */
+        public function getReadWritePermitablesToRemove()
+        {
+            return $this->readWritePermitablesToRemove;
+        }
+
+        /**
+         * Given a permitable, is that permitable in the read only data or the read write data?
+         * @param Permitable $permitable
+         * @return boolean true if it is in one of the data arrays.
+         */
+        public function isReadOrReadWritePermitable($permitable)
+        {
+            assert('$permitable instanceof Permitable');
+            if (isset($this->readWritePermitables[$permitable->id]) ||
+                isset($this->readOnlyPermitables[$permitable->id]))
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>

@@ -141,7 +141,6 @@
             RedBeanDatabase::setup(Yii::app()->db->connectionString,
                                    Yii::app()->db->username,
                                    Yii::app()->db->password);
-
             if (Yii::app()->isApplicationInstalled())
             {
                 if (!FORCE_NO_FREEZE)
