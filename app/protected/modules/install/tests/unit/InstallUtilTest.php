@@ -398,9 +398,15 @@
         public function testWriteConfiguration()
         {
             $instanceRoot = '.';
-            $debugConfigFile       = "$instanceRoot/protected/config/debug.php";
-            $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
-            $originalDebugConfiguration       = file_get_contents($debugConfigFile);
+
+            $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
+            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+
+            $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
+            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+            copy($debugConfigFileDist, $debugConfigFile);
+
             $this->assertRegExp   ('/\$debugOn = true;/',
                                    $originalDebugConfiguration);
             $this->assertRegExp   ('/\$forceNoFreeze = true;/',
@@ -445,8 +451,8 @@
             }
             // finally
             // {
-                file_put_contents($debugConfigFile,       $originalDebugConfiguration);
-                file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
+                unlink($debugConfigFile);
+                unlink($perInstanceConfigFile);
             // }
             if (isset($e)) // This bizarre looking $e stuff is because php thinks 'finally is not useful'.
             {
