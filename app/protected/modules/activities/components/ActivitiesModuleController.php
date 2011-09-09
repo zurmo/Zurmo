@@ -42,11 +42,15 @@
             $postVariableName = get_class($model);
             if (isset($_POST[$postVariableName]))
             {
-                $sanitizedPostData             = PostUtil::sanitizePostByDesignerTypeForSavingModel($model,
-                                                                $_POST[$postVariableName]);
-                $sanitizedOwnerPostData        = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
+                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                     resolveByPostDataAndModelThenMake($_POST[$postVariableName], $model);
+                $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
+                                                     removeIfExistsFromPostData($_POST[$postVariableName]);
+                $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel($model,
+                                                                $readyToUsePostData);
+                $sanitizedOwnerPostData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
                                                                 $sanitizedPostData, 'owner');
-                $sanitizedPostDataWithoutOwner = PostUtil::removeElementFromPostDataForSavingModel(
+                $sanitizedPostDataWithoutOwner     = PostUtil::removeElementFromPostDataForSavingModel(
                                                                 $sanitizedPostData, 'owner');
                 $model->setAttributes($sanitizedPostData);
                 $this->resolveModelsHasManyRelationsFromPost($model);
@@ -59,6 +63,12 @@
                     }
                     if ($model->validate(array('owner')) && $model->save(false))
                     {
+                        if($explicitReadWriteModelPermissions != null)
+                        {
+                            $success = ExplicitReadWriteModelPermissionsUtil::
+                            resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
+                            //todo: handle if success is false, means adding/removing permissions save failed.
+                        }
                         $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                     }
                 }

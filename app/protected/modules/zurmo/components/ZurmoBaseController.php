@@ -392,8 +392,15 @@
             if (isset($_POST[$postVariableName]))
             {
                 $postData = $_POST[$postVariableName];
-                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                     resolveByPostDataAndModelThenMake($_POST[$postVariableName], $model);
+                if($model instanceof SecurableItem)
+                {
+                    $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                         resolveByPostDataAndModelThenMake($_POST[$postVariableName], $model);
+                }
+                else
+                {
+                    $explicitReadWriteModelPermissions = null;
+                }
                 $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
                                                      removeIfExistsFromPostData($_POST[$postVariableName]);
                 $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(

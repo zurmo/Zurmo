@@ -180,6 +180,10 @@
                 {
                     return null;
                 }
+                if ($attributeName == 'groups')
+                {
+                    return array();
+                }
             }
             if ($this->isSuperAdministrators)
             {

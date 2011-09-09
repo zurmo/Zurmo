@@ -43,6 +43,7 @@
                         'ActivityItems',
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
+                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',
@@ -120,6 +121,16 @@
                                             'detailViewOnly' => true,
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null',
+                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
                                             ),
                                         ),
                                     )

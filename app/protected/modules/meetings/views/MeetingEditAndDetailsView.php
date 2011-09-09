@@ -44,6 +44,7 @@
                         'MultipleContactsForMeeting',
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
+                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',
@@ -129,6 +130,16 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'description', 'type' => 'TextArea'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null',
+                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
                                             ),
                                         ),
                                     )
