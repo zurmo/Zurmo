@@ -402,16 +402,16 @@
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+            $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
 
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
             $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
             copy($debugConfigFileDist, $debugConfigFile);
+            $originalDebugConfiguration = file_get_contents($debugConfigFile);
 
-            $this->assertRegExp   ('/\$debugOn = true;/',
-                                   $originalDebugConfiguration);
-            $this->assertRegExp   ('/\$forceNoFreeze = true;/',
-                                   $originalDebugConfiguration);
-            $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+            $this->assertRegExp   ('/\$debugOn = true;/', $originalDebugConfiguration);
+            $this->assertRegExp   ('/\$forceNoFreeze = true;/', $originalDebugConfiguration);
+
             try
             {
                 InstallUtil::writeConfiguration($instanceRoot,
