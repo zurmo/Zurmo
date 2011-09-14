@@ -92,7 +92,7 @@
                 );
                 $index++;
             }
-            $compareMetadata['structure'] = '1 or 2 or 3 or 4';
+            $compareMetadata['structure'] = '(1 or 2 or 3 or 4)';
             $this->assertEquals($compareMetadata, $adaptedMetadata);
 
             $metadata = array(

@@ -388,7 +388,7 @@
                 );
                 $index++;
             }
-            $compareMetadata['structure'] = '1 or 2 or 3 or 4 or 5 or 6';
+            $compareMetadata['structure'] = '(1 or 2 or 3 or 4 or 5 or 6)';
             $this->assertEquals($compareMetadata, $adaptedMetadata);
 
             $metadata = array(
@@ -539,7 +539,7 @@
             $statesToInclude = ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
             $this->assertEquals(7, count($statesToInclude));
             $compareMetadata['clauses'] = array();
-            $compareMetadata['structure'] = '1 or 2 or 3 or 4 or 5 or 6 or 7';
+            $compareMetadata['structure'] = '(1 or 2 or 3 or 4 or 5 or 6 or 7)';
             $index = 1;
             foreach ($statesToInclude as $stateId => $notUsed)
             {

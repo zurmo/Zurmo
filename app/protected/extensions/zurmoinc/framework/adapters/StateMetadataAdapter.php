@@ -72,7 +72,7 @@
             }
             if (empty($metadata['structure']))
             {
-                $metadata['structure'] = $structure;
+                $metadata['structure'] = '(' . $structure . ')';
             }
             else
             {

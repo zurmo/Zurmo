@@ -56,16 +56,33 @@
             //Make contact DetailsAndRelations portlets
         }
 
-        public function testRegularUserAllControllerActions()
+        public function testRegularUserAllControllerActionsNoElevation()
         {
-            //Now test all portlet controller actions
-
-            //Now test peon with elevated rights to tabs /other available rights
-            //such as convert lead
-
-            //Now test peon with elevated permissions to models.
-
-            //Test peon create/select from sublist actions with none and elevated permissions
+            //todo: look at account regular user walkthrough for idea.
         }
+
+        /**
+         * @depends testRegularUserAllControllerActionsNoElevation
+         */
+        public function testRegularUserControllerActionsWithElevationToAccessAndCreate()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+
+            //Now test peon with elevated rights to contacts
+            $nobody = User::getByUsername('nobody');
+            $nobody->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS);
+            $nobody->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
+            $this->assertTrue($nobody->save());
+
+            //Test nobody with elevated rights.
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/create');
+            //todo: more.
+        }
+
+        //todo: look at accounts regular user test for more ideas on what to test.
     }
 ?>
