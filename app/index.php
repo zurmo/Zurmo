@@ -23,7 +23,6 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
     require_once('version.php');
     require_once('roots.php');
 
@@ -48,6 +47,7 @@
     require_once($debug);
     require_once($yii);
     require_once($webApplication);
+
     $webApplication = Yii::createApplication('WebApplication', $config);
     $webApplication->setRuntimePath($runtimePath);
     $webApplication->run();
