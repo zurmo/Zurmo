@@ -72,7 +72,6 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/create');
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
             
-            
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
             $this->setGetArray(array('selectedIds' => '4,5,6,7,8', 'selectAll' => ''));  // Not Coding Standard
@@ -81,11 +80,11 @@
             $this->setGetArray(array('selectAll' => '1', 'Contact_page' => 2));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/massEditProgressSave');
             
-            //Autocomplete for Account should fail
+            //Autocomplete for Contact should fail.
             $this->setGetArray(array('term' => 'super'));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/autoComplete');
 
-            //actionModalList should fail
+            //actionModalList should fail.
             $this->setGetArray(array(
                 'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
             ));
@@ -118,21 +117,22 @@
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/create');
             
+            //Test nobody can view an existing contact he owns.
             $contact = ContactTestHelper::createContactByNameForOwner('Switcheroo', $nobody);
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
             
+            //Test nobody can delete an existing contact he owns and it redirects to index.
             $this->setGetArray(array('id' => $contact->id));
             $this->resetPostArray();
-            
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
                         Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
             
-            //Autocomplete for Account should not_fail
+            //Autocomplete for Contact should not fail.
             $this->setGetArray(array('term' => 'super'));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/autoComplete');
 
-            //actionModalList should not_fail
+            //actionModalList for Contact should not fail.
             $this->setGetArray(array(
                 'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
             ));
