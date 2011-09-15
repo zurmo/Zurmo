@@ -47,7 +47,6 @@
     require_once($debug);
     require_once($yii);
     require_once($webApplication);
-
     $webApplication = Yii::createApplication('WebApplication', $config);
     $webApplication->setRuntimePath($runtimePath);
     $webApplication->run();
