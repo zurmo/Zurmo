@@ -398,7 +398,7 @@
 
         public function testWriteConfiguration()
         {
-            $instanceRoot = '.';
+            $instanceRoot = INSTANCE_ROOT;
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
