@@ -141,6 +141,41 @@
             //todo: more.
         }
 
+        /**
+         * @depends testRegularUserControllerActionsWithElevationToAccessAndCreate
+         */
+        public function testRegularUserControllerActionsWithElevationToModels()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $nobody = User::getByUsername('nobody');
+            
+            //created contact owned by user super
+            $contact = ContactTestHelper::createContactByNameForOwner('Switcheroo', $super);
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
+            
+            Yii::app()->user->userModel = $super;
+            $contact->addPermissions($nobody, Permission::READ);
+            $contact->save();
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            
+            Yii::app()->user->userModel = $super;
+            $contact->addPermissions($nobody, Permission::READ_WRITE);
+            $contact->save();
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details'); //here it falis
+
+            //Now test peon with elevated permissions to models.
+        }
+        
         //todo: look at accounts regular user test for more ideas on what to test.
     }
 ?>
