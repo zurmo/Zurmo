@@ -35,7 +35,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <superuser-password> [demodata]
+      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <superuser-password> [demodata] [load-magnitude]
 
     DESCRIPTION
       This command runs a silent install on the application, optional loading demo data if specified. This version
@@ -51,6 +51,7 @@
 
      Optional Parameters:
      * demodata: If you want demodata to load just specify 'demodata' otherwise leave blank.
+     * load-magnitude: Conditional, used only if demodata parameter specified, and it specify load magnitude for demodata (demodata volume).
 
 EOD;
     }
@@ -68,6 +69,10 @@ EOD;
         if (isset($args[5]) && $args[5] != 'demodata')
         {
             $this->usageError('Invalid parameter specified.  If specified the 6th parameter should be \'demodata\'');
+        }
+        if (isset($args[6]) && (intval($args[6]) < 1))
+        {
+            $this->usageError('Invalid parameter specified.  If specified the 7th parameter should be integer and greater then 0');
         }
         if (Yii::app()->isApplicationInstalled())
         {
@@ -93,7 +98,17 @@ EOD;
         {
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);
-            DemoDataUtil::load($messageLogger, 3);
+
+            if (isset($args[6]))
+            {
+                DemoDataUtil::load($messageLogger, intval($args[6]));
+            }
+            else
+            {
+                DemoDataUtil::load($messageLogger, 3);
+            }
+
+
             $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
         }
         $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
