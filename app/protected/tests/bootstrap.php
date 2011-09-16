@@ -27,7 +27,18 @@
     require_once('testRoots.php');
 
     chdir(COMMON_ROOT);
-    $debug  = INSTANCE_ROOT . '/protected/config/debug.php';
+
+    if(!is_file(INSTANCE_ROOT . '/protected/config/debugTest.php'))
+    {
+        copy(INSTANCE_ROOT . '/protected/config/debugDIST.php', INSTANCE_ROOT . '/protected/config/debugTest.php');
+    }
+    if(!is_file(INSTANCE_ROOT . '/protected/config/perInstanceTest.php'))
+    {
+        copy(INSTANCE_ROOT . '/protected/config/perInstanceDIST.php', INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
+    }
+
+    $debug          = INSTANCE_ROOT . '/protected/config/debugTest.php';
+
     $yiit   = COMMON_ROOT   . "/../yii/framework/yiit.php";
     $config = INSTANCE_ROOT . "/protected/config/test.php";
 

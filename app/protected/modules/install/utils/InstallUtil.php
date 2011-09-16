@@ -596,7 +596,7 @@
         public static function writeConfiguration($instanceRoot,
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
                                                   $memcacheHost = null, $memcachePort = null,
-                                                  $language)
+                                                  $language, $isTest = false)
         {
             assert('is_dir($instanceRoot)');
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -609,11 +609,19 @@
             assert('is_string($language)     && $language     != ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
-            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
-
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
-            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+
+            if (isset($isTest) && $isTest)
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
+                $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
+            }
+            else
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+                $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+            }
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!

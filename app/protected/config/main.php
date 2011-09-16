@@ -26,9 +26,18 @@
 
     // Used in a symlinked configuration where
     // multiple instances use the same source code.
-    if(is_file(INSTANCE_ROOT . '/protected/config/perInstance.php'))
+    if (defined('IS_TEST'))
     {
-        $perInstanceConfigWithSymlinkedMainConfig          = INSTANCE_ROOT . '/protected/config/perInstance.php';
+        $perInstanceFilename = 'perInstanceTest.php';
+    }
+    else
+    {
+        $perInstanceFilename = 'perInstance.php';
+    }
+
+    if(is_file(INSTANCE_ROOT . '/protected/config/' . $perInstanceFilename))
+    {
+        $perInstanceConfigWithSymlinkedMainConfig          = INSTANCE_ROOT . '/protected/config/' . $perInstanceFilename;
     }
     else
     {
@@ -38,9 +47,9 @@
     // Used in a non-symlinked configuration such
     // as in running unit tests directly in the
     // checked out source code.
-    if(is_file(COMMON_ROOT   . '/protected/config/perInstance.php'))
+    if(is_file(COMMON_ROOT   . '/protected/config/' . $perInstanceFilename))
     {
-        $perInstanceConfigInSameDirAsMainConfig          = COMMON_ROOT   . '/protected/config/perInstance.php';
+        $perInstanceConfigInSameDirAsMainConfig          = COMMON_ROOT   . '/protected/config/' . $perInstanceFilename;
     }
     else
     {
