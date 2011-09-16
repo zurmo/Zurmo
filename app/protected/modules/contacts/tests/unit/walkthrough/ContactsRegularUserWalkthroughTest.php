@@ -146,34 +146,110 @@
          */
         public function testRegularUserControllerActionsWithElevationToModels()
         {
+            
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $nobody = User::getByUsername('nobody');
             
             //created contact owned by user super
             $contact = ContactTestHelper::createContactByNameForOwner('Switcheroo', $super);
+            
+            //Test nobody, access to edit and details should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             
+            //give nobody access to read
             Yii::app()->user->userModel = $super;
             $contact->addPermissions($nobody, Permission::READ);
-            $contact->save();
+            $this->assertTrue($contact->save());
+            
+            //Test nobody, access to details should not fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            
+            //Test nobody, access to edit should fail.
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
             
+            //revoke nobody access to read
             Yii::app()->user->userModel = $super;
-            $contact->addPermissions($nobody, Permission::READ_WRITE);
-            $contact->save();
+            $contact->addPermissions($nobody, Permission::READ, Permission::DENY);
+            $this->assertTrue($contact->save());
+            
+            //Test nobody, access to details should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details'); //here it falis
-
-            //Now test peon with elevated permissions to models.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
+            
+            Yii::app()->user->userModel = $super;
+            //create some roles
+            $higherRole = new Role();
+            $higherRole->name = 'AAA';
+            $this->assertTrue($higherRole->save());
+            
+            $lowerRole = new Role();
+            $lowerRole->name = 'BBB';
+            $this->assertTrue($lowerRole->save());
+            
+            $higherbody = User::getByUsername('confused');
+            $lowerbody = User::getByUsername('nobody');
+            
+            $lowerRole->users->add($lowerbody);
+            $this->assertTrue($lowerRole->save());
+            $higherRole->users->add($higherbody);
+            $higherRole->roles->add($lowerRole);
+            $this->assertTrue($higherRole->save());
+            
+            $contact2 = ContactTestHelper::createContactByNameForOwner('Switcheroo', $super);
+            
+            //give lowerbody access to READ
+            $contact2->addPermissions($lowerbody, Permission::READ);
+            $this->assertTrue($contact2->save());
+            
+            //Test lowerbody, access to details should not fail.
+            Yii::app()->user->userModel = $lowerbody;
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            
+            //Test higherbody, access to details should not fail.
+            Yii::app()->user->userModel = $higherbody;
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            
+            Yii::app()->user->userModel = $super;
+            //create some groups
+            $higherGroup = new Group();
+            $higherGroup->name = 'AAA';
+            $this->assertTrue($higherGroup->save());
+            
+            $lowerGroup = new Group();
+            $lowerGroup->name = 'BBB';
+            $this->assertTrue($lowerGroup->save());
+            
+            $lowerGroup->users->add($lowerbody);
+            $this->assertTrue($lowerGroup->save());
+            $higherGroup->users->add($higherbody);
+            $higherGroup->groups->add($lowerGroup);
+            $this->assertTrue($higherGroup->save());
+            
+            //give lowerbody access to READ
+            $contact3 = ContactTestHelper::createContactByNameForOwner('Switcheroo', $super);
+            $contact3->addPermissions($lowerGroup, Permission::READ);
+            $this->assertTrue($contact3->save());
+            
+            //Test lowerbody, access to details should not fail.
+            Yii::app()->user->userModel = $lowerbody;
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            
+            //Test higherbody, access to details should not fail.
+            Yii::app()->user->userModel = $higherbody;
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            
         }
         
         //todo: look at accounts regular user test for more ideas on what to test.
