@@ -48,6 +48,7 @@
                 $this->rootPassword          = 'somepass';
                 $this->temporaryDatabaseName = 'zurmo_wacky';
             }
+
         }
 
         public function setup()
@@ -400,14 +401,16 @@
             $instanceRoot = '.';
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
-            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
             $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+
 
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
-            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
-            copy($debugConfigFileDist, $debugConfigFile);
+            $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
             $originalDebugConfiguration = file_get_contents($debugConfigFile);
+            copy($debugConfigFileDist, $debugConfigFile);
+
 
             $this->assertRegExp   ('/\$debugOn = true;/', $originalDebugConfiguration);
             $this->assertRegExp   ('/\$forceNoFreeze = true;/', $originalDebugConfiguration);
@@ -417,7 +420,7 @@
                 InstallUtil::writeConfiguration($instanceRoot,
                                                 'mysql', 'databases.r-us.com', 'wacky', 'wacko', 'wacked',
                                                 'memcache.jason.com', 5432,
-                                                'es');
+                                                'es', true);
                 $debugConfiguration       = file_get_contents($debugConfigFile);
                 $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
                 $this->assertRegExp   ('/\$debugOn = false;/',
@@ -453,11 +456,16 @@
             // {
                 unlink($debugConfigFile);
                 unlink($perInstanceConfigFile);
+                file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
+                file_put_contents($debugConfigFile, $originalDebugConfiguration);
             // }
             if (isset($e)) // This bizarre looking $e stuff is because php thinks 'finally is not useful'.
             {
                 throw $e;
             }
         }
+
+
+
     }
 ?>

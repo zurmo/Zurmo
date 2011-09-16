@@ -16,3 +16,5 @@ glob:demodata.sql
 .settings/org.eclipse.php.core.prefs
 app/protected/config/perInstance.php
 app/protected/config/debug.php
+app/protected/config/perInstanceTest.php
+app/protected/config/debugTest.php
