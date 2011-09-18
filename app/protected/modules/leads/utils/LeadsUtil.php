@@ -117,5 +117,19 @@
             }
             return $leadStatesData;
         }
+
+        public static function isStateALead(ContactState $state)
+        {
+            assert('$state->id > 0');
+            $leadStatesData = self::getLeadStateDataFromStartingStateOnAndKeyedById();
+            if(isset($leadStatesData[$state->id]))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 ?>
