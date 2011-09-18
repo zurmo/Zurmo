@@ -149,7 +149,7 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $nobody = User::getByUsername('nobody');
 
-            //created contact owned by user super
+            //Created contact owned by user super.
             $contact = ContactTestHelper::createContactByNameForOwner('Switcheroo', $super);
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
