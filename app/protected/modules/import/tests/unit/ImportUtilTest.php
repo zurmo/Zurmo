@@ -238,7 +238,7 @@
             $jim = User::getByUsername('jim');
             foreach ($testModels as $model)
             {
-                $this->assertEquals(array(Permission::READ_WRITE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
+                $this->assertEquals(array(Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::NONE), $model->getExplicitActualPermissions ($jim));
             }
 
             //Re-freeze if needed.
