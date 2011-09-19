@@ -194,6 +194,11 @@
         {
             assert('!empty($id)');
             $contact                 = Contact::getById(intval($id));
+            if(!LeadsUtil::isStateALead($contact->state))
+            {
+                $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
+                $this->redirect($urlParams);
+            }
             $convertToAccountSetting = LeadsModule::getConvertToAccountSetting();
             $selectAccountForm       = new AccountSelectForm();
             $account                 = new Account();
