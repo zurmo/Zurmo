@@ -103,8 +103,6 @@
             => '??',
         'Group Rights'
             => '??',
-        'Group User Membership'
-            => '??',
         'Groups'
             => '??',
         'here'
