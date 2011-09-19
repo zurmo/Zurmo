@@ -76,7 +76,7 @@
                     $rate           = (float)$currencyHelper->getConversionRateToBase($model->code);
                     if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
                     {
-                        $model->addError('code', Yii::t('Default', 'The currency code is invalid'));
+                        $model->addError('code', Yii::t('Default', 'Invalid currency code'));
                         $currencyHelper->resetErrors();
                         return $model;
                     }

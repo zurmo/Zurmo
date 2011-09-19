@@ -125,7 +125,7 @@
             }
             if (stripos($file_contents, 'error') === false)
             {
-                $this->webServiceErrorMessage = Yii::t('Default', 'Invalid currency code.');
+                $this->webServiceErrorMessage = Yii::t('Default', 'Invalid currency code');
                 $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_INVALID_CODE;
             }
             else

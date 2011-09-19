@@ -201,7 +201,7 @@
             => '??',
         'Time zone'
             => '??',
-        'to continue to the home page. If the error persists please do something or other.'
+        'to continue to the home page. If the error persists please contact your administrator.'
             => 'para continuar a la página de inicio. Si el error persiste, por favor haga una cosa u otra.',
         'User Membership'
             => '??',
