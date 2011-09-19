@@ -146,13 +146,12 @@
          */
         public function testRegularUserControllerActionsWithElevationToModels()
         {
-            
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $nobody = User::getByUsername('nobody');
 
             //Created contact owned by user super.
             $contact = ContactTestHelper::createContactByNameForOwner('testingElavationToModel', $super);
-            
+
             //Test nobody, access to edit and details should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
@@ -169,7 +168,7 @@
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            
+
             //Test nobody, access to edit should fail.
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
@@ -185,185 +184,202 @@
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
-            
+
             //revoke nobody access to read
             Yii::app()->user->userModel = $super;
             $contact->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
             $this->assertTrue($contact->save());
-            
+
             //Test nobody, access to detail should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
-            
+
             Yii::app()->user->userModel = $super;
             //create some roles
             $parentRole = new Role();
             $parentRole->name = 'AAA';
             $this->assertTrue($parentRole->save());
-            
+
             $childRole = new Role();
             $childRole->name = 'BBB';
             $this->assertTrue($childRole->save());
-            
+
             $userInParentRole = User::getByUsername('confused');
             $userInChildRole = User::getByUsername('nobody');
-            
+
             $childRole->users->add($userInChildRole);
             $this->assertTrue($childRole->save());
             $parentRole->users->add($userInParentRole);
             $parentRole->roles->add($childRole);
             $this->assertTrue($parentRole->save());
-            
+
             $contact2 = ContactTestHelper::createContactByNameForOwner('testingParentRolePermission', $super);
-            
+
             //Test userInParentRole, access to details and edit should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
+
             //give userInChildRole access to READ
             Yii::app()->user->userModel = $super;
             $contact2->addPermissions($userInChildRole, Permission::READ);
             $this->assertTrue($contact2->save());
-            
+
             //Test userInChildRole, access to details should not fail.
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            
+
             //Test userInParentRole, access to details should not fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            
+
             //give userInChildRole access to read and write
             Yii::app()->user->userModel = $super;
             $contact2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($contact2->save());
-            
-             //Test userInChildRole, access to edit should not fail.
+
+            //Test userInChildRole, access to edit should not fail.
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
-            
+
             //Test userInParentRole, access to edit should not fail.
-            //Yii::app()->user->userModel = $userInParentRole;
-            //$this->setGetArray(array('id' => $contact2->id));
-            //$this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
-            
+            Yii::app()->user->userModel = $userInParentRole;
+            //Forget contact2, so that the permissions can be properly refreshed.
+            //Otherwise what is happening, is the related permissions to account for example on
+            //contact 2 is not properly retrieving permissions for the new current user.
+            $contact2Id = $contact2->id;
+            $contact2->forget();
+            unset($contact2);
+            $contact2 = Contact::getById($contact2Id);
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
+
             //revoke userInChildRole access to read and write
             Yii::app()->user->userModel = $super;
             $contact2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
             $this->assertTrue($contact2->save());
-            
+
             //Test userInChildRole, access to detail should fail.
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
+
             //Test userInParentRole, access to detail should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
-            
+
             $parentRole->users->remove($userInParentRole);
             $parentRole->roles->remove($childRole);
             $this->assertTrue($parentRole->save());
             $childRole->users->remove($userInChildRole);
             $this->assertTrue($childRole->save());
-            
+
             Yii::app()->user->userModel = $super;
             //create some groups and assign users to groups
             $parentGroup = new Group();
             $parentGroup->name = 'AAA';
             $this->assertTrue($parentGroup->save());
-            
+
             $childGroup = new Group();
             $childGroup->name = 'BBB';
             $this->assertTrue($childGroup->save());
-            
+
             $userInChildGroup = User::getByUsername('confused');
             $userInParentGroup = User::getByUsername('nobody');
-            
-            $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS);
-            $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
-            $this->assertTrue($userInChildGroup->save());
-            
+
             $childGroup->users->add($userInChildGroup);
             $this->assertTrue($childGroup->save());
             $parentGroup->users->add($userInParentGroup);
             $parentGroup->groups->add($childGroup);
             $this->assertTrue($parentGroup->save());
-            
+            $parentGroup->forget();
+            $childGroup->forget();
+            $parentGroup = Group::getByName('AAA');
+            $childGroup = Group::getByName('BBB');
+
+            //Add access for the confused user to contacts and creation of contacts.
+            $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS);
+            $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
+            $this->assertTrue($userInChildGroup->save());
+
             $contact3 = ContactTestHelper::createContactByNameForOwner('testingParentGroupPermission', $super);
-            
+
             //Test userInParentGroup, access to details and edit should fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
+
             //Test userInChildGroup, access to details and edit should fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
+
             //give parentGroup access to READ
             Yii::app()->user->userModel = $super;
             $contact3->addPermissions($parentGroup, Permission::READ);
             $this->assertTrue($contact3->save());
-            
+
             //Test userInParentGroup, access to details should not fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            
+
             //Test userInChildGroup, access to details should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            
+
             //give parentGroup access to read and write
             Yii::app()->user->userModel = $super;
             $contact3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($contact3->save());
-            
+
             //Test userInParentGroup, access to edit should not fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
-            
+
             //Test userInChildGroup, access to edit should not fail.
-            //Yii::app()->user->userModel = $userInChildGroup;
-            //$this->setGetArray(array('id' => $contact3->id));
-            //$this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
-            
+            Yii::app()->user->userModel = $userInChildGroup;
+            //Forget contact3, so that the permissions can be properly refreshed.
+            //Otherwise what is happening, is the related permissions to account for example on
+            //contact 3 is not properly retrieving permissions for the new current user.
+            $contact3Id = $contact3->id;
+            $contact3->forget();
+            unset($contact3);
+            $contact3 = Contact::getById($contact3Id);
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
+
             //revoke parentGroup access to read and write
             Yii::app()->user->userModel = $super;
             $contact3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
             $this->assertTrue($contact3->save());
-            
+
             //Test userInChildGroup, access to detail should fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
-            
+
             //Test userInParentGroup, access to detail should fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $contact3->id));
@@ -371,7 +387,5 @@
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
         }
-        
-        //todo: look at accounts regular user test for more ideas on what to test.
     }
 ?>
