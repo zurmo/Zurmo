@@ -404,16 +404,17 @@
             $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
             $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
-
+            $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
 
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
             $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
             $originalDebugConfiguration = file_get_contents($debugConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
+            $debugConfiguration = file_get_contents($debugConfigFile);
 
 
-            $this->assertRegExp   ('/\$debugOn = true;/', $originalDebugConfiguration);
-            $this->assertRegExp   ('/\$forceNoFreeze = true;/', $originalDebugConfiguration);
+            $this->assertRegExp   ('/\$debugOn = true;/', $debugConfiguration);
+            $this->assertRegExp   ('/\$forceNoFreeze = true;/', $debugConfiguration);
 
             try
             {
