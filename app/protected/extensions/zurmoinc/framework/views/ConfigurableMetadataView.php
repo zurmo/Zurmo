@@ -36,7 +36,9 @@
          */
         public function getTitle()
         {
-            return $this->resolveViewAndMetadataValueByName('title');
+            $title = $this->resolveViewAndMetadataValueByName('title');
+            $this->resolveEvaluateSubString($title, null);
+            return $title;
         }
 
         public function resolveViewAndMetadataValueByName($name)

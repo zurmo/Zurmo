@@ -54,7 +54,7 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => Yii::t('Default', 'Opportunities By Lead Source'),
+                    'title' => "eval:Yii::t('Default', 'Opportunities By Lead Source')",
                     'type'  => 'Pie3D',
                 ),
                 'global' => array(

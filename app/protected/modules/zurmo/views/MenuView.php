@@ -42,12 +42,12 @@
         {
             try
             {
-                $items = GeneralCache::getEntry('MenuViewItems');
+                $items = GeneralCache::getEntry($this->getMenuViewItemsCacheIdentifier());
             }
             catch (NotFoundException $e)
             {
                 $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
-                GeneralCache::cacheEntry('MenuViewItems', $items);
+                GeneralCache::cacheEntry($this->getMenuViewItemsCacheIdentifier(), $items);
             }
 
             if (count($items) == 0)
@@ -61,6 +61,15 @@
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['Tabs'];
+        }
+
+        /**
+         * The menu view items cache identifier is a combination of the language and current user.
+         * This ensures if the user or language changes, that it properly retrieves the cache.
+         */
+        protected function getMenuViewItemsCacheIdentifier()
+        {
+            return 'MenuViewItems' . Yii::app()->user->userModel->id . Yii::app()->language;
         }
     }
 ?>

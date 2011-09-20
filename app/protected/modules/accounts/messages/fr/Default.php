@@ -30,24 +30,32 @@
     // DON'T MAKE A MESS!
     return array(
         'Account'
-            => '??',
+            => 'Compte',
         'Accounts'
-            => '??',
+            => 'Comptes',
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
+        'AccountsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'AccountsModulePluralLabel pour AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
-            => 'AccountsModuleSingularLabel ??',
+            => 'ID du AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Name'
-            => 'AccountsModuleSingularLabel ??',
+            => 'Nom du AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Search'
-            => 'AccountsModuleSingularLabel ??',
+            => 'Recherche du AccountsModuleSingularLabel',
+        'Annual Revenue'
+            => 'Chiffres d\'affaires annuel',
         'Billing Address'
             => 'Adresse de facturation',
         'Create AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
+            => 'Nouveau AccountsModuleSingularLabel',
+        'Employees'
+            => 'Employés',
         'Related AccountsModulePluralLabel'
-            => '?? AccountsModulePluralLabel',
+            => 'AccountsModulePluralLabel principal',
+        'Type'
+            => 'Type',
     );
 ?>

@@ -31,6 +31,8 @@
     return array(
         'A field with this name is already used.'
             => '??',
+        'All panels visible'
+            => '??',
         'Create Field'
             => '??',
         'Default Value'
@@ -53,7 +55,11 @@
             => '??',
         'Fields'
             => '??',
+        'First panel visible, then `show more` link'
+            => '??',
         'General'
+            => '??',
+        'Invalid panel configuration type'
             => '??',
         'Layouts'
             => '??',
@@ -74,6 +80,10 @@
         'Minimum Value'
             => '??',
         'Module'
+            => '??',
+        'Panels are tabbed'
+            => '??',
+        'Panels Configuration'
             => '??',
         'Pick List Values'
             => '??',

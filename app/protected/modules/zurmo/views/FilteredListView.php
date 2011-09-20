@@ -174,7 +174,7 @@
                     'filteredListId',
                     $this->filteredListId,
                     $this->filteredList,
-                    array('id' => 'filteredListId', 'empty' => Yii::t('Default', 'None'))
+                    array('id' => 'filteredListId', 'empty' => Yii::t('Default', '(None)'))
                 );
                 $content .= '&#160;';
                 $content .= $runFilteredListButton . '&#160;';

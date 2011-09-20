@@ -29,17 +29,29 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Close Date'
+            => 'Date de clôture',
         'Create OpportunitiesModuleSingularLabel'
-            => '?? OpportunitiesModuleSingularLabel',
+            => 'Nouvelle OpportunitiesModuleSingularLabel',
         'Opportunities'
-            => '??',
+            => 'Opportunités',
+        'Opportunities By Lead Source'
+            => 'Opportunités par origine principale',
+        'Opportunities By Sales Stage'
+            => 'Opportunités par étape de vente',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
+        'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
+            => 'OpportunitiesModulePluralLabel pour un AccountsModuleSingularLabel',
+        'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
+            => 'OpportunitiesModulePluralLabel pour un ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
+        'OpportunitiesModuleSingularLabel Search'
+            => 'Recherche OpportunitiesModuleSingularLabel',
         'Opportunity'
-            => '??',
+            => 'Opportunité',
         'Related OpportunitiesModulePluralLabel'
-            => '?? OpportunitiesModulePluralLabel',
+            => 'OpportunitiesModulePluralLabel associées',
     );
 ?>

@@ -30,30 +30,36 @@
     // DON'T MAKE A MESS!
     return array(
         'Change Password'
-            => '??',
+            => 'Changer le mot de passe',
         'Confirm Password'
-            => '??',
+            => 'Confirmation du mot de passe',
         'Create User'
-            => '??',
+            => 'Nouvel Utilisateur',
         'Manage Users'
-            => '??',
+            => 'Gestion des utilisateurs',
+        'Manager'
+            => 'Rend compte à',
         'Profile'
-            => '??',
+            => 'Profil',
         'The password is too short. Minimum length is'
-            => '??',
+            => 'Le mot de passe doit comprendre ?? charatères minimum',
         'The password must have at least one lowercase letter'
-            => '??',
+            => 'Le mot de passe doit comprendre au moins une lettre minuscule',
         'The password must have at least one number and one letter'
-            => '??',
+            => 'Le mot de passe doit comprendre au moins un chiffre et une lettre',
         'The password must have at least one uppercase letter'
-            => '??',
+            => 'Le mot de passe doit comprendre au moins une lettre majuscule',
+        'The time zone is invalid.'
+            => 'Le fuseau horaire indiqué est invalide',
         'The username is too short. Minimum length is'
-            => '??',
+            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum ?? characteres ',
+        'Time Zone'
+            => 'Fuseau Horaire',
         'User'
-            => '??',
+            => 'Utilisateur',
         'User Search'
-            => '??',
+            => 'Recherche d\'utilisateurs',
         'Users'
-            => '??',
+            => 'Utilisateurs',
     );
 ?>

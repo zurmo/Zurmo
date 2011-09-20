@@ -30,70 +30,80 @@
     // DON'T MAKE A MESS!
     return array(
         'A field with this name is already used.'
-            => '??',
+            => 'Un champ avec ce nom est déjà utilisé.',
+        'All panels visible'
+            => 'Tous visibles',
         'Create Field'
-            => '??',
+            => 'Ajouter un champ',
         'Default Value'
-            => '??',
+            => 'Valeur par défaut',
         'Designer'
-            => '??',
+            => 'Designer',
         'Details And Edit View'
-            => '??',
+            => 'Vue des formulaires',
         'Details View'
-            => '??',
+            => 'Vue détaillée',
         'Display Name'
-            => '??',
+            => 'Étiquette du champ',
         'Each item must be uniquely named'
-            => '??',
+            => 'Merci d\'ajouter une valeur qui n\'est pas dans la liste.',
         'Edit View'
-            => '??',
+            => 'Formulaire de saisie',
         'Field Name'
-            => '??',
+            => 'Nom du champ',
         'Field Type'
-            => '??',
+            => 'Type de champ',
         'Fields'
-            => '??',
+            => 'Champs',
+        'First panel visible, then `show more` link'
+            => 'Premier panneau visible, ensuite un lien "plus de détails"',
         'General'
-            => '??',
+            => 'Général',
+        'Invalid panel configuration type'
+            => 'La configuration des panneaux choisie est invalide',
         'Layouts'
-            => '??',
+            => 'Présentations de page',
         'List View'
-            => '??',
+            => 'Vue liste',
         'Manage module fields, layouts, and labels.'
-            => '??',
+            => 'Personalisez vos champs, étiquettes, mises en pages etc.',
         'Mass Edit View'
-            => '??',
+            => 'Vue modification en masse',
         'Maximum Length'
-            => '??',
+            => 'Longueur maximale',
         'Maximum Value'
-            => '??',
+            => 'Valeur maximale',
         'Menu'
-            => '??',
+            => 'Menu',
         'Menus'
-            => '??',
+            => 'Menus',
         'Minimum Value'
-            => '??',
+            => 'Valeur minimale',
         'Module'
-            => '??',
+            => 'Module',
+        'Panels are tabbed'
+            => 'Onglets',
+        'Panels Configuration'
+            => 'Configuration des panneaux',
         'Pick List Values'
-            => '??',
+            => 'Éléments de la liste déroulante',
         'Popup List View'
-            => '??',
+            => 'Vue liste pop-up',
         'Popup Search View'
-            => '??',
+            => 'Vue recherche pop-up',
         'Precision'
-            => '??',
+            => 'Précision',
         'Related List View'
-            => '??',
+            => 'Vue liste associée',
         'Required Field'
-            => '??',
+            => 'Champ Requis',
         'Save Layout'
-            => '??',
+            => 'Publier',
         'Search View'
-            => '??',
+            => 'Vue recherche',
         'There was an error processing your request.'
-            => '??',
+            => 'Il y a une erreur',
         'Track Audit Log'
-            => '??',
+            => 'Auditer ce champ',
     );
 ?>

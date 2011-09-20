@@ -64,7 +64,8 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ListLink', 'label' => Yii::t('Default', 'Return to List')),
+                            array('type' => 'ListLink',
+                                  'label' => "eval:Yii::t('Default', 'Return to List')"),
                             array('type' => 'DetailsLink'),
                             array('type' => 'AuditEventsModalListLink'),
                             array('type' => 'ChangePasswordLink'),
