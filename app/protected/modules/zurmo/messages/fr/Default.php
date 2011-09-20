@@ -161,7 +161,6 @@
             => 'Règles de sécurit',
         'Group Rights'
             => 'Droits de sécurité',
-            => '??',
         'Groups'
             => 'Groupes',
         'here'

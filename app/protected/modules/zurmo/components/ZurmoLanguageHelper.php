@@ -99,7 +99,8 @@
         {
             try
             {
-                $moduleLabelTranslationParameters = GeneralCache::getEntry('moduleLabelTranslationParameters');
+                $moduleLabelTranslationParameters = GeneralCache::
+                                                    getEntry('moduleLabelTranslationParameters' . Yii::app()->language);
                 return $moduleLabelTranslationParameters;
             }
             catch (NotFoundException $e)
@@ -109,15 +110,15 @@
                 foreach ($modules as $module)
                 {
                     $params[get_class($module) . 'SingularLabel']
-                        = $module::getModuleLabelByTypeAndLanguage('Singular');
+                        = $module::getModuleLabelByTypeAndLanguage('Singular', Yii::app()->language);
                     $params[get_class($module) . 'SingularLowerCaseLabel']
-                        = $module::getModuleLabelByTypeAndLanguage('SingularLowerCase');
+                        = $module::getModuleLabelByTypeAndLanguage('SingularLowerCase', Yii::app()->language);
                     $params[get_class($module) . 'PluralLabel']
-                        = $module::getModuleLabelByTypeAndLanguage('Plural');
+                        = $module::getModuleLabelByTypeAndLanguage('Plural', Yii::app()->language);
                     $params[get_class($module) . 'PluralLowerCaseLabel']
-                        = $module::getModuleLabelByTypeAndLanguage('PluralLowerCase');
+                        = $module::getModuleLabelByTypeAndLanguage('PluralLowerCase', Yii::app()->language);
                 }
-                GeneralCache::cacheEntry('moduleLabelTranslationParameters', $params);
+                GeneralCache::cacheEntry('moduleLabelTranslationParameters' . Yii::app()->language, $params);
                 return $params;
             }
         }

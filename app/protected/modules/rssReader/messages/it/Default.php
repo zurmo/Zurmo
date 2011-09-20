@@ -33,9 +33,9 @@
             => '?? RssReaderModuleSingularLabel',
         'Related RssReaderModulePluralLabel'
             => '?? RssReaderModulePluralLabel',
-        'Rss Reader'
+        'RSS Reader'
             => '??',
-        'Rss Url'
+        'RSS URL'
             => '??',
         'RssReaderModulePluralLabel'
             => 'RssReaderModulePluralLabel',

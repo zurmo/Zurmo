@@ -116,6 +116,7 @@
                    $_POST['User']['language'] != $user->language)
                {
                    $lang = $_POST['User']['language'];
+                   GeneralCache::forgetAll();
                }
                else
                {

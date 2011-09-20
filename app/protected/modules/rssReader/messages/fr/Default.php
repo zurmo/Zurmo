@@ -33,9 +33,9 @@
             => 'Créer RssReaderModuleSingularLabel',
         'Related RssReaderModulePluralLabel'
             => 'RssReaderModulePluralLabel associés',
-        'Rss Reader'
+        'RSS Reader'
             => 'Flux RSS',
-        'Rss Url'
+        'RSS URL'
             => 'URL de flux RSS',
         'RssReaderModulePluralLabel'
             => 'RssReaderModulePluralLabel',

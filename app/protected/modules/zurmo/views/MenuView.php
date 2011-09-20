@@ -42,12 +42,12 @@
         {
             try
             {
-                $items = GeneralCache::getEntry('MenuViewItems');
+                $items = GeneralCache::getEntry('MenuViewItems' . Yii::app()->user->userModel->id);
             }
             catch (NotFoundException $e)
             {
                 $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
-                GeneralCache::cacheEntry('MenuViewItems', $items);
+                GeneralCache::cacheEntry('MenuViewItems' . Yii::app()->user->userModel->id, $items);
             }
 
             if (count($items) == 0)
