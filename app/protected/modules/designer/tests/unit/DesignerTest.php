@@ -366,7 +366,7 @@
                 'de' => '??',
                 'en' => 'Name',
                 'es' => 'Nombre',
-                'fr' => '??',
+                'fr' => 'Nom',
                 'it' => '??',
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);

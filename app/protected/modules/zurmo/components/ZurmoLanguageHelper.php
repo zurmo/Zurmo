@@ -128,7 +128,10 @@
          */
         public function flushModuleLabelTranslationParameters()
         {
-            GeneralCache::forgetEntry('moduleLabelTranslationParameters');
+            foreach (Yii::app()->params['supportedLanguages'] as $language => $notUsed)
+            {
+                GeneralCache::forgetEntry('moduleLabelTranslationParameters' . $language);
+            }
         }
     }
 ?>

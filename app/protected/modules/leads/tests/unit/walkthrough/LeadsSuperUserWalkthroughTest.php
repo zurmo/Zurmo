@@ -361,13 +361,13 @@
             $contact = ContactTestHelper::createContactbyNameForOwner('ContactNotLead',  $super);
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/edit',
-                                                                   'contacts/default/edit&id=8', true);
+                                                                   'contacts/default/edit&id=' . $contact->id, true);
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/details',
-                                                                   'contacts/default/details&id=8', true);
+                                                                   'contacts/default/details&id=' . $contact->id, true);
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
-                                                                   'contacts/default/delete&id=8', true);
+                                                                   'contacts/default/delete&id=' .  $contact->id, true);
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/convert',
-                                                                   'contacts/default/details&id=8', true);
+                                                                   'contacts/default/details&id=' . $contact->id, true);
         }
     }
 ?>
