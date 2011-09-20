@@ -45,8 +45,6 @@
             => 'LeadsModuleSingularLabel ??',
         'LeadsModuleSingularLabel Search'
             => 'LeadsModuleSingularLabel ??',
-        'Related LeadsModulePluralLabel'
-            => '?? LeadsModulePluralLabel',
         'Select AccountsModuleSingularLabel'
             => '?? AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'

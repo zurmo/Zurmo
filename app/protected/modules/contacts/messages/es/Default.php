@@ -55,8 +55,6 @@
             => '?? ContactsModuleSingularLowerCaseLabel ??',
         'Order'
             => '??',
-        'Related ContactsModulePluralLabel'
-            => 'ContactsModulePluralLabel Relacionadas',
         'Starting Status'
             => '??',
         'Status'

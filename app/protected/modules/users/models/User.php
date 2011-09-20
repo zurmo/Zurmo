@@ -557,7 +557,7 @@
             if (strlen($this->$attribute) < $minLength)
             {
                 $this->addError('username',
-                    Yii::t('Default', 'The username is too short. Minimum length is') . '&#160;' . $minLength . '.');
+                    Yii::t('Default', 'The username is too short. Minimum length is {minimumLength}.', array('{minimumLength}' => $minLength)));
             }
         }
 

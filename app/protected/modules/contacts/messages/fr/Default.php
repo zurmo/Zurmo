@@ -55,8 +55,6 @@
             => 'Chaque état du ContactsModuleSingularLowerCaseLabel doit avoir un nom unique',
         'Order'
             => 'Ordre',
-        'Related ContactsModulePluralLabel'
-            => 'ContactsModulePluralLabel liés',
         'Starting Status'
             => 'Valeur par défaut',
         'Status'
