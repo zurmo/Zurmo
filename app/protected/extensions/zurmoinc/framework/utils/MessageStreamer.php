@@ -43,5 +43,10 @@
             echo str_repeat(' ', $this->extraRenderBytes);
             flush();
         }
+
+        public function setEmptyTemplate()
+        {
+            $this->template = "";
+        }
     }
 ?>

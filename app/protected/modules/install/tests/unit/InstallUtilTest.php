@@ -50,7 +50,6 @@
                 $this->temporaryDatabaseName = 'zurmo_wacky';
             }
             $this->superUserPassword = 'super';
-
         }
 
         public function setup()
@@ -480,25 +479,34 @@
             $form->databaseUsername  = $this->rootUsername;
             $form->databasePassword  = $this->rootPassword;
             $form->superUserPassword = $this->superUserPassword;
-            $template        = "{message}\n";
-            $messageStreamer = new MessageStreamer($template);
+
+            $messageStreamer = new MessageStreamer();
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageStreamer->setEmptyTemplate();
 
             $perInstanceConfigFile      = "$instanceRoot/protected/config/perInstanceTest.php";
             $debugConfigFile            = "$instanceRoot/protected/config/debugTest.php";
-            $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
-            $originalDebugConfiguration = file_get_contents($debugConfigFile);
-
-            $this->assertTrue(is_file($perInstanceConfigFile));
-            $this->assertTrue(is_file($debugConfigFile));
+            if (is_file($perInstanceConfigFile))
+            {
+                $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+                unlink($perInstanceConfigFile);
+            }
+            if (is_file($debugConfigFile))
+            {
+                $originalDebugConfiguration = file_get_contents($debugConfigFile);
+                unlink($debugConfigFile);
+            }
+            $this->assertTrue(!is_file($perInstanceConfigFile));
+            $this->assertTrue(!is_file($debugConfigFile));
 
             InstallUtil::runInstallation($form, $messageStreamer, 'perInstanceTest.php', 'debugTest.php');
             $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
             $debugConfiguration = file_get_contents($debugConfigFile);
-            //check if super user is created
+            //Check if super user is created.
             $user = User::getByUsername('super');
             $this->assertEquals('super', $user->username);
 
-            //check if config files is updated
+            //Check if config files is updated.
             $this->assertRegExp   ('/\$connectionString = \'mysql:host='.$this->hostname.';dbname='.$this->temporaryDatabaseName.'\';/', // Not Coding Standard
                                    $perInstanceConfiguration);
             $this->assertRegExp   ('/\$username         = \''.$this->rootUsername.'\';/',
@@ -506,7 +514,7 @@
             $this->assertRegExp   ('/\$password         = \''.$this->rootPassword.'\';/',
                                     $perInstanceConfiguration);
 
-            //restore original config files
+            //Restore original config files.
             unlink($debugConfigFile);
             unlink($perInstanceConfigFile);
             file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
