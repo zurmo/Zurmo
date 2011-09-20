@@ -161,8 +161,7 @@
             => 'Règles de sécurit',
         'Group Rights'
             => 'Droits de sécurité',
-        'Group User Membership'
-            => 'Membres du groupe',
+            => '??',
         'Groups'
             => 'Groupes',
         'here'
@@ -325,7 +324,7 @@
             => 'Fuseau horaire',
          'Title'
             => 'Fonction',
-        'to continue to the home page. If the error persists please do something or other.'
+        'to continue to the home page. If the error persists please contact your administrator.'
             => 'pour continuer à l\'accueil. Veuillez contacter votre administrateur système si l\'erreur continue',
         'User Membership'
             => 'Membres du groupe',

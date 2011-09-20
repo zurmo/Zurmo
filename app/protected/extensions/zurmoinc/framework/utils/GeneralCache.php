@@ -28,7 +28,7 @@
      * This is a general cache helper that utilizes both php caching and memcaching if available. Utilized for
      * caching requirements that are simple in/out of a serialized array or string of information.
      */
-    class ZurmoGeneralCache
+    class GeneralCache
     {
         private static $cachedEntries = array();
 

@@ -29,7 +29,6 @@
      */
     class SelfIdValueTypeBatchAttributeValueDataAnalyzer extends IdValueTypeBatchAttributeValueDataAnalyzer
     {
-
         /**
          * Override to ensure the attribute is 'id'.
          * @param string $modelClassName

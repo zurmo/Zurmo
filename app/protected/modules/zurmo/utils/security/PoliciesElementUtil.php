@@ -39,7 +39,6 @@
             return "
                 function enableDisablePolicyTextField(helperValue, textFieldId, compareValue)
                 {
-
                     if (helperValue == compareValue)
                     {
                         $('#' + textFieldId).removeAttr('readonly');

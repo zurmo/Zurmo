@@ -99,7 +99,7 @@
         {
             try
             {
-                $moduleLabelTranslationParameters = ZurmoGeneralCache::getEntry('moduleLabelTranslationParameters');
+                $moduleLabelTranslationParameters = GeneralCache::getEntry('moduleLabelTranslationParameters');
                 return $moduleLabelTranslationParameters;
             }
             catch (NotFoundException $e)
@@ -117,7 +117,7 @@
                     $params[get_class($module) . 'PluralLowerCaseLabel']
                         = $module::getModuleLabelByTypeAndLanguage('PluralLowerCase');
                 }
-                ZurmoGeneralCache::cacheEntry('moduleLabelTranslationParameters', $params);
+                GeneralCache::cacheEntry('moduleLabelTranslationParameters', $params);
                 return $params;
             }
         }
@@ -127,7 +127,7 @@
          */
         public function flushModuleLabelTranslationParameters()
         {
-            ZurmoGeneralCache::forgetEntry('moduleLabelTranslationParameters');
+            GeneralCache::forgetEntry('moduleLabelTranslationParameters');
         }
     }
 ?>

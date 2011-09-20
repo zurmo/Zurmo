@@ -596,7 +596,7 @@
         public static function writeConfiguration($instanceRoot,
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
                                                   $memcacheHost = null, $memcachePort = null,
-                                                  $language)
+                                                  $language, $isTest = false)
         {
             assert('is_dir($instanceRoot)');
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -608,8 +608,21 @@
             assert('(is_int   ($memcachePort) && $memcachePort >= 1024) || $memcachePort == null');
             assert('is_string($language)     && $language     != ""');
 
-            $debugConfigFile       = "$instanceRoot/protected/config/debug.php";
-            $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
+            $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
+            $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
+
+            if (isset($isTest) && $isTest)
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
+                $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
+            }
+            else
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+                $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+            }
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+            copy($debugConfigFileDist, $debugConfigFile);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
 
@@ -649,14 +662,22 @@
 
         public static function isDebugConfigWritable($instanceRoot)
         {
-            $debugConfigFile = "$instanceRoot/protected/config/debug.php";
-            return is_writable($debugConfigFile);
+            $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
+            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+            copy($debugConfigFileDist, $debugConfigFile);
+            $isWritable = is_writable($debugConfigFile);
+            unlink($debugConfigFile);
+            return $isWritable;
         }
 
         public static function isPerInstanceConfigWritable($instanceRoot)
         {
-            $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
-            return is_writable($perInstanceConfigFile);
+            $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
+            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+            $isWritable = is_writable($perInstanceConfigFile);
+            unlink($perInstanceConfigFile);
+            return $isWritable;
         }
 
         /**

@@ -203,16 +203,13 @@
                         $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
                     }
                     $ownedTableName = static::getTableName('OwnedSecurableItem');
-                    if (!$joinTablesAdapter->isTableInFromTables($ownedTableName))
-                    {
-                        $ownedTableAliasName = $joinTablesAdapter->addFromTableAndGetAliasName($ownedTableName,
-                                                                "{$ownedTableName}_id",
-                                                                RedBeanModel::getTableName($modelClassName));
-                    }
-                    else
-                    {
-                        $ownedTableAliasName = $joinTablesAdapter->getAliasByTableName($ownedTableName);
-                    }
+
+
+                    $ownedTableAliasName = ModelDataProviderUtil::
+                                           resolveShouldAddFromTableAndGetAliasName( $ownedTableName,
+                                                                                     'OwnedSecurableItem',
+                                                                                     $modelClassName,
+                                                                                     $joinTablesAdapter);
                     $ownerColumnName = RedBeanModel::getForeignKeyName('OwnedSecurableItem', 'owner');
                     $mungeIds = ReadPermissionsOptimizationUtil::getMungeIdsByUser($user);
                     if ($where != null)

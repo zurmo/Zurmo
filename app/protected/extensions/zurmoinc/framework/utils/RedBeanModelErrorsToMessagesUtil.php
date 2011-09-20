@@ -46,7 +46,7 @@
                             {
                                 $messages[] = LabelUtil::
                                               makeModelAndAttributeNameCombinationLabel(get_class($model), $attributeName)
-                                              .  ' - ' .$relatedError;
+                                              .  ' - ' . $relatedError;
                             }
                         }
                     }
@@ -54,7 +54,7 @@
                     {
                         $messages[] = LabelUtil::
                                       makeModelAndAttributeNameCombinationLabel(get_class($model), $attributeName)
-                                      .  ' - ' .$errorOrRelatedError;
+                                      .  ' - ' . $errorOrRelatedError;
                     }
                 }
             }

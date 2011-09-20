@@ -267,7 +267,7 @@
          *
          * This methhod assumes if the attribute is not on the base model, that it is casted up not down from it.
          */
-        protected static function resolveShouldAddFromTableAndGetAliasName( $attributeTableName,
+        public static function resolveShouldAddFromTableAndGetAliasName( $attributeTableName,
                                                                             $attributeModelClassName,
                                                                             $modelClassName,
                                                                             &$joinTablesAdapter)

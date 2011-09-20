@@ -36,14 +36,14 @@
         {
             //First test a clean array with no errors.
             $form = new DropDownAttributeForm();
-            $form->customFieldDataData = array('a','b','c');
+            $form->customFieldDataData = array('a', 'b', 'c');
             $form->validateCustomFieldDataData('customFieldDataData', null);
             $errors = $form->getErrors();
             $this->assertEquals(0, count($errors));
 
             //First test a duplicate value that is of a different case and one of the same case
             $form = new DropDownAttributeForm();
-            $form->customFieldDataData = array('a','b','c', 'C', 'b');
+            $form->customFieldDataData = array('a', 'b', 'c', 'C', 'b');
             $form->validateCustomFieldDataData('customFieldDataData', null);
             $errors = $form->getErrors();
             $this->assertEquals(1, count($errors));

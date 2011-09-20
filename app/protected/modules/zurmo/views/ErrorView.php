@@ -39,7 +39,7 @@
         {
             $errorExplanation1 = Yii::t('Default', 'An error has occurred. Please click');
             $errorExplanation2 = Yii::t('Default', 'here');
-            $errorExplanation3 = Yii::t('Default', 'to continue to the home page. If the error persists please do something or other.');
+            $errorExplanation3 = Yii::t('Default', 'to continue to the home page. If the error persists please contact your administrator.');
             $error = Yii::app()->format->text($this->message);
             $content = '<p>'                                                                         .
                        "$errorExplanation1 <a href=\"/app\">$errorExplanation2</a> $errorExplanation3" .

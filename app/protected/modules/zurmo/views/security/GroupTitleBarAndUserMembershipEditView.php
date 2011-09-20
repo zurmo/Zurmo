@@ -39,7 +39,7 @@
                                     $controllerId,
                                     $moduleId,
                                     $menuItems);
-            $this->setView(new TitleBarView(Yii::t('Default', 'Group User Membership'), $model, 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', 'User Membership'), $model, 1, $shortcutsMenu->render()), 0, 0);
             $this->setView(new GroupUserMembershipEditView($controllerId, $moduleId, $form, $model->id), 1, 0);
         }
     }

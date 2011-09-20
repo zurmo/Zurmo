@@ -87,7 +87,6 @@
             $content .= $enclosureElement->render();
             $content .= '<div style="clear:both;"></div>' . "\n";
 
-
             return $content;
         }
 

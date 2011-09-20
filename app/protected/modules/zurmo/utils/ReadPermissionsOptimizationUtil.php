@@ -131,7 +131,9 @@
                     // for what the optimized way is doing.
                     $mungeTableName  = self::getMungeTableName($modelClassName);
                     self::recreateTable($mungeTableName);
-                    $modelCount = $modelClassName::getCount();
+                    //Specifically call RedBeanModel to avoid the use of the security in OwnedSecurableItem since for
+                    //rebuild it needs to look at all models regardless of permissions of the current user.
+                    $modelCount = RedBeanModel::getCount(null, null, $modelClassName);
                     $subset = intval($modelCount / 20);
                     if ($subset < 100)
                     {
@@ -143,12 +145,13 @@
                     }
                     for ($i = 0; $i < $modelCount; $i += $subset)
                     {
-                        $models = $modelClassName::getSubset(null, $i, $subset);
+                        //Specifically call RedBeanModel to avoid the use of the security in OwnedSecurableItem since for
+                        //rebuild it needs to look at all models regardless of permissions of the current user.
+                        $models = RedBeanModel::getSubset(null, $i, $subset, null, null, $modelClassName);
                         foreach ($models as $model)
                         {
                             assert('$model instanceof SecurableItem');
                             $securableItemId = $model->getClassId('SecurableItem');
-
                             $users = User::getAll();
                             foreach ($users as $user)
                             {
@@ -159,7 +162,6 @@
                                     self::incrementCount($mungeTableName, $securableItemId, $user);
                                 }
                             }
-
                             $groups = Group::getAll();
                             foreach ($groups as $group)
                             {
@@ -177,11 +179,11 @@
                                     }
                                     foreach ($group->groups as $subGroup)
                                     {
-                                        self::readPermissionsAddedToSecurableItem($model, $subGroup);
+                                        self::processNestedGroupWhereParentHasReadPermissionOnSecurableItem(
+                                              $mungeTableName, $securableItemId, $subGroup);
                                     }
                                 }
                             }
-
                             $roles = Role::getAll();
                             foreach ($roles as $role)
                             {
@@ -202,6 +204,26 @@
                     ZurmoDatabaseCompatibilityUtil::
                         callProcedureWithoutOuts("rebuild('$modelTableName', '$mungeTableName')");
                 }
+            }
+        }
+
+        protected static function processNestedGroupWhereParentHasReadPermissionOnSecurableItem(
+                                  $mungeTableName, $securableItemId, Group $group)
+        {
+            assert('is_string($mungeTableName) && $mungeTableName != ""');
+            assert('is_int($securableItemId) && $securableItemId > 0');
+            self::incrementCount($mungeTableName, $securableItemId, $group);
+            foreach ($group->users as $user)
+            {
+                if ($user->role->id > 0)
+                {
+                    self::incrementParentRolesCounts($mungeTableName, $securableItemId, $user->role);
+                }
+            }
+            foreach ($group->groups as $subGroup)
+            {
+                self::processNestedGroupWhereParentHasReadPermissionOnSecurableItem(
+                      $mungeTableName, $securableItemId, $subGroup);
             }
         }
 
@@ -399,6 +421,8 @@
                 $securableItemIds = R::getCol($sql);
                 self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
                 /*
+                 * This extra step is not needed. See slide 21.  This is similar to userBeingRemovedFromRole in that
+                 * the above query already is trapping the information needed.
                     Follow the same process for any upstream groups that the group is a member of.
                 */
             }
@@ -416,6 +440,8 @@
                 $securableItemIds = R::getCol($sql);
                 self::bulkDecrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
                 /*
+                 * This extra step is not needed. See slide 22. This is similar to userBeingRemovedFromRole or
+                 * userAddedToGroup in that the above query is already trapping the information needed.
                     Follow the same process for any upstream groups that the group is a member of.
                 */
                 self::garbageCollect($mungeTableName);
@@ -724,19 +750,27 @@
                         from   ownedsecurableitem
                         where  owner__user_id = $userId";
                 $securableItemIds = R::getCol($sql);
+                //Increment the parent roles for securableItems that the user is the owner on.
                 self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
 
-                $sql = "select $mungeTableName.securableitem_id
-                        from   $mungeTableName, _group__user
-                        where  $mungeTableName.munge_id = concat('G', _group__user._group_id) and
-                               _group__user._user_id = $userId";
-                $securableItemIds = R::getCol($sql);
-                self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
-                /*
-                    What groups are the user part of and what groups are those groups children of
-                    recursively? Do any of those groups have weight on the ownedSecurableItem?
-                    If so then add weight for the user's upstream roles on those models.
-                */
+                //Get all downstream groups the user is in including any groups that are in those groups recursively.
+                //Then for each group found, add weight for the user's upstream roles.
+                $groupMungeIds = array();
+                foreach($user->groups as $group)
+                {
+                    $groupMungeIds[] = 'G' . $group->id;
+                    self::getAllUpstreamGroupsRecursively($group, $groupMungeIds);
+                }
+                if(count($groupMungeIds) > 0)
+                {
+                    $inSqlPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', $groupMungeIds, true);
+                    $sql = "select distinct $mungeTableName.securableitem_id
+                            from   $mungeTableName
+                            where  $mungeTableName.munge_id $inSqlPart";
+                    $securableItemIds = R::getCol($sql);
+                    self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
+                }
+
             }
         }
 
@@ -759,6 +793,9 @@
                 $securableItemIds = R::getCol($sql);
                 self::bulkDecrementParentRolesCounts($mungeTableName, $securableItemIds, $role);
                 /*
+                 * This additional step I don't think is needed because the sql query above actually traps
+                 * the upstream explicit securableItems because the lower level groups will already have a point for
+                 * each of them.
                     What groups are the user part of and what groups are those groups children of recursively?
                     For any models that have that group explicity for read, subtract 1 point for the user's
                     upstream roles from the disconnected role.
@@ -768,6 +805,23 @@
         }
 
         ///////////////////////////////////////////////////////////////////////
+
+        public static function getAllUpstreamGroupsRecursively(Group $group, & $groupMungeIds)
+        {
+            assert('is_array($groupMungeIds)');
+            if($group->group->id > 0 )
+            {
+                $groupMungeIds[] = 'G' . $group->group->id;
+                if (!RedBeanDatabase::isFrozen() && $group->isSame($group->group))
+                {
+                    //Do Nothing. Prevent cycles in database auto build.
+                }
+                else
+                {
+                    self::getAllUpstreamGroupsRecursively($group->group, $groupMungeIds);
+                }
+            }
+        }
 
         public static function getUserRoleIdAndGroupIds(User $user)
         {
@@ -982,12 +1036,12 @@
         {
             try
             {
-                return ZurmoGeneralCache::getEntry('mungableModelClassNames');
+                return GeneralCache::getEntry('mungableModelClassNames');
             }
             catch (NotFoundException $e)
             {
                 $mungableClassNames = self::findMungableModelClassNames();
-                ZurmoGeneralCache::cacheEntry('mungableModelClassNames', $mungableClassNames);
+                GeneralCache::cacheEntry('mungableModelClassNames', $mungableClassNames);
                 return $mungableClassNames;
             }
         }

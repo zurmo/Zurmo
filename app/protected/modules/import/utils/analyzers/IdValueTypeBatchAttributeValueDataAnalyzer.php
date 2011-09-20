@@ -79,7 +79,7 @@
             parent:: __construct($modelClassName, $attributeName);
             assert('is_string($attributeName)');
             $model                         = new $modelClassName(false);
-            $this->attributeModelClassName = $this->resolveAttributeModelClassName($model,$this->attributeName);
+            $this->attributeModelClassName = $this->resolveAttributeModelClassName($model, $this->attributeName);
             $this->messageCountData[static::FOUND]                        = 0;
             $this->messageCountData[static::UNFOUND]                      = 0;
             $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] = 0;

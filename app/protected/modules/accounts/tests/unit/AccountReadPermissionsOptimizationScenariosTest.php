@@ -564,9 +564,13 @@
                 $u2->role = null;
                 $this->assertTrue($u2->save());
 
+                //at this point U2 has no role.
+
                 $g1 = Group::getByName('G1.');
                 $g1->users->add($u2);
                 $this->assertTrue($g1->save());
+                $u2->forget();
+                $u2  = User::getByUsername('u2.');
 
                 $r1 = Role::getByName('R1.');
                 $r4 = Role::getByName('R4.');
@@ -615,11 +619,11 @@
                                         array('A3', 'G1', 1),
                                     ),
                                     self::getAccountMungeRows());
-
                 $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
 
                 $u2->role = $r4;
                 $this->assertTrue($u2->save());
+
                 //Called in $u2->afterSave();
                 //ReadPermissionsOptimizationUtil::userAddedToRole($u2);
 
@@ -643,6 +647,8 @@
                 Yii::app()->user->userModel = $u99;
                 $a3->delete();
 
+                $g1->forget();
+                $g1 = Group::getByName('G1.');
                 $g1->users->removeAll();
                 $this->assertTrue($g1->save());
             }
@@ -1592,6 +1598,443 @@
 
                 $g1->users->removeAll();
                 $this->assertTrue($g1->save());
+            }
+
+            public function testUserAddedToRoleWhereUserIsMemberOfGroupWithChildrenGroups_Slide19()
+            {
+                $u1  = User::getByUsername('u1.');
+                $u99 = User::getByUsername('u99.');
+
+                Yii::app()->user->userModel = $u99;
+
+                $u1->role = null;
+                $this->assertTrue($u1->save());
+
+                $g1 = Group::getByName('G1.');
+                $g2 = Group::getByName('G2.');
+                $g3 = Group::getByName('G3.');
+                $g1->groups->add($g2);
+                $this->assertTrue($g1->save());
+                $g2->groups->add($g3);
+                $this->assertTrue($g2->save());
+                $g3->users->add($u1);
+                $this->assertTrue($g3->save());
+
+                $u1->forget(); //Forget the user, so the user knows what groups it is part of.
+                $u1  = User::getByUsername('u1.');
+
+                $r1 = Role::getByName('R1.');
+                $r2 = Role::getByName('R2.');
+                $r3 = Role::getByName('R3.');
+
+                $a1 = new Account();
+                $a1->name = 'A1.';
+                $a1->addPermissions($g1, Permission::READ);
+                $this->assertTrue($a1->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a1);
+
+                $a2 = new Account();
+                $a2->name = 'A2.';
+                $a2->addPermissions($g2, Permission::READ);
+                $this->assertTrue($a2->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a2);
+
+                $a3 = new Account();
+                $a3->name = 'A3.';
+                $a3->addPermissions($g3, Permission::READ);
+                $this->assertTrue($a3->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a3);
+
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a1, $g1);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a2, $g2);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a3, $g3);
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A2', 'G3', 1),
+                                        array('A3', 'G3', 1),
+                                        ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+                $u1->role = $r1;
+                $this->assertTrue($u1->save());
+                //Called in $u1->afterSave();
+                //ReadPermissionsOptimizationUtil::userAddedToRole($u1);
+
+                $r1->forget(); //Forget R1 so when it is utilized below, it will know that u1 is a member.
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A1', 'R2', 1),
+                                        array('A1', 'R3', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A2', 'G3', 1),
+                                        array('A2', 'R2', 1),
+                                        array('A2', 'R3', 1),
+                                        array('A3', 'G3', 1),
+                                        array('A3', 'R2', 1),
+                                        array('A3', 'R3', 1),
+                                    ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+                $a1->delete();
+                $a2->delete();
+                $a3->delete();
+
+
+                $g1->group = null;
+                $this->assertTrue($g1->save());
+
+                $g2->group = null;
+                $this->assertTrue($g2->save());
+
+                $g3->forget();
+                $g3 = Group::getByName('G3.');
+                $g3->group = null;
+                $g3->users->removeAll();
+                $this->assertTrue($g3->save());
+            }
+
+            public function testUserAddedToRoleWhereUserIsMemberOfGroupWithChildrenGroups_Slide20()
+            {
+                $u1  = User::getByUsername('u1.');
+                $u99 = User::getByUsername('u99.');
+
+                Yii::app()->user->userModel = $u99;
+
+                $u1->role = null;
+                $this->assertTrue($u1->save());
+
+                $g1 = Group::getByName('G1.');
+                $g2 = Group::getByName('G2.');
+                $g3 = Group::getByName('G3.');
+                $g1->groups->add($g2);
+                $this->assertTrue($g1->save());
+                $g2->groups->add($g3);
+                $this->assertTrue($g2->save());
+                $g3->users->add($u1);
+                $this->assertTrue($g3->save());
+
+                $u1->forget(); //Forget the user, so the user knows what groups it is part of.
+                $u1  = User::getByUsername('u1.');
+
+                $r1 = Role::getByName('R1.');
+                $r2 = Role::getByName('R2.');
+                $r3 = Role::getByName('R3.');
+
+                $a1 = new Account();
+                $a1->name = 'A1.';
+                $a1->addPermissions($g1, Permission::READ);
+                $this->assertTrue($a1->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a1);
+
+                $a2 = new Account();
+                $a2->name = 'A2.';
+                $a2->addPermissions($g2, Permission::READ);
+                $this->assertTrue($a2->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a2);
+
+                $a3 = new Account();
+                $a3->name = 'A3.';
+                $a3->addPermissions($g3, Permission::READ);
+                $this->assertTrue($a3->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a3);
+
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a1, $g1);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a2, $g2);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a3, $g3);
+
+                $u1->role = $r1;
+                $this->assertTrue($u1->save());
+                //Called in $u1->afterSave();
+                //ReadPermissionsOptimizationUtil::userAddedToRole($u1);
+
+                $r1->forget(); //Forget R1 so when it is utilized below, it will know that u1 is a member.
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A1', 'R2', 1),
+                                        array('A1', 'R3', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A2', 'G3', 1),
+                                        array('A2', 'R2', 1),
+                                        array('A2', 'R3', 1),
+                                        array('A3', 'G3', 1),
+                                        array('A3', 'R2', 1),
+                                        array('A3', 'R3', 1),
+                                    ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+                $u1->forget(); //Forget the user, so the user knows what groups it is part of.
+                $u1  = User::getByUsername('u1.');
+                $u1->role = null;
+                $this->assertTrue($u1->save());
+
+                RedBeanModelsCache::forgetAll();
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A2', 'G3', 1),
+                                        array('A3', 'G3', 1),
+                                        ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+                $a1->delete();
+                $a2->delete();
+                $a3->delete();
+
+
+                $g1->group = null;
+                $this->assertTrue($g1->save());
+
+                $g2->group = null;
+                $this->assertTrue($g2->save());
+
+                $g3->forget();
+                $g3 = Group::getByName('G3.');
+                $g3->group = null;
+                $g3->users->removeAll();
+                $this->assertTrue($g3->save());
+
+                $r1 = Role::getByName('R1.');
+                $u1->role = $r1;
+                $this->assertTrue($u1->save());
+            }
+
+            public function testUserAddedToGroup_Slide21()
+            {
+                $u2  = User::getByUsername('u2.');
+                $u99 = User::getByUsername('u99.');
+
+                Yii::app()->user->userModel = $u99;
+
+                $g1 = Group::getByName('G1.');
+                $g2 = Group::getByName('G2.');
+                $g3 = Group::getByName('G3.');
+                $g3->groups->add($g2);
+                $this->assertTrue($g3->save());
+                $g2->groups->add($g1);
+                $this->assertTrue($g2->save());
+
+                Yii::app()->user->userModel = $u99;
+
+                $a3 = new Account();
+                $a3->name = 'A3.';
+                $a3->addPermissions($g1, Permission::READ);
+                $this->assertTrue($a3->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a3);
+
+                $a2 = new Account();
+                $a2->name = 'A2.';
+                $a2->addPermissions($g2, Permission::READ);
+                $this->assertTrue($a2->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a2);
+
+                $a1 = new Account();
+                $a1->name = 'A1.';
+                $a1->addPermissions($g3, Permission::READ);
+                $this->assertTrue($a1->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a1);
+
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a3, $g1);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a2, $g2);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a1, $g3);
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A2', 'G1', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A3', 'G1', 1),
+                                    ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+                //Utilize method that is used by user interface to handle removing users from a group.
+                $form = new GroupUserMembershipForm();
+                $fakePostData = array(
+                    'userMembershipData'    => array(0 => $u2->id),
+                    'userNonMembershipData' => array()
+                );
+                $form = GroupUserMembershipFormUtil::setFormFromCastedPost($form, $fakePostData);
+                $saved = GroupUserMembershipFormUtil::setMembershipFromForm($form, $g1);
+                //This is completed above in GroupUserMembershipFormUtil::setMembershipFromForm
+                //$g1->users->add($u2);
+                //$this->assertTrue($g1->save());
+                //ReadPermissionsOptimizationUtil::userAddedToGroup($g1, $u2);
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A1', 'R5', 1),
+                                        array('A1', 'R6', 1),
+                                        array('A2', 'G1', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A2', 'R5', 1),
+                                        array('A2', 'R6', 1),
+                                        array('A3', 'G1', 1),
+                                        array('A3', 'R5', 1),
+                                        array('A3', 'R6', 1),
+                                    ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+                $a1->delete();
+                $a2->delete();
+                $a3->delete();
+
+                $g1->group = null;
+                $g1->users->removeAll();
+                $this->assertTrue($g1->save());
+
+                $g2->group = null;
+                $this->assertTrue($g2->save());
+
+                $g3->group = null;
+                $this->assertTrue($g3->save());
+            }
+
+            public function testUserAddedToGroup_Slide22()
+            {
+                $u2  = User::getByUsername('u2.');
+                $u99 = User::getByUsername('u99.');
+
+                Yii::app()->user->userModel = $u99;
+
+                $g1 = Group::getByName('G1.');
+                $g2 = Group::getByName('G2.');
+                $g3 = Group::getByName('G3.');
+                $g3->groups->add($g2);
+                $this->assertTrue($g3->save());
+                $g2->groups->add($g1);
+                $this->assertTrue($g2->save());
+
+                Yii::app()->user->userModel = $u99;
+
+                $a3 = new Account();
+                $a3->name = 'A3.';
+                $a3->addPermissions($g1, Permission::READ);
+                $this->assertTrue($a3->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a3);
+
+                $a2 = new Account();
+                $a2->name = 'A2.';
+                $a2->addPermissions($g2, Permission::READ);
+                $this->assertTrue($a2->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a2);
+
+                $a1 = new Account();
+                $a1->name = 'A1.';
+                $a1->addPermissions($g3, Permission::READ);
+                $this->assertTrue($a1->save());
+                //Called in OwnedSecurableItem::afterSave();
+                //ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($a1);
+
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a3, $g1);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a2, $g2);
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForGroup($a1, $g3);
+
+                //Utilize method that is used by user interface to handle removing users from a group.
+                $form = new GroupUserMembershipForm();
+                $fakePostData = array(
+                    'userMembershipData'    => array(0 => $u2->id),
+                    'userNonMembershipData' => array()
+                );
+                $form = GroupUserMembershipFormUtil::setFormFromCastedPost($form, $fakePostData);
+                $saved = GroupUserMembershipFormUtil::setMembershipFromForm($form, $g1);
+                //This is completed above in GroupUserMembershipFormUtil::setMembershipFromForm
+                //$g1->users->add($u2);
+                //$this->assertTrue($g1->save());
+                //ReadPermissionsOptimizationUtil::userAddedToGroup($g1, $u2);
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A1', 'R5', 1),
+                                        array('A1', 'R6', 1),
+                                        array('A2', 'G1', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A2', 'R5', 1),
+                                        array('A2', 'R6', 1),
+                                        array('A3', 'G1', 1),
+                                        array('A3', 'R5', 1),
+                                        array('A3', 'R6', 1),
+                                    ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+
+                //Utilize method that is used by user interface to handle removing users from a group.
+                $form = new GroupUserMembershipForm();
+                $fakePostData = array(
+                    'userMembershipData'    => array(),
+                    'userNonMembershipData' => array()
+                );
+                $form = GroupUserMembershipFormUtil::setFormFromCastedPost($form, $fakePostData);
+                $saved = GroupUserMembershipFormUtil::setMembershipFromForm($form, $g1);
+                //This is completed above in GroupUserMembershipFormUtil::setMembershipFromForm
+                //$g1->users->remove($u2);
+                //$this->assertTrue($g1->save());
+                //ReadPermissionsOptimizationUtil::userRemovedFromGroup($g1, $u2);
+
+                $this->assertEquals(array(
+                                        array('A1', 'G1', 1),
+                                        array('A1', 'G2', 1),
+                                        array('A1', 'G3', 1),
+                                        array('A2', 'G1', 1),
+                                        array('A2', 'G2', 1),
+                                        array('A3', 'G1', 1),
+                                    ),
+                                    self::getAccountMungeRows());
+
+                $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
+
+                $a1->delete();
+                $a2->delete();
+                $a3->delete();
+
+                $g1->group = null;
+                $this->assertTrue($g1->save());
+
+                $g2->group = null;
+                $this->assertTrue($g2->save());
+
+                $g3->group = null;
+                $this->assertTrue($g3->save());
             }
         }
     }

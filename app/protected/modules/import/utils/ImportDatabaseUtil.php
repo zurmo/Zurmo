@@ -36,7 +36,7 @@
          * @param string $tableName
          * @return true on success.
          */
-        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName, $delimiter = ',',
+        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName, $delimiter = ',', // Not Coding Standard
                                                                          $enclosure = "'")
         {
             assert('gettype($fileHandle) == "resource"');

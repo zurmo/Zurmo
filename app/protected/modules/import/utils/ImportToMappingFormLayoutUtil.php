@@ -46,7 +46,7 @@
             $mappableAttributeIndicesAndDerivedTypesForImportColumns = self::resolveMappableAttributeIndicesAndDerivedTypesByColumnType(
                                   $mappableAttributeIndicesAndDerivedTypes, 'importColumn', $importRulesType);
             $mappableAttributeIndicesAndDerivedTypesForExtraColumns = self::resolveMappableAttributeIndicesAndDerivedTypesByColumnType(
-                                  $mappableAttributeIndicesAndDerivedTypes,'extraColumn', $importRulesType);
+                                  $mappableAttributeIndicesAndDerivedTypes, 'extraColumn', $importRulesType);
             return new MappingFormLayoutUtil($modelClassName, $form,
                                              $mappableAttributeIndicesAndDerivedTypesForImportColumns,
                                              $mappableAttributeIndicesAndDerivedTypesForExtraColumns);

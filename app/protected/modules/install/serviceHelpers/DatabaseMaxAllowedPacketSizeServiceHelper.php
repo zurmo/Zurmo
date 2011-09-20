@@ -41,8 +41,8 @@
             {
                 if ($actualBytes == null)
                 {
-
-                }else
+                }
+                else
                 {
                     $this->message .= "\n";
                     $this->message .= Yii::t('Default', 'Database max allowed packet size is:') . ' ';

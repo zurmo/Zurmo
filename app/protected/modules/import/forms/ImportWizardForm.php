@@ -53,7 +53,7 @@
          * String of delimiter character to use for each row column.  Defaults to ,
          * @var string
          */
-        public $rowColumnDelimiter = ',';
+        public $rowColumnDelimiter = ','; // Not Coding Standard
 
         /**
          * String of the enclosure character to use for each row column.  Defaults to "
@@ -93,7 +93,7 @@
         {
             return array(
                 //default validators must come before the required validators
-                array('rowColumnDelimiter',  'default', 'value' => ',', 'setOnEmpty' => true),
+                array('rowColumnDelimiter',  'default', 'value' => ',', 'setOnEmpty' => true), // Not Coding Standard
                 array('rowColumnEnclosure',  'default', 'value' => "'", 'setOnEmpty' => true),
                 array('importRulesType',     'required'),
                 array('rowColumnDelimiter',  'required'),

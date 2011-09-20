@@ -68,12 +68,20 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
-            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
-            $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
-                                                                          'LeadDetailsAndRelationsView',
-                                                                          Yii::app()->request->getRequestUri());
-            $view = new LeadsPageView($this, $detailsAndRelationsView);
-            echo $view->render();
+            if(!LeadsUtil::isStateALead($contact->state))
+            {
+                $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
+                $this->redirect($urlParams);
+            }
+            else
+            {
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
+                $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
+                                                                              'LeadDetailsAndRelationsView',
+                                                                              Yii::app()->request->getRequestUri());
+                $view = new LeadsPageView($this, $detailsAndRelationsView);
+                echo $view->render();
+            }
         }
 
         public function actionCreate()
@@ -89,14 +97,22 @@
         public function actionEdit($id, $redirectUrl = null)
         {
             $contact = Contact::getById(intval($id));
-            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
-            $view = new LeadsPageView($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
-                    'LeadTitleBarAndEditAndDetailsView'
-                )
-            );
-            echo $view->render();
+            if(!LeadsUtil::isStateALead($contact->state))
+            {
+                $urlParams = array('/contacts/' . $this->getId() . '/edit', 'id' => $contact->id);
+                $this->redirect($urlParams);
+            }
+            else
+            {
+                ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
+                $view = new LeadsPageView($this,
+                    $this->makeTitleBarAndEditAndDetailsView(
+                        $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
+                        'LeadTitleBarAndEditAndDetailsView'
+                    )
+                );
+                echo $view->render();
+            }
         }
 
         /**
@@ -178,6 +194,11 @@
         {
             assert('!empty($id)');
             $contact                 = Contact::getById(intval($id));
+            if(!LeadsUtil::isStateALead($contact->state))
+            {
+                $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
+                $this->redirect($urlParams);
+            }
             $convertToAccountSetting = LeadsModule::getConvertToAccountSetting();
             $selectAccountForm       = new AccountSelectForm();
             $account                 = new Account();
@@ -255,8 +276,16 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
-            $contact->delete();
-            $this->redirect(array($this->getId() . '/index'));
+            if(!LeadsUtil::isStateALead($contact->state))
+            {
+                $urlParams = array('/contacts/' . $this->getId() . '/delete', 'id' => $contact->id);
+                $this->redirect($urlParams);
+            }
+            else
+            {
+                $contact->delete();
+                $this->redirect(array($this->getId() . '/index'));
+            }
         }
 
         /**

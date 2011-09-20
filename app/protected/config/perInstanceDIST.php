@@ -44,6 +44,7 @@
     // This configuration is for development and testing.
     // Do not remove it from source control!
     // Check it in as mysql!
+    /*
     $databaseType = 'mysql'; // mysql, sqlite, oracle, mysql, pgsql.
 
     switch ($databaseType)
@@ -90,4 +91,5 @@
         default:
             die('Unknown database type.');
     }
+    */
 ?>

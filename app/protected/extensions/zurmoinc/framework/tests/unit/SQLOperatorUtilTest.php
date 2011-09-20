@@ -45,10 +45,10 @@
         public function testResolveOperatorAndValueForOneOf()
         {
             $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array(5, 6, 7));
-            $compareQueryPart = "IN(5,6,7)"; //Not Coding Standard
+            $compareQueryPart = "IN(5,6,7)"; // Not Coding Standard
             $this->assertEquals($compareQueryPart, $queryPart);
             $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array('a', 'b', 'c'));
-            $compareQueryPart = "IN(lower('a'),lower('b'),lower('c'))"; //Not Coding Standard
+            $compareQueryPart = "IN(lower('a'),lower('b'),lower('c'))"; // Not Coding Standard
             $this->assertEquals($compareQueryPart, $queryPart);
         }
 

@@ -43,6 +43,10 @@
             $group3 = new Group();
             $group3->name = 'Group3';
             assert($group3->save());
+
+            $group4 = new Group();
+            $group4->name = 'Group4';
+            assert($group4->save());
         }
 
         public function testMakeByMixedPermitablesData()
@@ -118,6 +122,95 @@
             $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
             $this->assertEquals($group2, $readWritePermitables[$group2->id]);
+        }
+
+        public function testMakeBySecurableItem()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $group2                     = Group::getByName('Group2');
+            $group3                     = Group::getByName('Group3');
+            $account = new Account();
+            $account->name  = 'aTestAccount';
+            $account->owner = Yii::app()->user->userModel;
+            $this->assertTrue($account->save());
+            $account->addPermissions($group2, Permission::READ_WRITE);
+            $account->addPermissions($group3, Permission::READ);
+            $this->assertTrue($account->save());
+            $accountId = $account->id;
+            $account->forget();
+            unset($account);
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($accountId));
+            $this->assertTrue($explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($readWritePermitables));
+            $this->assertEquals(1, count($readOnlyPermitables));
+            $this->assertEquals($group3, $readOnlyPermitables[$group3->id]);
+            $this->assertEquals($group2, $readWritePermitables[$group2->id]);
+        }
+
+        /**
+         * @depends testMakeBySecurableItem
+         */
+        public function testResolveExplicitReadWriteModelPermissions()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $accounts                          = Account::getByName('aTestAccount');
+            $this->assertEquals(1, count($accounts));
+            $account                           = $accounts[0];
+            $accountId                         = $account->id;
+            $group4                            = Group::getByName('Group4');
+            $group3                            = Group::getByName('Group3');
+            $group2                            = Group::getByName('Group2');
+            $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            $explicitReadWriteModelPermissions->addReadWritePermitableToRemove($group3);
+            $explicitReadWriteModelPermissions->addReadWritePermitable($group4);
+
+            ExplicitReadWriteModelPermissionsUtil::resolveExplicitReadWriteModelPermissions($account,
+                                                   $explicitReadWriteModelPermissions);
+            $account->forget();
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($accountId));
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(2, count($readWritePermitables));
+            $this->assertEquals(0, count($readOnlyPermitables));
+            $this->assertEquals($group2, $readWritePermitables[$group2->id]);
+            $this->assertEquals($group4, $readWritePermitables[$group4->id]);
+        }
+
+        public function testRemoveIfExistsFromPostData()
+        {
+            $postData = array();
+            $postData['abc']                               = 123;
+            $postData['explicitReadWriteModelPermissions'] = 'string';
+            $resolvedPostData = ExplicitReadWriteModelPermissionsUtil::removeIfExistsFromPostData($postData);
+            $this->assertTrue(!isset($resolvedPostData['explicitReadWriteModelPermissions']));
+            $this->assertEquals(123, $resolvedPostData['abc']);
+        }
+
+        /**
+         * @depends testResolveExplicitReadWriteModelPermissions
+         */
+        public function testResolveByPostDataAndModelThenMake()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $accounts                          = Account::getByName('aTestAccount');
+            $this->assertEquals(1, count($accounts));
+            $account                           = $accounts[0];
+            $group3                            = Group::getByName('Group3');
+            //Remove group 2 and 4, and add group 3.
+            $postData = array('explicitReadWriteModelPermissions' =>
+                            array('type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP,
+                                    'nonEveryoneGroup' => $group3->id));
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 resolveByPostDataAndModelThenMake($postData, $account);
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($readWritePermitables));
+            $this->assertEquals(0, count($readOnlyPermitables));
+            $this->assertEquals($group3, $readWritePermitables[$group3->id]);
         }
     }
 ?>

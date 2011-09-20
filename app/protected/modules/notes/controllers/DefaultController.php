@@ -41,8 +41,12 @@
 
         protected function actionInlineEditValidate($model)
         {
-            $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($model, $_POST[get_class($model)]);
-            $sanitizedOwnerPostData = PostUtil::sanitizePostDataToJustHavingElementForSavingModel($sanitizedPostData, 'owner');
+            $readyToUsePostData            = ExplicitReadWriteModelPermissionsUtil::
+                                                     removeIfExistsFromPostData($_POST[get_class($model)]);
+            $sanitizedPostData             = PostUtil::
+                                             sanitizePostByDesignerTypeForSavingModel($model, $readyToUsePostData);
+            $sanitizedOwnerPostData        = PostUtil::
+                                             sanitizePostDataToJustHavingElementForSavingModel($sanitizedPostData, 'owner');
             $sanitizedPostDataWithoutOwner = PostUtil::removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
             $model->setAttributes($sanitizedPostDataWithoutOwner);
             if ($model->validate())

@@ -36,7 +36,7 @@
         {
             parent::__construct();
             $matches = array();
-            assert('preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1'); // Not Coding Standard
+            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
             $this->hostname              = $matches[1];
             $this->rootUsername          = Yii::app()->db->username;
             $this->rootPassword          = Yii::app()->db->password;
@@ -48,6 +48,7 @@
                 $this->rootPassword          = 'somepass';
                 $this->temporaryDatabaseName = 'zurmo_wacky';
             }
+
         }
 
         public function setup()
@@ -397,21 +398,30 @@
 
         public function testWriteConfiguration()
         {
-            $instanceRoot = '.';
-            $debugConfigFile       = "$instanceRoot/protected/config/debug.php";
-            $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
-            $originalDebugConfiguration       = file_get_contents($debugConfigFile);
-            $this->assertRegExp   ('/\$debugOn = true;/',
-                                   $originalDebugConfiguration);
-            $this->assertRegExp   ('/\$forceNoFreeze = true;/',
-                                   $originalDebugConfiguration);
+            $instanceRoot = INSTANCE_ROOT;
+
+            $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
+            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
             $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
+            $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+
+            $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
+            $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
+            $originalDebugConfiguration = file_get_contents($debugConfigFile);
+            copy($debugConfigFileDist, $debugConfigFile);
+            $debugConfiguration = file_get_contents($debugConfigFile);
+
+
+            $this->assertRegExp   ('/\$debugOn = true;/', $debugConfiguration);
+            $this->assertRegExp   ('/\$forceNoFreeze = true;/', $debugConfiguration);
+
             try
             {
                 InstallUtil::writeConfiguration($instanceRoot,
                                                 'mysql', 'databases.r-us.com', 'wacky', 'wacko', 'wacked',
                                                 'memcache.jason.com', 5432,
-                                                'es');
+                                                'es', true);
                 $debugConfiguration       = file_get_contents($debugConfigFile);
                 $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
                 $this->assertRegExp   ('/\$debugOn = false;/',
@@ -445,13 +455,18 @@
             }
             // finally
             // {
-                file_put_contents($debugConfigFile,       $originalDebugConfiguration);
+                unlink($debugConfigFile);
+                unlink($perInstanceConfigFile);
                 file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
+                file_put_contents($debugConfigFile, $originalDebugConfiguration);
             // }
             if (isset($e)) // This bizarre looking $e stuff is because php thinks 'finally is not useful'.
             {
                 throw $e;
             }
         }
+
+
+
     }
 ?>

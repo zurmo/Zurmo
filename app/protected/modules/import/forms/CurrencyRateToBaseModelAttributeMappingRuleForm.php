@@ -39,6 +39,7 @@
             parent::__construct($modelClassName, $modelAttributeName);
             $this->rateToBase = 1;
         }
+
         public function rules()
         {
             return array(

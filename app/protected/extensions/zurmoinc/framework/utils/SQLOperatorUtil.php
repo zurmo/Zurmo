@@ -131,7 +131,7 @@
             }
         }
 
-        public static function resolveOperatorAndValueForOneOf($operatorType, $values)
+        public static function resolveOperatorAndValueForOneOf($operatorType, $values, $ignoreStringToLower = false)
         {
             assert('$operatorType == "oneOf"');
             assert('is_array($values) && count($values) > 0');
@@ -144,7 +144,14 @@
                 }
                 if (is_string($theValue))
                 {
-                    $inPart .= "lower('" . $theValue . "')";
+                    if($ignoreStringToLower)
+                    {
+                        $inPart .= "'" . $theValue . "'";
+                    }
+                    else
+                    {
+                        $inPart .= "lower('" . $theValue . "')";
+                    }
                 }
                 elseif (is_numeric($theValue))
                 {

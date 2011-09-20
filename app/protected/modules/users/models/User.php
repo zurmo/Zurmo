@@ -232,7 +232,7 @@
             $className = get_called_class();
             try
             {
-                return ZurmoGeneralCache::getEntry($className . 'Metadata');
+                return GeneralCache::getEntry($className . 'Metadata');
             }
             catch (NotFoundException $e)
             {
@@ -256,7 +256,7 @@
                     self::assertMetadataIsValid($metadata);
                 }
             }
-            ZurmoGeneralCache::cacheEntry($className . 'Metadata', $metadata);
+            GeneralCache::cacheEntry($className . 'Metadata', $metadata);
             return $metadata;
         }
 
@@ -287,7 +287,7 @@
             {
                 parent::setMetadata($metadata);
             }
-            ZurmoGeneralCache::forgetEntry(get_called_class() . 'Metadata');
+            GeneralCache::forgetEntry(get_called_class() . 'Metadata');
         }
 
         public function setPassword($password)
@@ -322,7 +322,7 @@
                 throw new NotFoundException(); //undo once we figure this out.
                 //TODO: this key entry is wrong because it is a PER USER thing. i have a feeling this caching might
                 //need to be removed entirely.... since i am not sure this will be very practical...
-                //return ZurmoGeneralCache::getEntry($moduleName . $rightName . 'ActualRight');
+                //return GeneralCache::getEntry($moduleName . $rightName . 'ActualRight');
             }
             catch (NotFoundException $e)
             {
@@ -347,7 +347,7 @@
                     $actualRight     = intval(ZurmoDatabaseCompatibilityUtil::
                                        callFunction("get_user_actual_right({$this->id}, '$moduleName', '$rightName')"));
                 }
-                //ZurmoGeneralCache::cacheEntry($moduleName . $rightName . 'ActualRight', $actualRight);
+                //GeneralCache::cacheEntry($moduleName . $rightName . 'ActualRight', $actualRight);
                 return $actualRight;
             }
         }

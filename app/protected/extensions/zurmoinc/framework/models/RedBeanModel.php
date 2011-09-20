@@ -793,7 +793,7 @@
         {
             try
             {
-                return ZurmoGeneralCache::getEntry(get_called_class() . 'Metadata');
+                return GeneralCache::getEntry(get_called_class() . 'Metadata');
             }
             catch (NotFoundException $e)
             {
@@ -829,10 +829,9 @@
                 {
                     self::assertMetadataIsValid($metadata);
                 }
-                ZurmoGeneralCache::cacheEntry(get_called_class() . 'Metadata', $metadata);
+                GeneralCache::cacheEntry(get_called_class() . 'Metadata', $metadata);
                 return $metadata;
             }
-
         }
 
         /**
@@ -885,7 +884,7 @@
                 }
             }
             RedBeanModelsCache::forgetAllByModelType(get_called_class());
-            ZurmoGeneralCache::forgetEntry(get_called_class() . 'Metadata');
+            GeneralCache::forgetEntry(get_called_class() . 'Metadata');
         }
 
         /**
@@ -1115,7 +1114,6 @@
                                 }
                                 else
                                 {
-
                                     $linkName = null;
                                 }
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
@@ -2607,7 +2605,6 @@
             $modelIdentifier = $modelClassName . strval($bean->id);
             try
             {
-
                 return RedBeanModelsCache::getModel($modelIdentifier);
             }
             catch (NotFoundException $e)

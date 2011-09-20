@@ -93,7 +93,6 @@
         {
             assert('is_string($message)');
             $this->messages[] = $message;
-
         }
 
         /**
@@ -143,8 +142,6 @@
         {
             $this->status = self::ERROR;
         }
-
-
 
         /**
          * @return status.

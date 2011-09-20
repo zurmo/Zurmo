@@ -59,23 +59,26 @@
 
         protected function renderPortletsTabbed()
         {
-            assert('count($this->portlets) == 1');
-            $tabItems = array();
-            foreach ($this->portlets[1] as $noteUsed => $portlet)
+            assert('count($this->portlets) == 1 || count($this->portlets) == 0');
+            if(count($this->portlets) == 1)
             {
-                $tabItems[$portlet->getTitle()] = array(
-                    'id'      => $portlet->getUniquePortletPageId(),
-                    'content' => $portlet->renderContent()
-                );
+                $tabItems = array();
+                foreach ($this->portlets[1] as $noteUsed => $portlet)
+                {
+                    $tabItems[$portlet->getTitle()] = array(
+                        'id'      => $portlet->getUniquePortletPageId(),
+                        'content' => $portlet->renderContent()
+                    );
+                }
+                $cClipWidget = new CClipWidget();
+                $cClipWidget->beginClip("JuiTabs");
+                $cClipWidget->widget('zii.widgets.jui.CJuiTabs', array(
+                    'id' => $this->uniqueLayoutId . '-portlet-tabs',
+                    'tabs' => $tabItems
+                ));
+                $cClipWidget->endClip();
+                return $cClipWidget->getController()->clips['JuiTabs'];
             }
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("JuiTabs");
-            $cClipWidget->widget('zii.widgets.jui.CJuiTabs', array(
-                'id' => $this->uniqueLayoutId . '-portlet-tabs',
-                'tabs' => $tabItems
-            ));
-            $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['JuiTabs'];
         }
 
         protected function arePortletsRemovable()
