@@ -73,8 +73,6 @@
             => '??',
         'Error'
             => '??',
-        'Error:'
-            => '??',
         'Fahrenheit'
             => 'Fahrenheit',
         'Filtered List'

@@ -73,8 +73,6 @@
             => 'Modifier le portlet',
         'Error'
             => 'Erreur',
-        'Error:'
-            => 'Erreur',
         'Fahrenheit'
             => 'Fahrenheit',
         'Filtered List'
