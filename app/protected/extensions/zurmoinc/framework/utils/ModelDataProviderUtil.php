@@ -247,12 +247,23 @@
                                                                         $onTableAliasName,
                                                                         $tableJoinIdName);
             $relationAttributeTableAliasName = $relationTableAliasName;
-            //the second left join check being performed is in you are in a contact filtering on related account email.
+            //the second left join check being performed is in you
+            //are in a contact filtering on related account email as an example.
             if ($relationAttributeModelClassName != $relationModelClassName)
             {
+                //Handling special scenario for casted down Person.  Todo: Automatically determine a
+                //casted down scenario instead of specifically looking for Person.
+                if($relationAttributeModelClassName == 'Person')
+                {
+                    $onTableJoinIdName = "{$relationAttributeTableName}_id";
+                }
+                else
+                {
+                    $onTableJoinIdName = "{$relationColumnName}_{$relationAttributeTableName}_id";
+                }
                 $relationAttributeTableAliasName = $joinTablesAdapter->addLeftTableAndGetAliasName(
                                                             $relationAttributeTableName,
-                                                            "{$relationColumnName}_{$relationAttributeTableName}_id",
+                                                            $onTableJoinIdName,
                                                             $relationTableAliasName);
             }
             return $relationAttributeTableAliasName;
