@@ -73,6 +73,14 @@
                                                                                 $relationAttributeName,
                                                                                 (int)$relationModelId,
                                                                                 $relationModuleId);
+            if($relationAttributeName == 'contacts')
+            {
+                $relationContact = Contact::getById((int)$relationModelId);
+                if($relationContact->account->id > 0)
+                {
+                    $opportunity->account = $relationContact->account;
+                }
+            }
             $this->actionCreateByModel($opportunity, $redirectUrl);
         }
 
