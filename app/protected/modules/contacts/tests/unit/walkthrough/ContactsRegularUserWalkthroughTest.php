@@ -251,14 +251,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
             //Test userInParentRole, access to edit should not fail.
-            Yii::app()->user->userModel = $userInParentRole;
-            //Forget contact2, so that the permissions can be properly refreshed.
-            //Otherwise what is happening, is the related permissions to account for example on
-            //contact 2 is not properly retrieving permissions for the new current user.
-            $contact2Id = $contact2->id;
-            $contact2->forget();
-            unset($contact2);
-            $contact2 = Contact::getById($contact2Id);
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentRole->username);
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
@@ -358,13 +351,7 @@
 
             //Test userInChildGroup, access to edit should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
-            //Forget contact3, so that the permissions can be properly refreshed.
-            //Otherwise what is happening, is the related permissions to account for example on
-            //contact 3 is not properly retrieving permissions for the new current user.
-            $contact3Id = $contact3->id;
-            $contact3->forget();
-            unset($contact3);
-            $contact3 = Contact::getById($contact3Id);
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
