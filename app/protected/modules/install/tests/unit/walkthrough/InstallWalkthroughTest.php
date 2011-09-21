@@ -1,45 +1,59 @@
 <?php
     class InstallWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
-
-        protected $perInstanceConfig = "";
-        protected $debugConfig = "";
+        protected $perInstanceConfigContents = "";
+        protected $debugConfigContents = "";
         protected $perInstanceFile;
         protected $debugFile;
         protected $instanceRoot;
 
+        protected $databaseHostname;
+        protected $databaseUsername;
+        protected $databasePassword;
+        protected $databaseName;
+        protected $superUserPassword;
+
+
         public function setUp()
         {
+            $matches = array();
+            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
+            $this->databaseHostname          = $matches[1];
+            $this->databaseUsername          = Yii::app()->db->username;
+            $this->databasePassword          = Yii::app()->db->password;
+            $this->databaseName              = $matches[2];
+            $this->superUserPassword         = 'super';
+
             $this->instanceRoot = INSTANCE_ROOT;
             $this->perInstanceFile      = "{$this->instanceRoot}/protected/config/perInstanceTest.php";
             $this->debugFile            = "{$this->instanceRoot}/protected/config/debugTest.php";
 
             if (is_file($this->perInstanceFile))
             {
-                $this->perInstanceConfig = file_get_contents($this->perInstanceFile);
+                $this->perInstanceConfigContents = file_get_contents($this->perInstanceFile);
                 unlink($this->perInstanceFile);
             }
             if (is_file($this->debugFile))
             {
-                $this->debugConfig = file_get_contents($this->debugFile);
+                $this->debugConfigContents = file_get_contents($this->debugFile);
                 unlink($this->debugFile);
             }
         }
 
         public function teardown()
         {
-            if (strlen($this->perInstanceConfig))
+            if (strlen($this->perInstanceConfigContents))
             {
-                file_put_contents($this->perInstanceFile, $this->perInstanceConfig);
+                file_put_contents($this->perInstanceFile, $this->perInstanceConfigContents);
             }
             else
             {
                 unlink($this->perInstanceFile);
             }
 
-            if (strlen($this->debugConfig))
+            if (strlen($this->debugConfigContents))
             {
-                file_put_contents($this->debugFile, $this->debugConfig);
+                file_put_contents($this->debugFile, $this->debugConfigContents);
             }
             else
             {
@@ -47,87 +61,101 @@
             }
         }
 
-        public function testZurmoAlreadyInstalledActions()
-        {
-            //Set $installed = true in perInstanceTest.php file.
-            //As this change will not affect Yii params, set it directly.
-            //We need to test all controller actions, and all should fail.
-
-            Yii::app()->setApplicationInstalled(true);
-            //All actions below should fail and redirect user to index page.
-            //To-do: fix code below
-            /*
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/index');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/welcome');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/checkSystem');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/settings');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/validateSettings');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/runInstallation');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/installDemoData');
-			*/
-        }
+        //To-Do: Check if program redirect user to index page, when application is already installed (Selenium?)
 
         public function testAllActions()
         {
+            //Ensure that installed = false
             Yii::app()->setApplicationInstalled(false);
 
             //Check index action.
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default');
-            $this->runControllerWithRedirectExceptionAndGetContent('install/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('install/default');
+            $this->runControllerWithNoExceptionsAndGetContent('install/default/index');
 
             //Check welcome action.
             $this->runControllerWithNoExceptionsAndGetContent('install/default/welcome');
 
             //Check checkSystem action.
+            $_SERVER['SERVER_SOFTWARE'] = 'Apache';
             $this->runControllerWithNoExceptionsAndGetContent('install/default/checkSystem');
+
 
             //Check settings action.
             $this->runControllerWithNoExceptionsAndGetContent('install/default/settings');
 
             //Check validateSettings action.
+            //First validation will fail, and there should be at least validation errors.
             $this->setPostArray(array(
-            		'InstallSettingsForm' => array(
-            			'databaseHostname' => '',
-            			'databaseAdminUsername' => '',
-                        'databaseAdminPassword' => '',
-                        'databaseName' => '',
-                        'databaseUsername' => '',
-                        'databasePassword' => '',
-                        'superUserPassword' => '',
-                        'memcacheHostname' => '',
-                        'memcachePortNumber' => '',
-                        'memcacheAvailable' => true,
-                        'databaseType' => 'mysql',
-                        'removeExistingData' => true,
-                        'installDemoData' => false,
-                    )));
-            $this->runControllerWithNoExceptionsAndGetContent('install/default/validateSettings');
-            //To-Do: should we go with more combinations of post array above?
+            	'ajax' => 'install-form',
+                'InstallSettingsForm' => array(
+                 	'databaseHostname' => '',
+                    'databaseAdminUsername' => '',
+                    'databaseAdminPassword' => '',
+                    'databaseName' => '',
+                    'databaseUsername' => '',
+                    'databasePassword' => '',
+                    'superUserPassword' => '',
+                    'memcacheHostname' => '',
+                    'memcachePortNumber' => '',
+                    'memcacheAvailable' => '',
+                    'databaseType' => 'mysql',
+                    'removeExistingData' => '',
+                    'installDemoData' => '',
+                )));
+            $content = $this->runControllerWithExitExceptionAndGetContent('install/default/settings');
+            $errors = CJSON::decode($content);
+            $this->assertGreaterThanOrEqual(5, count($errors));
 
-            //Check runInstallation action, separate. We need to empty database.
+            //This validation should pass.
             $this->setPostArray(array(
-                        		'InstallSettingsForm' => array(
-                        			'databaseHostname' => '',
-                        			'databaseAdminUsername' => '',
-                                    'databaseAdminPassword' => '',
-                                    'databaseName' => '',
-                                    'databaseUsername' => '',
-                                    'databasePassword' => '',
-                                    'superUserPassword' => '',
-                                    'memcacheHostname' => '',
-                                    'memcachePortNumber' => '',
-                                    'memcacheAvailable' => true,
-                                    'databaseType' => 'mysql',
-                                    'removeExistingData' => true,
-                                    'installDemoData' => false,
+                'ajax' => 'install-form',
+            	'InstallSettingsForm' => array(
+            		'databaseHostname' => $this->databaseHostname,
+            		'databaseAdminUsername' => '',
+                    'databaseAdminPassword' => '',
+                    'databaseName' => $this->databaseName,
+                    'databaseUsername' => $this->databaseUsername,
+                    'databasePassword' => $this->databasePassword,
+                    'superUserPassword' => $this->superUserPassword,
+                    'memcacheHostname' => 'localhost',
+                    'memcachePortNumber' => '11211',
+                    'memcacheAvailable' => 1,
+                    'databaseType' => 'mysql',
+                    'removeExistingData' => 1,
+                    'installDemoData' => '',
+                )));
+            $content = $this->runControllerWithExitExceptionAndGetContent('install/default/settings');
+            $errors = CJSON::decode($content);
+            $this->assertEquals(0, count($errors));
 
-                                )));
-            $this->runControllerWithNoExceptionsAndGetContent('install/default/runInstallation');
+            //Run installation.
+            $this->setPostArray(array(
+				'InstallSettingsForm' => array(
+                	'databaseHostname' => $this->databaseHostname,
+                    'databaseAdminUsername' => '',
+                    'databaseAdminPassword' => '',
+                    'databaseName' => $this->databaseName,
+                    'databaseUsername' => $this->databaseUsername,
+                    'databasePassword' => $this->databasePassword,
+                    'superUserPassword' => $this->superUserPassword,
+                    'memcacheHostname' => 'localhost',
+                    'memcachePortNumber' => '11211',
+                    'memcacheAvailable' => 1,
+                    'databaseType' => 'mysql',
+                    'removeExistingData' => 1,
+                    'installDemoData' => '',
+                )));
+            //Close db connection(new will be created during installation process).
+            RedBeanDatabase::close();
+            $this->runControllerWithExitExceptionAndGetContent('install/default/settings');
+            $industryFieldData = CustomFieldData::getByName('Industries');
+            $this->assertGreaterThan('0', count(unserialize($industryFieldData->serializedData)));
 
-            //Check installDemoData action
+            //Check installDemoData action.
+            RedBeanDatabase::close();
             $this->runControllerWithNoExceptionsAndGetContent('install/default/installDemoData');
-            //Check if demo data are installed.
+            $this->assertGreaterThan('0', Account::getAll());
+            $this->assertGreaterThan('0', Contact::getAll());
         }
     }
 ?>
