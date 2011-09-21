@@ -94,7 +94,38 @@
          */
         public function testRegularUserControllerActionsWithElevationToAccessAndCreate()
         {
-            //Now test peon with elevated rights to tabs /other available rights
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+            
+            //Now test peon with elevated rights to accounts
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            $this->assertTrue($nobody->save());
+
+            //Test nobody with elevated rights.
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/create');
+
+            //Test nobody can view an existing account he owns.
+            $account = AccountTestHelper::createAccountByNameForOwner('accountOwnedByNobody', $nobody);
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
+
+            //Test nobody can delete an existing account he owns and it redirects to index.
+            $this->setGetArray(array('id' => $account->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/index'); // Not Coding Standard
+
+            //Autocomplete for Account should not fail.
+            $this->setGetArray(array('term' => 'super'));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/autoComplete');
+
+            //actionModalList for Account should not fail.
+            $this->setGetArray(array(
+                'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
+            ));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/modalList');
         }
 
         /**
@@ -102,7 +133,240 @@
          */
         public function testRegularUserControllerActionsWithElevationToModels()
         {
-            //Now test peon with elevated permissions to models.
+            //Created account owned by user super.
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $account = AccountTestHelper::createAccountByNameForOwner('testingAccountsForElevationToModelTest', $super);
+
+            //Test nobody, access to edit and details should fail.
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+
+            //give nobody access to read
+            Yii::app()->user->userModel = $super;
+            $account->addPermissions($nobody, Permission::READ);
+            $this->assertTrue($account->save());
+
+            //Now the nobody user can access the details view.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test nobody, access to edit should fail.
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //give nobody access to read and write
+            Yii::app()->user->userModel = $super;
+            $account->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($account->save());
+
+            //Now the nobody user should be able to access the edit view and still the details view.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
+
+            //revoke nobody access to read
+            Yii::app()->user->userModel = $super;
+            $account->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($account->save());
+
+            //Test nobody, access to detail should fail.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //create some roles
+            Yii::app()->user->userModel = $super;
+            $parentRole = new Role();
+            $parentRole->name = 'AAA';
+            $this->assertTrue($parentRole->save());
+
+            $childRole = new Role();
+            $childRole->name = 'BBB';
+            $this->assertTrue($childRole->save());
+
+            $userInParentRole = User::getByUsername('confused');
+            $userInChildRole = User::getByUsername('nobody');
+
+            $childRole->users->add($userInChildRole);
+            $this->assertTrue($childRole->save());
+            $parentRole->users->add($userInParentRole);
+            $parentRole->roles->add($childRole);
+            $this->assertTrue($parentRole->save());
+
+            //create account owned by super
+            $account2 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentRolePermission',$super);
+
+            //Test userInParentRole, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');		
+
+            //give userInChildRole access to READ
+            Yii::app()->user->userModel = $super;
+            $account2->addPermissions($userInChildRole, Permission::READ);
+            $this->assertTrue($account2->save());
+
+            //Test userInChildRole, access to details should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test userInParentRole, access to details should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //give userInChildRole access to read and write
+            Yii::app()->user->userModel = $super;
+            $account2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($account2->save());
+
+            //Test userInChildRole, access to edit should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
+
+            //Test userInParentRole, access to edit should not fail.
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentRole->username);
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
+
+            //revoke userInChildRole access to read and write
+            Yii::app()->user->userModel = $super;
+            $account2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($account2->save());
+
+            //Test userInChildRole, access to detail should fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //Test userInParentRole, access to detail should fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //clear up the role relationships between users so not to effect next assertions
+            $parentRole->users->remove($userInParentRole);
+            $parentRole->roles->remove($childRole);
+            $this->assertTrue($parentRole->save());
+            $childRole->users->remove($userInChildRole);
+            $this->assertTrue($childRole->save());
+            
+            //create some groups and assign users to groups
+            Yii::app()->user->userModel = $super;
+            $parentGroup = new Group();
+            $parentGroup->name = 'AAA';
+            $this->assertTrue($parentGroup->save());
+
+            $childGroup = new Group();
+            $childGroup->name = 'BBB';
+            $this->assertTrue($childGroup->save());
+
+            $userInChildGroup = User::getByUsername('confused');
+            $userInParentGroup = User::getByUsername('nobody');
+
+            $childGroup->users->add($userInChildGroup);
+            $this->assertTrue($childGroup->save());
+            $parentGroup->users->add($userInParentGroup);
+            $parentGroup->groups->add($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $parentGroup->forget();
+            $childGroup->forget();
+            $parentGroup = Group::getByName('AAA');
+            $childGroup = Group::getByName('BBB');
+
+            //Add access for the confused user to accounts and creation of accounts.
+            $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            $this->assertTrue($userInChildGroup->save());
+
+            $account3 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentGroupPermission', $super);
+
+            //Test userInParentGroup, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //Test userInChildGroup, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //give parentGroup access to READ
+            Yii::app()->user->userModel = $super;
+            $account3->addPermissions($parentGroup, Permission::READ);
+            $this->assertTrue($account3->save());
+
+            //Test userInParentGroup, access to details should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test userInChildGroup, access to details should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //give parentGroup access to read and write
+            Yii::app()->user->userModel = $super;
+            $account3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($account3->save());
+
+            //Test userInParentGroup, access to edit should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
+
+            //Test userInChildGroup, access to edit should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
+
+            //revoke parentGroup access to read and write
+            Yii::app()->user->userModel = $super;
+            $account3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($account3->save());
+
+            //Test userInChildGroup, access to detail should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+
+            //Test userInParentGroup, access to detail should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account3->id));			
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            
+            //clear up the role relationships between users so not to effect next assertions
+            $parentGroup->users->remove($userInParentGroup);
+            $parentGroup->groups->remove($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $childGroup->users->remove($userInChildGroup);
+            $this->assertTrue($childGroup->save());
         }
 
         /**
@@ -112,11 +376,11 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $confused = User::getByUsername('confused');
-            $this->assertEquals(Right::DENY, $confused->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS));
-            $this->assertEquals(Right::DENY, $confused->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS));
-            $confused->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
-            $confused->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
-            $this->assertTrue($confused->save());
+            //$this->assertEquals(Right::DENY, $confused->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS));
+            //$this->assertEquals(Right::DENY, $confused->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS));
+            //$confused->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            //$confused->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            //$this->assertTrue($confused->save());
 
             Yii::app()->user->userModel = $confused;
             $account = AccountTestHelper::createAccountByNameForOwner('Switcheroo', $confused);
