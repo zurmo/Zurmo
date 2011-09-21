@@ -31,6 +31,7 @@
         protected $rootPassword;
         protected $existingDatabaseName;
         protected $temporaryDatabaseName;
+        protected $superUserPassword;
 
         public function __construct()
         {
@@ -48,7 +49,7 @@
                 $this->rootPassword          = 'somepass';
                 $this->temporaryDatabaseName = 'zurmo_wacky';
             }
-
+            $this->superUserPassword = 'super';
         }
 
         public function setup()
@@ -421,7 +422,8 @@
                 InstallUtil::writeConfiguration($instanceRoot,
                                                 'mysql', 'databases.r-us.com', 'wacky', 'wacko', 'wacked',
                                                 'memcache.jason.com', 5432,
-                                                'es', true);
+                                                'es',
+                                                'perInstanceTest.php', 'debugTest.php');
                 $debugConfiguration       = file_get_contents($debugConfigFile);
                 $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
                 $this->assertRegExp   ('/\$debugOn = false;/',
@@ -466,6 +468,58 @@
             }
         }
 
+        public function testRunInstallation()
+        {
+            $instanceRoot = INSTANCE_ROOT;
+
+            $form = new InstallSettingsForm();
+            $form->databaseType      = 'mysql';
+            $form->databaseHostname  = $this->hostname;
+            $form->databaseName      = $this->temporaryDatabaseName;
+            $form->databaseUsername  = $this->rootUsername;
+            $form->databasePassword  = $this->rootPassword;
+            $form->superUserPassword = $this->superUserPassword;
+
+            $messageStreamer = new MessageStreamer();
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageStreamer->setEmptyTemplate();
+
+            $perInstanceConfigFile      = "$instanceRoot/protected/config/perInstanceTest.php";
+            $debugConfigFile            = "$instanceRoot/protected/config/debugTest.php";
+            if (is_file($perInstanceConfigFile))
+            {
+                $originalPerInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+                unlink($perInstanceConfigFile);
+            }
+            if (is_file($debugConfigFile))
+            {
+                $originalDebugConfiguration = file_get_contents($debugConfigFile);
+                unlink($debugConfigFile);
+            }
+            $this->assertTrue(!is_file($perInstanceConfigFile));
+            $this->assertTrue(!is_file($debugConfigFile));
+
+            InstallUtil::runInstallation($form, $messageStreamer, 'perInstanceTest.php', 'debugTest.php');
+            $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
+            $debugConfiguration = file_get_contents($debugConfigFile);
+            //Check if super user is created.
+            $user = User::getByUsername('super');
+            $this->assertEquals('super', $user->username);
+
+            //Check if config files is updated.
+            $this->assertRegExp   ('/\$connectionString = \'mysql:host='.$this->hostname.';dbname='.$this->temporaryDatabaseName.'\';/', // Not Coding Standard
+                                   $perInstanceConfiguration);
+            $this->assertRegExp   ('/\$username         = \''.$this->rootUsername.'\';/',
+                                    $perInstanceConfiguration);
+            $this->assertRegExp   ('/\$password         = \''.$this->rootPassword.'\';/',
+                                    $perInstanceConfiguration);
+
+            //Restore original config files.
+            unlink($debugConfigFile);
+            unlink($perInstanceConfigFile);
+            file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
+            file_put_contents($debugConfigFile, $originalDebugConfiguration);
+        }
 
 
     }

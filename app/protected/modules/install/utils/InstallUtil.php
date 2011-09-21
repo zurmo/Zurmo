@@ -596,7 +596,8 @@
         public static function writeConfiguration($instanceRoot,
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
                                                   $memcacheHost = null, $memcachePort = null,
-                                                  $language, $isTest = false)
+                                                  $language,
+                                                  $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
         {
             assert('is_dir($instanceRoot)');
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -611,16 +612,9 @@
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
 
-            if (isset($isTest) && $isTest)
-            {
-                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
-                $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
-            }
-            else
-            {
-                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
-                $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
-            }
+            $perInstanceConfigFile     = "$instanceRoot/protected/config/$perInstanceFilename";
+            $debugConfigFile     = "$instanceRoot/protected/config/$debugFilename";
+
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
 
@@ -730,10 +724,13 @@
          * @param object $form
          * @param object $messageStreamer
          */
-        public static function runInstallation($form, & $messageStreamer)
+        public static function runInstallation($form, & $messageStreamer,
+                                               $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
         {
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
+            assert('is_string($perInstanceFilename)');
+            assert('is_string($debugFilename)');
             $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,
@@ -755,6 +752,7 @@
             $messageStreamer->add(Yii::t('Default', 'Freezing database.'));
             InstallUtil::freezeDatabase();
             $messageStreamer->add(Yii::t('Default', 'Writing Configuration File.'));
+
             InstallUtil::writeConfiguration(INSTANCE_ROOT,
                                             $form->databaseType,
                                             $form->databaseHostname,
@@ -763,7 +761,9 @@
                                             $form->databasePassword,
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
-                                            Yii::app()->language);
+                                            Yii::app()->language,
+                                            $perInstanceFilename,
+                                            $debugFilename);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));

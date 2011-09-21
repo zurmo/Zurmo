@@ -184,5 +184,11 @@
         {
             return $this->installed;
         }
+
+        public function setApplicationInstalled($installed)
+        {
+            $this->installed = $installed;
+            return true;
+        }
     }
 ?>
