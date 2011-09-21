@@ -484,7 +484,7 @@
                 }
                 catch(FailedFileUploadException $e)
                 {
-                    $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
+                    $fileUploadData = array('error' => Yii::t('Default', 'Error') . ' ' . $e->getMessage());
                     ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
                 }
             }

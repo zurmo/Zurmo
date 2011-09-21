@@ -72,7 +72,7 @@
                     if ($firstDateTime < $secondDateTime)
                     {
                         $this->addError($object, $attribute,
-                            Yii::t('Default', 'firstDateTime must occur after  secondDateTime'),
+                            Yii::t('Default', 'firstDateTime must occur after secondDateTime'),
                             array(  'firstDateTime'  => $object->getAttributeLabel($attribute),
                                     'secondDateTime' => $object->getAttributeLabel($this->compareAttribute)));
                     }

@@ -29,14 +29,26 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Close Date'
+            => '??',
         'Create OpportunitiesModuleSingularLabel'
             => '?? OpportunitiesModuleSingularLabel',
         'Opportunities'
             => '??',
+        'Opportunities By Lead Source'
+            => '??',
+        'Opportunities By Sales Stage'
+            => '??',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
+        'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
+            => 'OpportunitiesModulePluralLabel ?? AccountsModuleSingularLabel',
+        'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
+            => 'OpportunitiesModulePluralLabel ?? ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
+        'OpportunitiesModuleSingularLabel Search'
+            => 'OpportunitiesModuleSingularLabel ??',
         'Opportunity'
             => '??',
         'Related OpportunitiesModulePluralLabel'

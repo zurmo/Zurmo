@@ -63,7 +63,7 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => Yii::t('Default', 'World Clock'),
+                    'title' => "eval:Yii::t('Default', 'World Clock')",
                     'temperatureUnit' => 'F',
                     'weatherLocationCode' => 'NAM|US|IL|CHICAGO',
                 ),

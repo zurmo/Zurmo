@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Company Name'
+            => '??',
         'Contact'
             => '??',
         'Contact Statuses'
@@ -37,12 +39,22 @@
             => '??',
         'ContactsModulePluralLabel'
             => 'ContactsModulePluralLabel',
+        'ContactsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'ContactsModulePluralLabel ?? AccountsModuleSingularLabel',
+        'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel'
+            => 'ContactsModulePluralLabel ?? OpportunitiesModuleSingularLabel',
         'ContactsModuleSingularLabel'
             => 'ContactsModuleSingularLabel',
+        'ContactsModuleSingularLabel or LeadsModuleSingularLabel'
+            => 'ContactsModuleSingularLabel ?? LeadsModuleSingularLabel',
+        'ContactsModuleSingularLabel Search'
+            => 'ContactsModuleSingularLabel Search',
         'Create ContactsModuleSingularLabel'
             => '?? ContactsModuleSingularLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => '?? ContactsModuleSingularLowerCaseLabel ??',
+        'Order'
+            => '??',
         'Related ContactsModulePluralLabel'
             => '?? ContactsModulePluralLabel',
         'Starting Status'

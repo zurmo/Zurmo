@@ -44,7 +44,7 @@
         public function actionRebuildMunge()
         {
            ReadPermissionsOptimizationUtil::rebuild();
-           echo Yii::t('Default', 'Munge rebuild complete.');
+           echo Yii::t('Default', 'Read permissions rebuild complete.');
         }
     }
 ?>

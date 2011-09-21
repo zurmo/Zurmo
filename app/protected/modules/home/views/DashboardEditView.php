@@ -32,7 +32,8 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ListLink', 'label' => Yii::t('Default', 'Return to Home')),
+                            array('type' => 'ListLink',
+                                  'label' => "eval:Yii::t('Default', 'Return to Home')"),
                             array('type' => 'SaveButton'),
                         ),
                     ),

@@ -37,6 +37,8 @@
             => 'Crear Usario',
         'Manage Users'
             => 'Administrar Usarios',
+        'Manager'
+            => '??',
         'Profile'
             => 'Perfil',
         'The password is too short. Minimum length is'
@@ -47,7 +49,11 @@
             => '??',
         'The password must have at least one uppercase letter'
             => '??',
+        'The time zone is invalid.'
+            => '??',
         'The username is too short. Minimum length is'
+            => '??',
+        'Time Zone'
             => '??',
         'User'
             => 'Usario',

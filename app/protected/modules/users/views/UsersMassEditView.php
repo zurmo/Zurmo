@@ -33,7 +33,8 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'SaveButton'),
-                            array('type' => 'ListLink', 'label' => Yii::t('Default', 'Return to List')),
+                            array('type' => 'ListLink',
+                                  'label' => "eval:Yii::t('Default', 'Return to List')"),
                         ),
                     ),
                     'nonPlaceableAttributeNames' => array(

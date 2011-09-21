@@ -36,7 +36,7 @@
 
         protected static function getSingularModuleLabel()
         {
-            return 'RssReader';
+            return 'RSS Reader';
         }
     }
 ?>

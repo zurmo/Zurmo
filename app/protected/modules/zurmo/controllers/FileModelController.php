@@ -28,9 +28,6 @@
     {
         public function actionUpload($filesVariableName)
         {
-          //  $fileUploadData = array(array('error' => Yii::t('Default', 'Error:')));
-          // echo CJSON::encode($fileUploadData);
-          //  Yii::app()->end(0, false);
             try
             {
                 $uploadedFile = UploadedFileUtil::getByNameAndCatchError($filesVariableName);
@@ -45,7 +42,7 @@
             }
             catch (FailedFileUploadException $e)
             {
-                $fileUploadData = array('error' => Yii::t('Default', 'Error:') . ' ' . $e->getMessage());
+                $fileUploadData = array('error' => Yii::t('Default', 'Error') . ' ' . $e->getMessage());
             }
             echo CJSON::encode(array($fileUploadData));
             Yii::app()->end(0, false);

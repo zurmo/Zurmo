@@ -36,7 +36,7 @@
                             array('type' => 'SaveButton', 'renderType' => 'Edit'),
                             array('type' => 'ListLink',
                                 'renderType' => 'Details',
-                                'label' => Yii::t('Default', 'Return to List')
+                                'label' => "eval:Yii::t('Default', 'Return to List')"
                             ),
                             array('type' => 'EditLink',      'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),

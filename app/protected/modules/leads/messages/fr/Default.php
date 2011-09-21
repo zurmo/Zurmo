@@ -30,24 +30,26 @@
     // DON'T MAKE A MESS!
     return array(
         'Create AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
+            => 'Nouveau AccountsModuleSingularLabel',
         'Create LeadsModuleSingularLabel'
-            => '?? LeadsModuleSingularLabel',
+            => 'Nouvelle LeadsModuleSingularLabel',
         'Lead'
-            => '??',
+            => 'Piste',
         'Leads'
-            => '??',
+            => 'Pistes',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'
-            => 'LeadsModuleSingularLabel ??',
+            => 'Conversion de la LeadsModuleSingularLabel',
+        'LeadsModuleSingularLabel Search'
+            => 'Recherche LeadsModuleSingularLabel',
         'Related LeadsModulePluralLabel'
-            => '?? LeadsModulePluralLabel',
+            => 'LeadsModulePluralLabel associées',
         'Select AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
+            => 'Choisir un AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
+            => 'Aucun AccountsModuleSingularLabel',
     );
 ?>

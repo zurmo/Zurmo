@@ -61,7 +61,7 @@
             switch ($right)
             {
                 case self::NONE:
-                    return Yii::t('Default', 'None');
+                    return Yii::t('Default', '(None)');
 
                 case self::ALLOW:
                     return Yii::t('Default', 'Allow');
