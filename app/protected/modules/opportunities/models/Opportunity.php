@@ -82,6 +82,7 @@
                 'members' => array(
                     'name',
                     'closeDate',
+                    'probability',
                     'description',
                 ),
                 'relations' => array(
@@ -99,6 +100,10 @@
                     array('closeDate',     'required'),
                     array('closeDate',     'type', 'type' => 'date'),
                     array('amount',        'required'),
+                    array('probability',   'type',      'type' => 'integer'),
+                    array('probability',   'numerical', 'min' => 0, 'max' => 100),
+                    array('probability',   'required'),
+                    array('probability',   'default', 'value' => 0),
                     array('description',   'type',    'type' => 'string'),
                 ),
                 'elements' => array(

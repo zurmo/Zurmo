@@ -75,7 +75,21 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'closeDate', 'type' => 'Date'), // Not Coding Standard
+                                                array('attributeName' => 'closeDate', 'type' => 'Date'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => null, 'type' => 'Null'),
+                                            ),
+                                        ),
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'probability', 'type' => 'Integer'),
                                             ),
                                         ),
                                     )
