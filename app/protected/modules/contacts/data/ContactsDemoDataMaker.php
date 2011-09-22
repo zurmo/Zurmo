@@ -12,27 +12,27 @@
             return array('accounts');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
-            assert('isset($demoDataByModelClassName["User"])');
-            assert('isset($demoDataByModelClassName["Account"])');
+            assert('$demoDataHelper instanceof DemoDataHelper');
+            assert('$demoDataHelper->isSetRange("User")');
+            assert('$demoDataHelper->isSetRange("Account")');
 
-            $demoDataByModelClassName['ContactState'] = ContactState::getAll();
-            $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState(
-                                                    $demoDataByModelClassName['ContactState']);
+            $contactStates = ContactState::getAll();
+            $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState($contactStates);
+            $contacts = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $contact          = new Contact();
-                $contact->account = RandomDataUtil::
-                                        getRandomValueFromArray($demoDataByModelClassName["Account"]);
+                $contact->account = $demoDataHelper->getRandomByModelName('Account');
                 $contact->state   = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
                 $contact->owner   = $contact->account->owner;
                 $this->populateModel($contact);
                 $saved = $contact->save();
                 assert('$saved');
-                $demoDataByModelClassName['Contact'][] = $contact;
+                $contacts[] = $contact;
             }
+            $demoDataHelper->setRangeByModelName('Contact', $contacts[0]->id, $contacts[count($contacts)-1]->id);
         }
 
         public function populateModel(& $model)

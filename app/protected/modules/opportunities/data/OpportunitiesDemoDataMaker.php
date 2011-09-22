@@ -11,30 +11,30 @@
             return array('contacts');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
-            assert('isset($demoDataByModelClassName["Currency"])');
-            assert('isset($demoDataByModelClassName["User"])');
-            assert('isset($demoDataByModelClassName["Account"])');
-            assert('isset($demoDataByModelClassName["Contact"])');
+            assert('$demoDataHelper instanceof DemoDataHelper');
+            assert('$demoDataHelper->isSetRange("Currency")');
+            assert('$demoDataHelper->isSetRange("User")');
+            assert('$demoDataHelper->isSetRange("Account")');
+            assert('$demoDataHelper->isSetRange("Contact")');
 
+            $opportunities = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $opportunity = new Opportunity();
-                $opportunity->contacts->add(RandomDataUtil::
-                                            getRandomValueFromArray($demoDataByModelClassName["Contact"]));
+                $opportunity->contacts->add($demoDataHelper->getRandomByModelName('Contact'));
                 $opportunity->account = $opportunity->contacts[0]->account;
                 $opportunity->owner   = $opportunity->contacts[0]->owner;
                 $currencyValue = new CurrencyValue();
-                $currencyValue->currency = RandomDataUtil::
-                                            getRandomValueFromArray($demoDataByModelClassName["Currency"]);
+                $currencyValue->currency   = $demoDataHelper->getRandomByModelName('Currency');
                 $opportunity->amount = $currencyValue;
                 $this->populateModel($opportunity);
                 $saved = $opportunity->save();
                 assert('$saved');
-                $demoDataByModelClassName['Opportunity'][] = $opportunity;
+                $opportunities[] = $opportunity;
             }
+            $demoDataHelper->setRangeByModelName('Opportunity', $opportunities[0]->id, $opportunities[count($opportunities)-1]->id);
         }
 
         public function populateModel(& $model)

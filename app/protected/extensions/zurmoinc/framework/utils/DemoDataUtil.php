@@ -15,21 +15,22 @@
             assert('$messageLogger instanceof MessageLogger');
             assert('$loadMagnitude == null || is_int($loadMagnitude)');
             Yii::import('application.extensions.zurmoinc.framework.data.*');
-            $demoDataByModelClassName = array();
             $loadedModules = array();
+            $demoDataHelper = new DemoDataHelper();
             $modules = Module::getModuleObjects();
+
             foreach ($modules as $module)
             {
-                static::loadByModule($module, $messageLogger, $demoDataByModelClassName, $loadMagnitude);
+                static::loadByModule($module, $messageLogger, $demoDataHelper, $loadMagnitude);
             }
         }
 
         protected static function loadByModule($module, & $messageLogger,
-                                               & $demoDataByModelClassName, $loadMagnitude = null)
+                                               & $demoDataHelper, $loadMagnitude = null)
         {
             assert('$module instanceof Module');
             assert('$messageLogger instanceof MessageLogger');
-            assert('is_array($demoDataByModelClassName)');
+            assert('$demoDataHelper instanceof DemoDataHelper');
             assert('$loadMagnitude == null || is_int($loadMagnitude)');
             $parentModule = $module->getParentModule();
             if ($parentModule != null)
@@ -50,7 +51,7 @@
                     {
                         $dependentModule       = Yii::app()->findModule($dependentModuleName);
                         static::loadByModule($dependentModule, $messageLogger,
-                                             $demoDataByModelClassName, $loadMagnitude);
+                                             $demoDataHelper, $loadMagnitude);
                     }
                 }
                 $dataMaker = new $demoDataMakerClassName(get_class($module));
@@ -58,7 +59,7 @@
                 {
                     $dataMaker->setLoadMagnitude($loadMagnitude);
                 }
-                $dataMaker->makeAll($demoDataByModelClassName);
+                $dataMaker->makeAll($demoDataHelper);
                 static::$loadedModules[] = $module->getName();
                 $messageLogger->addInfoMessage(Yii::t('Default', 'Demo data loaded for ' .
                                                $module::getModuleLabelByTypeAndLanguage('Plural')));

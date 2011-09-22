@@ -9,28 +9,27 @@
             return array('zurmo');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
+            assert('$demoDataHelper instanceof DemoDataHelper');
             $executive = new Role();
             $executive->name = 'Executive';
             $saved = $executive->save();
             assert('$saved');
-            $demoDataByModelClassName['Role'][] = $executive;
 
             $manager = new Role();
             $manager->name = 'Manager';
             $manager->role = $executive;
             $saved = $manager->save();
             assert('$saved');
-            $demoDataByModelClassName['Role'][] = $manager;
 
             $associate = new Role();
             $associate->name = 'Associate';
             $associate->role = $manager;
             $saved = $associate->save();
             assert('$saved');
-            $demoDataByModelClassName['Role'][] = $associate;
+
+            $demoDataHelper->setRangeByModelName('Role', $executive->id, $associate->id);
         }
 
         public function populateModel(& $model)

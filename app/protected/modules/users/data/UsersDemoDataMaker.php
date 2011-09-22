@@ -10,11 +10,11 @@
             return array('groups', 'roles');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
-            assert('isset($demoDataByModelClassName["Group"])');
-            assert('isset($demoDataByModelClassName["Role"])');
+            assert('$demoDataHelper instanceof DemoDataHelper');
+            assert('$demoDataHelper->isSetRange("Group")');
+            assert('$demoDataHelper->isSetRange("Role")');
 
             $user = new User();
             $this->populateModel($user);
@@ -25,10 +25,15 @@
             $user->setPassword($user->username);
             $saved = $user->save();
             assert('$saved');
-            $demoDataByModelClassName["Role"][0]->users->add($user);
-            $saved = $demoDataByModelClassName["Role"][0]->save();
+
+            $userStartId = $user->id;
+            $roleIdRange = $demoDataHelper->getRangeByModelName('Role');
+            $role = Role::getById($roleIdRange['startId']);
+            assert('$role instanceof Role');
+            $role->users->add($user);
+            $saved = $role->save();
             assert('$saved');
-            $demoDataByModelClassName['User'][] = $user;
+
             foreach (array('jim'   => 'Mr',
                            'john'  => 'Mr',
                            'sally' => 'Dr',
@@ -46,11 +51,15 @@
                 $user->lastName           = 'Smith';
                 $saved = $user->save();
                 assert('$saved');
-                $demoDataByModelClassName["Role"][1]->users->add($user);
-                $saved = $demoDataByModelClassName["Role"][1]->save();
+
+                $roleIdRange = $demoDataHelper->getRangeByModelName('Role');
+                $role = Role::getById($roleIdRange['startId']+1);
+                assert('$role instanceof Role');
+                $role->users->add($user);
+                $saved = $role->save();
                 assert('$saved');
-                $demoDataByModelClassName['User'][] = $user;
             }
+            $demoDataHelper->setRangeByModelName('User', $userStartId, $user->id);
         }
 
         public function populateModel(& $model)
