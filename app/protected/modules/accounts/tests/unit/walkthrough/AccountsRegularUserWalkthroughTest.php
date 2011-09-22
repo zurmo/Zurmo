@@ -48,7 +48,7 @@
         }
 
         public function testRegularUserAllControllerActionsNoElevation()
-        {
+        {           
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             Yii::app()->user->userModel = User::getByUsername('nobody');
@@ -133,7 +133,7 @@
          */
         public function testRegularUserControllerActionsWithElevationToModels()
         {
-            //Created account owned by user super.
+            //Create account owned by user super.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $account = AccountTestHelper::createAccountByNameForOwner('testingAccountsForElevationToModelTest', $super);
 
@@ -295,6 +295,7 @@
             $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
             $this->assertTrue($userInChildGroup->save());
 
+            //create account owned by super
             $account3 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentGroupPermission', $super);
 
             //Test userInParentGroup, access to details and edit should fail.
@@ -472,13 +473,14 @@
             Yii::app()->user->userModel = $super;
             $account1 = Account::getById($account1->id);
             $account2 = Account::getById($account2->id);
-            $account3 = Account::getById($account3->id);
-            $this->assertEquals ('7799',         $account1->name);
-            $this->assertEquals ('7799',         $account2->name);
-            $this->assertEquals ('cannotUpdate', $account3->name);
-            $this->assertEquals ($super,         $account1->owner);
-            $this->assertEquals ($super,         $account2->owner);
-            $this->assertEquals ($billy,         $account3->owner);
+            $account3 = Account::getById($account3->id);          
+            
+            $this->assertEquals ('7799',        $account1->name);
+            $this->assertEquals ('7799',        $account2->name);
+            $this->assertEquals ('cannotUpdate',$account3->name);
+            $this->assertEquals ("".$super,     "".$account2->owner);
+            $this->assertEquals ("".$super,     "".$account2->owner);
+            $this->assertEquals ("".$billy,     "".$account3->owner);
         }
     }
 ?>
