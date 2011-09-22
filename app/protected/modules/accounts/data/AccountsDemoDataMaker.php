@@ -11,19 +11,22 @@
             return array('users');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
-            assert('isset($demoDataByModelClassName["User"])');
+            assert('$demoDataHelper instanceof DemoDataHelper');
+            assert('$demoDataHelper->isSetRange("User")');
+
+            $accounts = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $account = new Account();
-                $account->owner = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
+                $account->owner = $demoDataHelper->getRandomByModelName('User');
                 $this->populateModel($account);
                 $saved = $account->save();
                 assert('$saved');
-                $demoDataByModelClassName['Account'][] = $account;
+                $accounts[] = $account;
             }
+            $demoDataHelper->setRangeByModelName('Account', $accounts[0]->id, $accounts[count($accounts)-1]->id);
         }
 
         public function populateModel(& $model)

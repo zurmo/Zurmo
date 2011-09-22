@@ -11,15 +11,17 @@
             return array('opportunities');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
-            assert('isset($demoDataByModelClassName["User"])');
-            assert('isset($demoDataByModelClassName["Opportunity"])');
+            assert('$demoDataHelper instanceof DemoDataHelper');
+            assert('$demoDataHelper->isSetRange("User")');
+            assert('$demoDataHelper->isSetRange("Opportunity")');
+
+            $notes = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $note           = new Note();
-                $opportunity    = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName["Opportunity"]);
+                $opportunity    = $demoDataHelper->getRandomByModelName('Opportunity');
                 $note->owner    = $opportunity->owner;
                 $note->activityItems->add($opportunity);
                 $note->activityItems->add($opportunity->contacts[0]);
@@ -27,8 +29,9 @@
                 $this->populateModel($note);
                 $saved = $note->save();
                 assert('$saved');
-                $demoDataByModelClassName['Note'][] = $note;
+                $notes[] = $note;
             }
+            $demoDataHelper->setRangeByModelName('Note', $notes[0]->id, $notes[count($notes)-1]->id);
         }
 
         public function populateModel(& $model)

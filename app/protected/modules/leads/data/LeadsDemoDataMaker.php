@@ -11,24 +11,26 @@
             return array('accounts');
         }
 
-        public function makeAll(& $demoDataByModelClassName)
+        public function makeAll(& $demoDataHelper)
         {
-            assert('is_array($demoDataByModelClassName)');
-            assert('isset($demoDataByModelClassName["User"])');
+            assert('$demoDataHelper instanceof DemoDataHelper');
+            assert('$demoDataHelper->isSetRange("User")');
 
-            $demoDataByModelClassName['ContactState'] = ContactState::getAll();
-            $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState(
-                                                    $demoDataByModelClassName['ContactState']);
+            $contactStates = ContactState::getAll();
+            $statesBeginningWithStartingState = $this->getStatesBeforeOrStartingWithStartingState($contactStates);
+            $contacts = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $contact          = new Contact();
-                $contact->owner   = RandomDataUtil::getRandomValueFromArray($demoDataByModelClassName['User']);
+                $contact->owner   = $demoDataHelper->getRandomByModelName('User');
                 $contact->state   = RandomDataUtil::getRandomValueFromArray($statesBeginningWithStartingState);
                 $this->populateModel($contact);
                 $saved = $contact->save();
                 assert('$saved');
-                $demoDataByModelClassName['ContactsThatAreLeads'][] = $contact;
+                $contacts[] = $contact;
             }
+            //We can use dummy model name here ContactsThatAreLeads, so we can distinct between contacts are leads
+            $demoDataHelper->setRangeByModelName('ContactsThatAreLeads', $contacts[0]->id, $contacts[count($contacts)-1]->id);
         }
 
         public function populateModel(& $model)
