@@ -194,6 +194,10 @@
             {
                 $_SERVER['SERVER_SOFTWARE'] = $serverSoftware;
             }
+            else
+            {
+                unset($_SERVER['SERVER_SOFTWARE']);
+            }
         }
     }
 ?>
