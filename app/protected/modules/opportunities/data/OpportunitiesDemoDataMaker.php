@@ -32,9 +32,9 @@
                 $this->populateModel($opportunity);
                 $saved = $opportunity->save();
                 assert('$saved');
-                $opportunities[] = $opportunity;
+                $opportunities[] = $opportunity->id;
             }
-            $demoDataHelper->setRangeByModelName('Opportunity', $opportunities[0]->id, $opportunities[count($opportunities)-1]->id);
+            $demoDataHelper->setRangeByModelName('Opportunity', $opportunities[0], $opportunities[count($opportunities)-1]);
         }
 
         public function populateModel(& $model)

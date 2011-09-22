@@ -29,9 +29,9 @@
                 $this->populateModel($task);
                 $saved = $task->save();
                 assert('$saved');
-                $tasks[] = $task;
+                $tasks[] = $task->id;
             }
-            $demoDataHelper->setRangeByModelName('Task', $tasks[0]->id, $tasks[count($tasks)-1]->id);
+            $demoDataHelper->setRangeByModelName('Task', $tasks[0], $tasks[count($tasks)-1]);
         }
 
         public function populateModel(& $model)

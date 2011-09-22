@@ -27,10 +27,10 @@
                 $this->populateModel($contact);
                 $saved = $contact->save();
                 assert('$saved');
-                $contacts[] = $contact;
+                $contacts[] = $contact->id;
             }
             //We can use dummy model name here ContactsThatAreLeads, so we can distinct between contacts are leads
-            $demoDataHelper->setRangeByModelName('ContactsThatAreLeads', $contacts[0]->id, $contacts[count($contacts)-1]->id);
+            $demoDataHelper->setRangeByModelName('ContactsThatAreLeads', $contacts[0], $contacts[count($contacts)-1]);
         }
 
         public function populateModel(& $model)

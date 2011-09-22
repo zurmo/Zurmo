@@ -24,9 +24,9 @@
                 $this->populateModel($account);
                 $saved = $account->save();
                 assert('$saved');
-                $accounts[] = $account;
+                $accounts[] = $account->id;
             }
-            $demoDataHelper->setRangeByModelName('Account', $accounts[0]->id, $accounts[count($accounts)-1]->id);
+            $demoDataHelper->setRangeByModelName('Account', $accounts[0], $accounts[count($accounts)-1]);
         }
 
         public function populateModel(& $model)

@@ -29,9 +29,9 @@
                 $this->populateModel($note);
                 $saved = $note->save();
                 assert('$saved');
-                $notes[] = $note;
+                $notes[] = $note->id;
             }
-            $demoDataHelper->setRangeByModelName('Note', $notes[0]->id, $notes[count($notes)-1]->id);
+            $demoDataHelper->setRangeByModelName('Note', $notes[0], $notes[count($notes)-1]);
         }
 
         public function populateModel(& $model)

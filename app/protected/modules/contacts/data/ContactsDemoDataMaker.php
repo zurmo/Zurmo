@@ -30,9 +30,9 @@
                 $this->populateModel($contact);
                 $saved = $contact->save();
                 assert('$saved');
-                $contacts[] = $contact;
+                $contacts[] = $contact->id;
             }
-            $demoDataHelper->setRangeByModelName('Contact', $contacts[0]->id, $contacts[count($contacts)-1]->id);
+            $demoDataHelper->setRangeByModelName('Contact', $contacts[0], $contacts[count($contacts)-1]);
         }
 
         public function populateModel(& $model)

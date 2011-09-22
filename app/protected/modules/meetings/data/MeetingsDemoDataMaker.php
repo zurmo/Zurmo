@@ -29,9 +29,9 @@
                 $this->populateModel($meeting);
                 $saved = $meeting->save();
                 assert('$saved');
-                $meetings[] = $meeting;
+                $meetings[] = $meeting->id;
             }
-            $demoDataHelper->setRangeByModelName('Meeting', $meetings[0]->id, $meetings[count($meetings)-1]->id);
+            $demoDataHelper->setRangeByModelName('Meeting', $meetings[0], $meetings[count($meetings)-1]);
         }
 
         public function populateModel(& $model)
