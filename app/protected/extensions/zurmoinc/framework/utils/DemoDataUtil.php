@@ -21,9 +21,7 @@
 
             foreach ($modules as $module)
             {
-                echo "Start:" . memory_get_usage(true) ."\n";
                 static::loadByModule($module, $messageLogger, $demoDataHelper, $loadMagnitude);
-                echo "End:" . memory_get_usage(true) ."\n";
             }
         }
 
