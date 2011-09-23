@@ -100,23 +100,33 @@
             return $metadata;
         }
 
-        public static function stringifyAuditEvent(AuditEvent $auditEvent)
+        public static function stringifyAuditEvent(AuditEvent $auditEvent, $format = 'long')
         {
-            $s = strval($auditEvent);
+            assert('$format == "long" || $format == "short"');
+            $s = null;
             switch ($auditEvent->eventName)
             {
                 case self::AUDIT_EVENT_ITEM_CREATED:
                 case self::AUDIT_EVENT_ITEM_DELETED:
+                    if($format == 'short')
+                    {
+                        return Yii::t('Default', $auditEvent->eventName);
+                    }
+                    $s   .= strval($auditEvent);
                     $name = unserialize($auditEvent->serializedData);
-                    $s .= ", $name";
+                    $s   .= ", $name";
                     break;
 
                 case self::AUDIT_EVENT_ITEM_MODIFIED:
                     list($name, $attributeNames, $oldValue, $newValue) = unserialize($auditEvent->serializedData);
                     $modelClassName = $auditEvent->modelClassName;
-                    $model = new $modelClassName();
-                    $s .= ", $name";
-                    $s .= ', ' . yii::t('Default', 'Changed') . ' ';
+                    $model          = new $modelClassName();
+                    if($format == 'long')
+                    {
+                        $s             .= strval($auditEvent);
+                        $s             .= ", $name";
+                        $s             .= ', ' . yii::t('Default', 'Changed') . ' ';
+                    }
                     $attributeModel = $model;
                     $attributeLabels = array();
                     for ($i = 0; $i < count($attributeNames); $i++)

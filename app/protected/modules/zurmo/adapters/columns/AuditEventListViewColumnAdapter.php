@@ -30,7 +30,7 @@
         {
             return array(
                 'name'  => 'auditEvent',
-                'value' => 'call_user_func("{$data->moduleName}::stringifyAuditEvent", $data)',
+                'value' => 'call_user_func("{$data->moduleName}::stringifyAuditEvent", $data, "short")',
                 'type'  => 'raw',
             );
         }

@@ -167,7 +167,8 @@
             $saved = parent::save($runValidation, $attributeNames);
             if ($saved && $passwordChanged)
             {
-                AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_PASSWORD_CHANGED, $this->username);
+                AuditEvent::
+                logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_PASSWORD_CHANGED, $this->username, $this);
             }
             return $saved;
         }

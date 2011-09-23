@@ -109,6 +109,24 @@
                                 ZurmoModule::stringifyAuditEvent($AuditEventsList[1]));
         }
 
+        public function testLogAuditEventsListWithShortFormat()
+        {
+            Yii::app()->user->userModel = User::getByUsername('jimmy');
+            $beforeCount = AuditEvent::getCount();
+
+            $account = new Account();
+            $account->name = 'Yoddle';
+            $this->assertTrue($account->save());
+            $this->assertEquals($beforeCount + 1, AuditEvent::getCount());
+
+            $account->delete();
+            $this->assertEquals($beforeCount + 2, AuditEvent::getCount());
+
+            $AuditEventsList = AuditEvent::getTailEvents(2);
+            $this->assertEquals('Item Created', ZurmoModule::stringifyAuditEvent($AuditEventsList[0], 'short'));
+            $this->assertEquals('Item Deleted', ZurmoModule::stringifyAuditEvent($AuditEventsList[1], 'short'));
+        }
+
         public function testLogAuditEventChangingItemMembers()
         {
             Yii::app()->user->userModel = User::getByUsername('jimmy');
@@ -304,10 +322,10 @@
             $AuditEventsList = AuditEvent::getTailEvents(2);
             $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                 'James Boondog, User Password Changed/',
-                                ZurmoModule::stringifyAuditEvent($AuditEventsList[0]));
+                                UsersModule::stringifyAuditEvent($AuditEventsList[0]));
             $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                 'James Boondog, User Password Changed/',
-                                ZurmoModule::stringifyAuditEvent($AuditEventsList[0]));
+                                UsersModule::stringifyAuditEvent($AuditEventsList[0]));
         }
 
         public function testLogAuditEventForEachType()

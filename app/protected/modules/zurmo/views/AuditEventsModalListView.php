@@ -54,6 +54,25 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'dateTime', 'type' => 'DateTime',
+                                                      'htmlOptions' => array('nowrap' => 'nowrap')),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'user', 'type' => 'User'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'AuditEvent'),
                                             ),
                                         ),
