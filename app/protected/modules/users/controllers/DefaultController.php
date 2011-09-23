@@ -76,6 +76,7 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $user);
             $params = array(
                 'controllerId'     => $this->getId(),
                 'relationModuleId' => $this->getModule()->getId(),

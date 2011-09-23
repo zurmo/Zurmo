@@ -76,6 +76,7 @@
             else
             {
                 ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
+                AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $contact);
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
                                                                               Yii::app()->request->getRequestUri());

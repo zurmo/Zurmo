@@ -55,6 +55,7 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($opportunity);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $opportunity);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($opportunity, 'OpportunitiesModule',
                                                                           'OpportunityDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());

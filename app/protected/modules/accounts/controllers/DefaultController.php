@@ -55,6 +55,7 @@
         {
             $account = Account::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($account);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $account);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($account, 'AccountsModule',
                                                                           'AccountDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());

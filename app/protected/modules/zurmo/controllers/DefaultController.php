@@ -61,6 +61,7 @@
                 $formModel->attributes = $_POST['LoginForm'];
                 if ($formModel->validate() && $formModel->login())
                 {
+                    AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
                     $this->redirect(Yii::app()->user->returnUrl);
                 }
             }
@@ -70,6 +71,7 @@
 
         public function actionLogout()
         {
+            AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_OUT);
             Yii::app()->user->logout();
             $this->redirect(Yii::app()->homeUrl);
         }

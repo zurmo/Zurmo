@@ -45,9 +45,14 @@
                     'attributeName'        => 'modelId',
                     'operatorType'         => 'equals',
                     'value'                => $model->id,
+                ),
+                3 => array(
+                    'attributeName'        => 'eventName',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => ZurmoModule::AUDIT_EVENT_ITEM_VIEWED,
                 )
             );
-            $searchAttributeData['structure'] = '1 and 2';
+            $searchAttributeData['structure'] = '1 and 2 and 3';
             return $searchAttributeData;
         }
 

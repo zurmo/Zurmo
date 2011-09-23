@@ -36,6 +36,7 @@
         const AUDIT_EVENT_ITEM_CREATED            = 'Item Created';
         const AUDIT_EVENT_ITEM_MODIFIED           = 'Item Modified';
         const AUDIT_EVENT_ITEM_DELETED            = 'Item Deleted';
+        const AUDIT_EVENT_ITEM_VIEWED             = 'Item Viewed';
 
         public function canDisable()
         {

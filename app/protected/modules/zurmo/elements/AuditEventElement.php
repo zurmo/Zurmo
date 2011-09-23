@@ -65,8 +65,7 @@
          */
         public static function getModelAttributeNames()
         {
-            return array(
-            );
+            return array();
         }
     }
 ?>
