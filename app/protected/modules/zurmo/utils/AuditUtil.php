@@ -87,6 +87,7 @@
             {
                 if (!in_array($attributeName, $noAuditAttributeNames))
                 {
+                    $processAuditEvent = true;
                     if (!$attributeModel->isRelation($attributeName))
                     {
                         $newValue = $attributeModel->$attributeName;
@@ -95,16 +96,26 @@
                     {
                         assert('$attributeModel->$attributeName instanceof RedBeanModel');
                         $relatedModel = $attributeModel->$attributeName;
-                        $newValue = array(get_class($relatedModel),
-                                          $relatedModel->id,
-                                          strval($relatedModel));
-                        assert('$oldValue != $newValue');
+                        if($relatedModel->id < 0 && $oldValue[1] < 0)
+                        {
+                            $processAuditEvent = false;
+                        }
+                        else
+                        {
+                            $newValue = array(get_class($relatedModel),
+                                              $relatedModel->id,
+                                              strval($relatedModel));
+                            assert('$oldValue != $newValue');
+                        }
                     }
-                    $tempAttributeNames = $attributeNames;
-                    $tempAttributeNames[] = $attributeName;
-                    $data = array(strval($item), $tempAttributeNames, $oldValue, $newValue);
-                    AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_MODIFIED,
-                                              $data, $item);
+                    if($processAuditEvent)
+                    {
+                        $tempAttributeNames = $attributeNames;
+                        $tempAttributeNames[] = $attributeName;
+                        $data = array(strval($item), $tempAttributeNames, $oldValue, $newValue);
+                        AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_MODIFIED,
+                                                  $data, $item);
+                    }
                 }
             }
             foreach ($attributeModel->attributeNames() as $attributeName)
@@ -147,8 +158,9 @@
             }
         }
                                                 // TODO - collections
-        public static function stringifyValue(/*RedBeanModel*/ $attributeModel, $attributeName, $value)
+        public static function stringifyValue(/*RedBeanModel*/ $attributeModel, $attributeName, $value, $format = 'long')
         {
+            assert('$format == "long" || $format == "short"');
             if ($attributeModel instanceof RedBeanModels)
             {
                 return 'Collection';
@@ -165,16 +177,30 @@
             else
             {
                 assert('is_array($value)');
-                $modelClassName = $value[0];
-                $s = $modelClassName::getModelLabelByTypeAndLanguage('Singular') .
-                     '(' . $value[1] . ') ';
-                if ($value[2] === null || $value == '')
+                if($value[1] < 0)
                 {
-                    $s .= yii::t('Default', '(None)');
+                    $s = yii::t('Default', '(None)');
                 }
                 else
                 {
-                    $s .= $value[2];
+                    $modelClassName = $value[0];
+                    if($format == 'long')
+                    {
+                    $s = $modelClassName::getModelLabelByTypeAndLanguage('Singular') .
+                         '(' . $value[1] . ') ';
+                    }
+                    else
+                    {
+                        $s = null;
+                    }
+                    if ($value[2] === null || $value == '')
+                    {
+                        $s .= yii::t('Default', '(None)');
+                    }
+                    else
+                    {
+                        $s .= $value[2];
+                    }
                 }
             }
             return $s;

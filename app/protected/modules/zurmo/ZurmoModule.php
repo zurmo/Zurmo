@@ -149,9 +149,9 @@
                     }
                     $s .= join(' ', $attributeLabels);
                     $s .= ' ' . yii::t('Default', 'from') . ' ';
-                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $oldValue) . ' ';
+                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $oldValue, $format) . ' ';
                     $s .= yii::t('Default', 'to') . ' ';
-                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $newValue);
+                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $newValue, $format);
                     break;
             }
             return $s;
