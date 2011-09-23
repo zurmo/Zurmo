@@ -66,5 +66,330 @@
 
             //Test peon create/select from sublist actions with none and elevated permissions
         }
+		
+		public function testRegularUserAllControllerActionsNoElevation()
+        {		
+			//Create opportunity owned by user super.
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('Opportunity', $super);
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+			
+			//Now test all portlet controller actions
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default');
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/index');
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/list');
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/create');
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('selectedIds' => '4,5,6,7,8', 'selectAll' => ''));  // Not Coding Standard
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/massEdit');
+            $this->setGetArray(array('selectAll' => '1', 'Opportunity_page' => 2));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/massEditProgressSave');
+			
+			//Autocomplete for opportunity should fail
+            $this->setGetArray(array('term' => 'super'));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/autoComplete');
+
+            //actionModalList should fail
+            $this->setGetArray(array(
+                'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
+            ));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/modalList');
+			
+			//actionAuditEventsModalList should fail
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/auditEventsModalList');
+
+            //actionDelete should fail.
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/delete');
+		}
+		
+		/**
+         * @depends testRegularUserAllControllerActionsNoElevation
+         */
+        public function testRegularUserControllerActionsWithElevationToAccessAndCreate()
+        {
+            //Now test peon with elevated rights to tabs /other available rights
+			$nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+			
+			//Now test peon with elevated rights to opportunities
+            $nobody->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+            $nobody->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_CREATE_OPPORTUNITIES);
+            $this->assertTrue($nobody->save());
+
+            //Test nobody with elevated rights.
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/list');
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/create');
+
+			//Test nobody can view an existing opportunity he owns.
+            $opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('opportunityOwnedByNobody', $nobody);
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
+			
+			//Test nobody can delete an existing opportunity he owns and it redirects to index.
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/delete',
+			Yii::app()->getUrlManager()->getBaseUrl() . '?r=opportunities/default/index'); // Not Coding Standard
+			
+			 //Autocomplete for Opportunity should not fail.
+            $this->setGetArray(array('term' => 'super'));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/autoComplete');
+
+            //actionModalList for Opportunity should not fail.
+            $this->setGetArray(array(
+                'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
+            ));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/modalList');
+		}	
+		
+		/**
+         * @depends testRegularUserControllerActionsWithElevationToAccessAndCreate
+         */
+        public function testRegularUserControllerActionsWithElevationToModels()
+        {
+            //Create opportunity owned by user super.
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+			$opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('opportunityForElevationToModelTest', $super);
+			
+			//Test nobody, access to edit and details should fail.
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+
+            //give nobody access to read
+            Yii::app()->user->userModel = $super;
+            $opportunity->addPermissions($nobody, Permission::READ);
+            $this->assertTrue($opportunity->save());
+			
+			//Now the nobody user can access the details view.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/details');
+			
+			 //Test nobody, access to edit should fail.
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+
+            //give nobody access to read and write
+            Yii::app()->user->userModel = $super;
+            $opportunity->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($opportunity->save());
+			
+			//Now the nobody user should be able to access the edit view and still the details view.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
+
+            //revoke nobody access to read
+            Yii::app()->user->userModel = $super;
+            $opportunity->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($opportunity->save());
+		
+			//Test nobody, access to detail should fail.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+			
+			//create some roles
+			Yii::app()->user->userModel = $super;
+            $parentRole = new Role();
+            $parentRole->name = 'AAA';
+            $this->assertTrue($parentRole->save());
+
+            $childRole = new Role();
+            $childRole->name = 'BBB';
+            $this->assertTrue($childRole->save());
+			
+			$userInParentRole = User::getByUsername('confused');
+            $userInChildRole = User::getByUsername('nobody');
+			
+			$childRole->users->add($userInChildRole);
+            $this->assertTrue($childRole->save());
+            $parentRole->users->add($userInParentRole);
+            $parentRole->roles->add($childRole);
+            $this->assertTrue($parentRole->save());
+			
+            //create opportunity owned by super
+			$opportunity2 = OpportunityTestHelper::createOpportunityByNameForOwner('testingParentRolePermission',$super);
+						
+			//Test userInParentRole, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');	
+			
+			//give userInChildRole access to READ
+            Yii::app()->user->userModel = $super;
+            $opportunity2->addPermissions($userInChildRole, Permission::READ);
+            $this->assertTrue($opportunity2->save());
+			
+			//Test userInChildRole, access to details should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/details');
+
+            //Test userInParentRole, access to details should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/details');
+			
+			//give userInChildRole access to read and write
+            Yii::app()->user->userModel = $super;
+            $opportunity2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($opportunity2->save());
+			
+			//Test userInChildRole, access to edit should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
+			
+			//Test userInParentRole, access to edit should not fail.
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentRole->username);
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
+			
+			//revoke userInChildRole access to read and write
+            Yii::app()->user->userModel = $super;
+            $opportunity2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($opportunity2->save());
+			
+			//Test userInChildRole, access to detail should fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+			
+			//Test userInParentRole, access to detail should fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+			
+            //clear up the role relationships between users so not to effect next assertions
+			$parentRole->users->remove($userInParentRole);
+            $parentRole->roles->remove($childRole);
+            $this->assertTrue($parentRole->save());
+            $childRole->users->remove($userInChildRole);
+            $this->assertTrue($childRole->save());
+			
+			//create some groups and assign users to groups
+			Yii::app()->user->userModel = $super;
+            $parentGroup = new Group();
+            $parentGroup->name = 'AAA';
+            $this->assertTrue($parentGroup->save());
+
+			$childGroup = new Group();
+            $childGroup->name = 'BBB';
+            $this->assertTrue($childGroup->save());
+
+            $userInChildGroup = User::getByUsername('confused');
+            $userInParentGroup = User::getByUsername('nobody');
+			
+			$childGroup->users->add($userInChildGroup);
+            $this->assertTrue($childGroup->save());
+            $parentGroup->users->add($userInParentGroup);
+            $parentGroup->groups->add($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $parentGroup->forget();
+            $childGroup->forget();
+            $parentGroup = Group::getByName('AAA');
+            $childGroup = Group::getByName('BBB');
+		
+			//Add access for the confused user to Opportunities and creation of Opportunities.
+            $userInChildGroup->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+            $userInChildGroup->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_CREATE_OPPORTUNITIES);
+            $this->assertTrue($userInChildGroup->save());
+			
+            //create opportunity owned by super
+			$opportunity3 = OpportunityTestHelper::createOpportunityByNameForOwner('testingParentGroupPermission', $super);
+			
+			 //Test userInParentGroup, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+
+            //Test userInChildGroup, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+			
+			//give parentGroup access to READ
+            Yii::app()->user->userModel = $super;
+            $opportunity3->addPermissions($parentGroup, Permission::READ);
+            $this->assertTrue($opportunity3->save());
+
+            //Test userInParentGroup, access to details should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/details');
+			
+			//Test userInChildGroup, access to details should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/details');
+
+            //give parentGroup access to read and write
+            Yii::app()->user->userModel = $super;
+            $opportunity3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($opportunity3->save());
+			
+			//Test userInParentGroup, access to edit should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
+
+            //Test userInChildGroup, access to edit should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
+			
+			//revoke parentGroup access to read and write
+            Yii::app()->user->userModel = $super;
+            $opportunity3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($opportunity3->save());
+			
+			//Test userInChildGroup, access to detail should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+			
+			//Test userInParentGroup, access to detail should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
+            $this->setGetArray(array('id' => $opportunity3->id));			
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');	
+            
+            //clear up the role relationships between users so not to effect next assertions
+            $parentGroup->users->remove($userInParentGroup);
+            $parentGroup->groups->remove($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $childGroup->users->remove($userInChildGroup);
+            $this->assertTrue($childGroup->save());
+		}
     }
 ?>
