@@ -60,7 +60,7 @@
         }
         public function testRegularUserAllControllerActionsNoElevation()
         {
-
+            //Create lead owned by user super.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $lead = LeadTestHelper::createLeadByNameForOwner('Lead', $super);
             Yii::app()->user->userModel = User::getByUsername('nobody');
@@ -147,16 +147,12 @@
          */
         public function testRegularUserControllerActionsWithElevationToModels()
         {
-
-            //Now test peon with elevated permissions to models.
+            //Create lead owned by user super.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $nobody = User::getByUsername('nobody');
-
-            //Created lead owned by user super.
             $lead = LeadTestHelper::createLeadByNameForOwner('leadForElevationToModelTest', $super);
 
             //Test nobody, access to edit and details should fail.
-            Yii::app()->user->userModel = $nobody;
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
             $this->setGetArray(array('id' => $lead->id));
@@ -219,7 +215,8 @@
             $parentRole->roles->add($childRole);
             $this->assertTrue($parentRole->save());
 
-            $lead2 = LeadTestHelper::createLeadByNameForOwner('testingParentRolePermission',$super);
+            //create lead owned by super
+            $lead2 = LeadTestHelper::createLeadByNameForOwner('leadsParentRolePermission',$super);
 
             //Test userInParentRole, access to details and edit should fail.
             Yii::app()->user->userModel = $userInParentRole;
@@ -277,6 +274,7 @@
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
 
+            //clear up the role relationships between users so not to effect next assertions
             $parentRole->users->remove($userInParentRole);
             $parentRole->roles->remove($childRole);
             $this->assertTrue($parentRole->save());
@@ -311,7 +309,8 @@
             $userInChildGroup->setRight('LeadsModule', LeadsModule::RIGHT_CREATE_LEADS);
             $this->assertTrue($userInChildGroup->save());
 
-            $lead3 = LeadTestHelper::createLeadByNameForOwner('testingParentGroupPermission', $super);
+            //create lead owned by super
+            $lead3 = LeadTestHelper::createLeadByNameForOwner('leadsParentGroupPermission', $super);
 
             //Test userInParentGroup, access to details and edit should fail.
             Yii::app()->user->userModel = $userInParentGroup;
@@ -376,6 +375,13 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/details');
             $this->setGetArray(array('id' => $lead3->id));			
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');		
+            
+            //clear up the role relationships between users so not to effect next assertions
+            $parentGroup->users->remove($userInParentGroup);
+            $parentGroup->groups->remove($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $childGroup->users->remove($userInChildGroup);
+            $this->assertTrue($childGroup->save());
         }
         //todo: test lead conversion.
     }
