@@ -26,7 +26,7 @@
 
     class WebUser extends CWebUser
     {
-        private $userModel = null;
+        protected $userModel = null;
 
         public function __get($attributeName)
         {
@@ -75,6 +75,17 @@
         public function hasUserModel()
         {
             return $this->userModel !== null;
+        }
+
+        protected function afterLogin($fromCookie)
+        {
+            AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+        }
+
+        protected function beforeLogout()
+        {
+            AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_OUT);
+            return true;
         }
     }
 ?>

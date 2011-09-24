@@ -84,7 +84,8 @@
             ));
             $this->resetGetArray();
             $this->runControllerWithExitExceptionAndGetContent('zurmo/default/login');
-            //Login and assert user is logged in.
+
+            //Login and assert user is logged in ok.
             $this->resetGetArray();
             $this->setPostArray(array(
                 'LoginForm' => array(   'username'   => 'super',
@@ -93,7 +94,7 @@
             ));
             $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
             $this->assertFalse(Yii::app()->user->isGuest);
-            $this->assertFalse(Yii::app()->user->userModel == $super);
+            $this->assertTrue(Yii::app()->user->userModel->username == $super->username);
 
             //Relogin super user.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
