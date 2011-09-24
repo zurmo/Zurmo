@@ -55,6 +55,7 @@
 
         public function actionAttributesList()
         {
+            $met = Account::getMetadata();
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
             $modelClassName = $moduleClassName::getPrimaryModelName();
