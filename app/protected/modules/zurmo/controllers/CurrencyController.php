@@ -72,13 +72,20 @@
                 $model->setAttributes($_POST[$postVariableName]);
                 if ($model->rateToBase == null && $model->code != null)
                 {
-                    $currencyHelper = Yii::app()->currencyHelper;
-                    $rate           = (float)$currencyHelper->getConversionRateToBase($model->code);
-                    if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
+                    if(!ZurmoCurrencyCodes::isValidCode($model->code))
                     {
                         $model->addError('code', Yii::t('Default', 'Invalid currency code'));
                         $currencyHelper->resetErrors();
                         return $model;
+                    }
+                    $currencyHelper = Yii::app()->currencyHelper;
+                    $rate           = (float)$currencyHelper->getConversionRateToBase($model->code);
+                    if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
+                    {
+                        Yii::app()->user->setFlash('notification',
+                                yii::t('Default', 'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.')
+                        );
+                        $currencyHelper->resetErrors();
                     }
                     elseif ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_WEB_SERVICE)
                     {
@@ -114,6 +121,12 @@
                 );
             }
             $this->redirect(array($this->getId() . '/configurationList'));
+        }
+
+        public function actionAutoComplete($term)
+        {
+            $autoCompleteResults = CurrencyCodeAutoCompleteUtil::getByPartialCodeOrName($term);
+            echo CJSON::encode($autoCompleteResults);
         }
     }
 ?>

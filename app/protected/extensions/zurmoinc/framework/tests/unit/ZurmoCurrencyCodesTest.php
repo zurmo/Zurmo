@@ -24,43 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A view for creating a new currency.
-     */
-    class CurrencyCreateView extends EditView
+    class ZurmoCurrencyCodesTest extends BaseTest
     {
-        public static function getDefaultMetadata()
+        public function testGetCodes()
         {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type' => 'ConfigurationLink'),
-                            array('type' => 'SaveButton'),
-                        ),
-                    ),
-                    'nonPlaceableAttributeNames' => array(
-                        'rateToBase',
-                    ),
-                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
-                    'panels' => array(
-                        array(
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'code', 'type' => 'CurrencyCode'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
+            $codes = ZurmoCurrencyCodes::getCodes();
+            $this->assertEquals(159, count($codes));
+        }
+
+        public function testGetByPartialCodeOrName()
+        {
+            $data = ZurmoCurrencyCodes::getByPartialCodeOrName('eu');
+            $compareData = array(
+                'EUR' => 'Euro Member Countries',
+                'MDL' => 'Moldova Leu',
+                'RON' => 'Romania New Leu',
             );
-            return $metadata;
+            $this->assertEquals($compareData, $data);
+
+            $data = ZurmoCurrencyCodes::getByPartialCodeOrName('EU');
+            $this->assertEquals($compareData, $data);
+
+            $data = ZurmoCurrencyCodes::getByPartialCodeOrName('zasd');
+            $this->assertEquals(array(), $data);
+
+            $data = ZurmoCurrencyCodes::getByPartialCodeOrName('falk');
+            $compareData = array(
+                'FKP' => 'Falkland Islands (Malvinas) Pound',
+            );
+            $this->assertEquals($compareData, $data);
+        }
+
+        public function testIsValidCode()
+        {
+            $this->assertTrue(ZurmoCurrencyCodes::isValidCode('USD'));
+            $this->assertTrue(ZurmoCurrencyCodes::isValidCode('EUR'));
+            $this->assertFalse(ZurmoCurrencyCodes::isValidCode('INVALID'));
         }
     }
 ?>

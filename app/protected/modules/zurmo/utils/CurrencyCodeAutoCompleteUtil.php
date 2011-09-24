@@ -25,42 +25,27 @@
      ********************************************************************************/
 
     /**
-     * A view for creating a new currency.
+     * Helper class to take a string and search that string against the known currency codes.  Perpares the resulting
+     * data in an array that is auto-complete ready. @see ModelAutoCompleteUtil.  @see CJuiAutoComplete
      */
-    class CurrencyCreateView extends EditView
+    class CurrencyCodeAutoCompleteUtil
     {
-        public static function getDefaultMetadata()
+        /**
+         * @return array - Jui AutoComplete ready array
+         *  containing value and label elements.
+         */
+        public static function getByPartialCodeOrName($partialCodeOrName)
         {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type' => 'ConfigurationLink'),
-                            array('type' => 'SaveButton'),
-                        ),
-                    ),
-                    'nonPlaceableAttributeNames' => array(
-                        'rateToBase',
-                    ),
-                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
-                    'panels' => array(
-                        array(
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'code', 'type' => 'CurrencyCode'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            );
-            return $metadata;
+            $autoCompleteResults = array();
+            $codesAndNames       = ZurmoCurrencyCodes::getByPartialCodeOrName($partialCodeOrName);
+            foreach ($codesAndNames as $code => $name)
+            {
+                $autoCompleteResults[] = array(
+                    'value' => $code,
+                    'label' => $code . ' ' . $name
+                );
+            }
+            return $autoCompleteResults;
         }
     }
 ?>
