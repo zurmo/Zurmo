@@ -44,7 +44,7 @@
             $saved = $currency->save();
             assert('$saved');
             $currency = new Currency();
-            $currency->code       = 'YEN';
+            $currency->code       = 'JPY';
             $currency->rateToBase = .75;
             $saved = $currency->save();
             assert('$saved');

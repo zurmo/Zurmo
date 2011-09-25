@@ -83,10 +83,10 @@
             $content .= '<col style="width:10%" /><col style="width:30%" /><col style="width:40%" /><col style="width:20%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Active') . ' ?</th>';
+            $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Code') . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' .
-                        Yii::app()->currencyHelper->getBaseCode(). ' ' . $this->renderLastUpdatedInformationContent() . '</th>';
+                        Yii::app()->currencyHelper->getBaseCode(). ' ' . $this->renderLastUpdatedHeaderContent() . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Remove') . '</th>';
             $content .= '</tr>';
             foreach ($this->currencies as $currency)
@@ -143,7 +143,7 @@
             return $form->checkBox($currency, 'active', $htmlOptions);
         }
 
-        protected static function renderLastUpdatedInformationContent()
+        protected static function renderLastUpdatedHeaderContent()
         {
             $content = Yii::t('Default', 'Last Updated') . ': ';
             $lastAttempedDateTime = Yii::app()->currencyHelper->getLastAttemptedRateUpdateDateTime();
@@ -155,8 +155,24 @@
             {
                 $content .= $lastAttempedDateTime;
             }
-            return '<i>(' . $content . ')</i>';
+            return '<span style="font-size:75%;"><i>(' . $content . ')</i></span>';
         }
 
+        protected static function renderActiveHeaderContent()
+        {
+            $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
+            $content     = Yii::t('Default', 'Active') . '&#160;';
+            $content    .= '<span id="xyz" style="font-size:75%; text-decoration:underline;" title="' . $title . '">';
+            $content    .= Yii::t('Default', 'What is this?') . '</span>';
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("ActiveToolTip");
+            $cClipWidget->widget('application.extensions.tipsy.Tipsy', array(
+              'trigger' => 'hover',
+              'items'   => array(array('id' => '#xyz', 'gravity' => 'sw')),
+            ));
+            $cClipWidget->endClip();
+            $content .= $cClipWidget->getController()->clips['ActiveToolTip'];
+            return $content;
+        }
     }
 ?>
