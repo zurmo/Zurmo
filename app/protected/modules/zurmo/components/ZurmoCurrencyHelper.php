@@ -202,5 +202,16 @@
             }
             return $data;
         }
+
+        public function getLastAttemptedRateUpdateDateTime()
+        {
+            $metadata = Currency::getMetadata();
+            if($metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null)
+            {
+                return null;
+            }
+            return Yii::app()->dateFormatter->formatDateTime(
+                    $metadata['Currency']['lastAttemptedRateUpdateTimeStamp'], 'short');
+        }
     }
 ?>

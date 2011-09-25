@@ -85,7 +85,8 @@
             $content .= '<tbody>';
             $content .= '<tr><th>' . Yii::t('Default', 'Active') . ' ?</th>';
             $content .= '<th>' . Yii::t('Default', 'Code') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' . Yii::app()->currencyHelper->getBaseCode(). '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' .
+                        Yii::app()->currencyHelper->getBaseCode(). ' ' . $this->renderLastUpdatedInformationContent() . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Remove') . '</th>';
             $content .= '</tr>';
             foreach ($this->currencies as $currency)
@@ -141,5 +142,21 @@
             $htmlOptions['name'] = 'CurrencyCollection[' . $currency->code . '][active]';
             return $form->checkBox($currency, 'active', $htmlOptions);
         }
+
+        protected static function renderLastUpdatedInformationContent()
+        {
+            $content = Yii::t('Default', 'Last Updated') . ': ';
+            $lastAttempedDateTime = Yii::app()->currencyHelper->getLastAttemptedRateUpdateDateTime();
+            if($lastAttempedDateTime == null)
+            {
+                $content .= Yii::t('Default', 'Never');
+            }
+            else
+            {
+                $content .= $lastAttempedDateTime;
+            }
+            return '<i>(' . $content . ')</i>';
+        }
+
     }
 ?>
