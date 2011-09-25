@@ -76,5 +76,30 @@
             $this->assertTrue($super->save());
             $this->assertEquals('EUR', $currencyHelper->getCodeForCurrentUserForDisplay());
         }
+
+        /**
+         * @depends testGetCodeForCurrentUserForDisplay
+         */
+        public function testGetActiveCurrenciesOrSelectedCurrenciesData()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $currency = Yii::app()->currencyHelper;
+            $currencies = Currency::getAll();
+            $this->assertEquals(2, count($currencies));
+            $activeCurrencies = $currency->getActiveCurrenciesOrSelectedCurrenciesData(null);
+            $this->assertEquals(2, count($activeCurrencies));
+
+            $currency = Currency::getByCode('EUR');
+            $currency->active = 0;
+            $this->assertTrue($currency->save());
+
+            $activeCurrencies = $currency->getActiveCurrenciesOrSelectedCurrenciesData(null);
+            $this->assertEquals(1, count($activeCurrencies));
+
+            $activeCurrencies = $currency->getActiveCurrenciesOrSelectedCurrenciesData($currency->id);
+            $this->assertEquals(1, count($activeCurrencies));
+        }
     }
 ?>

@@ -182,5 +182,25 @@
                 Currency::setMetadata($metadata);
             }
         }
+
+        /**
+         * Given a selectedCurrencyId, return an array of available currencies for selection in the user interface.
+         * If the selected currency is inactive, include this in the returned data.
+         * @param mixed $selectedCurrencyId
+         */
+        public function getActiveCurrenciesOrSelectedCurrenciesData($selectedCurrencyId)
+        {
+            assert('$selectedCurrencyId == null || (is_int($selectedCurrencyId) && $selectedCurrencyId > 0)');
+            $currencies = Currency::getAll();
+            $data       = array();
+            foreach ($currencies as $currency)
+            {
+                if($currency->active || ($selectedCurrencyId != null && $currency->id == $selectedCurrencyId))
+                {
+                    $data[$currency->id] = $currency->code;
+                }
+            }
+            return $data;
+        }
     }
 ?>

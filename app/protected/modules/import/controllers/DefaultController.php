@@ -529,13 +529,6 @@
                     Yii::app()->end(0, false);
                 }
             }
-            else
-            {
-                echo "<pre>";
-                print_r($importWizardForm->getErrors());
-                echo "</pre>";
-                exit;
-            }
         }
 
         protected function makeDataProviderForSampleRow($import, $firstRowIsHeaderRow)

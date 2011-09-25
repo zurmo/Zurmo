@@ -51,11 +51,13 @@
             $redirectUrlParams = array('/zurmo/' . $this->getId() . '/ConfigurationList');
             $currency          = new Currency();
             $currency = $this->attemptToSaveModelFromPost($currency, $redirectUrlParams);
+            $messageBoxContent = $this->attemptToUpdateActiveCurrenciesFromPostAndGetMessageBoxContent();
             $view = new CurrencyTitleBarConfigurationListAndCreateView(
                             $this->getId(),
                             $this->getModule()->getId(),
                             $currency,
-                            Currency::getAll());
+                            Currency::getAll(),
+                            $messageBoxContent);
             $view = new ZurmoConfigurationPageView($this, $view);
             echo $view->render();
         }
@@ -102,6 +104,47 @@
                 }
             }
             return $model;
+        }
+
+        protected function attemptToUpdateActiveCurrenciesFromPostAndGetMessageBoxContent()
+        {
+            if (isset($_POST['CurrencyCollection']))
+            {
+                $currencyCollectionActiveData = $_POST['CurrencyCollection'];
+                $atLeastOneCurrencyIsActive = false;
+                foreach($currencyCollectionActiveData as $currencyCode => $currencyData)
+                {
+                    assert('isset($currencyData["active"])');
+                    if($currencyData['active'])
+                    {
+                        $atLeastOneCurrencyIsActive = true;
+                    }
+                }
+                if(!$atLeastOneCurrencyIsActive)
+                {
+                    return HtmlNotifyUtil::renderAlertBoxByMessage(
+                                           Yii::t('Default', 'You must have at least one active currency.'));
+                }
+                else
+                {
+                    foreach($currencyCollectionActiveData as $currencyCode => $currencyData)
+                    {
+                        $currency = Currency::getByCode($currencyCode);
+                        if($currencyData['active'])
+                        {
+                            $currency->active = 1;
+                        }
+                        else
+                        {
+                            $currency->active = 0;
+                        }
+                        $saved = $currency->save();
+                        assert('$saved');
+                    }
+                    return HtmlNotifyUtil::renderHighlightBoxByMessage(
+                                           Yii::t('Default', 'Changes to active currencies changed successfully.'));
+                }
+            }
         }
 
         /**
