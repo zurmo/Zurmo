@@ -30,6 +30,12 @@
     class ZurmoLanguageHelper extends CApplicationComponent
     {
         /**
+         * The base language as defined by the config file. This language cannot be inactivated.
+         * @var string
+         */
+        protected $baseLanguage;
+
+        /**
          * Sets active language.
          */
         public function setActive($language)
@@ -40,10 +46,12 @@
         }
 
         /**
-         * Loads language for current user.  This is called by BeginBehavior.
+         * Loads language for current user.  This is called by BeginBehavior. This will also copy the base language
+         * into a parameter $baseLanguage in this class.
          */
         public function load()
         {
+            $this->baseLanguage = Yii::app()->language;
             if (Yii::app()->user->userModel == null)
             {
                 $language = $this->getForCurrentUser();
@@ -132,6 +140,82 @@
             {
                 GeneralCache::forgetEntry('moduleLabelTranslationParameters' . $language);
             }
+        }
+
+        /**
+         * Returns an array of active language data which includes the language as the index, and the translated
+         * name of the language as the value.
+         */
+        public function getActiveLanguagesData()
+        {
+            $supportedLanguages = $this->getSupportedLanguagesData();
+            $activeLanguages    = $this->getActiveLanguages();
+            foreach($supportedLanguages as $language => $notUsed)
+            {
+                if(!in_array($language, $activeLanguages))
+                {
+                    unset($supportedLanguages[$language]);
+                }
+            }
+            return $supportedLanguages;
+        }
+
+        /**
+         * A language that is the base language or currently selected as a user's default language, cannot be removed.
+         * @return true if the specified language can be removed.
+         */
+        public function canInactivateLanguage($language)
+        {
+            assert('is_string($language)');
+            if($language == $this->baseLanguage || $this->isLanguageADefaultLanguageForAnyUsers($language))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * Given a language, returns true if the language is active, otherwise false.
+         */
+        public function getActiveLanguages()
+        {
+            $activeLanguages = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'activeLanguages');
+            if($activeLanguages == null)
+            {
+                $activeLanguages = array();
+            }
+            if(!in_array($this->baseLanguage, $activeLanguages))
+            {
+                $activeLanguages[] = $this->baseLanguage;
+            }
+            return $activeLanguages;
+        }
+
+        /**
+         * Set the array of active languages that can be selected in the user interface by users.
+         * @param array $activeLanguages
+         */
+        public function setActiveLanguages($activeLanguages)
+        {
+            assert('is_array($activeLanguages');
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'activeLanguages', $activeLanguages);
+        }
+
+        /**
+         * Given a language, is it in use as a default language by any of the users.
+         * @param string $language
+         * @return true if in use, otherwise returns false.
+         */
+        protected function isLanguageADefaultLanguageForAnyUsers($language)
+        {
+            assert('is_string($language)');
+            $tableName = User::getTableName('User');
+            $beans = RedBean_Plugin_Finder::where($tableName, "language = '$language'");
+            if(count($beans) > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>
