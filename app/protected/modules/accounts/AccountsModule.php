@@ -27,6 +27,7 @@
     class AccountsModule extends SecurableModule
     {
         const RIGHT_CREATE_ACCOUNTS = 'Create Accounts';
+        const RIGHT_DELETE_ACCOUNTS = 'Delete Accounts';
         const RIGHT_ACCESS_ACCOUNTS = 'Access Accounts Tab';
 
         public function getDependencies()
@@ -87,7 +88,12 @@
 
         public static function getCreateRight()
         {
-            return self::RIGHT_CREATE_ACCOUNTS;
+            return self::RIGHT_DELETE_ACCOUNTS;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_ACCOUNTS;
         }
 
         public static function getDefaultDataMakerClassName()

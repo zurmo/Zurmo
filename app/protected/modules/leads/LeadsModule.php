@@ -31,6 +31,7 @@
         const CONVERT_ACCOUNT_REQUIRED     = 3;
 
         const RIGHT_CREATE_LEADS  = 'Create Leads';
+        const RIGHT_DELETE_LEADS  = 'Delete Leads';
         const RIGHT_ACCESS_LEADS  = 'Access Leads Tab';
         const RIGHT_CONVERT_LEADS = 'Convert Leads';
 
@@ -112,6 +113,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_LEADS;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_LEADS;
         }
 
         public static function getDemoDataMakerClassName()

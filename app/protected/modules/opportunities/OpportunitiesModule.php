@@ -27,6 +27,7 @@
     class OpportunitiesModule extends SecurableModule
     {
         const RIGHT_CREATE_OPPORTUNITIES = 'Create Opportunities';
+        const RIGHT_DELETE_OPPORTUNITIES = 'Delete Opportunities';
         const RIGHT_ACCESS_OPPORTUNITIES = 'Access Opportunities Tab';
 
         public function getDependencies()
@@ -98,6 +99,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_OPPORTUNITIES;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_OPPORTUNITIES;
         }
 
         public static function getDefaultDataMakerClassName()

@@ -27,6 +27,7 @@
     class ContactsModule extends SecurableModule
     {
         const RIGHT_CREATE_CONTACTS = 'Create Contacts';
+        const RIGHT_DELETE_CONTACTS = 'Delete Contacts';
         const RIGHT_ACCESS_CONTACTS = 'Access Contacts Tab';
 
         public function getDependencies()
@@ -134,6 +135,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_CONTACTS;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_CONTACTS;
         }
 
         /**
