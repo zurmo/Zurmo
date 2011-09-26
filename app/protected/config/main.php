@@ -78,6 +78,9 @@
                     'username'         => $username,
                     'password'         => $password,
                 ),
+                'currencyHelper' => array(
+                    'baseCode' => $currencyBaseCode,
+                ),
             ),
         )
     );

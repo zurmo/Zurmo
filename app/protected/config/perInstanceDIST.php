@@ -26,6 +26,7 @@
 
     // Configure for production.
     $language         = 'en'; // As per language codes under the messages directory.
+    $currencyBaseCode = 'USD';
     $theme            = 'default';
     $connectionString = 'mysql:host=localhost;dbname=zurmo'; // Not Coding Standard
     $username         = 'zurmo';
