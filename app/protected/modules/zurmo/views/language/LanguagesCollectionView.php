@@ -143,7 +143,7 @@
 
         protected static function renderActiveHeaderContent()
         {
-            $title       = Yii::t('Default', 'Active languages can be used by users. The system language cannot be inactivated.');
+            $title       = Yii::t('Default', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
             $content     = Yii::t('Default', 'Active') . '&#160;';
             $content    .= '<span id="active-languages-tooltip" ';
             $content    .= 'style="font-size:75%; text-decoration:underline;" title="' . $title . '">';

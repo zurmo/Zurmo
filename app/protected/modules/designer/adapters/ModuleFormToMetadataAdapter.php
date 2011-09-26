@@ -47,7 +47,21 @@
             $metadata = $module::getMetadata();
             foreach ($this->form->attributeNames() as $attributeName)
             {
-                $metadata['global'][$attributeName] = $this->form->$attributeName;
+                if($attributeName == 'singularModuleLabels' || $attributeName == 'pluralModuleLabels')
+                {
+                    if(!isset($metadata['global'][$attributeName]))
+                    {
+                        $metadata['global'][$attributeName] = array();
+
+                    }
+
+                    $metadata['global'][$attributeName] = array_merge($metadata['global'][$attributeName],
+                                                                      $this->form->$attributeName);
+                }
+                else
+                {
+                    $metadata['global'][$attributeName] = $this->form->$attributeName;
+                }
             }
             $module::setMetadata($metadata);
         }

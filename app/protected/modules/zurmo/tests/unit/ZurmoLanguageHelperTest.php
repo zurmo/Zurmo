@@ -157,5 +157,39 @@
             );
             $this->assertEquals($compareData, $data);
         }
+
+        /**
+         * @depends testGetAndSetActiveLanguages
+         */
+        public function testLanguagesToLanguageCollectionViewUtil()
+        {
+            $data = LanguagesToLanguageCollectionViewUtil::getLanguagesData();
+            $compareData = array('de' => array(
+                                    'label' => 'German',
+                                    'active' => true,
+                                    'canInactivate' => true,
+                                 ),
+                                 'en' => array(
+                                    'label' => 'English',
+                                    'active' => true,
+                                    'canInactivate' => false,
+                                 ),
+                                 'es' => array(
+                                    'label' => 'Spanish',
+                                    'active' => false,
+                                    'canInactivate' => true,
+                                 ),
+                                 'fr' => array(
+                                    'label' => 'French',
+                                    'active' => true,
+                                    'canInactivate' => false,
+                                 ),
+                                 'it' => array(
+                                    'label' => 'Italian',
+                                    'active' => false,
+                                    'canInactivate' => true,
+                                 ));
+            $this->assertEquals($compareData, $data);
+        }
     }
 ?>
