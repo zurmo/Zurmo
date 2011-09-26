@@ -37,7 +37,7 @@
         {
             if ($this->value != null)
             {
-                return DateTimeCalculatorUtil::calculateNew($this->value,
+                return DateTimeCalculatorUtil::calculateNew((int)$this->value,
                     new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
             }
         }
