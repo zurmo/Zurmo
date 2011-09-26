@@ -25,26 +25,26 @@
      ********************************************************************************/
 
     /**
-     * A view that displays a list of currency models in the application.
+     * A view that displays a list of supported languages in the application.
      *
      */
-    class CurrenciesCollectionView extends MetadataView
+    class LanguagesCollectionView extends MetadataView
     {
         protected $controllerId;
 
         protected $moduleId;
 
-        protected $currencies;
+        protected $languagesData;
 
-        public function __construct($controllerId, $moduleId, $currencies, $messageBoxContent = null)
+        public function __construct($controllerId, $moduleId, $languagesData, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
-            assert('is_array($currencies)');
+            assert('is_array($languagesData)');
             assert('$messageBoxContent == null || is_string($messageBoxContent)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
-            $this->currencies             = $currencies;
+            $this->languagesData           = $languagesData;
             $this->messageBoxContent      = $messageBoxContent;
         }
 
@@ -54,7 +54,7 @@
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
-                                                                array('id' => 'currency-collection-form')
+                                                                array('id' => 'language-collection-form')
                                                             );
             $content .= $formStart;
 
@@ -80,33 +80,23 @@
         {
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:10%" /><col style="width:30%" /><col style="width:40%" /><col style="width:20%" />';
+            $content .= '<col style="width:20%" /><col style="width:80%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Code') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' .
-                        Yii::app()->currencyHelper->getBaseCode(). ' ' . $this->renderLastUpdatedHeaderContent() . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Remove') . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Language') . '</th>';
             $content .= '</tr>';
-            foreach ($this->currencies as $currency)
+            foreach ($this->languagesData as $language => $languageData)
             {
+                assert('is_string($languageData["label"])');
+                assert('is_bool($languageData["active"])');
+                assert('is_bool($languageData["canInactivate"])');
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
-                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $currency) . '</td>';
-                $content .= '<td>' . $currency->code . '</td>';
-                $content .= '<td>' . $currency->rateToBase . '</td>';
-                $content .= '<td>';
-                if (count($this->currencies) == 1 || CurrencyValue::isCurrencyInUseById($currency->id))
-                {
-                    $content .= Yii::t('Default', 'Currency in use.');
-                }
-                else
-                {
-                    $content .= CHtml::link(Yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
-                                            array('id' => $currency->id)));
-                }
-                $content .= '</td>';
+                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $language,
+                                                                       $languageData['active'],
+                                                                       $languageData['canInactivate']) . '</td>';
+                $content .= '<td>' . $languageData['label'] . '</td>';
                 $content .= '</tr>';
             }
             $content .= '</tbody>';
@@ -135,41 +125,34 @@
             return true;
         }
 
-        protected static function renderActiveCheckBoxContent(ZurmoActiveForm $form, Currency $currency)
+        protected static function renderActiveCheckBoxContent(ZurmoActiveForm $form, $language, $active, $canInactivate)
         {
+            assert('is_string($language)');
+            assert('is_bool($active)');
+            assert('is_bool($canInactivate)');
+            $name                = 'LanguageCollection[' . $language . '][active]';
             $htmlOptions         = array();
-            $htmlOptions['id']   = 'CurrencyCollection_' . $currency->code . '_active';
-            $htmlOptions['name'] = 'CurrencyCollection[' . $currency->code . '][active]';
-            return $form->checkBox($currency, 'active', $htmlOptions);
-        }
+            $htmlOptions['id']   = 'LanguageCollection_' . $language . '_active';
 
-        protected static function renderLastUpdatedHeaderContent()
-        {
-            $content = Yii::t('Default', 'Last Updated') . ': ';
-            $lastAttempedDateTime = Yii::app()->currencyHelper->getLastAttemptedRateUpdateDateTime();
-            if($lastAttempedDateTime == null)
+            if(!$canInactivate)
             {
-                $content .= Yii::t('Default', 'Never');
+                $htmlOptions['disabled'] = 'disabled';
             }
-            else
-            {
-                $content .= $lastAttempedDateTime;
-            }
-            return '<span style="font-size:75%;"><i>(' . $content . ')</i></span>';
+            return CHtml::checkBox($name, $active, $htmlOptions);
         }
 
         protected static function renderActiveHeaderContent()
         {
-            $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
+            $title       = Yii::t('Default', 'Active languages can be used by users. The system language cannot be inactivated.');
             $content     = Yii::t('Default', 'Active') . '&#160;';
-            $content    .= '<span id="active-currencies-tooltip" ';
+            $content    .= '<span id="active-languages-tooltip" ';
             $content    .= 'style="font-size:75%; text-decoration:underline;" title="' . $title . '">';
             $content    .= Yii::t('Default', 'What is this?') . '</span>';
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ActiveToolTip");
             $cClipWidget->widget('application.extensions.tipsy.Tipsy', array(
               'trigger' => 'hover',
-              'items'   => array(array('id' => '#active-currencies-tooltip', 'gravity' => 'sw')),
+              'items'   => array(array('id' => '#active-languages-tooltip', 'gravity' => 'sw')),
             ));
             $cClipWidget->endClip();
             $content .= $cClipWidget->getController()->clips['ActiveToolTip'];

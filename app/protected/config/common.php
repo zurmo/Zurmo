@@ -261,6 +261,7 @@
     $common_config['import'][] = "application.modules.zurmo.elements.security.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.utils.security.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
     return $common_config;
 ?>

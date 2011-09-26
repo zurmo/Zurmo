@@ -197,7 +197,7 @@
          */
         public function setActiveLanguages($activeLanguages)
         {
-            assert('is_array($activeLanguages');
+            assert('is_array($activeLanguages)');
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'activeLanguages', $activeLanguages);
         }
 
