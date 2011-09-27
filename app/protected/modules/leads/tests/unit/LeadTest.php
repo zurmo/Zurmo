@@ -260,5 +260,17 @@
             $this->assertEquals(1, count($modelClassNames));
             $this->assertEquals('LeadsFilteredList', $modelClassNames[0]);
         }
+
+        public function testIsStateALead()
+        {
+            $allContactStates = ContactState::GetAll();
+            $this->assertGreaterThan(1, count($allContactStates));
+            foreach ($allContactStates as $contactState)
+            {
+                $isStateALead = LeadsUtil::isStateALead($contactState);
+                $isStateALeadCorrect = ($contactState->id < ContactsUtil::getStartingStateId()) ? true : false;
+                $this->assertEquals($isStateALead, $isStateALeadCorrect);
+            }
+        }
     }
 ?>
