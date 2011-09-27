@@ -80,7 +80,7 @@
         {
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:20%" /><col style="width:80%" />';
+            $content .= '<col style="width:30%" /><col style="width:70%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
@@ -145,17 +145,10 @@
         {
             $title       = Yii::t('Default', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
             $content     = Yii::t('Default', 'Active') . '&#160;';
-            $content    .= '<span id="active-languages-tooltip" ';
-            $content    .= 'style="font-size:75%; text-decoration:underline;" title="' . $title . '">';
+            $content    .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">';
             $content    .= Yii::t('Default', 'What is this?') . '</span>';
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("ActiveToolTip");
-            $cClipWidget->widget('application.extensions.tipsy.Tipsy', array(
-              'trigger' => 'hover',
-              'items'   => array(array('id' => '#active-languages-tooltip', 'gravity' => 'sw')),
-            ));
-            $cClipWidget->endClip();
-            $content .= $cClipWidget->getController()->clips['ActiveToolTip'];
+            $qtip = new QTip();
+            $qtip->addQTip("#active-languages-tooltip");
             return $content;
         }
     }

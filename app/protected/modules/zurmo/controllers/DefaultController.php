@@ -133,5 +133,10 @@
             $view = new ZurmoConfigurationPageView($this, $titleBarAndEditView);
             echo $view->render();
         }
+
+        public function actionRecentlyViewed()
+        {
+            echo AuditEventsRecentlyViewedUtil::getRecentlyViewedAjaxContentByUser(Yii::app()->user->userModel, 10);
+        }
     }
 ?>

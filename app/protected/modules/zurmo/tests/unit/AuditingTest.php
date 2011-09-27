@@ -417,5 +417,38 @@
                                     ZurmoModule::stringifyAuditEvent($auditEvents[4]));
             }
         }
+
+        public function testGetTailDistinctEventsByEventName()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $account1 = new Account();
+            $account1->name = 'Dooble1';
+            $this->assertTrue($account1->save());
+
+            $account2 = new Account();
+            $account2->name = 'Dooble2';
+            $this->assertTrue($account2->save());
+
+            $account3 = new Account();
+            $account3->name = 'Dooble3';
+            $account3->owner = User::getByUsername('jimmy');
+            $this->assertTrue($account3->save());
+
+            $auditEvents = AuditEvent::getTailDistinctEventsByEventName('Item Viewed', Yii::app()->user->userModel, 5);
+            $this->assertEquals(0, count($auditEvents));
+
+            //Now create some audit entries for the Item Viewed event.
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($account1), $account1);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($account2), $account2);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($account1), $account1);
+
+            //Switch users to add an audit event.
+            Yii::app()->user->userModel = User::getByUsername('jimmy');
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($account3), $account3);
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $auditEvents = AuditEvent::getTailDistinctEventsByEventName('Item Viewed', Yii::app()->user->userModel, 5);
+            $this->assertEquals(2, count($auditEvents));
+        }
     }
 ?>

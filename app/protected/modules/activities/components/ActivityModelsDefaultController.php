@@ -59,7 +59,7 @@
             $modelClassName    = $this->getModule()->getPrimaryModelName();
             $activity          = $modelClassName::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($activity);
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $activity);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($activity), $activity);
             $pageViewClassName = $this->getPageViewClassName();
             $view = new $pageViewClassName($this,
                 $this->makeTitleBarAndEditAndDetailsView(

@@ -80,7 +80,7 @@
         {
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:10%" /><col style="width:30%" /><col style="width:40%" /><col style="width:20%" />';
+            $content .= '<col style="width:20%" /><col style="width:20%" /><col style="width:40%" /><col style="width:20%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
@@ -162,17 +162,12 @@
         {
             $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
             $content     = Yii::t('Default', 'Active') . '&#160;';
-            $content    .= '<span id="active-currencies-tooltip" ';
-            $content    .= 'style="font-size:75%; text-decoration:underline;" title="' . $title . '">';
+            $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">';
             $content    .= Yii::t('Default', 'What is this?') . '</span>';
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("ActiveToolTip");
-            $cClipWidget->widget('application.extensions.tipsy.Tipsy', array(
-              'trigger' => 'hover',
-              'items'   => array(array('id' => '#active-currencies-tooltip', 'gravity' => 'sw')),
-            ));
-            $cClipWidget->endClip();
-            $content .= $cClipWidget->getController()->clips['ActiveToolTip'];
+
+            Yii::import('application.extensions.qtip.QTip');
+            $qtip = new QTip();
+            $qtip->addQTip("#active-currencies-tooltip");
             return $content;
         }
     }

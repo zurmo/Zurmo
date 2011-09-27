@@ -47,6 +47,7 @@
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/default/about');
+            $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/default/recentlyViewed');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group/create');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group/index');

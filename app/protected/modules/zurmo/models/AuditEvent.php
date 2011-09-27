@@ -59,6 +59,19 @@
             return self::makeModels($beans, __CLASS__);
         }
 
+        public static function getTailDistinctEventsByEventName($eventName, User $user, $count)
+        {
+            assert('is_string($eventName)');
+            assert('is_int($count)');
+            $sql = "select id
+                    from auditevent
+                    where _user_id = {$user->id} AND eventname = '{$eventName}' group by concat(modelclassname, modelid)
+                    order by id desc limit $count";
+            $ids   = R::getCol($sql);
+            $beans = R::batch ('auditevent', $ids);
+            return self::makeModels($beans, __CLASS__);
+        }
+
         public static function logAuditEvent($moduleName, $eventName, $data = null, RedBeanModel $model = null, User $user = null)
         {
             assert('is_string($moduleName) && $moduleName != ""');
