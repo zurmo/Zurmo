@@ -175,8 +175,8 @@
             //Phone
             $attributeImportRules = new PhoneAttributeImportRules(new ImportModelTestItem(), 'phone');
             $collection           = MappingRuleFormAndElementTypeUtil::
-            makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                                     'phone', 'importColumn');
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'phone', 'importColumn');
             $this->assertEquals(1, count($collection));
             $this->assertEquals('Phone', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
