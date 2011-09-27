@@ -52,7 +52,7 @@
         public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $attributeNames = $this->getRealModelAttributeNames();
-            assert('count$attributeNames) == 1');
+            assert('count($attributeNames) == 1');
             assert('$attributeNames[0] == "state"');
             $modelClassName = $this->getModelClassName();
             $value = ImportSanitizerUtil::

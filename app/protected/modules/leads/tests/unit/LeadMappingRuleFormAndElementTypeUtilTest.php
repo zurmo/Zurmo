@@ -35,6 +35,7 @@
         public function testMakeCollectionByAttributeImportRules()
         {
             //Leads
+            ContactsModule::loadStartingData();
             $attributeImportRules = new LeadStateAttributeImportRules(new ImportModelTestItem(), 'state');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,

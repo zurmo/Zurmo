@@ -57,6 +57,7 @@
             $this->assertEquals('IdValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
 
             //Contact State
+            ContactsModule::loadStartingData();
             $attributeImportRules = new ContactStateAttributeImportRules(new ImportModelTestItem(), 'state');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
