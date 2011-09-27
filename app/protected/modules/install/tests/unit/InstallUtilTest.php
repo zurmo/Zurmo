@@ -470,6 +470,16 @@
 
         public function testRunInstallation()
         {
+            $this->runInstallation(true);
+        }
+
+        public function testRunInstallationWithoutMemCacheOn()
+        {
+            $this->runInstallation(false);
+        }
+
+        protected function runInstallation($memcacheOn = true)
+        {
             $instanceRoot = INSTANCE_ROOT;
 
             $form = new InstallSettingsForm();
@@ -479,6 +489,10 @@
             $form->databaseUsername  = $this->rootUsername;
             $form->databasePassword  = $this->rootPassword;
             $form->superUserPassword = $this->superUserPassword;
+            if (!$memcacheOn)
+            {
+                $form->setMemcacheIsNotAvailable();
+            }
 
             $messageStreamer = new MessageStreamer();
             $messageStreamer->setExtraRenderBytes(0);
@@ -510,17 +524,26 @@
             $this->assertRegExp   ('/\$connectionString = \'mysql:host='.$this->hostname.';dbname='.$this->temporaryDatabaseName.'\';/', // Not Coding Standard
                                    $perInstanceConfiguration);
             $this->assertRegExp   ('/\$username         = \''.$this->rootUsername.'\';/',
-                                    $perInstanceConfiguration);
+                                   $perInstanceConfiguration);
             $this->assertRegExp   ('/\$password         = \''.$this->rootPassword.'\';/',
-                                    $perInstanceConfiguration);
+                                   $perInstanceConfiguration);
 
+            if ($memcacheOn)
+            {
+                $this->assertRegExp   ('/\$memcacheLevelCaching\s*=\s*true;/',
+                                       $debugConfiguration);
+            }
+            else
+            {
+                $this->assertRegExp   ('/\$memcacheLevelCaching\s*=\s*false;/',
+                                       $debugConfiguration);
+            }
             //Restore original config files.
             unlink($debugConfigFile);
             unlink($perInstanceConfigFile);
             file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
             file_put_contents($debugConfigFile, $originalDebugConfiguration);
         }
-
 
     }
 ?>
