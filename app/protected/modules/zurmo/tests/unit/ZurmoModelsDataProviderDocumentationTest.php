@@ -77,6 +77,41 @@
             $this->assertEquals('billy',  $users[2]->username);
         }
 
+       /**
+         * @depends testSortingModels
+         */
+        public function testSortingRelatedOwnerAttribute()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Account');
+            $orderByColumnName = RedBeanModelDataProvider::resolveSortAttributeColumnName('Account', $joinTablesAdapter, 'owner');
+            $this->assertEquals("{$quote}person{$quote}.{$quote}lastname{$quote}", $orderByColumnName);
+
+            $leftTablesAndAliases = $joinTablesAdapter->getLeftTablesAndAliases();
+            $this->assertEquals('person',    $leftTablesAndAliases[1]['tableName']);
+            $this->assertEquals('person',    $leftTablesAndAliases[1]['tableAliasName']);
+            $this->assertEquals('id',        $leftTablesAndAliases[1]['tableJoinIdName']);
+            $this->assertEquals('_user',     $leftTablesAndAliases[1]['onTableAliasName']);
+            $this->assertEquals('person_id', $leftTablesAndAliases[1]['onTableJoinIdName']);
+
+            $subsetSql = Account::makeSubsetOrCountSqlQuery('account', $joinTablesAdapter, 1, 5, null, $orderByColumnName);
+            $compareSubsetSql  = "select {$quote}account{$quote}.{$quote}id{$quote} id ";
+            $compareSubsetSql .= "from ({$quote}account{$quote}, {$quote}ownedsecurableitem{$quote}) ";
+            $compareSubsetSql .= "left join {$quote}_user{$quote} on ";
+            $compareSubsetSql .= "{$quote}_user$quote.{$quote}id{$quote} = {$quote}ownedsecurableitem$quote.{$quote}owner__user_id{$quote} ";
+            $compareSubsetSql .= "left join {$quote}person{$quote} on ";
+            $compareSubsetSql .= "{$quote}person$quote.{$quote}id{$quote} = {$quote}_user$quote.{$quote}person_id{$quote} ";
+            $compareSubsetSql .= " where {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = ";
+            $compareSubsetSql .= "{$quote}account{$quote}.{$quote}ownedsecurableitem_id{$quote} ";
+            $compareSubsetSql .= "order by {$quote}person{$quote}.{$quote}lastname{$quote} limit 5 offset 1";
+            $this->assertEquals($compareSubsetSql, $subsetSql);
+        }
+
+       /**
+         * @depends testSortingRelatedOwnerAttribute
+         */
         public function testMakeWhereAndGetSubset()
         {
             Yii::app()->user->userModel = User::getByUsername('super');

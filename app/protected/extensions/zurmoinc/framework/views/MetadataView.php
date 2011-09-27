@@ -102,19 +102,9 @@
             return $content;
         }
 
-        protected function resolveEvaluateSubString(&$element, $key)
+        protected function resolveEvaluateSubString(& $element, $key)
         {
-            if (is_array($element))
-            {
-                array_walk($element, array($this, 'resolveEvaluateSubString'));
-                return;
-            }
-            if (strpos($element, 'eval:') !== 0)
-            {
-                return;
-            }
-            $stringToEvaluate = substr($element, 5);
-            eval("\$element = $stringToEvaluate;");
+            MetadataUtil::resolveEvaluateSubString($element);
         }
 
         /**

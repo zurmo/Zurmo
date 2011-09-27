@@ -105,5 +105,20 @@
                 assert('$saved');
             }
         }
+
+        public static function resolveEvaluateSubString(& $subString)
+        {
+            if (is_array($subString))
+            {
+                array_walk($subString, self::resolveEvaluateSubString);
+                return;
+            }
+            if (strpos($subString, 'eval:') !== 0)
+            {
+                return;
+            }
+            $stringToEvaluate = substr($subString, 5);
+            eval("\$subString = $stringToEvaluate;");
+        }
     }
 ?>
