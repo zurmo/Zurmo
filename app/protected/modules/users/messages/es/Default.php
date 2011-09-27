@@ -41,7 +41,7 @@
             => '??',
         'Profile'
             => 'Perfil',
-        'The password is too short. Minimum length is'
+        'The password is too short. Minimum length is {minimumLength}.'
             => '??',
         'The password must have at least one lowercase letter'
             => '??',
@@ -51,7 +51,7 @@
             => '??',
         'The time zone is invalid.'
             => '??',
-        'The username is too short. Minimum length is'
+        'The username is too short. Minimum length is {minimumLength}.'
             => '??',
         'Time Zone'
             => '??',

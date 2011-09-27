@@ -69,7 +69,7 @@
                         $model = new $modelClass();
                         if ($model->hasAttribute($attribute))
                         {
-                        return $attribute;
+                            return $attribute;
                         }
                     }
                 }

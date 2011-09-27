@@ -31,8 +31,6 @@
     return array(
         'Create RssReaderModuleSingularLabel'
             => 'Créer RssReaderModuleSingularLabel',
-        'Related RssReaderModulePluralLabel'
-            => 'RssReaderModulePluralLabel associés',
         'RSS Reader'
             => 'Flux RSS',
         'RSS URL'

@@ -46,6 +46,15 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'amount', 'type' => 'CurrencyValue'),
                                             ),
                                         ),

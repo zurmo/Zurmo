@@ -51,7 +51,5 @@
             => 'Recherche OpportunitiesModuleSingularLabel',
         'Opportunity'
             => 'Opportunité',
-        'Related OpportunitiesModulePluralLabel'
-            => 'OpportunitiesModulePluralLabel associées',
     );
 ?>
