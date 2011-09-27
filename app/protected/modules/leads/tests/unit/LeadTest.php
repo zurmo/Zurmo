@@ -267,8 +267,15 @@
             $this->assertGreaterThan(1, count($allContactStates));
             foreach ($allContactStates as $contactState)
             {
+                if ($contactState->id < ContactsUtil::getStartingStateId())
+                {
+                    $isStateALeadCorrect = true;
+                }
+                else
+                {
+                    $isStateALeadCorrect = false;
+                }
                 $isStateALead = LeadsUtil::isStateALead($contactState);
-                $isStateALeadCorrect = ($contactState->id < ContactsUtil::getStartingStateId()) ? true : false;
                 $this->assertEquals($isStateALead, $isStateALeadCorrect);
             }
         }

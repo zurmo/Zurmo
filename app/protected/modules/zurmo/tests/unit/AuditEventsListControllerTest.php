@@ -26,6 +26,7 @@
 
     /**
      * Unit test for AuditEventsListControllerUtil
+     * To-Do: walkthrough test for AuditEventsListControllerUtil::renderList() action
      */
     class AuditEventsListControllerTest extends BaseTest
     {
@@ -41,21 +42,6 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
-        public function testRenderList()
-        {
-            $account = new Account();
-            $user = UserTestHelper::createBasicUser('Steve');
-            $account->name  = 'aNewDawn Inc 3';
-            $account->owner = $user;
-            assert($account->save());
-
-            $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($account);
-
-            $dataProvider = AuditEventsListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
-
-            //To-Do: test AuditEventsListControllerUtil::renderList() action
-        }
-
         public function testMakeSearchAttributeDataByAuditedModel()
         {
             $account = new Account();
@@ -66,30 +52,30 @@
 
             $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($account);
 
-            $this->assertTrue(is_array($searchAttributeData));
-            $this->assertTrue(is_array($searchAttributeData['clauses']));
-            $this->assertTrue(is_array($searchAttributeData['clauses']['1']));
-            $this->assertTrue(is_array($searchAttributeData['clauses']['2']));
-            $this->assertTrue(is_array($searchAttributeData['clauses']['3']));
-            $this->assertEquals(3, count($searchAttributeData['clauses']));
-            $this->assertEquals(3, count($searchAttributeData['clauses']['1']));
-            $this->assertEquals(3, count($searchAttributeData['clauses']['2']));
-            $this->assertEquals(3, count($searchAttributeData['clauses']['3']));
-            $this->assertTrue(is_string($searchAttributeData['structure']));
+            $this->assertTrue    (is_array($searchAttributeData)                  );
+            $this->assertTrue    (is_array($searchAttributeData['clauses'])       );
+            $this->assertTrue    (is_string($searchAttributeData['structure'])    );
+            $this->assertTrue    (is_array($searchAttributeData['clauses']['1'])  );
+            $this->assertTrue    (is_array($searchAttributeData['clauses']['2'])  );
+            $this->assertTrue    (is_array($searchAttributeData['clauses']['3'])  );
+            $this->assertEquals  (3, count($searchAttributeData['clauses'])       );
+            $this->assertEquals  (3, count($searchAttributeData['clauses']['1'])  );
+            $this->assertEquals  (3, count($searchAttributeData['clauses']['2'])  );
+            $this->assertEquals  (3, count($searchAttributeData['clauses']['3'])  );
 
-            $this->assertEquals('modelClassName', $searchAttributeData['clauses']['1']['attributeName']);
-            $this->assertEquals('equals', $searchAttributeData['clauses']['1']['operatorType']);
-            $this->assertEquals(get_class($account), $searchAttributeData['clauses']['1']['value']);
+            $this->assertEquals  ('modelClassName', $searchAttributeData['clauses']['1']['attributeName']);
+            $this->assertEquals  ('equals', $searchAttributeData['clauses']['1']['operatorType']         );
+            $this->assertEquals  (get_class($account), $searchAttributeData['clauses']['1']['value']     );
 
-            $this->assertEquals('modelId', $searchAttributeData['clauses']['2']['attributeName']);
-            $this->assertEquals('equals', $searchAttributeData['clauses']['2']['operatorType']);
-            $this->assertEquals($account->id, $searchAttributeData['clauses']['2']['value']);
+            $this->assertEquals  ('modelId', $searchAttributeData['clauses']['2']['attributeName']       );
+            $this->assertEquals  ('equals', $searchAttributeData['clauses']['2']['operatorType']         );
+            $this->assertEquals  ($account->id, $searchAttributeData['clauses']['2']['value']            );
 
-            $this->assertEquals('eventName', $searchAttributeData['clauses']['3']['attributeName']);
-            $this->assertEquals('doesNotEqual', $searchAttributeData['clauses']['3']['operatorType']);
-            $this->assertEquals(ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, $searchAttributeData['clauses']['3']['value']);
+            $this->assertEquals  ('eventName', $searchAttributeData['clauses']['3']['attributeName']     );
+            $this->assertEquals  ('doesNotEqual', $searchAttributeData['clauses']['3']['operatorType']   );
+            $this->assertEquals  (ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, $searchAttributeData['clauses']['3']['value']);
 
-            $this->assertEquals('1 and 2 and 3', $searchAttributeData['structure']);
+            $this->assertEquals  ('1 and 2 and 3', $searchAttributeData['structure']);
         }
 
         public function testMakeDataProviderBySearchAttributeData()
@@ -107,8 +93,8 @@
             $this->assertTrue($dataProvider instanceof RedBeanModelDataProvider);
             $data = $dataProvider->getData();
             $this->assertEquals(1, count($data));
-            $firstAccount = current($data);
-            $accountName = unserialize($firstAccount->serializedData);
+            $firstAuditEvent = current($data);
+            $accountName = unserialize($firstAuditEvent->serializedData);
             $this->assertEquals($account->name,     $accountName);
         }
     }

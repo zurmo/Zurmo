@@ -64,18 +64,18 @@
             //CurrencyValue attribute
             $attributeImportRules = new CurrencyValueAttributeImportRules(new ImportModelTestItem(), 'currencyValue');
             $collection           = MappingRuleFormAndElementTypeUtil::
-            makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                                     'currencyValue', 'importColumn');
-            $this->assertEquals(3, count($collection));
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'currencyValue', 'importColumn');
+            $this->assertEquals(3,                      count($collection));
             $this->assertEquals('Decimal',              $collection[0]['elementType']);
             $this->assertEquals('CurrencyDropDownForm', $collection[1]['elementType']);
             $this->assertEquals('Decimal',              $collection[2]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm',
-            get_class($collection[0]['mappingRuleForm']));
+                                get_class($collection[0]['mappingRuleForm']));
             $this->assertEquals('CurrencyIdModelAttributeMappingRuleForm',
-            get_class($collection[1]['mappingRuleForm']));
+                                get_class($collection[1]['mappingRuleForm']));
             $this->assertEquals('CurrencyRateToBaseModelAttributeMappingRuleForm',
-            get_class($collection[2]['mappingRuleForm']));
+                                get_class($collection[2]['mappingRuleForm']));
 
             //Date
             $attributeImportRules = new DateAttributeImportRules(new ImportModelTestItem(), 'date');
@@ -216,110 +216,6 @@
             $this->assertEquals(1, count($collection));
             $this->assertEquals('Url', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-
-            //User attribute
-            $attributeImportRules = new UserAttributeImportRules(new ImportModelTestItem(), 'owner');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'owner', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //Opportunity
-            $attributeImportRules = new OpportunityAttributeImportRules(new ImportModelTestItem(), 'opportunity');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'opportunity', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingModelIdValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('IdValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //OpportunityDerived
-            $attributeImportRules = new OpportunityDerivedAttributeImportRules(new ImportModelTestItem(), 'opportunityDerived');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'opportunityDerived', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdDerivedAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingModelIdValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('IdValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //User Password
-            $attributeImportRules = new PasswordAttributeImportRules(new ImportModelTestItem(), 'password');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'password', 'importColumn');
-            $this->assertEquals(1, count($collection));
-            $this->assertEquals('Text', $collection[0]['elementType']);
-            $this->assertEquals('PasswordDefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-
-            //Account
-            $attributeImportRules = new AccountAttributeImportRules(new ImportModelTestItem(), 'account');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'account', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingRelatedModelValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('RelatedModelValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //Account Derved
-            $attributeImportRules = new AccountDerivedAttributeImportRules(new ImportModelTestItem(), 'accountDerived');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'accountDerived', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdDerivedAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingModelIdValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('IdValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //Contact
-            $attributeImportRules = new ContactAttributeImportRules(new ImportModelTestItem(), 'contact');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'contact', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingRelatedModelValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('RelatedModelValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //Contact Derived
-            $attributeImportRules = new ContactDerivedAttributeImportRules(new ImportModelTestItem(), 'contactDerived');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'contactDerived', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdDerivedAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingModelIdValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('IdValueTypeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
-
-            //Contact State
-            $attributeImportRules = new ContactStateAttributeImportRules(new ImportModelTestItem(), 'contactState');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'contactState', 'importColumn');
-            $this->assertEquals(1, count($collection));
-            $this->assertEquals('ImportMappingRuleContactStatesDropDown', $collection[0]['elementType']);
-            $this->assertEquals('DefaultContactStateIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-
-            //Leads
-            $attributeImportRules = new LeadStateAttributeImportRules(new ImportModelTestItem(), 'leadState');
-            $collection           = MappingRuleFormAndElementTypeUtil::
-                                    makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'leadState', 'importColumn');
-            $this->assertEquals(1, count($collection));
-            $this->assertEquals('ImportMappingRuleContactStatesDropDown', $collection[0]['elementType']);
-            $this->assertEquals('DefaultLeadStateIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
         }
 
         public function testMakeFormsAndElementTypesByMappingDataAndImportRulesType()
