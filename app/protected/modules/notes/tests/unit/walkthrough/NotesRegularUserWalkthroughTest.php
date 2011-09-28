@@ -52,17 +52,22 @@
         
          public function testRegularUserAllControllerActionsNoElevation()
         {
-            //Now Logout and Login as a Super User
-            //Get the superAccountId using the account module
-            //Assign the nobody to userModel       
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            Yii::app()->user->userModel = User::getByUsername('nobody');
             
-            //Now test all portlet controller actions 
-            //Check that the nobody user does not have access to the following controllers
-            //notes/default/createFromRelation
-            //notes/default/edit
-            //notes/default/inlineEditSave
-            //notes/default/details
-            //notes/default/delete                  
+            //Now test all portlet controller actions                   
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/createFromRelation');          
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/inlineEditSave');
+            $this->setGetArray(array('id' => $superAccountId));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            
+            //actionDelete should fail.
+            $this->setGetArray(array('id' => $superAccountId));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/delete');                         
         }
         
          /**
@@ -70,27 +75,43 @@
          */
         public function testRegularUserControllerActionsWithElevationToAccessAndCreate()
         {        
-            //Now Logout and Login as a Nobody User            
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
                        
             //Now test peon with elevated rights to accounts
-            //Now give Nobody User Access Right to accounts Module
-            //Now give Nobody User Create Right to accounts Module
-            //Now assertTrue save the nobody user           
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            $this->assertTrue($nobody->save());
 
-            //create the account with nobody user as the owner           
+            //create the account as nobody user as the owner
+            $account = AccountTestHelper::createAccountByNameForOwner('accountOwnedByNobody', $nobody);
                        
             //Now test peon with elevated rights to notes
-            //Now give Nobody User Access Right to notes Module
-            //Now give Nobody User Create Right to notes Module
-            //Now assertTrue save the nobody user            
-            
+            $nobody->setRight('NotesModule', NotesModule::RIGHT_ACCESS_NOTES);
+            $nobody->setRight('NotesModule', NotesModule::RIGHT_CREATE_NOTES);
+            $this->assertTrue($nobody->save());
+                   
             //Test nobody with elevated rights.
-            //Now assign userModel to nobody user
-            //Now craete note using createNoteWithOwnerAndRelatedAccount with the nobdy user and account created by nobody user
-                       
-            //Test whether the nobody user is able to view the note details that he created               
+            Yii::app()->user->userModel = User::getByUsername('nobody'); 
+            $note = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedByNobody', $nobody, $account);   
+                   
+            //Test whether the nobody user is able to view the note details that he created 
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
 
-            //Test nobody can delete an existing note he craeted and it redirects to index.                     
+            //Test validating an existing note via the inline edit validation (Success)
+            $activityItemPostData = array('Account' => array('id' => $account));
+            $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
+                                      'ajax' => 'inline-edit-form',
+                                      'Note' => array('description' => 'a Valid Name of a Note')));
+            $this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
+            $content = $this->runControllerWithExitExceptionAndGetContent('notes/default/inlineEditSave');
+            $this->assertEquals('[]', $content);
+
+            //Test nobody can delete an existing note he craeted and it redirects to index.
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();          
+            $this->runControllerWithRedirectExceptionAndGetContent('notes/default/delete');                  
         }
         
          /**
@@ -99,108 +120,344 @@
         public function testRegularUserControllerActionsWithElevationToModels()
         {
             //Create superAccount owned by user super.
-            //Now Logout and Login as the Super User
-            //Now create account with super user as owner            
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $superAccount = AccountTestHelper::createAccountByNameForOwner('AccountsForElevationToModelTest', $super);
             
             //Test nobody, access to edit and details of superAccount should fail.
-            //Now Logout and Login as a nobody User
-            //Now access to account details should fail for nobody user            
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');        
+            $this->setGetArray(array('id' => $superAccount->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             
-            //give nobody access to read the superAccount
-                        
+            //give nobody access to read
+            Yii::app()->user->userModel = $super;
+            $superAccount->addPermissions($nobody, Permission::READ);
+            $this->assertTrue($superAccount->save());
+            
             //Now the nobody user can access the details view.
-                                 
-            //create note for an superAccount using the nobody user             
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $superAccount->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details'); 
             
-            //Test nobody, access to edit and details of notes should fail.
+            //create note for an superAccount using the super user
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $note = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $superAccount);   
             
-            //give nobody access to read and edit the note created by super user for superAccount
-           
-            //Now nobody should have access to read and edit note
+            //Test nobody, access to edit and details of notes should fail.                   
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');            
+            //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
+            //$this->resetPostArray();
+            //$this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/inlineEditSave');                  
+            
+            //give nobody access to details view only
+            Yii::app()->user->userModel = $super;
+            $note->addPermissions($nobody, Permission::READ);
+            $this->assertTrue($note->save());
+            
+            //Now access to notes view by Nobody should not fail.  
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
+            
+            //Now access to notes edit by Nobody should fail
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
+            //$this->resetPostArray();
+            //$this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/inlineEditSave');
+            
+            //give nobody access to both details and edit view
+            Yii::app()->user->userModel = $super;
+            $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($note->save());
+            
+            //Now access to notes view and edit by Nobody should not fail. 
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');
+            //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
+            //$this->resetPostArray();
+            //$this->runControllerWithNoExceptionsAndGetContent('notes/default/inlineEditSave');
             
             //revoke the permission from the nobody user to access the note
+            Yii::app()->user->userModel = $super;
+            $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($note->save());
             
-            //Now the nobodys access to read and edit note should fail
-            
+            //Now nobodys, access to edit and details of notes should fail.                   
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            $this->setGetArray(array('id' => $note->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
+            //$this->resetPostArray();
+            //$this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/inlineEditSave');
+
             //create some roles
-            //create parentRole
-            //create childRole
-            
-            //create userInParentRole  
-            //create userInChildRole
+            Yii::app()->user->userModel = $super;
+            $parentRole = new Role();
+            $parentRole->name = 'AAA';
+            $this->assertTrue($parentRole->save());
 
-            //create account2 with Super user as the owner
+            $childRole = new Role();
+            $childRole->name = 'BBB';
+            $this->assertTrue($childRole->save());
 
-            //Test userInParentRole, access to account2 details should fail.
+            $userInParentRole = User::getByUsername('confused');
+            $userInChildRole = User::getByUsername('nobody');
             
-            //give userInChildRole access to account2 READ
+            $childRole->users->add($userInChildRole);
+            $this->assertTrue($childRole->save());
+            $parentRole->users->add($userInParentRole);
+            $parentRole->roles->add($childRole);
+            $this->assertTrue($parentRole->save());
             
-            //Test userInChildRole, access to account2 details should not fail.
+            //create account owned by super
+            $account2 = AccountTestHelper::createAccountByNameForOwner('AccountsParentRolePermission',$super);
             
-            //Test userInParentRole, access to account2 details should not fail.
+            //Test userInParentRole, access to details and edit should fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             
-            //create note2 for account2 with super user as the owner
+            //give userInChildRole access to READ
+            Yii::app()->user->userModel = $super;
+            $account2->addPermissions($userInChildRole, Permission::READ);
+            $this->assertTrue($account2->save());
             
-            //Test userInParentRole, access to note2 details and edit should fail.
+            //Test userInChildRole, access to details should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test userInParentRole, access to details should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
             
-            //give userInChildRole access to note2 READ
+            //create a note owned by super
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $note2 = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $account2); 
             
-            //Test userInChildRole, access to note2 edit should fail.
+            //Test userInParentRole, access to notes details and edit should fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            $this->setGetArray(array('id' => $note2->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
             
-            //Test userInParentRole, access to note2 edit should fail.
+            //give userInChildRole access to READ permision for notes
+            Yii::app()->user->userModel = $super;
+            $note2->addPermissions($userInChildRole, Permission::READ);
+            $this->assertTrue($note2->save());
             
-            //give userInChildRole access to note2 READ_WRITE permission
+            //Test userInChildRole, access to notes details should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
+             
+            //Test userInParentRole, access to notes details should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
             
-            //Test userInChildRole, access to note2 detail and edit should not fail.
+            //give userInChildRole access to read and write for the notes
+            Yii::app()->user->userModel = $super;
+            $note2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($note2->save());
             
-            //Test userInParentRole, access to note2 detail and edit should not fail.
+            //Test userInChildRole, access to notes edit should not fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');
             
-            //revoke note2 read and write permission from userInChildRole
+            //Test userInParentRole, access to notes edit should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');
             
-            //Test userInChildRole, access to note2 details and edit should fail.
+            //revoke userInChildRole access to read and write notes
+            Yii::app()->user->userModel = $super;
+            $note2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($note2->save());
             
-            //Test userInParentRole, access to note2 details and edit should fail.
+            //Test userInChildRole, access to detail and edit should fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            $this->setGetArray(array('id' => $note2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');            
+            
+            //Test userInParentRole, access to detail and edit should fail.            
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $note2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            $this->setGetArray(array('id' => $note2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
             
             //clear up the role relationships between users so not to effect next assertions
+            $parentRole->users->remove($userInParentRole);
+            $parentRole->roles->remove($childRole);
+            $this->assertTrue($parentRole->save());
+            $childRole->users->remove($userInChildRole);
+            $this->assertTrue($childRole->save());
             
-            //create groups and assign users to groups
-            //create parentGroup
-            //create childGroup
-            
-            //create userInParentGroup  
-            //create userInChildGroup
+            //create some groups and assign users to groups
+            Yii::app()->user->userModel = $super;
+            $parentGroup = new Group();
+            $parentGroup->name = 'AAA';
+            $this->assertTrue($parentGroup->save());
 
-            //create account3 with Super user as the owner
+            $childGroup = new Group();
+            $childGroup->name = 'BBB';
+            $this->assertTrue($childGroup->save());
 
-            //Test userInParentGroup, access to account3 details should fail.
+            $userInChildGroup = User::getByUsername('confused');
+            $userInParentGroup = User::getByUsername('nobody');
+
+            $childGroup->users->add($userInChildGroup);
+            $this->assertTrue($childGroup->save());
+            $parentGroup->users->add($userInParentGroup);
+            $parentGroup->groups->add($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $parentGroup->forget();
+            $childGroup->forget();
+            $parentGroup = Group::getByName('AAA');
+            $childGroup = Group::getByName('BBB');
             
-            //give userInChildGroup access to account3 READ
+            //Add access for the confused user to accounts and creation of accounts.
+            $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            $this->assertTrue($userInChildGroup->save());
             
-            //Test userInChildGroup, access to account3 details should not fail.
+            //create account owned by super
+            $account3 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentGroupPermission', $super);
             
-            //Test userInParentGroup, access to account3 details should not fail.
+            //Test userInParentGroup, access to details should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             
-            //create note3 for account3 with super user as the owner
+            //Test userInChildGroup, access to details should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             
-            //Test userInParentGroup, access to note3 details and edit should fail.
+            //give parentGroup access to READ
+            Yii::app()->user->userModel = $super;
+            $account3->addPermissions($parentGroup, Permission::READ);
+            $this->assertTrue($account3->save());
             
-            //give userInChildGroup access to note3 READ
+            //Test userInParentGroup, access to details should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test userInChildGroup, access to details should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //create a note owned by super
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $note3 = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $account3);
             
-            //Test userInChildGroup, access to note3 edit should fail.
+            //Add access for the confused user to accounts and creation of accounts.
+            $userInChildGroup->setRight('NotesModule', NotesModule::RIGHT_ACCESS_NOTES);
+            $userInChildGroup->setRight('NotesModule', NotesModule::RIGHT_CREATE_NOTES);
+            $this->assertTrue($userInChildGroup->save());          
             
-            //Test userInParentGroup, access to note3 edit should fail.
+            //Test userInParentGroup, access to notes details and edit should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            $this->setGetArray(array('id' => $note3->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
             
-            //give userInChildGroup access to note3 READ_WRITE permission
+            //Test userInChildGroup, access to notes details and edit should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
             
-            //Test userInChildGroup, access to note3 detail and edit should not fail.
+            //give parentGroup access to READ
+            Yii::app()->user->userModel = $super;
+            $note3->addPermissions($parentGroup, Permission::READ);
+            $this->assertTrue($note3->save());
             
-            //Test userInParentGroup, access to note3 detail and edit should not fail.
+            //Test userInParentGroup, access to notes details should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
+
+            //Test userInChildGroup, access to notes details should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
             
-            //revoke note3 read and write permission from userInChildGroup
+            //give parentGroup access to read and write
+            Yii::app()->user->userModel = $super;
+            $note3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($note3->save());
+
+            //Test userInParentGroup, access to edit notes should not fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');
+
+            //Test userInChildGroup, access to edit notes should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');
             
-            //Test userInChildGroup, access to note3 details and edit should fail.
+            //revoke parentGroup access to notes read and write
+            Yii::app()->user->userModel = $super;
+            $note3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($note3->save());
             
-            //Test userInParentGroup, access to note3 details and edit should fail.            
+            //Test userInChildGroup, access to notes detail should fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+
+            //Test userInParentGroup, access to notes detail should fail.
+            Yii::app()->user->userModel = $userInParentGroup;
+            $this->setGetArray(array('id' => $note3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
+            $this->setGetArray(array('id' => $note3->id));			
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
+            
+            //clear up the role relationships between users so not to effect next assertions
+            $parentGroup->users->remove($userInParentGroup);
+            $parentGroup->groups->remove($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $childGroup->users->remove($userInChildGroup);
+            $this->assertTrue($childGroup->save());            
         }
     }
 ?>
