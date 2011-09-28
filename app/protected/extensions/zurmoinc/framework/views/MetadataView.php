@@ -102,9 +102,25 @@
             return $content;
         }
 
+        /**
+         * This method must not use the @see MetadataUtil::resolveEvaluateSubString because some evaluations might
+         * be using $this, which will not work if executed from within a different method.
+         * @param mixed $element
+         * @param integer $key
+         */
         protected function resolveEvaluateSubString(& $element, $key)
         {
-            MetadataUtil::resolveEvaluateSubString($element);
+            if (is_array($element))
+            {
+                array_walk($element, array($this, 'resolveEvaluateSubString'));
+                return;
+            }
+            if (strpos($element, 'eval:') !== 0)
+            {
+                return;
+            }
+            $stringToEvaluate = substr($element, 5);
+            eval("\$element = $stringToEvaluate;");
         }
 
         /**
