@@ -40,6 +40,13 @@
          * @param array $modelClassNamesAndSearchAttributeData.  Array of model class names and search attributes. This
          *              supports multiple arrays of the same model class names whereas modelClassNamesAndSortAttributes
          *              does not support that.
+         *              Example:
+         * @code
+            <?php
+                $modelClassNamesAndSortAttributes = array(array('ModelA' => array('attributeA' => 'value'))
+                                                          array('ModelB' => array('attributeB' => 'value')));
+            ?>
+         * @endcode
          * @param array $config
          */
         public function __construct($id, array $modelClassNamesAndSortAttributes = null, $sortDescending = false,
