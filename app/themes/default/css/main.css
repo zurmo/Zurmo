@@ -195,4 +195,13 @@ Process view classes
     cursor: hand;
     cursor: pointer;
 }
+
+.global-search
+{
+  width: 250px;
+}
+.global-search-hint
+{
+    color: #AAAAAA;
+}
 /* End Misc Classes */

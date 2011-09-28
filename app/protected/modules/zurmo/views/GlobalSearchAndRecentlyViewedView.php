@@ -32,13 +32,13 @@
         protected function renderContent()
         {
             $content  = '<div><div style="float:right;">' . $this->renderRecentlyViewedContent() . '</div>';
-            $content .= '<div style="margin: 0 auto;">GLOBAL SEARCH</div></div>&#160;';
+            $content .= '<div style="margin: 0 auto;">' . $this->renderGlobalSearchContent() . '</div></div>&#160;';
             return $content;
         }
 
         protected function renderRecentlyViewedContent()
         {
-            $content     = '&#160;<span id="recently-viewed" class="tooltip">';
+            $content     = '&#160;&#160;&#160;<span id="recently-viewed" class="tooltip">';
             $content    .= Yii::t('Default', 'Recently Viewed') . '</span>';
 
             Yii::import('application.extensions.qtip.QTip');
@@ -56,6 +56,36 @@
                                 'tooltip'	  => 'topRight')),
                 'style'    => array('width'   =>  300));
             $qtip->addQTip("#recently-viewed", $params);
+            return $content;
+        }
+
+        protected function renderGlobalSearchContent()
+        {
+            $imagePath = Yii::app()->baseUrl . '/themes/default/images/searchIcon.gif';
+            $content                 = CHtml::image($imagePath, 'Search Icon');
+            $hintMessage             = Yii::t('Default', 'Search by name, phone, or e-mail');
+            $htmlOptions             = array('class'   => 'global-search global-search-hint',
+                                             'onFocus' => 'js:$(this).removeClass("global-search-hint"); $(this).val("");',
+                                             'onBlur'  => 'js:$(this).val("")');
+            $cClipWidget             = new CClipWidget();
+            $cClipWidget->beginClip('GlobalSearchElement');
+            $cClipWidget->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name'        => 'globalSearchInput',
+                'id'          => 'globalSearchInput',
+                'value'       => $hintMessage,
+                'source'      => Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete'),
+                'htmlOptions' => $htmlOptions,
+                'options'	  => array('select' => 'js: function(event, ui) {if(ui.item.href.length > 0)' .
+                                                   '{window.location = ui.item.href;} return false;}')
+            ));
+            $cClipWidget->endClip();
+            $content .= '&#160;' . $cClipWidget->getController()->clips['GlobalSearchElement'];
+            $script = '$(".ui-autocomplete").position({
+                            my: "right top",
+                            at: "right bottom",
+                            of: $("#globalSearchInput"),
+                            collision: "flip flip"});';
+            Yii::app()->clientScript->registerScript('GlobalSearchElementPosition', $script);
             return $content;
         }
     }

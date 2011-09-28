@@ -146,7 +146,7 @@
                             'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ModelAutoCompleteUtil::
                                    getGlobalSearchResultsByPartialTerm($term, $pageSize, Yii::app()->user->userModel);
-            return CJSON::encode($autoCompleteResults);
+            echo CJSON::encode($autoCompleteResults);
         }
     }
 ?>

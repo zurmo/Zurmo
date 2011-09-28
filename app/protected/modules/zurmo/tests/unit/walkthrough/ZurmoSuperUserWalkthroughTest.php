@@ -194,7 +194,6 @@
             $this->setGetArray(array('term' => 'something'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete', true);
-            echo $content;
             $this->assertEmpty($content);
         }
     }
