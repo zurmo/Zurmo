@@ -37,7 +37,9 @@
          * @param string $id - unique identifier for this data collection.
          * @param array $modelClassNamesAndSortAttributes
          * @param boolean $sortDescending
-         * @param array $modelClassNamesAndSearchAttributeData
+         * @param array $modelClassNamesAndSearchAttributeData.  Array of model class names and search attributes. This
+         *              supports multiple arrays of the same model class names whereas modelClassNamesAndSortAttributes
+         *              does not support that.
          * @param array $config
          */
         public function __construct($id, array $modelClassNamesAndSortAttributes = null, $sortDescending = false,
@@ -77,7 +79,6 @@
                 $offset = 0;
                 $limit  = null;
             }
-
             if (count($this->modelClassNamesAndSearchAttributeData) == 0)
             {
                 return null;
@@ -99,35 +100,38 @@
                     count($modelClassNamesAndSortAttributes) == count($modelClassNamesAndSearchAttributeData)');
             assert('is_bool($sortDescending)');
             $sqlStatementsToUnion = array();
-            foreach ($modelClassNamesAndSearchAttributeData as $modelClassName => $searchAttributeData)
+            foreach ($modelClassNamesAndSearchAttributeData as $identifier => $modelClassNameAndSearchAttributeData)
             {
-                $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
-                $where             = ModelDataProviderUtil::makeWhere(  $modelClassName, $searchAttributeData,
-                                                                        $joinTablesAdapter);
-                $orderByColumnName = null;
-                $tableName         = $modelClassName::getTableName($modelClassName);
-                if ($modelClassNamesAndSortAttributes !== null)
+                foreach($modelClassNameAndSearchAttributeData as $modelClassName => $searchAttributeData)
                 {
-                    if (isset($modelClassNamesAndSortAttributes[$modelClassName]))
+                    $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
+                    $where             = ModelDataProviderUtil::makeWhere(  $modelClassName, $searchAttributeData,
+                                                                            $joinTablesAdapter);
+                    $orderByColumnName = null;
+                    $tableName         = $modelClassName::getTableName($modelClassName);
+                    if ($modelClassNamesAndSortAttributes !== null)
                     {
-                        $orderByColumnName = RedBeanModelDataProvider::resolveSortAttributeColumnName($modelClassName,
-                                                 $joinTablesAdapter, $modelClassNamesAndSortAttributes[$modelClassName]);
+                        if (isset($modelClassNamesAndSortAttributes[$modelClassName]))
+                        {
+                            $orderByColumnName = RedBeanModelDataProvider::resolveSortAttributeColumnName($modelClassName,
+                                                     $joinTablesAdapter, $modelClassNamesAndSortAttributes[$modelClassName]);
+                        }
+                        else
+                        {
+                            throw new notSupportedException();
+                        }
                     }
-                    else
+                    $quotedExtraSelectColumnNameAndAliases       = array();
+                    $quotedExtraSelectColumnNameAndAliases["'" . $modelClassName . "'"] = 'modelClassName';
+                    if ($orderByColumnName != null)
                     {
-                        throw new notSupportedException();
+                        $quotedExtraSelectColumnNameAndAliases[$orderByColumnName] = 'orderByColumn';
                     }
+                    $sqlStatementsToUnion[] = $modelClassName::makeSubsetOrCountSqlQuery($tableName,
+                                                             $joinTablesAdapter, null, null, $where, null, false,
+                                                             $joinTablesAdapter->getSelectDistinct(),
+                                                             $quotedExtraSelectColumnNameAndAliases);
                 }
-                $quotedExtraSelectColumnNameAndAliases       = array();
-                $quotedExtraSelectColumnNameAndAliases["'" . $modelClassName . "'"] = 'modelClassName';
-                if ($orderByColumnName != null)
-                {
-                    $quotedExtraSelectColumnNameAndAliases[$orderByColumnName] = 'orderByColumn';
-                }
-                $sqlStatementsToUnion[] = $modelClassName::makeSubsetOrCountSqlQuery($tableName,
-                                                         $joinTablesAdapter, null, null, $where, null, false,
-                                                         $joinTablesAdapter->getSelectDistinct(),
-                                                         $quotedExtraSelectColumnNameAndAliases);
             }
             $orderBy = null;
             if ($modelClassNamesAndSortAttributes !== null)
@@ -214,12 +218,15 @@
         public function calculateTotalItemCount()
         {
             $totalCount = 0;
-            foreach ($this->modelClassNamesAndSearchAttributeData as $modelClassName => $searchAttributeData)
+            foreach ($this->modelClassNamesAndSearchAttributeData as $identifier => $modelClassNameAndSearchAttributeData)
             {
-                $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
-                $where = ModelDataProviderUtil::makeWhere($modelClassName, $searchAttributeData, $joinTablesAdapter);
-                $totalCount = $totalCount + RedBeanModel::getCount($joinTablesAdapter, $where, $modelClassName,
-                                                                   $joinTablesAdapter->getSelectDistinct());
+                foreach($modelClassNameAndSearchAttributeData as $modelClassName => $searchAttributeData)
+                {
+                    $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
+                    $where = ModelDataProviderUtil::makeWhere($modelClassName, $searchAttributeData, $joinTablesAdapter);
+                    $totalCount = $totalCount + RedBeanModel::getCount($joinTablesAdapter, $where, $modelClassName,
+                                                                       $joinTablesAdapter->getSelectDistinct());
+                }
             }
             return $totalCount;
         }

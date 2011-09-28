@@ -72,6 +72,11 @@
                     'showLayoutsLink' => true,
                     'showMenusLink' => true,
                 ),
+                'globalSearchAttributeNames' => array(
+                    'name',
+                    'anyEmail',
+                    'officePhone',
+                )
             );
             return $metadata;
         }
@@ -104,6 +109,11 @@
         public static function getDemoDataMakerClassName()
         {
             return 'AccountsDemoDataMaker';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'AccountsSearchForm';
         }
     }
 ?>

@@ -44,8 +44,9 @@
          * of posted searchAttributes into metadata that is
          * readable by the RedBeanModelDataProvider
          */
-        public function getAdaptedMetadata()
+        public function getAdaptedMetadata($appendStructureAsAnd = true)
         {
+            assert('is_bool($appendStructureAsAnd)');
             $adaptedMetadata = array('clauses' => array(), 'structure' => '');
             $clauseCount = 1;
             $structure = '';
@@ -59,7 +60,8 @@
                                                                              $value,
                                                                              $adaptedMetadata['clauses'],
                                                                              $clauseCount,
-                                                                             $structure);
+                                                                             $structure,
+                                                                             $appendStructureAsAnd);
                 }
                 else
                 {
@@ -67,7 +69,8 @@
                                                                     $value,
                                                                     $adaptedMetadata['clauses'],
                                                                     $clauseCount,
-                                                                    $structure);
+                                                                    $structure,
+                                                                    $appendStructureAsAnd);
                 }
             }
             $adaptedMetadata['structure'] = $structure;
@@ -84,6 +87,12 @@
                                                                     &$structure,
                                                                     $appendStructureAsAnd = true)
         {
+            assert('is_string($attributeName)');
+            assert('is_array($value)');
+            assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
+            assert('is_int($clauseCount)');
+            assert('$structure == null || is_string($structure)');
+            assert('is_bool($appendStructureAsAnd)');
             if (!is_array($value))
             {
                 if ($value !== null)
@@ -178,8 +187,15 @@
                                                                             $value,
                                                                             &$adaptedMetadataClauses,
                                                                             &$clauseCount,
-                                                                            &$structure)
+                                                                            &$structure,
+                                                                            $appendStructureAsAnd = true)
         {
+            assert('is_string($attributeName)');
+            assert('is_array($value)');
+            assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
+            assert('is_int($clauseCount)');
+            assert('$structure == null || is_string($structure)');
+            assert('is_bool($appendStructureAsAnd)');
             $tempStructure = null;
             $metadataFromSearchFormAttributes = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata(
                                                     $this->model, $attributeName, $value);
@@ -193,37 +209,41 @@
                                                                 false);
             }
             $tempStructure = '(' . $tempStructure . ')';
-            if (!empty($structure))
+            if ($appendStructureAsAnd)
             {
-                $structure .= ' and ' . $tempStructure;
+                static::appendClauseAsAndToStructureString($structure, $tempStructure);
             }
             else
             {
-                $structure .= $tempStructure;
+                static::appendClauseAsOrToStructureString($structure, $tempStructure);
             }
         }
 
-        protected static function appendClauseAsAndToStructureString(& $structure, $clauseCount)
+        protected static function appendClauseAsAndToStructureString(& $structure, $clause)
         {
+            assert('$structure == null || is_string($structure)');
+            assert('$clause != null || (is_string($clause) || is_int(clause))');
             if (!empty($structure))
             {
-                $structure .= ' and ' . $clauseCount;
+                $structure .= ' and ' . $clause;
             }
             else
             {
-                $structure .= $clauseCount;
+                $structure .= $clause;
             }
         }
 
-        protected static function appendClauseAsOrToStructureString(& $structure, $clauseCount)
+        protected static function appendClauseAsOrToStructureString(& $structure, $clause)
         {
+            assert('$structure == null || is_string($structure)');
+            assert('$clause != null || (is_string($clause) || is_int(clause))');
             if (!empty($structure))
             {
-                $structure .= ' or ' . $clauseCount;
+                $structure .= ' or ' . $clause;
             }
             else
             {
-                $structure .= $clauseCount;
+                $structure .= $clause;
             }
         }
     }

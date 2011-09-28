@@ -188,6 +188,14 @@
             //Now confirm that there are no file models or content in the system.
             $this->assertEquals(0, count(FileModel::getAll()));
             $this->assertEquals(0, count(FileContent::getAll()));
+
+            //Test GlobalSearchAutoComplete
+            $this->assertTrue(ContactsModule::loadStartingData());
+            $this->setGetArray(array('term' => 'something'));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete', true);
+            echo $content;
+            $this->assertEmpty($content);
         }
     }
 ?>

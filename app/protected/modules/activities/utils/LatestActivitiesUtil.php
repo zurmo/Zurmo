@@ -87,7 +87,7 @@
                     $searchAttributesData =
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemId($relationItemIds[0]);
                 }
-                $modelClassNamesAndSearchAttributeData[$modelClassName] = $searchAttributesData;
+                $modelClassNamesAndSearchAttributeData[] = array($modelClassName => $searchAttributesData);
             }
             return $modelClassNamesAndSearchAttributeData;
         }

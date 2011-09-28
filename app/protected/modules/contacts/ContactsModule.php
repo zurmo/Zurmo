@@ -72,7 +72,13 @@
                     'showLayoutsLink' => true,
                     'showMenusLink' => true,
                 ),
-                'startingState' => 1
+                'startingState' => 1,
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'officePhone',
+                    'mobilePhone',
+                )
             );
             return $metadata;
         }
@@ -160,6 +166,16 @@
         public static function getDemoDataMakerClassName()
         {
             return 'ContactsDemoDataMaker';
+        }
+
+        public static function getStateMetadataAdapterClassName()
+        {
+            return 'ContactsStateMetadataAdapter';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'ContactsSearchForm';
         }
     }
 ?>

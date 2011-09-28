@@ -72,6 +72,9 @@
                     'showLayoutsLink' => true,
                     'showMenusLink' => true,
                 ),
+                'globalSearchAttributeNames' => array(
+                    'name'
+                )
             );
             return $metadata;
         }
@@ -114,6 +117,11 @@
         public static function getDemoDataMakerClassName()
         {
             return 'OpportunitiesDemoDataMaker';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'OpportunitiesSearchForm';
         }
     }
 ?>

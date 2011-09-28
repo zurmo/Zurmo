@@ -89,6 +89,13 @@
                     'officePhone'      => 'officePhone',
                     'officeFax'        => 'officeFax',
                     'companyName'      => 'name',
+                ),
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'officePhone',
+                    'mobilePhone',
+                    'companyName'
                 )
             );
             return $metadata;
@@ -123,6 +130,16 @@
         public static function getDemoDataMakerClassName()
         {
             return 'LeadsDemoDataMaker';
+        }
+
+        public static function getStateMetadataAdapterClassName()
+        {
+            return 'LeadsStateMetadataAdapter';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'LeadsSearchForm';
         }
     }
 ?>

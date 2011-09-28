@@ -265,8 +265,8 @@
                 $bFakePost = array('member' => 'test4');
                 $bMetadataAdapter = new SearchDataProviderMetadataAdapter(new OwnedSecurableTestItem2(false), $aUser->id, $bFakePost);
                 $modelClassNamesAndSearchAttributeData = array(
-                    'OwnedSecurableTestItem'  => $aMetadataAdapter->getAdaptedMetadata(),
-                    'OwnedSecurableTestItem2' => $bMetadataAdapter->getAdaptedMetadata(),
+                    array('OwnedSecurableTestItem'  => $aMetadataAdapter->getAdaptedMetadata()),
+                    array('OwnedSecurableTestItem2' => $bMetadataAdapter->getAdaptedMetadata()),
                 );
                 $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                         null, false, 2, 7);

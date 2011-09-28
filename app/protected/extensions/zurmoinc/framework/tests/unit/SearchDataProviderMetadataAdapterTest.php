@@ -73,5 +73,48 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
+
+        public function testGetAdaptedMetadataUsingOrClause()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'name'          => 'Vomitorio Corp',
+                'officePhone'   => '5',
+                'billingAddress' => array(
+                    'street1'    => null,
+                    'street2'    => 'Suite 101',
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new Account(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata(false);
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'name',
+                    'operatorType'  => 'startsWith',
+                    'value'         => 'Vomitorio Corp',
+                ),
+                2 => array(
+                    'attributeName' => 'officePhone',
+                    'operatorType'  => 'startsWith',
+                    'value'         => 5,
+                ),
+                3 => array(
+                    'attributeName'        => 'billingAddress',
+                    'relatedAttributeName' => 'street2',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Suite 101',
+                ),
+            );
+
+            $compareStructure = '1 or 2 or 3';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
     }
 ?>

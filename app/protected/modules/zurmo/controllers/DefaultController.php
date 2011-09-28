@@ -138,5 +138,15 @@
         {
             echo AuditEventsRecentlyViewedUtil::getRecentlyViewedAjaxContentByUser(Yii::app()->user->userModel, 10);
         }
+
+
+        public function actionGlobalSearchAutoComplete($term)
+        {
+            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                            'autoCompleteListPageSize', get_class($this->getModule()));
+            $autoCompleteResults = ModelAutoCompleteUtil::
+                                   getGlobalSearchResultsByPartialTerm($term, $pageSize, Yii::app()->user->userModel);
+            return CJSON::encode($autoCompleteResults);
+        }
     }
 ?>

@@ -90,5 +90,77 @@
             }
             return $autoCompleteResults;
         }
+
+        /**
+         * Given a partial term, search across modules that support global search.
+         * @param string  $partialTerm
+         * @param integer $pageSize
+         * @param User    $user
+         */
+        public static function getGlobalSearchResultsByPartialTerm($partialTerm, $pageSize, User $user)
+        {
+            assert('is_string($partialTerm)');
+            assert('is_int($pageSize)');
+            assert('$user->id > 0');
+            $modelClassNamesAndSearchAttributeData = self::makeMmodelClassNamesAndSearchAttributeData($partialTerm, $user);
+            if(empty($modelClassNamesAndSearchAttributeData))
+            {
+                return array();
+            }
+            $dataProvider = new RedBeanModelsDataProvider('anId', null, false, $modelClassNamesAndSearchAttributeData);
+            $data = $dataProvider->getData();
+            $autoCompleteResults = array();
+            foreach ($data as $model)
+            {
+                $modelClassName  = get_class($model);
+                $modelLabel      = $modelClassName::getModelLabelByTypeAndLanguage('Singular');
+                $moduleClassName = $modelClassName::getModuleClassName();
+                $route           = Yii::app()->createUrl($moduleClassName::getDirectoryName() . '/default/details/',
+                                                         array('id' => $model->id));
+                $autoCompleteResults[] = array(
+                    'value' => $route,
+                    'label' => strval($model) .' - ' . $modelLabel,
+                );
+            }
+            return $autoCompleteResults;
+        }
+
+        protected static function makeMmodelClassNamesAndSearchAttributeData($partialTerm, User $user)
+        {
+            assert('is_string($partialTerm)');
+            assert('$user->id > 0');
+            $modelClassNamesAndSearchAttributeData = array();
+            $modules = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                $globalSearchFormClassName = $module::getGlobalSearchFormClassName();
+                if($globalSearchFormClassName != null && RightsUtil::canUserAccessModule(get_class($module), $user))
+                {
+                    $modelClassName                = $module::getPrimaryModelName();
+                    $searchAttributes              = MixedTermSearchUtil::
+                                                     getGlobalSearchAttributeByModuleAndPartialTerm($module,
+                                                                                                    $partialTerm);
+                    if(!empty($searchAttributes))
+                    {
+                        $model                         = new $modelClassName(false);
+                        assert('$model instanceof RedBeanModel');
+                        $searchForm                    = new $globalSearchFormClassName($model);
+                        assert('$searchForm instanceof SearchForm');
+                        $metadataAdapter               = new SearchDataProviderMetadataAdapter(
+                                                         $searchForm, 1, $searchAttributes);
+                        $metadata                      = $metadataAdapter->getAdaptedMetadata(false);
+                        $stateMetadataAdapterClassName = $module::getStateMetadataAdapterClassName();
+                        if ($stateMetadataAdapterClassName != null)
+                        {
+                            $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
+                            $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
+                        }
+                        $modelClassNamesAndSearchAttributeData[$globalSearchFormClassName] =
+                        array($modelClassName => $metadata);
+                    }
+                }
+            }
+            return $modelClassNamesAndSearchAttributeData;
+        }
     }
 ?>
