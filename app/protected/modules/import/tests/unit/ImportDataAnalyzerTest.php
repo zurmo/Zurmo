@@ -273,95 +273,95 @@
             $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
-                    array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.',
+                    array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.', // Not Coding Standard
                           'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
                 ),
                 'column_1' => array(
-                    array('message'=> '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.',
+                    array('message'=> '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.', // Not Coding Standard
                            'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
                 ),
                 'column_2' => array(
-                    array('message'=> '2 value(s) are invalid. These rows will be skipped during import.',
+                    array('message'=> '2 value(s) are invalid. These rows will be skipped during import.',                                      // Not Coding Standard
                            'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
                 ),
                 'column_3' => array(
-                    array('message'=> '2 value(s) have invalid check box values. These values will be set to false upon import.',
+                    array('message'=> '2 value(s) have invalid check box values. These values will be set to false upon import.',               // Not Coding Standard
                            'sanitizerUtilType' => 'Boolean', 'moreAvailable' => false),
                 ),
                 'column_4' => array(
-                    array('message'=> '2 value(s) have invalid date formats. These values will be cleared during import.',
+                    array('message'=> '2 value(s) have invalid date formats. These values will be cleared during import.',                      // Not Coding Standard
                            'sanitizerUtilType' => 'Date', 'moreAvailable' => false),
                 ),
                 'column_5' => array(
-                    array('message'=> '2 value(s) have invalid date time formats. These values will be cleared during import.',
+                    array('message'=> '2 value(s) have invalid date time formats. These values will be cleared during import.',                 // Not Coding Standard
                            'sanitizerUtilType' => 'DateTime', 'moreAvailable' => false),
                 ),
                 'column_6' => array(
-                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',
+                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',                // Not Coding Standard
                            'sanitizerUtilType' => 'DropDown', 'moreAvailable' => false),
                 ),
                 'column_7' => array(
-                    array('message'=> '2 username(s) specified were not found. These values will not be used during the import.',
+                    array('message'=> '2 username(s) specified were not found. These values will not be used during the import.',               // Not Coding Standard
                            'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
                 ),
                 'column_8' => array(
-                    array('message'=> '1 zurmo user id(s) across 7 row(s) were not found. These values will not be used during the import.',
+                    array('message'=> '1 zurmo user id(s) across 7 row(s) were not found. These values will not be used during the import.',     // Not Coding Standard
                            'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
                 ),
                 'column_9' => array(
-                    array('message'=> '2 external system user id(s) specified were not found. These values will not be used during the import.',
+                    array('message'=> '2 external system user id(s) specified were not found. These values will not be used during the import.', // Not Coding Standard
                            'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
                 ),
                 'column_10' => array(
-                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',
+                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',                              // Not Coding Standard
                            'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
                 ),
                 'column_11' => array(
-                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',
+                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',                         // Not Coding Standard
                            'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
                 ),
                 'column_12' => array(
-                    array('message'=> '5 record(s) will be updated and 7 record(s) will be skipped during import.',
+                    array('message'=> '5 record(s) will be updated and 7 record(s) will be skipped during import.',                              // Not Coding Standard
                            'sanitizerUtilType' => 'ModelIdValueType', 'moreAvailable' => false),
                 ),
                 'column_13' => array(
-                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
+                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',                             // Not Coding Standard
                            'sanitizerUtilType' => 'ModelIdValueType', 'moreAvailable' => false),
                 ),
                 'column_14' => array(
-                    array('message'=> '4 record(s) will be updated and 8 record(s) will be skipped during import.',
+                    array('message'=> '4 record(s) will be updated and 8 record(s) will be skipped during import.',                              // Not Coding Standard
                            'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
                 ),
                 'column_15' => array(
-                    array('message'=> '1 record(s) will be updated and 11 record(s) will be skipped during import.',
+                    array('message'=> '1 record(s) will be updated and 11 record(s) will be skipped during import.',                             // Not Coding Standard
                            'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
                 ),
                 'column_16' => array(
-                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',
+                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',                         // Not Coding Standard
                            'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
                 ),
                 'column_17' => array(
-                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',
+                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',                              // Not Coding Standard
                            'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_18' => array(
-                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',
+                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',                             // Not Coding Standard
                            'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
                 ),
                 'column_19' => array(
-                    array('message'=> '1 value(s) have urls that are invalid. These values will be cleared during import.',
+                    array('message'=> '1 value(s) have urls that are invalid. These values will be cleared during import.',                      // Not Coding Standard
                           'sanitizerUtilType' => 'Url', 'moreAvailable' => false),
                 ),
                 'column_21' => array(
-                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',
+                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',                                       // Not Coding Standard
                           'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
                 ),
                 'column_22' => array(
-                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',
+                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',                                       // Not Coding Standard
                           'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
                 ),
                 'column_23' => array(
-                    array('message'=> '1 value(s) are too large for this field. These rows will be skipped during import.',
+                    array('message'=> '1 value(s) are too large for this field. These rows will be skipped during import.',                      // Not Coding Standard
                           'sanitizerUtilType' => 'FullName', 'moreAvailable' => false),
                 ),
             );

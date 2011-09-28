@@ -71,7 +71,7 @@
                 'formName'             => $this->form->id,
                 'allowMultipleUpload'  => true,
                 'existingFiles'        => $existingFilesInformation,
-                'maxSize'			   => (int)InstallUtil::getMaxAllowedFileSize()
+                'maxSize'              => (int)InstallUtil::getMaxAllowedFileSize()
             ));
 
             $cClipWidget->endClip();

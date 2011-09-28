@@ -47,10 +47,10 @@
             $isRequired = false)
         {
             assert('is_array ($collection)');
-            assert('is_string($attributeIndex)   		&& $attributeIndex != null');
-            assert('is_string($attributeLabel)   		&& $attributeLabel != null');
-            assert('is_string($attributeName)    		&& $attributeName != null');
-            assert('is_string($elementType)      		&& $elementType != null');
+            assert('is_string($attributeIndex)          && $attributeIndex != null');
+            assert('is_string($attributeLabel)          && $attributeLabel != null');
+            assert('is_string($attributeName)           && $attributeName != null');
+            assert('is_string($elementType)             && $elementType != null');
             assert('is_string($relationAttributeName)   || $relationAttributeName == null');
             assert('is_bool($isRequired)');
 

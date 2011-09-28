@@ -77,7 +77,7 @@
                     static::importByImportRulesRowData($importRules, $rowBean, $mappingData,
                                                        $importRowDataResultsUtil, $explicitReadWriteModelPermissions);
                 }
-                catch(AccessDeniedSecurityException $e)
+                catch (AccessDeniedSecurityException $e)
                 {
                     $importRowDataResultsUtil->addMessage(Yii::t('Default', 'You do not have permission to update this record and/or its related record.'));
                     $importRowDataResultsUtil->setStatusToError();
@@ -200,7 +200,7 @@
                             resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
                             $importRowDataResultsUtil->setStatusToCreated();
                         }
-                        catch(AccessDeniedSecurityException $e)
+                        catch (AccessDeniedSecurityException $e)
                         {
                             $importRowDataResultsUtil->addMessage('The record saved, but you do not have permissions '.
                             'to set the security the way you did. As a result this record has been removed.');
@@ -229,8 +229,6 @@
                 $importRowDataResultsUtil->setStatusToError();
             }
         }
-
-
 
         protected static function getIdColumnNameByMappingData($mappingData)
         {
@@ -339,8 +337,8 @@
         protected static function resolveReadOnlyAndSetValueToAttribute(RedBeanModel $model, $attributeName, $value)
         {
             assert('is_string($attributeName)');
-            if (!$model->isAttributeReadOnly($attributeName) || ($model->isAttributeReadOnly($attributeName)
-                   && $model->isAllowedToSetReadOnlyAttribute($attributeName)))
+            if (!$model->isAttributeReadOnly($attributeName) || ($model->isAttributeReadOnly($attributeName) && // Not Coding Standard
+                $model->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 $model->$attributeName = $value;
             }

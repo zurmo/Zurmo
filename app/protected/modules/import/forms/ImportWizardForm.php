@@ -98,12 +98,12 @@
                 array('importRulesType',     'required'),
                 array('rowColumnDelimiter',  'required'),
                 array('rowColumnEnclosure',  'required'),
-                array('fileUploadData', 	 'type', 'type' => 'string'),
+                array('fileUploadData',      'type', 'type' => 'string'),
                 array('rowColumnDelimiter',  'type', 'type' => 'string'),
                 array('rowColumnEnclosure',  'type', 'type' => 'string'),
 
                 array('firstRowIsHeaderRow', 'boolean'),
-                array('mappingData', 		 'type', 'type' => 'string'),
+                array('mappingData',         'type', 'type' => 'string'),
                 array('newPassword',         'validateMappingData', 'on'   => 'saveMappingData'),
             );
         }
@@ -189,7 +189,7 @@
             {
                 ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped($mappedAttributeImportRulesCollection);
             }
-            catch(ImportAttributeMappedMoreThanOnceException $e)
+            catch (ImportAttributeMappedMoreThanOnceException $e)
             {
                 $this->addError('mappingData', Yii::t('Default',
                 'The following attribute is mapped more than once. {message}', array('{message}' => $e->getMessage())));

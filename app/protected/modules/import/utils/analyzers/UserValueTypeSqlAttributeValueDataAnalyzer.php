@@ -77,7 +77,7 @@
                 }
                 if (!in_array($valueCountData[$columnName], $userIds))
                 {
-                    $count ++;
+                    $count++;
                     $rowCount = $rowCount + $valueCountData['count'];
                 }
             }
@@ -108,7 +108,7 @@
                 }
                 if (!in_array($valueCountData[$columnName], $userIds))
                 {
-                    $count ++;
+                    $count++;
                 }
             }
             if ($count > 0)
@@ -139,7 +139,7 @@
                 }
                 if (!in_array(mb_strtolower($valueCountData[$columnName]), $usernameValues))
                 {
-                    $count ++;
+                    $count++;
                 }
             }
             if ($count > 0)

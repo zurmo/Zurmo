@@ -276,7 +276,7 @@
 
         protected function getGridViewActionRoute($action, $moduleId = null)
         {
-            if($moduleId == null)
+            if ($moduleId == null)
             {
                 $moduleId = $this->moduleId;
             }

@@ -63,7 +63,7 @@
         public function getRelatedLinkString($attributeString, $attributeName, $moduleId)
         {
             $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
-            $string .= '$data->' . $attributeName. ', "' . $this->getActionModuleClassName() . '", ';
+            $string .= '$data->' . $attributeName. ', "' . $this->getActionModuleClassName() . '", '; // Not Coding Standard
             $string .= '"' . $this->getGridViewActionRoute('details', $moduleId) . '")';
             return $string;
         }

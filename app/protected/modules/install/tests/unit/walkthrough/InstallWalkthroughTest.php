@@ -117,9 +117,9 @@
             //Check validateSettings action.
             //First validation will fail, and there should be at least validation errors.
             $this->setPostArray(array(
-            	'ajax'                => 'install-form',
+                'ajax'                => 'install-form',
                 'InstallSettingsForm' => array(
-                 	'databaseHostname'      => '',
+                    'databaseHostname'      => '',
                     'databaseAdminUsername' => '',
                     'databaseAdminPassword' => '',
                     'databaseName'          => '',
@@ -140,9 +140,9 @@
             //This validation should pass.
             $this->setPostArray(array(
                 'ajax'                => 'install-form',
-            	'InstallSettingsForm' => array(
-            		'databaseHostname'      => $this->databaseHostname,
-            		'databaseAdminUsername' => '',
+                'InstallSettingsForm' => array(
+                    'databaseHostname'      => $this->databaseHostname,
+                    'databaseAdminUsername' => '',
                     'databaseAdminPassword' => '',
                     'databaseName'          => $this->databaseName,
                     'databaseUsername'      => $this->databaseUsername,
@@ -161,8 +161,8 @@
 
             //Run installation.
             $this->setPostArray(array(
-				'InstallSettingsForm' => array(
-                	'databaseHostname'      => $this->databaseHostname,
+                'InstallSettingsForm' => array(
+                    'databaseHostname'      => $this->databaseHostname,
                     'databaseAdminUsername' => '',
                     'databaseAdminPassword' => '',
                     'databaseName'          => $this->databaseName,

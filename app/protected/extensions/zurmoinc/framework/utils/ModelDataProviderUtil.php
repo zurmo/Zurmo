@@ -253,7 +253,7 @@
             {
                 //Handling special scenario for casted down Person.  Todo: Automatically determine a
                 //casted down scenario instead of specifically looking for Person.
-                if($relationAttributeModelClassName == 'Person')
+                if ($relationAttributeModelClassName == 'Person')
                 {
                     $onTableJoinIdName = "{$relationAttributeTableName}_id";
                 }

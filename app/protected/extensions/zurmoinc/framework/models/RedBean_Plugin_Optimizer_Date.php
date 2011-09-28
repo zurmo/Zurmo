@@ -46,7 +46,7 @@
                                                                                                                         // Not Coding Standard
                     $cnt = (int) $this->adapter->getCell("select count(*) as n from {$this->table} where ".             // Not Coding Standard
                               "{$this->column} regexp '[0-9]{4}-[0-1][0-9]-[0-3][0-9]' " .                              // Not Coding Standard
-                              "OR {$this->column} IS NULL");                                                            // Not Coding Standard
+                              "OR {$this->column} IS null");                                                            // Not Coding Standard
                     $total = (int) $this->adapter->getCell("SELECT count(*) FROM ".$this->writer->noKW($this->table));  // Not Coding Standard
                                                                                                                         // Not Coding Standard
                     if ($total===$cnt) {                                                                                // Not Coding Standard

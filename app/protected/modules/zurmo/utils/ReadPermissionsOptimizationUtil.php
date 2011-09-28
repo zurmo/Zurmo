@@ -761,7 +761,7 @@
                     $groupMungeIds[] = 'G' . $group->id;
                     self::getAllUpstreamGroupsRecursively($group, $groupMungeIds);
                 }
-                if(count($groupMungeIds) > 0)
+                if (count($groupMungeIds) > 0)
                 {
                     $inSqlPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', $groupMungeIds, true);
                     $sql = "select distinct $mungeTableName.securableitem_id
@@ -770,7 +770,6 @@
                     $securableItemIds = R::getCol($sql);
                     self::bulkIncrementParentRolesCounts($mungeTableName, $securableItemIds, $user->role);
                 }
-
             }
         }
 
@@ -809,7 +808,7 @@
         public static function getAllUpstreamGroupsRecursively(Group $group, & $groupMungeIds)
         {
             assert('is_array($groupMungeIds)');
-            if($group->group->id > 0 )
+            if ($group->group->id > 0 )
             {
                 $groupMungeIds[] = 'G' . $group->group->id;
                 if (!RedBeanDatabase::isFrozen() && $group->isSame($group->group))

@@ -101,7 +101,7 @@
                                    sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData);
                       }
                   }
-                  catch(InvalidValueToSanitizeException $e)
+                  catch (InvalidValueToSanitizeException $e)
                   {
                       if ($e->getMessage() != null)
                       {

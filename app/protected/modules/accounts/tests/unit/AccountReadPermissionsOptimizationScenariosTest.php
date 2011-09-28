@@ -1693,7 +1693,6 @@
                 $a2->delete();
                 $a3->delete();
 
-
                 $g1->group = null;
                 $this->assertTrue($g1->save());
 
@@ -1806,7 +1805,6 @@
                 $a1->delete();
                 $a2->delete();
                 $a3->delete();
-
 
                 $g1->group = null;
                 $this->assertTrue($g1->save());
@@ -1996,7 +1994,6 @@
                                     self::getAccountMungeRows());
 
                 $this->assertTrue(self::accountMungeDoesntChangeWhenRebuilt());
-
 
                 //Utilize method that is used by user interface to handle removing users from a group.
                 $form = new GroupUserMembershipForm();

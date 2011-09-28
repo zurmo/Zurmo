@@ -137,7 +137,7 @@
                 $nonUniqueValuesString = null;
                 foreach($nonUniqueData as $nonUniqueValue)
                 {
-                    if($nonUniqueValuesString != null)
+                    if ($nonUniqueValuesString != null)
                     {
                        $nonUniqueValuesString .= ', ';
                     }

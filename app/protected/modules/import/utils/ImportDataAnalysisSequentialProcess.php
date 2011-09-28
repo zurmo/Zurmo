@@ -84,7 +84,7 @@
             $completionPosition = array_search($params["columnNameToProcess"], $this->sanitizableColumnNames) + 1;
             if ($completionPosition != count($this->sanitizableColumnNames))
             {
-                $completionPosition ++;
+                $completionPosition++;
             }
             $this->subSequenceCompletionPercentage = ($completionPosition / count($this->sanitizableColumnNames)) * 100;
             //Run data analyzer

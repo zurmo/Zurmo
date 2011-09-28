@@ -108,7 +108,6 @@ EOD;
                 DemoDataUtil::load($messageLogger, 3);
             }
 
-
             $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
         }
         $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));

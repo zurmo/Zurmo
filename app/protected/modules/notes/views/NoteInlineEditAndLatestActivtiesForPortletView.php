@@ -160,11 +160,11 @@
             {
                 $relationItemsIds = array($relationItemId);
             }
-            $modelClassNamesAndSearchAttributeData =
+            $modelClassNamesAndSearchAttributeData = // Not Coding Standard
                 LatestActivitiesUtil::
                     getSearchAttributesDataByModelClassNamesAndRelatedItemIds($filteredMashableModelClassNames,
                                                                               $relationItemsIds);
-            $modelClassNamesAndSortAttributes =
+            $modelClassNamesAndSortAttributes =      // Not Coding Standard
                 LatestActivitiesUtil::getSortAttributesByMashableModelClassNames($filteredMashableModelClassNames);
             return new RedBeanModelsDataProvider($uniquePageId, $modelClassNamesAndSortAttributes,
                                                           true, $modelClassNamesAndSearchAttributeData,

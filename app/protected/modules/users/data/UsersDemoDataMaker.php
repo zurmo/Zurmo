@@ -78,7 +78,7 @@
                 assert('$saved');
 
                 $roleIdRange = $demoDataHelper->getRangeByModelName('Role');
-                $role = Role::getById($roleIdRange['startId']+1);
+                $role = Role::getById($roleIdRange['startId'] + 1);
                 assert('$role instanceof Role');
                 $role->users->add($user);
                 $saved = $role->save();

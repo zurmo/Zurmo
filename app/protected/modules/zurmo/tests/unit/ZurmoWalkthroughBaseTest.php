@@ -154,10 +154,11 @@
                 $this->doApplicationScriptPathsAllExist();
                 if ($compareUrl != null)
                 {
-                    if($compareUrlContains)
+                    if ($compareUrlContains)
                     {
                         $pos = strpos($e->getUrl(), $compareUrl);
-                        if($pos === false) {
+                        if ($pos === false)
+                        {
                             $this->fail($e->getUrl());
                         }
                     }

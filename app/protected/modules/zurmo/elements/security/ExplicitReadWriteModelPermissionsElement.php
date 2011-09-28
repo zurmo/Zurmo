@@ -75,7 +75,7 @@
             $selectedType = $this->resolveSelectedType();
 
             $permissionTypes = $this->getPermissionTypes();
-            if($selectedType == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP)
+            if ($selectedType == ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP)
             {
                 $selectedGroups = $this->getSelectableGroupsData();
                 $stringContent  = ArrayUtil::getArrayValue($permissionTypes, $selectedType);

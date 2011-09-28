@@ -75,16 +75,16 @@
             $modelClassNamesAndSearchAttributeData = array();
             foreach ($modelClassNames as $modelClassName)
             {
-                $mashableActivityRules =
+                $mashableActivityRules =     // Not Coding Standard
                     MashableActivityRulesFactory::createMashableActivityRulesByModel($modelClassName);
                 if (count($relationItemIds) > 1)
                 {
-                    $searchAttributesData =
+                    $searchAttributesData =     // Not Coding Standard
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemIds($relationItemIds);
                 }
                 else
                 {
-                    $searchAttributesData =
+                    $searchAttributesData =    // Not Coding Standard
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemId($relationItemIds[0]);
                 }
                 $modelClassNamesAndSearchAttributeData[$modelClassName] = $searchAttributesData;
@@ -103,7 +103,7 @@
             $modelClassNamesAndSortAttributes = array();
             foreach ($modelClassNames as $modelClassName)
             {
-                $mashableActivityRules =
+                $mashableActivityRules =    // Not Coding Standard
                     MashableActivityRulesFactory::createMashableActivityRulesByModel($modelClassName);
                 $modelClassNamesAndSortAttributes[$modelClassName] =
                     $mashableActivityRules->getLatestActivitiesOrderByAttributeName();

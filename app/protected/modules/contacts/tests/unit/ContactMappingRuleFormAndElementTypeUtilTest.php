@@ -65,7 +65,6 @@
             $this->assertEquals(1, count($collection));
             $this->assertEquals('ImportMappingRuleContactStatesDropDown', $collection[0]['elementType']);
             $this->assertEquals('DefaultContactStateIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-
         }
     }
 ?>

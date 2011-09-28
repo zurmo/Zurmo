@@ -82,7 +82,7 @@
                 $offset = 0;
                 $limit  = null;
             }
-            if($totalItemCount == 0)
+            if ($totalItemCount == 0)
             {
                 return array();
             }

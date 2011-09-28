@@ -135,7 +135,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'),
+                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
                                             ),
                                         ),
                                         array(

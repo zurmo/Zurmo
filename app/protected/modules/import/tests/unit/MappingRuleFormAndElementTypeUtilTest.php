@@ -38,7 +38,7 @@
             $attributeImportRules = new CheckBoxAttributeImportRules(new ImportModelTestItem(), 'checkBox');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                    									 'checkBox', 'importColumn');
+                                                                         'checkBox', 'importColumn');
             $this->assertEquals(1, count($collection));
             $this->assertEquals('CheckBox', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
@@ -47,7 +47,7 @@
             $attributeImportRules = new CreatedByUserAttributeImportRules(new ImportModelTestItem(), 'createdByUser');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                						 'createdByUser', 'importColumn');
+                                                                         'createdByUser', 'importColumn');
             $this->assertEquals(1, count($collection));
             $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[0]['elementType']);
             $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));

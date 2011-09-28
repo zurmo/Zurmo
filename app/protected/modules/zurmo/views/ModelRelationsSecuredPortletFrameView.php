@@ -85,7 +85,7 @@
         protected function renderPortletsTabbed()
         {
             assert('count($this->portlets) == 1 || count($this->portlets) == 0');
-            if(count($this->portlets) == 1)
+            if (count($this->portlets) == 1)
             {
                 $tabItems = array();
                 foreach ($this->portlets[1] as $noteUsed => $portlet)

@@ -96,7 +96,7 @@
                     {
                         assert('$attributeModel->$attributeName instanceof RedBeanModel');
                         $relatedModel = $attributeModel->$attributeName;
-                        if($relatedModel->id < 0 && $oldValue[1] < 0)
+                        if ($relatedModel->id < 0 && $oldValue[1] < 0)
                         {
                             $processAuditEvent = false;
                         }
@@ -108,7 +108,7 @@
                             assert('$oldValue != $newValue');
                         }
                     }
-                    if($processAuditEvent)
+                    if ($processAuditEvent)
                     {
                         $tempAttributeNames = $attributeNames;
                         $tempAttributeNames[] = $attributeName;
@@ -177,14 +177,14 @@
             else
             {
                 assert('is_array($value)');
-                if($value[1] < 0)
+                if ($value[1] < 0)
                 {
                     $s = yii::t('Default', '(None)');
                 }
                 else
                 {
                     $modelClassName = $value[0];
-                    if($format == 'long')
+                    if ($format == 'long')
                     {
                     $s = $modelClassName::getModelLabelByTypeAndLanguage('Singular') .
                          '(' . $value[1] . ') ';

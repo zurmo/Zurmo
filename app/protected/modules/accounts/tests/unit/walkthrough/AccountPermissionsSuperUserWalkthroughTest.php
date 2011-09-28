@@ -186,7 +186,6 @@
             $this->assertEquals(1, count($readWritePermitables));
             $this->assertEquals(0, count($readOnlyPermitables));
             $this->assertEquals($group1, $readWritePermitables[$group1->id]);
-
         }
     }
 ?>

@@ -284,8 +284,8 @@
         {
             if (isset($this->params['inputPrefix']) && $this->params['inputPrefix'])
             {
-                assert('(is_array($this->params["inputPrefix"]) && count($this->params["inputPrefix"]) > 0)
-                        || (is_string($this->params["inputPrefix"]) && $this->params["inputPrefix"] != "")');
+                assert('(is_array($this->params["inputPrefix"]) && count($this->params["inputPrefix"]) > 0) ||
+                        (is_string($this->params["inputPrefix"]) && $this->params["inputPrefix"] != "")');
                 return $this->params['inputPrefix'];
             }
             return get_class($this->model);

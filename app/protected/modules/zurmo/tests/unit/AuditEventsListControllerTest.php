@@ -48,7 +48,7 @@
             $user = UserTestHelper::createBasicUser('Billy');
             $account->name  = 'aNewDawn Inc';
             $account->owner = $user;
-            assert($account->save());
+            $this->assertTrue($account->save());
 
             $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($account);
 
@@ -84,7 +84,7 @@
             $user = UserTestHelper::createBasicUser('Andy');
             $account->name  = 'aNewDawn Inc 2';
             $account->owner = $user;
-            assert($account->save());
+            $this->assertTrue($account->save());
 
             $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($account);
 

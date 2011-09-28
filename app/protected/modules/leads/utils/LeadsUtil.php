@@ -122,7 +122,7 @@
         {
             assert('$state->id > 0');
             $leadStatesData = self::getLeadStateDataFromStartingStateOnAndKeyedById();
-            if(isset($leadStatesData[$state->id]))
+            if (isset($leadStatesData[$state->id]))
             {
                 return true;
             }
