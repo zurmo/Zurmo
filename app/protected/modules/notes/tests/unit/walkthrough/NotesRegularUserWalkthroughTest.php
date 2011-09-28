@@ -50,7 +50,7 @@
             //Now test peon with elevated permissions to models.
         }
         
-         public function testRegularUserAllControllerActionsNoElevation()
+        public function testRegularUserAllControllerActionsNoElevation()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
@@ -149,7 +149,7 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
             $this->setGetArray(array('id' => $note->id));
             $this->resetPostArray();
-            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');            
+            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');                       
             //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
             //$this->resetPostArray();
             //$this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/inlineEditSave');                  
@@ -184,7 +184,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
             $this->setGetArray(array('id' => $note->id));
             $this->resetPostArray();
-            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');
+            $this->runControllerWithNoExceptionsAndGetContent('notes/default/edit');           
             //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
             //$this->resetPostArray();
             //$this->runControllerWithNoExceptionsAndGetContent('notes/default/inlineEditSave');
@@ -205,7 +205,7 @@
             //$this->setGetArray(array('id' => $note->id, 'redirectUrl' => 'someRedirect'));
             //$this->resetPostArray();
             //$this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/inlineEditSave');
-
+           
             //create some roles
             Yii::app()->user->userModel = $super;
             $parentRole = new Role();
@@ -250,7 +250,7 @@
             
             //create a note owned by super
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $note2 = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $account2); 
+            $note2 = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuperForRole', $super, $account2); 
             
             //Test userInParentRole, access to notes details and edit should fail.
             Yii::app()->user->userModel = $userInParentRole;
@@ -313,7 +313,7 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
             $this->setGetArray(array('id' => $note2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
-            
+           
             //clear up the role relationships between users so not to effect next assertions
             $parentRole->users->remove($userInParentRole);
             $parentRole->roles->remove($childRole);
@@ -379,7 +379,7 @@
 
             //create a note owned by super
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $note3 = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $account3);
+            $note3 = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuperForGroup', $super, $account3);
             
             //Add access for the confused user to accounts and creation of accounts.
             $userInChildGroup->setRight('NotesModule', NotesModule::RIGHT_ACCESS_NOTES);
