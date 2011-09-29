@@ -185,6 +185,7 @@
 
             //Check installDemoData action.
             RedBeanDatabase::close();
+            DemoDataUtil::unsetLoadedModules();
             $this->runControllerWithNoExceptionsAndGetContent('install/default/installDemoData');
             $this->assertGreaterThan('0', Account::getAll());
             $this->assertGreaterThan('0', Contact::getAll());

@@ -90,5 +90,9 @@
                                                $module::getModuleLabelByTypeAndLanguage('Plural')));
             }
         }
+        public static function unsetLoadedModules()
+        {
+            self::$loadedModules = array();
+        }
     }
 ?>
