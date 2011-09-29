@@ -116,7 +116,7 @@
             {
                 case self::AUDIT_EVENT_ITEM_CREATED:
                 case self::AUDIT_EVENT_ITEM_DELETED:
-                    if($format == 'short')
+                    if ($format == 'short')
                     {
                         return Yii::t('Default', $auditEvent->eventName);
                     }
@@ -129,7 +129,7 @@
                     list($name, $attributeNames, $oldValue, $newValue) = unserialize($auditEvent->serializedData);
                     $modelClassName = $auditEvent->modelClassName;
                     $model          = new $modelClassName();
-                    if($format == 'long')
+                    if ($format == 'long')
                     {
                         $s             .= strval($auditEvent);
                         $s             .= ", $name";

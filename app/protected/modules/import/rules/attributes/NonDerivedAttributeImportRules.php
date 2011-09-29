@@ -68,7 +68,7 @@
         public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($columnMappingData)');
-            $modelClassName =$this->getModelClassName();
+            $modelClassName = $this->getModelClassName();
             $value  = ImportSanitizerUtil::
                       sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                     $this->getModelClassName(),

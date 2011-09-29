@@ -34,31 +34,39 @@
 
         public function testMakeCollectionByAttributeImportRules()
         {
-            $attributeImportRules = new PhoneAttributeImportRules(new ImportModelTestItem(), 'phone');
+            //CheckBox
+            $attributeImportRules = new CheckBoxAttributeImportRules(new ImportModelTestItem(), 'checkBox');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'phone', 'importColumn');
+                                                                         'checkBox', 'importColumn');
             $this->assertEquals(1, count($collection));
-            $this->assertEquals('Phone', $collection[0]['elementType']);
+            $this->assertEquals('CheckBox', $collection[0]['elementType']);
             $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
 
-            //User attribute
-            $attributeImportRules = new UserAttributeImportRules(new ImportModelTestItem(), 'owner');
+            //CreateByUser
+            $attributeImportRules = new CreatedByUserAttributeImportRules(new ImportModelTestItem(), 'createdByUser');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'owner', 'importColumn');
-            $this->assertEquals(2, count($collection));
-            $this->assertEquals('ImportMappingRuleDefaultModelNameId', $collection[0]['elementType']);
-            $this->assertEquals('DefaultModelNameIdMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
-            $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[1]['elementType']);
-            $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
+                                                                         'createdByUser', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[0]['elementType']);
+            $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //CreatedDateTime
+            $attributeImportRules = new CreatedDateTimeAttributeImportRules(new ImportModelTestItem(), 'createdDatetime');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'createdDatetime', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingRuleDateTimeFormatDropDown', $collection[0]['elementType']);
+            $this->assertEquals('ValueFormatMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
 
             //CurrencyValue attribute
             $attributeImportRules = new CurrencyValueAttributeImportRules(new ImportModelTestItem(), 'currencyValue');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
                                                                          'currencyValue', 'importColumn');
-            $this->assertEquals(3, count($collection));
+            $this->assertEquals(3,                      count($collection));
             $this->assertEquals('Decimal',              $collection[0]['elementType']);
             $this->assertEquals('CurrencyDropDownForm', $collection[1]['elementType']);
             $this->assertEquals('Decimal',              $collection[2]['elementType']);
@@ -68,6 +76,146 @@
                                 get_class($collection[1]['mappingRuleForm']));
             $this->assertEquals('CurrencyRateToBaseModelAttributeMappingRuleForm',
                                 get_class($collection[2]['mappingRuleForm']));
+
+            //Date
+            $attributeImportRules = new DateAttributeImportRules(new ImportModelTestItem(), 'date');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'date', 'importColumn');
+            $this->assertEquals(2, count($collection));
+            $this->assertEquals('Date', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('ImportMappingRuleDateFormatDropDown', $collection[1]['elementType']);
+            $this->assertEquals('ValueFormatMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
+
+            //DateTime
+            $attributeImportRules = new DateTimeAttributeImportRules(new ImportModelTestItem(), 'dateTime');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+            makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                                     'dateTime', 'importColumn');
+            $this->assertEquals(2, count($collection));
+
+            $this->assertEquals('DateTime', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+            $this->assertEquals('ImportMappingRuleDateTimeFormatDropDown', $collection[1]['elementType']);
+            $this->assertEquals('ValueFormatMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
+
+            //Decimal
+            $attributeImportRules = new DecimalAttributeImportRules(new ImportModelTestItem(), 'decimal');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'decimal', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Decimal', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //DropDown
+            $attributeImportRules = new DropDownAttributeImportRules(new ImportModelTestItem(), 'dropDown');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'dropDown', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingRuleDefaultDropDownForm', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueDropDownModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //Email
+            $attributeImportRules = new EmailAttributeImportRules(new ImportModelTestItem(), 'email');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'email', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Text', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //FullName
+            $attributeImportRules = new FullNameAttributeImportRules(new ImportModelTestItem(), 'fullName');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'fullName', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Text', $collection[0]['elementType']);
+            $this->assertEquals('FullNameDefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //Id
+            $attributeImportRules = new IdAttributeImportRules(new ImportModelTestItem(), 'id');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'id', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingModelIdValueTypeDropDown', $collection[0]['elementType']);
+            $this->assertEquals('IdValueTypeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //Integer attribute
+            $attributeImportRules = new IntegerAttributeImportRules(new ImportModelTestItem(), 'integer');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+            makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                                     'integer', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Integer', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //ModifiedByUser
+            $attributeImportRules = new ModifiedByUserAttributeImportRules(new ImportModelTestItem(), 'modifiedbyUser');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'modifiedbyUser', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingUserValueTypeDropDown', $collection[0]['elementType']);
+            $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //ModifiedDateTime
+            $attributeImportRules = new ModifiedDateTimeAttributeImportRules(new ImportModelTestItem(), 'modifiedDateTime');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'modifiedDateTime', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingRuleDateTimeFormatDropDown', $collection[0]['elementType']);
+            $this->assertEquals('ValueFormatMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //Phone
+            $attributeImportRules = new PhoneAttributeImportRules(new ImportModelTestItem(), 'phone');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'phone', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Phone', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //RadioDropDown
+            $attributeImportRules = new RadioDropDownAttributeImportRules(new ImportModelTestItem(), 'radioDropDown');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'radioDropDown', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('ImportMappingRuleDefaultDropDownForm', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueDropDownModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //TextArea
+            $attributeImportRules = new TextAreaAttributeImportRules(new ImportModelTestItem(), 'textArea');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'textArea', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('TextArea', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //Text
+            $attributeImportRules = new TextAttributeImportRules(new ImportModelTestItem(), 'text');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'text', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Text', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
+
+            //Url
+            $attributeImportRules = new UrlAttributeImportRules(new ImportModelTestItem(), 'url');
+            $collection           = MappingRuleFormAndElementTypeUtil::
+                                    makeCollectionByAttributeImportRules($attributeImportRules,
+                                                                         'url', 'importColumn');
+            $this->assertEquals(1, count($collection));
+            $this->assertEquals('Url', $collection[0]['elementType']);
+            $this->assertEquals('DefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
         }
 
         public function testMakeFormsAndElementTypesByMappingDataAndImportRulesType()

@@ -215,7 +215,7 @@
         public static function checkMemcache($minimumRequiredVersion, /* out */ &$actualVersion)
         {
             $actualVersion = phpversion('memcache');
-            if ($actualVersion !== null)
+            if ($actualVersion != false && extension_loaded('memcache'))
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }
@@ -627,6 +627,12 @@
             $contents = preg_replace('/\$forceNoFreeze\s*=\s*true;/',
                                      '$forceNoFreeze = false;',
                                      $contents);
+            if ($memcacheHost == null && $memcachePort == null)
+            {
+                $contents = preg_replace('/\$memcacheLevelCaching\s*=\s*true;/',
+                                                     '$memcacheLevelCaching = false;',
+                                         $contents);
+            }
             file_put_contents($debugConfigFile, $contents);
 
             $contents = file_get_contents($perInstanceConfigFile);

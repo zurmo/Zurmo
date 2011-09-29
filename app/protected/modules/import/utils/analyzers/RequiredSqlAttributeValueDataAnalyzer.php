@@ -52,7 +52,7 @@
             {
                 return;
             }
-            $where = $columnName . ' IS NULL OR ' . $columnName . "=''";
+            $where = $columnName . ' IS NULL OR ' . $columnName . "=''";  // Not Coding Standard
             $count = $dataProvider->getCountByWhere($where);
             if ($count > 0)
             {

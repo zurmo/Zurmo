@@ -51,6 +51,7 @@
             $this->assertEquals(0, Task::getCount());
             $this->assertEquals(1, User::getCount());
             $messageLogger   = new MessageLogger();
+            DemoDataUtil::unsetLoadedModules();
             DemoDataUtil::load($messageLogger, 3);
             $this->assertEquals(8, Group::getCount());
             $this->assertEquals(3, Role::getCount());

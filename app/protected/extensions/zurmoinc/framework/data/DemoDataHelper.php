@@ -40,7 +40,7 @@
             assert('array_key_exists($modelName, $this->demoData)');
 
             return array('startId' => $this->demoData[$modelName]['startId'],
-            			 'endId'   => $this->demoData[$modelName]['endId']);
+                         'endId'   => $this->demoData[$modelName]['endId']);
         }
 
         /**

@@ -41,8 +41,8 @@
             => 'Rend compte à',
         'Profile'
             => 'Profil',
-        'The password is too short. Minimum length is'
-            => 'Le mot de passe doit comprendre ?? charatères minimum',
+        'The password is too short. Minimum length is {minimumLength}.'
+            => 'Le mot de passe doit comprendre {minimumLength} charatères minimum',
         'The password must have at least one lowercase letter'
             => 'Le mot de passe doit comprendre au moins une lettre minuscule',
         'The password must have at least one number and one letter'
@@ -51,8 +51,8 @@
             => 'Le mot de passe doit comprendre au moins une lettre majuscule',
         'The time zone is invalid.'
             => 'Le fuseau horaire indiqué est invalide',
-        'The username is too short. Minimum length is'
-            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum ?? characteres ',
+        'The username is too short. Minimum length is {minimumLength}.'
+            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum {minimumLength} characteres ',
         'Time Zone'
             => 'Fuseau Horaire',
         'User'

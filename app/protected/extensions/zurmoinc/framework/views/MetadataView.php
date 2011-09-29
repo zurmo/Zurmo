@@ -102,7 +102,13 @@
             return $content;
         }
 
-        protected function resolveEvaluateSubString(&$element, $key)
+        /**
+         * This method must not use the @see MetadataUtil::resolveEvaluateSubString because some evaluations might
+         * be using $this, which will not work if executed from within a different method.
+         * @param mixed $element
+         * @param integer $key
+         */
+        protected function resolveEvaluateSubString(& $element, $key)
         {
             if (is_array($element))
             {

@@ -670,10 +670,10 @@
             $this->assertFalse($billPasswordForm->save());
             $errors = array(
                 'newPassword' => array(
-                    'The password is too short. Minimum length is&#160;5.',
+                    'The password is too short. Minimum length is 5.',
                 ),
                 'username' => array(
-                    'The username is too short. Minimum length is&#160;3.',
+                    'The username is too short. Minimum length is 3.',
                 ),
             );
             $this->assertEquals($errors, $billPasswordForm->getErrors());

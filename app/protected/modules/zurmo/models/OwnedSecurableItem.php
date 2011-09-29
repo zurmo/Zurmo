@@ -204,7 +204,6 @@
                     }
                     $ownedTableName = static::getTableName('OwnedSecurableItem');
 
-
                     $ownedTableAliasName = ModelDataProviderUtil::
                                            resolveShouldAddFromTableAndGetAliasName( $ownedTableName,
                                                                                      'OwnedSecurableItem',

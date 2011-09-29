@@ -87,7 +87,7 @@
         protected static function getIdType($length = 40)
         {
             assert('is_int($length)');
-            return "varchar(" . $length . ") NULL";
+            return "varchar(" . $length . ") null";
         }
     }
 ?>

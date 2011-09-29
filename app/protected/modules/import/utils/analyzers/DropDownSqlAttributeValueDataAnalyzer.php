@@ -54,7 +54,7 @@
                 if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
                 {
                     $missingDropDowns[] = $valueCountData[$columnName];
-                    $count ++;
+                    $count++;
                 }
             }
             if ($count > 0)

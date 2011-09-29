@@ -63,7 +63,7 @@
                 {
                    $relationModel       = $relationModelClassName::getById((int)$mappingRuleData['defaultModelId']);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                 }

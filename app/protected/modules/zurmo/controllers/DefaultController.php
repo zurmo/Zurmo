@@ -64,7 +64,8 @@
                     $this->redirect(Yii::app()->user->returnUrl);
                 }
             }
-            $view = new LoginPageView($this, $formModel);
+            $extraHeaderContent = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'loginViewExtraHeaderContent');
+            $view = new LoginPageView($this, $formModel, $extraHeaderContent);
             echo $view->render();
         }
 

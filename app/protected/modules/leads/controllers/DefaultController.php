@@ -68,7 +68,7 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
                 $this->redirect($urlParams);
@@ -98,7 +98,7 @@
         public function actionEdit($id, $redirectUrl = null)
         {
             $contact = Contact::getById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/edit', 'id' => $contact->id);
                 $this->redirect($urlParams);
@@ -195,7 +195,7 @@
         {
             assert('!empty($id)');
             $contact                 = Contact::getById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
                 $this->redirect($urlParams);
@@ -277,7 +277,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/delete', 'id' => $contact->id);
                 $this->redirect($urlParams);

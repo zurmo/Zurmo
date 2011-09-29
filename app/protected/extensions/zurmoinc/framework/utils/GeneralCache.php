@@ -76,7 +76,7 @@
         {
             if (PHP_CACHING_ON)
             {
-                if(isset(self::$cachedEntries[$identifier]))
+                if (isset(self::$cachedEntries[$identifier]))
                 {
                     unset(self::$cachedEntries[$identifier]);
                 }

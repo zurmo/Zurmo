@@ -90,7 +90,7 @@
                 {
                     return User::getById($value);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The user id specified did not match any existing records.'));
                 }
@@ -101,7 +101,7 @@
                 {
                     return static::getModelByExternalSystemIdAndModelClassName($value, 'User');
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other user id specified did not match any existing records.'));
                 }
@@ -112,7 +112,7 @@
                 {
                     return User::getByUsername($value);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The username specified did not match any existing records.'));
                 }

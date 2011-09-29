@@ -37,8 +37,40 @@
             Yii::app()->user->userModel = $super;
         }
 
+        public function testSearchByCustomField()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //todo: add accounts. 2 of them.
+            AccountTestHelper::createAccountByNameForOwner('aFirstAccount', $super);
+            AccountTestHelper::createAccountByNameForOwner('aSecondAccount', $super);
+
+            //Searching with a custom field that is not blank should not produce any errors.
+            //The data returned should be no accounts.
+            $fakePostData        = array('name'         => null,
+                                         'officePhone'  => null,
+                                         'industry'     => array('value' => 'Banking'),
+                                         'officeFax'    => null);
+            $account             = new Account(false);
+            $searchForm          = new AccountsSearchForm($account);
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $fakePostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+
+            //Run search and make sure the data returned matches how many total accounts are available.
+            $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
+            $data                = $dataProvider->getData();
+            $this->assertEquals(0, count($data));
+        }
+
+        /**
+         * @depends testSearchByCustomField
+         */
         public function testSearchMemberOfAndMembers()
         {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
             //Test member of search.
             $_FAKEPOST['Account'] = array();
             $_FAKEPOST['Account']['account']['id'] = '4';
@@ -66,7 +98,7 @@
             //Test accounts search.
             $_FAKEPOST['Account'] = array();
             $_FAKEPOST['Account']['accounts']['id'] = '5';
-            $metadataAdapter     = new SearchDataProviderMetadataAdapter(new Account(false), 1, $_FAKEPOST['Account']);
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter(new Account(false), $super->id, $_FAKEPOST['Account']);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Account');
             $quote        = DatabaseCompatibilityUtil::getQuote();

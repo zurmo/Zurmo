@@ -60,7 +60,6 @@
             $group6->name = 'Group6';
             $this->assertTrue($group6->save());
 
-
             $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
             $this->assertEquals(0, $explicitReadWriteModelPermissions->getReadOnlyPermitablesCount());
             $this->assertEquals(0, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());

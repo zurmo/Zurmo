@@ -216,7 +216,7 @@ EOD;
 
             $htmlOptions = array('id' => $this->inputId);
             echo '<div id="fileUpload' . $id . '">'                         . "\n";
-            echo '<div class="fileupload-buttonbar">'           	        . "\n";
+            echo '<div class="fileupload-buttonbar">'                       . "\n";
             echo '<label class="fileinput-button">'                         . "\n";
             echo '<span>' . $addLabel . '</span>'                           . "\n";
             echo CHtml::fileField($this->inputName, null, $htmlOptions);

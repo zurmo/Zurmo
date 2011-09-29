@@ -116,5 +116,69 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
+
+        public function testSearchFormAttributesAreAdaptedProperly()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'ABName' => null,
+                'anyA'   => null,
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array();
+
+            $compareStructure = null;
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+
+            //Now put values in for the search.
+            $searchAttributes = array(
+                'ABName' => 'something',
+                'anyA'   => 'nothing',
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'aName',
+                    'operatorType'  => 'startsWith',
+                    'value'         => 'something',
+                ),
+                2 => array(
+                    'attributeName' => 'bName',
+                    'operatorType'  => 'startsWith',
+                    'value'         => 'something',
+                ),
+                3 => array(
+                    'attributeName'        => 'primaryA',
+                    'relatedAttributeName' => 'name',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'nothing',
+                ),
+                4 => array(
+                    'attributeName'        => 'secondaryA',
+                    'relatedAttributeName' => 'name',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'nothing',
+                ),
+            );
+
+            $compareStructure = '(1 or 2) and (3 or 4)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
     }
 ?>

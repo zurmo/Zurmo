@@ -45,8 +45,6 @@
             => 'Conversion de la LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Search'
             => 'Recherche LeadsModuleSingularLabel',
-        'Related LeadsModulePluralLabel'
-            => 'LeadsModulePluralLabel associées',
         'Select AccountsModuleSingularLabel'
             => 'Choisir un AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'

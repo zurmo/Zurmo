@@ -170,7 +170,7 @@
             {
                 case self::AUDIT_EVENT_USER_LOGGED_IN:
                 case self::AUDIT_EVENT_USER_LOGGED_OUT:
-                    if($format == 'short')
+                    if ($format == 'short')
                     {
                         return Yii::t('Default', $auditEvent->eventName);
                     }
@@ -180,7 +180,7 @@
                     }
                     break;
                 case self::AUDIT_EVENT_USER_PASSWORD_CHANGED:
-                    if($format == 'short')
+                    if ($format == 'short')
                     {
                         return Yii::t('Default', $auditEvent->eventName);
                     }
@@ -188,7 +188,7 @@
                     $username = unserialize($auditEvent->serializedData);
                     try
                     {
-                        if($auditEvent->modelClassName == 'User')
+                        if ($auditEvent->modelClassName == 'User')
                         {
                             $user = User::getById((int)$auditEvent->modelId);
                             $s .= ", $user";

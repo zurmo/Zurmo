@@ -50,7 +50,7 @@
 
             $import                            = new Import();
             $mappingData = array(
-                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',        'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),

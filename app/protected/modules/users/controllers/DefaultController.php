@@ -112,7 +112,7 @@
             $this->attemptToValidateAjaxFromPost($user, 'User');
             if ($user == Yii::app()->user->userModel)
             {
-                if(isset($_POST['User']) &&
+                if (isset($_POST['User']) &&
                    !empty($_POST['User']['language']) &&
                    $_POST['User']['language'] != $user->language)
                {

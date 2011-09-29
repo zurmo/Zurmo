@@ -51,7 +51,5 @@
             => 'OpportunitiesModuleSingularLabel ??',
         'Opportunity'
             => '??',
-        'Related OpportunitiesModulePluralLabel'
-            => '?? OpportunitiesModulePluralLabel',
     );
 ?>

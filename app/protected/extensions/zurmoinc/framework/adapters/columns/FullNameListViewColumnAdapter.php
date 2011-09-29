@@ -31,7 +31,8 @@
             if ($this->getIsLink())
             {
                 return array(
-                'name' => 'fullName',
+                'name' => 'lastName',
+                'header' => Yii::t('Default', 'Name'),
                 'type' => 'raw',
                 'value' => $this->view->getLinkString('$data'),
                 );
@@ -39,7 +40,8 @@
             else
             {
                 return array(
-                    'name' => 'fullName',
+                    'name' => 'lastName',
+                    'header' => Yii::t('Default', 'Name'),
                     'value'  => 'strval($data)',
                 );
             }
