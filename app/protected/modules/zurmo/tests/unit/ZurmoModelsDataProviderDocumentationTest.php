@@ -51,6 +51,69 @@
         /**
          * @depends testGetAllModels
          */
+        public function testSearchOwnedCustomField()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //First create the industry values and an account with an industry value.
+            $values = array(
+                'Automotive',
+                'Adult Entertainment',
+                'Financial Services',
+                'Mercenaries & Armaments',
+            );
+            $industryFieldData = CustomFieldData::getByName('Industries');
+            $industryFieldData->serializedData = serialize($values);
+            $this->assertTrue($industryFieldData->save());
+
+            $account = AccountTestHelper::createAccountByNameForOwner('aFirstAccount', $super);
+            $account->industry->value = 'Automotive';
+            $this->assertTrue($account->save());
+
+            //Now confirm the where, joins, and ultimately the whole query are constructed correctly.
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new Account(false),
+                $super->id,
+                array('industry' => array('value' => 'Automotive'))
+            );
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Account');
+
+            //Is the where clause constructed correctly?
+            $where = RedBeanModelDataProvider::makeWhere('Account', $searchAttributeData, $joinTablesAdapter);
+            $this->assertEquals("({$quote}customfield$quote.{$quote}value$quote like lower('Automotive%'))", $where);
+
+            //Is the join information correct?
+            $leftTablesAndAliases = $joinTablesAdapter->getLeftTablesAndAliases();
+            $this->assertEquals('ownedcustomfield',             $leftTablesAndAliases[0]['tableName']);
+            $this->assertEquals('ownedcustomfield',             $leftTablesAndAliases[0]['tableAliasName']);
+            $this->assertEquals('id',                           $leftTablesAndAliases[0]['tableJoinIdName']);
+            $this->assertEquals('account',                      $leftTablesAndAliases[0]['onTableAliasName']);
+            $this->assertEquals('industry_ownedcustomfield_id', $leftTablesAndAliases[0]['onTableJoinIdName']);
+            $this->assertEquals('customfield',                  $leftTablesAndAliases[1]['tableName']);
+            $this->assertEquals('customfield',                  $leftTablesAndAliases[1]['tableAliasName']);
+            $this->assertEquals('id',                           $leftTablesAndAliases[1]['tableJoinIdName']);
+            $this->assertEquals('ownedcustomfield',             $leftTablesAndAliases[1]['onTableAliasName']);
+            $this->assertEquals('customfield_id',               $leftTablesAndAliases[1]['onTableJoinIdName']); //this is going to fail.... need to fix.
+
+            //Is the entire query correct? It should be.
+            $subsetSql = Account::makeSubsetOrCountSqlQuery('account', $joinTablesAdapter, 1, 5, $where);
+            $compareSubsetSql  = "select {$quote}account{$quote}.{$quote}id{$quote} id ";
+            $compareSubsetSql .= "from {$quote}account{$quote} ";
+            $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield$quote.{$quote}id{$quote} = {$quote}account$quote.{$quote}industry_ownedcustomfield_id{$quote} ";
+            $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}customfield$quote.{$quote}id{$quote} = {$quote}ownedcustomfield$quote.{$quote}customfield_id{$quote}";
+            $compareSubsetSql .= " where ({$quote}customfield{$quote}.{$quote}value{$quote} like lower('Automotive%')) ";
+            $compareSubsetSql .= "limit 5 offset 1";
+            $this->assertEquals($compareSubsetSql, $subsetSql);
+        }
+
+        /**
+         * @depends testSearchOwnedCustomField
+         */
         public function testSortingModels()
         {
             Yii::app()->user->userModel = User::getByUsername('super');

@@ -325,6 +325,7 @@
             $tableName      = self::getTableName($modelClassName);
             $sql = static::makeSubsetOrCountSqlQuery($tableName, $joinTablesAdapter, null, null, $where, null, true,
                                                      $selectDistinct);
+           // echo $sql . "\n";
             $count = R::getCell($sql);
             if ($count === null)
             {
