@@ -115,7 +115,7 @@
          */
         public function getCountDataByGroupByColumnName($groupbyColumnName, $where = null)
         {
-            assert('is_string($groupbyColumnName)');
+            assert(is_string($groupbyColumnName)); // Not Coding Standard
             assert('is_string($where) || $where == null');
             $sql = "select count(*) count, {$groupbyColumnName} from {$this->tableName} ";
             if ($this->excludeFirstRow)

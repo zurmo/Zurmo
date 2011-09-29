@@ -42,7 +42,7 @@
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
-            assert('$saved');
+            assert($saved);    // Not Coding Standard
 
             //Ensure the external system id column is present.
             $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;

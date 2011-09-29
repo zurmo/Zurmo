@@ -39,11 +39,11 @@
             Yii::app()->user->userModel = $super;
 
             $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
-            self::assertTrue($everyoneGroup->save());
+            assert($everyoneGroup->save()); // Not Coding Standard
 
             $group1        = new Group();
             $group1->name  = 'Group1';
-            self::assertTrue($group1->save());
+            assert($group1->save()); // Not Coding Standard
 
             //Setup test data owned by the super user.
             AccountTestHelper::createAccountByNameForOwner('superAccount', $super);

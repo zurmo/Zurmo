@@ -41,7 +41,7 @@
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
-            assert('$saved');
+            assert($saved); // Not Coding Standard
         }
 
         public function testSanitizeValueBySanitizerTypesForBooleanTypeThatIsNotRequired()
