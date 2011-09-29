@@ -43,20 +43,20 @@
             $nobody = User::getByUsername('nobody');
             $account = AccountTestHelper::createAccountByNameForOwner('superAccountReadableByNobody',  Yii::app()->user->userModel);
             $account->addPermissions($nobody, Permission::READ, Permission::ALLOW);
-            assert($account->save());
+            self::assertTrue($account->save());
             ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser($account, $nobody);
 
             //Give the nobody user rights to the accounts module.
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
-            assert($nobody->save());
+            self::assertTrue($nobody->save());
 
             $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
-            assert($everyoneGroup->save());
+            self::assertTrue($everyoneGroup->save());
 
             $group1        = new Group();
             $group1->name  = 'Group1';
-            assert($group1->save());
+            self::assertTrue($group1->save());
         }
 
         public function testRegularUserCanViewOrNotViewDerivedExplicitReadWriteModelPermissionsElement()

@@ -756,7 +756,7 @@
                 //Get all downstream groups the user is in including any groups that are in those groups recursively.
                 //Then for each group found, add weight for the user's upstream roles.
                 $groupMungeIds = array();
-                foreach($user->groups as $group)
+                foreach ($user->groups as $group)
                 {
                     $groupMungeIds[] = 'G' . $group->id;
                     self::getAllUpstreamGroupsRecursively($group, $groupMungeIds);
