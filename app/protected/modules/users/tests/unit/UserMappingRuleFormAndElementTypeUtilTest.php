@@ -46,10 +46,10 @@
             $this->assertEquals('UserValueTypeModelAttributeMappingRuleForm', get_class($collection[1]['mappingRuleForm']));
 
             //User Password
-            $attributeImportRules = new PasswordAttributeImportRules(new ImportModelTestItem(), 'hasOne');
+            $attributeImportRules = new PasswordAttributeImportRules(new User(), 'hash');
             $collection           = MappingRuleFormAndElementTypeUtil::
                                     makeCollectionByAttributeImportRules($attributeImportRules,
-                                                                         'hasOne', 'importColumn');
+                                                                         'hash', 'importColumn');
             $this->assertEquals(1, count($collection));
             $this->assertEquals('Text', $collection[0]['elementType']);
             $this->assertEquals('PasswordDefaultValueModelAttributeMappingRuleForm', get_class($collection[0]['mappingRuleForm']));
