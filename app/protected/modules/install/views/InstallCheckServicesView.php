@@ -58,12 +58,12 @@
             $content  = '<div class="MetadataView">';
             $content .= '<table>';
             $content .= '<tr><td>';
-            $content .= Yii::t('Default', 'Below you will find the results of the system check.  If any required
-                                           services are not setup correctly, you will need to make sure they are
-                                           installed correctly before you can continue.');
+            $content .= Yii::t('Default', 'Below you will find the results of the system check. If any required ' .
+                                          'services are not setup correctly, you will need to make sure they are ' .
+                                          'installed correctly before you can continue.');
             $content .= '<br/><br/>';
-            $content .= Yii::t('Default', 'It is highly recommended that all optional services are installed and
-                                           working before continuing.');
+            $content .= Yii::t('Default', 'It is highly recommended that all optional services are installed and ' .
+                                          'working before continuing.');
             $content .= '<br/><br/>';
             if (count($this->checkResultsDisplayData[$failedIndexId]) > 0)
             {

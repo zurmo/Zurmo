@@ -104,8 +104,8 @@
                 {
                     if ($this->memcachePortNumber == null)
                     {
-                        $this->addError('memcachePortNumber', Yii::t( 'Default', 'Since you specified a memcache
-                        hostname, you must specify a port.'));
+                        $this->addError('memcachePortNumber', Yii::t( 'Default', 'Since you specified a memcache ' .
+                        'hostname, you must specify a port.'));
                         return;
                     }
                     $memcacheResult = InstallUtil::checkMemcacheConnection($this->memcacheHostname,
@@ -122,8 +122,8 @@
                 {
                     if ($this->databaseAdminPassword == null)
                     {
-                        $this->addError('databaseAdminPassword', Yii::t( 'Default', 'Since you specified a database
-                        admin username, you must enter a password'));
+                        $this->addError('databaseAdminPassword', Yii::t( 'Default', 'Since you specified a database ' .
+                        'admin username, you must enter a password'));
                         return;
                     }
                     $connectionResult = InstallUtil::checkDatabaseConnection($this->databaseType,
@@ -143,9 +143,9 @@
                                                                              $this->databaseUsername);
                     if ($userExistsResult === true)
                     {
-                        $this->addError('databaseUsername', Yii::t('Default', 'You have specified an existing user.
-                        If you would like to use this user, then do not specify the database admin username and
-                        password. Otherwise pick a database username that does not exist.'));
+                        $this->addError('databaseUsername', Yii::t('Default', 'You have specified an existing user. ' .
+                        'If you would like to use this user, then do not specify the database admin username and ' .
+                        'password. Otherwise pick a database username that does not exist.'));
                         return;
                     }
                     $databaseExistsResult = InstallUtil::checkDatabaseExists($this->databaseType,
@@ -155,9 +155,9 @@
                                                                              $this->databaseName);
                     if ($databaseExistsResult === true)
                     {
-                        $this->addError('databaseName', Yii::t('Default', 'You have specified an existing database.
-                        If you would like to use this database, then do not specify the database admin username and
-                        password. Otherwise pick a database name that does not exist.'));
+                        $this->addError('databaseName', Yii::t('Default', 'You have specified an existing database. ' .
+                        'If you would like to use this database, then do not specify the database admin username and ' .
+                        'password. Otherwise pick a database name that does not exist.'));
                         return;
                     }
                     $createDatabaseResult = InstallUtil::createDatabase(     $this->databaseType,
@@ -167,8 +167,8 @@
                                                                              $this->databaseName);
                     if ($createDatabaseResult === false)
                     {
-                        $this->addError('databaseName', Yii::t('Default', 'There was a problem creating the database
-                        Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
+                        $this->addError('databaseName', Yii::t('Default', 'There was a problem creating the database ' .
+                        'Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
                     $createUserResult = InstallUtil::createDatabaseUser(     $this->databaseType,
@@ -180,8 +180,8 @@
                                                                              $this->databasePassword);
                     if ($createUserResult === false)
                     {
-                        $this->addError('databaseUsername', Yii::t('Default', 'There was a problem creating the user
-                        Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
+                        $this->addError('databaseUsername', Yii::t('Default', 'There was a problem creating the user ' .
+                        'Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
                 }
@@ -204,8 +204,8 @@
                                                                              $this->databaseName);
                     if ($databaseExistsResult !== true)
                     {
-                        $this->addError('databaseName', Yii::t('Default', 'The database name specified does not
-                        exist or the user specified does not have access.') . '<br/>' .
+                        $this->addError('databaseName', Yii::t('Default', 'The database name specified does not ' .
+                        'exist or the user specified does not have access.') . '<br/>' .
                         Yii::t('Default', 'Error code:') . " " . $databaseExistsResult[0] .
                         '<br/>Message: ' . $databaseExistsResult[1]);
                         return;
@@ -214,8 +214,8 @@
                     {
                         if ($this->removeExistingData == false)
                         {
-                        $this->addError('removeExistingData', Yii::t('Default', 'Since you specified an existing database
-                        you must check this box in order to proceed. THIS WILL REMOVE ALL EXISTING DATA.'));
+                        $this->addError('removeExistingData', Yii::t('Default', 'Since you specified an existing database ' .
+                        'you must check this box in order to proceed. THIS WILL REMOVE ALL EXISTING DATA.'));
                         return;
                         }
                     }
