@@ -208,14 +208,17 @@
                                                                 $tempStructure,
                                                                 false);
             }
-            $tempStructure = '(' . $tempStructure . ')';
-            if ($appendStructureAsAnd)
+            if($tempStructure != null)
             {
-                static::appendClauseAsAndToStructureString($structure, $tempStructure);
-            }
-            else
-            {
-                static::appendClauseAsOrToStructureString($structure, $tempStructure);
+                $tempStructure = '(' . $tempStructure . ')';
+                if ($appendStructureAsAnd)
+                {
+                    static::appendClauseAsAndToStructureString($structure, $tempStructure);
+                }
+                else
+                {
+                    static::appendClauseAsOrToStructureString($structure, $tempStructure);
+                }
             }
         }
 
