@@ -193,8 +193,8 @@
             $this->assertTrue(ContactsModule::loadStartingData());
             $this->setGetArray(array('term' => 'something'));
             $this->resetPostArray();
-            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete', true);
-            $this->assertEmpty($content);
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete');
+            $this->assertEquals(CJSON::encode(array(array('href' => '', 'label' => 'No results Found'))), $content);
         }
     }
 ?>
