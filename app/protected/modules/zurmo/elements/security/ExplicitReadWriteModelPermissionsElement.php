@@ -153,7 +153,7 @@
             }
             else
             {
-                assert(current($permitables) instanceof Group);
+                assert('current($permitables) instanceof Group');
                 if (current($permitables)->name == Group::EVERYONE_GROUP_NAME)
                 {
                     return ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
@@ -179,7 +179,7 @@
             }
             else
             {
-                assert(count($permitables) == 1);
+                assert('count($permitables) == 1');
                 reset($permitables);
                 $permitable = current($permitables);
                 if ($permitable->name == Group::EVERYONE_GROUP_NAME)
