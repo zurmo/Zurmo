@@ -128,7 +128,7 @@
 
         public function setExplicitReadWriteModelPermissions($explicitReadWriteModelPermissions)
         {
-            assert('$explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions');
+            assert($explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions); // Not Coding Standard
             $this->explicitReadWriteModelPermissions = $explicitReadWriteModelPermissions;
         }
 
