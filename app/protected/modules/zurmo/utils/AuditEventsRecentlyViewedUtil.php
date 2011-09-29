@@ -49,10 +49,13 @@
                     $unserializedData = unserialize($auditEvent->serializedData);
                     if($unserializedData)
                     {
+                        $model           = $modelClassName::getById((int)$auditEvent->modelId);
+                        $moduleClassName = ModelStateUtil::resolveModuleClassNameByStateOfModel($model);
                         $linkHtmlOptions = array('style' => 'text-decoration:underline;');
-                        $content .= CHtml::link($unserializedData, self::getRouteByAuditEvent($auditEvent), $linkHtmlOptions);
+                        $content .= CHtml::link($unserializedData,
+                                    self::getRouteByAuditEvent($auditEvent, $moduleClassName), $linkHtmlOptions);
                         $content .= '&#160;-&#160;<span style="font-size:75%">';
-                        $content .= $modelClassName::getModelLabelByTypeAndLanguage('Singular') . '</span></br>';
+                        $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span></br>';
                     }
                 }
             }
@@ -77,10 +80,9 @@
          * Given an AuditEvent, build a route to the event's model's details action.
          * @param AuditEvent $auditEvent
          */
-        protected static function getRouteByAuditEvent(AuditEvent $auditEvent)
+        protected static function getRouteByAuditEvent(AuditEvent $auditEvent, $moduleClassName)
         {
-            $modelClassName  = $auditEvent->modelClassName;
-            $moduleClassName = $modelClassName::getModuleClassName();
+            assert('is_string($moduleClassName)');
             return Yii::app()->createUrl($moduleClassName::getDirectoryName() . '/default/details/',
                                          array('id' => $auditEvent->modelId));
         }

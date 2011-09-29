@@ -116,14 +116,13 @@
             $autoCompleteResults = array();
             foreach ($data as $model)
             {
-                $modelClassName  = get_class($model);
-                $modelLabel      = $modelClassName::getModelLabelByTypeAndLanguage('Singular');
-                $moduleClassName = $modelClassName::getModuleClassName();
-                $route           = Yii::app()->createUrl($moduleClassName::getDirectoryName() . '/default/details/',
-                                                         array('id' => $model->id));
+                $moduleClassName = ModelStateUtil::resolveModuleClassNameByStateOfModel($model);
+                $moduleLabel     = $moduleClassName::getModuleLabelByTypeAndLanguage('Singular');
+                $route           = Yii::app()->createUrl($moduleClassName::getDirectoryName()
+                                                         . '/default/details/', array('id' => $model->id));
                 $autoCompleteResults[] = array(
                     'href' => $route,
-                    'label' => strval($model) .' - ' . $modelLabel,
+                    'label' => strval($model) .' - ' . $moduleLabel,
                 );
             }
             return $autoCompleteResults;

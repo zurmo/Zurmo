@@ -65,8 +65,8 @@
             $content                 = CHtml::image($imagePath, 'Search Icon');
             $hintMessage             = Yii::t('Default', 'Search by name, phone, or e-mail');
             $htmlOptions             = array('class'   => 'global-search global-search-hint',
-                                             'onFocus' => 'js:$(this).removeClass("global-search-hint"); $(this).val("");',
-                                             'onBlur'  => 'js:$(this).val("")');
+                                             'onfocus' => '$(this).removeClass("global-search-hint"); $(this).val("");',
+                                             'onblur'  => '$(this).val("")');
             $cClipWidget             = new CClipWidget();
             $cClipWidget->beginClip('GlobalSearchElement');
             $cClipWidget->widget('zii.widgets.jui.CJuiAutoComplete', array(
