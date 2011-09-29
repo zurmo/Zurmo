@@ -215,7 +215,7 @@
         public static function checkMemcache($minimumRequiredVersion, /* out */ &$actualVersion)
         {
             $actualVersion = phpversion('memcache');
-            if ($actualVersion !== null)
+            if ($actualVersion != false && extension_loaded('memcache'))
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }

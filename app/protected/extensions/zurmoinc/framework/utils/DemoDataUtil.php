@@ -92,7 +92,7 @@
         }
         public static function unsetLoadedModules()
         {
-            self::$loadedModules = array();
+            static::$loadedModules = array();
         }
     }
 ?>
