@@ -179,25 +179,39 @@
         /**
          * @depends testAutomatedOccurredOnDateTimeAndLatestDateTimeChanges
          */
-        public function testNobodyCanReadtheNote() {
+        public function testNobodyCanReadWriteDeleteAndStrValOfNoteFunctionsCorrectly() {
             
             Yii::app()->user->userModel = User::getByUsername('super');
 
             $fileModel    = ZurmoTestHelper::createFileModel();
-            $accounts = Account::getByName('anAccount');
+            $accounts     = Account::getByName('anAccount');
 
+            //create a nobody user
             $nobody                   = UserTestHelper::createBasicUser('nobody');
+
+            //create a note whoes owner is super
             $occurredOnStamp          = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
-            $note                     = new Note();            
+            $note                     = new Note();
+            $note->owner              = User::getByUsername('super');
             $note->occurredOnDateTime = $occurredOnStamp;
-            $note->description       = 'myNote';
+            $note->description        = 'myNote';
             $note->activityItems->add($accounts[0]);
             $note->files->add($fileModel);
             $this->assertTrue($note->save());
 
-            //add nobody permission to read the note            
-            $note->addPermissions($nobody, Permission::READ);
-            $this->assertTrue($note->save()); 
+            //add nobody permission to read and write the note
+            $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
+            $this->assertTrue($note->save());
+
+            //revoke the permission from the nobody user to access the note
+            $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($note->save());
+
+            //add nobody permission to read, write and delete the note
+            $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($note->save());
+            
+            //now acces to the notes read by nobody should not fail
             Yii::app()->user->userModel = $nobody;
             $this->assertEquals($note->description, strval($note));
        }
