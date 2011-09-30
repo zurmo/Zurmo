@@ -72,6 +72,21 @@
     // Check it in as true!
     $dbLevelCaching = true;
 
+    // Set information related to function tests
+    // 1. $seleniumServerPath is path to selenium server(selenium jar file)
+    // 2. $testBaseUrl is url of website to be tested via selenium server. It can be local or remote
+    // 3. $seleniumTestResultUrl is url where results of functional tests can be seen
+    // 4. $seleniumTestResultsPath path where functional tests will be stored, relatibe to basePath
+    // 5. $seleniumServerPort - selenium server port
+    // 6. $seleniumBrowsersToRun - list of browsers to run functional tests in
+    // For more details, please check protected/tests/functional/TestSuite.php
+    $seleniumServerPath         = '';
+    $seleniumTestBaseUrl        = '';
+    $seleniumTestResultUrl      = '';
+    $seleniumTestResultsPath    = '';
+    $seleniumServerPort         = '4048';
+    $seleniumBrowsersToRun      = 'All';
+
     if ($debugOn)
     {
         error_reporting(E_ALL | E_STRICT);
