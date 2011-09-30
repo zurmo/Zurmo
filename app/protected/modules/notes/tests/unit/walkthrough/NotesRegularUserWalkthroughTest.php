@@ -176,6 +176,7 @@
             
             //give nobody access to both details and edit view
             Yii::app()->user->userModel = $super;
+            $note->removePermissions($nobody, Permission::READ);
             $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($note->save());
             
@@ -189,7 +190,7 @@
                        
             //revoke the permission from the nobody user to access the note
             Yii::app()->user->userModel = $super;
-            $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $note->removePermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($note->save());
             
             //Now nobodys, access to edit and details of notes should fail.                   
@@ -202,12 +203,17 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
             
 			//give nobody access to both details and edit view in order to check the delete of a note
-			Yii::app()->user->userModel = $super;
+			Yii::app()->user->userModel = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $nobody->forget();            
+            $nobody = User::getByUsername('nobody');
             $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
             $this->assertTrue($note->save());
-			Yii::app()->user->userModel = $nobody;
-			$this->setGetArray(array('id' => $note->id));
-            $this->resetPostArray();          
+			Yii::app()->user->userModel = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+            $noteId = $note->id;
+            $note->forget();
+            $note = Note::getById($noteId);
+			$this->setGetArray(array('id' => $note->id));                
+            $this->resetPostArray();            
             $this->runControllerWithRedirectExceptionAndGetContent('notes/default/delete');
 			
             //create some roles
@@ -457,11 +463,19 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
             
             //clear up the role relationships between users so not to effect next assertions
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $userInParentGroup->forget();
+            $userInChildGroup->forget();
+            $childGroup->forget();
+            $userInParentGroup          = User::getByUsername('nobody');
+            $userInChildGroup           = User::getByUsername('confused');
+            $childGroup                 = Group::getByName('BBB');
+
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);
             $this->assertTrue($parentGroup->save());
             $childGroup->users->remove($userInChildGroup);
-            $this->assertTrue($childGroup->save());            
+            $this->assertTrue($childGroup->save());           
         }
     }
 ?>
