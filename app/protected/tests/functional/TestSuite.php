@@ -40,7 +40,7 @@
     define('SELENIUM_SERVER_PATH', $seleniumServerPath);
     define('TEST_BASE_URL', $seleniumTestBaseUrl);
     define('TEST_RESULTS_URL', $seleniumTestResultUrl);
-    define('TEST_RESULTS_PATH', $basePath . $seleniumTestResultsPath);
+    define('TEST_RESULTS_PATH', $seleniumTestResultsPath);
     define('SELENIUM_SERVER_PORT', $seleniumServerPort);
     define('BROWSERS_TO_RUN', $seleniumBrowsersToRun);
 
