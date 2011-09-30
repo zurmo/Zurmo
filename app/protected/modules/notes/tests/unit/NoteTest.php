@@ -23,7 +23,7 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
+    		
     class NoteTest extends BaseTest
     {
         public static function setUpBeforeClass()
@@ -175,6 +175,32 @@
             $this->assertEquals($newStamp, $note->occurredOnDateTime);
             $this->assertEquals($newStamp, $note->latestDateTime);
         }
+
+        /**
+         * @depends testAutomatedOccurredOnDateTimeAndLatestDateTimeChanges
+         */
+        public function testNobodyCanReadtheNote() {
+            
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $fileModel    = ZurmoTestHelper::createFileModel();
+            $accounts = Account::getByName('anAccount');
+
+            $nobody                   = UserTestHelper::createBasicUser('nobody');
+            $occurredOnStamp          = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $note                     = new Note();            
+            $note->occurredOnDateTime = $occurredOnStamp;
+            $note->description       = 'myNote';
+            $note->activityItems->add($accounts[0]);
+            $note->files->add($fileModel);
+            $this->assertTrue($note->save());
+
+            //add nobody permission to read the note            
+            $note->addPermissions($nobody, Permission::READ);
+            $this->assertTrue($note->save()); 
+            Yii::app()->user->userModel = $nobody;
+            $this->assertEquals($note->description, strval($note));
+       }
 
         public function testGetModelClassNames()
         {
