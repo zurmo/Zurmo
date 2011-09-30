@@ -24,14 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    $basePath = realpath(dirname(__FILE__) . '../../../../../');
+    $basePath = realpath(dirname(__FILE__) . '/../../../');
 
-    define('SELENIUM_SERVER_PATH', 'd:\Selenium\selenium-server-standalone-2.0b1.jar');
-    define('TEST_BASE_URL', 'http://localhost/app/');
-    define('TEST_RESULTS_URL', 'http://localhost/testresults/functional/');
-    define('TEST_RESULTS_PATH', $basePath . '\testresults\functional\\');
-    define('SELENIUM_SERVER_PORT', 4048);
-    define('BROWSERS_TO_RUN', 'All');
+    if (is_file($basePath . '/protected/config/debugTest.php'))
+    {
+        require_once($basePath . '/protected/config/debugTest.php');
+    }
+    else
+    {
+        copy($basePath . '/protected/config/debugDIST.php', $basePath . '/protected/config/debugTest.php');
+        die('Please configure functional tests in config file ' . $basePath . '/protected/config/debugTest.php');
+    }
+
+
+    define('SELENIUM_SERVER_PATH', $seleniumServerPath);
+    define('TEST_BASE_URL', $seleniumTestBaseUrl);
+    define('TEST_RESULTS_URL', $seleniumTestResultUrl);
+    define('TEST_RESULTS_PATH', $basePath . $seleniumTestResultsPath);
+    define('SELENIUM_SERVER_PORT', $seleniumServerPort);
+    define('BROWSERS_TO_RUN', $seleniumBrowsersToRun);
+
     require_once('File/Iterator/Factory.php');
     class TestSuite
     {
@@ -151,7 +163,9 @@
                 {
                     echo 'Running test suite: ';
                     echo $pathToSuite . "\n";
+
                     $host = self::resolveHostFromParameterAndConstant();
+
                     $hostFilePart = str_replace('http://', '', $host);
                     $hostFilePart = str_replace('https://', '', $hostFilePart);
                     $hostFilePart = str_replace('/', '', $hostFilePart);
@@ -167,7 +181,7 @@
                     $finalCommand .= '-port ' . self::resolvePortFromParameterAndConstant();
                     $finalCommand .= ' -htmlSuite ' . $browserId . ' ';
                     $finalCommand .= $host . ' ' . realPath($pathToSuite) . ' ' . $finalTestResultsPath;
-                    //echo $finalCommand . "\n";
+                    echo $finalCommand . "\n";
                     exec($finalCommand);
                 }
             }
