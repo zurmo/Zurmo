@@ -28,8 +28,8 @@
     {
         protected function renderContent()
         {
-            $message = Yii::t('Default', 'You cannot access the installation area because the
-                                          application is already installed.');
+            $message = Yii::t('Default', 'You cannot access the installation area because the ' .
+                                         'application is already installed.');
             $content = "<div>$message</div>";
             return $content;
         }

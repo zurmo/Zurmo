@@ -51,6 +51,12 @@
             => 'Editar el Panel de Widgets',
         'Home'
             => 'Inicio',
+        'Is Default'
+            => '??',
+        'Layout Id'
+            => '??',
+        'Layout Type'
+            => '??',
         'Return to Home'
             => 'Volver a Inicio',
     );

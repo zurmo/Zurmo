@@ -53,7 +53,7 @@
                                             'element' => 'owner',
                                         ),
                                         array(
-                                            'element' => 'Null', // Not Coding Standard
+                                            'element' => 'probability',
                                         ),
                                     )
                                 ),
@@ -246,7 +246,7 @@
                                             'element' => 'url',
                                         ),
                                         array(
-                                            'element' => 'Null', // Not Coding Standard
+                                            'element' => 'probability',
                                         ),
                                     )
                                 ),
@@ -384,6 +384,13 @@
                                     array(
                                         array(
                                             'element' => 'source',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'probability',
                                         ),
                                     )
                                 ),
@@ -571,6 +578,13 @@
                                     array(
                                         array(
                                             'element' => 'source',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'probability',
                                         ),
                                     )
                                 ),

@@ -192,14 +192,17 @@
                                                                 $tempStructure,
                                                                 false);
             }
-            $tempStructure = '(' . $tempStructure . ')';
-            if (!empty($structure))
+            if($tempStructure != null)
             {
-                $structure .= ' and ' . $tempStructure;
-            }
-            else
-            {
-                $structure .= $tempStructure;
+                $tempStructure = '(' . $tempStructure . ')';
+                if (!empty($structure))
+                {
+                    $structure .= ' and ' . $tempStructure;
+                }
+                else
+                {
+                    $structure .= $tempStructure;
+                }
             }
         }
 

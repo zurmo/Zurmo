@@ -31,6 +31,7 @@
     class ModelAttributeToDesignerTypeUtil extends ModelAttributeToMixedTypeUtil
     {
         private static $availableDesignerTypes;
+
         /**
          * Returns the element or attribute form type
          * that should be used with the named attribute

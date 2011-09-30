@@ -123,8 +123,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseHostname', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Can either be a domain
-                                                      name or an IP address.')),
+                                                      'description' => Yii::t('Default', 'Can either be a domain ' .
+                                                      'name or an IP address.')),
                                             ),
                                         ),
                                     ),
@@ -134,8 +134,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseAdminUsername', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Leave this blank unless you
-                                                      would like to create the user and database for Zurmo to run in.')),
+                                                      'description' => Yii::t('Default', 'Leave this blank unless you ' .
+                                                      'would like to create the user and database for Zurmo to run in.')),
                                             ),
                                         ),
                                     )
@@ -145,8 +145,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseAdminPassword', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Leave this blank unless you
-                                                      would like to create the user and database for Zurmo to run in.'))
+                                                      'description' => Yii::t('Default', 'Leave this blank unless you ' .
+                                                      'would like to create the user and database for Zurmo to run in.'))
                                             ),
                                         ),
                                     )
@@ -156,8 +156,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseName', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'The name of the database you
-                                                      want to run Zurmo in.')),
+                                                      'description' => Yii::t('Default', 'The name of the database you ' .
+                                                      'want to run Zurmo in.')),
                                             ),
                                         ),
                                     )
@@ -167,9 +167,9 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'removeExistingData', 'type' => 'CheckBox',
-                                                      'description' => Yii::t('Default', 'WARNING! - If the database
-                                                      already exists the data will be completely removed.
-                                                      This must be checked if you are specifying an existing database.')),
+                                                      'description' => Yii::t('Default', 'WARNING! - If the database ' .
+                                                      'already exists the data will be completely removed. ' .
+                                                      'This must be checked if you are specifying an existing database.')),
                                             ),
                                         ),
                                     )
@@ -179,8 +179,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseUsername', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'User who can connect
-                                                      to the database.')),
+                                                      'description' => Yii::t('Default', 'User who can connect ' .
+                                                      'to the database.')),
                                             ),
                                         ),
                                     )
@@ -200,8 +200,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'superUserPassword', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Zurmo administrative password.
-                                                      The username is `super`.  You can change this later.')),
+                                                      'description' => Yii::t('Default', 'Zurmo administrative password. ' .
+                                                      'The username is `super`.  You can change this later.')),
                                             ),
                                         ),
                                     )
@@ -211,8 +211,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'memcacheHostname', 'type' => 'MemcacheText',
-                                                      'description' => Yii::t('Default', 'Memcache host name. Default
-                                                      is 127.0.0.1')),
+                                                      'description' => Yii::t('Default', 'Memcache host name. Default ' .
+                                                      'is 127.0.0.1')),
                                             ),
                                         ),
                                     )
@@ -222,8 +222,8 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'memcachePortNumber', 'type' => 'MemcacheText',
-                                                      'description' => Yii::t('Default', 'Memcache port number. Default
-                                                      is 11211')),
+                                                      'description' => Yii::t('Default', 'Memcache port number. Default ' .
+                                                      'is 11211')),
                                             ),
                                         ),
                                     )

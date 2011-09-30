@@ -73,7 +73,7 @@
                     $modelClassName::getById((int)$value);
                     return (int)$value;
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                 }
@@ -85,7 +85,7 @@
                     $model = static::getModelByExternalSystemIdAndModelClassName($value, $modelClassName);
                     return $model->id;
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new ExternalSystemIdNotFoundException();
                 }

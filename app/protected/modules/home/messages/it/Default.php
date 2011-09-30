@@ -51,6 +51,12 @@
             => '??',
         'Home'
             => '??',
+        'Is Default'
+            => '??',
+        'Layout Id'
+            => '??',
+        'Layout Type'
+            => '??',
         'Return to Home'
             => '??',
     );

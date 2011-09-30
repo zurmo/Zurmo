@@ -30,12 +30,12 @@
     // DON'T MAKE A MESS!
     return array(
         'Location'
-            => '??',
+            => 'Position',
         'Temperature Unit'
-            => '??',
+            => 'Température',
         'Title'
-            => '??',
+            => 'Titre',
         'World Clock'
-            => '??',
+            => 'Horloge Mondiale',
     );
 ?>

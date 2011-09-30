@@ -83,7 +83,7 @@
                     }
                     return $derivedModelClassName::getById((int)$value);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     $derivedModelClassName = static::getDerivedModelClassName();
                     $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
@@ -98,7 +98,7 @@
                 {
                     return static::getModelByExternalSystemIdAndModelClassName($value, $derivedModelClassName);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     $derivedModelClassName = static::getDerivedModelClassName();
                     $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');

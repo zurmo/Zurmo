@@ -29,117 +29,166 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '(None)'
+            => '--Aucun--',
         'Advanced Search'
-            => '??',
+            => 'Recherche avancée',
         'All'
-            => '??',
+            => 'Tous',
         'by'
-            => '??',
+            => 'par',
+        'Cancel'
+            => 'Annuler',
         'Cell Settings'
-            => '??',
+            => 'Paramètres des cellules',
         'Celsius'
-            => '??',
+            => 'Celsius',
         'Change Log'
-            => '??',
+            => 'Log de modifications',
         'Changed'
-            => '??',
+            => 'Modifié',
         'Clear Search'
-            => '??',
+            => 'Effacer',
+        'Created By User'
+            => 'Crée par',
         'Created Date and User'
-            => '??',
+            => 'Date Crée',
+        'Created Date Time'
+            => 'Date Crée',
         'Created On'
-            => '??',
+            => 'Crée',
+        'Date'
+            => 'Date',
+        'Date Time'
+            => 'Date/Heure',
         'Delete'
-            => '??',
+            => 'Supprimer',
         'Detail View Only'
-            => '??',
+            => 'Vue détaillée uniquement',
         'Details'
-            => '??',
+            => 'Détails',
         'Edit'
-            => '??',
+            => 'Modifier',
         'Edit Portlet'
-            => '??',
+            => 'Modifier le portlet',
+        'Error'
+            => 'Erreur',
         'Fahrenheit'
-            => '??',
+            => 'Fahrenheit',
         'Filtered List'
-            => '??',
+            => 'Liste Filtrée',
+        'firstDateTime must occur after  secondDateTime'
+            => 'firstDateTime doit être après secondDateTime',
+        'firstDateTime must occur before secondDateTime'
+            => 'firstDateTime doit être avant secondDateTime',
+        'Float'
+            => 'Float',
         'from'
-            => '??',
+            => 'de',
         'Full Name'
-            => '??',
+            => 'Nom',
         'Go to Details'
-            => '??',
+            => 'Au détails',
+        'Inline Edit View'
+            => 'Formulaire de saisie Inline',
+        'Integer'
+            => 'Nombre entier',
         'Invalid'
-            => '??',
+            => 'Invalide',
         'Last Modified'
-            => '??',
+            => 'Dernière modification',
         'Last Modified Date and User'
-            => '??',
+            => 'Dernière modification',
         'List'
-            => '??',
+            => 'Liste',
+        'Model Class Name'
+            => 'Nom de la classe du modèle',
+        'Model Id'
+            => 'ID du modèle',
+        'Modified By User'
+            => 'Dernière modification par',
+        'Modified Date Time'
+            => 'Dernière modification',
+        'Module Name'
+            => 'Nom du Module',
+        'More Details'
+            => 'Plus de détails',
+        'More Options'
+            => 'Plus d\'options',
         'Name'
-            => '??',
+            => 'Nom',
         'No'
-            => '??',
+            => 'Non',
         'None'
-            => '??',
+            => 'Aucun',
+        'Now'
+            => 'Maintenant',
         'Opted Out'
-            => '??',
+            => 'Opt out',
         'Panel'
-            => '??',
+            => 'Panel',
         'Panel Settings'
-            => '??',
+            => 'Paramètres du panel',
         'Panel Title'
-            => '??',
+            => 'Titre du panel',
         'Perform Action'
-            => '??',
+            => 'Sélectionner',
         'record'
-            => '??',
+            => 'donnée',
         'records'
-            => '??',
+            => 'données',
         'Remove'
-            => '??',
+            => 'Supprimer',
         'Return to List'
-            => '??',
+            => 'Retour à la liste',
         'Row'
-            => '??',
+            => '[Ajouter une ligne]',
         'Save'
-            => '??',
+            => 'Sauvegarder',
         'Search'
-            => '??',
+            => 'Rechercher',
         'Select'
-            => '??',
+            => 'Sélectionner',
         'selected for updating.'
-            => '??',
-        'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
-            => '??',
+            => 'sélectionnée(s)',
+        'Serialized Data'
+            => 'Serialized Data',
+        'Some values cannot be removed because they are currently in use. ' .
+        'Try changing the records that use them first.'
+            => 'Certain éléments ne peuvent être supprimés car ils sont actuellement utilisés. Veuillez modifier la valeur des champs contenant ces éléments avant de supprimer.',
+        'Tab'
+            => 'Onglet',
         'This module doesn\'t have anything to configure.'
-            => '??',
+            => 'Il n\'y a rien a configurer',
         'This pick-list is used by more than one module.'
-            => '??',
-        'This portlet will be removed, ok?'
-            => '??',
+            => 'Cette liste déroulante est utilisée dans les modules suivants:',
+        'Time'
+            => 'Heure',
         'Title/First/LastName'
-            => '??',
+            => 'Titre/Prénom/Nom',
         'to'
-            => '??',
+            => 'à',
         'Today'
-            => '??',
+            => 'Aujourd\'hui',
         'Tomorrow'
-            => '??',
+            => 'Demain',
         'Unknown'
-            => '??',
+            => 'Inconnu',
         'Update Selected'
-            => '??',
+            => 'Actualiser les données',
+        'User'
+            => 'Utilisateur',
+        'Users'
+            => 'Utilisateurs',
         'Yes'
-            => '??',
+            => 'Oui',
         'Yesterday'
-            => '??',
+            => 'Hier',
         'You must enter a value'
-            => '??',
+            => 'Ce champ est obligatoire',
         'You must specify a value.'
-            => '??',
+            => 'Vous devez spécifier une valeur',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '??',
+            => '{attribute} est trop précis(e) (la précision maximale est {precision})',
     );
 ?>

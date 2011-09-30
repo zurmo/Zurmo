@@ -111,7 +111,7 @@
             }
             elseif (is_subclass_of($elementclassname, 'ExplicitReadWriteModelPermissionsElement'))
             {
-                if(ActionSecurityUtil::canUserPerformAction('Edit', $model, $user))
+                if (ActionSecurityUtil::canUserPerformAction('Edit', $model, $user))
                 {
                     return;
                 }

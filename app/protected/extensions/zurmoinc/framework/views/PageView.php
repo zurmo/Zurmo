@@ -94,7 +94,7 @@
             }
             if (SHOW_PERFORMANCE)
             {
-                foreach(Yii::app()->performance->getTimings() as $id => $time)
+                foreach (Yii::app()->performance->getTimings() as $id => $time)
                 {
                     $performanceMessage .= 'Timing: ' . $id . ' total time: ' . number_format(($time), 3) . "</br>";
                 }

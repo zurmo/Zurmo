@@ -35,6 +35,8 @@
             => '??',
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
+        'AccountsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'AccountsModulePluralLabel ?? AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
@@ -43,11 +45,17 @@
             => 'AccountsModuleSingularLabel ??',
         'AccountsModuleSingularLabel Search'
             => 'AccountsModuleSingularLabel ??',
+        'Annual Revenue'
+            => '??',
         'Billing Address'
             => 'Indirizzo di Fatturazione',
         'Create AccountsModuleSingularLabel'
             => '?? AccountsModuleSingularLabel',
+        'Employees'
+            => '??',
         'Related AccountsModulePluralLabel'
             => '?? AccountsModulePluralLabel',
+        'Type'
+            => '??',
     );
 ?>

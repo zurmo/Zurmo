@@ -122,7 +122,7 @@
             {
                 $data = R::getRow($sql);
             }
-            catch(RedBean_Exception_SQL $e)
+            catch (RedBean_Exception_SQL $e)
             {
                 throw new NoRowsInTableException();
             }

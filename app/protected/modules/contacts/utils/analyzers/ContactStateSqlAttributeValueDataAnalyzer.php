@@ -45,7 +45,7 @@
                 }
                 if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
                 {
-                    $count ++;
+                    $count++;
                 }
             }
             if ($count > 0)

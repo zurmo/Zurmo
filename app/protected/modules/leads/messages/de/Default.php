@@ -43,8 +43,8 @@
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'
             => 'LeadsModuleSingularLabel ??',
-        'Related LeadsModulePluralLabel'
-            => '?? LeadsModulePluralLabel',
+        'LeadsModuleSingularLabel Search'
+            => 'LeadsModuleSingularLabel ??',
         'Select AccountsModuleSingularLabel'
             => '?? AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'

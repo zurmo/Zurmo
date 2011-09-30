@@ -39,11 +39,11 @@
             Yii::app()->user->userModel = $super;
 
             $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
-            assert($everyoneGroup->save());
+            assert($everyoneGroup->save()); // Not Coding Standard
 
             $group1        = new Group();
             $group1->name  = 'Group1';
-            assert($group1->save());
+            assert($group1->save()); // Not Coding Standard
 
             //Setup test data owned by the super user.
             AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
@@ -186,7 +186,6 @@
             $this->assertEquals(1, count($readWritePermitables));
             $this->assertEquals(0, count($readOnlyPermitables));
             $this->assertEquals($group1, $readWritePermitables[$group1->id]);
-
         }
     }
 ?>

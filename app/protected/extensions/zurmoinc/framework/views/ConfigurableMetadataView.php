@@ -36,7 +36,9 @@
          */
         public function getTitle()
         {
-            return $this->resolveViewAndMetadataValueByName('title');
+            $title = $this->resolveViewAndMetadataValueByName('title');
+            $this->resolveEvaluateSubString($title, null);
+            return $title;
         }
 
         public function resolveViewAndMetadataValueByName($name)
@@ -63,7 +65,7 @@
         public static function getMetadata(User $user = null)
         {
             $className = get_called_class();
-            if($user == null)
+            if ($user == null)
             {
                 try
                 {
@@ -78,7 +80,7 @@
             {
                 $className::assertMetadataIsValid($metadata);
             }
-            if($user == null)
+            if ($user == null)
             {
                 GeneralCache::cacheEntry($className . 'Metadata', $metadata);
             }
@@ -98,7 +100,7 @@
                 $className::assertMetadataIsValid($metadata);
             }
             MetadataUtil::setMetadata($className, $metadata, $user);
-            if($user == null)
+            if ($user == null)
             {
                 GeneralCache::cacheEntry($className . 'Metadata', $metadata);
             }

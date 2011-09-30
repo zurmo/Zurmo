@@ -45,10 +45,7 @@
          */
         protected function renderControlNonEditable()
         {
-            assert('$this->attribute == "null"');
-            assert('$this->model instanceof AuditEvent');
-            $moduleName = $this->model->moduleName;
-            return Yii::app()->format->text($moduleName::stringifyAuditEvent($model));
+            throw NotSupportedException();
         }
 
         protected function renderLabel()
@@ -68,8 +65,7 @@
          */
         public static function getModelAttributeNames()
         {
-            return array(
-            );
+            return array();
         }
     }
 ?>

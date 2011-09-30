@@ -26,18 +26,6 @@
 
     class TestWebUser extends WebUser
     {
-        public function __set($attributeName, $value)
-        {
-            if ($attributeName == 'userModel')
-            {
-                $this->userModel = $value;
-            }
-            else
-            {
-                parent::__set($attributeName, $value);
-            }
-        }
-
     /**
      * Override for testing framework.  The regenerateId call was causing issues with a walkthrough test that logged out
      * and logged back in.  It would complain about headers already being sent. Under normal usage through the user

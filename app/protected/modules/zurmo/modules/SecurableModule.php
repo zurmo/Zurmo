@@ -68,8 +68,9 @@
             return $auditEventNames;
         }
 
-        public static function stringifyAuditEvent(AuditEvent $auditEvent)
+        public static function stringifyAuditEvent(AuditEvent $auditEvent, $format = 'long')
         {
+            assert('$format == "long" || $format == "short"');
             return strval($auditEvent);
         }
 

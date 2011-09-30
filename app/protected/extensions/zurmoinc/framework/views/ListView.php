@@ -274,16 +274,32 @@
             );
         }
 
-        protected function getGridViewActionRoute($action)
+        protected function getGridViewActionRoute($action, $moduleId = null)
         {
-            return '/' . $this->moduleId . '/' . $this->controllerId . '/' . $action;
+            if ($moduleId == null)
+            {
+                $moduleId = $this->moduleId;
+            }
+            return '/' . $moduleId . '/' . $this->controllerId . '/' . $action;
         }
 
         public function getLinkString($attributeString)
         {
             $string  = 'CHtml::link(';
             $string .=  $attributeString . ', ';
-            $string .= 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('details') . '", array("id" => $data->id))';
+            $string .= 'Yii::app()->createUrl("' .
+                        $this->getGridViewActionRoute('details') . '", array("id" => $data->id))';
+            $string .= ')';
+            return $string;
+        }
+
+        public function getRelatedLinkString($attributeString, $attributeName, $moduleId)
+        {
+            $string  = 'CHtml::link(';
+            $string .=  $attributeString . ', ';
+            $string .= 'Yii::app()->createUrl("' .
+                        $this->getGridViewActionRoute('details', $moduleId) . '",
+                        array("id" => $data->' . $attributeName . '->id))';
             $string .= ')';
             return $string;
         }

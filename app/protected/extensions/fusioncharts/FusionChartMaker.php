@@ -154,7 +154,7 @@ class FusionChartMaker
           # Setting ChartID, Defult is Charts Name
           if ($chartID==""){
               $chartCounter=@$_SESSION['chartcount'];
-            if($chartCounter<=0 || $chartCounter==NULL){
+            if($chartCounter<=0 || $chartCounter==null){
                 $chartCounter=1;
             }
 
@@ -1216,10 +1216,10 @@ class FusionChartMaker
         $strValue=str_replace("=","%3d",$strValue);
         $strValue=str_replace("+","%2b",$strValue);
 
-        $strValue=str_replace("¢","%a2",$strValue);
-        $strValue=str_replace("£","%a3",$strValue);
-        $strValue=str_replace("€","%E2%82%AC",$strValue);
-        $strValue=str_replace("¥","%a5",$strValue);
+        $strValue=str_replace("ï¿½","%a2",$strValue);
+        $strValue=str_replace("ï¿½","%a3",$strValue);
+        $strValue=str_replace("ï¿½","%E2%82%AC",$strValue);
+        $strValue=str_replace("ï¿½","%a5",$strValue);
         $strValue=str_replace("?","%e2%82%a3",$strValue);
 
         return $strValue;

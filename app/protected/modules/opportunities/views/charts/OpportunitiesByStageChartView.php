@@ -54,7 +54,7 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => Yii::t('Default', 'Opportunities By Sales Stage'),
+                    'title' => "eval:Yii::t('Default', 'Opportunities By Sales Stage')",
                     'type'  => 'Column2D',
                 ),
                 'global' => array(

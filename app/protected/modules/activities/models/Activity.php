@@ -44,7 +44,7 @@
         public function onCreated()
         {
             parent::onCreated();
-            $this->unrestrictedSet('latestDateTime', $this->modifiedDateTime);
+            $this->unrestrictedSet('latestDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
         }
 
         public static function getDefaultMetadata()

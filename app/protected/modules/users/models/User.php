@@ -167,7 +167,8 @@
             $saved = parent::save($runValidation, $attributeNames);
             if ($saved && $passwordChanged)
             {
-                AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_PASSWORD_CHANGED, $this->username);
+                AuditEvent::
+                logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_PASSWORD_CHANGED, $this->username, $this);
             }
             return $saved;
         }
@@ -557,7 +558,7 @@
             if (strlen($this->$attribute) < $minLength)
             {
                 $this->addError('username',
-                    Yii::t('Default', 'The username is too short. Minimum length is') . '&#160;' . $minLength . '.');
+                    Yii::t('Default', 'The username is too short. Minimum length is {minimumLength}.', array('{minimumLength}' => $minLength)));
             }
         }
 

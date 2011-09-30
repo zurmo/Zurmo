@@ -62,8 +62,8 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => Yii::t('Default', 'Zurmo News'),
-                    'url' => 'http://www.zurmo.org/feed',
+                    'title' => "eval:Yii::t('Default', 'Zurmo News')",
+                    'url'   => 'http://www.zurmo.org/feed',
                 ),
                 'global' => array(
                 ),

@@ -687,5 +687,32 @@
             $this->assertEquals('ContactState', $modelClassNames[2]);
             $this->assertEquals('ContactsFilteredList', $modelClassNames[3]);
         }
+
+        public function testChangingContactWithoutChangingRelatedAccountShouldNotAuditAccountChangeWhenDoneViaPost()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $contactStates              = ContactState::getByName('Qualified');
+
+            $contact = new Contact();
+            $contact->owner         = Yii::app()->user->userModel;
+            $contact->title->value  = 'Mr';
+            $contact->firstName     = 'Supero';
+            $contact->lastName      = 'Mano';
+            $contact->state         = $contactStates[0];
+            $this->assertTrue($contact->save());
+            $beforeCount = AuditEvent::getCount();
+
+            //Test that saving an existing contact without a related contact will not produce an audit event showing the
+            //related account has changed.  This is a test to show when the account is not populated but has a negative
+            //id.
+            $contactId = $contact->id;
+            $contact->forget();
+            unset($contact);
+            $contact   = Contact::getById($contactId);
+            $fakePostData = array('account' => array('id' => ''));
+            $contact->setAttributes($fakePostData);
+            $this->assertTrue($contact->save());
+            $this->assertEquals($beforeCount, AuditEvent::getCount());
+        }
     }
 ?>

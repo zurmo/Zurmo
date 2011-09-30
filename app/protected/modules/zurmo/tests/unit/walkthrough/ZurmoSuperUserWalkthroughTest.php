@@ -84,7 +84,8 @@
             ));
             $this->resetGetArray();
             $this->runControllerWithExitExceptionAndGetContent('zurmo/default/login');
-            //Login and assert user is logged in.
+
+            //Login and assert user is logged in ok.
             $this->resetGetArray();
             $this->setPostArray(array(
                 'LoginForm' => array(   'username'   => 'super',
@@ -93,10 +94,20 @@
             ));
             $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
             $this->assertFalse(Yii::app()->user->isGuest);
-            $this->assertFalse(Yii::app()->user->userModel == $super);
+            $this->assertTrue(Yii::app()->user->userModel->username == $super->username);
 
             //Relogin super user.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Test login form with populated extra header content.
+            //First test that the extra content does not show up.
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
+            $this->assertTrue(strpos($content, 'xyzabc') === false);
+            //Add content and test that it shows up properly.
+            $content = '<div style="padding: 7px 7px 7px 80px; color: red;"><b>xyzabc</b></div>';
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'loginViewExtraHeaderContent', $content);
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
+            $this->assertTrue(strpos($content, 'xyzabc') !== false);
 
             //Configuration administration user interface.
             //First make sure settings are not what we are setting them too.

@@ -38,12 +38,12 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $import                            = new Import();
             $mappingData = array(
-                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',        'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
 
-                'column_1' => array('attributeIndexOrDerivedType' => 'phone',    	  'type' => 'importColumn',
+                'column_1' => array('attributeIndexOrDerivedType' => 'phone',         'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))));

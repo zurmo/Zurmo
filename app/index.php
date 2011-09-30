@@ -23,12 +23,11 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
     require_once('version.php');
     require_once('roots.php');
 
     // Debug is used per instance.
-    if(is_file(INSTANCE_ROOT . '/protected/config/debug.php'))
+    if (is_file(INSTANCE_ROOT . '/protected/config/debug.php'))
     {
         $debug          = INSTANCE_ROOT . '/protected/config/debug.php';
     }

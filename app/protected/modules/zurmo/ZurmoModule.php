@@ -36,6 +36,7 @@
         const AUDIT_EVENT_ITEM_CREATED            = 'Item Created';
         const AUDIT_EVENT_ITEM_MODIFIED           = 'Item Modified';
         const AUDIT_EVENT_ITEM_DELETED            = 'Item Deleted';
+        const AUDIT_EVENT_ITEM_VIEWED             = 'Item Viewed';
 
         public function canDisable()
         {
@@ -100,23 +101,33 @@
             return $metadata;
         }
 
-        public static function stringifyAuditEvent(AuditEvent $auditEvent)
+        public static function stringifyAuditEvent(AuditEvent $auditEvent, $format = 'long')
         {
-            $s = strval($auditEvent);
+            assert('$format == "long" || $format == "short"');
+            $s = null;
             switch ($auditEvent->eventName)
             {
                 case self::AUDIT_EVENT_ITEM_CREATED:
                 case self::AUDIT_EVENT_ITEM_DELETED:
+                    if ($format == 'short')
+                    {
+                        return Yii::t('Default', $auditEvent->eventName);
+                    }
+                    $s   .= strval($auditEvent);
                     $name = unserialize($auditEvent->serializedData);
-                    $s .= ", $name";
+                    $s   .= ", $name";
                     break;
 
                 case self::AUDIT_EVENT_ITEM_MODIFIED:
                     list($name, $attributeNames, $oldValue, $newValue) = unserialize($auditEvent->serializedData);
                     $modelClassName = $auditEvent->modelClassName;
-                    $model = new $modelClassName();
-                    $s .= ", $name";
-                    $s .= ', ' . yii::t('Default', 'Changed') . ' ';
+                    $model          = new $modelClassName();
+                    if ($format == 'long')
+                    {
+                        $s             .= strval($auditEvent);
+                        $s             .= ", $name";
+                        $s             .= ', ' . yii::t('Default', 'Changed') . ' ';
+                    }
                     $attributeModel = $model;
                     $attributeLabels = array();
                     for ($i = 0; $i < count($attributeNames); $i++)
@@ -139,9 +150,9 @@
                     }
                     $s .= join(' ', $attributeLabels);
                     $s .= ' ' . yii::t('Default', 'from') . ' ';
-                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $oldValue) . ' ';
+                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $oldValue, $format) . ' ';
                     $s .= yii::t('Default', 'to') . ' ';
-                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $newValue);
+                    $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $newValue, $format);
                     break;
             }
             return $s;

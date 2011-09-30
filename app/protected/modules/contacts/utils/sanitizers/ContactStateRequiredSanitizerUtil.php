@@ -59,7 +59,7 @@
                     {
                        $state       = ContactState::getById($mappingRuleData['defaultStateId']);
                     }
-                    catch(NotFoundException $e)
+                    catch (NotFoundException $e)
                     {
                         throw new InvalidValueToSanitizeException(
                         Yii::t('Default', 'The default status specified does not exist.'));

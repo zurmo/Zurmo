@@ -78,7 +78,7 @@
                 }
                 return $state;
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified does not exist.'));
             }

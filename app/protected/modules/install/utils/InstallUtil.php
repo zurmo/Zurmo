@@ -215,7 +215,7 @@
         public static function checkMemcache($minimumRequiredVersion, /* out */ &$actualVersion)
         {
             $actualVersion = phpversion('memcache');
-            if ($actualVersion !== null)
+            if ($actualVersion != false && extension_loaded('memcache'))
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }
@@ -276,7 +276,7 @@
         public static function checkRedBeanPatched()
         {
             $contents = file_get_contents('../redbean/rb.php');
-            return preg_match('/public function __call\(\$method, \$args\) {\n\s+return null;/', $contents) != 0; // Not Coding Standard
+            return preg_match('/public function __call\(\$method, \$args\) {\s+return null;/', $contents) != 0; // Not Coding Standard
         }
 
         /**
@@ -596,7 +596,8 @@
         public static function writeConfiguration($instanceRoot,
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
                                                   $memcacheHost = null, $memcachePort = null,
-                                                  $language)
+                                                  $language,
+                                                  $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
         {
             assert('is_dir($instanceRoot)');
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -609,11 +610,12 @@
             assert('is_string($language)     && $language     != ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
-            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
-
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
-            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+
+            $perInstanceConfigFile     = "$instanceRoot/protected/config/$perInstanceFilename";
+            $debugConfigFile     = "$instanceRoot/protected/config/$debugFilename";
+
+            copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
@@ -625,6 +627,12 @@
             $contents = preg_replace('/\$forceNoFreeze\s*=\s*true;/',
                                      '$forceNoFreeze = false;',
                                      $contents);
+            if ($memcacheHost == null && $memcachePort == null)
+            {
+                $contents = preg_replace('/\$memcacheLevelCaching\s*=\s*true;/',
+                                                     '$memcacheLevelCaching = false;',
+                                         $contents);
+            }
             file_put_contents($debugConfigFile, $contents);
 
             $contents = file_get_contents($perInstanceConfigFile);
@@ -722,10 +730,13 @@
          * @param object $form
          * @param object $messageStreamer
          */
-        public static function runInstallation($form, & $messageStreamer)
+        public static function runInstallation($form, & $messageStreamer,
+                                               $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
         {
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
+            assert('is_string($perInstanceFilename)');
+            assert('is_string($debugFilename)');
             $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,
@@ -747,6 +758,7 @@
             $messageStreamer->add(Yii::t('Default', 'Freezing database.'));
             InstallUtil::freezeDatabase();
             $messageStreamer->add(Yii::t('Default', 'Writing Configuration File.'));
+
             InstallUtil::writeConfiguration(INSTANCE_ROOT,
                                             $form->databaseType,
                                             $form->databaseHostname,
@@ -755,7 +767,9 @@
                                             $form->databasePassword,
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
-                                            Yii::app()->language);
+                                            Yii::app()->language,
+                                            $perInstanceFilename,
+                                            $debugFilename);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));

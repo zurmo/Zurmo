@@ -63,7 +63,7 @@
                     }
                     if ($model->validate(array('owner')) && $model->save(false))
                     {
-                        if($explicitReadWriteModelPermissions != null)
+                        if ($explicitReadWriteModelPermissions != null)
                         {
                             $success = ExplicitReadWriteModelPermissionsUtil::
                             resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);

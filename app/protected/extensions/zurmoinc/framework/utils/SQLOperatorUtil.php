@@ -144,7 +144,7 @@
                 }
                 if (is_string($theValue))
                 {
-                    if($ignoreStringToLower)
+                    if ($ignoreStringToLower)
                     {
                         $inPart .= "'" . $theValue . "'";
                     }

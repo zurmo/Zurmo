@@ -162,17 +162,41 @@
             return self::RIGHT_CREATE_USERS;
         }
 
-        public static function stringifyAuditEvent(AuditEvent $auditEvent)
+        public static function stringifyAuditEvent(AuditEvent $auditEvent, $format = 'long')
         {
-            $s = strval($auditEvent);
+            assert('$format == "long" || $format == "short"');
+            $s = null;
             switch ($auditEvent->eventName)
             {
+                case self::AUDIT_EVENT_USER_LOGGED_IN:
+                case self::AUDIT_EVENT_USER_LOGGED_OUT:
+                    if ($format == 'short')
+                    {
+                        return Yii::t('Default', $auditEvent->eventName);
+                    }
+                    else
+                    {
+                        $s .= strval($auditEvent);
+                    }
+                    break;
                 case self::AUDIT_EVENT_USER_PASSWORD_CHANGED:
+                    if ($format == 'short')
+                    {
+                        return Yii::t('Default', $auditEvent->eventName);
+                    }
+                    $s       .= strval($auditEvent);
                     $username = unserialize($auditEvent->serializedData);
                     try
                     {
-                        $user = User::getByUsername($username);
-                        $s .= ", $user";
+                        if ($auditEvent->modelClassName == 'User')
+                        {
+                            $user = User::getById((int)$auditEvent->modelId);
+                            $s .= ", $user";
+                        }
+                        else
+                        {
+                            throw new NotSupporteException();
+                        }
                     }
                     catch (NotFoundException $e)
                     {

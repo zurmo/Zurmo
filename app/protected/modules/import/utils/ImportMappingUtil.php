@@ -143,14 +143,14 @@
                 else
                 {
                     $reIndexedData[$columnName] = $data;
-                    $importColumnCount ++;
+                    $importColumnCount++;
                 }
             }
             $extraColumnStartingCount = $importColumnCount - 1;
             foreach ($tempData as $data)
             {
                 $reIndexedData[self::makeExtraColumnNameByColumnCount($extraColumnStartingCount)] = $data;
-                $extraColumnStartingCount ++;
+                $extraColumnStartingCount++;
             }
             return $reIndexedData;
         }

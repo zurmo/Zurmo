@@ -77,7 +77,7 @@
             if (strlen($this->$attribute) < $minLength)
             {
                 $this->addError('newPassword',
-                    Yii::t('Default', 'The password is too short. Minimum length is') . '&#160;' . $minLength . '.');
+                    Yii::t('Default', 'The password is too short. Minimum length is {minimumLength}.', array('{minimumLength}' => $minLength)));
             }
         }
 

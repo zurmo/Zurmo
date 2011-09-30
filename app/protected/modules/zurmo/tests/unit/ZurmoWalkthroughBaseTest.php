@@ -142,7 +142,8 @@
          * Helper method to run a controller action that is
          * expected produce a redirect exception.
          */
-        protected function runControllerWithRedirectExceptionAndGetContent($route, $compareUrl = null)
+        protected function runControllerWithRedirectExceptionAndGetContent($route, $compareUrl = null,
+                           $compareUrlContains = false)
         {
             $_SERVER['REQUEST_URI'] = '/index.php';
             $this->startOutputBuffer();
@@ -157,7 +158,18 @@
                 $this->doApplicationScriptPathsAllExist();
                 if ($compareUrl != null)
                 {
-                    $this->assertEquals($compareUrl, $e->getUrl());
+                    if ($compareUrlContains)
+                    {
+                        $pos = strpos($e->getUrl(), $compareUrl);
+                        if ($pos === false)
+                        {
+                            $this->fail($e->getUrl());
+                        }
+                    }
+                    else
+                    {
+                        $this->assertEquals($compareUrl, $e->getUrl());
+                    }
                 }
                 if (!empty($content))
                 {

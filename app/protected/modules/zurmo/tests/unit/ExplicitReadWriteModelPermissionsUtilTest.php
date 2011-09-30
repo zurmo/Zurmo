@@ -31,22 +31,22 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
             $everyoneGroup        = Group::getByName(Group::EVERYONE_GROUP_NAME);
-            assert($everyoneGroup->save());
+            assert($everyoneGroup->save()); // Not Coding Standard
             $group1 = new Group();
             $group1->name = 'Group1';
-            assert($group1->save());
+            assert($group1->save()); // Not Coding Standard
 
             $group2 = new Group();
             $group2->name = 'Group2';
-            assert($group2->save());
+            assert($group2->save()); // Not Coding Standard
 
             $group3 = new Group();
             $group3->name = 'Group3';
-            assert($group3->save());
+            assert($group3->save()); // Not Coding Standard
 
             $group4 = new Group();
             $group4->name = 'Group4';
-            assert($group4->save());
+            assert($group4->save()); // Not Coding Standard
         }
 
         public function testMakeByMixedPermitablesData()

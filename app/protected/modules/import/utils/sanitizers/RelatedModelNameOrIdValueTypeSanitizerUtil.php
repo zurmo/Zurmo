@@ -79,7 +79,7 @@
                     }
                     return $relationModelClassName::getById((int)$value);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
                 }
@@ -90,7 +90,7 @@
                 {
                     return static::getModelByExternalSystemIdAndModelClassName($value, $relationModelClassName);
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other id specified did not match any existing records.'));
                 }

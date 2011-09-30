@@ -43,7 +43,7 @@
             $cClipWidget->beginClip("EditableDateElement");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.JuiDatePicker', array(
                 'attribute'           => $this->attribute,
-                'value'          	  => $value,
+                'value'               => $value,
                 'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
                 'htmlOptions'         => array(
                     'id'              => $this->getEditableInputId(),

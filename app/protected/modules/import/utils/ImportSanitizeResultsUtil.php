@@ -59,7 +59,6 @@
         {
             assert('is_string($message)');
             $this->messages[] = $message;
-
         }
 
         /**

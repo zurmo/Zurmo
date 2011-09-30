@@ -29,19 +29,19 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        'Rss Reader'
-            => '??',
-        'Rss Reader'
-            => '??',
+        'Create RssReaderModuleSingularLabel'
+            => 'Créer RssReaderModuleSingularLabel',
+        'RSS Reader'
+            => 'Flux RSS',
+        'RSS URL'
+            => 'URL de flux RSS',
         'RssReaderModulePluralLabel'
             => 'RssReaderModulePluralLabel',
         'RssReaderModuleSingularLabel'
             => 'RssReaderModuleSingularLabel',
-        'Create RssReaderModuleSingularLabel'
-            => '?? RssReaderModuleSingularLabel',
-        'Related RssReaderModulePluralLabel'
-            => '?? RssReaderModulePluralLabel',
         'The Title'
-            => '??',
+            => 'Titre',
+        'Zurmo News'
+            => 'Actualités Zurmo',
     );
 ?>

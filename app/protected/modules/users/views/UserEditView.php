@@ -33,7 +33,6 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'CancelLink'),
-                            array('type' => 'ChangePasswordLink'),
                             array('type' => 'SaveButton'),
                         ),
                     ),

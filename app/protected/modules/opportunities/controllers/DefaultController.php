@@ -55,6 +55,7 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($opportunity);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $opportunity);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($opportunity, 'OpportunitiesModule',
                                                                           'OpportunityDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
@@ -73,6 +74,14 @@
                                                                                 $relationAttributeName,
                                                                                 (int)$relationModelId,
                                                                                 $relationModuleId);
+            if ($relationAttributeName == 'contacts')
+            {
+                $relationContact = Contact::getById((int)$relationModelId);
+                if ($relationContact->account->id > 0)
+                {
+                    $opportunity->account = $relationContact->account;
+                }
+            }
             $this->actionCreateByModel($opportunity, $redirectUrl);
         }
 

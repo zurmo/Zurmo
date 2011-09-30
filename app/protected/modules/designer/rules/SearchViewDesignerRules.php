@@ -56,6 +56,15 @@
             return Yii::t('Default', 'Search View');
         }
 
+        public function getNonPlaceableLayoutAttributeNames()
+        {
+            return array(
+                'createdDateTime',
+                'modifiedDateTime',
+                'id'
+            );
+        }
+
         public function getNonPlaceableLayoutAttributeTypes()
         {
             return array(
