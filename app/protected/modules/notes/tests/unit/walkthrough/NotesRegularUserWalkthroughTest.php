@@ -142,7 +142,7 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $note = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $superAccount);   
             
-            //Test nobody, access to edit,details and delete of notes should fail.                   
+            //Test nobody, access to edit and details of notes should fail.                   
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $note->id));
             $this->resetPostArray();
@@ -150,10 +150,7 @@
             $this->setGetArray(array('id' => $note->id));
             $this->resetPostArray();
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');	
-            $this->setGetArray(array('id' => $note->id));
-            $this->resetPostArray();          
-            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/delete');
-			
+           			
             //give nobody access to details view only
             Yii::app()->user->userModel = $super;
             $note->addPermissions($nobody, Permission::READ);
@@ -165,15 +162,11 @@
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('notes/default/details');
             
-            //Now access to notes edit and delete by Nobody should fail
+            //Now access to notes edit by Nobody should fail
             $this->setGetArray(array('id' => $note->id));
             $this->resetPostArray();
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/edit');
-			$this->setGetArray(array('id' => $note->id));
-            $this->resetPostArray();          
-            $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/delete');
-            
-            
+			          
             //give nobody access to both details and edit view
             Yii::app()->user->userModel = $super;
             $note->removePermissions($nobody, Permission::READ);
@@ -201,21 +194,7 @@
             $this->setGetArray(array('id' => $note->id));
             $this->resetPostArray();
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/details');
-            
-			//give nobody access to both details and edit view in order to check the delete of a note
-			Yii::app()->user->userModel = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $nobody->forget();            
-            $nobody = User::getByUsername('nobody');
-            $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
-            $this->assertTrue($note->save());
-			Yii::app()->user->userModel = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
-            $noteId = $note->id;
-            $note->forget();
-            $note = Note::getById($noteId);
-			$this->setGetArray(array('id' => $note->id));                
-            $this->resetPostArray();            
-            $this->runControllerWithRedirectExceptionAndGetContent('notes/default/delete');
-			
+            		
             //create some roles
             Yii::app()->user->userModel = $super;
             $parentRole = new Role();

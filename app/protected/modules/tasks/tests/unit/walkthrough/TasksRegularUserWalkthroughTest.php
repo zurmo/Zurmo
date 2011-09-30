@@ -145,13 +145,7 @@
             $this->resetPostArray();
             $this->runControllerShouldResultInAccessFailureAndGetContent('tasks/default/edit');
             $this->setGetArray(array('id' => $task->id));
-            $this->resetPostArray();
-            //$this->runControllerShouldResultInAccessFailureAndGetContent('tasks/default/details');
-            //$activityItemPostData = array('Account' => array('id' => $account->id));
-            //$this->setGetArray(array('relationAttributeName' => 'Account', 'relationModelId' => $account->id,
-                                     //'relationModuleId'      => 'accounts', 'redirectUrl' => 'someRedirect'));
-            //$this->setPostArray(array('ActivityItemForm' => $activityItemPostData, 'Task' => array('name' => 'myTask')));
-            //$this->runControllerWithRedirectExceptionAndGetContent('tasks/default/createFromRelation');
+            $this->resetPostArray();           
             
             //give nobody access to details view only
             Yii::app()->user->userModel = $super;
@@ -443,11 +437,19 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('tasks/default/edit');
             
             //clear up the role relationships between users so not to effect next assertions
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $userInParentGroup->forget();
+            $userInChildGroup->forget();
+            $childGroup->forget();
+            $userInParentGroup          = User::getByUsername('nobody');
+            $userInChildGroup           = User::getByUsername('confused');
+            $childGroup                 = Group::getByName('BBB');
+
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);
             $this->assertTrue($parentGroup->save());
             $childGroup->users->remove($userInChildGroup);
-            $this->assertTrue($childGroup->save());            
+            $this->assertTrue($childGroup->save());           
         }    
     }
 ?>

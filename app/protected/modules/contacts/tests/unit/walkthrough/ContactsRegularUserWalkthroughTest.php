@@ -373,6 +373,21 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+
+            //clear up the role relationships between users so not to effect next assertions
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $userInParentGroup->forget();
+            $userInChildGroup->forget();
+            $childGroup->forget();
+            $userInParentGroup          = User::getByUsername('nobody');
+            $userInChildGroup           = User::getByUsername('confused');
+            $childGroup                 = Group::getByName('BBB');
+
+            $parentGroup->users->remove($userInParentGroup);
+            $parentGroup->groups->remove($childGroup);
+            $this->assertTrue($parentGroup->save());
+            $childGroup->users->remove($userInChildGroup);
+            $this->assertTrue($childGroup->save());
         }
     }
 ?>

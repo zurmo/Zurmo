@@ -150,13 +150,7 @@
             $this->setGetArray(array('id' => $meeting->id));
             $this->resetPostArray();
             $this->runControllerShouldResultInAccessFailureAndGetContent('meetings/default/details');
-            //$activityItemPostData = array('Account' => array('id' => $superAccount->id));
-            //$this->setGetArray(array(   'relationAttributeName' => 'Account', 'relationModelId' => $superAccount->id,
-                                        //'relationModuleId'      => 'accounts', 'redirectUrl' => 'someRedirect'));
-            //$this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
-                                      //'Meeting' => array('name' => 'myMeeting', 'startDateTime' => '11/1/11 7:45 PM')));
-            //$this->runControllerShouldResultInAccessFailureAndGetContent('meetings/default/createFromRelation');
-
+            
             //give nobody access to details view only
             Yii::app()->user->userModel = $super;
             $meeting->addPermissions($nobody, Permission::READ);

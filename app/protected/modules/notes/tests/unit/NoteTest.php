@@ -204,7 +204,7 @@
             $this->assertTrue($note->save());
 
             //revoke the permission from the nobody user to access the note
-            $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $note->removePermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($note->save());
 
             //add nobody permission to read, write and delete the note
@@ -214,7 +214,36 @@
             //now acces to the notes read by nobody should not fail
             Yii::app()->user->userModel = $nobody;
             $this->assertEquals($note->description, strval($note));
-       }
+        }
+
+        /**
+         * @depends testNobodyCanReadWriteDeleteAndStrValOfNoteFunctionsCorrectly
+         */
+        public function testAUserCanDeleteANoteNotOwnedButHasExplicitDeletePermission() {
+
+            //Create superAccount owned by user super.
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $superAccount = AccountTestHelper::createAccountByNameForOwner('AccountTest', $super);
+
+            //create a nobody user
+            $nobody                   = User::getByUsername('nobody');
+
+            //create note for an superAccount using the super user
+            $note = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $superAccount);
+
+            //give nobody access to both details, edit and delete view in order to check the delete of a note
+			Yii::app()->user->userModel = User::getByUsername('super');
+            $nobody->forget();
+            $nobody = User::getByUsername('nobody');
+            $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($note->save());
+			Yii::app()->user->userModel = User::getByUsername('nobody');
+            $noteId = $note->id;
+            $note->forget();
+            $note = Note::getById($noteId);
+			$note->delete();
+        }
 
         public function testGetModelClassNames()
         {
