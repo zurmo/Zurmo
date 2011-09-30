@@ -91,7 +91,9 @@
             => '??',
         'Freezing database.'
             => '??',
-        'In all likelihood, these items were supplied to you by your Web Host. If you do not have this information, then you will need to contact them before you can continue. If you\'re all ready...'
+        'In all likelihood, these items were supplied to you by your Web Host. '.
+        'If you do not have this information, then you will need to contact them ' .
+        'before you can continue. If you\'re all ready...'
             => '??',
         'Install'
             => '??',
@@ -107,9 +109,11 @@
             => '??',
         'is not installed'
             => '??',
-        'It is highly recommended that all optional services are installed and working before continuing.'
+        'It is highly recommended that all optional services are installed and ' .
+        'working before continuing.'
             => '??',
-        'Leave this blank unless you would like to create the user and database for Zurmo to run in.'
+        'Leave this blank unless you would like to create the user and database ' .
+        'for Zurmo to run in.'
             => '??',
         'Loading demo data. Please wait.'
             => '??',
@@ -179,7 +183,8 @@
             => '??',
         'Setting up default data.'
             => '??',
-        'Since you specified an existing database you must check this box in order to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
+        'Since you specified an existing database you must check this box in order ' .
+        'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
             => '??',
         'Soap is not installed.'
             => '??',
@@ -215,9 +220,11 @@
             => '??',
         'WARNING'
             => '??',
-        'WARNING! - If the database already exists the data will be completely removed. This must be checked if you are specifying an existing database.'
+        'WARNING! - If the database already exists the data will be completely removed. ' .
+        'This must be checked if you are specifying an existing database.'
             => '??',
-        'Welcome to Zurmo. Before getting started, we need some information on the database. You will need to know the following items before proceeding:'
+        'Welcome to Zurmo. Before getting started, we need some information on the database. ' .
+        'You will need to know the following items before proceeding:'
             => '??',
         'Writing Configuration File.'
             => '??',
@@ -225,9 +232,13 @@
             => '??',
         'You cannot access the installation area because the application is already installed.'
             => '??',
-        'You have specified an existing database. If you would like to use this database, then do not specify the database admin username and password. Otherwise pick a database name that does not exist.'
+        'You have specified an existing database. If you would like to use this database, ' .
+        'then do not specify the database admin username and password. Otherwise pick a ' .
+        'database name that does not exist.'
             => '??',
-        'You have specified an existing user. If you would like to use this user, then do not specify the database admin username and password. Otherwise pick a database username that does not exist.'
+        'You have specified an existing user. If you would like to use this user, then do ' .
+        'not specify the database admin username and password. Otherwise pick a database ' .
+        'username that does not exist.'
             => '??',
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => '??',

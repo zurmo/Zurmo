@@ -153,7 +153,8 @@
             => 'sélectionnée(s)',
         'Serialized Data'
             => 'Serialized Data',
-        'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
+        'Some values cannot be removed because they are currently in use. ' .
+        'Try changing the records that use them first.'
             => 'Certain éléments ne peuvent être supprimés car ils sont actuellement utilisés. Veuillez modifier la valeur des champs contenant ces éléments avant de supprimer.',
         'Tab'
             => 'Onglet',
