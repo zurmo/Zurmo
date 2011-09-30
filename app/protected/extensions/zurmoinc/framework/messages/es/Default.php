@@ -32,117 +32,117 @@
         '(None)'
             => '??',
         'Advanced Search'
-            => 'Búsqueda Avanzada',
+            => 'Búsqueda avanzada',
         'All'
             => 'Todo',
         'by'
             => 'por',
         'Cancel'
-            => '??',
+            => 'Cancelar',
         'Cell Settings'
-            => '??',
+            => 'Configuración de las células',
         'Celsius'
             => 'Centígrado',
         'Change Log'
-            => 'Registro de Cambios',
+            => 'Registro de cambios',
         'Changed'
             => 'Cambiado',
         'Clear Search'
-            => 'Restablecer Busqueda',
+            => 'Restablecer búsqueda',
         'Created By User'
-            => '??',
+            => 'Creado por',
         'Created Date and User'
-            => '??',
+            => 'Fecha de creación y de usuario',
         'Created Date Time'
-            => '??',
+            => 'Fecha y hora de creación',
         'Created On'
             => 'Creado el',
         'Date'
-            => '??',
+            => 'Fecha',
         'Date Time'
-            => '??',
+            => 'Fecha',
         'Delete'
-            => '??',
+            => 'Eliminar',
         'Detail View Only'
-            => 'Solo Vista de Detalles',
+            => 'Solo vista de detalles',
         'Details'
             => 'Detalles',
         'Edit'
             => 'Editar',
         'Edit Portlet'
-            => '??',
+            => 'Modificar portlet',
         'Error'
-            => '??',
+            => 'Error',
         'Fahrenheit'
             => 'Fahrenheit',
         'Filtered List'
-            => '??',
-        'firstDateTime must occur after  secondDateTime'
-            => '??',
+            => 'Lista filtrada',
+        'firstDateTime must occur after secondDateTime'
+            => 'firstDateTime debe ocurrir después secondDateTime',
         'firstDateTime must occur before secondDateTime'
-            => '??',
+            => 'firstDateTime debe ocurrir antes secondDateTime',
         'Float'
-            => '??',
+            => 'Float',
         'from'
             => 'de',
         'Full Name'
-            => '??',
+            => 'Nombre completo',
         'Go to Details'
-            => '??',
+            => 'Ir a detalles',
         'Inline Edit View'
             => '??',
         'Integer'
-            => '??',
+            => 'Número entero',
         'Invalid'
             => 'Inválido',
         'Last Modified'
-            => 'Última Modificación',
+            => 'Última modificación',
         'Last Modified Date and User'
-            => '??',
+            => 'Última modificación fecha y usuario',
         'List'
-            => '??',
+            => 'Lista',
         'Model Class Name'
-            => '??',
+            => 'Nombre de la clase de modelo',
         'Model Id'
-            => '??',
+            => 'ID de modelo',
         'Modified By User'
-            => '??',
+            => 'Modificado por',
         'Modified Date Time'
-            => '??',
+            => 'Modificado fecha y hora',
         'Module Name'
-            => '??',
+            => 'Nombre de Module',
         'More Details'
-            => '??',
+            => 'Más detalles',
         'More Options'
-            => '??',
+            => 'Más opciones',
         'Name'
             => 'Nombre',
         'No'
-            => '??',
+            => 'No',
         'None'
             => 'Ninguno',
         'Now'
-            => '??',
+            => 'Ahora',
         'Opted Out'
-            => 'Se Excluido',
+            => 'Excluido',
         'Panel'
-            => '??',
+            => 'Panel',
         'Panel Settings'
-            => '??',
+            => 'Configuración de panel',
         'Panel Title'
-            => '??',
+            => 'Título de panel',
         'Perform Action'
-            => '??',
+            => 'realizar accíon',
         'record'
             => 'registro',
         'records'
             => 'registros',
         'Remove'
-            => '??',
+            => 'Eliminar',
         'Return to List'
-            => 'Volver al la Lista',
+            => 'Volver a la lista',
         'Row'
-            => '??',
+            => 'Fila',
         'Save'
             => 'Guardar',
         'Search'
@@ -150,21 +150,21 @@
         'Select'
             => 'Seleccionar',
         'selected for updating.'
-            => '??',
+            => 'Seleccionado por actualización',
         'Serialized Data'
-            => '??',
+            => 'Datos serializados',
         'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
-            => '??',
+            => 'Algunos valores no se pueden eliminar, ya que están actualmente en uso. Trate de cambiar los registros que usó primero',
         'Tab'
-            => '??',
+            => 'Tab',
         'This module doesn\'t have anything to configure.'
-            => 'Este módulo no tiene nada para configurar.',
+            => 'Este module no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
-            => '??',
+            => 'Esta lista de selección es utilizada por más de un module',
         'Time'
-            => '??',
+            => 'Tiempo',
         'Title/First/LastName'
-            => '??',
+            => 'Título/Nombre/Appellido',
         'to'
             => 'a',
         'Today'
@@ -172,22 +172,22 @@
         'Tomorrow'
             => 'Mañana',
         'Unknown'
-            => '??',
+            => 'Desconocido',
         'Update Selected'
             => 'Actualización Seleccionada',
         'User'
-            => '??',
+            => 'Usuario',
         'Users'
-            => '??',
+            => 'Usuarios',
         'Yes'
-            => 'Sí',
+            => 'Si',
         'Yesterday'
             => 'Ayer',
         'You must enter a value'
-            => '??',
+            => 'Debe introducir un valor',
         'You must specify a value.'
-            => '??',
+            => 'Debe especificar un valor',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '{attribute} es demasiado preciso (lugares decimals máximo es {precision}).',
+            => '{attribute} es demasiado preciso (máximo de decimales es {precision}).',
     );
 ?>
