@@ -24,24 +24,20 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    abstract class OpenTasksRelatedListView extends SecuredRelatedListView
+    /**
+     * Class used for the dashboard, selectable by users to display a list of their contacts or filtered any way.
+     */
+    class ContactsMyListView extends SecuredMyListView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array(  'type'            => 'CreateFromRelatedListLink',
-                                    'routeModuleId'   => 'eval:$this->moduleId',
-                                    'routeParameters' => 'eval:$this->getCreateLinkRouteParameters()'),
-                        ),
-                    ),
-                    'nonPlaceableAttributeNames' => array(
-                        'latestDateTime',
+                    'derivedAttributeTypes' => array(
+                        'FullName',
                     ),
                     'panels' => array(
                         array(
@@ -50,7 +46,16 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true),
+                                                array('attributeName' => 'null', 'type' => 'FullName', 'isLink' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
                                             ),
                                         ),
                                     )
@@ -63,28 +68,24 @@
             return $metadata;
         }
 
-        protected function makeSearchAttributeData()
-        {
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'activityItems',
-                    'relatedAttributeName' => 'id',
-                    'operatorType'         => 'equals',
-                    'value'                => (int)$this->params['relationModel']->getClassId('Item'),
-                ),
-                2 => array(
-                    'attributeName'        => 'completed',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1
-                ));
-            $searchAttributeData['structure'] = '(1 and 2)';
-            return $searchAttributeData;
-        }
-
         public static function getModuleClassName()
         {
-            return 'TasksModule';
+            return 'ContactsModule';
+        }
+
+        public static function getDisplayDescription()
+        {
+            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+        }
+
+        protected static function getSearchModel()
+        {
+            return new ContactsSearchForm(new Contact(false));
+        }
+
+        protected static function getConfigViewClassName()
+        {
+            return 'ContactsMyListConfigView';
         }
     }
 ?>

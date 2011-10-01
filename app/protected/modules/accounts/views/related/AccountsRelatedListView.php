@@ -30,7 +30,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => 'Related AccountsModulePluralLabel',
+                    'title' => "eval:Yii::t('Default', 'Related AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
                     'panels' => array(

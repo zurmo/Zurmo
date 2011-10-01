@@ -57,6 +57,26 @@
                     'relationModel'    => $model,
                     'redirectUrl'      => Yii::app()->request->getRequestUri(),
             );
+
+            $portletView = $portlet->getView();
+            if (!RightsUtil::canUserAccessModule($portletView::getModuleClassName(), Yii::app()->user->userModel))
+            {
+                $messageView = new AccessFailureView();
+                $view        = new AccessFailurePageView($messageView);
+                echo $view->render();
+                Yii::app()->end(0, false);
+            }
+            $view            = new AjaxPageView($portletView);
+            echo $view->render();
+        }
+
+        /**
+         * Used by my list portlets to do pagination and sort order changes.
+         * @param integer $id
+         */
+        public function actionMyListDetails()
+        {
+            $portlet         = Portlet::getById(intval($_GET['portletId']));
             $portletView = $portlet->getView();
             if (!RightsUtil::canUserAccessModule($portletView::getModuleClassName(), Yii::app()->user->userModel))
             {

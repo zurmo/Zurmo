@@ -24,33 +24,54 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    abstract class OpenTasksRelatedListView extends SecuredRelatedListView
+    /**
+     * View for showing the configuration parameters for the @see ContactsMyListView.
+     */
+    class ContactsMyListConfigView extends MyListConfigView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
-                'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
-                ),
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array(  'type'            => 'CreateFromRelatedListLink',
-                                    'routeModuleId'   => 'eval:$this->moduleId',
-                                    'routeParameters' => 'eval:$this->getCreateLinkRouteParameters()'),
+                            array('type' => 'SaveButton'),
                         ),
                     ),
-                    'nonPlaceableAttributeNames' => array(
-                        'latestDateTime',
+                    'derivedAttributeTypes' => array(
+                        'ContactStateDropDown',
                     ),
+                    'nonPlaceableAttributeNames' => array(
+                        'state',
+                    ),
+                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(
+                            'title' => 'List Filters',
                             'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true),
+                                                array('attributeName' => 'fullName', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'lastName', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'ContactStateDropDown', 'addBlank' => true),
                                             ),
                                         ),
                                     )
@@ -61,30 +82,6 @@
                 ),
             );
             return $metadata;
-        }
-
-        protected function makeSearchAttributeData()
-        {
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'activityItems',
-                    'relatedAttributeName' => 'id',
-                    'operatorType'         => 'equals',
-                    'value'                => (int)$this->params['relationModel']->getClassId('Item'),
-                ),
-                2 => array(
-                    'attributeName'        => 'completed',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1
-                ));
-            $searchAttributeData['structure'] = '(1 and 2)';
-            return $searchAttributeData;
-        }
-
-        public static function getModuleClassName()
-        {
-            return 'TasksModule';
         }
     }
 ?>

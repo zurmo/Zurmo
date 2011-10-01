@@ -25,9 +25,10 @@
      ********************************************************************************/
 
     /**
-     * The base View for a module's related list view.
+     * The base View for a module's my list view which is a customizable list view by the end user for use in the
+     * dashboard.
      */
-    abstract class RelatedListView extends ListView implements PortletViewInterface
+    abstract class MyListView extends ListView implements PortletViewInterface
     {
         protected $params;
         protected $viewData;
@@ -35,25 +36,21 @@
 
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
-            assert('isset($params["controllerId"])');
-            assert('isset($params["relationModuleId"])');
-            assert('$params["relationModel"] instanceof RedBeanModel || $params["relationModel"] instanceof ModelForm');
             assert('isset($params["portletId"])');
-            assert('isset($params["redirectUrl"])');
-            assert('$this->getRelationAttributeName() != null');
-            $this->modelClassName    = $this->getModelClassName();
             $this->viewData          = $viewData;
             $this->params            = $params;
             $this->uniqueLayoutId    = $uniqueLayoutId;
             $this->gridIdSuffix      = $uniqueLayoutId;
             $this->rowsAreSelectable = false;
             $this->gridId            = 'list-view';
+            $this->modelClassName    = $this->getModelClassName();
             $this->controllerId      = $this->resolveControllerId();
             $this->moduleId          = $this->resolveModuleId();
         }
 
         protected function makeSearchAttributeData()
         {
+            /* //eventually absorb the metadata for this stuff. perUser.
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
                 1 => array(
@@ -64,13 +61,15 @@
                 )
             );
             $searchAttributeData['structure'] = '1';
-            return $searchAttributeData;
+            */
+            return array();
         }
 
         protected function makeDataProviderBySearchAttributeData($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('subListPageSize');
+            //todo: this should be using searchModelClassName
             return new RedBeanModelDataProvider( $this->modelClassName, null, false,
                                                                 $searchAttributeData, array(
                                                                     'pagination' => array(
@@ -84,19 +83,34 @@
             return false;
         }
 
-        protected function getCreateLinkRouteParameters()
+        public function getConfigurationView()
         {
-            return array(
-                'relationAttributeName' => $this->getRelationAttributeName(),
-                'relationModelId'       => $this->params['relationModel']->id,
-                'relationModuleId'      => $this->params['relationModuleId'],
-                'redirectUrl'           => $this->params['redirectUrl'],
-            );
+            $searchForm   = static::getSearchModel();
+            $formModel    = new MyListForm();
+            if($this->viewData != null)
+            {
+                if (isset($this->viewData['searchAttributes']))
+                {
+                    $searchForm->setAttributes($this->viewData['searchAttributes']);
+                }
+                if (isset($this->viewData['title']))
+                {
+                    $formModel->setAttributes(array('title' => $this->viewData['title']));
+                }
+            }
+            else
+            {
+                $metadata     = self::getMetadata();
+                if(isset($metadata['perUser']['searchAttributes']))
+                {
+                    $searchForm->setAttributes($metadata['perUser']['searchAttributes']);
+                }
+                $formModel->setAttributes(array('title' => static::getDefaultTitle()));
+            }
+            $configViewClassName = static::getConfigViewClassName();
+            return new $configViewClassName($formModel, $searchForm, $this->params);
         }
 
-        /**
-         * TODO
-         */
         protected function getCGridViewPagerParams()
         {
             return array(
@@ -107,7 +121,7 @@
                     'lastPageLabel'  => '&gt;&gt;',
                     'class'          => 'LinkPager',
                     'paginationParams' => array_merge($_GET, array('portletId' => $this->params['portletId'])),
-                    'route'         => 'defaultPortlet/details',
+                    'route'         => 'defaultPortlet/myListDetails',
                 );
         }
 
@@ -133,16 +147,16 @@
 
         public static function canUserConfigure()
         {
-            return false;
+            return true;
         }
 
         public static function getDesignerRulesType()
         {
-            return 'RelatedListView';
+            return 'MyListView';
         }
 
         /**
-         * Override to add a display description.  An example would be 'Contacts for Account'.  This display description
+         * Override to add a display description.  An example would be 'My Contacts'.  This display description
          * can then be used by external classes interfacing with the view in order to display information to the user in
          * the user interface.
          */
@@ -163,7 +177,7 @@
          */
         public static function getPortletRulesType()
         {
-            return 'RelatedList';
+            return 'MyList';
         }
 
         /**
@@ -201,6 +215,22 @@
             return $this->dataProvider;
         }
 
-        abstract protected function getRelationAttributeName();
+        /**
+         * Override in non-abstract class to return the proper search model object.
+         * @throws NotImplementedException
+         */
+        protected static function getSearchModel()
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
+         * Override in non-abstract class to return the proper config view class name.
+         * @throws NotImplementedException
+         */
+        protected static function getConfigViewClassName()
+        {
+            throw new NotImplementedException();
+        }
     }
 ?>
