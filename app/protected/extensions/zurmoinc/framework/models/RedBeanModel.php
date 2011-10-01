@@ -1461,8 +1461,10 @@
          * validation either stopping at a non-validating model and only
          * proceeding to non-validated models.
          * @see RedBeanModel
+         * @param $ignoreRequiredValidator - set to true in scenarios where you want to validate everything but the
+         * 									 the required validator.  An example is a search form.
          */
-        public function validate(array $attributeNames = null)
+        public function validate(array $attributeNames = null, $ignoreRequiredValidator = false)
         {
             if ($this->isValidating) // Prevent cycles.
             {
@@ -1481,7 +1483,14 @@
                     }
                     foreach ($this->getValidators() as $validator)
                     {
-                        if (!$validator instanceof CDefaultValueValidator && $validator->applyTo($this->scenarioName))
+                        if($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
+                        {
+                            if(!$ignoreRequiredValidator)
+                            {
+                                $validator->validate($this, $attributeNames);
+                            }
+                        }
+                        elseif (!$validator instanceof CDefaultValueValidator && $validator->applyTo($this->scenarioName))
                         {
                             $validator->validate($this, $attributeNames);
                         }
@@ -1494,10 +1503,10 @@
                         {
                             if (in_array($relationName, $attributeNames) &&
                                 ($this->$relationName->isModified() ||
-                                     $this->isAttributeRequired($relationName) &&
+                                     ($this->isAttributeRequired($relationName) && !$ignoreRequiredValidator) &&
                                      !$this->isSame($this->$relationName))) // Prevent cycles.
                             {
-                                if (!$this->$relationName->validate())
+                                if (!$this->$relationName->validate(null, $ignoreRequiredValidator))
                                 {
                                     $hasErrors = true;
                                 }

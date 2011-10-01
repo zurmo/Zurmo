@@ -109,6 +109,20 @@
         }
 
         /**
+         * Override to properly check if the attribute is required or not.
+         * (non-PHPdoc)
+         * @see CModel::isAttributeRequired()
+         */
+        public function isAttributeRequired($attribute)
+        {
+            if (property_exists($this, $attribute))
+            {
+                return parent::isAttributeRequired($attribute);
+            }
+            return $this->model->isAttributeRequired($attribute);
+        }
+
+        /**
          * Returns the list of attribute names.
          * By default, this method returns all public properties of the class.
          * You may override this method to change the default.
@@ -170,13 +184,22 @@
         public function validate($attributes = null, $clearErrors = true)
         {
             assert('$clearErrors == true');
+            assert('$attributes == null');
             $formValidatedSuccessfully  = parent::validate($attributes);
-            $modelValidatedSuccessfully = $this->model->validate($attributes);
+            $modelValidatedSuccessfully = $this->model->validate($attributes, static::shouldIgnoreRequiredValidator());
             if (!$modelValidatedSuccessfully || !$formValidatedSuccessfully)
             {
                 return false;
             }
             return true;
+        }
+
+        /**
+         * Override and set to true if you need to ignore the required validator.
+         */
+        protected static function shouldIgnoreRequiredValidator()
+        {
+            return false;
         }
 
         /**

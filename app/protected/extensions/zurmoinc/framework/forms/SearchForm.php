@@ -36,5 +36,14 @@
          * @return array of metadata or null.
          */
         abstract public function resolveAttributesMappedToRealAttributesMetadata();
+
+        /**
+         * All search forms on validation would ignore required.  There are no required attributes on
+         * a search form.  This is an override.
+         */
+        protected static function shouldIgnoreRequiredValidator()
+        {
+            return true;
+        }
     }
 ?>
