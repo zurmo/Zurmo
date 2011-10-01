@@ -78,9 +78,10 @@
             return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
-        protected static function getSearchModel()
+        protected function getSearchModel()
         {
-            return new ContactsSearchForm(new Contact(false));
+            $modelClassName = $this->modelClassName;
+            return new ContactsSearchForm(new $modelClassName(false));
         }
 
         protected static function getConfigViewClassName()

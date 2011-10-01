@@ -190,7 +190,6 @@
                                                                             $appendStructureAsAnd = true)
         {
             assert('is_string($attributeName)');
-            assert('is_array($value) || is_string($value)');
             assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
             assert('is_int($clauseCount)');
             assert('$structure == null || is_string($structure)');

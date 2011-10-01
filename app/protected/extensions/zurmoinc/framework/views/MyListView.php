@@ -50,27 +50,32 @@
 
         protected function makeSearchAttributeData()
         {
-            /* //eventually absorb the metadata for this stuff. perUser.
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => $this->getRelationAttributeName(),
-                    'relatedAttributeName' => 'id',
-                    'operatorType'         => 'equals',
-                    'value'                => (int)$this->params['relationModel']->id,
-                )
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $this->getSearchModel(),
+                Yii::app()->user->userModel->id,
+                $this->getSearchAttributes()
             );
-            $searchAttributeData['structure'] = '1';
-            */
-            return array();
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $this->resolveSearchAttributesMetadataAgainstStateAdapter($metadata);
+            return $metadata;
+        }
+
+        protected function resolveSearchAttributesMetadataAgainstStateAdapter(& $searchAttributesMetadata)
+        {
+            assert('is_array($searchAttributesMetadata)');
+            $moduleClassName              = $this->getActionModuleClassName();
+            if (null != $stateMetadataAdapterClassName = $moduleClassName::getStateMetadataAdapterClassName())
+            {
+                $stateMetadataAdapter     = new $stateMetadataAdapterClassName($searchAttributesMetadata);
+                $searchAttributesMetadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
+            }
         }
 
         protected function makeDataProviderBySearchAttributeData($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('subListPageSize');
-            //todo: this should be using searchModelClassName
-            return new RedBeanModelDataProvider( $this->modelClassName, null, false,
+            return new RedBeanModelDataProvider($this->modelClassName, null, false,
                                                                 $searchAttributeData, array(
                                                                     'pagination' => array(
                                                                         'pageSize' => $pageSize,
@@ -83,9 +88,18 @@
             return false;
         }
 
+        protected function getSearchAttributes()
+        {
+            if($this->viewData != null && isset($this->viewData['searchAttributes']))
+            {
+                return $this->viewData['searchAttributes'];
+            }
+            return static::getDefaultSearchAttributes();
+        }
+
         public function getConfigurationView()
         {
-            $searchForm   = static::getSearchModel();
+            $searchForm   = $this->getSearchModel();
             $formModel    = new MyListForm();
             if($this->viewData != null)
             {
@@ -100,11 +114,7 @@
             }
             else
             {
-                $metadata     = self::getMetadata();
-                if(isset($metadata['perUser']['searchAttributes']))
-                {
-                    $searchForm->setAttributes($metadata['perUser']['searchAttributes']);
-                }
+                $searchForm->setAttributes(static::getDefaultSearchAttributes());
                 $formModel->setAttributes(array('title' => static::getDefaultTitle()));
             }
             $configViewClassName = static::getConfigViewClassName();
@@ -143,6 +153,15 @@
             $title    = $metadata['perUser']['title'];
             MetadataUtil::resolveEvaluateSubString($title);
             return $title;
+        }
+
+        public static function getDefaultSearchAttributes()
+        {
+            if(isset($metadata['perUser']['searchAttributes']))
+            {
+                return $metadata['perUser']['searchAttributes'];
+            }
+            return array();
         }
 
         public static function canUserConfigure()
@@ -219,7 +238,7 @@
          * Override in non-abstract class to return the proper search model object.
          * @throws NotImplementedException
          */
-        protected static function getSearchModel()
+        protected function getSearchModel()
         {
             throw new NotImplementedException();
         }

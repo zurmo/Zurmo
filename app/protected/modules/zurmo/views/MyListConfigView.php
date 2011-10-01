@@ -126,5 +126,15 @@
             $titleData['rows'][0]['cells'][0]['elements'][0] = $element->render();
             array_unshift($metadataWithRenderedElements['global']['panels'], $titleData);
         }
+
+        /**
+         * Override to add a display description.  An example would be 'My Contacts'.  This display description
+         * can then be used by external classes interfacing with the view in order to display information to the user in
+         * the user interface.
+         */
+        public static function getDisplayDescription()
+        {
+            return null;
+        }
     }
 ?>

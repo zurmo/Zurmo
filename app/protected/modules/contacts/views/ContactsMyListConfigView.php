@@ -83,5 +83,15 @@
             );
             return $metadata;
         }
+
+        public static function getDisplayDescription()
+        {
+            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+        }
+
+        public static function getModelForMetadataClassName()
+        {
+            return 'ContactsSearchForm';
+        }
     }
 ?>
