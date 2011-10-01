@@ -64,9 +64,6 @@
                     $adaptedMetadata[$attributesAndRelations[0]] = array_merge($adaptedMetadata[$attributesAndRelations[0]],
                     static::resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations));
                 }
-                echo "<pre>";
-                print_r($adaptedMetadata);
-                echo "</pre>";
                 return $adaptedMetadata;
             }
             else

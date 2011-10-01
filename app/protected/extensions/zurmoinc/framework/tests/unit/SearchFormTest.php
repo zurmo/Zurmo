@@ -24,44 +24,33 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper class used to make data providers
-     */
-    class RedBeanModelDataProviderUtil
+    class SearchFormTest extends BaseTest
     {
-        /**
-         * Adapt metadata to be ready to load into a Data Provider.
-         * Make data Provider
-         * @return RedBeanModelDataProvider
-         */
-        public static function makeDataProvider(
-            DataProviderMetadataAdapter $metadataAdapter,
-            $listModelClassName,
-            $dataProviderClassName,
-            $sortAttribute,
-            $sortDescending,
-            $pageSize,
-            $stateMetadataAdapterClassName = null
-            )
+        public static function setUpBeforeClass()
         {
-            assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
-            assert('is_string($dataProviderClassName)');
-            $metadata = $metadataAdapter->getAdaptedMetadata();
-            if ($stateMetadataAdapterClassName != null)
-            {
-                $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
-                $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
-            }
-            return new $dataProviderClassName(
-                $listModelClassName,
-                $sortAttribute,
-                $sortDescending,
-                $metadata,
-                array(
-                'pagination' => array(
-                    'pageSize' => $pageSize
-                )
-            ));
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+        }
+
+        /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetSearchFormAttributeMappingRulesTypeByAttributeWithInvalidAttribute()
+        {
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $searchForm->getSearchFormAttributeMappingRulesTypeByAttribute('AttributeDoesNotExist');
+        }
+
+        /**
+         * @depends testGetSearchFormAttributeMappingRulesTypeByAttributeWithInvalidAttribute
+         */
+        public function testGetSearchFormAttributeMappingRulesTypeByAttributeWithValidAttribute()
+        {
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $mappingRulesType = $searchForm->getSearchFormAttributeMappingRulesTypeByAttribute('differentOperatorA');
+            $this->assertEquals('OwnedItemsOnly', $mappingRulesType);
         }
     }
 ?>

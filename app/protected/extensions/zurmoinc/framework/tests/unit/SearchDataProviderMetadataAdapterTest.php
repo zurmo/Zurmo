@@ -180,5 +180,79 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
+
+        public function testOwnedItemsOnlyAttribute()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //Try where the value for differentOperatorA is specified (Checkbox is checked)
+            $searchAttributes = array(
+                'differentOperatorA' => '1',
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'primaryA',
+                    'relatedAttributeName' => 'name',
+                    'operatorType'  => 'startsWith',
+                    'value'         => $super->id,
+                ),
+            );
+
+            $compareStructure = '(1)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+
+            //Now try where the value for differentOperatorA is not specified (Checkbox not checked)
+            $searchAttributes = array(
+                'differentOperatorA' => '',
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses   = array();
+            $compareStructure = null;
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+        public function testCustomOperatorTypeOnAttribute()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'differentOperatorB' => 'something',
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'aName',
+                    'operatorType'  => 'endsWith',
+                    'value'         => 'something',
+                ),
+            );
+
+            $compareStructure = '(1)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
     }
 ?>
