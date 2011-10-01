@@ -59,8 +59,6 @@
         public function getNonPlaceableLayoutAttributeNames()
         {
             return array(
-                'createdDateTime',
-                'modifiedDateTime',
                 'id'
             );
         }
@@ -71,6 +69,8 @@
                 'TextArea',
                 'EmailAddressInformation',
                 'Address',
+                'Date',
+                'DateTime'
             );
         }
 
