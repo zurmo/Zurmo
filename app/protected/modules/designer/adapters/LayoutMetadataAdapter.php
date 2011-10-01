@@ -133,7 +133,7 @@
                     }
                 }
             }
-            return $this->designerRules->formatSavableMetadataFromLayout($metadata);
+            return $this->designerRules->formatSavableMetadataFromLayout($metadata, $viewClassName);
         }
 
         protected function getexistingMetadataToMerge($viewClassName)

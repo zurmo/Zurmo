@@ -36,29 +36,53 @@
         public static function getMetadata($model, $attributeName, $value)
         {
             assert('$model instanceof SearchForm');
-            $metadata        = $model->resolveAttributesMappedToRealAttributesMetadata($value);
+            $metadata        = $model->getAttributesMappedToRealAttributesMetadata();
             $adaptedMetadata = array();
             if (isset($metadata[$attributeName]))
             {
-                $valuesToMap = array('{value}' => $value);
                 foreach ($metadata[$attributeName] as $attributesAndRelations)
                 {
-                    assert('count($attributesAndRelations) == 0 || $attributesAndRelations > 2');
-                    if (isset($attributesAndRelations[1]))
+                    assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 5');
+                    if(isset($attributesAndRelations[3]))
                     {
-                        $adaptedMetadata[$attributesAndRelations[0]][$attributesAndRelations[1]] = $value;
+                        assert('$attributesAndRelations[3] == "resolveValueByRules"');
+                        $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                           $attributeName);
+                        $className = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
+
+                        $className::resolveValue($value);
+                    }
+                    if (isset($attributesAndRelations[1]) && $attributesAndRelations[1] != null)
+                    {
+                        $adaptedMetadata[$attributesAndRelations[0]] = array('value' =>
+                                                                             array($attributesAndRelations[1] => $value));
                     }
                     else
                     {
-                        $adaptedMetadata[$attributesAndRelations[0]] = $value;
+                        $adaptedMetadata[$attributesAndRelations[0]] = array('value' => $value);
                     }
+                    $adaptedMetadata[$attributesAndRelations[0]] = array_merge($adaptedMetadata[$attributesAndRelations[0]],
+                    static::resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations));
                 }
+                echo "<pre>";
+                print_r($adaptedMetadata);
+                echo "</pre>";
                 return $adaptedMetadata;
             }
             else
             {
                 throw NotSupportedException();
             }
+        }
+
+        protected static function resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations)
+        {
+            assert('is_array($attributesAndRelations)');
+            if (isset($attributesAndRelations[2]) && $attributesAndRelations[2] != null)
+            {
+                return array('operatorType' => $attributesAndRelations[2]);
+            }
+            return array();
         }
     }
 ?>

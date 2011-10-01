@@ -48,7 +48,7 @@
             );
         }
 
-        public function resolveAttributesMappedToRealAttributesMetadata()
+        public function getAttributesMappedToRealAttributesMetadata()
         {
             return array(
                 'anyA' => array(

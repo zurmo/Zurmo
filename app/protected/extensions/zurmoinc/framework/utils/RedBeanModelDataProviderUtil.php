@@ -52,6 +52,9 @@
                 $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
                 $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
             }
+            echo "<pre>";
+            print_r($metadata);
+            echo "</pre>";
             return new $dataProviderClassName(
                 $listModelClassName,
                 $sortAttribute,

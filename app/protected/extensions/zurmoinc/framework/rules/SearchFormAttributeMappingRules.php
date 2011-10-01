@@ -24,7 +24,29 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class OpportunitiesSearchForm extends OwnedSearchForm
+    /**
+     * Base class for defining rules for search form attributes. Some search form attributes require dynamically
+     * determining operatorTypes and values based on either the value specified in the user interface in the search form
+     * or some other means. An example is the @see OwnedItemsOnlySearchFormAttributeMappingRules which will dynamically
+     * use the current user's userModel id to define the value to filter on.
+     */
+    abstract class SearchFormAttributeMappingRules
     {
+        /**
+         * Override if any massaging is needed on the value.
+         * @param mixed $value
+         */
+        public static function resolveValue(& $value)
+        {
+        }
+
+        /**
+         * Override if any rules need to be ignored for attributes using this rule.
+         * @param mixed $value
+         */
+        public static function getIgnoredSavableMetadataRules()
+        {
+            return array();
+        }
     }
 ?>

@@ -85,7 +85,8 @@
                                                                     &$adaptedMetadataClauses,
                                                                     &$clauseCount,
                                                                     &$structure,
-                                                                    $appendStructureAsAnd = true)
+                                                                    $appendStructureAsAnd = true,
+                                                                    $operatorType = null)
         {
             assert('is_string($attributeName)');
             assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
@@ -96,9 +97,10 @@
             {
                 if ($value !== null)
                 {
-                    //todo!!! if we move the search form fork , here we can eliminate some things.
-                    $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
-                                        $this->model, $attributeName);
+                    if($operatorType == null)
+                    {
+                        $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeName);
+                    }
                     $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                         $this->model, $attributeName, $value);
                     $adaptedMetadataClauses[($clauseCount)] = array(
@@ -123,9 +125,11 @@
             {
                 if (isset($value['value']))
                 {
-                    //todo!!! if we move the search form fork , here we can eliminate some things.
-                    $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
-                                        $this->model, $attributeName);
+                    if($operatorType == null)
+                    {
+                        $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
+                                            $this->model, $attributeName);
+                    }
                     $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                         $this->model, $attributeName, $value['value']);
                     $adaptedMetadataClauses[($clauseCount)] = array(
@@ -153,8 +157,11 @@
                     {
                         if ($this->model->isRelation($attributeName))
                         {
-                            $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
+                            if($operatorType == null)
+                            {
+                                $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                                 $this->model->$attributeName, $relatedAttributeName);
+                            }
                             $relatedValue = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                                 $this->model->$attributeName, $relatedAttributeName, $relatedValue);
                             $adaptedMetadataClauses[($clauseCount)] = array(
@@ -197,14 +204,23 @@
             $tempStructure = null;
             $metadataFromSearchFormAttributes = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata(
                                                     $this->model, $attributeName, $value);
-            foreach ($metadataFromSearchFormAttributes as $searchFormAttributeName => $searchFormValue)
+            foreach ($metadataFromSearchFormAttributes as $searchFormAttributeName => $searchFormValueAndOperator)
             {
+                if(isset($searchFormValueAndOperator['operatorType']))
+                {
+                    $operatorType = $searchFormValueAndOperator['operatorType'];
+                }
+                else
+                {
+                    $operatorType = null;
+                }
                 static::populateClausesAndStructureForAttribute($searchFormAttributeName,
-                                                                $searchFormValue,
+                                                                $searchFormValueAndOperator['value'],
                                                                 $adaptedMetadataClauses,
                                                                 $clauseCount,
                                                                 $tempStructure,
-                                                                false);
+                                                                false,
+                                                                $operatorType);
             }
             if($tempStructure != null)
             {

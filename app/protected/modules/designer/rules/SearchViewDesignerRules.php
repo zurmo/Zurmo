@@ -88,5 +88,43 @@
         {
             return 2;
         }
+
+        /**
+         * This override is here because sometimes certain elements should not be modified based on the
+         * SavableMetadataRules.  An example is a checkbox that should remain a checkbox and not be converted to a
+         * dropdown for the search view user interface.
+         * @param string $rule
+         * @param array $elementInformation
+         * @param string $viewClassName
+         */
+        protected static function doesRuleApplyToElement($rule, $elementInformation, $viewClassName)
+        {
+            assert('is_string($rule)');
+            assert('is_array($elementInformation)');
+            assert('is_string($viewClassName)');
+            if($elementInformation['attributeName'] != null)
+            {
+                $modelForMetadataClassName = $viewClassName::getModelForMetadataClassName();
+                if($modelForMetadataClassName == 'SearchForm' || is_subclass_of($modelForMetadataClassName, 'SearchForm'))
+                {
+                    try
+                    {
+                        $searchFormAttributeMappingRules = $modelForMetadataClassName::
+                                                           getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                           $elementInformation['attributeName']);
+                        $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
+                        $ignoredRules                    = $className::getIgnoredSavableMetadataRules();
+                        if(in_array($rule, $ignoredRules))
+                        {
+                            return false;
+                        }
+                    }
+                    catch(NotSupportedException $e)
+                    {
+                    }
+                }
+            }
+            return true;
+        }
     }
 ?>

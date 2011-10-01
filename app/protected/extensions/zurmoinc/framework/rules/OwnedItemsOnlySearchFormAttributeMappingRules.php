@@ -24,7 +24,31 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class OpportunitiesSearchForm extends OwnedSearchForm
+    /**
+     * Rule used in search form to define when a filter should be on the current user's userModel id.
+     */
+    class OwnedItemsOnlySearchFormAttributeMappingRules extends SearchFormAttributeMappingRules
     {
+        public static function resolveValue(& $value)
+        {
+            assert('$value == null || $value == true');
+            if($value == true)
+            {
+                $value = Yii::app()->user->userModel->id;
+            }
+            else
+            {
+                $value = null;
+            }
+        }
+
+        /**
+         * Override so that it shows up as a checkbox and not a dropdown since normally checkboxes are converted to
+         * dropdowns in search views.
+         */
+        public static function getIgnoredSavableMetadataRules()
+        {
+            return array('BooleanAsDropDown');
+        }
     }
 ?>

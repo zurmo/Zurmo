@@ -25,54 +25,38 @@
      ********************************************************************************/
 
     /**
-     * Base Class for all searchForms that are module specific. This for is to be used if your module form
-     * needs to be adapted in the SearchDataProviderMetadataAdapter
+     * Extend this class when a searchForm's model is owned.
      */
-    abstract class SearchForm extends ModelForm
+    abstract class OwnedSearchForm extends SearchForm
     {
-        /**
-         * For each SearchForm attribute, there is either 1 or more corresponding model attributes. Specify this
-         * information in this method as an array
-         * @return array of metadata or null.
-         */
-        public function getAttributesMappedToRealAttributesMetadata()
+        public $ownedItemsOnly;
+
+        public function rules()
         {
-            return array();
+            return array_merge(parent::rules(), array(
+                               array('ownedItemsOnly', 'boolean'),
+            ));
         }
 
-        /**
-         * All search forms on validation would ignore required.  There are no required attributes on
-         * a search form.  This is an override.
-         */
-        protected static function shouldIgnoreRequiredValidator()
+        public function attributeLabels()
         {
-            return true;
+            return array_merge(parent::attributeLabels(), array(
+                               'ownedItemsOnly' => Yii::t('Default', 'Only Items I Own'),
+            ));
         }
 
-        /**
-         * Override if any attributes support SearchFormAttributeMappingRules
-         */
         protected static function getSearchFormAttributeMappingRulesType()
         {
-            return array();
+            return array_merge(parent::getSearchFormAttributeMappingRulesType(), array('ownedItemsOnly' => 'OwnedItemsOnly'));
         }
 
-        /**
-         * Given an attributeName, return the corresponding rule type.
-         * @param string $attributeName
-         */
-        public static function getSearchFormAttributeMappingRulesTypeByAttribute($attributeName)
+        public function getAttributesMappedToRealAttributesMetadata()
         {
-            assert('is_string($attributeName)');
-            $ruleTypesIndexedByAttributeName = static::getSearchFormAttributeMappingRulesType();
-            if(isset($ruleTypesIndexedByAttributeName[$attributeName]))
-            {
-                return $ruleTypesIndexedByAttributeName[$attributeName];
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            return array_merge(parent::getAttributesMappedToRealAttributesMetadata(), array(
+                'ownedItemsOnly' => array(
+                    array('owner', 'id', null, 'resolveValueByRules'),
+                ),
+            ));
         }
     }
 ?>
