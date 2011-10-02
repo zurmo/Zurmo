@@ -40,9 +40,14 @@
             $adaptedMetadata = array();
             if (isset($metadata[$attributeName]))
             {
+                static::resolveMetadataForResolveEntireMappingByRules($model, $metadata, $attributeName, $value);
                 foreach ($metadata[$attributeName] as $attributesAndRelations)
                 {
                     assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 5');
+
+
+
+
                     if(isset($attributesAndRelations[3]))
                     {
                         assert('$attributesAndRelations[3] == "resolveValueByRules"');
@@ -69,6 +74,30 @@
             else
             {
                 throw NotSupportedException();
+            }
+        }
+
+        protected static function resolveMetadataForResolveEntireMappingByRules($model, & $metadata, $attributeName,
+                                                                                $value)
+        {
+            assert('$model instanceof SearchForm');
+            assert('is_array($metadata)');
+            assert('is_string($attributeName)');
+            if(!is_array($metadata[$attributeName]))
+            {
+                if($metadata[$attributeName] == 'resolveEntireMappingByRules')
+                {
+                    $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                       $attributeName);
+                    $className                       = $searchFormAttributeMappingRules .
+                                                       'SearchFormAttributeMappingRules';
+                    $className::resolveAttributesAndRelations($attributeName, $metadata[$attributeName], $value);
+
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
             }
         }
 

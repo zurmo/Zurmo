@@ -54,9 +54,9 @@
             ));
         }
 
-        protected static function getSearchFormAttributeMappingRulesType()
+        protected static function getSearchFormAttributeMappingRulesTypes()
         {
-            return array_merge(parent::getSearchFormAttributeMappingRulesType(), array('differentOperatorA' => 'OwnedItemsOnly'));
+            return array_merge(parent::getSearchFormAttributeMappingRulesTypes(), array('differentOperatorA' => 'OwnedItemsOnly'));
         }
 
         public function getAttributesMappedToRealAttributesMetadata()

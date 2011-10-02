@@ -30,6 +30,196 @@
      */
     abstract class SearchForm extends ModelForm
     {
+        private $dynamicAttributeData;
+
+        private $dynamicAttributeNames = array();
+
+        public function __construct(RedBeanModel $model)
+        {
+            parent::__construct($model);
+            $modelAttributesAdapter = new ModelAttributesAdapter($this->model);
+            $attributeInformation   = $modelAttributesAdapter->getAttributes();
+            foreach($attributeInformation as $attributeName => $attributeData)
+            {
+                if(in_array($attributeData['elementType'], static::getDynamicAttributeTypes()))
+                {
+                    $this->dynamicAttributeNames[] = $attributeName .
+                                                     FormModelUtil::DELIMITER . $attributeData['elementType'];
+                }
+            }
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see CModel::rules()
+         */
+        public function rules()
+        {
+            $dynamicAttributeRules = array();
+            foreach($this->dynamicAttributeNames as $attributeName)
+            {
+                $dynamicAttributeRules[] = array($attributeName, 'safe');
+            }
+            return array_merge(parent::rules(), $dynamicAttributeRules);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see CModel::attributeLabels()
+         */
+        public function attributeLabels()
+        {
+            $dynamicAttributeLabels = array();
+            foreach($this->dynamicAttributeNames as $attributeName)
+            {
+                $delimiter                              = FormModelUtil::DELIMITER;
+                list($realAttributeName, $type)         = explode($delimiter, $attributeName);
+                $dynamicAttributeLabels[$attributeName] = $this->model->getAttributeLabel($realAttributeName);
+            }
+            return array_merge(parent::attributeLabels(), $dynamicAttributeLabels);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::__set()
+         */
+        public function __set($name, $value)
+        {
+            if($this->doesNameResolveNameForDelimiterSplit($name))
+            {
+                return $this->dynamicAttributeData[$name] = $value;
+            }
+            parent::__get($name);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::__get()
+         */
+        public function __get($name)
+        {
+            if($this->doesNameResolveNameForDelimiterSplit($name))
+            {
+                return $this->dynamicAttributeData[$name];
+            }
+            return parent::__get($name);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::getMetadata()
+         */
+        public function getMetadata()
+        {
+            $metadata = parent::getMetadata();
+            $dynamicAttributeToElementTypes = static::getDynamicAttributeToElementTypes();
+            foreach($this->dynamicAttributeNames as $attributeName)
+            {
+                $delimiter                      = FormModelUtil::DELIMITER;
+                list($realAttributeName, $type) = explode($delimiter, $attributeName);
+                assert('$dynamicAttributeToElementTypes[$type] != null');
+                $metadata[get_called_class()]['elements'][$attributeName] = $dynamicAttributeToElementTypes[$type];
+            }
+            return $metadata;
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::isRelation()
+         */
+        public function isRelation($attributeName)
+        {
+            if($this->doesNameResolveNameForDelimiterSplit($attributeName))
+            {
+                return false;
+            }
+            return parent::isRelation($attributeName);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::isAttribute()
+         */
+        public function isAttribute($attributeName)
+        {
+            assert('is_string($attributeName)');
+            assert('$attributeName != ""');
+            if($this->doesNameResolveNameForDelimiterSplit($attributeName))
+            {
+                return true;
+            }
+            return parent::isAttribute($attributeName);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::isAttributeRequired()
+         */
+        public function isAttributeRequired($attribute)
+        {
+            if($this->doesNameResolveNameForDelimiterSplit($attribute))
+            {
+                return false;
+            }
+            return parent::isAttributeRequired($attribute);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::attributeNames()
+         */
+        public function attributeNames()
+        {
+            $attributeNames = parent::attributeNames();
+            return array_merge($attributeNames, $this->dynamicAttributeNames);
+        }
+
+        /**
+         * Checks if the supplied name is a normal attribute, or a dynamic attribute which utilizes a delimiter in
+         * the string to define two distinct values.  If the delimiter is present, but the format is invalid an exception
+         * is thrown, otherwise it returns true.  If there is no delimiter present then it returns false.
+         * @param string $name
+         * @throws NotSupportedException
+         * @return true/false
+         */
+        protected static function doesNameResolveNameForDelimiterSplit($name)
+        {
+            assert('is_string($name)');
+            $delimiter                  = FormModelUtil::DELIMITER;
+            $parts                      = explode($delimiter, $name);
+            if(isset($parts[1]) && $parts[1] != null)
+            {
+                //also wanted to check for safety:
+                //&& in_array($name, $this->dynamicAttributeNames) but that cant be done statically.
+                if(in_array($parts[1], static::getDynamicAttributeTypes()))
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            return false;
+        }
+
+        /**
+         * @return array of available dyanamic attribute types.  Whatever is used in the name with a delimiter for the
+         * second part, example: test__Date, must match a value in this array.
+         */
+        protected static function getDynamicAttributeTypes()
+        {
+            return array('Date', 'DateTime');
+        }
+
+        /**
+         * @return array of dynamic attribute types as the indexes and their corresponding mapping rules as the values.
+         */
+        protected static function getDynamicAttributeToElementTypes()
+        {
+            return array('Date' => 'MixedDateTypesForSearch', 'DateTime' => 'MixedDateTimeTypesForSearch');
+        }
+
         /**
          * For each SearchForm attribute, there is either 1 or more corresponding model attributes. Specify this
          * information in this method as an array
@@ -37,7 +227,12 @@
          */
         public function getAttributesMappedToRealAttributesMetadata()
         {
-            return array();
+            $dynamicMappingData = array();
+            foreach($this->dynamicAttributeNames as $attributeName)
+            {
+                $dynamicMappingData[$attributeName] = 'resolveEntireMappingByRules';
+            }
+            return $dynamicMappingData;
         }
 
         /**
@@ -52,7 +247,7 @@
         /**
          * Override if any attributes support SearchFormAttributeMappingRules
          */
-        protected static function getSearchFormAttributeMappingRulesType()
+        protected static function getSearchFormAttributeMappingRulesTypes()
         {
             return array();
         }
@@ -64,14 +259,34 @@
         public static function getSearchFormAttributeMappingRulesTypeByAttribute($attributeName)
         {
             assert('is_string($attributeName)');
-            $ruleTypesIndexedByAttributeName = static::getSearchFormAttributeMappingRulesType();
-            if(isset($ruleTypesIndexedByAttributeName[$attributeName]))
+            if(static::doesNameResolveNameForDelimiterSplit($attributeName))
             {
-                return $ruleTypesIndexedByAttributeName[$attributeName];
+                $delimiter                      = FormModelUtil::DELIMITER;
+                list($realAttributeName, $type) = explode($delimiter, $attributeName);
+                if($type == 'Date')
+                {
+                    return 'MixedDateTypes';
+                }
+                elseif($type == 'DateTime')
+                {
+                    return 'MixedDateTimeTypes';
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
             }
             else
             {
-                throw new NotSupportedException();
+                $ruleTypesIndexedByAttributeName = static::getSearchFormAttributeMappingRulesTypes();
+                if(isset($ruleTypesIndexedByAttributeName[$attributeName]))
+                {
+                    return $ruleTypesIndexedByAttributeName[$attributeName];
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
             }
         }
     }

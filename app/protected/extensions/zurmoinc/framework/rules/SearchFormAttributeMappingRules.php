@@ -41,6 +41,18 @@
         }
 
         /**
+         * Implement if the attributeAndRelations array needs to be dynamically resolved to a new structure at run-time.
+         * This could be required if the structure changes depending on the value for example.
+         * @param string $attributeName
+         * @param array $attributeAndRelations
+         * @param mixed $value
+         */
+        public static function resolveAttributesAndRelations($attributeName, & $attributeAndRelations, $value)
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
          * Override if any rules need to be ignored for attributes using this rule.
          * @param mixed $value
          */

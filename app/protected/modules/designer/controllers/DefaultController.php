@@ -256,6 +256,9 @@
             $designerRulesClassName = $designerRulesType . 'DesignerRules';
             $designerRules = new $designerRulesClassName();
             $modelAttributesAdapter = DesignerModelToViewUtil::getModelAttributesAdapter($_GET['viewClassName'], $modelClassName);
+            echo "<pre>";
+            print_r($modelAttributesAdapter->getAttributes());
+            echo "</pre>";
             $attributeCollection = $modelAttributesAdapter->getAttributes();
             $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
                 $attributeCollection,
