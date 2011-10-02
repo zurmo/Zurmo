@@ -72,8 +72,10 @@
         public function setMetadataFromPost($postArray)
         {
             parent::setMetadataFromPost($postArray);
+            $sanitizedPostArray     = PostUtil::sanitizePostByDesignerTypeForSavingModel(
+                                      $this->searchModel, $_POST[$this->getSearchModelPostArrayName()]);
             $this->searchAttributes = SearchUtil::
-                                      getSearchAttributesFromSearchArray($_POST[$this->getSearchModelPostArrayName()]);
+                                      getSearchAttributesFromSearchArray($sanitizedPostArray);
         }
 
         /**

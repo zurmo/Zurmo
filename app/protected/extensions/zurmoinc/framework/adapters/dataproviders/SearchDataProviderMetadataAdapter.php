@@ -54,7 +54,7 @@
             foreach ($this->metadata as $attributeName => $value)
             {
                 //If attribute is a pseudo attribute on the SearchForm
-                if ($this->model instanceof SearchForm && property_exists(get_class($this->model), $attributeName))
+                if ($this->model instanceof SearchForm && $this->model->isAttributeOnForm($attributeName))
                 {
                     static::populateAdaptedMetadataFromSearchFormAttributes( $attributeName,
                                                                              $value,
@@ -203,7 +203,7 @@
             assert('is_bool($appendStructureAsAnd)');
             $tempStructure = null;
             $metadataFromSearchFormAttributes = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata(
-                                                    $this->model, $attributeName, $value);
+                                                $this->model, $attributeName, $value);
             foreach ($metadataFromSearchFormAttributes as $searchFormClause)
             {
                 foreach($searchFormClause as $searchFormAttributeName => $searchFormStructure)

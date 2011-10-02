@@ -106,6 +106,22 @@
         }
 
         /**
+         * @return true if the provided attributeName is in fact an attribute on this form and not the $this->model.
+         */
+        public function isAttributeOnForm($attributeName)
+        {
+            if (property_exists($this, $attributeName))
+            {
+                return true;
+            }
+            if($this->doesNameResolveNameForDelimiterSplit($attributeName))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * (non-PHPdoc)
          * @see ModelForm::getMetadata()
          */
@@ -134,6 +150,19 @@
                 return false;
             }
             return parent::isRelation($attributeName);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::getRelationModelClassName()
+         */
+        public function getRelationModelClassName($relationName)
+        {
+            if($this->doesNameResolveNameForDelimiterSplit($relationName))
+            {
+                return false;
+            }
+            return parent::getRelationModelClassName($relationName);
         }
 
         /**
@@ -172,6 +201,28 @@
         {
             $attributeNames = parent::attributeNames();
             return array_merge($attributeNames, $this->dynamicAttributeNames);
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see ModelForm::setAttributes()
+         */
+        public function setAttributes($values, $safeOnly = true)
+        {
+            $nonDyanmicAttributeValues = array();
+            foreach ($values as $name => $value)
+            {
+                if($this->doesNameResolveNameForDelimiterSplit($name))
+                {
+                    $this->$name = $value;
+                }
+                else
+                {
+                    $nonDyanmicAttributeValues[$name] = $value;
+                }
+            }
+            parent::setAttributes($nonDyanmicAttributeValues, $safeOnly);
+
         }
 
         /**

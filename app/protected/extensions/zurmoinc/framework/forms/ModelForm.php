@@ -94,6 +94,19 @@
         }
 
         /**
+         * If the attribute exists on the form, then assume it is not a relation since the form
+         * does not support relational attributes.
+         */
+        public function getRelationModelClassName($relationName)
+        {
+            if (property_exists($this, $relationName))
+            {
+                return false;
+            }
+            return $this->model->getRelationModelClassName($relationName);
+        }
+
+        /**
          * Returns true if the named attribute is a property on this
          * model.
          */
