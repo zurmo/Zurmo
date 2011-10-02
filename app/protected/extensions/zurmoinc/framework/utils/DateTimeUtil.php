@@ -101,7 +101,7 @@
         }
 
         /**
-         * @return timezone adjusted unix timestamp
+         * @return local timezone adjusted unix timestamp
          */
         public static function convertFromUtcUnixStampByTimeZone($utcTimeStamp, $timeZone)
         {
@@ -109,6 +109,17 @@
             $timeZoneObject = new DateTimeZone($timeZone);
             $offset = $timeZoneObject->getOffset(new DateTime());
             return $utcTimeStamp + $offset;
+        }
+
+        /**
+         * @return timezone adjusted utc unix timestamp
+         */
+        public static function convertFromLocalUnixStampByTimeZoneToUtcUnixStamp($utcTimeStamp, $timeZone)
+        {
+            assert('is_string($timeZone)');
+            $timeZoneObject = new DateTimeZone($timeZone);
+            $offset = $timeZoneObject->getOffset(new DateTime());
+            return $utcTimeStamp - $offset;
         }
 
         public static function convertTimestampToDbFormatDateTime($timestamp)
@@ -178,6 +189,24 @@
             $dbFormattedDateTime =  self::convertTimestampToDbFormatDateTime($timestamp);
             //todo deal with potential diffferent db format
             return substr_replace($dbFormattedDateTime, '00', -2, 2);
+        }
+
+        public static function convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($dateValue)
+        {
+            //TODO: assert is date and not date time
+            $greaterThanValue = $dateValue . ' 00:00:00';
+            $adjustedTimeStamp = Yii::app()->timeZoneHelper->convertFromLocalTimeStampForCurrentUser(
+                                 DateTimeUtil::convertDbFormatDateTimeToTimestamp($greaterThanValue));
+            return               DateTimeUtil::convertTimestampToDbFormatDateTime($adjustedTimeStamp);
+        }
+
+        public static function convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($dateValue)
+        {
+            //TODO: assert is date and not date time
+            $lessThanValue     = $dateValue . ' 23:59:59';
+            $adjustedTimeStamp = Yii::app()->timeZoneHelper->convertFromLocalTimeStampForCurrentUser(
+                                 DateTimeUtil::convertDbFormatDateTimeToTimestamp($lessThanValue));
+            return               DateTimeUtil::convertTimestampToDbFormatDateTime($adjustedTimeStamp);
         }
     }
 ?>

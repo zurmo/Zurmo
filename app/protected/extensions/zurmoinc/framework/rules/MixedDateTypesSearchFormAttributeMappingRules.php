@@ -29,13 +29,21 @@
      */
     class MixedDateTypesSearchFormAttributeMappingRules extends SearchFormAttributeMappingRules
     {
-        const TYPE_YESTERDAY = 'Yesterday';
+        const TYPE_YESTERDAY      = 'Yesterday';
 
-        const TYPE_TODAY     = 'Today';
+        const TYPE_TODAY          = 'Today';
 
-        const TYPE_TOMORROW  = 'Tomorrow';
+        const TYPE_TOMORROW       = 'Tomorrow';
 
-        public static function resolveValue(& $value)
+        const TYPE_BEFORE         = 'Before';
+
+        const TYPE_AFTER          = 'After';
+
+        const TYPE_NEXT_7_DAYS    = 'Next 7 Days';
+
+        const TYPE_LAST_7_DAYS    = 'Last 7 Days';
+
+        public static function resolveValueDataIntoUsableValue($value)
         {
             if(isset($value['type']) && $value['type'] != null)
             {
@@ -46,35 +54,50 @@
                 }
                 if($value['type'] == self::TYPE_TODAY)
                 {
-                    $value = DateTimeCalculatorUtil::
+                    return   DateTimeCalculatorUtil::
                              calculateNew(DateTimeCalculatorUtil::TODAY,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
                 elseif($value['type'] == self::TYPE_TOMORROW)
                 {
-                    $value = DateTimeCalculatorUtil::
+                    return   DateTimeCalculatorUtil::
                              calculateNew(DateTimeCalculatorUtil::TOMORROW,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
                 elseif($value['type'] == self::TYPE_YESTERDAY)
                 {
-                    $value = DateTimeCalculatorUtil::
+                    return   DateTimeCalculatorUtil::
                              calculateNew(DateTimeCalculatorUtil::YESTERDAY,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
+                elseif($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER)
+                {
+                    assert('$value["firstDate"] != null && is_string($value["firstDate"])');
+                    return $value['firstDate'];
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
             }
-            else
-            {
-                $value = null;
-            }
+            return null;
         }
 
         public static function getValidValueTypesAndLabels()
         {
-            return array(self::TYPE_YESTERDAY => Yii::t('Default', self::TYPE_YESTERDAY),
-                         self::TYPE_TODAY     => Yii::t('Default', self::TYPE_TODAY),
-                         self::TYPE_TOMORROW  => Yii::t('Default', self::TYPE_TOMORROW),
+            return array(self::TYPE_YESTERDAY   => Yii::t('Default', self::TYPE_YESTERDAY),
+                         self::TYPE_TODAY       => Yii::t('Default', self::TYPE_TODAY),
+                         self::TYPE_TOMORROW    => Yii::t('Default', self::TYPE_TOMORROW),
+                         self::TYPE_BEFORE      => Yii::t('Default', self::TYPE_BEFORE),
+                         self::TYPE_AFTER       => Yii::t('Default', self::TYPE_AFTER),
+                         self::TYPE_NEXT_7_DAYS => Yii::t('Default', self::TYPE_NEXT_7_DAYS),
+                         self::TYPE_LAST_7_DAYS => Yii::t('Default', self::TYPE_LAST_7_DAYS),
             );
+        }
+
+        public static function getValueTypesRequiringFirstDateInput()
+        {
+            return array(self::TYPE_BEFORE, self::TYPE_AFTER);
         }
 
         /**
@@ -103,6 +126,28 @@
                 {
                     $attributeAndRelations = array(array($realAttributeName, null, 'equals', 'resolveValueByRules'));
                 }
+                elseif($value['type'] == self::TYPE_AFTER)
+                {
+                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', 'resolveValueByRules'));
+                }
+                elseif($value['type'] == self::TYPE_BEFORE)
+                {
+                    $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', 'resolveValueByRules'));
+                }
+                elseif($value['type'] == self::TYPE_NEXT_7_DAYS)
+                {
+                    $today                 = static::calculateNewDateByDaysFromNow(0);
+                    $todayPlusSevenDays    = static::calculateNewDateByDaysFromNow(7);
+                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $today, true),
+                                                   array($realAttributeName, null, 'lessThanOrEqualTo',    $todayPlusSevenDays, true));
+                }
+                elseif($value['type'] == self::TYPE_LAST_7_DAYS)
+                {
+                    $today                 = static::calculateNewDateByDaysFromNow(0);
+                    $todayMinusSevenDays   = static::calculateNewDateByDaysFromNow(-7);
+                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $todayMinusSevenDays, true),
+                                                   array($realAttributeName, null, 'lessThanOrEqualTo',    $today, true));
+                }
                 else
                 {
                     throw new NotSupportedException();
@@ -112,6 +157,13 @@
             {
                 $attributeAndRelations = array(array($realAttributeName, null, null, 'resolveValueByRules'));
             }
+        }
+
+        public static function calculateNewDateByDaysFromNow($daysFromNow)
+        {
+            assert('is_int($daysFromNow)');
+            return   DateTimeCalculatorUtil::calculateNewByDaysFromNow($daysFromNow,
+                     new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
         }
     }
 ?>

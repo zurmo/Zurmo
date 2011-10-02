@@ -81,5 +81,13 @@
             }
             throw new NotSupportedException();
         }
+
+        public static function calculateNewByDaysFromNow($daysFromNow, DateTime $dateTime)
+        {
+            assert('is_int($daysFromNow)');
+            $dateTime->modify($daysFromNow . ' day');
+            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                        $dateTime->getTimestamp());
+        }
     }
 ?>

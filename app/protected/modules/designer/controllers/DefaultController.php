@@ -249,17 +249,14 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["viewClassName"])');
-            $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $editableMetadata = $_GET['viewClassName']::getMetadata();
-            $designerRulesType = $_GET['viewClassName']::getDesignerRulesType();
-            $designerRulesClassName = $designerRulesType . 'DesignerRules';
-            $designerRules = new $designerRulesClassName();
-            $modelAttributesAdapter = DesignerModelToViewUtil::getModelAttributesAdapter($_GET['viewClassName'], $modelClassName);
-            echo "<pre>";
-            print_r($modelAttributesAdapter->getAttributes());
-            echo "</pre>";
-            $attributeCollection = $modelAttributesAdapter->getAttributes();
+            $moduleClassName         = $_GET['moduleClassName'];
+            $modelClassName          = $moduleClassName::getPrimaryModelName();
+            $editableMetadata        = $_GET['viewClassName']::getMetadata();
+            $designerRulesType       = $_GET['viewClassName']::getDesignerRulesType();
+            $designerRulesClassName  = $designerRulesType . 'DesignerRules';
+            $designerRules           = new $designerRulesClassName();
+            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($_GET['viewClassName'], $modelClassName);
+            $attributeCollection     = $modelAttributesAdapter->getAttributes();
             $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
                 $attributeCollection,
                 $designerRules,

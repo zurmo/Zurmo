@@ -108,5 +108,16 @@
             $timeZone = $this->getForCurrentUser();
             return DateTimeUtil::convertFromUtcUnixStampByTimeZone($utcTimeStamp, $timeZone);
         }
+
+        /**
+         * Given a local time stamp, convert the time stamp to UTC based on a timezone adjusted time stamp.
+         * The time zone is based on the current user's time zone.
+         */
+        public function convertFromLocalTimeStampForCurrentUser($utcTimeStamp)
+        {
+            assert('is_int($utcTimeStamp)');
+            $timeZone = $this->getForCurrentUser();
+            return DateTimeUtil::convertFromLocalUnixStampByTimeZoneToUtcUnixStamp($utcTimeStamp, $timeZone);
+        }
     }
 ?>

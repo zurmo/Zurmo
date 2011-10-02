@@ -204,23 +204,34 @@
             $tempStructure = null;
             $metadataFromSearchFormAttributes = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata(
                                                     $this->model, $attributeName, $value);
-            foreach ($metadataFromSearchFormAttributes as $searchFormAttributeName => $searchFormValueAndOperator)
+            foreach ($metadataFromSearchFormAttributes as $searchFormClause)
             {
-                if(isset($searchFormValueAndOperator['operatorType']))
+                foreach($searchFormClause as $searchFormAttributeName => $searchFormStructure)
                 {
-                    $operatorType = $searchFormValueAndOperator['operatorType'];
+                    if(isset($searchFormStructure['operatorType']))
+                    {
+                        $operatorType = $searchFormStructure['operatorType'];
+                    }
+                    else
+                    {
+                        $operatorType = null;
+                    }
+                    if(isset($searchFormStructure['appendStructureAsAnd']))
+                    {
+                        $appendTempStructureAsAnd = $searchFormStructure['appendStructureAsAnd'];
+                    }
+                    else
+                    {
+                        $appendTempStructureAsAnd = false;
+                    }
+                    static::populateClausesAndStructureForAttribute($searchFormAttributeName,
+                                                                    $searchFormStructure['value'],
+                                                                    $adaptedMetadataClauses,
+                                                                    $clauseCount,
+                                                                    $tempStructure,
+                                                                    $appendTempStructureAsAnd,
+                                                                    $operatorType);
                 }
-                else
-                {
-                    $operatorType = null;
-                }
-                static::populateClausesAndStructureForAttribute($searchFormAttributeName,
-                                                                $searchFormValueAndOperator['value'],
-                                                                $adaptedMetadataClauses,
-                                                                $clauseCount,
-                                                                $tempStructure,
-                                                                false,
-                                                                $operatorType);
             }
             if($tempStructure != null)
             {

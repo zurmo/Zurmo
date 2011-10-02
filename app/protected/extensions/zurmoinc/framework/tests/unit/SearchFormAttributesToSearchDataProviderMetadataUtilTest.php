@@ -41,28 +41,28 @@
 
             $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata($searchForm, 'anyA', 'xyz');
-            $compareData = array('primaryA'   => array('value' => array('name' => 'xyz')),
-                                 'secondaryA' => array('value' => array('name' => 'xyz')));
+            $compareData = array(array('primaryA'   => array('value' => array('name' => 'xyz'))),
+                                 array('secondaryA' => array('value' => array('name' => 'xyz'))));
             $this->assertEquals($compareData, $metadata);
 
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata($searchForm, 'ABName', 'abc');
-            $compareData = array('aName' => array('value' => 'abc'),
-                                 'bName' => array('value' => 'abc'));
+            $compareData = array(array('aName' => array('value' => 'abc')),
+                                 array('bName' => array('value' => 'abc')));
             $this->assertEquals($compareData, $metadata);
 
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
                         getMetadata($searchForm, 'differentOperatorA', '1');
-            $compareData = array('primaryA'   => array('value' => array('name' => $super->id)));
+            $compareData = array(array('primaryA'   => array('value' => array('name' => $super->id))));
             $this->assertEquals($compareData, $metadata);
 
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
                         getMetadata($searchForm, 'differentOperatorA', '');
-            $compareData = array('primaryA'   => array('value' => array('name' => null)));
+            $compareData = array(array('primaryA'   => array('value' => array('name' => null))));
             $this->assertEquals($compareData, $metadata);
 
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
                         getMetadata($searchForm, 'differentOperatorB', 'def');
-            $compareData = array('aName'   => array('value' => 'def', 'operatorType' => 'endsWith'));
+            $compareData = array(array('aName'   => array('value' => 'def', 'operatorType' => 'endsWith')));
             $this->assertEquals($compareData, $metadata);
         }
 
@@ -77,7 +77,7 @@
             //TEST when no value present
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
                         getMetadata($searchForm, 'date__Date', null);
-            $compareData = array('date' => array('value' => null));
+            $compareData = array(array('date' => array('value' => null)));
             $this->assertEquals($compareData, $metadata);
 
             //Test Date = Today
@@ -88,7 +88,7 @@
             $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
             $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                                   $todayDateTime->getTimeStamp());
-            $compareData        = array('date' => array('value' => $today, 'operatorType' => 'equals'));
+            $compareData        = array(array('date' => array('value' => $today, 'operatorType' => 'equals')));
             $this->assertEquals($compareData, $metadata);
 
             //Test Date = Tomorrow
@@ -99,7 +99,7 @@
             $tomorrowDateTime   = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
             $tomorrow           = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                                     $tomorrowDateTime->getTimeStamp() + (60 * 60 *24));
-            $compareData        = array('date' => array('value' => $tomorrow, 'operatorType' => 'equals'));
+            $compareData        = array(array('date' => array('value' => $tomorrow, 'operatorType' => 'equals')));
             $this->assertEquals($compareData, $metadata);
 
             //Test Date = Yesterday
@@ -110,10 +110,212 @@
             $yesterdayDateTime  = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
             $yesterday          = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                                   $yesterdayDateTime->getTimeStamp() - (60 * 60 *24));
-            $compareData        = array('date' => array('value' => $yesterday, 'operatorType' => 'equals'));
+            $compareData        = array(array('date' => array('value' => $yesterday, 'operatorType' => 'equals')));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = After X
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER;
+            $value['firstDate'] = '2011-05-05';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $compareData        = array(array('date' => array('value' => '2011-05-05',
+                                                                'operatorType' => 'greaterThanOrEqualTo')));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Before X
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_BEFORE;
+            $value['firstDate'] = '2011-05-04';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $compareData        = array(array('date' => array('value' => '2011-05-04',
+                                                              'operatorType' => 'lessThanOrEqualTo')));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date next 7 days
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_NEXT_7_DAYS;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $compareData        = array(array('date' => array('value'                => $today,
+                                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)),
+                                        array('date' => array('value' => MixedDateTypesSearchFormAttributeMappingRules::
+                                                                         calculateNewDateByDaysFromNow(7),
+                                                              'operatorType'         => 'lessThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date last 7 days
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_LAST_7_DAYS;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $compareData        = array(array('date' => array('value' => MixedDateTypesSearchFormAttributeMappingRules::
+                                                                         calculateNewDateByDaysFromNow(-7),
+                                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)),
+                                        array('date' => array('value'                => $today,
+                                                              'operatorType'         => 'lessThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)));
             $this->assertEquals($compareData, $metadata);
         }
 
-        //todO: datetime
+        public function testGetMetadataForDynamicDateTimeAttribute()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+
+            //Make sure the timeZone is different than UTC for testing.
+            Yii::app()->user->userModel->timeZone = 'America/Chicago';
+
+            //TEST when no value present
+            $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                        getMetadata($searchForm, 'dateTime__DateTime', null);
+            $compareData = array(array('dateTime' => array('value' => null)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Today
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_TODAY;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($today),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)),
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($today),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Tomorrow
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_TOMORROW;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $tomorrowDateTime   = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $tomorrow           = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                    $tomorrowDateTime->getTimeStamp() + (60 * 60 *24));
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($tomorrow),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)),
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($tomorrow),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Yesterday
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_YESTERDAY;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $yesterdayDateTime  = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $yesterday          = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $yesterdayDateTime->getTimeStamp() - (60 * 60 *24));
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($yesterday),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)),
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($yesterday),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = After X
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER;
+            $value['firstDate'] = '2011-05-05';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' => DateTimeUtil::
+                                                         convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay('2011-05-05'),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Before X
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_BEFORE;
+            $value['firstDate'] = '2011-05-04';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' => DateTimeUtil::
+                                                         convertDateIntoTimeZoneAdjustedDateTimeEndOfDay('2011-05-04'),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date next 7 days
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_NEXT_7_DAYS;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $todayPlus7Days     = MixedDateTypesSearchFormAttributeMappingRules::calculateNewDateByDaysFromNow(7);
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($today),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)),
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($todayPlus7Days),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+
+            //Test Date last 7 days
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_LAST_7_DAYS;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateTime__DateTime', $value);
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $todayMinus7Days     = MixedDateTypesSearchFormAttributeMappingRules::calculateNewDateByDaysFromNow(-7);
+            $compareData        = array(
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($todayMinus7Days),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)),
+                                    array('dateTime'  =>
+                                        array('value' =>
+                                            DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($today),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+        }
     }
 ?>

@@ -29,17 +29,14 @@
      */
     class OwnedItemsOnlySearchFormAttributeMappingRules extends SearchFormAttributeMappingRules
     {
-        public static function resolveValue(& $value)
+        public static function resolveValueDataIntoUsableValue($value)
         {
             assert('$value == null || $value == true');
             if($value == true)
             {
-                $value = Yii::app()->user->userModel->id;
+                return Yii::app()->user->userModel->id;
             }
-            else
-            {
-                $value = null;
-            }
+            return null;
         }
 
         /**

@@ -43,31 +43,39 @@
                 static::resolveMetadataForResolveEntireMappingByRules($model, $metadata, $attributeName, $value);
                 foreach ($metadata[$attributeName] as $attributesAndRelations)
                 {
-                    assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 5');
-
-
-
-
+                    $attributesAndRelationsValue = $value;
+                    assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 6');
+                    $adaptedMetadataClause = array();
                     if(isset($attributesAndRelations[3]))
                     {
-                        assert('$attributesAndRelations[3] == "resolveValueByRules"');
-                        $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
-                                                           $attributeName);
-                        $className = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
-
-                        $className::resolveValue($value);
+                        if($attributesAndRelations[3] == 'resolveValueByRules')
+                        {
+                            $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                               $attributeName);
+                            $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
+                            $attributesAndRelationsValue     = $className::resolveValueDataIntoUsableValue(
+                                                               $attributesAndRelationsValue);
+                        }
+                        elseif($attributesAndRelations[3] != null)
+                        {
+                            $attributesAndRelationsValue = $attributesAndRelations[3];
+                        }
                     }
                     if (isset($attributesAndRelations[1]) && $attributesAndRelations[1] != null)
                     {
-                        $adaptedMetadata[$attributesAndRelations[0]] = array('value' =>
-                                                                             array($attributesAndRelations[1] => $value));
+                        $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' =>
+                                                                             array($attributesAndRelations[1] =>
+                                                                                   $attributesAndRelationsValue));
                     }
                     else
                     {
-                        $adaptedMetadata[$attributesAndRelations[0]] = array('value' => $value);
+                        $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' => $attributesAndRelationsValue);
                     }
-                    $adaptedMetadata[$attributesAndRelations[0]] = array_merge($adaptedMetadata[$attributesAndRelations[0]],
+                    $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
                     static::resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations));
+                    $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
+                    static::resolveAppendTypeDataFromAttributesAndRelations($attributesAndRelations));
+                    $adaptedMetadata[] = $adaptedMetadataClause;
                 }
                 return $adaptedMetadata;
             }
@@ -107,6 +115,16 @@
             if (isset($attributesAndRelations[2]) && $attributesAndRelations[2] != null)
             {
                 return array('operatorType' => $attributesAndRelations[2]);
+            }
+            return array();
+        }
+
+        protected static function resolveAppendTypeDataFromAttributesAndRelations($attributesAndRelations)
+        {
+            assert('is_array($attributesAndRelations)');
+            if (isset($attributesAndRelations[4]) && $attributesAndRelations[4] == true)
+            {
+                return array('appendStructureAsAnd' => true);
             }
             return array();
         }

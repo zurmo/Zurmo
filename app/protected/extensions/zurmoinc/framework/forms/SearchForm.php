@@ -217,7 +217,7 @@
          */
         protected static function getDynamicAttributeToElementTypes()
         {
-            return array('Date' => 'MixedDateTypesForSearch', 'DateTime' => 'MixedDateTimeTypesForSearch');
+            return array('Date' => 'MixedDateTypesForSearch', 'DateTime' => 'MixedDateTypesForSearch');
         }
 
         /**

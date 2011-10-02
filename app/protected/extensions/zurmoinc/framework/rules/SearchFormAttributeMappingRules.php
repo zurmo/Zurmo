@@ -36,8 +36,9 @@
          * Override if any massaging is needed on the value.
          * @param mixed $value
          */
-        public static function resolveValue(& $value)
+        public static function resolveValueDataIntoUsableValue($value)
         {
+            return $value;
         }
 
         /**
