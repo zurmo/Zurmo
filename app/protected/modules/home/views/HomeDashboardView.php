@@ -55,7 +55,7 @@
                                     'type' => 'OpportunitiesByStageChart',
                                 ),
                                 array(
-                                    'type' => 'WorldClock',
+                                    'type' => 'TasksMyList',
                                 ),
                             )
                         ),

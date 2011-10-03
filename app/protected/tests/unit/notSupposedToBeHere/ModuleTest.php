@@ -58,7 +58,6 @@
             $this->assertTrue ($modules['groups']         instanceof Module);
             $this->assertTrue ($modules['roles']          instanceof Module);
             $this->assertTrue ($modules['home']           instanceof Module);
-            $this->assertTrue ($modules['worldClock']     instanceof Module);
             $this->assertTrue ($modules['accounts']       instanceof Module);
             $this->assertTrue ($modules['leads']          instanceof Module);
             $this->assertTrue ($modules['contacts']       instanceof Module);
@@ -72,7 +71,6 @@
             $this->assertTrue ($modules['contacts']     ->canDisable());
             $this->assertTrue ($modules['leads']        ->canDisable());
             $this->assertTrue ($modules['opportunities']->canDisable());
-            $this->assertTrue ($modules['worldClock']   ->canDisable());
         }
 
         /**
@@ -92,7 +90,6 @@
             $this->assertEquals('Contacts',      $modules['contacts']     ::getModuleLabelByTypeAndLanguage('Plural'));
             $this->assertEquals('Leads',         $modules['leads']        ::getModuleLabelByTypeAndLanguage('Plural'));
             $this->assertEquals('Opportunities', $modules['opportunities']::getModuleLabelByTypeAndLanguage('Plural'));
-            $this->assertEquals('World Clock',   $modules['worldClock']   ::getModuleLabelByTypeAndLanguage('Plural'));
         }
 
         /**

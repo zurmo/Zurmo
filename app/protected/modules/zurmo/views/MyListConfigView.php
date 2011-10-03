@@ -60,8 +60,8 @@
          */
         public function validate()
         {
-            $this->model->setAttributes($_POST[$this->getPostArrayName()]);
-            $this->searchModel->setAttributes($_POST[$this->getSearchModelPostArrayName()]);
+            $this->model->setAttributes(ArrayUtil::getArrayValue($_POST, $this->getPostArrayName()));
+            $this->searchModel->setAttributes(ArrayUtil::getArrayValue($_POST, $this->getSearchModelPostArrayName()));
             echo NoRequiredsActiveForm::validate(array($this->model, $this->searchModel), null, false);
         }
 
@@ -73,7 +73,8 @@
         {
             parent::setMetadataFromPost($postArray);
             $sanitizedPostArray     = PostUtil::sanitizePostByDesignerTypeForSavingModel(
-                                      $this->searchModel, $_POST[$this->getSearchModelPostArrayName()]);
+                                      $this->searchModel,
+                                      ArrayUtil::getArrayValue($_POST, $this->getSearchModelPostArrayName()));
             $this->searchAttributes = SearchUtil::
                                       getSearchAttributesFromSearchArray($sanitizedPostArray);
         }

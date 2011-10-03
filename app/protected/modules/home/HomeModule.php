@@ -34,7 +34,6 @@
         {
             return array(
                 'zurmo',
-                'worldClock',
             );
         }
 

@@ -30,6 +30,15 @@
      */
     class GetUtil
     {
+        public static function getData()
+        {
+            $getData = array();
+            if(isset($_GET))
+            {
+                $getData = $_GET;
+            }
+            return $getData;
+        }
          /**
          * Resets page to 1 for a grid view.
          * @param $pageVariableName - typically the model class name.

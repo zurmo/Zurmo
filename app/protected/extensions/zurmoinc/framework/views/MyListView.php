@@ -135,7 +135,7 @@
                     'nextPageLabel'  => '&gt;',
                     'lastPageLabel'  => '&gt;&gt;',
                     'class'          => 'LinkPager',
-                    'paginationParams' => array_merge($_GET, array('portletId' => $this->params['portletId'])),
+                    'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/myListDetails',
                 );
         }

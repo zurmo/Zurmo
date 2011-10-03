@@ -188,7 +188,6 @@
                 ),
             ),
             'users',
-            'worldClock',
         ),
 
         'params' => array(
