@@ -51,13 +51,21 @@
                 'members' => array(
                     'aName',
                     'bName',
+                    'date',
+                    'date2',
+                    'dateTime',
+                    'dateTime2'
                 ),
                 'rules' => array(
-                    array('aName',      'type',   'type' => 'string'),
-                    array('aName',      'length', 'min'  => 1, 'max' => 32),
-                    array('bName',      'required'),
-                    array('bName',      'type',   'type' => 'string'),
-                    array('bName',      'length', 'min'  => 2, 'max' => 32),
+                    array('aName',     'type',   'type' => 'string'),
+                    array('aName',     'length', 'min'  => 1, 'max' => 32),
+                    array('bName',     'required'),
+                    array('bName',     'type',   'type' => 'string'),
+                    array('bName',     'length', 'min'  => 2, 'max' => 32),
+                    array('date',      'type', 'type' => 'date'),
+                    array('date2',     'type', 'type' => 'date'),
+                    array('dateTime',  'type', 'type' => 'datetime'),
+                    array('dateTime2', 'type', 'type' => 'datetime'),
                 ),
                 'relations' => array(
                     'primaryA'     => array(RedBeanModel::HAS_ONE, 'A', RedBeanModel::OWNED),

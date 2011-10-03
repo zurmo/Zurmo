@@ -27,6 +27,7 @@
     class MeetingsModule extends SecurableModule
     {
         const RIGHT_CREATE_MEETINGS = 'Create Meetings';
+        const RIGHT_DELETE_MEETINGS = 'Delete Meetings';
         const RIGHT_ACCESS_MEETINGS = 'Access Meetings';
 
         public function getDependencies()
@@ -70,6 +71,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_MEETINGS;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_MEETINGS;
         }
 
         public static function getDefaultDataMakerClassName()

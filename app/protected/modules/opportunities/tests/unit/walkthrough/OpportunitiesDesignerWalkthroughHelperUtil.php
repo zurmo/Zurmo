@@ -193,10 +193,10 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'date',
+                                            'element' => 'date__Date',
                                         ),
                                         array(
-                                            'element' => 'datetime',
+                                            'element' => 'datetime__DateTime',
                                         ),
                                     )
                                 ),
@@ -279,7 +279,7 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'closeDate',
+                                            'element' => 'closeDate__Date',
                                         ),
                                         array(
                                             'element' => 'stage',
@@ -299,10 +299,10 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'createdDateTime',
+                                            'element' => 'createdDateTime__DateTime',
                                         ),
                                         array(
-                                            'element' => 'modifiedDateTime',
+                                            'element' => 'modifiedDateTime__DateTime',
                                         ),
                                     )
                                 ),

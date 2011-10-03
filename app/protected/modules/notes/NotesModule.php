@@ -27,6 +27,7 @@
     class NotesModule extends SecurableModule
     {
         const RIGHT_CREATE_NOTES = 'Create Notes';
+        const RIGHT_DELETE_NOTES = 'Delete Notes';
         const RIGHT_ACCESS_NOTES = 'Access Notes';
 
         public function getDependencies()
@@ -66,6 +67,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_NOTES;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_NOTES;
         }
 
         public static function getDemoDataMakerClassName()

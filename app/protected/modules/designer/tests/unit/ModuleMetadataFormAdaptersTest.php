@@ -26,6 +26,19 @@
 
     class ModuleMetadataFormAdaptersTest extends BaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            Yii::app()->languageHelper->load();
+            Yii::app()->languageHelper->setActiveLanguages(array('es', 'fr', 'it', 'de'));
+        }
+
+        public static function tearDownAfterClass()
+        {
+            Yii::app()->languageHelper->setActiveLanguages(array());
+            parent::tearDownAfterClass();
+        }
+
         public function testModuleMetadataToFormAdapter()
         {
             $module = new TestModule(null, null);
@@ -101,6 +114,50 @@
                 'it' => 'texst',
                 'fr' => 'texst',
                 'de' => 'texst',
+            );
+            $this->assertEquals($pluralCompareData, $metadata['global']['pluralModuleLabels']);
+        }
+
+        /**
+         * @depends testModuleFormToMetadataAdapter
+         */
+        public function testAttributeLabelArrayMergeIsWorking()
+        {
+            $module = new TestModule(null, null);
+            $moduleForm = new TestModuleForm();
+            $moduleForm->a = 5;
+            $moduleForm->b = 6;
+            $moduleForm->c = 7;
+            $moduleForm->singularModuleLabels = array(
+                'it' => 'git',
+                'fr' => 'frit',
+                'de' => 'dit',
+            );
+            $moduleForm->pluralModuleLabels = array(
+                'it' => 'gits',
+                'fr' => 'frits',
+                'de' => 'dits',
+            );
+            $adapter = new ModuleFormToMetadataAdapter($module, $moduleForm);
+            $adapter->setMetadata();
+            $metadata = $module::getMetadata();
+            $this->assertEquals(5, $metadata['global']['a']);
+            $this->assertEquals(6, $metadata['global']['b']);
+            $this->assertEquals(7, $metadata['global']['c']);
+            $singularCompareData = array(
+                'en' => 'texs',
+                'es' => 'texs',
+                'it' => 'git',
+                'fr' => 'frit',
+                'de' => 'dit',
+            );
+            $this->assertEquals($singularCompareData, $metadata['global']['singularModuleLabels']);
+            $pluralCompareData = array(
+                'en' => 'texst',
+                'es' => 'texst',
+                'it' => 'gits',
+                'fr' => 'frits',
+                'de' => 'dits',
             );
             $this->assertEquals($pluralCompareData, $metadata['global']['pluralModuleLabels']);
         }

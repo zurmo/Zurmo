@@ -60,5 +60,24 @@
                 //success
             }
         }
+
+        public function testCreateCurrencyAndIsActiveByDefaultAndSettingActiveToFalse()
+        {
+            $currency = new Currency();
+            $currency->code       = 'EUR';
+            $currency->rateToBase = 2;
+            $this->assertTrue($currency->save());
+            $currency->forget();
+
+            $currency = Currency::getByCode('EUR');
+            $this->assertEquals(1, $currency->active);
+
+            $currency->active     = false;
+            $this->assertTrue($currency->save());
+            $currency->forget();
+
+            $currency = Currency::getByCode('EUR');
+            $this->assertEquals(0, $currency->active);
+        }
     }
 ?>

@@ -37,7 +37,7 @@
             {
                 $params['htmlOptions'] = array();
             }
-            $params['htmlOptions'] = array_merge($params['htmlOptions'], array('id' => 'save', 'name' => 'save'));
+            $params['htmlOptions'] = array_merge(array('id' => 'save', 'name' => 'save'), $params['htmlOptions']);
             parent::__construct($controllerId, $moduleId, $modelId, $params);
         }
 

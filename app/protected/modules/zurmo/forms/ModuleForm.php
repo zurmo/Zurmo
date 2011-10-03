@@ -56,7 +56,7 @@
         public function validateModuleLabels($attribute, $params)
         {
             $data = $this->$attribute;
-            foreach (Yii::app()->languageHelper->getSupportedLanguagesData() as $language => $name)
+            foreach (Yii::app()->languageHelper->getActiveLanguagesData() as $language => $name)
             {
                 if ( empty($data[$language]))
                 {

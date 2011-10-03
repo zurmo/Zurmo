@@ -67,8 +67,10 @@
             }
             else
             {
-                $metadata = self::getMetadata();
-                $formModel->setAttributes($metadata['perUser']);
+                $metadata        = self::getMetadata();
+                $perUserMetadata = $metadata['perUser'];
+                $this->resolveEvaluateSubString($perUserMetadata, null);
+                $formModel->setAttributes($perUserMetadata);
             }
             return new ChartConfigView($formModel, $this->params);
         }

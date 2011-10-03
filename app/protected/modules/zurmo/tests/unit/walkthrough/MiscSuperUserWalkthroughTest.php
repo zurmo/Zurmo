@@ -46,8 +46,6 @@
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             //This does not include portlet controller actions.
             //World Clock Module
-            $this->setGetArray(array('location' => 'NAM|US|IL|CHICAGO', 'metric' => 'F'));
-            $this->runControllerWithNoExceptionsAndGetContent('worldClock/default/getWeather');
         }
     }
 ?>

@@ -30,7 +30,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => 'ContactsModulePluralLabel',
+                    'title' => "eval:Yii::t('Default', 'ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
                     'toolbar' => array(

@@ -31,6 +31,7 @@
         const CONVERT_ACCOUNT_REQUIRED     = 3;
 
         const RIGHT_CREATE_LEADS  = 'Create Leads';
+        const RIGHT_DELETE_LEADS  = 'Delete Leads';
         const RIGHT_ACCESS_LEADS  = 'Access Leads Tab';
         const RIGHT_CONVERT_LEADS = 'Convert Leads';
 
@@ -88,6 +89,13 @@
                     'officePhone'      => 'officePhone',
                     'officeFax'        => 'officeFax',
                     'companyName'      => 'name',
+                ),
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'officePhone',
+                    'mobilePhone',
+                    'companyName'
                 )
             );
             return $metadata;
@@ -114,9 +122,24 @@
             return self::RIGHT_CREATE_LEADS;
         }
 
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_LEADS;
+        }
+
         public static function getDemoDataMakerClassName()
         {
             return 'LeadsDemoDataMaker';
+        }
+
+        public static function getStateMetadataAdapterClassName()
+        {
+            return 'LeadsStateMetadataAdapter';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'LeadsSearchForm';
         }
     }
 ?>

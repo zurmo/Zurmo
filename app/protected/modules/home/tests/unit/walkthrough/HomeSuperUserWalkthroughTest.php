@@ -122,10 +122,10 @@
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/addList');
 
-            //Add WorldClockPortlet to dashboard
+            //Add AccountsMyList Portlet to dashboard
             $this->setGetArray(array(
                 'dashboardId'    => $superDashboard->id,
-                'portletType'    => 'WorldClock',
+                'portletType'    => 'AccountsMyList',
                 'uniqueLayoutId' => $uniqueLayoutId));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('home/defaultPortlet/add');
@@ -176,7 +176,7 @@
 
             //Load up modal config edit view.
             $this->assertTrue($portlets[1][1]->id > 0);
-            $this->assertEquals('WorldClock', $portlets[1][1]->viewType);
+            $this->assertEquals('AccountsMyList', $portlets[1][1]->viewType);
             $this->setGetArray(array(
                 'portletId'    => $portlets[1][1]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
@@ -190,7 +190,8 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->setPostArray(array(
-                'ajax'    => 'modal-edit-form'));
+                'ajax'    => 'modal-edit-form',
+                'AccountsSearchForm' => array()));
             $this->runControllerWithExitExceptionAndGetContent('home/defaultPortlet/modalConfigEdit');
 
             //save changes to the portlet title
@@ -199,7 +200,8 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->setPostArray(array(
-                'WorldClockForm'    => array('title' => 'something new')));
+                'MyListForm'         => array('title' => 'something new'),
+                'AccountsSearchForm' => array()));
             $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
             //Now confirm the title change was successful.
             $portlet = Portlet::getById($portlets[1][1]->id);

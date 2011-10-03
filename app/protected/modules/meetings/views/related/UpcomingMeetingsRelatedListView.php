@@ -30,7 +30,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => 'Upcoming MeetingsModulePluralLabel',
+                    'title' => "eval:Yii::t('Default', 'Upcoming MeetingsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
                     'toolbar' => array(

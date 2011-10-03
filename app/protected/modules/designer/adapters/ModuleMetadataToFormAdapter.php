@@ -53,7 +53,7 @@
                 }
             }
             $moduleClassName = $this->moduleClassName;
-            foreach (Yii::app()->languageHelper->getSupportedLanguagesData() as $language => $name)
+            foreach (Yii::app()->languageHelper->getActiveLanguagesData() as $language => $name)
             {
                 $moduleForm->singularModuleLabels[$language] = $moduleClassName::getModuleLabelByTypeAndLanguage(
                                                                                     'SingularLowerCase', $language);

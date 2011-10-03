@@ -479,5 +479,36 @@
 
             ModelMetadataUtil::removeAttribute('A', 'fruit');
         }
+
+        public function testAttributeLabelsMergeCorrectlyWithExistingData()
+        {
+            //Testing addOrUpdateMember merges correctly.
+            $originalMetadata = A::getMetadata();
+            $this->assertEquals($originalMetadata['A']['labels']['newMember2'], array('en' => 'newMember2'));
+            $attributeLabels  = array('fr' => 'somethingDifferent');
+            ModelMetadataUtil::addOrUpdateMember('A', 'newMember2', $attributeLabels,
+                null, null, null, null, null, false, false, 'Text', array());
+            $metadata = A::getMetadata();
+            $this->assertEquals($metadata['A']['labels']['newMember2'],
+                                array('en' => 'newMember2', 'fr' => 'somethingDifferent'));
+
+             //Testing addOrUpdateRelation merges correctly.
+             //todo: this is covered though by addOrUpdateCustomFieldRelation, but a test for this specifically woulud
+             //be ideal.
+
+             //Testing addOrUpdateCustomFieldRelation merges correctly.
+            $originalMetadata = A::getMetadata();
+            $this->assertEquals($originalMetadata['A']['labels']['fruit'], array('en' => 'fruit'));
+            $attributeLabels  = array('fr' => 'somethingDifferent2');
+            $appleCustomField = new CustomField();
+            $appleCustomField->value = 'apple';
+            $appleCustomField->data = CustomFieldData::getByName('Fruit');
+            $this->assertTrue($appleCustomField->save());
+            ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
+                $appleCustomField, true, false, 'DropDown', 'Fruit');
+            $metadata = A::getMetadata();
+            $this->assertEquals($metadata['A']['labels']['fruit'],
+                                array('en' => 'fruit', 'fr' => 'somethingDifferent2'));
+        }
     }
 ?>

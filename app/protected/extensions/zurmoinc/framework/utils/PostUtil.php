@@ -72,7 +72,19 @@
                     }
                     else
                     {
-                       //NOT SUPPORTED. ONLY SUPPORTS SANITIZING NON RELATED ATTRIBUTES
+                        if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
+                        {
+                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
+                                                $model, $attributeName);
+                            if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
+                                $value['firstDate'] != null)
+                            {
+                                $postData[$attributeName]['firstDate'] = DateTimeUtil::
+                                                                         resolveValueForDateDBFormatted(
+                                                                         $value['firstDate']);
+                            }
+
+                        }
                     }
                 }
             }

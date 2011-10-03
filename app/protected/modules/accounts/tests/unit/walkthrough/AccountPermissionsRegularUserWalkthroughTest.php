@@ -168,7 +168,7 @@
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/create'); // Not Coding Standard
             //Confirm the permissions are set right based on how the account was saved.
-                        $accounts = Account::getByName('myNewAccount');
+            $accounts = Account::getByName('myNewAccount');
             $this->assertEquals(1, count($accounts));
             $accountId = $accounts[0]->id;
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::

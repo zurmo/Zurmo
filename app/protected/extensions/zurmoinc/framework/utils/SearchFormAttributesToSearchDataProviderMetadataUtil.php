@@ -36,22 +36,46 @@
         public static function getMetadata($model, $attributeName, $value)
         {
             assert('$model instanceof SearchForm');
-            $metadata        = $model->resolveAttributesMappedToRealAttributesMetadata($value);
+            $metadata        = $model->getAttributesMappedToRealAttributesMetadata();
             $adaptedMetadata = array();
             if (isset($metadata[$attributeName]))
             {
-                $valuesToMap = array('{value}' => $value);
+                static::resolveMetadataForResolveEntireMappingByRules($model, $metadata, $attributeName, $value);
                 foreach ($metadata[$attributeName] as $attributesAndRelations)
                 {
-                    assert('count($attributesAndRelations) == 0 || $attributesAndRelations > 2');
-                    if (isset($attributesAndRelations[1]))
+                    $attributesAndRelationsValue = $value;
+                    assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 6');
+                    $adaptedMetadataClause = array();
+                    if(isset($attributesAndRelations[3]))
                     {
-                        $adaptedMetadata[$attributesAndRelations[0]][$attributesAndRelations[1]] = $value;
+                        if($attributesAndRelations[3] == 'resolveValueByRules')
+                        {
+                            $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                               $attributeName);
+                            $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
+                            $attributesAndRelationsValue     = $className::resolveValueDataIntoUsableValue(
+                                                               $attributesAndRelationsValue);
+                        }
+                        elseif($attributesAndRelations[3] != null)
+                        {
+                            $attributesAndRelationsValue = $attributesAndRelations[3];
+                        }
+                    }
+                    if (isset($attributesAndRelations[1]) && $attributesAndRelations[1] != null)
+                    {
+                        $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' =>
+                                                                             array($attributesAndRelations[1] =>
+                                                                                   $attributesAndRelationsValue));
                     }
                     else
                     {
-                        $adaptedMetadata[$attributesAndRelations[0]] = $value;
+                        $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' => $attributesAndRelationsValue);
                     }
+                    $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
+                    static::resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations));
+                    $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
+                    static::resolveAppendTypeDataFromAttributesAndRelations($attributesAndRelations));
+                    $adaptedMetadata[] = $adaptedMetadataClause;
                 }
                 return $adaptedMetadata;
             }
@@ -59,6 +83,50 @@
             {
                 throw NotSupportedException();
             }
+        }
+
+        protected static function resolveMetadataForResolveEntireMappingByRules($model, & $metadata, $attributeName,
+                                                                                $value)
+        {
+            assert('$model instanceof SearchForm');
+            assert('is_array($metadata)');
+            assert('is_string($attributeName)');
+            if(!is_array($metadata[$attributeName]))
+            {
+                if($metadata[$attributeName] == 'resolveEntireMappingByRules')
+                {
+                    $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                       $attributeName);
+                    $className                       = $searchFormAttributeMappingRules .
+                                                       'SearchFormAttributeMappingRules';
+                    $className::resolveAttributesAndRelations($attributeName, $metadata[$attributeName], $value);
+
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
+
+        protected static function resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations)
+        {
+            assert('is_array($attributesAndRelations)');
+            if (isset($attributesAndRelations[2]) && $attributesAndRelations[2] != null)
+            {
+                return array('operatorType' => $attributesAndRelations[2]);
+            }
+            return array();
+        }
+
+        protected static function resolveAppendTypeDataFromAttributesAndRelations($attributesAndRelations)
+        {
+            assert('is_array($attributesAndRelations)');
+            if (isset($attributesAndRelations[4]) && $attributesAndRelations[4] == true)
+            {
+                return array('appendStructureAsAnd' => true);
+            }
+            return array();
         }
     }
 ?>

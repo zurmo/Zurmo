@@ -81,5 +81,18 @@
             }
             throw new NotSupportedException();
         }
+
+        /**
+         * Given an integer representing a count of days from the present day, returns a DB formatted date stamp based
+         * on that calculation.
+         * @param integer $daysFromNow
+         */
+        public static function calculateNewByDaysFromNow($daysFromNow, DateTime $dateTime)
+        {
+            assert('is_int($daysFromNow)');
+            $dateTime->modify($daysFromNow . ' day');
+            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                        $dateTime->getTimestamp());
+        }
     }
 ?>

@@ -58,6 +58,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_ACCOUNTS'   => array(
+                        'displayName' => AccountsModule::RIGHT_DELETE_ACCOUNTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_ACCOUNTS'   => array(
                         'displayName' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
                         'explicit'    => null,
@@ -68,6 +74,12 @@
                 'ContactsModule' => array(
                     'RIGHT_CREATE_CONTACTS'   => array(
                         'displayName' => ContactsModule::RIGHT_CREATE_CONTACTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONTACTS'   => array(
+                        'displayName' => ContactsModule::RIGHT_DELETE_CONTACTS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -94,6 +106,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_DASHBOARDS'   => array(
+                        'displayName' => HomeModule::RIGHT_DELETE_DASHBOARDS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_ACCESS_DASHBOARDS,
                         'explicit'    => null,
@@ -104,6 +122,12 @@
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_LEADS'   => array(
+                        'displayName' => LeadsModule::RIGHT_DELETE_LEADS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -128,6 +152,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_NOTES'   => array(
+                        'displayName' => NotesModule::RIGHT_DELETE_NOTES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_NOTES'   => array(
                         'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
@@ -142,6 +172,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_OPPORTUNITIES'   => array(
+                        'displayName' => OpportunitiesModule::RIGHT_DELETE_OPPORTUNITIES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_OPPORTUNITIES'   => array(
                         'displayName' => OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES,
                         'explicit'    => null,
@@ -152,6 +188,12 @@
                 'GroupsModule'  => array(
                     'RIGHT_CREATE_GROUPS'   => array(
                         'displayName' => GroupsModule::RIGHT_CREATE_GROUPS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_GROUPS'   => array(
+                        'displayName' => GroupsModule::RIGHT_DELETE_GROUPS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -178,6 +220,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_MEETINGS'   => array(
+                        'displayName' => MeetingsModule::RIGHT_DELETE_MEETINGS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_MEETINGS'   => array(
                         'displayName' => MeetingsModule::RIGHT_ACCESS_MEETINGS,
                         'explicit'    => null,
@@ -188,6 +236,12 @@
                 'RolesModule'  => array(
                     'RIGHT_CREATE_ROLES'   => array(
                         'displayName' => RolesModule::RIGHT_CREATE_ROLES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_ROLES'   => array(
+                        'displayName' => RolesModule::RIGHT_DELETE_ROLES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -206,22 +260,14 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_TASKS'   => array(
+                        'displayName' => TasksModule::RIGHT_DELETE_TASKS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_TASKS'   => array(
                         'displayName' => TasksModule::RIGHT_ACCESS_TASKS,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                ),
-                'NotesModule'  => array(
-                    'RIGHT_CREATE_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_CREATE_NOTES,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                    'RIGHT_ACCESS_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -317,6 +363,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_ACCOUNTS'   => array(
+                        'displayName' => AccountsModule::RIGHT_DELETE_ACCOUNTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_ACCOUNTS'   => array(
                         'displayName' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
                         'explicit'    => null,
@@ -327,6 +379,12 @@
                 'ContactsModule' => array(
                     'RIGHT_CREATE_CONTACTS'   => array(
                         'displayName' => ContactsModule::RIGHT_CREATE_CONTACTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONTACTS'   => array(
+                        'displayName' => ContactsModule::RIGHT_DELETE_CONTACTS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -353,6 +411,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_DASHBOARDS'   => array(
+                        'displayName' => HomeModule::RIGHT_DELETE_DASHBOARDS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_ACCESS_DASHBOARDS,
                         'explicit'    => null,
@@ -363,6 +427,12 @@
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_LEADS'   => array(
+                        'displayName' => LeadsModule::RIGHT_DELETE_LEADS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -387,6 +457,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_NOTES'   => array(
+                        'displayName' => NotesModule::RIGHT_DELETE_NOTES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_NOTES'   => array(
                         'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
@@ -401,6 +477,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_OPPORTUNITIES'   => array(
+                        'displayName' => OpportunitiesModule::RIGHT_DELETE_OPPORTUNITIES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_OPPORTUNITIES'   => array(
                         'displayName' => OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES,
                         'explicit'    => null,
@@ -411,6 +493,12 @@
                 'GroupsModule'  => array(
                     'RIGHT_CREATE_GROUPS'   => array(
                         'displayName' => GroupsModule::RIGHT_CREATE_GROUPS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_GROUPS'   => array(
+                        'displayName' => GroupsModule::RIGHT_DELETE_GROUPS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -437,6 +525,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_MEETINGS'   => array(
+                        'displayName' => MeetingsModule::RIGHT_DELETE_MEETINGS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_MEETINGS'   => array(
                         'displayName' => MeetingsModule::RIGHT_ACCESS_MEETINGS,
                         'explicit'    => null,
@@ -447,6 +541,12 @@
                 'RolesModule'  => array(
                     'RIGHT_CREATE_ROLES'   => array(
                         'displayName' => RolesModule::RIGHT_CREATE_ROLES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_ROLES'   => array(
+                        'displayName' => RolesModule::RIGHT_DELETE_ROLES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -465,22 +565,14 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_TASKS'   => array(
+                        'displayName' => TasksModule::RIGHT_DELETE_TASKS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_TASKS'   => array(
                         'displayName' => TasksModule::RIGHT_ACCESS_TASKS,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                ),
-                'NotesModule'  => array(
-                    'RIGHT_CREATE_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_CREATE_NOTES,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                    'RIGHT_ACCESS_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -572,6 +664,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_ACCOUNTS'   => array(
+                        'displayName' => AccountsModule::RIGHT_DELETE_ACCOUNTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_ACCOUNTS'   => array(
                         'displayName' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
                         'explicit'    => null,
@@ -582,6 +680,12 @@
                 'ContactsModule' => array(
                     'RIGHT_CREATE_CONTACTS'   => array(
                         'displayName' => ContactsModule::RIGHT_CREATE_CONTACTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONTACTS'   => array(
+                        'displayName' => ContactsModule::RIGHT_DELETE_CONTACTS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -608,6 +712,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_DASHBOARDS'   => array(
+                        'displayName' => HomeModule::RIGHT_DELETE_DASHBOARDS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_ACCESS_DASHBOARDS,
                         'explicit'    => null,
@@ -618,6 +728,12 @@
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_LEADS'   => array(
+                        'displayName' => LeadsModule::RIGHT_DELETE_LEADS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -642,6 +758,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_NOTES'   => array(
+                        'displayName' => NotesModule::RIGHT_DELETE_NOTES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_NOTES'   => array(
                         'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
@@ -656,6 +778,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_OPPORTUNITIES'   => array(
+                        'displayName' => OpportunitiesModule::RIGHT_DELETE_OPPORTUNITIES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_OPPORTUNITIES'   => array(
                         'displayName' => OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES,
                         'explicit'    => null,
@@ -666,6 +794,12 @@
                 'GroupsModule'  => array(
                     'RIGHT_CREATE_GROUPS'   => array(
                         'displayName' => GroupsModule::RIGHT_CREATE_GROUPS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_GROUPS'   => array(
+                        'displayName' => GroupsModule::RIGHT_DELETE_GROUPS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -692,6 +826,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_MEETINGS'   => array(
+                        'displayName' => MeetingsModule::RIGHT_DELETE_MEETINGS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_MEETINGS'   => array(
                         'displayName' => MeetingsModule::RIGHT_ACCESS_MEETINGS,
                         'explicit'    => null,
@@ -702,6 +842,12 @@
                 'RolesModule'  => array(
                     'RIGHT_CREATE_ROLES'   => array(
                         'displayName' => RolesModule::RIGHT_CREATE_ROLES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_ROLES'   => array(
+                        'displayName' => RolesModule::RIGHT_DELETE_ROLES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -720,22 +866,14 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_TASKS'   => array(
+                        'displayName' => TasksModule::RIGHT_DELETE_TASKS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_TASKS'   => array(
                         'displayName' => TasksModule::RIGHT_ACCESS_TASKS,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                ),
-                'NotesModule'  => array(
-                    'RIGHT_CREATE_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_CREATE_NOTES,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                    'RIGHT_ACCESS_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -826,6 +964,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_ACCOUNTS'   => array(
+                        'displayName' => AccountsModule::RIGHT_DELETE_ACCOUNTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_ACCOUNTS'   => array(
                         'displayName' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
                         'explicit'    => null,
@@ -836,6 +980,12 @@
                 'ContactsModule' => array(
                     'RIGHT_CREATE_CONTACTS'   => array(
                         'displayName' => ContactsModule::RIGHT_CREATE_CONTACTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONTACTS'   => array(
+                        'displayName' => ContactsModule::RIGHT_DELETE_CONTACTS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -862,6 +1012,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_DASHBOARDS'   => array(
+                        'displayName' => HomeModule::RIGHT_DELETE_DASHBOARDS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_ACCESS_DASHBOARDS,
                         'explicit'    => null,
@@ -872,6 +1028,12 @@
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_LEADS'   => array(
+                        'displayName' => LeadsModule::RIGHT_DELETE_LEADS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -896,6 +1058,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_NOTES'   => array(
+                        'displayName' => NotesModule::RIGHT_DELETE_NOTES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_NOTES'   => array(
                         'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
@@ -910,6 +1078,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_OPPORTUNITIES'   => array(
+                        'displayName' => OpportunitiesModule::RIGHT_DELETE_OPPORTUNITIES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_OPPORTUNITIES'   => array(
                         'displayName' => OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES,
                         'explicit'    => null,
@@ -920,6 +1094,12 @@
                 'GroupsModule'  => array(
                     'RIGHT_CREATE_GROUPS'   => array(
                         'displayName' => GroupsModule::RIGHT_CREATE_GROUPS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_GROUPS'   => array(
+                        'displayName' => GroupsModule::RIGHT_DELETE_GROUPS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -946,6 +1126,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_MEETINGS'   => array(
+                        'displayName' => MeetingsModule::RIGHT_DELETE_MEETINGS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_MEETINGS'   => array(
                         'displayName' => MeetingsModule::RIGHT_ACCESS_MEETINGS,
                         'explicit'    => null,
@@ -956,6 +1142,12 @@
                 'RolesModule'  => array(
                     'RIGHT_CREATE_ROLES'   => array(
                         'displayName' => RolesModule::RIGHT_CREATE_ROLES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_ROLES'   => array(
+                        'displayName' => RolesModule::RIGHT_DELETE_ROLES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -974,22 +1166,14 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_DELETE_TASKS'   => array(
+                        'displayName' => TasksModule::RIGHT_DELETE_TASKS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_ACCESS_TASKS'   => array(
                         'displayName' => TasksModule::RIGHT_ACCESS_TASKS,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                ),
-                'NotesModule'  => array(
-                    'RIGHT_CREATE_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_CREATE_NOTES,
-                        'explicit'    => null,
-                        'inherited'   => null,
-                        'effective'   => Right::DENY,
-                    ),
-                    'RIGHT_ACCESS_NOTES'   => array(
-                        'displayName' => NotesModule::RIGHT_ACCESS_NOTES,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
