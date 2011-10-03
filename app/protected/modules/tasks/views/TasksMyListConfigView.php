@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * View for showing the configuration parameters for the @see ContactsMyListView.
+     * View for showing the configuration parameters for the @see TasksMyListView.
      */
     class TasksMyListConfigView extends MyListConfigView
     {

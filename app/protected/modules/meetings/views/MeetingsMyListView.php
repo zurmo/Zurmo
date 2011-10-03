@@ -25,20 +25,27 @@
      ********************************************************************************/
 
     /**
-     * Class used for the dashboard, selectable by users to display a list of their contacts or filtered any way.
+     * Class used for the dashboard, selectable by users to display a list of their meetings or filtered any way.
      */
-    class ContactsMyListView extends SecuredMyListView
+    class MeetingsMyListView extends SecuredMyListView
     {
+        protected function getSortAttributeForDataProvider()
+        {
+            return 'startDateTime';
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
-                    'searchAttributes' => array('ownedItemsOnly' => true),
+                    'title' => "eval:Yii::t('Default', 'My Upcoming MeetingsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'searchAttributes' => array('ownedItemsOnly' => true,
+                                                'startDateTime__DateTime' =>
+                                                    array('type' => MixedDateTypesSearchFormAttributeMappingRules::TYPE_NEXT_7_DAYS)),
                 ),
                 'global' => array(
-                    'derivedAttributeTypes' => array(
-                        'FullName',
+                    'nonPlaceableAttributeNames' => array(
+                        'latestDateTime',
                     ),
                     'panels' => array(
                         array(
@@ -47,7 +54,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'FullName', 'isLink' => true),
+                                                array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true),
                                             ),
                                         ),
                                     )
@@ -56,7 +63,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
+                                                array('attributeName' => 'startDateTime', 'type' => 'DateTime'),
                                             ),
                                         ),
                                     )
@@ -71,23 +78,23 @@
 
         public static function getModuleClassName()
         {
-            return 'ContactsModule';
+            return 'MeetingsModule';
         }
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', 'My Upcoming MeetingsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()
         {
             $modelClassName = $this->modelClassName;
-            return new ContactsSearchForm(new $modelClassName(false));
+            return new MeetingsSearchForm(new $modelClassName(false));
         }
 
         protected static function getConfigViewClassName()
         {
-            return 'ContactsMyListConfigView';
+            return 'MeetingsMyListConfigView';
         }
     }
 ?>

@@ -25,15 +25,15 @@
      ********************************************************************************/
 
     /**
-     * Class used for the dashboard, selectable by users to display a list of their contacts or filtered any way.
+     * Class used for the dashboard, selectable by users to display a list of their leads or filtered any way.
      */
-    class ContactsMyListView extends SecuredMyListView
+    class LeadsMyListView extends SecuredMyListView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Yii::t('Default', 'My LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                     'searchAttributes' => array('ownedItemsOnly' => true),
                 ),
                 'global' => array(
@@ -56,7 +56,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
+                                                array('attributeName' => 'companyName', 'type' => 'Text'),
                                             ),
                                         ),
                                     )
@@ -71,23 +71,23 @@
 
         public static function getModuleClassName()
         {
-            return 'ContactsModule';
+            return 'LeadsModule';
         }
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', 'My LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()
         {
             $modelClassName = $this->modelClassName;
-            return new ContactsSearchForm(new $modelClassName(false));
+            return new LeadsSearchForm(new $modelClassName(false));
         }
 
         protected static function getConfigViewClassName()
         {
-            return 'ContactsMyListConfigView';
+            return 'LeadsMyListConfigView';
         }
     }
 ?>

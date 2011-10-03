@@ -25,29 +25,29 @@
      ********************************************************************************/
 
     /**
-     * Class used for the dashboard, selectable by users to display a list of their contacts or filtered any way.
+     * View for showing the configuration parameters for the @see OpportunitiesMyListView.
      */
-    class ContactsMyListView extends SecuredMyListView
+    class OpportunitiesMyListConfigView extends MyListConfigView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
-                'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
-                    'searchAttributes' => array('ownedItemsOnly' => true),
-                ),
                 'global' => array(
-                    'derivedAttributeTypes' => array(
-                        'FullName',
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type' => 'SaveButton'),
+                        ),
                     ),
+                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(
+                            'title' => 'List Filters',
                             'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'FullName', 'isLink' => true),
+                                                array('attributeName' => 'stage', 'type' => 'DropDown', 'addBlank' => true),
                                             ),
                                         ),
                                     )
@@ -56,7 +56,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
+                                                array('attributeName' => 'ownedItemsOnly', 'type' => 'CheckBox'),
                                             ),
                                         ),
                                     )
@@ -69,25 +69,14 @@
             return $metadata;
         }
 
-        public static function getModuleClassName()
-        {
-            return 'ContactsModule';
-        }
-
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
-        protected function getSearchModel()
+        public static function getModelForMetadataClassName()
         {
-            $modelClassName = $this->modelClassName;
-            return new ContactsSearchForm(new $modelClassName(false));
-        }
-
-        protected static function getConfigViewClassName()
-        {
-            return 'ContactsMyListConfigView';
+            return 'OpportunitiesSearchForm';
         }
     }
 ?>

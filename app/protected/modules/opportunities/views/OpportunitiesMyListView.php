@@ -25,21 +25,18 @@
      ********************************************************************************/
 
     /**
-     * Class used for the dashboard, selectable by users to display a list of their contacts or filtered any way.
+     * Class used for the dashboard, selectable by users to display a list of their opportunities or filtered any way.
      */
-    class ContactsMyListView extends SecuredMyListView
+    class OpportunitiesMyListView extends SecuredMyListView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Yii::t('Default', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                     'searchAttributes' => array('ownedItemsOnly' => true),
                 ),
                 'global' => array(
-                    'derivedAttributeTypes' => array(
-                        'FullName',
-                    ),
                     'panels' => array(
                         array(
                             'rows' => array(
@@ -47,7 +44,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'FullName', 'isLink' => true),
+                                                array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true),
                                             ),
                                         ),
                                     )
@@ -56,7 +53,25 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
+                                                array('attributeName' => 'stage', 'type' => 'DropDown'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'amount', 'type' => 'CurrencyValue'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'closeDate', 'type' => 'Date'),
                                             ),
                                         ),
                                     )
@@ -71,23 +86,23 @@
 
         public static function getModuleClassName()
         {
-            return 'ContactsModule';
+            return 'OpportunitiesModule';
         }
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()
         {
             $modelClassName = $this->modelClassName;
-            return new ContactsSearchForm(new $modelClassName(false));
+            return new OpportunitiesSearchForm(new $modelClassName(false));
         }
 
         protected static function getConfigViewClassName()
         {
-            return 'ContactsMyListConfigView';
+            return 'OpportunitiesMyListConfigView';
         }
     }
 ?>

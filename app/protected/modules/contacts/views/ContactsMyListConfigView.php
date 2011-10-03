@@ -53,25 +53,16 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'fullName', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'lastName', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'ContactStateDropDown', 'addBlank' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'ownedItemsOnly', 'type' => 'CheckBox'),
                                             ),
                                         ),
                                     )
