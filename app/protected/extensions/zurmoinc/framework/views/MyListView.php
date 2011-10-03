@@ -75,12 +75,17 @@
         {
             assert('is_array($searchAttributeData)');
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('subListPageSize');
-            return new RedBeanModelDataProvider($this->modelClassName, null, false,
+            return new RedBeanModelDataProvider($this->modelClassName, $this->getSortAttributeForDataProvider(), false,
                                                                 $searchAttributeData, array(
                                                                     'pagination' => array(
                                                                         'pageSize' => $pageSize,
                                                                     )
                                                                 ));
+        }
+
+        protected function getSortAttributeForDataProvider()
+        {
+            return null;
         }
 
         public function isUniqueToAPage()
@@ -157,6 +162,7 @@
 
         public static function getDefaultSearchAttributes()
         {
+            $metadata = self::getMetadata();
             if(isset($metadata['perUser']['searchAttributes']))
             {
                 return $metadata['perUser']['searchAttributes'];

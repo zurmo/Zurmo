@@ -214,7 +214,7 @@
             $tableName = self::getTableName($modelClassName);
             $sql = static::makeSubsetOrCountSqlQuery($tableName, $joinTablesAdapter, $offset, $count, $where,
                                                      $orderBy, false, $selectDistinct);
-            $ids   = R::getCol($sql);
+            $ids = R::getCol($sql);
             $tableName = self::getTableName($modelClassName);
             $beans = R::batch ($tableName, $ids);
             return self::makeModels($beans, $modelClassName);
