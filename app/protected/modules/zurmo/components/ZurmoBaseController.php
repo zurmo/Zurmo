@@ -40,7 +40,7 @@
                         'rightName' => $moduleClassName::getAccessRight(),
                 );
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + create, createFromRelation',
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + create, createFromRelation, inlineCreateSave',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );

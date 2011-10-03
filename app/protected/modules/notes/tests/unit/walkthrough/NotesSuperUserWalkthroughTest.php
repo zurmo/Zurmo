@@ -139,8 +139,8 @@
             $content = $this->runControllerWithRedirectExceptionAndGetContent('notes/default/inlineEditSave');
             //Confirm changes applied correctly.
             $notes = Note::getAll();
-            $this->assertEquals(2, count($notes));
-            $this->assertEquals('myNoteX', $notes[0]->description);
+            $this->assertEquals(1, count($notes));
+            $this->assertEquals('a Valid Name of a Note', $notes[0]->description);
 
             //test removing a note.
             $this->setGetArray(array('id' => $notes[0]->id));
@@ -148,7 +148,7 @@
             $this->runControllerWithRedirectExceptionAndGetContent('notes/default/delete');
             //Confirm no more notes exist.
             $notes = Note::getAll();
-            $this->assertEquals(1, count($notes));
+            $this->assertEquals(0, count($notes));
         }
     }
 ?>
