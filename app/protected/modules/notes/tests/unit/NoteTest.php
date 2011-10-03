@@ -23,7 +23,7 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-    		
+
     class NoteTest extends BaseTest
     {
         public static function setUpBeforeClass()
@@ -180,7 +180,7 @@
          * @depends testAutomatedOccurredOnDateTimeAndLatestDateTimeChanges
          */
         public function testNobodyCanReadWriteDeleteAndStrValOfNoteFunctionsCorrectly() {
-            
+
             Yii::app()->user->userModel = User::getByUsername('super');
 
             $fileModel    = ZurmoTestHelper::createFileModel();
@@ -210,7 +210,7 @@
             //add nobody permission to read, write and delete the note
             $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
             $this->assertTrue($note->save());
-            
+
             //now acces to the notes read by nobody should not fail
             Yii::app()->user->userModel = $nobody;
             $this->assertEquals($note->description, strval($note));
@@ -233,16 +233,16 @@
             $note = NoteTestHelper::createNoteWithOwnerAndRelatedAccount('noteCreatedBySuper', $super, $superAccount);
 
             //give nobody access to both details, edit and delete view in order to check the delete of a note
-			Yii::app()->user->userModel = User::getByUsername('super');
+            Yii::app()->user->userModel = User::getByUsername('super');
             $nobody->forget();
             $nobody = User::getByUsername('nobody');
             $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
             $this->assertTrue($note->save());
-			Yii::app()->user->userModel = User::getByUsername('nobody');
+            Yii::app()->user->userModel = User::getByUsername('nobody');
             $noteId = $note->id;
             $note->forget();
             $note = Note::getById($noteId);
-			$note->delete();
+            $note->delete();
         }
 
         public function testGetModelClassNames()
