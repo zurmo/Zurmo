@@ -93,7 +93,7 @@
 
         public static function getCreateRight()
         {
-            return self::RIGHT_DELETE_ACCOUNTS;
+            return self::RIGHT_CREATE_ACCOUNTS;
         }
 
         public static function getDeleteRight()

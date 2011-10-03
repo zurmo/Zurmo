@@ -102,12 +102,14 @@
 
             //Test login form with populated extra header content.
             //First test that the extra content does not show up.
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
+            $this->resetGetArray();
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
             $this->assertTrue(strpos($content, 'xyzabc') === false);
             //Add content and test that it shows up properly.
             $content = '<div style="padding: 7px 7px 7px 80px; color: red;"><b>xyzabc</b></div>';
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'loginViewExtraHeaderContent', $content);
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
             $this->assertTrue(strpos($content, 'xyzabc') !== false);
 
             //Configuration administration user interface.
@@ -204,7 +206,7 @@
             $this->setGetArray(array('term' => 'something'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete');
-            $this->assertEquals(CJSON::encode(array(array('href' => '', 'label' => 'No results Found'))), $content);
+            $this->assertEquals(CJSON::encode(array(array('href' => '', 'label' => 'No Results Found'))), $content);
         }
     }
 ?>

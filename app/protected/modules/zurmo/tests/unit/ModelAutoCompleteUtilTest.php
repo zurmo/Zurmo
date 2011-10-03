@@ -203,7 +203,7 @@
 
                 //Test where no results are expected.
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('weqqw', 5, $super);
-                $this->assertEquals(array(), $data);
+                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found')), $data);
 
                 //Test where one account is expected searching by account name.
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('Rabbit', 5, $super);
@@ -217,6 +217,8 @@
                 $this->assertEquals('The Zoo - Account', $data[0]['label']);
                 $this->assertEquals('Big Elephant - Contact', $data[1]['label']);
                 $this->assertEquals('Animal Crackers - Opportunity', $data[2]['label']);
+
+
             }
         }
 
@@ -225,65 +227,70 @@
          */
         public function testGetGlobalSearchResultsByPartialTermWithRegularUserAndElevationStepsForRegularUser()
         {
-            $super = User::getByUsername('super');
-            $jimmy = User::getByUsername('jimmy');
-            Yii::app()->user->userModel = $super;
+            //Unfrozen, there are too many attributes that have to be columns in the database at this point, so
+            //now this is just a frozen test.
+            if (RedBeanDatabase::isFrozen())
+            {
+                $super = User::getByUsername('super');
+                $jimmy = User::getByUsername('jimmy');
+                Yii::app()->user->userModel = $super;
 
-            //Jimmy does not have read access, so he should not be able to see any results.
-            $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS));
-            $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('ContactsModule',      ContactsModule::RIGHT_ACCESS_CONTACTS));
-            $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES));
-            Yii::app()->user->userModel = $jimmy;
-            $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
-            $this->assertEquals(array(), $data);
+                //Jimmy does not have read access, so he should not be able to see any results.
+                $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS));
+                $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('ContactsModule',      ContactsModule::RIGHT_ACCESS_CONTACTS));
+                $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES));
+                Yii::app()->user->userModel = $jimmy;
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
+                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found')), $data);
 
-            //Give Jimmy access to the module, he still will not be able to see results.
-            Yii::app()->user->userModel = $super;
-            $jimmy->setRight   ('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS);
-            $jimmy->setRight   ('ContactsModule',      ContactsModule::RIGHT_ACCESS_CONTACTS);
-            $jimmy->setRight   ('LeadsModule',         LeadsModule::RIGHT_ACCESS_LEADS);
-            $jimmy->setRight   ('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
-            $this->assertTrue  ($jimmy->save());
-            Yii::app()->user->userModel = $jimmy;
-            $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
-            $this->assertEquals(array(), $data);
+                //Give Jimmy access to the module, he still will not be able to see results.
+                Yii::app()->user->userModel = $super;
+                $jimmy->setRight   ('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+                $jimmy->setRight   ('ContactsModule',      ContactsModule::RIGHT_ACCESS_CONTACTS);
+                $jimmy->setRight   ('LeadsModule',         LeadsModule::RIGHT_ACCESS_LEADS);
+                $jimmy->setRight   ('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+                $this->assertTrue  ($jimmy->save());
+                Yii::app()->user->userModel = $jimmy;
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
+                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found')), $data);
 
-            //Give Jimmy read on 1 model.  The search then should pick up this model.
-            Yii::app()->user->userModel = $super;
-            $accounts = Account::getByName('The Zoo');
-            $this->assertEquals(1, count($accounts));
-            $account = $accounts[0];
-            $this->assertEquals(Permission::NONE, $account->getEffectivePermissions      ($jimmy));
-            $account->addPermissions($jimmy, Permission::READ);
-            $this->assertTrue  ($account->save());
-            ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser($account, $jimmy);
-            Yii::app()->user->userModel = $jimmy;
-            $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
-            $this->assertEquals(1, count($data));
-            $this->assertEquals('The Zoo - Account',             $data[0]['label']);
+                //Give Jimmy read on 1 model.  The search then should pick up this model.
+                Yii::app()->user->userModel = $super;
+                $accounts = Account::getByName('The Zoo');
+                $this->assertEquals(1, count($accounts));
+                $account = $accounts[0];
+                $this->assertEquals(Permission::NONE, $account->getEffectivePermissions      ($jimmy));
+                $account->addPermissions($jimmy, Permission::READ);
+                $this->assertTrue  ($account->save());
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser($account, $jimmy);
+                Yii::app()->user->userModel = $jimmy;
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
+                $this->assertEquals(1, count($data));
+                $this->assertEquals('The Zoo - Account',             $data[0]['label']);
 
-            //Give Jimmy read on 2 more models.  The search then should pick up these models.
-            Yii::app()->user->userModel = $super;
-            $contacts = Contact::getByName('Big Elephant');
-            $this->assertEquals(1, count($contacts));
-            $contact = $contacts[0];
-            $this->assertEquals(Permission::NONE, $contact->getEffectivePermissions      ($jimmy));
-            $contact->addPermissions($jimmy, Permission::READ);
-            $this->assertTrue  ($contact->save());
-            ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser        ($contact, $jimmy);
-            $opportunities = Opportunity::getByName('Animal Crackers');
-            $this->assertEquals(1, count($opportunities));
-            $opportunity = $opportunities[0];
-            $this->assertEquals(Permission::NONE, $opportunity->getEffectivePermissions  ($jimmy));
-            $opportunity->addPermissions($jimmy, Permission::READ);
-            $this->assertTrue  ($opportunity->save());
-            ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser        ($opportunity, $jimmy);
-            Yii::app()->user->userModel = $jimmy;
-            $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
-            $this->assertEquals(3, count($data));
-            $this->assertEquals('The Zoo - Account',             $data[0]['label']);
-            $this->assertEquals('Big Elephant - Contact',        $data[1]['label']);
-            $this->assertEquals('Animal Crackers - Opportunity', $data[2]['label']);
+                //Give Jimmy read on 2 more models.  The search then should pick up these models.
+                Yii::app()->user->userModel = $super;
+                $contacts = Contact::getByName('Big Elephant');
+                $this->assertEquals(1, count($contacts));
+                $contact = $contacts[0];
+                $this->assertEquals(Permission::NONE, $contact->getEffectivePermissions      ($jimmy));
+                $contact->addPermissions($jimmy, Permission::READ);
+                $this->assertTrue  ($contact->save());
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser        ($contact, $jimmy);
+                $opportunities = Opportunity::getByName('Animal Crackers');
+                $this->assertEquals(1, count($opportunities));
+                $opportunity = $opportunities[0];
+                $this->assertEquals(Permission::NONE, $opportunity->getEffectivePermissions  ($jimmy));
+                $opportunity->addPermissions($jimmy, Permission::READ);
+                $this->assertTrue  ($opportunity->save());
+                ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser        ($opportunity, $jimmy);
+                Yii::app()->user->userModel = $jimmy;
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
+                $this->assertEquals(3, count($data));
+                $this->assertEquals('The Zoo - Account',             $data[0]['label']);
+                $this->assertEquals('Big Elephant - Contact',        $data[1]['label']);
+                $this->assertEquals('Animal Crackers - Opportunity', $data[2]['label']);
+            }
         }
     }
 ?>

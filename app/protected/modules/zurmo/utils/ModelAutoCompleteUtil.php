@@ -105,13 +105,13 @@
             $modelClassNamesAndSearchAttributeData = self::makeMmodelClassNamesAndSearchAttributeData($partialTerm, $user);
             if(empty($modelClassNamesAndSearchAttributeData))
             {
-                return array(array('href' => '', 'label' => Yii::t('Default', 'No results Found')));
+                return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
             }
             $dataProvider = new RedBeanModelsDataProvider('anId', null, false, $modelClassNamesAndSearchAttributeData);
             $data = $dataProvider->getData();
             if(empty($data))
             {
-                return array(array('href' => '', 'label' => Yii::t('Default', 'No results Found')));
+                return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
             }
             $autoCompleteResults = array();
             foreach ($data as $model)
