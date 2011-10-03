@@ -344,14 +344,13 @@
                             }
                             //Remove extra lines caused by ' . ' which is used for line breaks in php. Minimum 3 spaces
                             //will avoid catching 2 spaces between words which can be legitimate.
-                            $massagedString = preg_replace('/[\p{Z}\s]{3,}/u', ' ', $matches[2][$index]);
+                            $massagedString = preg_replace('/[\p{Z}\s]{3,}/u', ' ', $matches[2][$index]); // Not Coding Standard
                             $massagedString = str_replace("' . '", '', $massagedString);
                             $fileNamesToCategoriesToMessages[$entry][$category][] = $massagedString;
-                            if($matches[2][$index] != $massagedString && strpos($matches[2][$index], "' .") === false)
+                            if ($matches[2][$index] != $massagedString && strpos($matches[2][$index], "' .") === false)
                             {
                                 echo 'The following message should be using proper line breaks: ' . $matches[2][$index] . "\n";
                             }
-
                         }
                     }
                 }

@@ -79,6 +79,7 @@
             {
                 $urlScript = 'js:$.param.querystring("' . $this->url . '", "' .
                              $this->dataProvider->getPagination()->pageVar . '=" + $(this).attr("href"))';
+                // Begin Not Coding Standard
                 return CHtml::ajaxLink(Yii::t('Default', 'Show more'), $urlScript,
                     array('type' => 'GET',
                           'success' => 'js:function(data){
@@ -87,6 +88,7 @@
                             $(id).append($(id, data).html());
                           }'),
                     array('id' => $showMoreLinkId, 'href' => ($currentPage + 1)));
+                // End Not Coding Standard
             }
         }
 

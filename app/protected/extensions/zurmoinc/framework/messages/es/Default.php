@@ -153,7 +153,8 @@
             => '??',
         'Serialized Data'
             => '??',
-        'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
+        'Some values cannot be removed because they are currently in use. ' .
+        'Try changing the records that use them first.'
             => '??',
         'Tab'
             => '??',

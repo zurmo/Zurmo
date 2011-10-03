@@ -233,7 +233,7 @@
                                                                     $operatorType);
                 }
             }
-            if($tempStructure != null)
+            if ($tempStructure != null)
             {
                 $tempStructure = '(' . $tempStructure . ')';
                 if ($appendStructureAsAnd)

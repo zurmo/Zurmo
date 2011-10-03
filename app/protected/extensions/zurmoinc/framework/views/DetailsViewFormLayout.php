@@ -165,10 +165,12 @@
             if ($this->shouldRenderTabbedPanels())
             {
                 $content = '<div id="' . $this->uniqueId . '-panel-tabs"><ul>' . $this->getTabsContent() . '</ul>' . $content . '</div>';
+                // Begin Not Coding Standard
                 Yii::app()->clientScript->registerScript('initializeTabs' . $this->uniqueId, "
                     $(function() {
                         $( '#" . $this->uniqueId . "-panel-tabs' ).tabs({selected: 0});
                     });");
+                // End Not Coding Standard
             }
             return $content;
         }
