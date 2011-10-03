@@ -108,10 +108,11 @@
         {
             //Now test peon with elevated rights to tabs /other available rights
             $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
-            
+
             //Now test peon with elevated rights to leads
             $nobody->setRight('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS);
             $nobody->setRight('LeadsModule', LeadsModule::RIGHT_CREATE_LEADS);
+            $nobody->setRight('LeadsModule', LeadsModule::RIGHT_DELETE_LEADS);
             $this->assertTrue($nobody->save());
 
             //Test nobody with elevated rights.
@@ -223,7 +224,7 @@
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/details');
             $this->setGetArray(array('id' => $lead2->id));
-            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');	
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
 
             //give userInChildRole access to READ
             Yii::app()->user->userModel = $super;
@@ -280,7 +281,7 @@
             $this->assertTrue($parentRole->save());
             $childRole->users->remove($userInChildRole);
             $this->assertTrue($childRole->save());
-            
+
             //create some groups and assign users to groups
             Yii::app()->user->userModel = $super;
             $parentGroup = new Group();
@@ -373,9 +374,9 @@
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/details');
-            $this->setGetArray(array('id' => $lead3->id));			
-            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');		
-            
+            $this->setGetArray(array('id' => $lead3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
+
             //clear up the role relationships between users so not to effect next assertions
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $userInParentGroup->forget();
