@@ -213,7 +213,7 @@
                     $mungeIds = ReadPermissionsOptimizationUtil::getMungeIdsByUser($user);
                     if ($where != null)
                     {
-                        $where .= ' and ';
+                        $where = '(' . $where . ') and ';
                     }
                     if (count($mungeIds) > 0 && $permission == Permission::NONE)
                     {

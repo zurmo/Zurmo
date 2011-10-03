@@ -29,6 +29,13 @@
      */
     class DeleteActionSecurity extends ActionSecurity
     {
+        protected function getRightToCheck()
+        {
+            $model = $this->model;
+            $moduleClassName = $model::getModuleClassName();
+            return array($moduleClassName, $moduleClassName::getDeleteRight());
+        }
+
         protected function getPermissionToCheck()
         {
             return Permission::DELETE;

@@ -40,6 +40,11 @@
                         'moduleClassName' => 'HomeModule',
                         'rightName' => HomeModule::RIGHT_CREATE_DASHBOARDS,
                    ),
+                    array(
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + deleteDashboard',
+                        'moduleClassName' => 'HomeModule',
+                        'rightName' => HomeModule::RIGHT_DELETE_DASHBOARDS,
+                   ),
                )
             );
         }

@@ -27,6 +27,7 @@
     class GroupsModule extends SecurableModule
     {
         const RIGHT_CREATE_GROUPS = 'Create Groups';
+        const RIGHT_DELETE_GROUPS = 'Delete Groups';
         const RIGHT_ACCESS_GROUPS = 'Access Groups Tab';
 
         public function canDisable()
@@ -93,6 +94,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_GROUPS;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_GROUPS;
         }
 
         public static function getDefaultDataMakerClassName()

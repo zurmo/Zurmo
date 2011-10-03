@@ -28,13 +28,15 @@
     {
         public function testIsValidOperatorTypeByValue()
         {
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('startsWith', 'abc'));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('greaterThan', 'abc'));
-            $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue('startsWith', 5));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('greaterThan', 5));
-            $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue('doesNotMatter', null));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue('oneOf', array(4, 5, 6)));
-            $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue('oneOf', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('startsWith', 'abc'));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThan', 'abc'));
+            $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue ('startsWith', 5));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThan', 5));
+            $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue ('doesNotMatter', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('oneOf', array(4, 5, 6)));
+            $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue ('oneOf', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThanOrEqualTo', 'abc'));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('lessThanOrEqualTo', 'abc'));
         }
 
         public function testGetOperatorByType()

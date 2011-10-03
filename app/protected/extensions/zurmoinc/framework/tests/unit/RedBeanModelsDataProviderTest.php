@@ -86,9 +86,9 @@
             $kFakePost = array('kMember' => 'kString');
             $kMetadataAdapter = new SearchDataProviderMetadataAdapter(new K(false), 1, $kFakePost);
             $modelClassNamesAndSearchAttributeData = array(
-                'I' => $iMetadataAdapter->getAdaptedMetadata(),
-                'J' => $jMetadataAdapter->getAdaptedMetadata(),
-                'K' => $kMetadataAdapter->getAdaptedMetadata(),
+                array('I' => $iMetadataAdapter->getAdaptedMetadata()),
+                array('J' => $jMetadataAdapter->getAdaptedMetadata()),
+                array('K' => $kMetadataAdapter->getAdaptedMetadata()),
             );
             $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                     null, false, 2, 7);
@@ -130,9 +130,9 @@
             $kFakePost = array();
             $kMetadataAdapter = new SearchDataProviderMetadataAdapter(new K(false), 1, $kFakePost);
             $modelClassNamesAndSearchAttributeData = array(
-                'I' => $iMetadataAdapter->getAdaptedMetadata(),
-                'J' => $jMetadataAdapter->getAdaptedMetadata(),
-                'K' => $kMetadataAdapter->getAdaptedMetadata(),
+                array('I' => $iMetadataAdapter->getAdaptedMetadata()),
+                array('J' => $jMetadataAdapter->getAdaptedMetadata()),
+                array('K' => $kMetadataAdapter->getAdaptedMetadata()),
             );
             $modelClassNamesAndSortAttributes = array(
                 'I' => 'name',
@@ -193,9 +193,9 @@
             $kFakePost = array();
             $kMetadataAdapter = new SearchDataProviderMetadataAdapter(new K(false), 1, $kFakePost);
             $modelClassNamesAndSearchAttributeData = array(
-                'I' => $iMetadataAdapter->getAdaptedMetadata(),
-                'J' => $jMetadataAdapter->getAdaptedMetadata(),
-                'K' => $kMetadataAdapter->getAdaptedMetadata(),
+                array('I' => $iMetadataAdapter->getAdaptedMetadata()),
+                array('J' => $jMetadataAdapter->getAdaptedMetadata()),
+                array('K' => $kMetadataAdapter->getAdaptedMetadata()),
             );
             $modelClassNamesAndSortAttributes = array(
                 'I' => 'name',
@@ -252,8 +252,8 @@
             );
             $searchAttributeDataForI['structure'] = '1';
             $modelClassNamesAndSearchAttributeData = array(
-                'I' => $searchAttributeDataForI,
-                'J' => $searchAttributeDataForJ,
+                array('I' => $searchAttributeDataForI),
+                array('J' => $searchAttributeDataForJ),
             );
             $modelClassNamesAndSortAttributes = array(
                 'I' => 'name',

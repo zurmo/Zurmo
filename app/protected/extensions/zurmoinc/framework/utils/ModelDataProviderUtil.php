@@ -259,7 +259,7 @@
                 //An example of this if if you are searching on an account's industry value.  Industry is related from
                 //account, but the value is actually on the parent class of OwnedCustomField which is CustomField.
                 //Therefore the JoinId is going to be structured like this.
-                elseif(get_parent_class($relationModelClassName) == $relationAttributeModelClassName)
+                elseif (get_parent_class($relationModelClassName) == $relationAttributeModelClassName)
                 {
                     $onTableJoinIdName = "{$relationAttributeTableName}_id";
                 }

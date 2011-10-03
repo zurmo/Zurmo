@@ -144,6 +144,11 @@
             return true;
         }
 
+        public static function getModuleClassName()
+        {
+            return 'HomeModule';
+        }
+
         /**
          * BEFORE ADDING TO THIS ARRAY - Remember to change the assertion in JuiPortlets:::init()
          */

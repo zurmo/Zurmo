@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactsSearchForm extends SearchForm
+    class ContactsSearchForm extends OwnedSearchForm
     {
         public $anyCity;
         public $anyStreet;
@@ -38,7 +38,7 @@
 
         public function rules()
         {
-            return array(
+            return array_merge(parent::rules(), array(
                 array('anyCity', 'safe'),
                 array('anyStreet', 'safe'),
                 array('anyState', 'safe'),
@@ -48,12 +48,12 @@
                 array('anyInvalidEmail', 'boolean'),
                 array('anyOptOutEmail', 'boolean'),
                 array('fullName', 'safe'),
-            );
+            ));
         }
 
         public function attributeLabels()
         {
-            return array(
+            return array_merge(parent::attributeLabels(), array(
                 'anyCity'            => Yii::t('Default', 'Any City'),
                 'anyStreet'          => Yii::t('Default', 'Any Street'),
                 'anyState'           => Yii::t('Default', 'Any State'),
@@ -63,12 +63,12 @@
                 'anyInvalidEmail'    => Yii::t('Default', 'Any Invalid Email'),
                 'anyOptOutEmail'     => Yii::t('Default', 'Any Opted Out Email'),
                 'fullName'           => Yii::t('Default', 'Name'),
-            );
+            ));
         }
 
-        public function resolveAttributesMappedToRealAttributesMetadata()
+        public function getAttributesMappedToRealAttributesMetadata()
         {
-            return array(
+            return array_merge(parent::getAttributesMappedToRealAttributesMetadata(), array(
                 'anyCity' => array(
                     array('primaryAddress',  'city'),
                     array('secondaryAddress', 'city'),
@@ -105,7 +105,7 @@
                     array('firstName'),
                     array('lastName'),
                 ),
-            );
+            ));
         }
     }
 ?>

@@ -93,7 +93,12 @@ a:hover
 /* Begin Header Menu Classes */
 #HeaderLinksView
 {
-    margin-top: 35px;
+    margin-top: 5 px;
+    text-align: right;
+}
+#GlobalSearchAndRecentlyViewedView
+{
+    margin-right: 20px;
     text-align: right;
 }
 /* End Header Menu Classes */
@@ -181,5 +186,22 @@ Process view classes
     align:center;
     margin:0 auto;
     width:800px;
+}
+
+.tooltip
+{
+    font-size:75%;
+    text-decoration:underline;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.global-search
+{
+  width: 250px;
+}
+.global-search-hint
+{
+    color: #AAAAAA;
 }
 /* End Misc Classes */

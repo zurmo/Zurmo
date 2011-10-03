@@ -31,26 +31,37 @@
     {
         public $anyA;
         public $ABName;
+        public $differentOperatorA;
+        public $differentOperatorB;
 
         public function rules()
         {
-            return array(
+            return array_merge(parent::rules(), array(
                 array('anyA', 'safe'),
                 array('ABName', 'safe'),
-            );
+                array('differentOperatorA', 'safe'),
+                array('differentOperatorB', 'boolean'),
+            ));
         }
 
         public function attributeLabels()
         {
-            return array(
-                'anyA'            => Yii::t('Default', 'Any A'),
-                'ABName'          => Yii::t('Default', 'ABName'),
-            );
+            return array_merge(parent::attributeLabels(), array(
+                'anyA'                => Yii::t('Default', 'Any A'),
+                'ABName'              => Yii::t('Default', 'ABName'),
+                'differentOperatorA'  => Yii::t('Default', 'differentOperatorA'),
+                'differentOperatorB'  => Yii::t('Default', 'differentOperatorB'),
+            ));
         }
 
-        public function resolveAttributesMappedToRealAttributesMetadata()
+        protected static function getSearchFormAttributeMappingRulesTypes()
         {
-            return array(
+            return array_merge(parent::getSearchFormAttributeMappingRulesTypes(), array('differentOperatorA' => 'OwnedItemsOnly'));
+        }
+
+        public function getAttributesMappedToRealAttributesMetadata()
+        {
+            return array_merge(parent::getAttributesMappedToRealAttributesMetadata(), array(
                 'anyA' => array(
                     array('primaryA',   'name'),
                     array('secondaryA', 'name'),
@@ -59,7 +70,13 @@
                     array('aName'),
                     array('bName'),
                 ),
-            );
+                'differentOperatorA' => array(
+                    array('primaryA',   'name', null, 'resolveValueByRules'),
+                ),
+                'differentOperatorB' => array(
+                    array('aName', null, 'endsWith')
+                )
+            ));
         }
     }
 ?>

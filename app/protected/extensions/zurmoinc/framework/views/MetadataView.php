@@ -88,7 +88,7 @@
                     }
                     if (!$renderedInForm && $element->isFormRequiredToUse())
                     {
-                        throw NotSupportedException();
+                        throw new NotSupportedException();
                     }
                     $renderedContent = $element->render();
                     if (!$first && !empty($renderedContent))

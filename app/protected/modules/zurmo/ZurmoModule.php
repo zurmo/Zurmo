@@ -77,6 +77,13 @@
                         'route'            => '/zurmo/currency/configurationList',
                         'right'            => self::RIGHT_ACCESS_CURRENCY_CONFIGURATION,
                     ),
+                    array(
+                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Languages',
+                        'descriptionLabel' => 'Manage Active Languages',
+                        'route'            => '/zurmo/language/configurationList',
+                        'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
+                    ),
                 ),
                 'headerMenuItems' => array(
                     array(

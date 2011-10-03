@@ -30,7 +30,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => 'OpportunitiesModulePluralLabel',
+                    'title' => "eval:Yii::t('Default', 'OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
                     'toolbar' => array(

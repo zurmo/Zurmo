@@ -47,6 +47,7 @@
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/default/about');
+            $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/default/recentlyViewed');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group/create');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group/index');
@@ -101,12 +102,14 @@
 
             //Test login form with populated extra header content.
             //First test that the extra content does not show up.
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
+            $this->resetGetArray();
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
             $this->assertTrue(strpos($content, 'xyzabc') === false);
             //Add content and test that it shows up properly.
             $content = '<div style="padding: 7px 7px 7px 80px; color: red;"><b>xyzabc</b></div>';
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'loginViewExtraHeaderContent', $content);
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
             $this->assertTrue(strpos($content, 'xyzabc') !== false);
 
             //Configuration administration user interface.
@@ -197,6 +200,13 @@
             //Now confirm that there are no file models or content in the system.
             $this->assertEquals(0, count(FileModel::getAll()));
             $this->assertEquals(0, count(FileContent::getAll()));
+
+            //Test GlobalSearchAutoComplete
+            $this->assertTrue(ContactsModule::loadStartingData());
+            $this->setGetArray(array('term' => 'something'));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete');
+            $this->assertEquals(CJSON::encode(array(array('href' => '', 'label' => 'No Results Found'))), $content);
         }
     }
 ?>

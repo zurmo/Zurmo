@@ -30,8 +30,9 @@
 
         public function __construct()
         {
-            $this->verticalGridView  = new GridView(1, 1);
+            $this->verticalGridView  = new GridView(2, 1);
             $this->verticalGridView->setView(new HeaderLinksView(),    0, 0);
+            $this->verticalGridView->setView(new GlobalSearchAndRecentlyViewedView(),    1, 0);
         }
 
         protected function renderContent()

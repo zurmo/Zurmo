@@ -51,11 +51,13 @@
             $redirectUrlParams = array('/zurmo/' . $this->getId() . '/ConfigurationList');
             $currency          = new Currency();
             $currency = $this->attemptToSaveModelFromPost($currency, $redirectUrlParams);
+            $messageBoxContent = $this->attemptToUpdateActiveCurrenciesFromPostAndGetMessageBoxContent();
             $view = new CurrencyTitleBarConfigurationListAndCreateView(
                             $this->getId(),
                             $this->getModule()->getId(),
                             $currency,
-                            Currency::getAll());
+                            Currency::getAll(),
+                            $messageBoxContent);
             $view = new ZurmoConfigurationPageView($this, $view);
             echo $view->render();
         }
@@ -72,13 +74,20 @@
                 $model->setAttributes($_POST[$postVariableName]);
                 if ($model->rateToBase == null && $model->code != null)
                 {
-                    $currencyHelper = Yii::app()->currencyHelper;
-                    $rate           = (float)$currencyHelper->getConversionRateToBase($model->code);
-                    if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
+                    if(!ZurmoCurrencyCodes::isValidCode($model->code))
                     {
                         $model->addError('code', Yii::t('Default', 'Invalid currency code'));
                         $currencyHelper->resetErrors();
                         return $model;
+                    }
+                    $currencyHelper = Yii::app()->currencyHelper;
+                    $rate           = (float)$currencyHelper->getConversionRateToBase($model->code);
+                    if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
+                    {
+                        Yii::app()->user->setFlash('notification',
+                                yii::t('Default', 'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.')
+                        );
+                        $currencyHelper->resetErrors();
                     }
                     elseif ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_WEB_SERVICE)
                     {
@@ -95,6 +104,47 @@
                 }
             }
             return $model;
+        }
+
+        protected function attemptToUpdateActiveCurrenciesFromPostAndGetMessageBoxContent()
+        {
+            if (isset($_POST['CurrencyCollection']))
+            {
+                $currencyCollectionActiveData = $_POST['CurrencyCollection'];
+                $atLeastOneCurrencyIsActive = false;
+                foreach($currencyCollectionActiveData as $currencyCode => $currencyData)
+                {
+                    assert('isset($currencyData["active"])');
+                    if($currencyData['active'])
+                    {
+                        $atLeastOneCurrencyIsActive = true;
+                    }
+                }
+                if(!$atLeastOneCurrencyIsActive)
+                {
+                    return HtmlNotifyUtil::renderAlertBoxByMessage(
+                                           Yii::t('Default', 'You must have at least one active currency.'));
+                }
+                else
+                {
+                    foreach($currencyCollectionActiveData as $currencyCode => $currencyData)
+                    {
+                        $currency = Currency::getByCode($currencyCode);
+                        if($currencyData['active'])
+                        {
+                            $currency->active = 1;
+                        }
+                        else
+                        {
+                            $currency->active = 0;
+                        }
+                        $saved = $currency->save();
+                        assert('$saved');
+                    }
+                    return HtmlNotifyUtil::renderHighlightBoxByMessage(
+                                           Yii::t('Default', 'Changes to active currencies changed successfully.'));
+                }
+            }
         }
 
         /**
@@ -114,6 +164,12 @@
                 );
             }
             $this->redirect(array($this->getId() . '/configurationList'));
+        }
+
+        public function actionAutoComplete($term)
+        {
+            $autoCompleteResults = CurrencyCodeAutoCompleteUtil::getByPartialCodeOrName($term);
+            echo CJSON::encode($autoCompleteResults);
         }
     }
 ?>

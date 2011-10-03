@@ -415,6 +415,24 @@
         }
 
         /**
+         * Override and return a string if the module supports the global search mechanism.
+         * @return null if not supported otherwise return the appropriate string.
+         */
+        public static function getGlobalSearchFormClassName()
+        {
+            return null;
+        }
+
+        /**
+         * Override and return a string of the StatemetadataAdataper class if the module's primary model supports
+         * states.  An example is leads or contacts where the lead is only contacts in a certain state.
+         */
+        public static function getStateMetadataAdapterClassName()
+        {
+            return null;
+        }
+
+        /**
          * Returns metadata for the module.
          * Does caching only if the user is not specified. This can potentially be changed to cache when the user is
          * specified but must be investigated further before doing this.

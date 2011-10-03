@@ -159,6 +159,7 @@
             'application.extensions.zurmoinc.framework.modules.*',
             'application.extensions.zurmoinc.framework.portlets.*',
             'application.extensions.zurmoinc.framework.portlets.rules.*',
+            'application.extensions.zurmoinc.framework.rules.*',
             'application.extensions.zurmoinc.framework.utils.*',
             'application.extensions.zurmoinc.framework.validators.*',
             'application.extensions.zurmoinc.framework.views.*',
@@ -187,7 +188,6 @@
                 ),
             ),
             'users',
-            'worldClock',
         ),
 
         'params' => array(
@@ -261,6 +261,7 @@
     $common_config['import'][] = "application.modules.zurmo.elements.security.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.utils.security.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
     return $common_config;
 ?>
