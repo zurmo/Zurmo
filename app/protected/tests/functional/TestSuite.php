@@ -36,7 +36,6 @@
         die('Please configure functional tests in config file ' . $basePath . '/protected/config/debugTest.php');
     }
 
-
     define('SELENIUM_SERVER_PATH', $seleniumServerPath);
     define('TEST_BASE_URL', $seleniumTestBaseUrl);
     define('TEST_RESULTS_URL', $seleniumTestResultUrl);

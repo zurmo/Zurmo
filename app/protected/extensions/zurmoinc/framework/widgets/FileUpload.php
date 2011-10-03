@@ -145,7 +145,7 @@
                 $sendAction = "\$('#{$this->formName}').find('.files > tbody').children().remove();";
                 $addLabel = Yii::t('Default', 'Add File');
             }
-
+            // Begin Not Coding Standard
             $javaScript = <<<EOD
 $(function () {
     'use strict';
@@ -212,6 +212,7 @@ $(function () {
 });
 
 EOD;
+            // End Not Coding Standard
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);
 
             $htmlOptions = array('id' => $this->inputId);
