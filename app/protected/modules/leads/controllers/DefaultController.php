@@ -68,6 +68,7 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
@@ -75,7 +76,6 @@
             }
             else
             {
-                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
                 AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $contact);
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
@@ -98,6 +98,7 @@
         public function actionEdit($id, $redirectUrl = null)
         {
             $contact = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/edit', 'id' => $contact->id);
@@ -105,7 +106,6 @@
             }
             else
             {
-                ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
                 $view = new LeadsPageView($this,
                     $this->makeTitleBarAndEditAndDetailsView(
                         $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
