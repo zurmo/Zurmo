@@ -254,5 +254,52 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
+
+        public function testSearchFormDynamicAttributes()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'date__Date'          => array('type'         => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
+                                                 'firstDate'  => '1991-03-04'),
+                'dateTime__DateTime'  => array('type'         => MixedDateTypesSearchFormAttributeMappingRules::TYPE_TODAY),
+                'dateTime2__DateTime' => array('value'        => null)
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $todayPlus7Days     = MixedDateTypesSearchFormAttributeMappingRules::calculateNewDateByDaysFromNow(7);
+            $metadata           = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'date',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => '1991-03-04',
+                ),
+                2 => array(
+                    'attributeName'        => 'dateTime',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => DateTimeUtil::
+                                              convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($today),
+                ),
+                3 => array(
+                    'attributeName'        => 'dateTime',
+                    'operatorType'         => 'lessThanOrEqualTo',
+                    'value'                => DateTimeUtil::
+                                              convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($today),
+                ),
+            );
+
+            $compareStructure = '(1) and (2 and 3)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
     }
 ?>

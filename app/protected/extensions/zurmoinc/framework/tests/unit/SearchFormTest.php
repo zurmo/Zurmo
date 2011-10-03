@@ -143,7 +143,7 @@
 
             //Test that the correct elements are used for the dynamic date attribute.
             $elementType = ModelAttributeToDesignerTypeUtil::getDesignerType($searchForm, 'dateTime__DateTime');
-            $this->assertEquals('MixedDateTimeTypesForSearch', $elementType);
+            $this->assertEquals('MixedDateTypesForSearch', $elementType);
         }
     }
 ?>

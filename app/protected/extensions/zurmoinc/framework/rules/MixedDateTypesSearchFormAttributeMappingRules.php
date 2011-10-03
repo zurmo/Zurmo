@@ -159,6 +159,11 @@
             }
         }
 
+        /**
+         * Given an integer representing a count of days from the present day, returns a DB formatted date stamp based
+         * on that calculation. This is a wrapper method for @see DateTimeCalculatorUtil::calculateNewByDaysFromNow
+         * @param integer $daysFromNow
+         */
         public static function calculateNewDateByDaysFromNow($daysFromNow)
         {
             assert('is_int($daysFromNow)');

@@ -26,6 +26,14 @@
 
     class PostUtilTest extends BaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+        }
+
         public function testSanitizePostByDesignerTypeForSavingModel()
         {
             $language = Yii::app()->getLanguage();
@@ -67,6 +75,36 @@
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new DateDateTime(),
                                                                                     array('aDateTime' => ''));
             $this->assertEmpty($sanitizedPostData['aDateTime']);
+
+
+        }
+
+        /**
+         * @depends testSanitizePostByDesignerTypeForSavingModel
+         */
+        public function testSanitizeSearchFormAttributes()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $language                   = Yii::app()->getLanguage();
+            $this->assertEquals($language, 'en');
+
+            //test sanitizing a SearchForm date attribute and a SearchForm dateTime attribute
+            $searchForm        = new ASearchFormTestModel(new MixedRelationsModel());
+            $postData          = array( 'date__Date'  =>
+                                    array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
+                                          'firstDate' => '3/25/11'),
+                                'dateTime__DateTime'  =>
+                                   array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
+                                          'firstDate' => '3/26/11'));
+            $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($searchForm, $postData);
+            $compareData = array( 'date__Date'  =>
+                                    array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
+                                          'firstDate' => '2011-03-25'),
+                                'dateTime__DateTime'  =>
+                                   array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
+                                          'firstDate' => '2011-03-26'));
+            $this->assertEquals($compareData, $sanitizedPostData);
         }
 
         public function testSanitizePostDataToJustHavingElementForSavingModel()

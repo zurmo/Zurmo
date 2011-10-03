@@ -64,13 +64,13 @@
                 {
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $greaterThanValue      = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($dateValue);
-                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue, true));
+                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue));
                 }
                 elseif($value['type'] == self::TYPE_BEFORE)
                 {
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $lessThanValue         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($dateValue);
-                    $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', $lessThanValue, true));
+                    $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', $lessThanValue));
                 }
                 elseif($value['type'] == self::TYPE_NEXT_7_DAYS)
                 {

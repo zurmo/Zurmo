@@ -257,8 +257,7 @@
                                     array('dateTime'  =>
                                         array('value' => DateTimeUtil::
                                                          convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay('2011-05-05'),
-                                              'operatorType'         => 'greaterThanOrEqualTo',
-                                              'appendStructureAsAnd' => true)));
+                                              'operatorType'         => 'greaterThanOrEqualTo')));
             $this->assertEquals($compareData, $metadata);
 
             //Test Date = Before X
@@ -271,8 +270,7 @@
                                     array('dateTime'  =>
                                         array('value' => DateTimeUtil::
                                                          convertDateIntoTimeZoneAdjustedDateTimeEndOfDay('2011-05-04'),
-                                              'operatorType'         => 'lessThanOrEqualTo',
-                                              'appendStructureAsAnd' => true)));
+                                              'operatorType'         => 'lessThanOrEqualTo')));
             $this->assertEquals($compareData, $metadata);
 
             //Test Date next 7 days
@@ -295,6 +293,7 @@
                                             DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($todayPlus7Days),
                                               'operatorType'         => 'lessThanOrEqualTo',
                                               'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
 
             //Test Date last 7 days
             $value              = array();
@@ -316,6 +315,7 @@
                                             DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($today),
                                               'operatorType'         => 'lessThanOrEqualTo',
                                               'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
         }
     }
 ?>
