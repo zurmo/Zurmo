@@ -203,7 +203,8 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null)
+                                                    $pageTitle = null,
+                                                    $stateMetadataAdapterClassName = null)
         {
             $pageTitle = Yii::t('Default',
                                 'OpportunitiesModuleSingularLabel Search',
