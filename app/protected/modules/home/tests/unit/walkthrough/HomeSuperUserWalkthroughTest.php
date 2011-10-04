@@ -42,6 +42,7 @@
             //Setup test data owned by the super user.
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser(Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
+            ContactsModule::loadStartingData();
         }
 
         public function testSuperUserAllDefaultControllerActions()
@@ -122,10 +123,10 @@
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/addList');
 
-            //Add WorldClockPortlet to dashboard
+            //Add AccountsMyList Portlet to dashboard
             $this->setGetArray(array(
                 'dashboardId'    => $superDashboard->id,
-                'portletType'    => 'WorldClock',
+                'portletType'    => 'AccountsMyList',
                 'uniqueLayoutId' => $uniqueLayoutId));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('home/defaultPortlet/add');
@@ -133,8 +134,8 @@
             //Save a layout change. Collapse all portlets
             //At this point portlets for this view should be created because we have already loaded the 'details' page in a request above.
             $portlets = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($uniqueLayoutId, $super->id, array());
-            $this->assertEquals(3, count($portlets[1]));
-            $this->assertEquals(2, count($portlets[2]));
+            $this->assertEquals(6, count($portlets[1]));
+            $this->assertEquals(3, count($portlets[2]));
             $portletPostData = array();
             $portletCount = 0;
             foreach ($portlets as $column => $columnPortlets)
@@ -152,7 +153,7 @@
                 }
             }
             //There should have been a total of 3 portlets. Checking positions as 4 will confirm this.
-            $this->assertEquals(5, $portletCount);
+            $this->assertEquals(9, $portletCount);
             $this->resetGetArray();
             $this->setPostArray(array(
                 'portletLayoutConfiguration' => array(
@@ -164,8 +165,8 @@
             //Now test that all the portlets are collapsed.
             $portlets = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition(
                             $uniqueLayoutId, $super->id, array());
-            $this->assertEquals (5, count($portlets[1])         );
-            $this->assertFalse  (array_key_exists(4, $portlets) );
+            $this->assertEquals (9, count($portlets[1])         );
+            $this->assertFalse  (array_key_exists(8, $portlets) );
             foreach ($portlets as $column => $columns)
             {
                 foreach ($columns as $position => $positionPortlets)
@@ -176,7 +177,7 @@
 
             //Load up modal config edit view.
             $this->assertTrue($portlets[1][1]->id > 0);
-            $this->assertEquals('WorldClock', $portlets[1][1]->viewType);
+            $this->assertEquals('AccountsMyList', $portlets[1][1]->viewType);
             $this->setGetArray(array(
                 'portletId'    => $portlets[1][1]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
@@ -190,7 +191,8 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->setPostArray(array(
-                'ajax'    => 'modal-edit-form'));
+                'ajax'    => 'modal-edit-form',
+                'AccountsSearchForm' => array()));
             $this->runControllerWithExitExceptionAndGetContent('home/defaultPortlet/modalConfigEdit');
 
             //save changes to the portlet title
@@ -199,7 +201,8 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->setPostArray(array(
-                'WorldClockForm'    => array('title' => 'something new')));
+                'MyListForm'         => array('title' => 'something new'),
+                'AccountsSearchForm' => array()));
             $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
             //Now confirm the title change was successful.
             $portlet = Portlet::getById($portlets[1][1]->id);

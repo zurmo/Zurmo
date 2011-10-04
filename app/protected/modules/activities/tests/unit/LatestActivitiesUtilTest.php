@@ -81,10 +81,11 @@
                            'operatorType' => 'oneOf',
                            'value' => array(5, 7, 9)),
             );
+
             $compareSearchAttributesData['Note']['structure'] = '1';
-            $this->assertEquals($compareSearchAttributesData['Meeting'], $searchAttributesData['Meeting']);
-            $this->assertEquals($compareSearchAttributesData['Task'], $searchAttributesData['Task']);
-            $this->assertEquals($compareSearchAttributesData['Note'],    $searchAttributesData['Note']);
+            $this->assertEquals($compareSearchAttributesData['Meeting'], $searchAttributesData[0]['Meeting']);
+            $this->assertEquals($compareSearchAttributesData['Task'],    $searchAttributesData[1]['Task']);
+            $this->assertEquals($compareSearchAttributesData['Note'],    $searchAttributesData[2]['Note']);
         }
 
         public function testGetSortAttributesByMashableModelClassNames()

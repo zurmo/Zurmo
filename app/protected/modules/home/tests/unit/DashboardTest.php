@@ -140,7 +140,7 @@
                 $portlet->position  = 1 + $i;
                 $portlet->layoutId  = 'TEST' . $dashboard->layoutId;
                 $portlet->collapsed = false;
-                $portlet->viewType  = 'WorldClock';
+                $portlet->viewType  = 'TasksMyList';
                 $portlet->user      = $user;
                 $this->assertTrue($portlet->save());
             }

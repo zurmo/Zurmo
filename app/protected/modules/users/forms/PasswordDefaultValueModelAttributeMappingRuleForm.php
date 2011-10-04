@@ -33,7 +33,7 @@
 
         public function __construct($modelClassName, $derivedAttributeType)
         {
-            assert($modelClassName == "User");
+            assert($modelClassName == "User"); // Not Coding Standard
             parent::__construct($modelClassName, $derivedAttributeType);
         }
 

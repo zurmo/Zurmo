@@ -54,15 +54,18 @@
             return $this->resolveInputNamePrefix() . '[' . $this->attribute . '][currency][id]';
         }
 
+        /**
+         * (non-PHPdoc)
+         * @see DropDownElement::getDropDownArray()
+         */
         protected function getDropDownArray()
         {
-           $currencies = Currency::getAll();
-           $dropDownArray = array();
-           foreach ($currencies as $currency)
+           $selectedCurrencyId = $this->model->{$this->attribute}->currency->id;
+           if($selectedCurrencyId < 0)
            {
-               $dropDownArray[$currency->id] = $currency->code;
+               $selectedCurrencyId = null;
            }
-           return $dropDownArray;
+           return Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData((int)$selectedCurrencyId);
         }
     }
 ?>

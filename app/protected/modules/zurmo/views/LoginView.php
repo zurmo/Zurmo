@@ -29,10 +29,12 @@
         private $controller;
         private $formModel;
 
-        public function __construct(CController $controller, CFormModel $formModel)
+        public function __construct(CController $controller, CFormModel $formModel, $extraHeaderContent = null)
         {
-            $this->controller = $controller;
-            $this->formModel  = $formModel;
+            assert('is_string($extraHeaderContent) || $extraHeaderContent == null');
+            $this->controller         = $controller;
+            $this->formModel          = $formModel;
+            $this->extraHeaderContent = $extraHeaderContent;
         }
 
         protected function renderContent()
@@ -68,13 +70,15 @@
 
             $formEnd = $this->controller->renderEndWidget();
 
-            $content = "<div class=\"form\">$formStart"                                            .
+            $content  = $this->extraHeaderContent;
+            $content .= "<div class=\"form\">$formStart"                                            .
                        "<div>$usernameLabel$usernameTextField$usernameError</div>"                 .
                        "<div>$passwordLabel$passwordField$passwordError</div>"                     .
                        "<div style = 'float:left; padding-right:3px;'>$rememberMeCheckBox</div>"   .
                        "<div>$rememberMeLabel$rememberMeError</div>"                               .
                        "<div style = 'clear:both;'>$submitButton</div>"                            .
                        "$formEnd</div>";
+
             return $content;
         }
     }

@@ -135,6 +135,16 @@
             return null;
         }
 
+        /**
+         * Override if the module has a right that determines
+         * if a user can delete the models in this modules
+         * @return null or access right
+         */
+        public static function getDeleteRight()
+        {
+            return null;
+        }
+
         public static function getSecurableModuleDisplayName()
         {
             return static::getModuleLabelByTypeAndLanguage('Plural');

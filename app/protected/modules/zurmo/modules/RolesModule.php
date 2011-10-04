@@ -27,6 +27,7 @@
     class RolesModule extends SecurableModule
     {
         const RIGHT_CREATE_ROLES = 'Create Roles';
+        const RIGHT_DELETE_ROLES = 'Delete Roles';
         const RIGHT_ACCESS_ROLES = 'Access Roles Tab';
 
         public function canDisable()
@@ -93,6 +94,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_ROLES;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_ROLES;
         }
 
         public static function getDemoDataMakerClassName()

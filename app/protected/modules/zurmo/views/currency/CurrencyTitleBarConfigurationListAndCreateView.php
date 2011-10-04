@@ -30,13 +30,14 @@
             $controllerId,
             $moduleId,
             Currency $currency,
-            $currencies)
+            $currencies,
+            $messageBoxContent = null)
         {
             parent::__construct(4, 1);
             $this->setView(new TitleBarView (Yii::t('Default', 'Currencies: Create')), 0, 0);
             $this->setView(new CurrencyCreateView($controllerId, $moduleId, $currency), 1, 0);
             $this->setView(new TitleBarView (Yii::t('Default', 'Currencies: List')), 2, 0);
-            $this->setView(new CurrenciesCollectionView($controllerId, $moduleId, $currencies), 3, 0);
+            $this->setView(new CurrenciesCollectionView($controllerId, $moduleId, $currencies, $messageBoxContent), 3, 0);
         }
     }
 ?>

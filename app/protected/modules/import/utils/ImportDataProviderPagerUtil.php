@@ -67,6 +67,7 @@
             assert('is_string($style) || $style == null');
             $urlScript = 'js:$.param.querystring("' . $url . '", "' .
                          $pageVar . '=" + $(this).attr("href"))';
+            // Begin Not Coding Standard
             return       CHtml::ajaxLink($label, $urlScript,
                          array('type' => 'GET',
                                'dataType' => 'json',
@@ -76,6 +77,7 @@
                                 });
                               }'),
                          array('id' => $id, 'href' => $page, 'style' => $style));
+            // End Not Coding Standard
         }
     }
 ?>

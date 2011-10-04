@@ -50,7 +50,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'code', 'type' => 'Decimal'),
+                                                array('attributeName' => 'code', 'type' => 'CurrencyCode'),
                                             ),
                                         ),
                                     )

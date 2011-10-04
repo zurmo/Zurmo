@@ -42,14 +42,14 @@
             $betty                      = User::getByUsername('betty');
             $this->assertFalse(RightsUtil::canUserAccessModule('AccountsModule', $betty));
             $this->assertFalse(RightsUtil::canUserAccessModule('ContactsModule', $betty));
-            $this->assertTrue(RightsUtil::canUserAccessModule('WorldClockModule', $betty));
+            $this->assertFalse(RightsUtil::canUserAccessModule('TasksModule', $betty));
             Yii::app()->user->userModel = $betty;
             $portlet1 = new Portlet();
             $portlet1->viewType = 'AccountsRelatedList';
             $portlet2 = new Portlet();
             $portlet2->viewType = 'ContactsRelatedList';
             $portlet3 = new Portlet();
-            $portlet3->viewType = 'WorldClock';
+            $portlet3->viewType = 'TasksMyList';
             $portlets = array();
             $portlets[0][0] = $portlet1;
             $portlets[0][1] = $portlet2;
@@ -63,10 +63,7 @@
             $comparePortlets[0][0] = $portlet3;
             $comparePortlets[1][0] = $portlet3;
             $comparePortlets[1][1] = $portlet3;
-            $this->assertEquals(2, count($resolvedPortlets));
-            $this->assertEquals(1, count($resolvedPortlets[0]));
-            $this->assertEquals(2, count($resolvedPortlets[1]));
-            $this->assertEquals($comparePortlets, $resolvedPortlets);
+            $this->assertEquals(0, count($resolvedPortlets));
             Yii::app()->user->userModel = User::getByUsername('super');
             $resolvedPortlets = PortletsSecurityUtil::resolvePortletsForCurrentUser($portlets);
             $this->assertEquals($portlets, $resolvedPortlets);

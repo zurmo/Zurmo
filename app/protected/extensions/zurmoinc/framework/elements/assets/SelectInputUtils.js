@@ -8,7 +8,7 @@ function rebuildSelectInputFromInputs(id, inputCollectionName)
             $(this).remove();
         }
     });
-    var order = 1;
+    var order = 0;
     var selectedOrder = 0;
     $('input[name="' + inputCollectionName + '"]').each(function(){
         tempArray = $(this).attr('id').split('_');

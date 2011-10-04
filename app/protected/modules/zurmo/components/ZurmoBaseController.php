@@ -44,6 +44,11 @@
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );
+                $filters[] = array(
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + delete',
+                        'moduleClassName' => $moduleClassName,
+                        'rightName' => $moduleClassName::getDeleteRight(),
+                );
             }
             $filters[] = array(
                 ZurmoBaseController::RIGHTS_FILTER_PATH . ' + massEdit, massEditProgressSave',

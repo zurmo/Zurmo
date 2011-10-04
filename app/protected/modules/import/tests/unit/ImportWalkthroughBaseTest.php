@@ -39,8 +39,8 @@
 
         public function runMappingRulesEditAction($id, $attributeIndexOrDerivedType)
         {
-            assert('is_int($id)'); // Not Coding Standard
-            assert('is_string($attributeIndexOrDerivedType)');
+            $this->assertTrue(is_int($id));
+            assert('is_string($attributeIndexOrDerivedType)'); // Not Coding Standard
             $this->setGetArray (array('id' => $id, 'attributeIndexOrDerivedType' => $attributeIndexOrDerivedType,
                                       'columnName' => 'column_0', 'columnType' => 'importColumn'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('import/default/mappingRulesEdit');

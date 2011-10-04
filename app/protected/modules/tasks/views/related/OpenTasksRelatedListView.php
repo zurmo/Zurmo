@@ -30,7 +30,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => 'Open TasksModulePluralLabel',
+                    'title' => "eval:Yii::t('Default', 'Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
                     'toolbar' => array(

@@ -27,6 +27,7 @@
     class AccountsModule extends SecurableModule
     {
         const RIGHT_CREATE_ACCOUNTS = 'Create Accounts';
+        const RIGHT_DELETE_ACCOUNTS = 'Delete Accounts';
         const RIGHT_ACCESS_ACCOUNTS = 'Access Accounts Tab';
 
         public function getDependencies()
@@ -71,6 +72,11 @@
                     'showLayoutsLink' => true,
                     'showMenusLink' => true,
                 ),
+                'globalSearchAttributeNames' => array(
+                    'name',
+                    'anyEmail',
+                    'officePhone',
+                )
             );
             return $metadata;
         }
@@ -90,6 +96,11 @@
             return self::RIGHT_CREATE_ACCOUNTS;
         }
 
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_ACCOUNTS;
+        }
+
         public static function getDefaultDataMakerClassName()
         {
             return 'AccountsDefaultDataMaker';
@@ -98,6 +109,11 @@
         public static function getDemoDataMakerClassName()
         {
             return 'AccountsDemoDataMaker';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'AccountsSearchForm';
         }
     }
 ?>

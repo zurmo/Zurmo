@@ -34,7 +34,7 @@
                 $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
             }
 
-            $content = '<div><ul>';
+            $content  = '<div><ul>';
             $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
             foreach ($links as $label => $link)
             {

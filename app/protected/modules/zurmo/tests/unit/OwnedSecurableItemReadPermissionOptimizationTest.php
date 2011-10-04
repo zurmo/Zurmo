@@ -52,18 +52,18 @@
 
                 $model = new OwnedSecurableTestItem();
                 $model->member = 'test';
-                assert('$model->save()'); // Not Coding Standard
+                assert($model->save()); // Not Coding Standard
                 $model = new OwnedSecurableTestItem();
                 $model->member = 'test2';
-                assert('$model->save()'); // Not Coding Standard
+                assert($model->save()); // Not Coding Standard
                 $model = new OwnedSecurableTestItem();
                 $model->member = 'test3';
                 $model->owner  = $benny;
-                assert('$model->save()'); // Not Coding Standard
-                assert('count(OwnedSecurableTestItem::getAll()) == 3'); // Not Coding Standard
+                assert($model->save()); // Not Coding Standard
+                assert(count(OwnedSecurableTestItem::getAll()) == 3); // Not Coding Standard
                 $model = new OwnedSecurableTestItem2();
                 $model->member = 'test5';
-                assert('$model->save()'); // Not Coding Standard
+                assert($model->save()); // Not Coding Standard
             }
 
             public function setUp()
@@ -137,7 +137,7 @@
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem_read{$quote}.{$quote}securableitem_id{$quote} = ";
                 $compareSubsetSql .= "{$quote}ownedsecurableitem{$quote}.{$quote}securableitem_id{$quote} ";
                 $compareSubsetSql .= "and {$quote}munge_id{$quote} in ('" . join("', '", $mungeIds) . "') ";
-                $compareSubsetSql .= "where $compareWhere and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = $benny->id ";
+                $compareSubsetSql .= "where ($compareWhere) and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = $benny->id ";
                 $compareSubsetSql .= "OR {$quote}ownedsecurabletestitem_read{$quote}.{$quote}munge_id{$quote} IS NOT NULL) "; // Not Coding Standard
                 $compareSubsetSql .= "and {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = ";
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem{$quote}.{$quote}ownedsecurableitem_id{$quote}";
@@ -265,8 +265,8 @@
                 $bFakePost = array('member' => 'test4');
                 $bMetadataAdapter = new SearchDataProviderMetadataAdapter(new OwnedSecurableTestItem2(false), $aUser->id, $bFakePost);
                 $modelClassNamesAndSearchAttributeData = array(
-                    'OwnedSecurableTestItem'  => $aMetadataAdapter->getAdaptedMetadata(),
-                    'OwnedSecurableTestItem2' => $bMetadataAdapter->getAdaptedMetadata(),
+                    array('OwnedSecurableTestItem'  => $aMetadataAdapter->getAdaptedMetadata()),
+                    array('OwnedSecurableTestItem2' => $bMetadataAdapter->getAdaptedMetadata()),
                 );
                 $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                         null, false, 2, 7);
@@ -280,7 +280,7 @@
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem_read{$quote}.{$quote}securableitem_id{$quote} = ";
                 $compareSubsetSql .= "{$quote}ownedsecurableitem{$quote}.{$quote}securableitem_id{$quote} ";
                 $compareSubsetSql .= "and {$quote}munge_id{$quote} in ('" . join("', '", $mungeIds) . "') ";
-                $compareSubsetSql .= "where $compareWhere and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = $aUser->id ";
+                $compareSubsetSql .= "where ($compareWhere) and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = $aUser->id ";
                 $compareSubsetSql .= "OR {$quote}ownedsecurabletestitem_read{$quote}.{$quote}munge_id{$quote} IS NOT NULL) "; // Not Coding Standard
                 $compareSubsetSql .= "and {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = ";
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem{$quote}.{$quote}ownedsecurableitem_id{$quote}";
@@ -293,7 +293,7 @@
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem2_read{$quote}.{$quote}securableitem_id{$quote} = ";
                 $compareSubsetSql .= "{$quote}ownedsecurableitem{$quote}.{$quote}securableitem_id{$quote} ";
                 $compareSubsetSql .= "and {$quote}munge_id{$quote} in ('" . join("', '", $mungeIds) . "') ";
-                $compareSubsetSql .= "where $compareWhere2 and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = $aUser->id ";
+                $compareSubsetSql .= "where ($compareWhere2) and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = $aUser->id ";
                 $compareSubsetSql .= "OR {$quote}ownedsecurabletestitem2_read{$quote}.{$quote}munge_id{$quote} IS NOT NULL) "; // Not Coding Standard
                 $compareSubsetSql .= "and {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = ";
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem2{$quote}.{$quote}ownedsecurableitem_id{$quote}";

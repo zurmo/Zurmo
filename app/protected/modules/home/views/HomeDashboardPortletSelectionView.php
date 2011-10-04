@@ -51,22 +51,26 @@
                     $viewClassNames = $module::getViewClassNames();
                     foreach ($viewClassNames as $className)
                     {
-                        $portletRules = PortletRulesFactory::createPortletRulesByView($className);
-                        if ($portletRules != null && $portletRules->allowOnDashboard())
+                        $viewReflectionClass = new ReflectionClass($className);
+                        if (!$viewReflectionClass->isAbstract())
                         {
-                            $metadata = $className::getMetadata();
-                            $url = Yii::app()->createUrl($this->moduleId . '/defaultPortlet/add', array(
-                                'uniqueLayoutId' => $this->uniqueLayoutId,
-                                'dashboardId'    => $this->dashboardId,
-                                'portletType'    => $portletRules->getType(),
-                                )
-                            );
-                            $onClick = 'window.location.href = "' . $url . '"';
-                            $content .= CHtml::button(yii::t('Default', 'Select'), array('onClick' => $onClick));
-                            $title    = $metadata['perUser']['title'];
-                            MetadataUtil::resolveEvaluateSubString($title);
-                            $content .= '&#160;' . $title;
-                            $content .= '<br/>';
+                            $portletRules = PortletRulesFactory::createPortletRulesByView($className);
+                            if ($portletRules != null && $portletRules->allowOnDashboard())
+                            {
+                                $metadata = $className::getMetadata();
+                                $url = Yii::app()->createUrl($this->moduleId . '/defaultPortlet/add', array(
+                                    'uniqueLayoutId' => $this->uniqueLayoutId,
+                                    'dashboardId'    => $this->dashboardId,
+                                    'portletType'    => $portletRules->getType(),
+                                    )
+                                );
+                                $onClick = 'window.location.href = "' . $url . '"';
+                                $content .= CHtml::button(yii::t('Default', 'Select'), array('onClick' => $onClick));
+                                $title    = $metadata['perUser']['title'];
+                                MetadataUtil::resolveEvaluateSubString($title);
+                                $content .= '&#160;' . $title;
+                                $content .= '<br/>';
+                            }
                         }
                     }
                 }

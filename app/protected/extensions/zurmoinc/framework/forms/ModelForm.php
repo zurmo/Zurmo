@@ -94,6 +94,19 @@
         }
 
         /**
+         * If the attribute exists on the form, then assume it is not a relation since the form
+         * does not support relational attributes.
+         */
+        public function getRelationModelClassName($relationName)
+        {
+            if (property_exists($this, $relationName))
+            {
+                return false;
+            }
+            return $this->model->getRelationModelClassName($relationName);
+        }
+
+        /**
          * Returns true if the named attribute is a property on this
          * model.
          */
@@ -106,6 +119,20 @@
                 return true;
             }
             return $this->model->isAttribute($attributeName);
+        }
+
+        /**
+         * Override to properly check if the attribute is required or not.
+         * (non-PHPdoc)
+         * @see CModel::isAttributeRequired()
+         */
+        public function isAttributeRequired($attribute)
+        {
+            if (property_exists($this, $attribute))
+            {
+                return parent::isAttributeRequired($attribute);
+            }
+            return $this->model->isAttributeRequired($attribute);
         }
 
         /**
@@ -170,13 +197,22 @@
         public function validate($attributes = null, $clearErrors = true)
         {
             assert('$clearErrors == true');
+            assert('$attributes == null');
             $formValidatedSuccessfully  = parent::validate($attributes);
-            $modelValidatedSuccessfully = $this->model->validate($attributes);
+            $modelValidatedSuccessfully = $this->model->validate($attributes, static::shouldIgnoreRequiredValidator());
             if (!$modelValidatedSuccessfully || !$formValidatedSuccessfully)
             {
                 return false;
             }
             return true;
+        }
+
+        /**
+         * Override and set to true if you need to ignore the required validator.
+         */
+        protected static function shouldIgnoreRequiredValidator()
+        {
+            return false;
         }
 
         /**

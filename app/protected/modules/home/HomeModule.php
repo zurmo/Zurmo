@@ -27,13 +27,13 @@
     class HomeModule extends SecurableModule
     {
         const RIGHT_CREATE_DASHBOARDS = 'Create Dashboards';
+        const RIGHT_DELETE_DASHBOARDS = 'Delete Dashboards';
         const RIGHT_ACCESS_DASHBOARDS = 'Access Dashboards';
 
         public function getDependencies()
         {
             return array(
                 'zurmo',
-                'worldClock',
             );
         }
 
@@ -120,6 +120,11 @@
         protected static function getSingularModuleLabel()
         {
             return 'Home';
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_DASHBOARDS;
         }
     }
 ?>

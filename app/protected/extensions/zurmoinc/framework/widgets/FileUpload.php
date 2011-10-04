@@ -27,7 +27,7 @@
     /**
      * Render a file upload element that can allow for multiple file uploads and calls ajax to upload the files to
      * the server as you add them.
-     * Utilizes file upload plpugin here: https://github.com/blueimp/jQuery-File-Upload
+     * Utilizes file upload plugin here: https://github.com/blueimp/jQuery-File-Upload
      */
     class FileUpload extends ZurmoWidget
     {
@@ -145,7 +145,7 @@
                 $sendAction = "\$('#{$this->formName}').find('.files > tbody').children().remove();";
                 $addLabel = Yii::t('Default', 'Add File');
             }
-
+            // Begin Not Coding Standard
             $javaScript = <<<EOD
 $(function () {
     'use strict';
@@ -212,6 +212,7 @@ $(function () {
 });
 
 EOD;
+            // End Not Coding Standard
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);
 
             $htmlOptions = array('id' => $this->inputId);

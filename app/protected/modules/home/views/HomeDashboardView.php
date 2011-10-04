@@ -52,20 +52,32 @@
                         array(
                             'rows' => array(
                                 array(
-                                    'type' => 'OpportunitiesByStageChart',
+                                    'type' => 'MeetingsMyList',
                                 ),
                                 array(
-                                    'type' => 'WorldClock',
+                                    'type' => 'TasksMyList',
+                                ),
+                                array(
+                                    'type' => 'OpportunitiesMyList',
+                                ),
+                                array(
+                                    'type' => 'LeadsMyList',
+                                ),
+                                array(
+                                    'type' => 'AccountsMyList',
                                 ),
                             )
                         ),
                         array(
                             'rows' => array(
                                 array(
-                                    'type' => 'RssReader',
+                                    'type' => 'OpportunitiesByStageChart',
                                 ),
                                 array(
                                     'type' => 'OpportunitiesBySourceChart',
+                                ),
+                                array(
+                                    'type' => 'RssReader',
                                 ),
                             )
                         )

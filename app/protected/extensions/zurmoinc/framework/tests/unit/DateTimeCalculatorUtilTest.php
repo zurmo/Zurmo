@@ -30,7 +30,7 @@
         {
             //Test Today.
             $todayDateStamp     = DateTimeCalculatorUtil::calculateNew(DateTimeCalculatorUtil::TODAY,
-                                new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
+                                  new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
             $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
             $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                                      $todayDateTime->getTimeStamp());

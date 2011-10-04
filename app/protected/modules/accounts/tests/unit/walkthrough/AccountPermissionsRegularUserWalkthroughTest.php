@@ -43,20 +43,20 @@
             $nobody = User::getByUsername('nobody');
             $account = AccountTestHelper::createAccountByNameForOwner('superAccountReadableByNobody',  Yii::app()->user->userModel);
             $account->addPermissions($nobody, Permission::READ, Permission::ALLOW);
-            assert($account->save());
+            assert($account->save()); // Not Coding Standard
             ReadPermissionsOptimizationUtil::securableItemGivenPermissionsForUser($account, $nobody);
 
             //Give the nobody user rights to the accounts module.
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
-            assert($nobody->save());
+            assert($nobody->save()); // Not Coding Standard
 
             $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
-            assert($everyoneGroup->save());
+            assert($everyoneGroup->save()); // Not Coding Standard
 
             $group1        = new Group();
             $group1->name  = 'Group1';
-            assert($group1->save());
+            assert($group1->save()); // Not Coding Standard
         }
 
         public function testRegularUserCanViewOrNotViewDerivedExplicitReadWriteModelPermissionsElement()
@@ -168,7 +168,7 @@
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/create'); // Not Coding Standard
             //Confirm the permissions are set right based on how the account was saved.
-                        $accounts = Account::getByName('myNewAccount');
+            $accounts = Account::getByName('myNewAccount');
             $this->assertEquals(1, count($accounts));
             $accountId = $accounts[0]->id;
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::

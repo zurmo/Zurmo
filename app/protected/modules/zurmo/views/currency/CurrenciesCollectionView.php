@@ -36,40 +36,70 @@
 
         protected $currencies;
 
-        public function __construct($controllerId, $moduleId, $currencies)
+        public function __construct($controllerId, $moduleId, $currencies, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($currencies)');
+            assert('$messageBoxContent == null || is_string($messageBoxContent)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
             $this->currencies             = $currencies;
+            $this->messageBoxContent      = $messageBoxContent;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div>' . "\n";
-            $content .= '<table>';
+            $content = '<div class="wide form">';
+            $clipWidget = new ClipWidget();
+            list($form, $formStart) = $clipWidget->renderBeginWidget(
+                                                                'ZurmoActiveForm',
+                                                                array('id' => 'currency-collection-form')
+                                                            );
+            $content .= $formStart;
+
+            if($this->messageBoxContent != null)
+            {
+                $content .= $this->messageBoxContent;
+                $content .= '<br/>';
+            }
+            $content .= $this->renderFormLayout($form);
+            $content .= $this->renderViewToolBar();
+            $content .= $clipWidget->renderEndWidget();
+            $content .= '</div>';
+            return $content;
+        }
+
+            /**
+         * Render a form layout.
+         * @param $form If the layout is editable, then pass a $form otherwise it can
+         * be null.
+         * @return A string containing the element's content.
+          */
+        protected function renderFormLayout(ZurmoActiveForm $form)
+        {
+            $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:40%" /><col style="width:40%" /><col style="width:20%" />';
+            $content .= '<col style="width:20%" /><col style="width:20%" /><col style="width:40%" /><col style="width:20%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Code') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' . Yii::app()->currencyHelper->getBaseCode(). '</th>';
-            $content .= '<th>&#160;</th>';
+            $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Code') . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' .
+                        Yii::app()->currencyHelper->getBaseCode(). ' ' . $this->renderLastUpdatedHeaderContent() . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Remove') . '</th>';
             $content .= '</tr>';
             foreach ($this->currencies as $currency)
             {
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
+                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $currency) . '</td>';
                 $content .= '<td>' . $currency->code . '</td>';
                 $content .= '<td>' . $currency->rateToBase . '</td>';
                 $content .= '<td>';
                 if (count($this->currencies) == 1 || CurrencyValue::isCurrencyInUseById($currency->id))
                 {
-                    $content .= '&#160;';
+                    $content .= Yii::t('Default', 'Currency in use.');
                 }
                 else
                 {
@@ -88,6 +118,13 @@
         {
             $metadata = array(
                 'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'  => 'SaveButton',
+                                  'label' => "eval:Yii::t('Default', 'Save Changes')",
+                                  'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
+                        ),
+                     ),
                 ),
             );
             return $metadata;
@@ -96,6 +133,42 @@
         public function isUniqueToAPage()
         {
             return true;
+        }
+
+        protected static function renderActiveCheckBoxContent(ZurmoActiveForm $form, Currency $currency)
+        {
+            $htmlOptions         = array();
+            $htmlOptions['id']   = 'CurrencyCollection_' . $currency->code . '_active';
+            $htmlOptions['name'] = 'CurrencyCollection[' . $currency->code . '][active]';
+            return $form->checkBox($currency, 'active', $htmlOptions);
+        }
+
+        protected static function renderLastUpdatedHeaderContent()
+        {
+            $content = Yii::t('Default', 'Last Updated') . ': ';
+            $lastAttempedDateTime = Yii::app()->currencyHelper->getLastAttemptedRateUpdateDateTime();
+            if($lastAttempedDateTime == null)
+            {
+                $content .= Yii::t('Default', 'Never');
+            }
+            else
+            {
+                $content .= $lastAttempedDateTime;
+            }
+            return '<span style="font-size:75%;"><i>(' . $content . ')</i></span>';
+        }
+
+        protected static function renderActiveHeaderContent()
+        {
+            $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
+            $content     = Yii::t('Default', 'Active') . '&#160;';
+            $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">';
+            $content    .= Yii::t('Default', 'What is this?') . '</span>';
+
+            Yii::import('application.extensions.qtip.QTip');
+            $qtip = new QTip();
+            $qtip->addQTip("#active-currencies-tooltip");
+            return $content;
         }
     }
 ?>

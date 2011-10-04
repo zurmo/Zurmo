@@ -85,5 +85,111 @@
             );
             $this->assertEquals($compareData, $data);
         }
+
+        /**
+         * @depends testGetSupportedLanguagesData
+         */
+        public function testGetActiveLanguagesData()
+        {
+            Yii::app()->language = 'en'; //Set the base language back to english.
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $data = $languageHelper->getActiveLanguagesData();
+            $compareData = array(
+                'en' => 'English',
+            );
+            $this->assertEquals($compareData, $data);
+
+            //Now activate de.
+            $languageHelper->setActiveLanguages(array('en', 'de'));
+            $data = $languageHelper->getActiveLanguagesData();
+            $compareData = array(
+                'en' => 'English',
+                'de' => 'German',
+            );
+            $this->assertEquals($compareData, $data);
+        }
+
+        /**
+         * @depends testGetActiveLanguagesData
+         */
+        public function testCanInactivateLanguage()
+        {
+            $this->assertEquals('en', Yii::app()->language);
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            //Cannot inactivate the base language.
+            $this->assertFalse($languageHelper->canInactivateLanguage('en'));
+            //De and Fr are in use by users.
+            $this->assertFalse($languageHelper->canInactivateLanguage('de'));
+            $this->assertFalse($languageHelper->canInactivateLanguage('fr'));
+            $this->assertTrue($languageHelper->canInactivateLanguage('it'));
+
+            $billy =  User::getByUsername('billy');
+            $billy->language = 'en';
+            $this->assertTrue($billy->save());
+
+            //Now de should be able to be inactivated
+            $this->assertTrue($languageHelper->canInactivateLanguage('de'));
+        }
+
+        /**
+         * @depends testCanInactivateLanguage
+         */
+        public function testGetAndSetActiveLanguages()
+        {
+            Yii::app()->language = 'en'; //Set the base language back to english.
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $data = $languageHelper->getActiveLanguages();
+            $compareData = array(
+                'en',
+                'de',
+            );
+            $this->assertEquals($compareData, $data);
+            $languageHelper->setActiveLanguages(array('en', 'de', 'fr'));
+            $data = $languageHelper->getActiveLanguages();
+            $compareData = array(
+                'en',
+                'de',
+                'fr',
+            );
+            $this->assertEquals($compareData, $data);
+        }
+
+        /**
+         * @depends testGetAndSetActiveLanguages
+         */
+        public function testLanguagesToLanguageCollectionViewUtil()
+        {
+            $data = LanguagesToLanguageCollectionViewUtil::getLanguagesData();
+            $compareData = array('de' => array(
+                                    'label' => 'German',
+                                    'active' => true,
+                                    'canInactivate' => true,
+                                 ),
+                                 'en' => array(
+                                    'label' => 'English',
+                                    'active' => true,
+                                    'canInactivate' => false,
+                                 ),
+                                 'es' => array(
+                                    'label' => 'Spanish',
+                                    'active' => false,
+                                    'canInactivate' => true,
+                                 ),
+                                 'fr' => array(
+                                    'label' => 'French',
+                                    'active' => true,
+                                    'canInactivate' => false,
+                                 ),
+                                 'it' => array(
+                                    'label' => 'Italian',
+                                    'active' => false,
+                                    'canInactivate' => true,
+                                 ));
+            $this->assertEquals($compareData, $data);
+        }
     }
 ?>

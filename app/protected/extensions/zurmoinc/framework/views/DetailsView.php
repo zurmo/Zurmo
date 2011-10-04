@@ -75,9 +75,10 @@
             $maxCellsPerRow               = $this->getMaxCellsPerRow();
             $metadata                     = $this->getFormLayoutMetadata();
             $metadataWithRenderedElements = $this->resolveMetadataWithRenderedElements($metadata, $maxCellsPerRow, $form);
+            $this->afterResolveMetadataWithRenderedElements($metadataWithRenderedElements, $form);
             if ($form != null)
             {
-                $errorSummaryContent      = $form->errorSummary($this->model);
+                $errorSummaryContent      = $form->errorSummary($this->getModel());
             }
             else
             {
@@ -116,7 +117,7 @@
                                 }
                                 $this->resolveElementInformationDuringFormLayoutRender($elementInformation);
                                 $elementclassname = $elementInformation['type'] . 'Element';
-                                $element  = new $elementclassname($this->model, $elementInformation['attributeName'],
+                                $element  = new $elementclassname($this->getModel(), $elementInformation['attributeName'],
                                                                   $form, array_slice($elementInformation, 2));
                                 $this->resolveElementDuringFormLayoutRender($element);
                                 $metadata['global']['panels'][$panelNumber]['rows']
@@ -135,6 +136,14 @@
                 }
             }
             return $metadata;
+        }
+
+        /**
+         * Override if you need to do any special processing of the metadata array prior to it being rendered.
+         * @param array $metadataWithRenderedElements
+         */
+        protected function afterResolveMetadataWithRenderedElements(& $metadataWithRenderedElements, $form)
+        {
         }
 
         protected function getMaxCellsPerRow()

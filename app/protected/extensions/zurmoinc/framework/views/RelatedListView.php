@@ -119,9 +119,16 @@
             }
             else
             {
-                $metadata = self::getMetadata();
-                return Yii::t('Default', $metadata['perUser']['title'], LabelUtil::getTranslationParamsForAllModules());
+                return static::getDefaultTitle();
             }
+        }
+
+        public static function getDefaultTitle()
+        {
+            $metadata = self::getMetadata();
+            $title    = $metadata['perUser']['title'];
+            MetadataUtil::resolveEvaluateSubString($title);
+            return $title;
         }
 
         public static function canUserConfigure()

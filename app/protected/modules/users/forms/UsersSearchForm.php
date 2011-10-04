@@ -37,7 +37,7 @@
 
         public function rules()
         {
-            return array(
+            return array_merge(parent::rules(), array(
                 array('anyCity', 'safe'),
                 array('anyStreet', 'safe'),
                 array('anyState', 'safe'),
@@ -46,12 +46,12 @@
                 array('anyEmail', 'safe'),
                 array('anyInvalidEmail', 'boolean'),
                 array('anyOptOutEmail', 'boolean'),
-            );
+            ));
         }
 
         public function attributeLabels()
         {
-            return array(
+            return array_merge(parent::attributeLabels(), array(
                 'anyCity'            => Yii::t('Default', 'Any City'),
                 'anyStreet'          => Yii::t('Default', 'Any Street'),
                 'anyState'           => Yii::t('Default', 'Any State'),
@@ -60,12 +60,7 @@
                 'anyEmail'           => Yii::t('Default', 'Any Email Address'),
                 'anyInvalidEmail'    => Yii::t('Default', 'Any Invalid Email'),
                 'anyOptOutEmail'     => Yii::t('Default', 'Any Opted Out Email'),
-            );
-        }
-
-        public function resolveAttributesMappedToRealAttributesMetadata()
-        {
-            return null;
+            ));
         }
     }
 ?>

@@ -27,6 +27,7 @@
     class ContactsModule extends SecurableModule
     {
         const RIGHT_CREATE_CONTACTS = 'Create Contacts';
+        const RIGHT_DELETE_CONTACTS = 'Delete Contacts';
         const RIGHT_ACCESS_CONTACTS = 'Access Contacts Tab';
 
         public function getDependencies()
@@ -71,7 +72,13 @@
                     'showLayoutsLink' => true,
                     'showMenusLink' => true,
                 ),
-                'startingState' => 1
+                'startingState' => 1,
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'officePhone',
+                    'mobilePhone',
+                )
             );
             return $metadata;
         }
@@ -136,6 +143,11 @@
             return self::RIGHT_CREATE_CONTACTS;
         }
 
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_CONTACTS;
+        }
+
         /**
          * Override since the ContactsModule controls module permissions for both leads and contacts.
          */
@@ -154,6 +166,16 @@
         public static function getDemoDataMakerClassName()
         {
             return 'ContactsDemoDataMaker';
+        }
+
+        public static function getStateMetadataAdapterClassName()
+        {
+            return 'ContactsStateMetadataAdapter';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'ContactsSearchForm';
         }
     }
 ?>
