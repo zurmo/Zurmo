@@ -71,8 +71,8 @@
             parent::populateModel($model);
             $name        = RandomDataUtil::getRandomValueFromArray($opportunityRandomData['names']);
             $model->name = $name;
-            $source    = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('SalesStages'));
-            $stage     = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
+            $stage       = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('SalesStages'));
+            $source      = RandomDataUtil::getRandomValueFromArray(static::getCustomFieldDataByName('LeadSources'));
             $model->stage->value  = $stage;
             $model->source->value = $source;
             $futureTimeStamp      = time() + (mt_rand(1, 200) * 60 * 60 * 24);
