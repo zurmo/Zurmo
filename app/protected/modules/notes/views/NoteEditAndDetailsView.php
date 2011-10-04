@@ -94,9 +94,8 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'detailViewOnly' => true,
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
+                                                array('attributeName' => 'owner', 'type' => 'User'),
                                             ),
                                         ),
                                     )
@@ -107,6 +106,16 @@
                                             'elements' => array(
                                                 array('attributeName' => 'null',
                                                       'type' => 'DerivedExplicitReadWriteModelPermissions'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'detailViewOnly' => true,
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
                                             ),
                                         ),
                                     )

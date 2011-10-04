@@ -71,7 +71,7 @@
 
             $contact = new Contact();
             $contact->owner         = $user;
-            $contact->title->value  = 'Mr';
+            $contact->title->value  = 'Mr.';
             $contact->firstName     = 'Super';
             $contact->lastName      = 'Man';
             $contact->jobTitle      = 'Superhero';
@@ -90,7 +90,7 @@
             $contact = Contact::getById($id);
             $this->assertEquals('Super',            $contact->firstName);
             $this->assertEquals('Man',              $contact->lastName);
-            $this->assertEquals('Mr',               $contact->title->value);
+            $this->assertEquals('Mr.',               $contact->title->value);
             $this->assertEquals('Superhero',        $contact->jobTitle);
             $this->assertEquals('Outbound',         $contact->source->value);
             $this->assertEquals($account->id,       $contact->account->id);
@@ -695,7 +695,7 @@
 
             $contact = new Contact();
             $contact->owner         = Yii::app()->user->userModel;
-            $contact->title->value  = 'Mr';
+            $contact->title->value  = 'Mr.';
             $contact->firstName     = 'Supero';
             $contact->lastName      = 'Mano';
             $contact->state         = $contactStates[0];

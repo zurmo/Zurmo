@@ -48,7 +48,7 @@
             foreach ($contactData as $key => $firstName)
             {
                 $contact = new Contact();
-                $contact->title->value = 'Mr';
+                $contact->title->value = 'Mr.';
                 $contact->firstName    = $firstName;
                 $contact->lastName     = $firstName . 'son';
                 $contact->owner        = $user;
@@ -91,7 +91,7 @@
             $lastContactState  = $contactStates[count($contactStates) - 1];
 
             $contact = new Contact();
-            $contact->title->value = 'Mr';
+            $contact->title->value = 'Mr.';
             $contact->firstName    = 'Sallyy';
             $contact->lastName     = 'Sallyyson';
             $contact->owner        = $super;

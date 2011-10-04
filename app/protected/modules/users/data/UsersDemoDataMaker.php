@@ -59,13 +59,13 @@
             $saved = $role->save();
             assert('$saved');
 
-            foreach (array('jim'   => 'Mr',
-                           'john'  => 'Mr',
-                           'sally' => 'Dr',
-                           'mary'  => 'Mrs',
-                           'katie' => 'Ms',
-                           'jill'  => 'Ms',
-                           'sam'   => 'Mr') as $username => $title)
+            foreach (array('jim'   => 'Mr.',
+                           'john'  => 'Mr.',
+                           'sally' => 'Dr.',
+                           'mary'  => 'Mrs.',
+                           'katie' => 'Ms.',
+                           'jill'  => 'Ms.',
+                           'sam'   => 'Mr.') as $username => $title)
             {
                 $user = new User();
                 $this->populateModel($user);

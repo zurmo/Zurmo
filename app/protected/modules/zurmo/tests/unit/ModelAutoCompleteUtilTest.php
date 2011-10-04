@@ -64,7 +64,7 @@
             foreach ($contactData as $firstName)
             {
                 $contact = new Contact();
-                $contact->title->value = 'Mr';
+                $contact->title->value = 'Mr.';
                 $contact->firstName    = $firstName;
                 $contact->lastName     = $firstName . 'son';
                 $contact->owner        = $user;
@@ -177,7 +177,7 @@
                 //Create a contact with a similar e-mail address
                 $contactStates = ContactState::getAll();
                 $contact = new Contact();
-                $contact->title->value = 'Mr';
+                $contact->title->value = 'Mr.';
                 $contact->firstName    = 'Big';
                 $contact->lastName     = 'Elephant';
                 $contact->owner        = $super;

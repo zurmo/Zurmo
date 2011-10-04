@@ -46,7 +46,7 @@
                 $user = new User();
                 $user->setScenario('createUser');
                 $user->username     = "uuuuu$i";
-                $user->title->value = 'Mr';
+                $user->title->value = 'Mr.';
                 $user->firstName    = "Uuuuuu{$i}";
                 $user->lastName     = "Uuuuuu{$i}son";
                 $user->setPassword("uuuuu$i");

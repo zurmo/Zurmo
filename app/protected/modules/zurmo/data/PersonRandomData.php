@@ -67,13 +67,13 @@
             'Betty'
         ),
         'maleTitles'    => array(
-            'Mr',
-            'Dr'
+            'Mr.',
+            'Dr.'
         ),
         'femaleTitles'    => array(
-            'Mrs',
-            'Ms',
-            'Dr'
+            'Mrs.',
+            'Ms.',
+            'Dr.'
         ),
         'lastNames' => array(
             'Johnson',

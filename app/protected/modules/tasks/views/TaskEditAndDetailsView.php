@@ -92,15 +92,6 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'ActivityItems'),
                                             ),
                                         ),
@@ -118,9 +109,8 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'detailViewOnly' => true,
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
+                                                array('attributeName' => 'owner', 'type' => 'User'),
                                             ),
                                         ),
                                     )
@@ -131,6 +121,16 @@
                                             'elements' => array(
                                                 array('attributeName' => 'null',
                                                       'type' => 'DerivedExplicitReadWriteModelPermissions'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'detailViewOnly' => true,
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
                                             ),
                                         ),
                                     )
