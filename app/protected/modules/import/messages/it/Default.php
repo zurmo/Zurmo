@@ -41,11 +41,7 @@
             => '??',
         'Analyzing the import data...'
             => '??',
-        'Boolean'
-            => '??',
         'Congratulations! Your import is complete.  Below is a summary of the results.'
-            => '??',
-        'Currency Value'
             => '??',
         'Default Name'
             => '??',
@@ -54,8 +50,6 @@
         'Delimiter'
             => '??',
         'Do not map this field'
-            => '??',
-        'Drop Down'
             => '??',
         'Email was too large.'
             => '??',
@@ -76,12 +70,6 @@
         'First Row is Header Row'
             => '??',
         'Format'
-            => '??',
-        'Has Many'
-            => '??',
-        'Has One'
-            => '??',
-        'Has One Also'
             => '??',
         'Header'
             => '??',
@@ -131,8 +119,6 @@
             => '??',
         'Next'
             => '??',
-        'Phone'
-            => '??',
         'Pick list is missing corresponding custom field data.'
             => '??',
         'Pick list value required, but missing.'
@@ -148,8 +134,6 @@
         'Previous'
             => '??',
         'Processing'
-            => '??',
-        'Radio Drop Down'
             => '??',
         'Record saved correctly.'
             => '??',
@@ -168,10 +152,6 @@
         'Rules'
             => '??',
         'Sample Row'
-            => '??',
-        'String'
-            => '??',
-        'Text Area'
             => '??',
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => '??',
@@ -194,8 +174,6 @@
         'This id is required and was not specified.'
             => '??',
         'Type of Value'
-            => '??',
-        'Url'
             => '??',
         'Url was too large.'
             => '??',

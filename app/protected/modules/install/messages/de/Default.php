@@ -125,9 +125,9 @@
             => '??',
         'Memcache host'
             => '??',
-        'Memcache host'
-            => '??',
         'Memcache host name. Default is 127.0.0.1'
+            => '??',
+        'Memcache port number'
             => '??',
         'Memcache port number. Default is 11211'
             => '??',

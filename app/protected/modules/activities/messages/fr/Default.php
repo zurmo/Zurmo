@@ -32,14 +32,14 @@
         'Related'
             => '??',
         'Related to'
-            => '??',
+            => 'Lié à',
         'Roll Up Off'
-            => '??',
+            => 'Roll-up éteint',
         'Roll Up On'
-            => '??',
+            => 'Roll-up actif',
         'Show more'
-            => '??',
+            => 'Plus',
         'Summary'
-            => '??',
+            => 'Sommaire',
     );
 ?>

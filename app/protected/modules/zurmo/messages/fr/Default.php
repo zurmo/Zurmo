@@ -82,9 +82,9 @@
         'Are you sure you want to remove this role?'
             => 'Êtes-vous sûr(e) de vouloir supprimer ce rôle?',
         'Attachment'
-            => 'Pièce jointe',
+            => 'Fichier',
         'Attachments'
-            => 'Pièces jointes',
+            => 'Fichiers',
         'Audit Event'
             => 'Liste de modifications',
         'Audit Trail'
@@ -158,7 +158,7 @@
         'Group Module Permissions'
             => 'Permissions',
         'Group Policies'
-            => 'Règles de sécurit',
+            => 'Règles de sécurité',
         'Group Rights'
             => 'Droits de sécurité',
         'Groups'
@@ -194,7 +194,7 @@
         'List page size'
             => 'Dimension de la liste',
         'Load'
-            => '?? ',
+            => 'Télécharger',
         'Login'
             => 'Connexion',
         'Logout'
@@ -284,7 +284,7 @@
         'Secondary Email'
             => 'Adresse e-mail secondaire',
         'Securable Item'
-            => '?? Securable Item',
+            => 'Élément sécurisable',
         'Security'
             => 'Sécurité',
         'Select a Parent Group'
