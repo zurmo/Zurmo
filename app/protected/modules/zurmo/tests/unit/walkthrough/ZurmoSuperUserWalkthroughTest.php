@@ -118,6 +118,7 @@
             $this->assertNotEquals(9, Yii::app()->pagination->getGlobalValueByType('listPageSize'));
             $this->assertNotEquals(4, Yii::app()->pagination->getGlobalValueByType('subListPageSize'));
             $this->assertNotEquals(7, Yii::app()->pagination->getGlobalValueByType('modalListPageSize'));
+            $this->assertNotEquals(8, Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize'));
 
             $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/configurationEdit');
             //Post fake save that will fail validation.
@@ -127,6 +128,7 @@
                         'listPageSize' => 10,
                         'subListPageSize' => 0,
                         'modalListPageSize' => 8,
+                        'dashboardListPageSize' => 8,
                         )));
 
             $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/configurationEdit');
@@ -137,6 +139,7 @@
                         'listPageSize' => 9,
                         'subListPageSize' => 4,
                         'modalListPageSize' => 7,
+                        'dashboardListPageSize' => 7,
                         )));
             $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/configurationEdit');
             $this->assertEquals('Global configuration saved successfully.', Yii::app()->user->getFlash('notification'));
@@ -146,6 +149,7 @@
             $this->assertEquals(9, Yii::app()->pagination->getGlobalValueByType('listPageSize'));
             $this->assertEquals(4, Yii::app()->pagination->getGlobalValueByType('subListPageSize'));
             $this->assertEquals(7, Yii::app()->pagination->getGlobalValueByType('modalListPageSize'));
+            $this->assertEquals(7, Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize'));
         }
 
         public function testFileControllerActions()

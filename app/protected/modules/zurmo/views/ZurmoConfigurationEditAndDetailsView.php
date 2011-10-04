@@ -72,6 +72,20 @@
                                         ),
                                     )
                                 ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'dashboardListPageSize', 'type' => 'Integer'),
+                                            ),
+                                        ),
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => null, 'type' => 'Null'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                             ),
                         ),
                     ),

@@ -90,6 +90,7 @@
                 'massEditProgressPageSize' => 5,
                 'autoCompleteListPageSize' => 5,
                 'importPageSize'           => 50,
+                'dashboardListPageSize'	   => 5,
             ),
             'performance' => array(
                 'class'          => 'application.extensions.zurmoinc.framework.components.PerformanceMeasurement',

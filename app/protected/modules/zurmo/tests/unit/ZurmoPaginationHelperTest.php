@@ -44,6 +44,7 @@
             $pager->setMassEditProgressPageSize(14);
             $pager->setAutoCompleteListPageSize(15);
             $pager->setImportPageSize(16);
+            $pager->setDashboardListPageSize(17);
 
             //Retrieve settings for different current users.
             Yii::app()->user->userModel =  User::getByUsername('super');
@@ -57,6 +58,7 @@
             $this->assertEquals(14, $pager->resolveActiveForCurrentUserByType('massEditProgressPageSize'));
             $this->assertEquals(15, $pager->resolveActiveForCurrentUserByType('autoCompleteListPageSize'));
             $this->assertEquals(16, $pager->resolveActiveForCurrentUserByType('importPageSize'));
+            $this->assertEquals(17, $pager->resolveActiveForCurrentUserByType('dashboardListPageSize'));
 
             //Retrieve settings for different specific users
             $sally = User::getByUsername('sally');
@@ -76,6 +78,8 @@
             $this->assertEquals(15, $pager->getByUserAndType($billy, 'autoCompleteListPageSize'));
             $this->assertEquals(16, $pager->getByUserAndType($super, 'importPageSize'));
             $this->assertEquals(16, $pager->getByUserAndType($billy, 'importPageSize'));
+            $this->assertEquals(17, $pager->getByUserAndType($super, 'dashboardListPageSize'));
+            $this->assertEquals(17, $pager->getByUserAndType($billy, 'dashboardListPageSize'));
 
             $pager->setByUserAndType($billy, 'listPageSize',             88);
             $pager->setByUserAndType($billy, 'subListPageSize',          89);
@@ -83,6 +87,7 @@
             $pager->setByUserAndType($billy, 'massEditProgressPageSize', 91);
             $pager->setByUserAndType($billy, 'autoCompleteListPageSize', 92);
             $pager->setByUserAndType($billy, 'importPageSize',           93);
+            $pager->setByUserAndType($billy, 'dashboardListPageSize',    94);
 
             $this->assertEquals(88, $pager->getByUserAndType($billy, 'listPageSize'));
             $this->assertEquals(89, $pager->getByUserAndType($billy, 'subListPageSize'));
@@ -90,6 +95,7 @@
             $this->assertEquals(91, $pager->getByUserAndType($billy, 'massEditProgressPageSize'));
             $this->assertEquals(92, $pager->getByUserAndType($billy, 'autoCompleteListPageSize'));
             $this->assertEquals(93, $pager->getByUserAndType($billy, 'importPageSize'));
+            $this->assertEquals(94, $pager->getByUserAndType($billy, 'dashboardListPageSize'));
         }
 
         public function testSetGetGlobalValueByType()
