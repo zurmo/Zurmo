@@ -44,7 +44,7 @@
         public function attributeLabels()
         {
             return array(
-                'title' => Yii::t('Default', 'The Title'),
+                'title' => Yii::t('Default', 'Title'),
                 'url'   => Yii::t('Default', 'RSS URL'),
             );
         }

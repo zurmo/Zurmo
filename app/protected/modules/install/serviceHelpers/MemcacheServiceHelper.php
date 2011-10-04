@@ -74,7 +74,10 @@
                 {
                     $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
                 }
-                $this->message .= "\n";
+                if($this->message != null)
+                {
+                    $this->message .= "\n";
+                }
                 $this->message .= Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
                 return false;
             }
