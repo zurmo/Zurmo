@@ -152,12 +152,14 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $lead = LeadTestHelper::createLeadByNameForOwner('leadForElevationToModelTest', $super);
 
-            //Test nobody, access to edit and details should fail.
+            //Test nobody, access to edit, details and delete should fail.
             $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/details');
+            $this->setGetArray(array('id' => $lead->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
 
             //give nobody access to read
             Yii::app()->user->userModel = $super;
@@ -169,33 +171,52 @@
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
 
-            //Test nobody, access to edit should fail.
+            //Test nobody, access to edit and delete should fail.
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
+            $this->setGetArray(array('id' => $lead->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
 
             //give nobody access to read and write
             Yii::app()->user->userModel = $super;
             $lead->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($lead->save());
 
-            //Now the nobody user should be able to access the edit view and still the details view.
+            //Now the nobody user should be able to access the edit view and still the details view and the delete 
+            //of the leads should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
+            $this->setGetArray(array('id' => $lead->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
 
             //revoke nobody access to read
             Yii::app()->user->userModel = $super;
             $lead->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
             $this->assertTrue($lead->save());
 
-            //Test nobody, access to detail should fail.
+            //Test nobody, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/details');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
+            $this->setGetArray(array('id' => $lead->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
+            
+            //give nobody access to delete
+            Yii::app()->user->userModel = $super;
+            $lead->addPermissions($nobody, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($lead->save());            
+            
+            //now nobody should be able to delete a lead
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $lead->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
 
             //create some roles
             Yii::app()->user->userModel = $super;
