@@ -277,6 +277,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/delete', 'id' => $contact->id);
