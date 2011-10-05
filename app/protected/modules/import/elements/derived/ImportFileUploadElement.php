@@ -44,6 +44,8 @@
                 $existingFilesInformation[]        = $this->model->fileUploadData;
                 $existingFilesInformation[0]['id'] = $this->model->id;
             }
+            $content = $this->renderDelimiterAndEnclosureContent($existingFilesInformation);
+
             $inputNameAndId = $this->getEditableInputId('file');
 
             $beforeUploadAction  = "$('#{$this->getEditableInputId('rowColumnDelimiter')}').attr('readonly', true);";
@@ -69,8 +71,13 @@
                 'afterDeleteAction'    => $afterDeleteAction,
             ));
             $cClipWidget->endClip();
-            $content = $cClipWidget->getController()->clips['filesElement'];
+            $content .= $cClipWidget->getController()->clips['filesElement'];
+            return $content;
+        }
 
+        protected function renderDelimiterAndEnclosureContent($existingFilesInformation)
+        {
+            assert('is_array($existingFilesInformation)');
             $params = array('htmlOptions' => array('size' => 5));
             if (count($existingFilesInformation) == 1)
             {
@@ -83,10 +90,9 @@
             $enclosureElement                          = new TextElement($this->model, 'rowColumnEnclosure',
                                                          $this->form, $params);
             $enclosureElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
-            $content .= $delimiterElement->render();
+            $content  = $delimiterElement->render();
             $content .= $enclosureElement->render();
             $content .= '<div style="clear:both;"></div>' . "\n";
-
             return $content;
         }
 

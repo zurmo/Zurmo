@@ -443,7 +443,7 @@
             }
             elseif (!$importWizardForm->validate(array('rowColumnDelimiter')))
             {
-                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid enclosure'));
+                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid qualifier'));
             }
             else
             {
