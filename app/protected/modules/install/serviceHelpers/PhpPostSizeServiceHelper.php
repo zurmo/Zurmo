@@ -41,11 +41,11 @@
                                                                             $actualPostSizeBytes);
             if ($postSizeBytesPassed)
             {
-                $this->message  = Yii::t('Default', 'Php post max size meets minimum requirement.');
+                $this->message  = Yii::t('Default', 'PHP post max size meets minimum requirement.');
             }
             else
             {
-                $this->message  = Yii::t('Default', 'Php post max size setting is:') . ' ';
+                $this->message  = Yii::t('Default', 'PHP post max size setting is:') . ' ';
                 $this->message .= round($actualPostSizeBytes / 1024000) . 'M ';
                 $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';

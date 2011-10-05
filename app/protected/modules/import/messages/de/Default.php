@@ -51,7 +51,7 @@
             => '??',
         'Do not map this field'
             => '??',
-        'Email was too large.'
+        'Email was too long.'
             => '??',
         'Enclosure'
             => '??',
@@ -65,7 +65,7 @@
             => '??',
         'File Upload Data'
             => '??',
-        'First name specified is too large.'
+        'First name specified is too long.'
             => '??',
         'First Row is Header Row'
             => '??',
@@ -109,7 +109,7 @@
             => '??',
         'Invalid url format'
             => '??',
-        'Last name specified is too large.'
+        'Last name specified is too long.'
             => '??',
         'Mapping Data'
             => '??',
@@ -143,7 +143,7 @@
             => '??',
         'Records updated: {updated}'
             => '??',
-        'Remove Column'
+        'Remove Field'
             => '??',
         'Required Fields'
             => '??',
@@ -157,7 +157,7 @@
             => '??',
         'The file that was uploaded was not a csv.'
             => '??',
-        'The full name specified did not resolve to have a last name, which is required.'
+        'The full name must contain a last name, which is required.'
             => '??',
         'The id specified did not match any existing records.'
             => '??',
@@ -175,11 +175,11 @@
             => '??',
         'Type of Value'
             => '??',
-        'Url was too large.'
+        'URL was too long.'
             => '??',
         'Who can read and write the new {importRulesLabel}'
             => '??',
-        'You can only map each attribute once.'
+        'You can only map each field once.'
             => '??',
         'You do not have permission to update this record and/or its related record.'
             => '??',

@@ -66,7 +66,7 @@
             }
             if (strlen($validatedUrl) > $maxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Url was too large.'));
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'URL was too long.'));
             }
             return $validatedUrl;
         }

@@ -166,7 +166,7 @@
             }
             if ($attributeMappedOrHasRulesMoreThanOnce)
             {
-                $this->addError('mappingData', Yii::t('Default', 'You can only map each attribute once.'));
+                $this->addError('mappingData', Yii::t('Default', 'You can only map each field once.'));
             }
             if (!$atLeastOneAttributeMappedOrHasRules)
             {
