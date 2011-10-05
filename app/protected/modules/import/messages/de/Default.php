@@ -53,11 +53,11 @@
             => '??',
         'Email was too long.'
             => '??',
-        'Enclosure'
+        'Qualifier'
             => '??',
         'Error: Invalid delimiter'
             => '??',
-        'Error: Invalid enclosure'
+        'Error: Invalid qualifier'
             => '??',
         'Failed to create temporary database table from CSV.'
             => '??',
@@ -128,8 +128,6 @@
         'Please select the CSV to upload'
             => '??',
         'Please select the module you would like to import to:'
-            => '??',
-        'Prev'
             => '??',
         'Previous'
             => '??',

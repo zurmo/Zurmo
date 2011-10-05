@@ -30,7 +30,7 @@
                                                                      $tableName,
                                                                      $pathToFiles = null,
                                                                      $delimiter = ',', // Not Coding Standard
-                                                                     $enclosure = "'")
+                                                                     $enclosure = '"')
         {
             assert('is_string($fileName)');
             assert('is_string($tableName)');

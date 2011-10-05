@@ -53,11 +53,11 @@
             => 'Ne pas mapper ce champs',
         'Email was too long.'
             => 'Email trop long.',
-        'Enclosure'
+        'Qualifier'
             => 'Délimiteur de texte',
         'Error: Invalid delimiter'
             => 'Erreur: délimiteur invalide',
-        'Error: Invalid enclosure'
+        'Error: Invalid qualifier'
             => 'Erreur: qualificateur invalide',
         'Failed to create temporary database table from CSV.'
             => 'Impossible de créer une table temporaire du fichier CSV',
@@ -129,8 +129,6 @@
             => 'Veuillez télécharger un CSV',
         'Please select the module you would like to import to:'
             => 'Veuillez sélectionner le module d\'importation',
-        'Prev'
-            => 'Préc',
         'Previous'
             => 'Précédent',
         'Processing'

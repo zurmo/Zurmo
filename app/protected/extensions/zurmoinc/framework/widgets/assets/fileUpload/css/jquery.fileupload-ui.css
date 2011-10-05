@@ -25,6 +25,10 @@
   cursor: pointer;
 }
 
+.fileupload-buttonbar .ui-button-text {
+  font-size: 80%;
+}
+
 .fileinput-button {
   overflow: hidden;
 }

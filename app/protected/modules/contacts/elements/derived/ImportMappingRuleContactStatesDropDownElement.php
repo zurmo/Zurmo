@@ -51,7 +51,7 @@
             {
                 return array();
             }
-            return array_combine($dropDownArray, $dropDownArray);
+            return $dropDownArray;
         }
     }
 ?>

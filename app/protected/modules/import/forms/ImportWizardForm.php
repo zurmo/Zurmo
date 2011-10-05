@@ -59,7 +59,7 @@
          * String of the enclosure character to use for each row column.  Defaults to "
          * @var string
          */
-        public $rowColumnEnclosure = "'";
+        public $rowColumnEnclosure = '"';
 
         /**
          * True/false whether the import file's first row is a header row or not.
@@ -94,7 +94,7 @@
             return array(
                 //default validators must come before the required validators
                 array('rowColumnDelimiter',  'default', 'value' => ',', 'setOnEmpty' => true), // Not Coding Standard
-                array('rowColumnEnclosure',  'default', 'value' => "'", 'setOnEmpty' => true),
+                array('rowColumnEnclosure',  'default', 'value' => '"', 'setOnEmpty' => true),
                 array('importRulesType',     'required'),
                 array('rowColumnDelimiter',  'required'),
                 array('rowColumnEnclosure',  'required'),
@@ -114,7 +114,7 @@
                 'importRulesType'                   => Yii::t('Default', 'Module To Import To'),
                 'fileUploadData'                    => Yii::t('Default', 'File Upload Data'),
                 'rowColumnDelimiter'                => Yii::t('Default', 'Delimiter'),
-                'rowColumnEnclosure'                => Yii::t('Default', 'Enclosure'),
+                'rowColumnEnclosure'                => Yii::t('Default', 'Qualifier'),
                 'firstRowIsHeaderRow'               => Yii::t('Default', 'First Row is Header Row'),
                 'explicitReadWriteModelPermissions' => Yii::t('Default', 'Model Permissions'),
                 'mappingData'                       => Yii::t('Default', 'Mapping Data'),
