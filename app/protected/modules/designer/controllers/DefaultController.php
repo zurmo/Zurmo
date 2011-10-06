@@ -55,12 +55,11 @@
 
         public function actionAttributesList()
         {
-            $met = Account::getMetadata();
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $model = new $modelClassName();
-            $adapter = new ModelAttributesAdapter($model);
+            $modelClassName  = $moduleClassName::getPrimaryModelName();
+            $model           = new $modelClassName();
+            $adapter         = new ModelAttributesAdapter($model);
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
