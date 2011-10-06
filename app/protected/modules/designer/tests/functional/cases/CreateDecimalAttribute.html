@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Functestdecimalfield</td>
+	<td>functestdecimalfield_${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,13 +68,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>DecimalAttributeForm_displayName</td>
-	<td>functestdecimalfield${randomSuffix}</td>
+	<td>DecimalAttributeForm_attributeName</td>
+	<td>functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>DecimalAttributeForm_attributeName</td>
-	<td>functestdecimalfield${randomSuffix}</td>
+	<td>DecimalAttributeForm_attributeLabels_en</td>
+	<td>functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -92,6 +92,36 @@
 	<td>3</td>
 </tr>
 <tr>
+	<td>verifyValue</td>
+	<td>DecimalAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DecimalAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DecimalAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DecimalAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DecimalAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DecimalAttributeForm_isAudited</td>
+	<td>on</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
@@ -99,7 +129,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: Functestdecimalfield${randomSuffix}</td>
+	<td>exact:Field: functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -108,13 +138,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functestdecimalfield${randomSuffix}</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//*[@id=&quot;DecimalAttributeForm_isRequired&quot;]</td>
-	<td>off</td>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -129,7 +159,82 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[6]/td</td>
-	<td>2</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+	<td>exact:Edit Field: functestdecimalfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>DecimalAttributeForm_defaultValue</td>
+	<td>62.894</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DecimalAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DecimalAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DecimalAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: functestdecimalfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>62.894</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+	<td>off</td>
 </tr>
 </tbody></table>
 </body>
