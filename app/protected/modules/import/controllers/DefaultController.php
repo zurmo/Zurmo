@@ -456,7 +456,7 @@
                     {
                         $tempTableName = $import->getTempTableName();
                         if (!ImportDatabaseUtil::
-                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
+                            makeDatabaseTableByFileHandleAndTableName($uploadedFile->getTempName(), $tempTableName,
                                                                       $importWizardForm->rowColumnDelimiter,
                                                                       $importWizardForm->rowColumnEnclosure))
                         {

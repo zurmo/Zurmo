@@ -32,47 +32,99 @@
         /**
          * Given a file resource, convert the file into a database table based on the table name provided.
          * Assumes the file is a csv.
-         * @param resource $fileHandle
+         * @param string $csvFilePath
          * @param string $tableName
          * @return true on success.
          */
-        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName, $delimiter = ',', // Not Coding Standard
+        public static function makeDatabaseTableByFileHandleAndTableName($csvFilePath, $tableName, $delimiter = ',', // Not Coding Standard
                                                                          $enclosure = "'")
         {
-            assert('gettype($fileHandle) == "resource"');
             assert('is_string($tableName)');
             assert('$tableName == strtolower($tableName)');
             assert('$delimiter != null && is_string($delimiter)');
             assert('$enclosure != null && is_string($enclosure)');
-            $freezeWhenComplete = false;
-            if (RedBeanDatabase::isFrozen())
+
+            $fileHandle  = fopen($csvFilePath, 'r');
+            assert('gettype($fileHandle) == "resource"');
+
+            if ($fileHandle !== false)
             {
-                RedBeanDatabase::unfreeze();
-                $freezeWhenComplete = true;
-            }
-            R::exec("drop table if exists $tableName");
-            while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
-            {
-                if (count($data) > 0)
+                $freezeWhenComplete = false;
+                if (RedBeanDatabase::isFrozen())
                 {
-                    $newBean = R::dispense($tableName);
-                    foreach ($data as $columnId => $value)
+                    RedBeanDatabase::unfreeze();
+                    $freezeWhenComplete = true;
+                }
+
+                //Get first row from CSV file, and create array from it.
+                //Add id, status and serializedmessages columns.
+                $columns = array();
+                $headerRow = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
+                if (count($headerRow) > 0)
+                {
+                    $columns[] = 'id';
+                    foreach ($headerRow as $columnId => $value)
                     {
                         $columnName = 'column_' . $columnId;
-                        $newBean->{$columnName} = $value;
+                        $columns[] = $columnName;
                     }
-                    $newBean->status             = null;
-                    $newBean->serializedmessages = null;
-                    R::store($newBean);
-                    unset($newBean);
+                    $columns[] = 'status';
+                    $columns[] = 'serializedmessages';
                 }
+
+                $tableDef = '';
+                if (count($columns > 3))
+                {
+                    foreach ($columns as $id => $column)
+                    {
+                        switch ($column) {
+                            case 'id':
+                                $tableDef .= "id int(11) unsigned NOT NULL AUTO_INCREMENT," . "\n";
+                                break;
+                            case 'status':
+                                $tableDef .= "status int(11) unsigned DEFAULT NULL," . "\n";
+                                break;
+                            case 'serializedmessages':
+                                $tableDef .= "serializedmessages text COLLATE utf8_unicode_ci DEFAULT NULL," . "\n";
+                                break;
+                            default:
+                                $tableDef .= "{$column} TEXT COLLATE utf8_unicode_ci DEFAULT NULL," . "\n";
+                        }
+                    }
+                    $tableDef .= "PRIMARY KEY (id)";
+                }
+                else
+                {
+                    return false;
+                }
+
+                //Remove id, status and serializedmessages columns.
+                $insertColumns = array_diff($columns, array('id','status','serializedmessages'));
+
+                $sql = "drop table if exists $tableName";
+                R::exec($sql);
+
+                $sql = "create table $tableName ($tableDef)";
+                R::exec($sql);
+                $sql = "LOAD DATA LOCAL INFILE '$csvFilePath'
+                        INTO TABLE $tableName
+                        FIELDS TERMINATED BY '$delimiter'
+                        OPTIONALLY ENCLOSED BY '\"'
+                        (".implode(",", $insertColumns).")
+                       ";
+                R::exec($sql);
+
+                self::optimizeTable($tableName);
+                if ($freezeWhenComplete)
+                {
+                    RedBeanDatabase::freeze();
+                }
+                return true;
             }
-            self::optimizeTable($tableName);
-            if ($freezeWhenComplete)
+            else
             {
-                RedBeanDatabase::freeze();
+                return false;
             }
-            return true;
         }
 
         protected static function optimizeTable($tableName)
