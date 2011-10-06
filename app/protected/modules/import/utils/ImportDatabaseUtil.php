@@ -52,6 +52,9 @@
             $fileHandle  = fopen($csvFilePath, 'r');
             assert('gettype($fileHandle) == "resource"');
 
+            $sql = "drop table if exists $tableName";
+            R::exec($sql);
+
             if ($fileHandle !== false)
             {
                 $freezeWhenComplete = false;
@@ -65,7 +68,7 @@
                 //Add id, status and serializedmessages columns.
                 $columns = array();
                 $headerRow = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
-                if (count($headerRow) > 0)
+                if (count($headerRow) > 1 || (count($headerRow) == 1 && $headerRow[0] != ''))
                 {
                     $columns[] = 'id';
                     foreach ($headerRow as $columnId => $value)
@@ -78,7 +81,7 @@
                 }
 
                 $tableDef = '';
-                if (count($columns > 3))
+                if (count($columns) > 3)
                 {
                     foreach ($columns as $id => $column)
                     {
@@ -97,40 +100,33 @@
                         }
                     }
                     $tableDef .= "PRIMARY KEY (id)";
+
+                    //Remove id, status and serializedmessages columns.
+                    $insertColumns = array_diff($columns, array('id','status','serializedmessages'));
+
+                    $sql = "create table $tableName ($tableDef)";
+                    R::exec($sql);
+                    $sql = "LOAD DATA LOCAL INFILE '$csvFilePath'
+                                            INTO TABLE $tableName
+                                            FIELDS TERMINATED BY '$delimiter'
+                                            OPTIONALLY ENCLOSED BY '\"'
+                                            LINES TERMINATED BY '\n'
+                                            (".implode(",", $insertColumns).")
+                                           ";
+                    R::exec($sql);
+
+                    self::optimizeTable($tableName);
+                    if ($freezeWhenComplete)
+                    {
+                        RedBeanDatabase::freeze();
+                    }
                 }
-                else
-                {
-                    return false;
-                }
-
-                //Remove id, status and serializedmessages columns.
-                $insertColumns = array_diff($columns, array('id','status','serializedmessages'));
-
-                $sql = "drop table if exists $tableName";
-                R::exec($sql);
-
-                $sql = "create table $tableName ($tableDef)";
-                R::exec($sql);
-                $sql = "LOAD DATA LOCAL INFILE '$csvFilePath'
-                        INTO TABLE $tableName
-                        FIELDS TERMINATED BY '$delimiter'
-                        OPTIONALLY ENCLOSED BY '\"'
-                        LINES TERMINATED BY '\n'
-                        (".implode(",", $insertColumns).")
-                       ";
-                R::exec($sql);
-
-                self::optimizeTable($tableName);
-                if ($freezeWhenComplete)
-                {
-                    RedBeanDatabase::freeze();
-                }
-                return true;
             }
             else
             {
                 return false;
             }
+            return true;
         }
 
         protected static function optimizeTable($tableName)
