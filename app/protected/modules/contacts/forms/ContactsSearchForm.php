@@ -104,6 +104,7 @@
                 'fullName' => array(
                     array('firstName'),
                     array('lastName'),
+                    array('concatedAttributeNames' => array('firstName', 'lastName'))
                 ),
             ));
         }
