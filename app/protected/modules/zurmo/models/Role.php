@@ -126,5 +126,10 @@
             parent::beforeDelete();
             ReadPermissionsOptimizationUtil::roleBeingDeleted($this);
         }
+
+        protected function afterDelete()
+        {
+            PermissionsCache::forgetAll();
+        }
     }
 ?>
