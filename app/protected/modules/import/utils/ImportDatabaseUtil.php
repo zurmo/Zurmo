@@ -107,12 +107,12 @@
                     $sql = "create table $tableName ($tableDef)";
                     R::exec($sql);
                     $sql = "LOAD DATA LOCAL INFILE '$csvFilePath'
-                                            INTO TABLE $tableName
-                                            FIELDS TERMINATED BY '$delimiter'
-                                            OPTIONALLY ENCLOSED BY '\"'
-                                            LINES TERMINATED BY '\n'
-                                            (".implode(",", $insertColumns).")
-                                           ";
+                            INTO TABLE $tableName
+                            FIELDS TERMINATED BY '$delimiter'
+                            OPTIONALLY ENCLOSED BY '\{$enclosure}'
+                            LINES TERMINATED BY '\n'
+                            (".implode(",", $insertColumns).")
+                           ";
                     R::exec($sql);
 
                     self::optimizeTable($tableName);
