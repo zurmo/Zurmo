@@ -30,7 +30,7 @@
         {
             $user = new User();
             $user->username     = strtolower($name);
-            $user->title->value = 'Mr';
+            $user->title->value = 'Mr.';
             $user->firstName    = $name;
             $user->lastName     = $name . 'son';
             $user->setPassword(strtolower($name));

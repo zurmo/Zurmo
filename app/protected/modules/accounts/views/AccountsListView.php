@@ -46,6 +46,15 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'type', 'type' => 'DropDown'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'owner', 'type' => 'User'),
                                             ),
                                         ),

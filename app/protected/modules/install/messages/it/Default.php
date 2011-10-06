@@ -65,9 +65,9 @@
             => '??',
         'Database host'
             => '??',
-        'Database max allowed packet size is:'
+        'Database max_allowed_packet size is:'
             => '??',
-        'Database max allowed packet size meets minimum requirement.'
+        'Database max_allowed_packet size meets minimum requirement.'
             => '??',
         'Database name'
             => '??',
@@ -121,9 +121,9 @@
             => '??',
         'Login'
             => '??',
-        'Mb String is installed.'
+        'Mbstring is installed.'
             => '??',
-        'Mb String is not installed.'
+        'Mbstring is not installed.'
             => '??',
         'Memcache'
             => '??',
@@ -147,27 +147,27 @@
             => '??',
         'PASS'
             => '??',
-        'Php'
+        'PHP'
             => '??',
-        'Php File Uploads is Off.  This should be on.'
+        'PHP File Uploads is Off.  This should be on.'
             => '??',
-        'Php File Uploads is on which is ok.'
+        'PHP File Uploads is on which is ok.'
             => '??',
-        'Php Memory setting is:'
+        'PHP Memory setting is:'
             => '??',
-        'Php Memory setting meets minimum requirement.'
+        'PHP Memory setting meets minimum requirement.'
             => '??',
-        'Php post max size meets minimum requirement.'
+        'PHP post max size meets minimum requirement.'
             => '??',
-        'Php post max size setting is:'
+        'PHP post max size setting is:'
             => '??',
-        'Php Timezone is not set.'
+        'PHP Timezone is not set.'
             => '??',
-        'Php Timezone is set.'
+        'PHP Timezone is set.'
             => '??',
-        'Php Upload size meets minimum requirement.'
+        'PHP Upload size meets minimum requirement.'
             => '??',
-        'Php Upload size setting is:'
+        'PHP Upload size setting is:'
             => '??',
         'Rebuilding Permissions.'
             => '??',
@@ -186,9 +186,7 @@
         'Since you specified an existing database you must check this box in order ' .
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
             => '??',
-        'Soap is installed.'
-            => '??',
-        'Soap is not installed.'
+        'SOAP is not installed.'
             => '??',
         'Starting database schema creation.'
             => '??',

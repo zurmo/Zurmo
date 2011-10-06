@@ -48,8 +48,8 @@
         'Delimiter'
             => 'Délimiteur',
         'Do not map this field'
-            => 'Ne pas mapper ce champ',
-        'Email was too large.'
+            => 'Ne pas mapper ce champs',
+        'Email was too long.'
             => 'Email trop long.',
         'Enclosure'
             => 'Délimiteur de texte',
@@ -63,7 +63,7 @@
             => 'Impossible d\'ouvrir le fichier',
         'File Upload Data'
             => 'Données du fichier',
-        'First name specified is too large.'
+        'First name specified is too long.'
             => 'Le prénom contient trop de caractères',
         'First Row is Header Row'
             => 'La première ligne du fichier contient les en-têtes de colonne',
@@ -141,7 +141,7 @@
             => 'No. d\'enregistrements importés: {created}',
         'Records updated: {updated}'
             => 'Enregistrements mis à jour: {updated}',
-        'Remove Column'
+        'Remove Field'
             => 'Supprimer',
         'Required Fields'
             => 'Champs Requis',
@@ -155,7 +155,7 @@
             => 'Fichier vide: le fichier ne contient que les en-têtes de colonne',
         'The file that was uploaded was not a csv.'
             => 'Le fichier à télécharger doit être au format CSV',
-        'The full name specified did not resolve to have a last name, which is required.'
+        'The full name must contain a last name, which is required.'
             => 'Le nom complet doit contenir un moins un nom de famille (requis).',
         'The id specified did not match any existing records.'
             => 'L\'ID ne correspond pas ou est introuvable',
@@ -173,11 +173,11 @@
             => 'Le champ ID est requis et la valeur du champ est vide sur le fichier',
         'Type of Value'
             => 'Type de données',
-        'Url was too large.'
+        'URL was too long.'
             => 'L\'URL contient trop de caractères',
         'Who can read and write the new {importRulesLabel}'
             => 'Permissions {importRulesLabel}',
-        'You can only map each attribute once.'
+        'You can only map each field once.'
             => 'Chaque champ ne peut être mappé à un autre champ déjà mappé.',
         'You do not have permission to update this record and/or its related record.'
             => 'Vous n\'avez pas l\'autorisation requise pour mettre à jour cet objet',

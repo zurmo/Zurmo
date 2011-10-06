@@ -62,7 +62,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'officeFax', 'type' => 'Phone'),
+                                                array('attributeName' => 'type', 'type' => 'DropDown', 'addBlank' => true),
                                             ),
                                         ),
                                     )

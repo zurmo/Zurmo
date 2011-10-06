@@ -39,7 +39,7 @@
             $this->assertTrue($superAdminDude->save());
 
             $adminDude = new User();
-            $adminDude->title->value       = 'Mr';
+            $adminDude->title->value       = 'Mr.';
             $adminDude->username           = 'jason';
             $adminDude->firstName          = 'Jason';
             $adminDude->lastName           = 'Jasonson';
@@ -47,7 +47,7 @@
             $this->assertTrue($adminDude->save());
 
             $accountOwner = new User();
-            $accountOwner->title->value       = 'Mr'; // :P
+            $accountOwner->title->value       = 'Mr.'; // :P
             $accountOwner->username           = 'lisay';
             $accountOwner->firstName          = 'lisa';
             $accountOwner->lastName           = 'Lisason';
@@ -55,7 +55,7 @@
             $this->assertTrue($accountOwner->save());
 
             $salesDude1 = new User();
-            $salesDude1->title->value       = 'Mr';
+            $salesDude1->title->value       = 'Mr.';
             $salesDude1->username           = 'ray45';
             $salesDude1->firstName          = 'Ray';
             $salesDude1->lastName           = 'Rayson';
@@ -63,7 +63,7 @@
             $this->assertTrue($salesDude1->save());
 
             $salesDude2 = new User();
-            $salesDude2->title->value       = 'Mr';
+            $salesDude2->title->value       = 'Mr.';
             $salesDude2->username           = 'stafford';
             $salesDude2->firstName          = 'Stafford';
             $salesDude2->lastName           = 'Staffordson';
@@ -71,7 +71,7 @@
             $this->assertTrue($salesDude2->save());
 
             $managementDudette = new User();
-            $managementDudette->title->value       = 'Ms';
+            $managementDudette->title->value       = 'Ms.';
             $managementDudette->username           = 'donna';
             $managementDudette->firstName          = 'Donna';
             $managementDudette->lastName           = 'Donnason';
@@ -79,7 +79,7 @@
             $this->assertTrue($managementDudette->save());
 
             $supportDude = new User();
-            $supportDude->title->value        = 'Mr';
+            $supportDude->title->value        = 'Mr.';
             $supportDude->username            = 'rossy';
             $supportDude->firstName           = 'Ross';
             $supportDude->lastName            = 'Rosson';

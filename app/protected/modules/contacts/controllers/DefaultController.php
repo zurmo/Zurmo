@@ -201,17 +201,19 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null)
+                                                    $pageTitle = null,
+                                                    $stateMetadataAdapterClassName = null)
         {
             $pageTitle = Yii::t('Default',
                                 'ContactsModuleSingularLabel Search',
                                  LabelUtil::getTranslationParamsForAllModules());
             parent::actionSelectFromRelatedList($portletId,
-                                                    $uniqueLayoutId,
-                                                    $relationAttributeName,
-                                                    $relationModelId,
-                                                    $relationModuleId,
-                                                    $pageTitle);
+                                                $uniqueLayoutId,
+                                                $relationAttributeName,
+                                                $relationModelId,
+                                                $relationModuleId,
+                                                $pageTitle,
+                                                'ContactsStateMetadataAdapter');
         }
 
         /**

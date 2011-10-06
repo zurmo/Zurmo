@@ -533,7 +533,7 @@
         {
             $user = new User();
             $user->username     = $username;
-            $user->title->value = 'Mr';
+            $user->title->value = 'Mr.';
             $user->firstName    = 'Super';
             $user->lastName     = 'User';
             $user->setPassword($password);
@@ -776,7 +776,7 @@
         }
 
         /**
-         * Looks at the post max size, upload max size, and database max allowed packets
+         * Looks at the post max size, upload max size, and database max_allowed_packets
          * @return integer of max allowed file size for uploads.
          */
         public static function getMaxAllowedFileSize()

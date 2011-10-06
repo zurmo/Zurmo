@@ -37,7 +37,7 @@
                                                                                 Yii::t('Default', 'RedBean'));
             if ($passed)
             {
-                $patched = InstallUtil::checkRedBeanPatched();
+                $patched        = InstallUtil::checkRedBeanPatched();
                 $this->message .= "\n";
                 if ($patched)
                 {

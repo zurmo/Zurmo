@@ -452,7 +452,7 @@
 
                 if (count(array_diff($phpRows, $otherRows)) > 0)
                 {
-                    echo "Php & optimized munges don't match.\n";
+                    echo "PHP & optimized munges don't match.\n";
                     echo "--------\n";
                     foreach ($phpRows as $row)
                     {

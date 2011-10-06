@@ -66,9 +66,9 @@
             => 'Nom d\'utilisateur administrateur',
         'Database host'
             => 'L\'hôte de la base de données',
-        'Database max allowed packet size is:'
+        'Database max_allowed_packet size is:'
             => 'Le max_allowed_packet de la base de données est:',
-        'Database max allowed packet size meets minimum requirement.'
+        'Database max_allowed_packet size meets minimum requirement.'
             => 'La taille max_allowed_packet de la base de données répond aux exigences minimales',
         'Database name'
             => 'Nom de la base de donées',
@@ -126,9 +126,9 @@
             => 'Verrouillage de la page d\'installation',
         'Login'
             => 'Connexion',
-        'Mb String is installed.'
+        'Mbstring is installed.'
             => 'Mbstring est installé',
-        'Mb String is not installed.'
+        'Mbstring is not installed.'
             => 'Mbstring n\'est pas installé',
         'Memcache'
             => 'Memcache',
@@ -152,28 +152,27 @@
             => 'ou',
         'PASS'
             => 'RÉUSSI',
-        'Php'
+        'PHP'
             => 'PHP',
-        'Php File Uploads is Off.  This should be on.'
-            => 'Le paramètre téléchargement de fichier PHP ne sont pas activés. ' .
-               'Cette fonction doit être activée.',
-        'Php File Uploads is on which is ok.'
+        'PHP File Uploads is Off.  This should be on.'
+            => 'Le paramètre téléchargement de fichier PHP ne sont pas activés. Cette fonction doit être activée.',
+        'PHP File Uploads is on which is ok.'
             => 'Le paramètre téléchargement de fichier PHP est activé.',
-        'Php Memory setting is:'
+        'PHP Memory setting is:'
             => 'PHP limite de mémoire:',
-        'Php Memory setting meets minimum requirement.'
+        'PHP Memory setting meets minimum requirement.'
             => 'Le parametre PHP limite de mémoire répond aux exigences minimales.',
-        'Php post max size meets minimum requirement répond aux exigences minimales.'
+        'PHP post max size meets minimum requirement répond aux exigences minimales.'
             => 'La taille PHP post_max_size',
-        'Php post max size setting is:'
+        'PHP post max size setting is:'
             => 'La taille PHP post_max_size est:',
-        'Php Timezone is not set.'
+        'PHP Timezone is not set.'
             => 'Le fuseau horaire PHP n\'est pas configuré',
-        'Php Timezone is set.'
+        'PHP Timezone is set.'
             => 'Le fuseau horaire PHP est configuré',
-        'Php Upload size meets minimum requirement.'
+        'PHP Upload size meets minimum requirement.'
             => 'PHP limite de téléchargement répond aux exigences minimales.',
-        'Php Upload size setting is:'
+        'PHP Upload size setting is:'
             => 'PHP limite de téléchargement:',
         'Rebuilding Permissions.'
             => 'Reconstruction des permissions',
