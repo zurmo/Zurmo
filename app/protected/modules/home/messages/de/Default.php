@@ -45,6 +45,8 @@
             => '??',
         'Dashboard'
             => '??',
+        'Dashboard portlet list page size'
+            => '??',
         'Delete Dashboard'
             => '??',
         'Edit Dashboard'

@@ -33,10 +33,11 @@
             => 'Apache',
         'APC'
             => 'APC',
-        'Below you will find the results of the system check.  If any required
-        services are not setup correctly, you will need to make sure they are
-        installed correctly before you can continue.'
-            => 'Voici les résultats du scan. Si un des éléments requis n\'est pas bien installé, vous devez corriger les problèmes avant de continuer.',
+        'Below you will find the results of the system check.  If any required ' .
+        'services are not setup correctly, you will need to make sure they are ' .
+        'installed correctly before you can continue.'
+            => 'Voici les résultats du scan. Si un des éléments requis n\'est ' .
+            'pas bien installé, vous devez corriger les problèmes avant de continuer.',
         'Can either be a domain name or an IP address.'
             => 'Peut être soit le nom de domaine ou l\'adresse IP',
         'Click below to go to the login page. The username is <b>super</b>'
@@ -91,8 +92,12 @@
             => 'Les données de démonstration sont chargées.',
         'Freezing database.'
             => 'Freezing la base de données.',
-        'In all likelihood, these items were supplied to you by your Web Host. If you do not have this information, then you will need to contact them before you can continue. If you\'re all ready...'
-            => 'Cette information est fournie par votre hébergeur.  Si vous n\'avez pas toutes ces informations, vous devez contacter votre hébergeur ou votre administrateur système.  Si tout est en ordre...',
+        'In all likelihood, these items were supplied to you by your Web Host. ' .
+        'If you do not have this information, then you will need to contact them ' .
+        'before you can continue. If you\'re all ready...'
+            => 'Cette information est fournie par votre hébergeur.  Si vous n\'avez ' .
+               'pas toutes ces informations, vous devez contacter votre hébergeur ou ' .
+               'votre administrateur système.  Si tout est en ordre...',
         'Install'
             => 'Installer',
         'Install demo data.'
@@ -107,10 +112,14 @@
             => 'est installé, mais la version est inconnue',
         'is not installed'
             => 'n\'est pas installé',
-        'It is highly recommended that all optional services are installed and working before continuing.'
-            => 'Il est fortement recommandé d\'installer tous les services optionnels avant de continuer.',
-        'Leave this blank unless you would like to create the user and database for Zurmo to run in.'
-            => 'Laissez la valeur vide si vous souhaitez créer un utilisateur et une base de données pour Zurmo.',
+        'It is highly recommended that all optional services are installed and ' .
+        'working before continuing.'
+            => 'Il est fortement recommandé d\'installer tous les services optionnels ' .
+               'avant de continuer.',
+        'Leave this blank unless you would like to create the user and database ' .
+        'for Zurmo to run in.'
+            => 'Laissez la valeur vide si vous souhaitez créer un utilisateur et une ' .
+               'base de données pour Zurmo.',
         'Loading demo data. Please wait.'
             => 'Création des données de démonstration.  Veuillez patienter.',
         'Locking Installation.'
@@ -146,7 +155,8 @@
         'Php'
             => 'PHP',
         'Php File Uploads is Off.  This should be on.'
-            => 'Le paramètre téléchargement de fichier PHP ne sont pas activés. Cette fonction doit être activée.',
+            => 'Le paramètre téléchargement de fichier PHP ne sont pas activés. ' .
+               'Cette fonction doit être activée.',
         'Php File Uploads is on which is ok.'
             => 'Le paramètre téléchargement de fichier PHP est activé.',
         'Php Memory setting is:'
@@ -179,8 +189,12 @@
             => 'Statut du service partiellement connue',
         'Setting up default data.'
             => 'Installation des données du système',
-        'Since you specified an existing database you must check this box in order to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
-            => 'Vous avez spécifiez une base de données existante, cochez la boite pour continuer.  LES DONNÉES EXISTANTES SERONT SUPPRIMÉES.',
+        'Since you specified an existing database you must check this box in order ' .
+        'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
+            => 'Vous avez spécifiez une base de données existante, cochez la boite pour continuer. ' .
+               'LES DONNÉES EXISTANTES SERONT SUPPRIMÉES.',
+        'Soap is installed.'
+            => 'SOAP est installé',
         'Soap is not installed.'
             => 'SOAP n\'est pas installé',
         'Starting database schema creation.'
@@ -215,8 +229,10 @@
             => 'version installée',
         'WARNING'
             => 'AVERTISSEMENT',
-        'WARNING! - If the database already exists the data will be completely removed. This must be checked if you are specifying an existing database.'
-            => 'Avertissement - Si la base de données existe déjà, la base de données existante va être suprimée.  Cocher la boîte si vous spécifiez une base de données existante.',
+        'WARNING! - If the database already exists the data will be completely removed. ' .
+        'This must be checked if you are specifying an existing database.'
+            => 'AVERTISSEMENT - Si la base de données existe déjà, la base de données existante ' .
+               'va être suprimée.  Cocher la boîte si vous spécifiez une base de données existante.',
         'Welcome to Zurmo. Before getting started, we need some information on the database. You will need to know the following items before proceeding:'
             => 'Bienvenue à Zurmo. Avant de commencer, vous devez obtenir les informations suivantes sure votre base de donnéés:',
         'Writing Configuration File.'
@@ -225,10 +241,18 @@
             => 'Yii',
         'You cannot access the installation area because the application is already installed.'
             => 'Vous ne pouvez pas accéder l\'installation parce que l\'application est déjà installée',
-        'You have specified an existing database. If you would like to use this database, then do not specify the database admin username and password. Otherwise pick a database name that does not exist.'
-            => 'Vous avez specifié une base de données existante.  Si vous voulez utiliser cette base de données, ne specifiez pas un nom d\'utilisateur et mot de passe administrateur. Autrement, choisissez une base de données non existante.',
-        'You have specified an existing user. If you would like to use this user, then do not specify the database admin username and password. Otherwise pick a database username that does not exist.'
-            => 'Vous avez specifié un utilisateur existant.  Si vous voulez utiliser cet utilisateur, ne specifiez pas un nom d\'utilisateur et mot de passe administrateur. Autrement, choisissez un nom d\'utilisateur non existant.',
+        'You have specified an existing database. If you would like to use this database, ' .
+        'then do not specify the database admin username and password. Otherwise pick a database ' .
+        'name that does not exist.'
+            => 'Vous avez specifié une base de données existante.  Si vous voulez utiliser cette base ' .
+               'de données, ne specifiez pas un nom d\'utilisateur et mot de passe administrateur. ' .
+               'Autrement, choisissez une base de données non existante.',
+        'You have specified an existing user. If you would like to use this user, then do ' .
+        'not specify the database admin username and password. Otherwise pick a database ' .
+        'username that does not exist.'
+            => 'Vous avez specifié un utilisateur existant.  Si vous voulez utiliser cet utilisateur, ' .
+               'ne specifiez pas un nom d\'utilisateur et mot de passe administrateur. Autrement, ' .
+               'choisissez un nom d\'utilisateur non existant.',
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => 'Zurmo mot de passe administrateur.  Le nom d\'utilisateur est \'super\'. Vous pouvez modifier le nom plus tard.',
         'Zurmo Installation'

@@ -186,6 +186,8 @@
         'Since you specified an existing database you must check this box in order ' .
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
             => '??',
+        'Soap is installed.'
+            => '??',
         'Soap is not installed.'
             => '??',
         'Starting database schema creation.'

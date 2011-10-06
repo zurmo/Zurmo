@@ -45,8 +45,6 @@
             => '??',
         'Default Name'
             => '??',
-        'Default Value'
-            => '??',
         'Delimiter'
             => '??',
         'Do not map this field'
@@ -95,19 +93,19 @@
             => '??',
         'Importing data...'
             => '??',
-        'Invalid check box format'
+        'Invalid check box format.'
             => '??',
-        'Invalid date format'
+        'Invalid date format.'
             => '??',
-        'Invalid datetime format'
+        'Invalid datetime format.'
             => '??',
-        'Invalid email format'
+        'Invalid email format.'
             => '??',
-        'Invalid integer format'
+        'Invalid integer format.'
             => '??',
-        'Invalid number format'
+        'Invalid number format.'
             => '??',
-        'Invalid url format'
+        'Invalid url format.'
             => '??',
         'Last name specified is too large.'
             => '??',

@@ -29,10 +29,20 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Activities'
+            => 'Activités',
+        'Activity Items'
+            => 'Éléments d\'activité',
+        'All Activities'
+            => 'Toutes les Activités',
+        'Latest Date Time'
+            => 'Dernière date/heure',
+        'No Activities found.'
+            => 'Aucune Activité trouvée',
         'Related'
-            => '??',
+            => 'Associé',
         'Related to'
-            => 'Lié à',
+            => 'Associé à',
         'Roll Up Off'
             => 'Roll-up éteint',
         'Roll Up On'

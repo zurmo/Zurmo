@@ -53,6 +53,8 @@
             => '?? AccountsModuleSingularLabel',
         'Employees'
             => '??',
+        'My AccountsModulePluralLabel'
+            => '??',
         'Related AccountsModulePluralLabel'
             => '?? AccountsModulePluralLabel',
         'Type'
