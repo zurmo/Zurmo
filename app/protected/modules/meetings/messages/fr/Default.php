@@ -29,5 +29,31 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Attendees'
+            => 'Paticipants',
+        'Category'
+            => 'Catégorie',
+        'End Time'
+            => 'Échéance',
+        'Location'
+            => 'Localisation',
+        'Meetings'
+            => 'Rendez-vous',
+        'MeetingsModulePluralLabel For AccountsModuleSingularLabel'
+            => 'MeetingsModulePluralLabel pour AccountsModuleSingularLabel',
+        'MeetingsModulePluralLabel For ContactsModuleSingularLabel'
+            => 'MeetingsModulePluralLabel pour ContactsModuleSingularLabel',
+        'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
+            => 'MeetingsModulePluralLabel pour OpportunitiesModuleSingularLabel',
+        'My Upcoming MeetingsModulePluralLabel'
+            => 'Mes Prochains MeetingsModulePluralLabel',
+        'Related ContactsModulePluralLabel and LeadsModulePluralLabel'
+            => 'ContactsModulePluralLabel et LeadsModulePluralLabel Associés',
+        'Start Time'
+            => 'Heure de début',
+        'Type a ContactsModuleSingularLowerCaseLabel or LeadsModuleSingularLowerCaseLabel: name or email address'
+            => 'Tapez un ContactsModuleSingularLowerCaseLabel ou LeadsModuleSingularLowerCaseLabel: nom ou adresse email',
+        'Upcoming MeetingsModulePluralLabel'
+            => 'Prochains MeetingsModulePluralLabel',
     );
 ?>

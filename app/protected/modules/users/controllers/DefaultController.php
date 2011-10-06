@@ -76,7 +76,7 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $user);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($user), $user);
             $params = array(
                 'controllerId'     => $this->getId(),
                 'relationModuleId' => $this->getModule()->getId(),
@@ -112,7 +112,7 @@
             $this->attemptToValidateAjaxFromPost($user, 'User');
             if ($user == Yii::app()->user->userModel)
             {
-                if(isset($_POST['User']) &&
+                if (isset($_POST['User']) &&
                    !empty($_POST['User']['language']) &&
                    $_POST['User']['language'] != $user->language)
                {

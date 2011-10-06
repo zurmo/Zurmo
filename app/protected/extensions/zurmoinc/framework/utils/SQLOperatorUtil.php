@@ -40,7 +40,8 @@
             if (is_string($value))
             {
                 return in_array($operatorType, array('startsWith', 'endsWith', 'equals', 'doesNotEqual', 'contains',
-                                                     'lessThan', 'greaterThan'));
+                                                     'lessThan', 'greaterThan', 'greaterThanOrEqualTo',
+                                                     'lessThanOrEqualTo'));
             }
             elseif (is_array($value))
             {
@@ -48,7 +49,8 @@
             }
             elseif ($value !== null)
             {
-                return in_array($operatorType, array('greaterThan', 'lessThan', 'equals', 'doesNotEqual'));
+                return in_array($operatorType, array('greaterThan', 'lessThan', 'equals', 'doesNotEqual',
+                                                     'greaterThanOrEqualTo', 'lessThanOrEqualTo'));
             }
             return false;
         }
@@ -90,6 +92,12 @@
 
                     case 'lessThan' :
                         return '<';
+
+                    case 'greaterThanOrEqualTo' :
+                        return '>=';
+
+                    case 'lessThanOrEqualTo' :
+                        return '<=';
 
                     default :
                         throw new NotSupportedException();
@@ -144,7 +152,7 @@
                 }
                 if (is_string($theValue))
                 {
-                    if($ignoreStringToLower)
+                    if ($ignoreStringToLower)
                     {
                         $inPart .= "'" . $theValue . "'";
                     }
@@ -184,6 +192,8 @@
                 'contains',
                 'equals',
                 'doesNotEqual',
+                'greaterThanOrEqualTo',
+                'lessThanOrEqualTo',
                 'greaterThan',
                 'lessThan',
                 'oneOf')))

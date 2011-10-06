@@ -32,9 +32,9 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'CancelLink'),
-                            array('type' => 'SaveButton', 'renderType' => 'Edit'),
-                            array('type' => 'EditLink', 'renderType' => 'Details'),
+                            array('type'  => 'CancelLink', 'renderType' => 'Edit'),
+                            array('type' => 'SaveButton',  'renderType' => 'Edit'),
+                            array('type' => 'EditLink',    'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
                             array('type' => 'MeetingDeleteLink'),
                         ),
@@ -102,15 +102,6 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'MultipleContactsForMeeting'),
                                             ),
                                         ),
@@ -130,6 +121,15 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'description', 'type' => 'TextArea'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'owner', 'type' => 'User'),
                                             ),
                                         ),
                                     )

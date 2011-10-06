@@ -73,7 +73,7 @@
             }
             if (strlen($validatedEmail) > $maxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Email was too large.'));
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Email was too long.'));
             }
             return  $validatedEmail;
         }

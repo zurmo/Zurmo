@@ -92,7 +92,7 @@
                     'primaryEmail'     => 'EmailAddressInformation',
                     'primaryAddress'   => 'Address',
                     'textArea'         => 'TextArea',
-                    'radioDropDown'	   => 'RadioDropDown',
+                    'radioDropDown'    => 'RadioDropDown',
                 ),
                 'customFields' => array(
                     'dropDown'        => 'ImportTestDropDown',

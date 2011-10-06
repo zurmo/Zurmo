@@ -447,7 +447,8 @@
             }
             else
             {
-                try {
+                try
+                {
                     $uploadedFile = ImportUploadedFileUtil::getByNameCatchErrorAndEnsureFileIsACSV($filesVariableName);
                     assert('$uploadedFile instanceof CUploadedFile');
                     $fileHandle  = fopen($uploadedFile->getTempName(), 'r');
@@ -482,7 +483,7 @@
                                                            $fileUploadData['size']);
                     $fileUploadData['id']                = $import->id;
                 }
-                catch(FailedFileUploadException $e)
+                catch (FailedFileUploadException $e)
                 {
                     $fileUploadData = array('error' => Yii::t('Default', 'Error') . ' ' . $e->getMessage());
                     ImportWizardUtil::clearFileAndRelatedDataFromImport($import);
@@ -528,13 +529,6 @@
                     echo $view->render();
                     Yii::app()->end(0, false);
                 }
-            }
-            else
-            {
-                echo "<pre>";
-                print_r($importWizardForm->getErrors());
-                echo "</pre>";
-                exit;
             }
         }
 

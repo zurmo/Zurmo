@@ -84,7 +84,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'),
+                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
                                             ),
                                         ),
                                         array(
@@ -104,6 +104,15 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'source', 'type' => 'DropDown', 'addBlank' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'description', 'type' => 'TextArea'),
                                             ),
                                         ),
                                     )
@@ -135,15 +144,6 @@
                                             'detailViewOnly' => true,
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'DateTimeModifiedUser'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'description', 'type' => 'TextArea'),
                                             ),
                                         ),
                                     )

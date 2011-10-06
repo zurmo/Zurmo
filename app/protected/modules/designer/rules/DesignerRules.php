@@ -88,8 +88,9 @@
         /**
          * Override to add special formatting to the savableMetadata
          */
-        public function formatSavableMetadataFromLayout($metadata)
+        public function formatSavableMetadataFromLayout($metadata, $viewClassName)
         {
+            assert('is_string($viewClassName)');
             $rules = $this->getSavableMetadataRules();
             foreach ($metadata['global']['panels'] as $panelKey => $panel)
             {
@@ -103,11 +104,14 @@
                             {
                                 foreach ($rules as $rule)
                                 {
-                                    $ruleClassName = $rule . 'ViewMetadataRules';
-                                    $ruleClassName::resolveElementMetadata(
-                                        $elementInformation,
-                                        $metadata['global']['panels'][$panelKey]['rows'][$rowKey]['cells'][$cellKey]['elements'][$elementKey]
-                                    );
+                                    if(static::doesRuleApplyToElement($rule, $elementInformation, $viewClassName))
+                                    {
+                                        $ruleClassName = $rule . 'ViewMetadataRules';
+                                        $ruleClassName::resolveElementMetadata(
+                                            $elementInformation,
+                                            $metadata['global']['panels'][$panelKey]['rows'][$rowKey]['cells'][$cellKey]['elements'][$elementKey]
+                                        );
+                                    }
                                 }
                             }
                         }
@@ -115,6 +119,18 @@
                 }
             }
             return $metadata;
+        }
+
+        /**
+         * Override if special handling is required to ignore certain rules from applying to the element before
+         * the metadata is saved. @see formatSavableMetadataFromLayout()
+         * @param string $rule
+         * @param array $elementInformation
+         * @param string $viewClassName
+         */
+        protected static function doesRuleApplyToElement($rule, $elementInformation, $viewClassName)
+        {
+            return true;
         }
 
         public function getCellSettingsAttributes()

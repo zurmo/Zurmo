@@ -413,7 +413,6 @@
             copy($debugConfigFileDist, $debugConfigFile);
             $debugConfiguration = file_get_contents($debugConfigFile);
 
-
             $this->assertRegExp   ('/\$debugOn = true;/', $debugConfiguration);
             $this->assertRegExp   ('/\$forceNoFreeze = true;/', $debugConfiguration);
 
@@ -523,9 +522,9 @@
             //Check if config files is updated.
             $this->assertRegExp   ('/\$connectionString = \'mysql:host='.$this->hostname.';dbname='.$this->temporaryDatabaseName.'\';/', // Not Coding Standard
                                    $perInstanceConfiguration);
-            $this->assertRegExp   ('/\$username         = \''.$this->rootUsername.'\';/',
+            $this->assertRegExp   ('/\$username         = \''.$this->rootUsername.'\';/',  // Not Coding Standard
                                    $perInstanceConfiguration);
-            $this->assertRegExp   ('/\$password         = \''.$this->rootPassword.'\';/',
+            $this->assertRegExp   ('/\$password         = \''.$this->rootPassword.'\';/',  // Not Coding Standard
                                    $perInstanceConfiguration);
 
             if ($memcacheOn)
@@ -544,6 +543,5 @@
             file_put_contents($perInstanceConfigFile, $originalPerInstanceConfiguration);
             file_put_contents($debugConfigFile, $originalDebugConfiguration);
         }
-
     }
 ?>

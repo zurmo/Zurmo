@@ -71,13 +71,15 @@
         {
             assert('is_int($pageSize)');
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
-            $searchAttributes = SearchUtil::resolveSearchAttributesFromGetArray(get_class($searchModel));
-            $sortAttribute    = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
-            $sortDescending   = SearchUtil::resolveSortDescendingFromGetArray($listModelClassName);
+            $searchAttributes          = SearchUtil::resolveSearchAttributesFromGetArray(get_class($searchModel));
+            $sanitizedSearchAttributes = GetUtil::sanitizePostByDesignerTypeForSavingModel($searchModel,
+                                                                                            $searchAttributes);
+            $sortAttribute             = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
+            $sortDescending            = SearchUtil::resolveSortDescendingFromGetArray($listModelClassName);
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
                 $searchModel,
                 $userId,
-                $searchAttributes
+                $sanitizedSearchAttributes
             );
             return RedBeanModelDataProviderUtil::makeDataProvider(
                 $metadataAdapter,

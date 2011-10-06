@@ -47,7 +47,7 @@
 
         protected function getExplicitReadWriteModelPermissions()
         {
-            if($this->explicitReadWriteModelPermissions != null)
+            if ($this->explicitReadWriteModelPermissions != null)
             {
                 return $this->explicitReadWriteModelPermissions;
             }

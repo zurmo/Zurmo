@@ -58,7 +58,7 @@
             $content = '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
-                'ZurmoActiveForm',
+                $this->getActiveFormClassName(),
                 array(
                     'id' => $formName,
                     'enableAjaxValidation' => true,
@@ -131,6 +131,11 @@
         public function getViewMetadata()
         {
             return $this->model->getAttributes();
+        }
+
+        protected static function getActiveFormClassName()
+        {
+            return 'ZurmoActiveForm';
         }
     }
 ?>

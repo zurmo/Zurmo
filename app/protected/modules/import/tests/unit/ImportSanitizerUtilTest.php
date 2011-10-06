@@ -41,7 +41,7 @@
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
-            assert('$saved');
+            assert($saved); // Not Coding Standard
         }
 
         public function testSanitizeValueBySanitizerTypesForBooleanTypeThatIsNotRequired()
@@ -580,7 +580,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Last name specified is too large.';
+            $compareMessage = 'ImportModelTestItem - Last name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required FullName with a value that is too long and a specified default value. The specified
@@ -599,7 +599,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Last name specified is too large.';
+            $compareMessage = 'ImportModelTestItem - Last name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //A first name that is too large, but the last name is ok.
@@ -617,7 +617,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - First name specified is too large.';
+            $compareMessage = 'ImportModelTestItem - First name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 

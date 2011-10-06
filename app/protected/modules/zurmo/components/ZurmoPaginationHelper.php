@@ -47,6 +47,11 @@
         protected $_modalListPageSize;
 
         /**
+         * Dashboard portlets list page size.
+         */
+        protected $_dashboardListPageSize;
+
+        /**
          * When a mass edit must complete using a progress bar, this is how many are processed at once.
          */
         protected $_massEditProgressPageSize;
@@ -87,6 +92,15 @@
         public function setModalListPageSize($value)
         {
             $this->_modalListPageSize = $value;
+        }
+
+        /**
+         * This is set from the value in the application common config file. It is used as the final fall back
+         * if no other configuration settings are found.
+         */
+        public function setDashboardListPageSize($value)
+        {
+            $this->_dashboardListPageSize = $value;
         }
 
         /**
@@ -249,7 +263,7 @@
         protected static function getAvailablePageSizeNames()
         {
             return array('listPageSize', 'subListPageSize', 'modalListPageSize', 'massEditProgressPageSize',
-                         'autoCompleteListPageSize', 'importPageSize');
+                         'autoCompleteListPageSize', 'importPageSize', 'dashboardListPageSize');
         }
     }
 ?>

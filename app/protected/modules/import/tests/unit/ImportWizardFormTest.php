@@ -60,7 +60,7 @@
             $importWizardForm->validateMappingData('mappingData', array());
             $this->assertTrue($importWizardForm->hasErrors());
             $compareData = array(
-                'mappingData' => array('You can only map each attribute once.',
+                'mappingData' => array('You can only map each field once.',
                                        'All required attributes must be mapped or added.'),
             );
             $this->assertEquals($compareData, $importWizardForm->getErrors());

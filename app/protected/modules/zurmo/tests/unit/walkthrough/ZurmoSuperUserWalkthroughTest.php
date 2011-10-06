@@ -47,6 +47,7 @@
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/default/about');
+            $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/default/recentlyViewed');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group/create');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/group/index');
@@ -99,12 +100,25 @@
             //Relogin super user.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
+            //Test login form with populated extra header content.
+            //First test that the extra content does not show up.
+            $this->resetGetArray();
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
+            $this->assertTrue(strpos($content, 'xyzabc') === false);
+            //Add content and test that it shows up properly.
+            $content = '<div style="padding: 7px 7px 7px 80px; color: red;"><b>xyzabc</b></div>';
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'loginViewExtraHeaderContent', $content);
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
+            $this->assertTrue(strpos($content, 'xyzabc') !== false);
+
             //Configuration administration user interface.
             //First make sure settings are not what we are setting them too.
             $this->assertNotEquals('America/Barbados', Yii::app()->timeZoneHelper->getGlobalValue());
             $this->assertNotEquals(9, Yii::app()->pagination->getGlobalValueByType('listPageSize'));
             $this->assertNotEquals(4, Yii::app()->pagination->getGlobalValueByType('subListPageSize'));
             $this->assertNotEquals(7, Yii::app()->pagination->getGlobalValueByType('modalListPageSize'));
+            $this->assertNotEquals(8, Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize'));
 
             $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/configurationEdit');
             //Post fake save that will fail validation.
@@ -114,6 +128,7 @@
                         'listPageSize' => 10,
                         'subListPageSize' => 0,
                         'modalListPageSize' => 8,
+                        'dashboardListPageSize' => 8,
                         )));
 
             $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/configurationEdit');
@@ -124,6 +139,7 @@
                         'listPageSize' => 9,
                         'subListPageSize' => 4,
                         'modalListPageSize' => 7,
+                        'dashboardListPageSize' => 7,
                         )));
             $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/configurationEdit');
             $this->assertEquals('Global configuration saved successfully.', Yii::app()->user->getFlash('notification'));
@@ -133,6 +149,7 @@
             $this->assertEquals(9, Yii::app()->pagination->getGlobalValueByType('listPageSize'));
             $this->assertEquals(4, Yii::app()->pagination->getGlobalValueByType('subListPageSize'));
             $this->assertEquals(7, Yii::app()->pagination->getGlobalValueByType('modalListPageSize'));
+            $this->assertEquals(7, Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize'));
         }
 
         public function testFileControllerActions()
@@ -187,6 +204,13 @@
             //Now confirm that there are no file models or content in the system.
             $this->assertEquals(0, count(FileModel::getAll()));
             $this->assertEquals(0, count(FileContent::getAll()));
+
+            //Test GlobalSearchAutoComplete
+            $this->assertTrue(ContactsModule::loadStartingData());
+            $this->setGetArray(array('term' => 'something'));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete');
+            $this->assertEquals(CJSON::encode(array(array('href' => '', 'label' => 'No Results Found'))), $content);
         }
     }
 ?>

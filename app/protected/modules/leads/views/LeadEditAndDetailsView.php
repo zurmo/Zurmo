@@ -122,22 +122,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null',
-                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'),
+                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
                                             ),
                                         ),
                                         array(
@@ -192,6 +177,30 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'elements' => array(
+                                                array('attributeName' => 'description', 'type' => 'TextArea'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'owner', 'type' => 'User'),
+                                            ),
+                                        ),
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null',
+                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'detailViewOnly' => true,
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
@@ -201,15 +210,6 @@
                                             'detailViewOnly' => true,
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'DateTimeModifiedUser'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'description', 'type' => 'TextArea'),
                                             ),
                                         ),
                                     )

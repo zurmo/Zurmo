@@ -44,6 +44,11 @@
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );
+                $filters[] = array(
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + delete',
+                        'moduleClassName' => $moduleClassName,
+                        'rightName' => $moduleClassName::getDeleteRight(),
+                );
             }
             $filters[] = array(
                 ZurmoBaseController::RIGHTS_FILTER_PATH . ' + massEdit, massEditProgressSave',
@@ -392,7 +397,7 @@
             if (isset($_POST[$postVariableName]))
             {
                 $postData = $_POST[$postVariableName];
-                if($model instanceof SecurableItem)
+                if ($model instanceof SecurableItem)
                 {
                     $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                          resolveByPostDataAndModelThenMake($_POST[$postVariableName], $model);
@@ -427,7 +432,7 @@
                     }
                     if ($passedOwnerValidation && $model->save(false))
                     {
-                        if($explicitReadWriteModelPermissions != null)
+                        if ($explicitReadWriteModelPermissions != null)
                         {
                             $success = ExplicitReadWriteModelPermissionsUtil::
                             resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);

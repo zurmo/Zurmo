@@ -108,7 +108,7 @@
                     throw new NoCurrentUserSecurityException();
                 }
             }
-            if($this->name != null)
+            if ($this->name != null)
             {
                 try
                 {

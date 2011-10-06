@@ -56,7 +56,7 @@
         {
             $contact = Contact::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $contact);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($contact), $contact);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'ContactsModule',
                                                                           'ContactDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
@@ -201,17 +201,19 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null)
+                                                    $pageTitle = null,
+                                                    $stateMetadataAdapterClassName = null)
         {
             $pageTitle = Yii::t('Default',
                                 'ContactsModuleSingularLabel Search',
                                  LabelUtil::getTranslationParamsForAllModules());
             parent::actionSelectFromRelatedList($portletId,
-                                                    $uniqueLayoutId,
-                                                    $relationAttributeName,
-                                                    $relationModelId,
-                                                    $relationModuleId,
-                                                    $pageTitle);
+                                                $uniqueLayoutId,
+                                                $relationAttributeName,
+                                                $relationModelId,
+                                                $relationModuleId,
+                                                $pageTitle,
+                                                'ContactsStateMetadataAdapter');
         }
 
         /**

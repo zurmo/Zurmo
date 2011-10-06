@@ -147,7 +147,7 @@
          */
         public static function resolveByPostDataAndModelThenMake($postData, SecurableItem $securableItem)
         {
-            if(isset($postData['explicitReadWriteModelPermissions']))
+            if (isset($postData['explicitReadWriteModelPermissions']))
             {
                 $explicitReadWriteModelPermissions = self::
                                                      makeByPostData($postData['explicitReadWriteModelPermissions']);
@@ -174,18 +174,18 @@
             foreach ($securableItem->permissions as $permission)
             {
                 $permission->castDownPermitable();
-                if($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
+                if ($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
                 {
-                    if(Permission::READ == ($permission->permissions & Permission::READ))
+                    if (Permission::READ == ($permission->permissions & Permission::READ))
                     {
-                        if(!$explicitReadWriteModelPermissions->isReadOrReadWritePermitable($permission->permitable))
+                        if (!$explicitReadWriteModelPermissions->isReadOrReadWritePermitable($permission->permitable))
                         {
                             $explicitReadWriteModelPermissions->addReadWritePermitableToRemove($permission->permitable);
                         }
                     }
-                    elseif(Permission::WRITE == ($permission->permissions & Permission::WRITE))
+                    elseif (Permission::WRITE == ($permission->permissions & Permission::WRITE))
                     {
-                        if(!$explicitReadWriteModelPermissions->isReadOrReadWritePermitable($permission->permitable))
+                        if (!$explicitReadWriteModelPermissions->isReadOrReadWritePermitable($permission->permitable))
                         {
                             $explicitReadWriteModelPermissions->addReadWritePermitableToRemove($permission->permitable);
                         }
@@ -203,7 +203,7 @@
         public static function removeIfExistsFromPostData($postData)
         {
             assert('is_array($postData)');
-            if(isset($postData['explicitReadWriteModelPermissions']))
+            if (isset($postData['explicitReadWriteModelPermissions']))
             {
                 unset($postData['explicitReadWriteModelPermissions']);
             }
@@ -227,12 +227,12 @@
                 foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
                 {
                     $securableItem->addPermissions($permitable, Permission::READ);
-                    if($permitable instanceof Group)
+                    if ($permitable instanceof Group)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemGivenPermissionsForGroup($securableItem, $permitable);
                     }
-                    elseif($permitable instanceof User)
+                    elseif ($permitable instanceof User)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemGivenPermissionsForUser($securableItem, $permitable);
@@ -249,12 +249,12 @@
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
                 {
                     $securableItem->addPermissions($permitable, Permission::READ_WRITE);
-                    if($permitable instanceof Group)
+                    if ($permitable instanceof Group)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemGivenPermissionsForGroup($securableItem, $permitable);
                     }
-                    elseif($permitable instanceof User)
+                    elseif ($permitable instanceof User)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemGivenPermissionsForUser($securableItem, $permitable);
@@ -271,12 +271,12 @@
                 foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitablesToRemove() as $permitable)
                 {
                     $securableItem->removePermissions($permitable, Permission::READ, Permission::ALLOW);
-                    if($permitable instanceof Group)
+                    if ($permitable instanceof Group)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemLostPermissionsForGroup($securableItem, $permitable);
                     }
-                    elseif($permitable instanceof User)
+                    elseif ($permitable instanceof User)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemLostPermissionsForUser($securableItem, $permitable);
@@ -293,12 +293,12 @@
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove() as $permitable)
                 {
                     $securableItem->removePermissions($permitable, Permission::READ_WRITE, Permission::ALLOW);
-                    if($permitable instanceof Group)
+                    if ($permitable instanceof Group)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemLostPermissionsForGroup($securableItem, $permitable);
                     }
-                    elseif($permitable instanceof User)
+                    elseif ($permitable instanceof User)
                     {
                         ReadPermissionsOptimizationUtil::
                         securableItemLostPermissionsForUser($securableItem, $permitable);
@@ -309,7 +309,7 @@
                     }
                 }
             }
-            if($saveSecurableItem)
+            if ($saveSecurableItem)
             {
                 return $securableItem->save();
             }
@@ -326,13 +326,13 @@
             foreach ($securableItem->permissions as $permission)
             {
                 $permission->castDownPermitable();
-                if($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
+                if ($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
                 {
-                    if(Permission::WRITE == ($permission->permissions & Permission::WRITE))
+                    if (Permission::WRITE == ($permission->permissions & Permission::WRITE))
                     {
                         $explicitReadWriteModelPermissions->addReadWritePermitable($permission->permitable);
                     }
-                    elseif(Permission::READ == ($permission->permissions & Permission::READ))
+                    elseif (Permission::READ == ($permission->permissions & Permission::READ))
                     {
                         $explicitReadWriteModelPermissions->addReadOnlyPermitable($permission->permitable);
                     }

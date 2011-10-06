@@ -27,6 +27,7 @@
     class TasksModule extends SecurableModule
     {
         const RIGHT_CREATE_TASKS = 'Create Tasks';
+        const RIGHT_DELETE_TASKS = 'Delete Tasks';
         const RIGHT_ACCESS_TASKS = 'Access Tasks';
 
         public function getDependencies()
@@ -68,6 +69,11 @@
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_TASKS;
+        }
+
+        public static function getDeleteRight()
+        {
+            return self::RIGHT_DELETE_TASKS;
         }
 
         public static function getDemoDataMakerClassName()

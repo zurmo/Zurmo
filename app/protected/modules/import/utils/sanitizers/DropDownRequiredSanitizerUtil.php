@@ -63,7 +63,7 @@
                     $customField->data  = CustomFieldDataModelUtil::
                                           getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
                 }
-                catch(NotSupportedException $e)
+                catch (NotSupportedException $e)
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list is missing corresponding custom field data.'));
                 }

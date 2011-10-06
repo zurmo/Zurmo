@@ -191,7 +191,7 @@
             $contact = new Contact();
             $contact->owner        = User::getByUsername('etester');
             $contact->account      = $account;
-            $contact->title->value = 'Mr';
+            $contact->title->value = 'Mr.';
             $contact->firstName    = 'Super';
             $contact->lastName     = 'Man';
             $contact->state        = $states[0];

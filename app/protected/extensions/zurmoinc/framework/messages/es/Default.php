@@ -60,7 +60,9 @@
         'Date'
             => 'Fecha',
         'Date Time'
-            => 'Fecha',
+            => '??',
+        'Default Value'
+            => '??',
         'Delete'
             => 'Eliminar',
         'Detail View Only'
@@ -100,7 +102,9 @@
         'Last Modified Date and User'
             => 'Última modificación fecha y usuario',
         'List'
-            => 'Lista',
+            => '??',
+        'Loading'
+            => '??',
         'Model Class Name'
             => 'Nombre de la clase de modelo',
         'Model Id'
@@ -114,7 +118,9 @@
         'More Details'
             => 'Más detalles',
         'More Options'
-            => 'Más opciones',
+            => '??',
+        'My List View'
+            => '??',
         'Name'
             => 'Nombre',
         'No'
@@ -132,7 +138,9 @@
         'Panel Title'
             => 'Título de panel',
         'Perform Action'
-            => 'realizar accíon',
+            => '??',
+        'Radio Drop Down'
+            => '??',
         'record'
             => 'registro',
         'records'
@@ -160,7 +168,9 @@
         'This module doesn\'t have anything to configure.'
             => 'Este module no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
-            => 'Esta lista de selección es utilizada por más de un module',
+            => '??',
+        'This portlet will be removed, ok?'
+            => '??',
         'Time'
             => 'Tiempo',
         'Title/First/LastName'

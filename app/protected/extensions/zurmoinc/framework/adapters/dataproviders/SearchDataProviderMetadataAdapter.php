@@ -44,8 +44,9 @@
          * of posted searchAttributes into metadata that is
          * readable by the RedBeanModelDataProvider
          */
-        public function getAdaptedMetadata()
+        public function getAdaptedMetadata($appendStructureAsAnd = true)
         {
+            assert('is_bool($appendStructureAsAnd)');
             $adaptedMetadata = array('clauses' => array(), 'structure' => '');
             $clauseCount = 1;
             $structure = '';
@@ -53,13 +54,14 @@
             foreach ($this->metadata as $attributeName => $value)
             {
                 //If attribute is a pseudo attribute on the SearchForm
-                if ($this->model instanceof SearchForm && property_exists(get_class($this->model), $attributeName))
+                if ($this->model instanceof SearchForm && $this->model->isAttributeOnForm($attributeName))
                 {
                     static::populateAdaptedMetadataFromSearchFormAttributes( $attributeName,
                                                                              $value,
                                                                              $adaptedMetadata['clauses'],
                                                                              $clauseCount,
-                                                                             $structure);
+                                                                             $structure,
+                                                                             $appendStructureAsAnd);
                 }
                 else
                 {
@@ -67,7 +69,8 @@
                                                                     $value,
                                                                     $adaptedMetadata['clauses'],
                                                                     $clauseCount,
-                                                                    $structure);
+                                                                    $structure,
+                                                                    $appendStructureAsAnd);
                 }
             }
             $adaptedMetadata['structure'] = $structure;
@@ -82,15 +85,22 @@
                                                                     &$adaptedMetadataClauses,
                                                                     &$clauseCount,
                                                                     &$structure,
-                                                                    $appendStructureAsAnd = true)
+                                                                    $appendStructureAsAnd = true,
+                                                                    $operatorType = null)
         {
+            assert('is_string($attributeName)');
+            assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
+            assert('is_int($clauseCount)');
+            assert('$structure == null || is_string($structure)');
+            assert('is_bool($appendStructureAsAnd)');
             if (!is_array($value))
             {
                 if ($value !== null)
                 {
-                    //todo!!! if we move the search form fork , here we can eliminate some things.
-                    $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
-                                        $this->model, $attributeName);
+                    if($operatorType == null)
+                    {
+                        $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeName);
+                    }
                     $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                         $this->model, $attributeName, $value);
                     $adaptedMetadataClauses[($clauseCount)] = array(
@@ -115,9 +125,11 @@
             {
                 if (isset($value['value']))
                 {
-                    //todo!!! if we move the search form fork , here we can eliminate some things.
-                    $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
-                                        $this->model, $attributeName);
+                    if($operatorType == null)
+                    {
+                        $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
+                                            $this->model, $attributeName);
+                    }
                     $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                         $this->model, $attributeName, $value['value']);
                     $adaptedMetadataClauses[($clauseCount)] = array(
@@ -145,8 +157,11 @@
                     {
                         if ($this->model->isRelation($attributeName))
                         {
-                            $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
+                            if($operatorType == null)
+                            {
+                                $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                                 $this->model->$attributeName, $relatedAttributeName);
+                            }
                             $relatedValue = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                                 $this->model->$attributeName, $relatedAttributeName, $relatedValue);
                             $adaptedMetadataClauses[($clauseCount)] = array(
@@ -178,52 +193,85 @@
                                                                             $value,
                                                                             &$adaptedMetadataClauses,
                                                                             &$clauseCount,
-                                                                            &$structure)
+                                                                            &$structure,
+                                                                            $appendStructureAsAnd = true)
         {
+            assert('is_string($attributeName)');
+            assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
+            assert('is_int($clauseCount)');
+            assert('$structure == null || is_string($structure)');
+            assert('is_bool($appendStructureAsAnd)');
             $tempStructure = null;
             $metadataFromSearchFormAttributes = SearchFormAttributesToSearchDataProviderMetadataUtil::getMetadata(
-                                                    $this->model, $attributeName, $value);
-            foreach ($metadataFromSearchFormAttributes as $searchFormAttributeName => $searchFormValue)
+                                                $this->model, $attributeName, $value);
+            foreach ($metadataFromSearchFormAttributes as $searchFormClause)
             {
-                static::populateClausesAndStructureForAttribute($searchFormAttributeName,
-                                                                $searchFormValue,
-                                                                $adaptedMetadataClauses,
-                                                                $clauseCount,
-                                                                $tempStructure,
-                                                                false);
+                foreach($searchFormClause as $searchFormAttributeName => $searchFormStructure)
+                {
+                    if(isset($searchFormStructure['operatorType']))
+                    {
+                        $operatorType = $searchFormStructure['operatorType'];
+                    }
+                    else
+                    {
+                        $operatorType = null;
+                    }
+                    if(isset($searchFormStructure['appendStructureAsAnd']))
+                    {
+                        $appendTempStructureAsAnd = $searchFormStructure['appendStructureAsAnd'];
+                    }
+                    else
+                    {
+                        $appendTempStructureAsAnd = false;
+                    }
+                    static::populateClausesAndStructureForAttribute($searchFormAttributeName,
+                                                                    $searchFormStructure['value'],
+                                                                    $adaptedMetadataClauses,
+                                                                    $clauseCount,
+                                                                    $tempStructure,
+                                                                    $appendTempStructureAsAnd,
+                                                                    $operatorType);
+                }
             }
-            $tempStructure = '(' . $tempStructure . ')';
-            if (!empty($structure))
+            if ($tempStructure != null)
             {
-                $structure .= ' and ' . $tempStructure;
-            }
-            else
-            {
-                $structure .= $tempStructure;
+                $tempStructure = '(' . $tempStructure . ')';
+                if ($appendStructureAsAnd)
+                {
+                    static::appendClauseAsAndToStructureString($structure, $tempStructure);
+                }
+                else
+                {
+                    static::appendClauseAsOrToStructureString($structure, $tempStructure);
+                }
             }
         }
 
-        protected static function appendClauseAsAndToStructureString(& $structure, $clauseCount)
+        protected static function appendClauseAsAndToStructureString(& $structure, $clause)
         {
+            assert('$structure == null || is_string($structure)');
+            assert('$clause != null || (is_string($clause) || is_int(clause))');
             if (!empty($structure))
             {
-                $structure .= ' and ' . $clauseCount;
+                $structure .= ' and ' . $clause;
             }
             else
             {
-                $structure .= $clauseCount;
+                $structure .= $clause;
             }
         }
 
-        protected static function appendClauseAsOrToStructureString(& $structure, $clauseCount)
+        protected static function appendClauseAsOrToStructureString(& $structure, $clause)
         {
+            assert('$structure == null || is_string($structure)');
+            assert('$clause != null || (is_string($clause) || is_int(clause))');
             if (!empty($structure))
             {
-                $structure .= ' or ' . $clauseCount;
+                $structure .= ' or ' . $clause;
             }
             else
             {
-                $structure .= $clauseCount;
+                $structure .= $clause;
             }
         }
     }

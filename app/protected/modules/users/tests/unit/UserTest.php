@@ -40,7 +40,7 @@
 
         public function testSetTitleValuesAndRetrieveTitleValuesFromUser()
         {
-            $titles = array('Mr', 'Mrs', 'Ms', 'Dr', 'Swami');
+            $titles = array('Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Swami');
             $customFieldData = CustomFieldData::getByName('Titles');
             $customFieldData->serializedData = serialize($titles);
             $this->assertTrue($customFieldData->save());
@@ -67,7 +67,7 @@
 
             $user = new User();
             $user->username           = 'bill';
-            $user->title->value       = 'Mr';
+            $user->title->value       = 'Mr.';
             $user->firstName          = 'Bill';
             $user->lastName           = 'Billson';
             $user->setPassword('billy');
@@ -87,7 +87,7 @@
 
             $manager = new User();
             $manager->username           = 'bobi';
-            $manager->title->value       = 'Mr';
+            $manager->title->value       = 'Mr.';
             $manager->firstName          = 'Bob';
             $manager->lastName           = 'Bobson';
             $manager->setPassword('bobii');
@@ -95,7 +95,7 @@
 
             $user = new User();
             $user->username     = 'dick';
-            $user->title->value = 'Mr';
+            $user->title->value = 'Mr.';
             $user->firstName    = 'Dick';
             $user->lastName     = 'Dickson';
             $user->manager      = $manager;
@@ -169,7 +169,7 @@
 
             $user3 = new User();
             $user3->username  = 'dison';
-            $user3->title->value = 'Mr';
+            $user3->title->value = 'Mr.';
             $user3->firstName    = 'Dison';
             $user3->lastName     = 'Smith';
             $user3->setPassword('dison');
@@ -177,7 +177,7 @@
 
             $user4 = new User();
             $user4->username  = 'graham';
-            $user4->title->value = 'Mr';
+            $user4->title->value = 'Mr.';
             $user4->firstName    = 'Graham';
             $user4->lastName   = 'Dillon';
             $user4->setPassword('graham');
@@ -266,7 +266,7 @@
         {
             $user = new User();
             $user->username     = 'jason';
-            $user->title->value = 'Mr';
+            $user->title->value = 'Mr.';
             $user->firstName    = 'Jason';
             $user->lastName     = 'Jasonson';
             $user->setPassword('jason');
@@ -275,7 +275,7 @@
             unset($user);
             $user = User::getById($id);
             $this->assertEquals('jason', $user->username);
-            $this->assertEquals('Mr', strval($user->title));
+            $this->assertEquals('Mr.', strval($user->title));
             $user->title = null;
             $this->assertNotNull($user->title);
             $this->assertTrue($user->save());
@@ -287,8 +287,8 @@
         public function testCreateWithTitleThenClearTitleWithSetAttributesWithEmptyId()
         {
             $user = User::getByUsername('jason');
-            $user->title->value = 'Mr';
-            $this->assertEquals('Mr', strval($user->title));
+            $user->title->value = 'Mr.';
+            $this->assertEquals('Mr.', strval($user->title));
             $this->assertTrue($user->save());
 
             $_FAKEPOST = array(
@@ -310,8 +310,8 @@
         public function testCreateWithTitleThenClearTitleWithSetAttributesWithNullId()
         {
             $user = User::getByUsername('jason');
-            $user->title->value = 'Mr';
-            $this->assertEquals('Mr', strval($user->title));
+            $user->title->value = 'Mr.';
+            $this->assertEquals('Mr.', strval($user->title));
             $this->assertTrue($user->save());
 
             $_FAKEPOST = array(
@@ -333,8 +333,8 @@
         public function testCreateWithTitleThenClearTitleWithSetAttributesWithRealId()
         {
             $user = User::getByUsername('jason');
-            $user->title->value = 'Mr';
-            $this->assertEquals('Mr', strval($user->title));
+            $user->title->value = 'Mr.';
+            $this->assertEquals('Mr.', strval($user->title));
             $this->assertTrue($user->save());
 
             $_FAKEPOST = array(
@@ -454,7 +454,7 @@
             $this->assertTrue($user->isAttribute('jobTitle'));
 
             $user->username     = 'oliver';
-            $user->title->value = 'Mr';
+            $user->title->value = 'Mr.';
             $user->firstName    = 'Oliver';
             $user->lastName     = 'Oliverson';
             $user->jobTitle     = 'Recruiter';
@@ -878,7 +878,7 @@
             Yii::app()->user->userModel = null;
             $user = new User();
             $user->username           = 'myuser';
-            $user->title->value       = 'Mr';
+            $user->title->value       = 'Mr.';
             $user->firstName          = 'My';
             $user->lastName           = 'Userson';
             $user->setPassword('myuser');
@@ -889,7 +889,7 @@
             //Create a second user and confirm the first user is still the current user.
             $user2 = new User();
             $user2->username           = 'myuser2';
-            $user2->title->value       = 'Mr';
+            $user2->title->value       = 'Mr.';
             $user2->firstName          = 'My';
             $user2->lastName           = 'Userson2';
             $user2->setPassword('myuser2');

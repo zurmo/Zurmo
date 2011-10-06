@@ -34,12 +34,12 @@
             $soapInstalled =  InstallUtil::checkSoap();
             if ($soapInstalled)
             {
-                $this->message  = Yii::t('Default', 'Soap is installed.');
+                $this->message  = Yii::t('Default', 'SOAP is installed.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'Soap is not installed.');
+                $this->message  = Yii::t('Default', 'SOAP is not installed.');
                 return false;
             }
         }

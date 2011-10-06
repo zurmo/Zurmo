@@ -149,12 +149,12 @@
                 foreach ($data as $rowData)
                 {
                     $this->analyzeByValue($rowData->$columnName);
-                    $itemsProcessed ++;
+                    $itemsProcessed++;
                 }
 
                 if ($itemsProcessed < $totalItemCount)
                 {
-                    $page ++;
+                    $page++;
                     $dataProvider->getPagination()->setCurrentPage($page);
                 }
                 else

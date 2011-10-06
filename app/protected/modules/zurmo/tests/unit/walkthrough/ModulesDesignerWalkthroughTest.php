@@ -1026,7 +1026,7 @@
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
 
-            //Add all fields to OpportunitiesRelatedListView.
+            //Add all fields to OpenTasksForAccountRelatedListView.
             $this->setGetArray(array('moduleClassName' => 'TasksModule',
                                      'viewClassName'   => 'OpenTasksForAccountRelatedListView'));
             $layout = TasksDesignerWalkthroughHelperUtil::getTasksRelatedListViewLayoutWithAllStandardAndCustomFieldsPlaced();
@@ -1137,7 +1137,7 @@
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
 
-            //Add all fields to OpportunitiesRelatedListView.
+            //Add all fields to UpcomingMeetingsForAccountRelatedListView.
             $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
                                      'viewClassName'   => 'UpcomingMeetingsForAccountRelatedListView'));
             $layout = MeetingsDesignerWalkthroughHelperUtil::getMeetingsRelatedListViewLayoutWithAllStandardAndCustomFieldsPlaced();

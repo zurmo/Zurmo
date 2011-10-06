@@ -40,8 +40,15 @@
 
         public function testSetAndGetCheckBoxAttribute()
         {
+            $this->setAndGetCheckBoxAttribute('testCheckBox2', true);
+            $this->setAndGetCheckBoxAttribute('testCheckBox3', false);
+        }
+        protected function setAndGetCheckBoxAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
             $attributeForm = new CheckBoxAttributeForm();
-            $attributeForm->attributeName    = 'testCheckBox2';
+            $attributeForm->attributeName    = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Checkbox 2 de',
                 'en' => 'Test Checkbox 2 en',
@@ -50,7 +57,12 @@
                 'it' => 'Test Checkbox 2 it',
             );
             $attributeForm->isAudited        = true;
-            $attributeForm->defaultValue     = 1; //means checked.
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue     = 1; //means checked.
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -63,9 +75,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testCheckBox2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('CheckBox',         $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testCheckBox2',    $attributeForm->attributeName);
+            $this->assertEquals($attributeName,     $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Checkbox 2 de',
                 'en' => 'Test Checkbox 2 en',
@@ -75,7 +87,15 @@
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
             $this->assertEquals(true,                    $attributeForm->isAudited);
-            $this->assertEquals(1,                       $attributeForm->defaultValue);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals(1,                   $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,                $attributeForm->defaultValue);
+            }
         }
 
         /**
@@ -126,8 +146,17 @@
          */
         public function testSetAndGetDateAttribute()
         {
+            $this->setAndGetDateAttribute('testDate2', true);
+            $this->setAndGetDateAttribute('testDate3', false);
+        }
+
+        protected function setAndGetDateAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new DateAttributeForm();
-            $attributeForm->attributeName = 'testDate2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Date 2 de',
                 'en' => 'Test Date 2 en',
@@ -137,7 +166,12 @@
             );
             $attributeForm->isAudited     = true;
             $attributeForm->isRequired    = true;
-            $attributeForm->defaultValueCalculationType  = DateTimeCalculatorUtil::YESTERDAY;
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValueCalculationType  = DateTimeCalculatorUtil::YESTERDAY;
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -150,9 +184,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testDate2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('Date',        $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testDate2',   $attributeForm->attributeName);
+            $this->assertEquals($attributeName,   $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Date 2 de',
                 'en' => 'Test Date 2 en',
@@ -163,13 +197,23 @@
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
             $this->assertEquals(true,          $attributeForm->isAudited);
             $this->assertEquals(true,          $attributeForm->isRequired);
-            $this->assertEquals(DateTimeCalculatorUtil::YESTERDAY,        $attributeForm->defaultValueCalculationType);
-            //Confirm default calculation loads correct default value for Account.
-            $account = new Account();
-            $yesterdayDateTime  = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
-            $yesterday          = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
-                                    $yesterdayDateTime->getTimeStamp() - (60 * 60 *24));
-            $this->assertEquals($yesterday, $account->testDate2);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals(DateTimeCalculatorUtil::YESTERDAY,        $attributeForm->defaultValueCalculationType);
+                //Confirm default calculation loads correct default value for Account.
+                $account = new Account();
+                $yesterdayDateTime  = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+                $yesterday          = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                        $yesterdayDateTime->getTimeStamp() - (60 * 60 *24));
+                $this->assertEquals($yesterday, $account->$attributeName);
+            }
+            else
+            {
+                $account = new Account();
+                $this->assertEquals(null,        $attributeForm->defaultValueCalculationType);
+                $this->assertEquals(null,        $account->$attributeName);
+            }
         }
 
         /**
@@ -177,8 +221,17 @@
          */
         public function testSetAndGetDateTimeAttribute()
         {
+            $this->setAndGetDateTimeAttribute('testDateTime2', true);
+            $this->setAndGetDateTimeAttribute('testDateTime3', false);
+        }
+
+        protected function setAndGetDateTimeAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new DateTimeAttributeForm();
-            $attributeForm->attributeName = 'testDateTime2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test DateTime 2 de',
                 'en' => 'Test DateTime 2 en',
@@ -188,7 +241,16 @@
             );
             $attributeForm->isAudited                    = true;
             $attributeForm->isRequired                   = true;
-            $attributeForm->defaultValueCalculationType  = DateTimeCalculatorUtil::NOW;
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValueCalculationType  = DateTimeCalculatorUtil::NOW;
+            }
+            else
+            {
+                $attributeForm->defaultValueCalculationType  = null;
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -201,9 +263,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testDateTime2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('DateTime',         $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testDateTime2',    $attributeForm->attributeName);
+            $this->assertEquals($attributeName,    $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test DateTime 2 de',
                 'en' => 'Test DateTime 2 en',
@@ -214,11 +276,22 @@
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
             $this->assertEquals(true,                        $attributeForm->isAudited);
             $this->assertEquals(true,                        $attributeForm->isRequired);
-            $this->assertEquals(DateTimeCalculatorUtil::NOW, $attributeForm->defaultValueCalculationType);
-            //Confirm default calculation loads correct default value for Account.
-            $account = new Account();
-            $nowDateTime        = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
-            $this->assertWithinTolerance($nowDateTime->getTimeStamp(), DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->testDateTime2), 1);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals(DateTimeCalculatorUtil::NOW, $attributeForm->defaultValueCalculationType);
+                //Confirm default calculation loads correct default value for Account.
+                $account = new Account();
+                $nowDateTime        = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+                $this->assertWithinTolerance($nowDateTime->getTimeStamp(), DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->$attributeName), 1);
+            }
+            else
+            {
+                $this->assertEquals(null, $attributeForm->defaultValueCalculationType);
+                //Confirm default calculation loads correct default value (null) for Account.
+                $account = new Account();
+                $this->assertEquals(null, $account->$attributeName);
+            }
         }
 
         /**
@@ -277,8 +350,16 @@
          */
         public function testSetAndGetDecimalAttribute()
         {
+            $this->setAndGetDecimalAttribute('testDecimal2', true);
+            $this->setAndGetDecimalAttribute('testDecimal3', false);
+        }
+        protected function setAndGetDecimalAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new DecimalAttributeForm();
-            $attributeForm->attributeName   = 'testDecimal2';
+            $attributeForm->attributeName   = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Decimal 2 de',
                 'en' => 'Test Decimal 2 en',
@@ -290,7 +371,12 @@
             $attributeForm->isRequired      = true;
             $attributeForm->maxLength       = 11;
             $attributeForm->precisionLength = 5;
-            $attributeForm->defaultValue    = 34.213;
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue    = 34.213;
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -314,9 +400,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testDecimal2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('Decimal',        $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testDecimal2',   $attributeForm->attributeName);
+            $this->assertEquals($attributeName,   $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Decimal 2 de',
                 'en' => 'Test Decimal 2 en',
@@ -329,7 +415,15 @@
             $this->assertEquals(true,             $attributeForm->isRequired);
             $this->assertEquals(11,               $attributeForm->maxLength);
             $this->assertEquals(3,                $attributeForm->precisionLength);
-            $this->assertEquals(34.213,           $attributeForm->defaultValue);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals(34.213,       $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,         $attributeForm->defaultValue);
+            }
         }
 
         /**
@@ -429,8 +523,17 @@
          */
         public function testSetAndGetIntegerAttribute()
         {
+            $this->setAndGetIntegerAttribute('testInteger2', true);
+            $this->setAndGetIntegerAttribute('testInteger3', false);
+        }
+
+        protected function setAndGetIntegerAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new IntegerAttributeForm();
-            $attributeForm->attributeName = 'testInteger2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Integer 2 de',
                 'en' => 'Test Integer 2 en',
@@ -443,7 +546,12 @@
             $attributeForm->maxLength     = 11;
             $attributeForm->minValue      = -500;
             $attributeForm->maxValue      = 500;
-            $attributeForm->defaultValue  = 458;
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue  = 458;
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -456,7 +564,11 @@
                 $this->fail();
             }
 
-            $attributeForm->defaultValue  = 50;
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue  = 50;
+            }
+
             try
             {
                 $adapter->setAttributeMetadataFromForm($attributeForm);
@@ -467,9 +579,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testInteger2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('Integer',        $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testInteger2',   $attributeForm->attributeName);
+            $this->assertEquals($attributeName,   $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Integer 2 de',
                 'en' => 'Test Integer 2 en',
@@ -483,7 +595,15 @@
             $this->assertEquals(11,               $attributeForm->maxLength);
             $this->assertEquals(-500,             $attributeForm->minValue);
             $this->assertEquals(500,              $attributeForm->maxValue);
-            $this->assertEquals(50,               $attributeForm->defaultValue);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals(50,           $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,         $attributeForm->defaultValue);
+            }
         }
 
         /**
@@ -499,8 +619,17 @@
          */
         public function testSetAndGetPhoneAttribute()
         {
+            $this->setAndGetPhoneAttribute('testPhone2', true);
+            $this->setAndGetPhoneAttribute('testPhone3', false);
+        }
+
+        protected function setAndGetPhoneAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new PhoneAttributeForm();
-            $attributeForm->attributeName = 'testPhone2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Phone 2 de',
                 'en' => 'Test Phone 2 en',
@@ -511,7 +640,12 @@
             $attributeForm->isAudited     = true;
             $attributeForm->isRequired    = true;
             $attributeForm->maxLength     = 50;
-            $attributeForm->defaultValue  = '1-800-111-2233';
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue  = '1-800-111-2233';
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -535,9 +669,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testPhone2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('Phone',          $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testPhone2',     $attributeForm->attributeName);
+            $this->assertEquals($attributeName,     $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Phone 2 de',
                 'en' => 'Test Phone 2 en',
@@ -549,7 +683,15 @@
             $this->assertEquals(true,             $attributeForm->isAudited);
             $this->assertEquals(true,             $attributeForm->isRequired);
             $this->assertEquals(20,               $attributeForm->maxLength);
-            $this->assertEquals('1-800-111-2233', $attributeForm->defaultValue);
+
+            if($withDefaultData)
+            {
+                $this->assertEquals('1-800-111-2233', $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,             $attributeForm->defaultValue);
+            }
         }
 
         /**
@@ -617,8 +759,17 @@
          */
         public function testSetAndGetTextAttribute()
         {
+            $this->setAndGetTextAttribute('testText2', true);
+            $this->setAndGetTextAttribute('testText3', false);
+        }
+
+        protected function setAndGetTextAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new TextAttributeForm();
-            $attributeForm->attributeName = 'testText2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Text 2 de',
                 'en' => 'Test Text 2 en',
@@ -629,7 +780,12 @@
             $attributeForm->isAudited     = true;
             $attributeForm->isRequired    = true;
             $attributeForm->maxLength     = 50;
-            $attributeForm->defaultValue  = 'Kangaroo';
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue  = 'Kangaroo';
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -642,9 +798,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testText2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('Text',        $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testText2',   $attributeForm->attributeName);
+            $this->assertEquals($attributeName,   $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Text 2 de',
                 'en' => 'Test Text 2 en',
@@ -653,10 +809,18 @@
                 'it' => 'Test Text 2 it',
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
-            $this->assertEquals(true,         $attributeForm->isAudited);
+            $this->assertEquals(true,          $attributeForm->isAudited);
             $this->assertEquals(true,          $attributeForm->isRequired);
             $this->assertEquals(50,            $attributeForm->maxLength);
-            $this->assertEquals('Kangaroo',    $attributeForm->defaultValue);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals('Kangaroo',    $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,          $attributeForm->defaultValue);
+            }
         }
 
         /**
@@ -664,8 +828,17 @@
          */
         public function testSetAndGetTextAreaAttribute()
         {
+            $this->setAndGetTextAreaAttribute('testTextArea2', true);
+            $this->setAndGetTextAreaAttribute('testTextArea3', false);
+        }
+
+        protected function setAndGetTextAreaAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new TextAreaAttributeForm();
-            $attributeForm->attributeName = 'testTextArea2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Text Area 2 de',
                 'en' => 'Test Text Area 2 en',
@@ -675,7 +848,12 @@
             );
             $attributeForm->isAudited     = true;
             $attributeForm->isRequired    = true;
-            $attributeForm->defaultValue  = 'Kangaroo Pouch';
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValue  = 'Kangaroo Pouch';
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -688,9 +866,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testTextArea2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('TextArea',         $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testTextArea2',    $attributeForm->attributeName);
+            $this->assertEquals($attributeName,     $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Text Area 2 de',
                 'en' => 'Test Text Area 2 en',
@@ -699,9 +877,17 @@
                 'it' => 'Test Text Area 2 it',
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
-            $this->assertEquals(true,               $attributeForm->isAudited);
-            $this->assertEquals(true,               $attributeForm->isRequired);
-            $this->assertEquals('Kangaroo Pouch',   $attributeForm->defaultValue);
+            $this->assertEquals(true,                    $attributeForm->isAudited);
+            $this->assertEquals(true,                    $attributeForm->isRequired);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals('Kangaroo Pouch',    $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,                $attributeForm->defaultValue);
+            }
         }
 
         /**
@@ -709,8 +895,17 @@
          */
         public function testSetAndGetUrlAttribute()
         {
+            $this->setAndGetUrlAttribute('testUrl2', true);
+            $this->setAndGetUrlAttribute('testUrl3', false);
+        }
+
+        protected function setAndGetUrlAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $attributeForm = new UrlAttributeForm();
-            $attributeForm->attributeName = 'testUrl2';
+            $attributeForm->attributeName = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Url 2 de',
                 'en' => 'Test Url 2 en',
@@ -721,7 +916,12 @@
             $attributeForm->isAudited     = true;
             $attributeForm->isRequired    = true;
             $attributeForm->maxLength     = 50;
-            $attributeForm->defaultValue  = 'http://www.outback.com';
+
+            if($withDefaultData)
+            {
+                $attributeForm->defaultValue  = 'http://www.outback.com';
+            }
+
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             try
@@ -734,9 +934,9 @@
                 $this->fail();
             }
 
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'testUrl2');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
             $this->assertEquals('Url',                    $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testUrl2',               $attributeForm->attributeName);
+            $this->assertEquals($attributeName,               $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Url 2 de',
                 'en' => 'Test Url 2 en',
@@ -744,11 +944,20 @@
                 'fr' => 'Test Url 2 fr',
                 'it' => 'Test Url 2 it',
             );
-            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+            $this->assertEquals($compareAttributeLabels,  $attributeForm->attributeLabels);
             $this->assertEquals(true,                     $attributeForm->isAudited);
             $this->assertEquals(true,                     $attributeForm->isRequired);
             $this->assertEquals(50,                       $attributeForm->maxLength);
-            $this->assertEquals('http://www.outback.com', $attributeForm->defaultValue);
+
+            if($withDefaultData)
+            {
+                $this->assertEquals('http://www.outback.com', $attributeForm->defaultValue);
+            }
+            else
+            {
+                $this->assertEquals(null,                     $attributeForm->defaultValue);
+            }
+
         }
 
         /**
@@ -800,15 +1009,23 @@
             $account->testCurrency2->value       = 728.89;
             $account->testCurrency2->currency    = $currencies[0];
             $account->testDate2                  = '2008-09-03';
+            $account->testDate3                  = '2008-09-02';
             $account->testDateTime2              = '2008-09-02 03:03:03';
+            $account->testDateTime3              = '2008-09-01 03:03:03';
             $account->testDecimal2               = 45.67;
+            $account->testDecimal3               = 31.05;
             $account->testAirPlane->value        = 'A380'; //Dive Bomber
             $account->testInteger2               = 56;
+            $account->testInteger3               = 21;
             $account->testPhone2                 = '345345234';
+            $account->testPhone3                 = '345345221';
             $account->testAirPlaneParts->value   = 'Seat'; // Wheel
             $account->testText2                  = 'some test stuff';
+            $account->testText3                  = 'some test stuff 3';
             $account->testTextArea2              = 'some test text area stuff';
+            $account->testTextArea3              = 'some test text area stuff 3';
             $account->testUrl2                   = 'http://www.zurmo.com';
+            $account->testUrl3                   = 'http://www.zurmo.org';
             $account->playMyFavoriteSong->value  = 'song2'; // song 3
             $saved = $account->save();
             $this->assertTrue($saved);

@@ -101,7 +101,7 @@
         }
 
         /**
-         * @return timezone adjusted unix timestamp
+         * @return local timezone adjusted unix timestamp
          */
         public static function convertFromUtcUnixStampByTimeZone($utcTimeStamp, $timeZone)
         {
@@ -109,6 +109,17 @@
             $timeZoneObject = new DateTimeZone($timeZone);
             $offset = $timeZoneObject->getOffset(new DateTime());
             return $utcTimeStamp + $offset;
+        }
+
+        /**
+         * @return timezone adjusted utc unix timestamp
+         */
+        public static function convertFromLocalUnixStampByTimeZoneToUtcUnixStamp($utcTimeStamp, $timeZone)
+        {
+            assert('is_string($timeZone)');
+            $timeZoneObject = new DateTimeZone($timeZone);
+            $offset = $timeZoneObject->getOffset(new DateTime());
+            return $utcTimeStamp - $offset;
         }
 
         public static function convertTimestampToDbFormatDateTime($timestamp)
@@ -178,6 +189,39 @@
             $dbFormattedDateTime =  self::convertTimestampToDbFormatDateTime($timestamp);
             //todo deal with potential diffferent db format
             return substr_replace($dbFormattedDateTime, '00', -2, 2);
+        }
+
+        /**
+         * Given a db formatted date string, return the db formatted dateTime stamp representing the first minute of
+         *  the provided date.  This will be adjusted for the current user's timezone.
+         *  Example: date provided is 1980-06-03, the first minute is '1980-06-03 00:00:00'.  If the user is in Chicago
+         *  then the time needs to be adjusted 5 or 6 hours forward depending on daylight savings time
+         * @param string $dateValue - db formatted
+         */
+        public static function convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($dateValue)
+        {
+            assert('is_string($dateValue) && DateTimeUtil::isValidDbFormattedDate($dateValue)');
+            $greaterThanValue = $dateValue . ' 00:00:00';
+            $adjustedTimeStamp = Yii::app()->timeZoneHelper->convertFromLocalTimeStampForCurrentUser(
+                                 DateTimeUtil::convertDbFormatDateTimeToTimestamp($greaterThanValue));
+            return               DateTimeUtil::convertTimestampToDbFormatDateTime($adjustedTimeStamp);
+        }
+
+        /**
+         *
+         * Given a db formatted date string, return the db formatted dateTime stamp representing the last minute of
+         *  the provided date.  This will be adjusted for the current user's timezone.
+         *  Example: date provided is 1980-06-03, the first minute is '1980-06-03 23:59:59'.  If the user is in Chicago
+         *  then the time needs to be adjusted 5 or 6 hours forward depending on daylight savings time
+         * @param string $dateValue - db formatted
+         */
+        public static function convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($dateValue)
+        {
+            assert('is_string($dateValue) && DateTimeUtil::isValidDbFormattedDate($dateValue)');
+            $lessThanValue     = $dateValue . ' 23:59:59';
+            $adjustedTimeStamp = Yii::app()->timeZoneHelper->convertFromLocalTimeStampForCurrentUser(
+                                 DateTimeUtil::convertDbFormatDateTimeToTimestamp($lessThanValue));
+            return               DateTimeUtil::convertTimestampToDbFormatDateTime($adjustedTimeStamp);
         }
     }
 ?>

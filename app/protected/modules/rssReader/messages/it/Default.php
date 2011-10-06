@@ -39,8 +39,6 @@
             => 'RssReaderModulePluralLabel',
         'RssReaderModuleSingularLabel'
             => 'RssReaderModuleSingularLabel',
-        'The Title'
-            => '??',
         'Zurmo News'
             => '??',
     );

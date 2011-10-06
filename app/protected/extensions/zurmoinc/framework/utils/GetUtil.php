@@ -30,6 +30,15 @@
      */
     class GetUtil
     {
+        public static function getData()
+        {
+            $getData = array();
+            if(isset($_GET))
+            {
+                $getData = $_GET;
+            }
+            return $getData;
+        }
          /**
          * Resets page to 1 for a grid view.
          * @param $pageVariableName - typically the model class name.
@@ -67,6 +76,17 @@
             {
                 return false;
             }
+        }
+
+        /**
+         * Sanitizes get data for date and date time attributes by converting them to the proper
+         * format and timezone for saving.  Wrapper for the method with the logic in PostUtil which completes this
+         * task.
+         * @return - array sanitized get data
+         */
+        public static function sanitizePostByDesignerTypeForSavingModel($model, $postData)
+        {
+            return PostUtil::sanitizePostByDesignerTypeForSavingModel($model, $postData);
         }
     }
 ?>

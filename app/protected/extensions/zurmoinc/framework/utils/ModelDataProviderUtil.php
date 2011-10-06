@@ -187,7 +187,6 @@
                                                         $attributeModelClassName,
                                                         get_class($model),
                                                         $joinTablesAdapter);
-
             if ($relationType == RedBeanModel::MANY_MANY)
             {
                 self::buildJoinAndWhereForManyToManyRelatedAttribute(   $model, $clauseInformation,
@@ -199,9 +198,9 @@
                 $joinTablesAdapter,
                 $relationType,
                 static::getColumnNameByAttribute($model, $clauseInformation['attributeName']),
-                $onTableAliasName,
-                $relationModelClassName, $relationAttributeModelClassName,
-                $relationAttributeTableName, $relationColumnName);
+                                                 $onTableAliasName,
+                                                 $relationModelClassName, $relationAttributeModelClassName,
+                                                 $relationAttributeTableName, $relationColumnName);
                 $relationWhere                   = array();
                 self::addWherePartByClauseInformation($clauseInformation['operatorType'], $clauseInformation['value'],
                       $relationWhere, 1, $relationAttributeTableAliasName, $relationColumnName);
@@ -247,13 +246,20 @@
                                                                         $onTableAliasName,
                                                                         $tableJoinIdName);
             $relationAttributeTableAliasName = $relationTableAliasName;
-            //the second left join check being performed is in you
+            //the second left join check being performed is if you
             //are in a contact filtering on related account email as an example.
             if ($relationAttributeModelClassName != $relationModelClassName)
             {
                 //Handling special scenario for casted down Person.  Todo: Automatically determine a
                 //casted down scenario instead of specifically looking for Person.
-                if($relationAttributeModelClassName == 'Person')
+                if ($relationAttributeModelClassName == 'Person')
+                {
+                    $onTableJoinIdName = "{$relationAttributeTableName}_id";
+                }
+                //An example of this if if you are searching on an account's industry value.  Industry is related from
+                //account, but the value is actually on the parent class of OwnedCustomField which is CustomField.
+                //Therefore the JoinId is going to be structured like this.
+                elseif (get_parent_class($relationModelClassName) == $relationAttributeModelClassName)
                 {
                     $onTableJoinIdName = "{$relationAttributeTableName}_id";
                 }

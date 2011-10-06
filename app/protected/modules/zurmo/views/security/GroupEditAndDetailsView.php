@@ -140,7 +140,7 @@
                ($this->model->isEveryone || $this->model->isSuperAdministrators))
             {
                     $elementInformation['attributeName'] = null;
-                    $elementInformation['type']          = 'Null';
+                    $elementInformation['type']          = 'Null'; // Not Coding Standard
             }
         }
     }

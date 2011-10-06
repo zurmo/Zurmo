@@ -40,6 +40,14 @@
         {
             assert('$model !== null');
             assert('is_string($attributeName) && $attributeName != ""');
+            $metadata = $model->getMetadata();
+            foreach ($metadata as $className => $perClassMetadata)
+            {
+                if (isset($perClassMetadata['elements'][$attributeName]))
+                {
+                    return $perClassMetadata['elements'][$attributeName];
+                }
+            }
             $validators = $model->getValidators($attributeName);
             foreach ($validators as $validator)
             {

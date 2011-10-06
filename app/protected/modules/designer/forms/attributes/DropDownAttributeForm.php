@@ -135,9 +135,9 @@
             if (!empty($data) && $nonUniqueData = array_diff_key( $data , ArrayUtil::array_iunique( $data )) )
             {
                 $nonUniqueValuesString = null;
-                foreach($nonUniqueData as $nonUniqueValue)
+                foreach ($nonUniqueData as $nonUniqueValue)
                 {
-                    if($nonUniqueValuesString != null)
+                    if ($nonUniqueValuesString != null)
                     {
                        $nonUniqueValuesString .= ', ';
                     }

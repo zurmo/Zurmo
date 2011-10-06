@@ -77,6 +77,13 @@
                         'route'            => '/zurmo/currency/configurationList',
                         'right'            => self::RIGHT_ACCESS_CURRENCY_CONFIGURATION,
                     ),
+                    array(
+                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Languages',
+                        'descriptionLabel' => 'Manage Active Languages',
+                        'route'            => '/zurmo/language/configurationList',
+                        'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
+                    ),
                 ),
                 'headerMenuItems' => array(
                     array(
@@ -109,7 +116,7 @@
             {
                 case self::AUDIT_EVENT_ITEM_CREATED:
                 case self::AUDIT_EVENT_ITEM_DELETED:
-                    if($format == 'short')
+                    if ($format == 'short')
                     {
                         return Yii::t('Default', $auditEvent->eventName);
                     }
@@ -122,7 +129,7 @@
                     list($name, $attributeNames, $oldValue, $newValue) = unserialize($auditEvent->serializedData);
                     $modelClassName = $auditEvent->modelClassName;
                     $model          = new $modelClassName();
-                    if($format == 'long')
+                    if ($format == 'long')
                     {
                         $s             .= strval($auditEvent);
                         $s             .= ", $name";

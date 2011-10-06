@@ -37,7 +37,7 @@
                     'j'                => array(RedBeanModel::HAS_ONE,             'J'),
                     'ks'               => array(RedBeanModel::HAS_MANY,            'K'),
                     'ls'               => array(RedBeanModel::MANY_MANY,           'L'),
-                    'i'        		   => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'I'),
+                    'i'                => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'I'),
                     'is'               => array(RedBeanModel::HAS_MANY,            'I',           RedBeanModel::OWNED),
                     'hasOneRelation'   => array(RedBeanModel::HAS_ONE,             'CustomField', RedBeanModel::OWNED),
                     'hasManyRelation'  => array(RedBeanModel::HAS_MANY,            'A',           RedBeanModel::OWNED),

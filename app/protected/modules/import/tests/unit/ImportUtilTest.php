@@ -76,7 +76,7 @@
             $this->assertEquals(13, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',        'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
@@ -126,7 +126,7 @@
 
             //Confirm the messages are as expected.
             $compareMessages = array(
-                'ImportModelTestItem - Last name specified is too large.',
+                'ImportModelTestItem - Last name specified is too long.',
                 'ImportModelTestItem - Last Name - Last Name cannot be blank.',
             );
             $this->assertEquals($compareMessages, unserialize(current($beansWithErrors)->serializedmessages));
@@ -184,7 +184,7 @@
             $this->assertEquals(13, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => array('attributeIndexOrDerivedType' => 'string',   	  'type' => 'importColumn',
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',        'type' => 'importColumn',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),

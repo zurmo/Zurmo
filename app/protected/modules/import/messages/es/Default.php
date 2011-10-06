@@ -41,23 +41,15 @@
             => '??',
         'Analyzing the import data...'
             => '??',
-        'Boolean'
-            => '??',
         'Congratulations! Your import is complete.  Below is a summary of the results.'
             => '??',
-        'Currency Value'
-            => '??',
         'Default Name'
-            => '??',
-        'Default Value'
             => '??',
         'Delimiter'
             => '??',
         'Do not map this field'
             => '??',
-        'Drop Down'
-            => '??',
-        'Email was too large.'
+        'Email was too long.'
             => '??',
         'Enclosure'
             => '??',
@@ -71,17 +63,11 @@
             => '??',
         'File Upload Data'
             => '??',
-        'First name specified is too large.'
+        'First name specified is too long.'
             => '??',
         'First Row is Header Row'
             => '??',
         'Format'
-            => '??',
-        'Has Many'
-            => '??',
-        'Has One'
-            => '??',
-        'Has One Also'
             => '??',
         'Header'
             => '??',
@@ -107,21 +93,21 @@
             => '??',
         'Importing data...'
             => '??',
-        'Invalid check box format'
+        'Invalid check box format.'
             => '??',
-        'Invalid date format'
+        'Invalid date format.'
             => '??',
-        'Invalid datetime format'
+        'Invalid datetime format.'
             => '??',
-        'Invalid email format'
+        'Invalid email format.'
             => '??',
-        'Invalid integer format'
+        'Invalid integer format.'
             => '??',
-        'Invalid number format'
+        'Invalid number format.'
             => '??',
-        'Invalid url format'
+        'Invalid url format.'
             => '??',
-        'Last name specified is too large.'
+        'Last name specified is too long.'
             => '??',
         'Mapping Data'
             => '??',
@@ -130,8 +116,6 @@
         'Module To Import To'
             => '??',
         'Next'
-            => '??',
-        'Phone'
             => '??',
         'Pick list is missing corresponding custom field data.'
             => '??',
@@ -149,8 +133,6 @@
             => '??',
         'Processing'
             => '??',
-        'Radio Drop Down'
-            => '??',
         'Record saved correctly.'
             => '??',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'
@@ -159,7 +141,7 @@
             => '??',
         'Records updated: {updated}'
             => '??',
-        'Remove Column'
+        'Remove Field'
             => '??',
         'Required Fields'
             => '??',
@@ -169,15 +151,11 @@
             => '??',
         'Sample Row'
             => '??',
-        'String'
-            => '??',
-        'Text Area'
-            => '??',
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => '??',
         'The file that was uploaded was not a csv.'
             => '??',
-        'The full name specified did not resolve to have a last name, which is required.'
+        'The full name must contain a last name, which is required.'
             => '??',
         'The id specified did not match any existing records.'
             => '??',
@@ -195,13 +173,11 @@
             => '??',
         'Type of Value'
             => '??',
-        'Url'
-            => '??',
-        'Url was too large.'
+        'URL was too long.'
             => '??',
         'Who can read and write the new {importRulesLabel}'
             => '??',
-        'You can only map each attribute once.'
+        'You can only map each field once.'
             => '??',
         'You do not have permission to update this record and/or its related record.'
             => '??',

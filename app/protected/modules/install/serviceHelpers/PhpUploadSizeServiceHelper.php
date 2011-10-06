@@ -41,13 +41,11 @@
                                                                             $actualUploadSizeBytes);
             if ($uploadSizeBytesPassed)
             {
-                $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Php Upload size meets minimum requirement.');
+                $this->message = Yii::t('Default', 'PHP Upload size meets minimum requirement.');
             }
             else
             {
-                $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Php Upload size setting is:') . ' ';
+                $this->message  = Yii::t('Default', 'PHP Upload size setting is:') . ' ';
                 $this->message .= round($actualUploadSizeBytes / 1024000) . 'M ';
                 $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';

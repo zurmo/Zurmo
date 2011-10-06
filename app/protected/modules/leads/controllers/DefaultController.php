@@ -68,7 +68,7 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
                 $this->redirect($urlParams);
@@ -76,7 +76,7 @@
             else
             {
                 ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
-                AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $contact);
+                AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($contact), $contact);
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
                                                                               Yii::app()->request->getRequestUri());
@@ -98,7 +98,7 @@
         public function actionEdit($id, $redirectUrl = null)
         {
             $contact = Contact::getById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/edit', 'id' => $contact->id);
                 $this->redirect($urlParams);
@@ -195,7 +195,7 @@
         {
             assert('!empty($id)');
             $contact                 = Contact::getById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
                 $this->redirect($urlParams);
@@ -277,7 +277,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
-            if(!LeadsUtil::isStateALead($contact->state))
+            if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/delete', 'id' => $contact->id);
                 $this->redirect($urlParams);

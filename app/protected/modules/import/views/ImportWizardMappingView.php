@@ -202,6 +202,7 @@
             $ajaxOnChangeUrl     = Yii::app()->createUrl("import/default/mappingAddExtraMappingRow",
                                    array('id' => $this->model->id));
             $content             = CHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
+            // Begin Not Coding Standard
             $content            .= CHtml::ajaxButton(Yii::t('Default', 'Add Field'), $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'columnCount=\' + $(\'#columnCounter\').val()',
@@ -210,6 +211,7 @@
                                             $(\'#addExtraColumnButton\').parent().parent().prev().after(data);
                                           }'),
                                     array('id' => 'addExtraColumnButton'));
+            // End Not Coding Standard
             return $content;
         }
 

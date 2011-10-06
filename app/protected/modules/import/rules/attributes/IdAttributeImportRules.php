@@ -62,7 +62,7 @@
             $sanitizerUtilTypes = static::getSanitizerUtilTypesInProcessingOrder();
             if (count($sanitizerUtilTypes) == 1 && $sanitizerUtilTypes[0] == 'SelfIdValueType')
             {
-                $modelClassName =$this->getModelClassName();
+                $modelClassName = $this->getModelClassName();
                 try
                 {
                     $value  = ImportSanitizerUtil::

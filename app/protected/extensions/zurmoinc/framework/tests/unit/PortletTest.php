@@ -34,7 +34,7 @@
             $portlet->position  = 5;
             $portlet->layoutId  = 'Test';
             $portlet->collapsed = true;
-            $portlet->viewType  = 'WorldClock';
+            $portlet->viewType  = 'RssReader';
             $portlet->serializedViewData = serialize(array('a' => 'apple', 'b' => 'bannana'));
             $portlet->user      = $user;
             $this->assertTrue($portlet->save());
@@ -43,7 +43,7 @@
             $this->assertEquals(5,                                          $portlet->position);
             $this->assertEquals('Test',                                     $portlet->layoutId);
             //$this->assertEquals(true,                                       $portlet->collapsed); //reenable once working
-            $this->assertEquals('WorldClock',                               $portlet->viewType);
+            $this->assertEquals('RssReader',                               $portlet->viewType);
             $this->assertEquals($user->id,                                  $portlet->user->id);
             $this->assertNotEquals(array('a' => 'apple', 'b' => 'bannana'), $portlet->serializedViewData);
             $this->assertEquals   (array('a' => 'apple', 'b' => 'bannana'), unserialize($portlet->serializedViewData));
@@ -65,20 +65,20 @@
                         array(
                             'rows' => array(
                                 array(
-                                    'type' => 'WorldClock',
+                                    'type' => 'RssReader',
                                 ),
                                 array(
-                                    'type' => 'WorldClock',
+                                    'type' => 'RssReader',
                                 ),
                             )
                         ),
                         array(
                             'rows' => array(
                                 array(
-                                    'type' => 'WorldClock',
+                                    'type' => 'RssReader',
                                 ),
                                 array(
-                                    'type' => 'WorldClock',
+                                    'type' => 'RssReader',
                                 ),
                             )
                         )
@@ -123,7 +123,7 @@
                 $portlet->position  = $i;
                 $portlet->layoutId  = 'shiftTest';
                 $portlet->collapsed = true;
-                $portlet->viewType  = 'WorldClock';
+                $portlet->viewType  = 'RssReader';
                 $portlet->user      = $user;
                 $this->assertTrue($portlet->save());
             }
@@ -134,7 +134,7 @@
                 $portlet->position  = $i;
                 $portlet->layoutId  = 'shiftTest';
                 $portlet->collapsed = true;
-                $portlet->viewType  = 'WorldClock';
+                $portlet->viewType  = 'RssReader';
                 $portlet->user      = $user;
                 $this->assertTrue($portlet->save());
             }
@@ -145,7 +145,7 @@
                 $portlet->position  = $i;
                 $portlet->layoutId  = 'shiftTest';
                 $portlet->collapsed = true;
-                $portlet->viewType  = 'WorldClock';
+                $portlet->viewType  = 'RssReader';
                 $portlet->user      = $user;
                 $this->assertTrue($portlet->save());
             }
@@ -173,7 +173,7 @@
             $portlet->position  = 1;
             $portlet->layoutId  = 'Test';
             $portlet->collapsed = true;
-            $portlet->viewType  = 'WorldClock';
+            $portlet->viewType  = 'RssReader';
             $portlet->user      = $user;
             $this->assertTrue($portlet->save());
             $portlet = Portlet::getById($portlet->id);

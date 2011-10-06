@@ -78,9 +78,9 @@
          */
         protected function renderControlNonEditable()
         {
-            if($this->model->{$this->attribute} != null)
+            if ($this->model->{$this->attribute} != null)
             {
-                $content = Yii::app()->dateFormatter->formatDateTime($this->model->{$this->attribute}, 'short');
+                $content = Yii::app()->dateFormatter->formatDateTime($this->model->{$this->attribute}, 'short', 'short');
                 return CHtml::encode($content);
             }
         }

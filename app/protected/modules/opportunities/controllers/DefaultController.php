@@ -55,7 +55,7 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($opportunity);
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, null, $opportunity);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($opportunity), $opportunity);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($opportunity, 'OpportunitiesModule',
                                                                           'OpportunityDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
@@ -74,10 +74,10 @@
                                                                                 $relationAttributeName,
                                                                                 (int)$relationModelId,
                                                                                 $relationModuleId);
-            if($relationAttributeName == 'contacts')
+            if ($relationAttributeName == 'contacts')
             {
                 $relationContact = Contact::getById((int)$relationModelId);
-                if($relationContact->account->id > 0)
+                if ($relationContact->account->id > 0)
                 {
                     $opportunity->account = $relationContact->account;
                 }
@@ -203,7 +203,8 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null)
+                                                    $pageTitle = null,
+                                                    $stateMetadataAdapterClassName = null)
         {
             $pageTitle = Yii::t('Default',
                                 'OpportunitiesModuleSingularLabel Search',

@@ -98,7 +98,7 @@
             assert('is_string($name)');
             if (!isset(self::$customFieldData[$name]))
             {
-                $data = CustomFieldData::getByName('AccountTypes');
+                $data = CustomFieldData::getByName($name);
                 $values = unserialize($data->serializedData);
                 self::$customFieldData[$name] = $values;
             }

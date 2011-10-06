@@ -137,7 +137,7 @@
                     $otherRows = self::getAccountMungeRows();
                     if ($phpRows != $otherRows)
                     {
-                        echo 'Php & optimized munges don\'t match after account ' . ($i + 1) . "\n";
+                        echo 'PHP & optimized munges don\'t match after account ' . ($i + 1) . "\n";
                         echo "--------\n";
                         foreach ($phpRows as $row)
                         {

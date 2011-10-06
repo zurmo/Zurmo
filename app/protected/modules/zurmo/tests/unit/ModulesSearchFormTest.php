@@ -143,6 +143,43 @@
             $compareStructure = '(1 or 2) and (3 or 4) and 5';
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
+
+            //Test using an or clause between everything.
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata(false);
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'billingAddress',
+                    'relatedAttributeName' => 'state',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Illinois',
+                ),
+                2 => array(
+                    'attributeName'        => 'shippingAddress',
+                    'relatedAttributeName' => 'state',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Illinois',
+                ),
+                3 => array(
+                    'attributeName'        => 'primaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)1,
+                ),
+                4 => array(
+                    'attributeName'        => 'secondaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)1,
+                ),
+                5 => array(
+                    'attributeName'        => 'name',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'ABC Company',
+                ),
+            );
+            $compareStructure = '(1 or 2) or (3 or 4) or 5';
+            $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
+            $this->assertEquals($compareStructure, $searchAttributeData['structure']);
         }
     }
 ?>

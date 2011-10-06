@@ -35,11 +35,9 @@
             => 'Tous visibles',
         'Create Field'
             => 'Ajouter un champ',
-        'Default Value'
-            => 'Valeur par défaut',
         'Designer'
             => 'Designer',
-        'Details And Edit View'
+        'Detail And Edit View'
             => 'Vue des formulaires',
         'Details View'
             => 'Vue détaillée',

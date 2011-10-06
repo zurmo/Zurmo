@@ -45,7 +45,7 @@
         This is <b>version $zurmoVersion</b>, of <b>Zurmo</b>.
     </p>
     <p>
-        <b>Zurmo</b> is a <b>Customer Relation Management</b> system by <b>Zurmo Inc.</b>
+        <b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>
     </p>
     <p>
         Visit the <b>Zurmo Open Source Project</b> at
@@ -56,15 +56,15 @@
         <a href="http://www.zurmo.com">http://www.zurmo.com</a>.<br />
     </p>
     <p>
-        Zurmo is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>.
+        <b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>.
     </p>
     <p>
-        <b>Zurmo</b> uses the following great Open Source tools and frameworks...
+        <b>Zurmo</b> uses the following great Open Source tools and frameworks:
     </p>
     <p>
-        <a href="http://www.yiiframework.com">The Yii Framework</a> (version $yiiVersion is installed)<br />
-        <a href="http://www.redbeanphp.com">RedBean Php ORM</a>     (version $redBeanVersion is installed)<br />
-        <a href="http://www.jquery.com">The JQuery Javascript Framework</a> (installed with Yii)<br />
+        <a href="http://www.yiiframework.com">Yii Framework</a> (version $yiiVersion is installed)<br />
+        <a href="http://www.redbeanphp.com">RedBeanPHP ORM</a>     (version $redBeanVersion is installed)<br />
+        <a href="http://www.jquery.com">jQuery JavaScript Framework</a> (installed with Yii)<br />
     </p>
 END;
         }

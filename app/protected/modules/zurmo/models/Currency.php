@@ -88,6 +88,7 @@
                 'members' => array(
                     'code',
                     'rateToBase',
+                    'active',
                 ),
                 'rules' => array(
                     array('code',       'required'),
@@ -98,6 +99,8 @@
                                                   'message' => 'Code must be a valid currency code.'),
                     array('rateToBase', 'required'),
                     array('rateToBase', 'type', 'type' => 'float'),
+                    array('active',     'boolean'),
+                    array('active',     'default', 'value' => true),
                 ),
                 'lastAttemptedRateUpdateTimeStamp'      => null,
             );

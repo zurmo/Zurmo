@@ -42,7 +42,7 @@
             $states = ContactState::GetAll();
             $contact = new Contact();
             $contact->owner        = $user;
-            $contact->title->value = 'Mr';
+            $contact->title->value = 'Mr.';
             $contact->firstName    = 'Super';
             $contact->lastName     = 'Man';
             $contact->state        = $states[0];

@@ -61,6 +61,8 @@
             => '??',
         'Date Time'
             => '??',
+        'Default Value'
+            => '??',
         'Delete'
             => '??',
         'Detail View Only'
@@ -77,7 +79,7 @@
             => '??',
         'Filtered List'
             => '??',
-        'firstDateTime must occur after  secondDateTime'
+        'firstDateTime must occur after secondDateTime'
             => '??',
         'firstDateTime must occur before secondDateTime'
             => '??',
@@ -101,6 +103,8 @@
             => '??',
         'List'
             => '??',
+        'Loading'
+            => '??',
         'Model Class Name'
             => '??',
         'Model Id'
@@ -114,6 +118,8 @@
         'More Details'
             => '??',
         'More Options'
+            => '??',
+        'My List View'
             => '??',
         'Name'
             => '??',
@@ -132,6 +138,8 @@
         'Panel Title'
             => '??',
         'Perform Action'
+            => '??',
+        'Radio Drop Down'
             => '??',
         'record'
             => '??',
@@ -153,13 +161,16 @@
             => '??',
         'Serialized Data'
             => '??',
-        'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
+        'Some values cannot be removed because they are currently in use. ' .
+        'Try changing the records that use them first.'
             => '??',
         'Tab'
             => '??',
         'This module doesn\'t have anything to configure.'
             => '??',
         'This pick-list is used by more than one module.'
+            => '??',
+        'This portlet will be removed, ok?'
             => '??',
         'Time'
             => '??',
@@ -171,6 +182,7 @@
             => '??',
         'Tomorrow'
             => '??',
+
         'Unknown'
             => '??',
         'Update Selected'

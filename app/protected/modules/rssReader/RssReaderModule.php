@@ -31,7 +31,7 @@
     {
         public function getDependencies()
         {
-            return array();
+            return array('configuration', 'zurmo');
         }
 
         protected static function getSingularModuleLabel()

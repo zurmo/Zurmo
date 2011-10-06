@@ -54,7 +54,7 @@
          */
         public function addTimingById($identifer, $time)
         {
-            if(isset($this->timings[$identifer]))
+            if (isset($this->timings[$identifer]))
             {
                 $this->timings[$identifer] = $this->timings[$identifer] + $time;
             }

@@ -40,6 +40,7 @@
             $form->listPageSize             = Yii::app()->pagination->getGlobalValueByType('listPageSize');
             $form->subListPageSize          = Yii::app()->pagination->getGlobalValueByType('subListPageSize');
             $form->modalListPageSize        = Yii::app()->pagination->getGlobalValueByType('modalListPageSize');
+            $form->dashboardListPageSize    = Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize');
             return $form;
         }
 
@@ -48,10 +49,11 @@
          */
         public static function setConfigurationFromForm(ZurmoConfigurationForm $form)
         {
-            Yii::app()->timeZoneHelper  ->setGlobalValue      (                     (string)$form->timeZone);
-            Yii::app()->pagination->setGlobalValueByType('listPageSize',      (int)   $form->listPageSize);
-            Yii::app()->pagination->setGlobalValueByType('subListPageSize',   (int)   $form->subListPageSize);
-            Yii::app()->pagination->setGlobalValueByType('modalListPageSize', (int)   $form->modalListPageSize);
+            Yii::app()->timeZoneHelper  ->setGlobalValue(                         (string)$form->timeZone);
+            Yii::app()->pagination->setGlobalValueByType('listPageSize',          (int)   $form->listPageSize);
+            Yii::app()->pagination->setGlobalValueByType('subListPageSize',       (int)   $form->subListPageSize);
+            Yii::app()->pagination->setGlobalValueByType('modalListPageSize',     (int)   $form->modalListPageSize);
+            Yii::app()->pagination->setGlobalValueByType('dashboardListPageSize', (int)   $form->dashboardListPageSize);
        }
     }
 ?>

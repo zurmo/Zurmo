@@ -76,5 +76,39 @@
             $this->assertTrue($super->save());
             $this->assertEquals('EUR', $currencyHelper->getCodeForCurrentUserForDisplay());
         }
+
+        /**
+         * @depends testGetCodeForCurrentUserForDisplay
+         */
+        public function testGetActiveCurrenciesOrSelectedCurrenciesData()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //Make a second currency for this test.
+            $currency             = new Currency();
+            $currency->code       = 'USD';
+            $currency->rateToBase = 1;
+            $this->assertTrue($currency->save());
+            $super->currency = $currency;
+            $this->assertTrue($super->save());
+
+            $currencies = Currency::getAll();
+            $this->assertEquals(2, count($currencies));
+            $activeCurrencies = Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData(null);
+            $this->assertEquals(2, count($activeCurrencies));
+
+            $currency = Currency::getByCode('EUR');
+            $currency->active = 0;
+            $this->assertTrue($currency->save());
+
+            //There should only be one active currency at this point.
+            $activeCurrencies = Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData(null);
+            $this->assertEquals(1, count($activeCurrencies));
+
+            //Confirm that there are 2 active currencies when specifying an inactive one as the selected currency.
+            $activeCurrencies = Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData($currency->id);
+            $this->assertEquals(2, count($activeCurrencies));
+        }
     }
 ?>

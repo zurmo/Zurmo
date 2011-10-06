@@ -97,6 +97,7 @@
             $timeout = 2;
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
             $file_contents = curl_exec($ch);
             if ($file_contents === false || empty($file_contents))
@@ -181,6 +182,37 @@
                 $metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] = time();
                 Currency::setMetadata($metadata);
             }
+        }
+
+        /**
+         * Given a selectedCurrencyId, return an array of available currencies for selection in the user interface.
+         * If the selected currency is inactive, include this in the returned data.
+         * @param mixed $selectedCurrencyId
+         */
+        public function getActiveCurrenciesOrSelectedCurrenciesData($selectedCurrencyId)
+        {
+            assert('$selectedCurrencyId == null || (is_int($selectedCurrencyId) && $selectedCurrencyId > 0)');
+            $currencies = Currency::getAll();
+            $data       = array();
+            foreach ($currencies as $currency)
+            {
+                if($currency->active || ($selectedCurrencyId != null && $currency->id == $selectedCurrencyId))
+                {
+                    $data[$currency->id] = $currency->code;
+                }
+            }
+            return $data;
+        }
+
+        public function getLastAttemptedRateUpdateDateTime()
+        {
+            $metadata = Currency::getMetadata();
+            if($metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null)
+            {
+                return null;
+            }
+            return Yii::app()->dateFormatter->formatDateTime(
+                    $metadata['Currency']['lastAttemptedRateUpdateTimeStamp'], 'short');
         }
     }
 ?>

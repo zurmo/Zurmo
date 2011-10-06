@@ -135,7 +135,7 @@
          */
         public static function getReflectedPropertyValue($object, $propertyName)
         {
-            assert('is_object($object)');
+            assert('is_object($object)'); // Not Coding Standard
             $reflectedClass = new ReflectionClass($object);
             $property       = $reflectedClass->getProperty($propertyName);
             $property->setAccessible(true);

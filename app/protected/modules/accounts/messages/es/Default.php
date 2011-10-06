@@ -53,6 +53,8 @@
             => 'Crear una AccountsModuleSingularLabel',
         'Employees'
             => '??',
+        'My AccountsModulePluralLabel'
+            => '??',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel Relacionadas',
         'Type'

@@ -34,12 +34,12 @@
             $allPassed = false;
             if (InstallUtil::checkPhpTimezoneSetting())
             {
-                $this->message = Yii::t('Default', 'Php Timezone is set.');
+                $this->message = Yii::t('Default', 'PHP Timezone is set.');
                 return true;
             }
             else
             {
-                $this->message = Yii::t('Default', 'Php Timezone is not set.');
+                $this->message = Yii::t('Default', 'PHP Timezone is not set.');
                 return true;
             }
         }

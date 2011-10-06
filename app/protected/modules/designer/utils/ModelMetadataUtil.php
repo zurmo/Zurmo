@@ -60,7 +60,7 @@
             }
             static::resolveAddOrRemoveNoAuditInformation($isAudited, $metadata[$modelClassName], $memberName);
             $metadata[$modelClassName]['elements'][$memberName] = $elementType;
-            $metadata[$modelClassName]['labels'][$memberName] = $attributeLabels;
+            self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $memberName);
             self::addOrUpdateRules($modelClassName, $memberName, $defaultValue, $maxLength,
                                    $minValue, $maxValue, $precision, $isRequired, $partialTypeRule,
                                    $metadata, $mixedRule);
@@ -99,7 +99,7 @@
             }
             static::resolveAddOrRemoveNoAuditInformation($isAudited, $metadata[$modelClassName], $relationName);
             $metadata[$modelClassName]['elements'][$relationName] = $elementType;
-            $metadata[$modelClassName]['labels'][$relationName]   = $attributeLabels;
+            self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $relationName);
             self::addOrUpdateRules($modelClassName, $relationName, null, null, null,
                                    null, null, $isRequired, array(), $metadata);
 
@@ -130,7 +130,7 @@
                 $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,  'CustomField');
             }
             $metadata[$modelClassName]['elements'][$relationName] = $elementType;
-            $metadata[$modelClassName]['labels'][$relationName]   = $attributeLabels;
+            self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $relationName);
             if (!isset           (               $metadata[$modelClassName]['customFields']) ||
                  !array_key_exists($relationName, $metadata[$modelClassName]['customFields']))
             {
@@ -350,6 +350,29 @@
                     $modelMetadata['noAudit'] = array_values($modelMetadata['noAudit']);
                 }
             }
+        }
+
+        /**
+         * Given an array of attributeLabels, resolve that array into any existing attributeLabels in the metadata.
+         * This is needed in case a language has been inactivated for example, we do not want to lose the translation.
+         * @param array $attributeLabels
+         * @param array $metadata
+         * @param string $modelClassName
+         * @param string $labelsAttributeName
+         */
+        protected static function resolveAttributeLabelsMetadata($attributeLabels, & $metadata,
+                                                                 $modelClassName, $labelsAttributeName)
+        {
+            assert('is_array($attributeLabels)');
+            assert('is_array($metadata)');
+            assert('is_string($modelClassName)');
+            assert('is_string($labelsAttributeName)');
+            if(!isset($metadata[$modelClassName]['labels'][$labelsAttributeName]))
+            {
+                $metadata[$modelClassName]['labels'][$labelsAttributeName] = array();
+            }
+            $metadata[$modelClassName]['labels'][$labelsAttributeName] =
+            array_merge($metadata[$modelClassName]['labels'][$labelsAttributeName], $attributeLabels);
         }
     }
 ?>

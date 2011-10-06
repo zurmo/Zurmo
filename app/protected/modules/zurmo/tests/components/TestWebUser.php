@@ -26,7 +26,6 @@
 
     class TestWebUser extends WebUser
     {
-
     /**
      * Override for testing framework.  The regenerateId call was causing issues with a walkthrough test that logged out
      * and logged back in.  It would complain about headers already being sent. Under normal usage through the user
