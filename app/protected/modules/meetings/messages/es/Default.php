@@ -29,5 +29,31 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Attendees'
+            => '??',
+        'Category'
+            => '??',
+        'End Time'
+            => '??',
+        'Location'
+            => '??',
+        'Meetings'
+            => '??',
+        'MeetingsModulePluralLabel For AccountsModuleSingularLabel'
+            => '??',
+        'MeetingsModulePluralLabel For ContactsModuleSingularLabel'
+            => '??',
+        'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
+            => '??',
+        'My Upcoming MeetingsModulePluralLabel'
+            => '??',
+        'Related ContactsModulePluralLabel and LeadsModulePluralLabel'
+            => '??',
+        'Start Time'
+            => '??',
+        'Type a ContactsModuleSingularLowerCaseLabel or LeadsModuleSingularLowerCaseLabel: name or email address'
+            => '??',
+        'Upcoming MeetingsModulePluralLabel'
+            => '??',
     );
 ?>

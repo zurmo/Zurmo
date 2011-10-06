@@ -35,11 +35,9 @@
             => '??',
         'Create Field'
             => '??',
-        'Default Value'
-            => '??',
         'Designer'
             => '??',
-        'Details And Edit View'
+        'Detail And Edit View'
             => '??',
         'Details View'
             => '??',

@@ -35,6 +35,8 @@
             => 'Confirmation du mot de passe',
         'Create User'
             => 'Nouvel Utilisateur',
+        'Hash'
+            => 'Hash',
         'Manage Users'
             => 'Gestion des utilisateurs',
         'Manager'

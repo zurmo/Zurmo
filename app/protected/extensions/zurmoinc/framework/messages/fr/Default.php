@@ -63,6 +63,8 @@
             => 'Date/Heure',
         'Delete'
             => 'Supprimer',
+        'Default Value'
+            => 'Valeur par défault',
         'Detail View Only'
             => 'Vue détaillée uniquement',
         'Details'
@@ -77,7 +79,7 @@
             => 'Fahrenheit',
         'Filtered List'
             => 'Liste Filtrée',
-        'firstDateTime must occur after  secondDateTime'
+        'firstDateTime must occur after secondDateTime'
             => 'firstDateTime doit être après secondDateTime',
         'firstDateTime must occur before secondDateTime'
             => 'firstDateTime doit être avant secondDateTime',
@@ -101,6 +103,8 @@
             => 'Dernière modification',
         'List'
             => 'Liste',
+        'Loading'
+            => 'Chargement en cours',
         'Model Class Name'
             => 'Nom de la classe du modèle',
         'Model Id'
@@ -115,6 +119,8 @@
             => 'Plus de détails',
         'More Options'
             => 'Plus d\'options',
+        'My List View'
+            => 'Ma Vue Liste',
         'Name'
             => 'Nom',
         'No'
@@ -133,6 +139,8 @@
             => 'Titre du panel',
         'Perform Action'
             => 'Sélectionner',
+        'Radio Drop Down'
+            => 'Éléments du bouton radio',
         'record'
             => 'donnée',
         'records'
@@ -155,13 +163,16 @@
             => 'Serialized Data',
         'Some values cannot be removed because they are currently in use. ' .
         'Try changing the records that use them first.'
-            => 'Certain éléments ne peuvent être supprimés car ils sont actuellement utilisés. Veuillez modifier la valeur des champs contenant ces éléments avant de supprimer.',
+            => 'Certain éléments ne peuvent être supprimés car ils sont actuellement utilisés. ' .
+               'Veuillez modifier la valeur des champs contenant ces éléments avant de supprimer.',
         'Tab'
             => 'Onglet',
         'This module doesn\'t have anything to configure.'
             => 'Il n\'y a rien a configurer',
         'This pick-list is used by more than one module.'
             => 'Cette liste déroulante est utilisée dans les modules suivants:',
+        'This portlet will be removed, ok?'
+            => 'Êtes-vous sûr de vouloir supprimer ce portlet?',
         'Time'
             => 'Heure',
         'Title/First/LastName'

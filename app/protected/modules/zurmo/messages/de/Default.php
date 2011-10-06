@@ -49,6 +49,16 @@
             => '??',
         'Access Failure'
             => '??',
+        'Active'
+            => '??',
+        'Active currencies can be used when creating new records and as a default currency for a user.'
+            => '??',
+        'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
+            => '??',
+        'Add File'
+            => '??',
+        'Add Files'
+            => '??',
         'Admin'
             => '??',
         'Alert'
@@ -91,6 +101,10 @@
             => '??',
         'Cancel'
             => '??',
+        'Changes to active currencies changed successfully.'
+            => '??',
+        'Changes to active languages changed successfully.'
+            => '??',
         'Chart Type'
             => '??',
         'City'
@@ -117,6 +131,10 @@
             => '??',
         'Currency Configuration'
             => '??',
+        'Currency in use.'
+            => '??',
+        'Currency Value'
+            => '??',
         'Data'
             => '??',
         'days'
@@ -140,6 +158,8 @@
         'Fields with'
             => '??',
         'File Content'
+            => '??',
+        'File failed to upload. The file is empty.'
             => '??',
         'Files'
             => '??',
@@ -171,6 +191,8 @@
             => '??',
         'Industry'
             => '??',
+        'Info'
+            => '??',
         'Inherited - All'
             => '??',
         'Inherited - Allow'
@@ -189,7 +211,11 @@
             => '??',
         'Language'
             => '??',
+        'Languages: List'
+            => '??',
         'Last Name'
+            => '??',
+        'Last Updated'
             => '??',
         'List page size'
             => '??',
@@ -206,6 +232,8 @@
         'Manage Groups'
             => '??',
         'Manage Roles'
+            => '??',
+        'Max upload size: {maxSize}'
             => '??',
         'Member'
             => '??',
@@ -227,6 +255,12 @@
             => '??',
         'Munge rebuild complete.'
             => '??',
+        'My List Configuration View'
+            => '??',
+        'Never'
+            => '??',
+        'No Results Found'
+            => '??',
         'Not Set'
             => '??',
         'Not Set - Ad-hoc / Owner'
@@ -237,6 +271,8 @@
             => 'Bürotelefon',
         'Oh no!'
             => '??',
+        'Only Items I Own'
+            => '??',
         'Opt Out'
             => '??',
         'Owner'
@@ -244,6 +280,8 @@
         'Owner Only'
             => '??',
         'Parent Group'
+            => '??',
+        'Parent Role'
             => '??',
         'Password'
             => '??',
@@ -267,6 +305,10 @@
             => '??',
         'Rate To Base'
             => '??',
+        'Read permissions rebuild complete.'
+            => '??',
+        'Recently Viewed'
+            => '??',
         'Remember me next time'
             => '??',
         'Return to Admin Menu'
@@ -278,6 +320,8 @@
         'Roles'
             => '??',
         'Search'
+            => '??',
+        'Search by name, phone, or e-mail'
             => '??',
         'Secondary Address'
             => '??',
@@ -303,6 +347,8 @@
             => '??',
         'Stage'
             => '??',
+        'Start'
+            => '??',
         'State'
             => '??',
         'Street 1'
@@ -317,6 +363,16 @@
             => '???',
         'The currency code is invalid'
             => '??',
+        'The file did not exist'
+            => '??',
+        'There are no recently viewed items.'
+            => '??',
+        'There was an error uploading the file.'
+            => '??',
+        'There was an error with the web service.'
+            => '??',
+        'This action is only available in debug mode.'
+            => '??',
         'This name is reserved. Please pick a different name.'
             => '??',
         'Time zone'
@@ -329,9 +385,17 @@
             => '??',
         'Username'
             => '??',
+        'Value'
+            => '??',
         'Website'
             => '??',
         'Welcome'
+            => '??',
+        'What is this?'
+            => '??',
+        'Who can read and write'
+            => '??',
+        'You must have at least one active currency.'
             => '??',
         'Your Profile'
             => '??',
