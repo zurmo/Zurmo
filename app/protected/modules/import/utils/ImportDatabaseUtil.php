@@ -44,6 +44,11 @@
             assert('$delimiter != null && is_string($delimiter)');
             assert('$enclosure != null && is_string($enclosure)');
 
+            //Replace /r/n in file with /n.
+            $fileContent = file_get_contents($csvFilePath);
+            $fileContent = str_replace("\r\n" ,"\n", $fileContent);
+            file_put_contents($csvFilePath, $fileContent);
+
             $fileHandle  = fopen($csvFilePath, 'r');
             assert('gettype($fileHandle) == "resource"');
 
@@ -79,16 +84,16 @@
                     {
                         switch ($column) {
                             case 'id':
-                                $tableDef .= "id int(11) unsigned NOT NULL AUTO_INCREMENT," . "\n";
+                                $tableDef .= "id int(11) unsigned NOT NULL AUTO_INCREMENT,";
                                 break;
                             case 'status':
-                                $tableDef .= "status int(11) unsigned DEFAULT NULL," . "\n";
+                                $tableDef .= "status int(11) unsigned DEFAULT NULL,";
                                 break;
                             case 'serializedmessages':
-                                $tableDef .= "serializedmessages text COLLATE utf8_unicode_ci DEFAULT NULL," . "\n";
+                                $tableDef .= "serializedmessages text COLLATE utf8_unicode_ci DEFAULT NULL,";
                                 break;
                             default:
-                                $tableDef .= "{$column} TEXT COLLATE utf8_unicode_ci DEFAULT NULL," . "\n";
+                                $tableDef .= "{$column} TEXT COLLATE utf8_unicode_ci DEFAULT NULL,";
                         }
                     }
                     $tableDef .= "PRIMARY KEY (id)";
@@ -110,6 +115,7 @@
                         INTO TABLE $tableName
                         FIELDS TERMINATED BY '$delimiter'
                         OPTIONALLY ENCLOSED BY '\"'
+                        LINES TERMINATED BY '\n'
                         (".implode(",", $insertColumns).")
                        ";
                 R::exec($sql);
