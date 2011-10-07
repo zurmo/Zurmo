@@ -46,7 +46,7 @@
 
             //Replace /r/n in file with /n.
             $fileContent = file_get_contents($csvFilePath);
-            $fileContent = str_replace("\r\n" ,"\n", $fileContent);
+            $fileContent = str_replace("\r\n" ,"\n", trim($fileContent));
             file_put_contents($csvFilePath, $fileContent);
 
             $fileHandle  = fopen($csvFilePath, 'r');
@@ -64,62 +64,32 @@
                     $freezeWhenComplete = true;
                 }
 
-                //Get first row from CSV file, and create array from it.
-                //Add id, status and serializedmessages columns.
                 $columns = array();
-                $headerRow = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
-                if (count($headerRow) > 1 || (count($headerRow) == 1 && $headerRow[0] != ''))
+                $data = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
+                if (count($data) > 0 && $data !== false)
                 {
-                    $columns[] = 'id';
-                    foreach ($headerRow as $columnId => $value)
+                    $newBean = R::dispense($tableName);
+                    foreach ($data as $columnId => $value)
                     {
                         $columnName = 'column_' . $columnId;
+                        $newBean->{$columnName} = str_repeat(' ', 256);
                         $columns[] = $columnName;
                     }
-                    $columns[] = 'status';
-                    $columns[] = 'serializedmessages';
+                    $newBean->status             = null;
+                    $newBean->serializedmessages = null;
+
+                    R::store($newBean);
+                    R::trash($newBean);
+                    R::exec("TRUNCATE TABLE $tableName");
+
+                    DatabaseCompatibilityUtil::loadDataFromFileIntoDatabase($csvFilePath, $tableName, $delimiter,
+                                                                            $enclosure, $columns);
                 }
 
-                $tableDef = '';
-                if (count($columns) > 3)
+                self::optimizeTable($tableName);
+                if ($freezeWhenComplete)
                 {
-                    foreach ($columns as $id => $column)
-                    {
-                        switch ($column) {
-                            case 'id':
-                                $tableDef .= "id int(11) unsigned NOT NULL AUTO_INCREMENT,";
-                                break;
-                            case 'status':
-                                $tableDef .= "status int(11) unsigned DEFAULT NULL,";
-                                break;
-                            case 'serializedmessages':
-                                $tableDef .= "serializedmessages text COLLATE utf8_unicode_ci DEFAULT NULL,";
-                                break;
-                            default:
-                                $tableDef .= "{$column} TEXT COLLATE utf8_unicode_ci DEFAULT NULL,";
-                        }
-                    }
-                    $tableDef .= "PRIMARY KEY (id)";
-
-                    //Remove id, status and serializedmessages columns.
-                    $insertColumns = array_diff($columns, array('id','status','serializedmessages'));
-
-                    $sql = "create table $tableName ($tableDef)";
-                    R::exec($sql);
-                    $sql = "LOAD DATA LOCAL INFILE '$csvFilePath'
-                            INTO TABLE $tableName
-                            FIELDS TERMINATED BY '$delimiter'
-                            OPTIONALLY ENCLOSED BY '\{$enclosure}'
-                            LINES TERMINATED BY '\n'
-                            (".implode(",", $insertColumns).")
-                           ";
-                    R::exec($sql);
-
-                    self::optimizeTable($tableName);
-                    if ($freezeWhenComplete)
-                    {
-                        RedBeanDatabase::freeze();
-                    }
+                    RedBeanDatabase::freeze();
                 }
             }
             else
