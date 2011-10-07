@@ -188,6 +188,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($contact);
             $contact->delete();
             $this->redirect(array($this->getId() . '/index'));
         }

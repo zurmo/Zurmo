@@ -182,13 +182,14 @@
             $lead->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($lead->save());
 
-            //Now the nobody user should be able to access the edit view and still the details view and the delete 
-            //of the leads should fail.
+            //Now the nobody user should be able to access the edit view and still the details view
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
+
+            //Test nobody, access to delete should fail.
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
 
@@ -196,7 +197,7 @@
             Yii::app()->user->userModel = $super;
             $lead->removePermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($lead->save());
-           
+
             //Test nobody, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $lead->id));
@@ -205,12 +206,12 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
-            
+
             //give nobody access to read, write and delete
             Yii::app()->user->userModel = $super;
             $lead->addPermissions($nobody, Permission::READ_WRITE_DELETE);
             $this->assertTrue($lead->save());            
-           
+
             //now nobody should be able to delete a lead
             Yii::app()->user->userModel = $nobody;            
             $this->setGetArray(array('id' => $lead->id));
@@ -240,6 +241,15 @@
             //create lead owned by super
             $lead2 = LeadTestHelper::createLeadByNameForOwner('leadsParentRolePermission',$super);
 
+            //Test userInChildRole, access to details, edit and delete should fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $lead2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/details');
+            $this->setGetArray(array('id' => $lead2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
+            $this->setGetArray(array('id' => $lead2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
+
             //Test userInParentRole, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $lead2->id));
@@ -258,7 +268,7 @@
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
-            
+
             //Test userInChildRole, access to edit and delete should fail.
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
@@ -281,7 +291,7 @@
             $lead2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($lead2->save());
 
-            //Test userInChildRole, access to edit and delete should not fail.
+            //Test userInChildRole, access to edit and delete should not fail and also detaisl view must be accessible.
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
@@ -326,15 +336,14 @@
             Yii::app()->user->userModel = $super;
             $lead2->addPermissions($userInChildRole, Permission::READ_WRITE_DELETE);
             $this->assertTrue($lead2->save());
-            
+
             //Test userInParentRole, access to delete should not fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $lead2->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
                         Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
-            
-            
+
             //clear up the role relationships between users so not to effect next assertions
             $parentRole->users->remove($userInParentRole);
             $parentRole->roles->remove($childRole);
@@ -368,6 +377,7 @@
             //Add access for the confused user to leads and creation of leads.
             $userInChildGroup->setRight('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS);
             $userInChildGroup->setRight('LeadsModule', LeadsModule::RIGHT_CREATE_LEADS);
+            $userInChildGroup->setRight('LeadsModule', LeadsModule::RIGHT_DELETE_LEADS);
             $this->assertTrue($userInChildGroup->save());
 
             //create lead owned by super
@@ -400,17 +410,21 @@
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
-            
+
             //Test userInParentGroup, access to delete should fail.
+            $this->setGetArray(array('id' => $lead3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
 
-            //Test userInChildGroup, access to details should not fail.
+            //Test userInChildGroup, access to edit and details should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
             
-            //Test userInChildGroup, access to delete should fail.
+            //Test userInChildGroup, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $lead3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
 
@@ -466,9 +480,9 @@
             $lead3->addPermissions($parentGroup, Permission::READ_WRITE_DELETE);
             $this->assertTrue($lead3->save());
             
-            //Test userInParentGroup, access to delete should not fail.
-            Yii::app()->user->userModel = $userInParentGroup;
-            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentGroup->username);
+            //Test userInChildGroup, access to delete should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
                         Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard

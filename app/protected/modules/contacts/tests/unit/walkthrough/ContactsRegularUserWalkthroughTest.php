@@ -110,6 +110,7 @@
             $nobody = User::getByUsername('nobody');
             $nobody->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS);
             $nobody->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
+            $nobody->setRight('ContactsModule', ContactsModule::RIGHT_DELETE_CONTACTS);
             $this->assertTrue($nobody->save());
 
             //Test nobody with elevated rights.
@@ -152,12 +153,14 @@
             //Created contact owned by user super.
             $contact = ContactTestHelper::createContactByNameForOwner('testingElavationToModel', $super);
 
-            //Test nobody, access to edit and details should fail.
+            //Test nobody, access to edit, details and delete should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
             //give nobody access to read
             Yii::app()->user->userModel = $super;
@@ -169,9 +172,11 @@
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
 
-            //Test nobody, access to edit should fail.
+            //Test nobody, access to edit and delete should fail.
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
             //give nobody access to read and write
             Yii::app()->user->userModel = $super;
@@ -185,17 +190,35 @@
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
+            //Test nobody, access to delete should fail.
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //revoke nobody access to read
             Yii::app()->user->userModel = $super;
-            $contact->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $contact->removePermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($contact->save());
 
-            //Test nobody, access to detail should fail.
+            //Test nobody, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
+            //give nobody access to read, write and delete
+            Yii::app()->user->userModel = $super;
+            $contact->addPermissions($nobody, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($contact->save());
+
+            //Test nobody, access to delete should not fail.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $contact->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
 
             Yii::app()->user->userModel = $super;
             //create some roles
@@ -218,12 +241,23 @@
 
             $contact2 = ContactTestHelper::createContactByNameForOwner('testingParentRolePermission', $super);
 
-            //Test userInParentRole, access to details and edit should fail.
+            //Test userInChildRole, access to details, edit and delete should fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
+            //Test userInParentRole, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
             //give userInChildRole access to READ
             Yii::app()->user->userModel = $super;
@@ -235,10 +269,22 @@
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
 
+            //Test userInChildRole, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //Test userInParentRole, access to details should not fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            
+            //Test userInParentRole, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
             //give userInChildRole access to read and write
             Yii::app()->user->userModel = $super;
@@ -250,29 +296,53 @@
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
+            //Test userInChildRole, access to delete should fail.
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //Test userInParentRole, access to edit should not fail.
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentRole->username);
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
+            //Test userInParentRole, access to delete should fail.
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //revoke userInChildRole access to read and write
             Yii::app()->user->userModel = $super;
-            $contact2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $contact2->removePermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($contact2->save());
 
-            //Test userInChildRole, access to detail should fail.
+            //Test userInChildRole, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
-            //Test userInParentRole, access to detail should fail.
+            //Test userInParentRole, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
+            //give userInChildRole access to read and write
+            Yii::app()->user->userModel = $super;
+            $contact2->addPermissions($userInChildRole, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($contact2->save());
+
+            //Test userInParentRole, access to delete should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $contact2->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
 
             $parentRole->users->remove($userInParentRole);
             $parentRole->roles->remove($childRole);
@@ -306,23 +376,28 @@
             //Add access for the confused user to contacts and creation of contacts.
             $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS);
             $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
+            $userInChildGroup->setRight('ContactsModule', ContactsModule::RIGHT_DELETE_CONTACTS);
             $this->assertTrue($userInChildGroup->save());
 
             $contact3 = ContactTestHelper::createContactByNameForOwner('testingParentGroupPermission', $super);
 
-            //Test userInParentGroup, access to details and edit should fail.
+            //Test userInParentGroup, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
-            //Test userInChildGroup, access to details and edit should fail.
+            //Test userInChildGroup, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
             //give parentGroup access to READ
             Yii::app()->user->userModel = $super;
@@ -334,10 +409,22 @@
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
 
+            //Test userInParentGroup, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //Test userInChildGroup, access to details should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+
+            //Test userInChildGroup, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
             //give parentGroup access to read and write
             Yii::app()->user->userModel = $super;
@@ -349,30 +436,54 @@
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
+            //Test userInParentGroup, access to delete should fail.
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //Test userInChildGroup, access to edit should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 
+            //Test userInChildGroup, access to delete should fail.
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
             //revoke parentGroup access to read and write
             Yii::app()->user->userModel = $super;
-            $contact3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $contact3->removePermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($contact3->save());
 
-            //Test userInChildGroup, access to detail should fail.
+            //Test userInChildGroup, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
 
-            //Test userInParentGroup, access to detail should fail.
+            //Test userInParentGroup, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/details');
             $this->setGetArray(array('id' => $contact3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
+
+            //give parentGroup access to read and write
+            Yii::app()->user->userModel = $super;
+            $contact3->addPermissions($parentGroup, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($contact3->save());
+
+            //Test userInChildGroup, access to delete should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $contact3->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
 
             //clear up the role relationships between users so not to effect next assertions
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');

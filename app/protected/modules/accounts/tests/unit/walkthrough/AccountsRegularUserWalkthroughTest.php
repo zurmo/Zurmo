@@ -99,6 +99,7 @@
             //Now test peon with elevated rights to accounts
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_DELETE_ACCOUNTS);
             $this->assertTrue($nobody->save());
 
             //Test nobody with elevated rights.
@@ -137,12 +138,14 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $account = AccountTestHelper::createAccountByNameForOwner('testingAccountsForElevationToModelTest', $super);
 
-            //Test nobody, access to edit and details should fail.
+            //Test nobody, access to edit, details and delete should fail.
             $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
             //give nobody access to read
             Yii::app()->user->userModel = $super;
@@ -154,9 +157,11 @@
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
 
-            //Test nobody, access to edit should fail.
+            //Test nobody, access to edit and delete should fail.
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
             //give nobody access to read and write
             Yii::app()->user->userModel = $super;
@@ -170,17 +175,35 @@
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
 
+            //Test nobody, access to delete should fail.
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //revoke nobody access to read
             Yii::app()->user->userModel = $super;
-            $account->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $account->removePermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($account->save());
 
-            //Test nobody, access to detail should fail.
+            //Test nobody, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
+            //give nobody access to read, write and delete
+            Yii::app()->user->userModel = $super;
+            $account->addPermissions($nobody, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($account->save());
+
+            //Test nobody, access to delete should not fail.
+            Yii::app()->user->userModel = $nobody;
+            $this->setGetArray(array('id' => $account->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/index'); // Not Coding Standard
 
             //create some roles
             Yii::app()->user->userModel = $super;
@@ -204,12 +227,23 @@
             //create account owned by super
             $account2 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentRolePermission',$super);
 
-            //Test userInParentRole, access to details and edit should fail.
+            //Test userInChildRole, access to details, edit and delete should fail.
+            Yii::app()->user->userModel = $userInChildRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
+            //Test userInParentRole, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account2->id));
-            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');		
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
             //give userInChildRole access to READ
             Yii::app()->user->userModel = $super;
@@ -221,10 +255,22 @@
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
 
+            //Test userInChildRole, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //Test userInParentRole, access to details should not fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test userInParentRole, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
             //give userInChildRole access to read and write
             Yii::app()->user->userModel = $super;
@@ -236,29 +282,53 @@
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
 
+            //Test userInChildRole, access to delete should fail.
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //Test userInParentRole, access to edit should not fail.
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentRole->username);
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
 
+            //Test userInParentRole, access to delete should fail.
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //revoke userInChildRole access to read and write
             Yii::app()->user->userModel = $super;
-            $account2->addPermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $account2->removePermissions($userInChildRole, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($account2->save());
 
-            //Test userInChildRole, access to detail should fail.
+            //Test userInChildRole, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
-            //Test userInParentRole, access to detail should fail.
+            //Test userInParentRole, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account2->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
+            //give userInChildRole access to read, write and delete
+            Yii::app()->user->userModel = $super;
+            $account2->addPermissions($userInChildRole, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($account2->save());
+
+            //Test userInParentRole, access to delete should not fail.
+            Yii::app()->user->userModel = $userInParentRole;
+            $this->setGetArray(array('id' => $account2->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/index'); // Not Coding Standard
 
             //clear up the role relationships between users so not to effect next assertions
             $parentRole->users->remove($userInParentRole);
@@ -266,7 +336,7 @@
             $this->assertTrue($parentRole->save());
             $childRole->users->remove($userInChildRole);
             $this->assertTrue($childRole->save());
-            
+
             //create some groups and assign users to groups
             Yii::app()->user->userModel = $super;
             $parentGroup = new Group();
@@ -293,24 +363,29 @@
             //Add access for the confused user to accounts and creation of accounts.
             $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
+            $userInChildGroup->setRight('AccountsModule', AccountsModule::RIGHT_DELETE_ACCOUNTS);
             $this->assertTrue($userInChildGroup->save());
 
             //create account owned by super
             $account3 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentGroupPermission', $super);
 
-            //Test userInParentGroup, access to details and edit should fail.
+            //Test userInParentGroup, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
-            //Test userInChildGroup, access to details and edit should fail.
+            //Test userInChildGroup, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
             //give parentGroup access to READ
             Yii::app()->user->userModel = $super;
@@ -322,10 +397,22 @@
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
 
+            //Test userInParentGroup, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //Test userInChildGroup, access to details should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Test userInChildGroup, access to edit and delete should fail.
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
             //give parentGroup access to read and write
             Yii::app()->user->userModel = $super;
@@ -337,31 +424,55 @@
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
 
+            //Test userInParentGroup, access to delete should fail.
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //Test userInChildGroup, access to edit should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
 
+            //Test userInChildGroup, access to delete should fail.
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
             //revoke parentGroup access to read and write
             Yii::app()->user->userModel = $super;
-            $account3->addPermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $account3->removePermissions($parentGroup, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($account3->save());
 
-            //Test userInChildGroup, access to detail should fail.
+            //Test userInChildGroup, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
 
-            //Test userInParentGroup, access to detail should fail.
+            //Test userInParentGroup, access to detail, edit and delete should fail.
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
             $this->setGetArray(array('id' => $account3->id));			
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
-            
+            $this->setGetArray(array('id' => $account3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
+
+            //give parentGroup access to read, write and delete
+            Yii::app()->user->userModel = $super;
+            $account3->addPermissions($parentGroup, Permission::READ_WRITE_DELETE);
+            $this->assertTrue($account3->save());
+
+            //Test userInChildGroup, access to delete should not fail.
+            Yii::app()->user->userModel = $userInChildGroup;
+            $this->setGetArray(array('id' => $account3->id));
+            $this->resetPostArray();
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/delete',
+                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/index'); // Not Coding Standard
+
             //clear up the role relationships between users so not to effect next assertions
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $userInParentGroup->forget();
