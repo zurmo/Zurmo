@@ -40,6 +40,7 @@
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
                         'TitleFullName',
+                        'DerivedUserStatus',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'title',
@@ -170,6 +171,15 @@
                                             'elements' => array(
                                                 array('attributeName' => 'currency', 'type' => 'CurrencyDropDown',
                                                       'addBlank' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DerivedUserStatus'),
                                             ),
                                         ),
                                     )

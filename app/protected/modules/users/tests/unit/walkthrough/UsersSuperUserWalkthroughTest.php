@@ -289,8 +289,44 @@
             $this->assertEquals(4, Yii::app()->user->getState('subListPageSize'));
         }
 
+
         /**
          * @depends testSuperUserAllDefaultControllerActions
+         */
+        public function testSuperUserUserStatusActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $user       = UserTestHelper::createBasicUser('statusCheck');
+            $userId     = $user->id;
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
+
+            //Change the user's status to inactive and confirm the changes in rights.
+            $this->setGetArray(array('id' => $user->id));
+            $this->setPostArray(array('User' => array('userStatus'  => UserStatusUtil::INACTIVE)));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
+
+            $userId     = $user->id;
+            $user       = User::getById($userId);
+            $this->assertTrue(Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertTrue(Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE));
+            $this->assertTrue(Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
+
+            //Now change the user's status back to active.
+            $this->setGetArray(array('id' => $user->id));
+            $this->setPostArray(array('User' => array('userStatus'  => UserStatusUtil::ACTIVE)));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
+
+            $userId     = $user->id;
+            $user       = User::getById($userId);
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
+        }
+
+        /**
+         * @depends testSuperUserUserStatusActions
          */
         public function testSuperUserDefaultPortletControllerActions()
         {

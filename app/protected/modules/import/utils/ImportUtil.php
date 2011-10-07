@@ -101,10 +101,11 @@
         {
             assert('$rowBean instanceof RedBean_OODBBean');
             assert('is_array($mappingData)');
-            $makeNewModel     = true;
-            $modelClassName   = $importRules->getModelClassName();
-            $externalSystemId = null;
+            $makeNewModel              = true;
+            $modelClassName            = $importRules->getModelClassName();
+            $externalSystemId          = null;
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $afterSaveActionsData      = array();
 
             //Process the 'id' column first if available.
             if (false !== $idColumnName = static::getIdColumnNameByMappingData($mappingData))
@@ -169,6 +170,11 @@
                                                                                            $columnMappingData,
                                                                                            $importSanitizeResultsUtil);
                     }
+                    elseif ($attributeImportRules instanceof AfterSaveSupportedDerivedAttributeImportRules)
+                    {
+                    //aftersave tasks.
+//$array[] = array(AttributeImportRules, attributeValuesData
+                    }
                     else
                     {
                         static::
@@ -187,6 +193,7 @@
                 $saved = $model->save();
                 if ($saved)
                 {
+                    static::processAfterSaveActions($afterSaveActionsData, $model);
                     if ($externalSystemId!= null)
                     {
                         ExternalSystemIdUtil::updateByModel($model, $externalSystemId);
@@ -227,6 +234,15 @@
                 $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModel($model);
                 $importRowDataResultsUtil->addMessages($messages);
                 $importRowDataResultsUtil->setStatusToError();
+            }
+        }
+
+        protected static function processAfterSaveActions($afterSaveActionsData, RedBeanModel $model)
+        {
+            assert('is_array($afterSaveActionsData');
+            foreach($afterSaveActionsData as $attributeImportRules => $attributeValueData)
+            {
+                $attributeImportRules::someMethodAndPass($model, $attributeValueData);
             }
         }
 
