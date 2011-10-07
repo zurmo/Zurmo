@@ -223,8 +223,14 @@
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
 
-            Yii::app()->minScript->generateScriptMap('css');
-            Yii::app()->minScript->generateScriptMap('js');
+            if (MINIFY_SCRIPTS)
+            {
+                Yii::app()->minScript->setThemePath(INSTANCE_ROOT . DIRECTORY_SEPARATOR . $defaultTheme);
+                Yii::app()->minScript->initializeGroups();
+
+                Yii::app()->minScript->generateScriptMap('css');
+                Yii::app()->minScript->generateScriptMap('js');
+            }
 
             $cs->registerCssFile(INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/default/css/screen.css', 'screen, projection');
             $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/print.css', 'print');
@@ -248,24 +254,6 @@
                 }
             }
 
-            /*
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/screen.css', 'screen, projection');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/print.css', 'print');
-
-            if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
-            {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/ie.css', 'screen, projection');
-            }
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/theme.css', 'screen, projection');
-            foreach ($this->getStyles() as $style)
-            {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/' . $style. '.css'); // Not Coding Standard
-                if ($theme != $defaultTheme && file_exists("$theme/css/$style.css"))
-                {
-                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/' . $style. '.css'); // Not Coding Standard
-                }
-            }
-            */
             if (file_exists("$theme/ico/favicon.ico"))
             {
                 $cs->registerLinkTag('shortcut icon', null, $theme . '/ico/favicon.ico');
