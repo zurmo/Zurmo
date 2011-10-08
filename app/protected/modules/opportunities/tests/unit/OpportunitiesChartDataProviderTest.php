@@ -32,6 +32,8 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
+            UserTestHelper::createBasicUser('jim');
+            ReadPermissionsOptimizationUtil::rebuild();
             OpportunityTestHelper::createOpportunityStagesIfDoesNotExist();
             OpportunityTestHelper::createOpportunitySourcesIfDoesNotExist();
             $currencies    = Currency::getAll();
@@ -94,6 +96,22 @@
 
         /**
          * @depends testGetChartData
+         */
+        public function testGetChartDataUsingReadOptimization()
+        {
+            $jim                        = User::getByUsername('jim');
+            Yii::app()->user->userModel = $jim;
+            $chartDataProvider     = ChartDataProviderFactory::createByType('OpportunitiesByStage');
+            $chartData             = $chartDataProvider->getChartData();
+            $this->assertEquals(array(), $chartData);
+
+            $chartDataProvider     = ChartDataProviderFactory::createByType('OpportunitiesBySource');
+            $chartData             = $chartDataProvider->getChartData();
+            $this->assertEquals(array(), $chartData);
+        }
+
+        /**
+         * @depends testGetChartDataUsingReadOptimization
          */
         public function testGetChartDataConvertedToNewCurrency()
         {

@@ -183,13 +183,37 @@
                                                          $selectCount = false, $selectDistinct = false,
                                                          array $quotedExtraSelectColumnNameAndAliases = array())
         {
+            assert('is_string($tableName) && $tableName != ""');
+            assert('$offset  === null || is_integer($offset)  && $offset  >= 0');
+            assert('$count   === null || is_integer($count)   && $count   >= 1');
+            assert('$where   === null || is_string ($where)   && $where   != ""');
+            assert('$orderBy === null || is_string ($orderBy) && $orderBy != ""');
+            assert('is_bool($selectCount)');
+            assert('is_bool($selectDistinct)');
             $user = Yii::app()->user->userModel;
             if (!$user instanceof User)
             {
                 throw new NoCurrentUserSecurityException();
             }
+            if ($joinTablesAdapter == null)
+            {
+                $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
+            }
+            static::resolveReadPermissionsOptimizationToSqlQuery($user, $joinTablesAdapter, $where, $selectDistinct);
+            return parent::makeSubsetOrCountSqlQuery($tableName, $joinTablesAdapter, $offset, $count,
+                                                         $where, $orderBy, $selectCount, $selectDistinct,
+                                                         $quotedExtraSelectColumnNameAndAliases);
+        }
+
+        public static function resolveReadPermissionsOptimizationToSqlQuery(User $user,
+                                    RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter,
+                                    & $where,
+                                    & $selectDistinct)
+        {
+            assert('$where == null || is_string($where)');
+            assert('is_bool($selectDistinct)');
             $modelClassName  = get_called_class();
-            $moduleClassName = static::getModuleClassName();
+            $moduleClassName = $modelClassName::getModuleClassName();
             //Currently only adds munge if the module is securable and this model supports it.
             if (static::hasReadPermissionsOptimization() &&$moduleClassName != null &&
                 is_subclass_of($moduleClassName, 'SecurableModule'))
@@ -197,13 +221,8 @@
                 $permission = PermissionsUtil::getActualPermissionDataForReadByModuleNameForCurrentUser($moduleClassName);
                 if ($permission == Permission::NONE || $permission == Permission::DENY)
                 {
-                    $quote = DatabaseCompatibilityUtil::getQuote();
-                    if ($joinTablesAdapter == null)
-                    {
-                        $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
-                    }
-                    $ownedTableName = static::getTableName('OwnedSecurableItem');
-
+                    $quote               = DatabaseCompatibilityUtil::getQuote();
+                    $ownedTableName      = $modelClassName::getTableName('OwnedSecurableItem');
                     $ownedTableAliasName = ModelDataProviderUtil::
                                            resolveShouldAddFromTableAndGetAliasName( $ownedTableName,
                                                                                      'OwnedSecurableItem',
@@ -240,9 +259,6 @@
                     }
                 }
             }
-            return parent::makeSubsetOrCountSqlQuery($tableName, $joinTablesAdapter, $offset, $count,
-                                                         $where, $orderBy, $selectCount, $selectDistinct,
-                                                         $quotedExtraSelectColumnNameAndAliases);
         }
 
         public static function isTypeDeletable()

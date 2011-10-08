@@ -240,68 +240,21 @@
             assert('$orderBy === null || is_string ($orderBy) && $orderBy != ""');
             assert('is_bool($selectCount)');
             assert('is_bool($selectDistinct)');
-            $quote = DatabaseCompatibilityUtil::getQuote();
-            if ($selectDistinct)
-            {
-                $distinctPart = 'distinct ';
-            }
-            else
-            {
-                $distinctPart = null;
-            }
+            $selectQueryAdapter = new RedBeanModelSelectQueryAdapter($selectDistinct);
             if ($selectCount)
             {
-                $sql = "select count({$distinctPart}{$quote}$tableName{$quote}.{$quote}id{$quote}) ";
+                $selectQueryAdapter->addCountClause($tableName);
             }
             else
             {
-                $sql = "select {$distinctPart}{$quote}$tableName{$quote}.{$quote}id{$quote} id ";
+                $selectQueryAdapter->addClause($tableName, 'id', 'id');
             }
             foreach ($quotedExtraSelectColumnNameAndAliases as $columnName => $columnAlias)
             {
-                $sql .= ", $columnName $columnAlias ";
+                $selectQueryAdapter->addClauseWithColumnNameOnlyAndNoEnclosure($columnName, $columnAlias);
             }
-            $sql .= "from ";
-            //Added ( ) around from tables to ensure precedence over joins.
-            $joinFromPart   = $joinTablesAdapter->getJoinFromQueryPart();
-            if ($joinFromPart !== null)
-            {
-                $sql .= "(";
-                $sql .= "{$quote}$tableName{$quote}";
-                $sql .= ", $joinFromPart) ";
-            }
-            else
-            {
-                $sql .= "{$quote}$tableName{$quote}";
-                $sql .= ' ';
-            }
-            $sql           .= $joinTablesAdapter->getJoinQueryPart();
-            $joinWherePart  = $joinTablesAdapter->getJoinWhereQueryPart();
-            if ($where !== null)
-            {
-                $sql .= "where $where";
-                if ($joinWherePart != null)
-                {
-                    $sql .= " and $joinWherePart";
-                }
-            }
-            elseif ($joinWherePart != null)
-            {
-                $sql .= " where $joinWherePart";
-            }
-            if ($orderBy !== null)
-            {
-                $sql .= " order by $orderBy";
-            }
-            if ($count !== null)
-            {
-                $sql .= " limit $count";
-            }
-            if ($offset !== null)
-            {
-                $sql .= " offset $offset";
-            }
-            return $sql;
+            return SQLQueryUtil::
+                   makeQuery($tableName, $selectQueryAdapter, $joinTablesAdapter, $offset, $count, $where, $orderBy);
         }
 
         /**
