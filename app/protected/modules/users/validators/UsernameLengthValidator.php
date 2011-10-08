@@ -25,40 +25,38 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * This validator can be used by both a User model as well as a CFormModel like in User import for example.
+     * This validator assumes that if the model is not a User model, then the respected minimum length should
+     * be based on the Everyone group policy.
+     * See the yii documentation.
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class UsernameLengthValidator extends CValidator
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        /**
+         * See the yii documentation.
+         */
+        protected function validateAttribute($model, $attributeName)
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
+            if($model instanceof User)
             {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
+                $minLength = $model->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH);
             }
-            if ($count > 0)
+            elseif($model instanceof CFormModel)
             {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $group     = Group::getByName(Group::EVERYONE_GROUP_NAME);
+                $minLength = $group->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH);
             }
-        }
-
-        protected function resolveStates()
-        {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            else
+            {
+                throw new NotSupportedException();
+            }
+            //$model->$attributeName != null &&
+            if ($model->$attributeName != null && strlen($model->$attributeName) < $minLength)
+            {
+                $model->addError($attributeName,
+                                 Yii::t('Default', 'The username is too short. Minimum length is {minimumLength}.',
+                                 array('{minimumLength}' => $minLength)));
+            }
         }
     }
 ?>

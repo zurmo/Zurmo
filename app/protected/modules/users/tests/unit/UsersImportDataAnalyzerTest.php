@@ -49,16 +49,19 @@
             $mappingData = array(
                 'column_0'  => array('attributeIndexOrDerivedType' => 'username',
                                          'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'DefaultValueModelAttributeMappingRuleForm' =>
-                                          array('defaultValue' => null))),
+                                      'mappingRulesData' => array()),
 
                 'column_1'  => array('attributeIndexOrDerivedType' => 'Password',
                                       'type' => 'importColumn',
                                       'mappingRulesData' => array(
                                           'PasswordDefaultValueModelAttributeMappingRuleForm' =>
                                           array('defaultValue' => null))),
-            );
+                'column_2'  => array('attributeIndexOrDerivedType' => 'UserStatus',
+                                      'type' => 'importColumn',
+                                      'mappingRulesData' => array(
+                                          'UserStatusDefaultValueMappingRuleForm' =>
+                                          array('defaultValue' => UserStatusUtil::ACTIVE))),
+                );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
             $import->serializedData        = serialize($serializedData);
@@ -84,6 +87,10 @@
                 'column_1' => array(
                     array('message' => '1 value(s) are too large for this field. These values will be truncated to a length of 32 upon import.',
                            'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
+                ),
+                'column_2' => array(
+                    array('message' => '1 user status value(s) are not valid. Users that have these values will be set to active upon import.',
+                           'sanitizerUtilType' => 'UserStatus', 'moreAvailable' => false),
                 ),
             );
             $this->assertEquals($compareData, $messagesData);

@@ -36,7 +36,7 @@
          */
         public static function getDerivedAttributeTypes()
         {
-            return array('Password');
+            return array('Password', 'UserStatus');
         }
 
         /**

@@ -27,50 +27,67 @@
     /**
      * Import rules for any derived attributes that are of type Password
      */
-    class PasswordAttributeImportRules extends DerivedAttributeImportRules
+    class UserStatusAttributeImportRules extends AfterSaveActionDerivedAttributeImportRules
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('PasswordDefaultValueModelAttribute' => 'Text');
+            return array('UserStatusDefaultValue' => 'ImportMappingRuleUserStatusDropDown');
         }
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Password');
+            return Yii::t('Default', 'Status');
         }
 
         public function getRealModelAttributeNames()
         {
-            return array('hash');
+            return array();
         }
 
         public static function getSanitizerUtilTypesInProcessingOrder()
         {
-            return array('Truncate');
+            return array('UserStatus');
         }
 
         public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
-            $attributeNames = $this->getRealModelAttributeNames();
-            assert('count($attributeNames) == 1');
-            assert('$attributeNames[0] == "hash"');
             assert('is_array($columnMappingData)');
             $modelClassName = $this->getModelClassName();
             $value          = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                            $modelClassName, 'hash', $value, $columnMappingData,
+                                                            $modelClassName, null, $value, $columnMappingData,
                                                             $importSanitizeResultsUtil);
             if ($value == null)
             {
-                $mappingRuleFormClassName = 'PasswordDefaultValueModelAttributeMappingRuleForm';
+                $mappingRuleFormClassName = 'UserStatusDefaultValueMappingRuleForm';
                 $mappingRuleData          = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
                 assert('$mappingRuleData != null');
                 if (isset($mappingRuleData['defaultValue']))
                 {
                     $value = $mappingRuleData['defaultValue'];
                 }
+                else
+                {
+                    //The default value dropdown will be either active or inactive. There is no blank.
+                    throw new NotSupportedException();
+                }
             }
-            return array('hash' => md5($value));
+            return array('status' => $value);
+        }
+
+        public static function processAfterSaveAction(RedBeanModel $model, $attributeValueData)
+        {
+            assert('$model instanceof User');
+            assert('is_array($attributeValueData) && count($attributeValueData) == 1');
+            assert('isset($attributeValueData["status"]) && ($attributeValueData["status"] == UserStatusUtil::ACTIVE ||
+                    $attributeValueData["status"] == UserStatusUtil::INACTIVE)');
+            $userStatus = new UserStatus();
+
+            if($attributeValueData['status'] == UserStatusUtil::INACTIVE)
+            {
+                $userStatus->setInactive();
+            }
+            UserStatusUtil::resolveUserStatus($model, $userStatus);
         }
     }
 ?>

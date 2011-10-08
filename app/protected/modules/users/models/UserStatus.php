@@ -25,40 +25,38 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * Class helps interaction between the user interface, forms, and controllers that are involved in setting
+     * the user status to active or inactive. An inactive user is a user who cannot login to the application via
+     * the the normal login, mobile, or web-api. If a user is inactive, they will recieve explict permissions
+     * to DENY those login rights. Upon changing the user to active, the explict permissions will be removed and the
+     * rights will be controlled via the normal role/group hierarchy.
+     * @see DerivedUserStatusElement
+     * @see UserStatusUtil
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class UserStatus
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        /**
+         * True if the user has an active status.
+         * @var boolean
+         */
+        private $active = true;
+
+        /**
+         * Return true if the status is active
+         */
+        public function isActive()
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
-            {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
-            }
+            return $this->active;
         }
 
-        protected function resolveStates()
+        public function setActive()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            $this->active = true;
+        }
+
+        public function setInactive()
+        {
+            $this->active = false;
         }
     }
 ?>

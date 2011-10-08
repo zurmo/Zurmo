@@ -25,40 +25,18 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * Import rules for the username attribute
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class UsernameAttributeImportRules extends NonDerivedAttributeImportRules
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public static function getSanitizerUtilTypesInProcessingOrder()
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
-            {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
-            }
+            return array('Truncate');
         }
 
-        protected function resolveStates()
+        public function getDisplayLabel()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            return Yii::t('Default', 'Username');
         }
     }
 ?>

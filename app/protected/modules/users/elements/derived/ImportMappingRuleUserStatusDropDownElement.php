@@ -25,40 +25,28 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * Display a drop down of user statuses specifically for mapping rules during the import process.
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class ImportMappingRuleUserStatusDropDownElement extends ImportMappingRuleStaticDropDownFormElement
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
-            {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
-            }
+            assert('$model instanceof UserStatusDefaultValueMappingRuleForm');
+            parent::__construct($model, $attribute, $form, $params);
         }
 
-        protected function resolveStates()
+        /**
+         * Override to never have a blank, either it is active or not.
+         * @see DropDownElement::getAddBlank()
+         */
+        protected function getAddBlank()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            return false;
+        }
+
+        protected function getDropDownArray()
+        {
+            return $this->model->getStatusData();
         }
     }
 ?>

@@ -25,40 +25,42 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * Data analyzer for a user status attribute.
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class UserStatusBatchAttributeValueDataAnalyzer extends BatchAttributeValueDataAnalyzer
+                                                      implements DataAnalyzerInterface
     {
+        public function __construct($modelClassName, $attributeName)
+        {
+            parent:: __construct($modelClassName, $attributeName);
+            assert('$attributeName == null');
+        }
+
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
         {
             assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
+            $this->processAndMakeMessage($dataProvider, $columnName);
+        }
+
+        protected function analyzeByValue($value)
+        {
+            if($value != null &&
+               strtolower($value) != strtolower(UserStatusUtil::ACTIVE) &&
+               strtolower($value) == strtolower(UserStatusUtil::INACTIVE))
             {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $this->messageCountData[static::INVALID] ++;
             }
         }
 
-        protected function resolveStates()
+        protected function makeMessages()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            $invalid  = $this->messageCountData[static::INVALID];
+            if ($invalid > 0)
+            {
+                $label   = '{count} user status value(s) are not valid. ';
+                $label  .= 'Users that have these values will be set to active upon import.';
+                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+            }
         }
     }
 ?>

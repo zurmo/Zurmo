@@ -24,41 +24,57 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Data analyzer for attributes that are a contact state.
+   /**
+     * Sanitizer for handling user status.
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class UserStatusSanitizerUtil extends SanitizerUtil
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public static function supportsSqlAttributeValuesDataAnalysis()
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
-            {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
-            }
+            return false;
         }
 
-        protected function resolveStates()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            return 'UserStatus';
+        }
+
+        /**
+         * Given a user status, attempt to resolve it as a valid status.  If the status is invalid, a
+         * InvalidValueToSanitizeException will be thrown.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('$attributeName == null');
+            assert('$mappingRuleData == null');
+            if ($value == null)
+            {
+                return $value;
+            }
+            try
+            {
+                if(strtolower($value) == strtolower(UserStatusUtil::ACTIVE))
+                {
+                    return UserStatusUtil::ACTIVE;
+                }
+                elseif(strtolower($value) == strtolower(UserStatusUtil::INACTIVE))
+                {
+                    return UserStatusUtil::INACTIVE;
+                }
+                else
+                {
+                    throw new InvalidValueToSanitizeException();
+                }
+            }
+            catch (NotFoundException $e)
+            {
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is invalid.'));
+            }
         }
     }
 ?>

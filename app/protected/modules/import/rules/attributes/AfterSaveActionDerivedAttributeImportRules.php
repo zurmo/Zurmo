@@ -25,40 +25,20 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * Extend this rule if the derived attribute is processed after save of the import model instead of the beforehand.
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    abstract class AfterSaveActionDerivedAttributeImportRules extends DerivedAttributeImportRules
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        /**
+         * Override to implement method.  This method is called after the model is saved during import. Allows for
+         * additional after save processing to occur that is attribute specific.
+         * @param RedBeanModel $model
+         * @param array $attributeValueData
+         */
+        public static function processAfterSaveAction(RedBeanModel $model, $attributeValueData)
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
-            {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
-            }
-        }
-
-        protected function resolveStates()
-        {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            assert('is_array($attributeValueData)');
+            throw notImplementedException();
         }
     }
 ?>

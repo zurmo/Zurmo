@@ -59,7 +59,7 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if ($invalid > 0)
             {
-                $label   = '{count} pick list value(s) are not valid. ';
+                $label   = '{count} contact status value(s) are not valid. ';
                 $label  .= 'Rows that have these values will be skipped upon import.';
                 $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
             }

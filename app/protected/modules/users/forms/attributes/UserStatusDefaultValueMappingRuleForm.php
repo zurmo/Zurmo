@@ -25,40 +25,34 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for attributes that are a contact state.
+     * Form for handling default values for the user status derived attribute type
      */
-    class ContactStateSqlAttributeValueDataAnalyzer extends SqlAttributeValueDataAnalyzer
-                                                implements DataAnalyzerInterface
+    class UserStatusDefaultValueMappingRuleForm extends DerivedAttributeMappingRuleForm
     {
-        public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
+        public $defaultValue;
+
+        protected $statusData;
+
+        public function __construct($modelClassName, $modelAttributeName)
         {
-            assert('is_string($columnName)');
-            $dropDownValues  = $this->resolveStates();
-            $dropDownValues  = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
-            $data            = $dataProvider->getCountDataByGroupByColumnName($columnName);
-            $count           = 0;
-            foreach ($data as $valueCountData)
-            {
-                if ($valueCountData[$columnName] == null)
-                {
-                    continue;
-                }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
-                {
-                    $count++;
-                }
-            }
-            if ($count > 0)
-            {
-                $label   = '{count} contact status value(s) are not valid. ';
-                $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
-            }
+            assert($modelClassName == "User"); // Not Coding Standard
+            parent::__construct($modelClassName, $modelAttributeName);
+            $this->statusData = UserStatusUtil::getStatusArray();
         }
 
-        protected function resolveStates()
+        public function getStatusData()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            return $this->statusData;
+        }
+
+        public function attributeLabels()
+        {
+            return array('defaultValue' => Yii::t('Default', 'Default Value'));
+        }
+
+        public static function getAttributeName()
+        {
+            return 'defaultValue';
         }
     }
 ?>
