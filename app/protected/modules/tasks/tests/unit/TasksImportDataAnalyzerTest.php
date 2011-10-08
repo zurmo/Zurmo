@@ -70,10 +70,9 @@
             $opportunity3 = OpportunityTestHelper::createOpportunityByNameForOwner('opportunity3', $super);
 
             //Make models externally linked for testing.
-            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            R::exec("update " . $accountTableName     . " set $columnName = 'ACC' where id = {$account2->id}");
-            R::exec("update " . $contactTableName     . " set $columnName = 'CON' where id = {$contact2->id}");
-            R::exec("update " . $opportunityTableName . " set $columnName = 'OPP' where id = {$opportunity2->id}");
+            ImportTestHelper::updateModelsExternalId($account2, 	'ACC');
+            ImportTestHelper::updateModelsExternalId($contact2, 	'CON');
+            ImportTestHelper::updateModelsExternalId($opportunity2, 'OPP');
 
             ImportTestHelper::
             createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName(),
@@ -86,39 +85,15 @@
                     $opportunity3->id . " where id != 1 limit 5");
 
             $mappingData = array(
-                'column_0'  => array('attributeIndexOrDerivedType' => 'AccountDerived',
-                                         'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'IdValueTypeMappingRuleForm' =>
-                                          array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
-
-                'column_1'  => array('attributeIndexOrDerivedType' => 'AccountDerived',
-                                      'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'IdValueTypeMappingRuleForm' =>
-                                          array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
-                'column_2'  => array('attributeIndexOrDerivedType' => 'ContactDerived',
-                                         'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'IdValueTypeMappingRuleForm' =>
-                                          array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
-
-                'column_3'  => array('attributeIndexOrDerivedType' => 'ContactDerived',
-                                      'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'IdValueTypeMappingRuleForm' =>
-                                          array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
-                'column_4'  => array('attributeIndexOrDerivedType' => 'OpportunityDerived',
-                                         'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'IdValueTypeMappingRuleForm' =>
-                                          array('type' => IdValueTypeMappingRuleForm::ZURMO_MODEL_ID))),
-
-                'column_5'  => array('attributeIndexOrDerivedType' => 'OpportunityDerived',
-                                      'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'IdValueTypeMappingRuleForm' =>
-                                          array('type' => IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID))),
+                'column_0'  => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived',
+                               IdValueTypeMappingRuleForm::ZURMO_MODEL_ID),
+                'column_1'  => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_2'  => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived',
+                               IdValueTypeMappingRuleForm::ZURMO_MODEL_ID),
+                'column_3'  => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_4'  => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived',
+                               IdValueTypeMappingRuleForm::ZURMO_MODEL_ID),
+                'column_5'  => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
             );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;

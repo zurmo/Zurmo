@@ -179,5 +179,11 @@
                              'DefaultValueModelAttributeMappingRuleForm' =>
                              array('defaultValue' => $defaultValue)));
         }
+
+        public static function makeBooleanColumnMappingData($attributeName)
+        {
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn');
+        }
     }
 ?>

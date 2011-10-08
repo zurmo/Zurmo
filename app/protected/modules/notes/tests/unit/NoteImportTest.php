@@ -24,13 +24,12 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MeetingImportTest extends ActivityImportBaseTest
+    class NoteImportTest extends ActivityImportBaseTest
     {
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
-            MeetingTestHelper::createCategories();
         }
 
 
@@ -39,33 +38,29 @@
         {
             Yii::app()->user->userModel            = User::getByUsername('super');
 
-            $meetings                              = Meeting::getAll();
-            $this->assertEquals(0, count($meetings));
+            $notes                              = Note::getAll();
+            $this->assertEquals(0, count($notes));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Meeting';
+            $serializedData['importRulesType']     = 'Note';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());
 
             ImportTestHelper::
-            createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName(),
-                                                  Yii::getPathOfAlias('application.modules.meetings.tests.unit.files'));
+            createTempTableByFileNameAndTableName('simpleImportTest.csv', $import->getTempTableName(),
+                                                  Yii::getPathOfAlias('application.modules.notes.tests.unit.files'));
 
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => ImportTestHelper::makeStringColumnMappingData       ('name'),
-                'column_1' => ImportTestHelper::makeStringColumnMappingData       ('location'),
-                'column_2' => ImportTestHelper::makeDateTimeColumnMappingData     ('startDateTime'),
-                'column_3' => ImportTestHelper::makeDateTimeColumnMappingData     ('endDateTime'),
-                'column_4' => ImportTestHelper::makeDropDownColumnMappingData     ('category'),
-                'column_5' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
-                'column_6' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
-                'column_7' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
-                'column_8' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
+                'column_0' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
+                'column_1' => ImportTestHelper::makeDateTimeColumnMappingData     ('occurredOnDateTime'),
+                'column_2' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_3' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_4' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
             );
 
-            $importRules  = ImportRulesUtil::makeImportRulesByType('Meetings');
+            $importRules  = ImportRulesUtil::makeImportRulesByType('Notes');
             $page         = 0;
             $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
@@ -79,29 +74,29 @@
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.
-            $meetings = Meeting::getAll();
-            $this->assertEquals(3, count($meetings));
+            $notes = Note::getAll();
+            $this->assertEquals(3, count($notes));
 
-            $meetings = Meeting::getByName('meeting1');
-            $this->assertEquals(1,                  count($meetings[0]));
-            $this->assertEquals(1,                  count($meetings[0]->activityItems));
-            $this->assertEquals('testAccount',      $meetings[0]->activityItems[0]->name);
-            $this->assertEquals('Account',          get_class($meetings[0]->activityItems[0]));
-            $this->assertEquals('2011-12-22 05:03', substr($meetings[0]->latestDateTime, 0, -3));
+            $notes = Note::getByName('note1');
+            $this->assertEquals(1, count($notes[0]));
+            $this->assertEquals(1, count($notes[0]->activityItems));
+            $this->assertEquals('testAccount',      $notes[0]->activityItems[0]->name);
+            $this->assertEquals('Account',          get_class($notes[0]->activityItems[0]));
+            $this->assertEquals('2011-12-22 05:03', substr($notes[0]->latestDateTime, 0, -3));
 
-            $meetings = Meeting::getByName('meeting2');
-            $this->assertEquals(1,                  count($meetings[0]));
-            $this->assertEquals(1,                  count($meetings[0]->activityItems));
-            $this->assertEquals('testContact',      $meetings[0]->activityItems[0]->firstName);
-            $this->assertEquals('Contact',          get_class($meetings[0]->activityItems[0]));
-            $this->assertEquals('2011-12-22 05:03', substr($meetings[0]->latestDateTime, 0, -3));
+            $notes = Note::getByName('note2');
+            $this->assertEquals(1, count($notes[0]));
+            $this->assertEquals(1, count($notes[0]->activityItems));
+            $this->assertEquals('testContact', $notes[0]->activityItems[0]->firstName);
+            $this->assertEquals('Contact',     get_class($notes[0]->activityItems[0]));
+            $this->assertEquals('2011-12-22 05:03', substr($notes[0]->latestDateTime, 0, -3));
 
-            $meetings = Meeting::getByName('meeting3');
-            $this->assertEquals(1,                  count($meetings[0]));
-            $this->assertEquals(1,                  count($meetings[0]->activityItems));
-            $this->assertEquals('testOpportunity',  $meetings[0]->activityItems[0]->name);
-            $this->assertEquals('Opportunity',      get_class($meetings[0]->activityItems[0]));
-            $this->assertEquals('2011-12-22 06:03', substr($meetings[0]->latestDateTime, 0, -3));
+            $notes = Note::getByName('note3');
+            $this->assertEquals(1, count($notes[0]));
+            $this->assertEquals(1, count($notes[0]->activityItems));
+            $this->assertEquals('testOpportunity', $notes[0]->activityItems[0]->name);
+            $this->assertEquals('Opportunity',     get_class($notes[0]->activityItems[0]));
+            $this->assertEquals('2011-12-22 06:03', substr($notes[0]->latestDateTime, 0, -3));
 
             //Confirm 10 rows were processed as 'created'.
             $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
