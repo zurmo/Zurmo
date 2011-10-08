@@ -38,8 +38,7 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $derivedAttributeTypes = ActivitiesImportRules::getDerivedAttributeTypes();
-            $compareData = array('AccountDerived', 'ContactDerived', 'OpportunityDerived', 'CreatedByUser',
-                                 'ModifiedByUser', 'CreatedDateTime', 'ModifiedDateTime');
+            $compareData = array('AccountDerived', 'ContactDerived', 'OpportunityDerived');
             $this->assertEquals($compareData, $derivedAttributeTypes);
         }
     }

@@ -123,8 +123,7 @@
             $this->assertEquals(
                 array('owner' =>
                     array('username' =>
-                        array('Username cannot be blank.',
-                              'The username is too short. Minimum length is 3.'),
+                        array('Username cannot be blank.'),
                           'lastName' =>
                         array('Last Name cannot be blank.'),
                     )

@@ -89,7 +89,7 @@
                            'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
                 ),
                 'column_2' => array(
-                    array('message' => '1 user status value(s) are not valid. Users that have these values will be set to active upon import.',
+                    array('message' => '2 user status value(s) are not valid. Users that have these values will be set to active upon import.',
                            'sanitizerUtilType' => 'UserStatus', 'moreAvailable' => false),
                 ),
             );
