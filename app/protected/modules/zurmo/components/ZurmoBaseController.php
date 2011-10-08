@@ -390,62 +390,6 @@
          * Check if form is posted. If form is posted attempt to save. If save is complete, confirm the current
          * user can still read the model.  If not, then redirect the user to the index action for the module.
          */
-/*
-        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
-        {
-            assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
-            $postVariableName = get_class($model);
-            if (isset($_POST[$postVariableName]))
-            {
-                $postData = $_POST[$postVariableName];
-                if ($model instanceof SecurableItem)
-                {
-                    $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                         resolveByPostDataAndModelThenMake($_POST[$postVariableName], $model);
-                }
-                else
-                {
-                    $explicitReadWriteModelPermissions = null;
-                }
-                $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
-                                                     removeIfExistsFromPostData($_POST[$postVariableName]);
-                $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
-                                                     $model, $readyToUsePostData);
-                $sanitizedOwnerPostData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
-                                                     $sanitizedPostData, 'owner');
-                $sanitizedPostDataWithoutOwner     = PostUtil::
-                                                     removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
-                $model->setAttributes($sanitizedPostDataWithoutOwner);
-                if ($model->validate())
-                {
-                    $modelToStringValue = strval($model);
-                    if ($sanitizedOwnerPostData != null)
-                    {
-                        $model->setAttributes($sanitizedOwnerPostData);
-                    }
-                    if ($model instanceof OwnedSecurableItem)
-                    {
-                        $passedOwnerValidation = $model->validate(array('owner'));
-                    }
-                    else
-                    {
-                        $passedOwnerValidation = true;
-                    }
-                    if ($passedOwnerValidation && $model->save(false))
-                    {
-                        if ($explicitReadWriteModelPermissions != null)
-                        {
-                            $success = ExplicitReadWriteModelPermissionsUtil::
-                            resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
-                            //todo: handle if success is false, means adding/removing permissions save failed.
-                        }
-                        $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
-                    }
-                }
-            }
-            return $model;
-        }
-*/
         protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
         {
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');

@@ -242,7 +242,10 @@
                     $importRowDataResultsUtil->addMessages($importSanitizeResultsUtil->getMessages());
                 }
                 $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModel($model);
-                $importRowDataResultsUtil->addMessages($messages);
+                if(count($messages) > 0)
+                {
+                    $importRowDataResultsUtil->addMessages($messages);
+                }
                 $importRowDataResultsUtil->setStatusToError();
             }
         }
@@ -381,11 +384,13 @@
                                                                                  $columnMappingData,
                                                                                  $importSanitizeResultsUtil);
             assert('count($attributeValueData) == 1');
-            assert('isset($attributeValueData["getDerivedAttributeName()"])');
-            if ($attributeValueData[$attributeImportRules::getDerivedAttributeName()] != null)
+            assert('$attributeImportRules::getDerivedAttributeName() != null');
+            $derivedAttributeName = $attributeImportRules::getDerivedAttributeName();
+            if ($attributeValueData[$derivedAttributeName] != null)
             {
-                $actualAttributeName = $importRulesType::getActualModelAttributeNameForDerivedAttribute();
-                $actualModel         = $attributeValueData[$attributeImportRules::getDerivedAttributeName()];
+                $importRulesClassName = ImportRulesUtil::getImportRulesClassNameByType($importRulesType);
+                $actualAttributeName  = $importRulesClassName::getActualModelAttributeNameForDerivedAttribute();
+                $actualModel          = $attributeValueData[$derivedAttributeName];
                 if (!$model->$actualAttributeName->contains($actualModel))
                 {
                     $model->$actualAttributeName->add($actualModel);

@@ -24,52 +24,48 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UserImportTest extends ImportBaseTest
+    class MeetingImportTest extends ActivityImportBaseTest
     {
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+            MeetingTestHelper::createCategories();
         }
+
+
 
         public function testSimplUserImportWhereAllRowsSucceed()
         {
-            Yii::app()->user->userModel = User::getByUsername('super');
+            Yii::app()->user->userModel            = User::getByUsername('super');
 
-            $users                      = User::getAll();
-            $this->assertEquals(1, count($users));
+            $meetings                              = Meeting::getAll();
+            $this->assertEquals(0, count($meetings));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'User';
+            $serializedData['importRulesType']     = 'Meeting';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());
 
             ImportTestHelper::
             createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName(),
-                                                  Yii::getPathOfAlias('application.modules.users.tests.unit.files'));
+                                                  Yii::getPathOfAlias('application.modules.meetings.tests.unit.files'));
 
-            $this->assertEquals(11, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+            $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0'  => array('attributeIndexOrDerivedType' => 'username',
-                                         'type' => 'importColumn',
-                                      'mappingRulesData' => array()),
-
-                'column_1'  => array('attributeIndexOrDerivedType' => 'Password',
-                                      'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'PasswordDefaultValueModelAttributeMappingRuleForm' =>
-                                          array('defaultValue' => null))),
-                'column_2'  => array('attributeIndexOrDerivedType' => 'UserStatus',
-                                      'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'UserStatusDefaultValueMappingRuleForm' =>
-                                          array('defaultValue' => UserStatusUtil::ACTIVE))),
-                'column_3'  => ImportTestHelper::makeStringColumnMappingData      ('firstName'),
-                'column_4'  => ImportTestHelper::makeStringColumnMappingData      ('lastName')
+                'column_0' => ImportTestHelper::makeStringColumnMappingData       ('name'),
+                'column_1' => ImportTestHelper::makeStringColumnMappingData       ('location'),
+                'column_2' => ImportTestHelper::makeDateTimeColumnMappingData     ('startDateTime'),
+                'column_3' => ImportTestHelper::makeDateTimeColumnMappingData     ('endDateTime'),
+                'column_4' => ImportTestHelper::makeDropDownColumnMappingData     ('category'),
+                'column_5' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_6' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_7' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
+                'column_8' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
             );
 
-            $importRules  = ImportRulesUtil::makeImportRulesByType('Users');
+            $importRules  = ImportRulesUtil::makeImportRulesByType('Meetings');
             $page         = 0;
             $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
@@ -82,18 +78,30 @@
                                              new ExplicitReadWriteModelPermissions());
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
-            //Confirm that 10 models where created.
-            $users = User::getAll();
-            $this->assertEquals(11, count($users));
-            $activeUser   = User::getByUsername('myusername7');
-            $userStatus   = UserStatusUtil::makeByUser($activeUser);
-            $this->assertTrue($userStatus->isActive());
-            $inactiveUser = User::getByUsername('myusername8');
-            $userStatus   = UserStatusUtil::makeByUser($inactiveUser);
-            $this->assertFalse($userStatus->isActive());
+            //Confirm that 3 models where created.
+            $meetings = Meeting::getAll();
+            $this->assertEquals(3, count($meetings));
+
+            $meetings = Meeting::getByName('meeting1');
+            $this->assertEquals(1, count($meetings[0]));
+            $this->assertEquals(1, count($meetings[0]->activityItems));
+            $this->assertEquals('testAccount', $meetings[0]->activityItems[0]->name);
+            $this->assertEquals('Account',     get_class($meetings[0]->activityItems[0]));
+
+            $meetings = Meeting::getByName('meeting2');
+            $this->assertEquals(1, count($meetings[0]));
+            $this->assertEquals(1, count($meetings[0]->activityItems));
+            $this->assertEquals('testContact', $meetings[0]->activityItems[0]->firstName);
+            $this->assertEquals('Contact',     get_class($meetings[0]->activityItems[0]));
+
+            $meetings = Meeting::getByName('meeting3');
+            $this->assertEquals(1, count($meetings[0]));
+            $this->assertEquals(1, count($meetings[0]->activityItems));
+            $this->assertEquals('testOpportunity', $meetings[0]->activityItems[0]->name);
+            $this->assertEquals('Opportunity',     get_class($meetings[0]->activityItems[0]));
 
             //Confirm 10 rows were processed as 'created'.
-            $this->assertEquals(10, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
+            $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
                                                                  . ImportRowDataResultsUtil::CREATED));
 
             //Confirm that 0 rows were processed as 'updated'.

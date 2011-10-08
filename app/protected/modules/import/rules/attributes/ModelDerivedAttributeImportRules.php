@@ -70,10 +70,12 @@
                                                             $modelClassName, null,
                                                             $value, $columnMappingData, $importSanitizeResultsUtil);
              if ($sanitizedValue == null &&
-                $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
+                $columnMappingData['mappingRulesData']
+                                  ['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)
              {
-                $modelId               = $columnMappingData['DefaultModelNameIdDerivedAttributeMappingRuleForm']
-                                         ['defaultModelId'];
+                $modelId               = $columnMappingData['mappingRulesData']
+                                                           ['DefaultModelNameIdDerivedAttributeMappingRuleForm']
+                                                           ['defaultModelId'];
                 $sanitizedValue        = $derivedModelClassName::getById((int)$modelId);
              }
             return array(static::getDerivedAttributeName() => $sanitizedValue);
