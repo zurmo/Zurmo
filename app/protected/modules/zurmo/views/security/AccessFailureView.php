@@ -26,6 +26,18 @@
 
     class AccessFailureView extends View
     {
+        protected $failureMessageContent;
+
+        public function __construct($failureMessageContent = null)
+        {
+            assert('$failureMessageContent == null || is_string($failureMessageContent)');
+            if($failureMessageContent == null)
+            {
+                $failureMessageContent = Yii::t('Default', 'You have tried to access a page you do not have access to.');
+            }
+            $this->failureMessageContent = $failureMessageContent;
+        }
+
         protected function renderContent()
         {
             return <<<END
@@ -34,7 +46,7 @@
     <br/>
     <div align='center'>
     <h2>
-    You have tried to access a page you do not have access to.
+    $this->failureMessageContent
     </h2>
     </div>
 END;

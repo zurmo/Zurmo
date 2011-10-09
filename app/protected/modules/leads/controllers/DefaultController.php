@@ -204,6 +204,13 @@
             $selectAccountForm       = new AccountSelectForm();
             $account                 = new Account();
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
+
+            $userCanAccessContacts = RightsUtil::canUserAccessModule('ContactsModule', Yii::app()->user->userModel);
+            $userCanAccessAccounts = RightsUtil::canUserAccessModule('AccountsModule', Yii::app()->user->userModel);
+            $userCanCreateAccount  = RightsUtil::doesUserHaveAllowByRightName('AccountsModule',
+                                     AccountsModule::RIGHT_CREATE_ACCOUNTS, Yii::app()->user->userModel);
+            LeadsControllerSecurityUtil::
+            resolveCanUserProperlyConvertLead($userCanAccessContacts, $userCanAccessAccounts, $convertToAccountSetting);
             if (isset($_POST['AccountSelectForm']))
             {
                 $selectAccountForm->setAttributes($_POST['AccountSelectForm']);
@@ -223,7 +230,9 @@
                 }
             }
             elseif (isset($_POST['AccountSkip']) ||
-                $convertToAccountSetting == LeadsModule::CONVERT_NO_ACCOUNT)
+                $convertToAccountSetting == LeadsModule::CONVERT_NO_ACCOUNT ||
+                ($convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED && !$userCanAccessAccounts)
+                )
             {
                 $this->actionSaveConvertedContact($contact);
             }
@@ -238,7 +247,8 @@
                 strval($contact),
                 $selectAccountForm,
                 $account,
-                $convertToAccountSetting
+                $convertToAccountSetting,
+                $userCanCreateAccount
             );
             $view = new LeadsPageView($this, $convertView);
             echo $view->render();

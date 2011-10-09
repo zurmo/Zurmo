@@ -125,7 +125,7 @@
             Yii::app()->end(0, false);
         }
 
-        private static function renderAccessFailureView($fromAjax = false)
+        protected static function renderAccessFailureView($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
             if ($fromAjax)
             {
@@ -134,7 +134,7 @@
             }
             else
             {
-                $messageView = new AccessFailureView();
+                $messageView = new AccessFailureView($nonAjaxFailureMessageContent);
                 $view        = new AccessFailurePageView($messageView);
             }
             echo $view->render();
