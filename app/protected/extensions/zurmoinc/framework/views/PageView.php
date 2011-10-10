@@ -229,24 +229,22 @@
                 Yii::app()->minScript->generateScriptMap('js');
             }
 
-            $cs->registerCssFile(INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/default/css/screen.css', 'screen, projection');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/print.css', 'print');
-            $cs->registerCssFile(INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/default/css/theme.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . DIRECTORY_SEPARATOR . $theme . '/css/screen.css', 'screen, projection');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
+            $cs->registerCssFile(Yii::app()->baseUrl . DIRECTORY_SEPARATOR . $theme . '/css/theme.css');
 
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/ie.css', 'screen, projection');
+                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
             }
 
             foreach ($this->getStyles() as $style)
             {
                 if ($style != 'ie')
                 {
-                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/' . $style. '.css'); // Not Coding Standard
-
-                    if ($theme != $defaultTheme && file_exists("$theme/css/$style.css"))
+                    if (file_exists("$theme/css/$style.css"))
                     {
-                        $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/' . $style. '.css'); // Not Coding Standard
+                        $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
                     }
                 }
             }
