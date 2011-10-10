@@ -526,7 +526,7 @@
                 'rules' => array(
                     array('username', 'required'),
                     array('username', 'unique'),
-                    array('username', 'validateUsernameLength'),
+                    array('username', 'UsernameLengthValidator'),
                     array('username', 'type',  'type' => 'string'),
                     array('username', 'match',   'pattern' => '/^[^A-Z]+$/', // Not Coding Standard
                                                'message' => 'Username must be lowercase.'),
@@ -550,16 +550,6 @@
         public static function isTypeDeletable()
         {
             return true;
-        }
-
-        public function validateUsernameLength($attribute, $params)
-        {
-            $minLength = $this->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH);
-            if (strlen($this->$attribute) < $minLength)
-            {
-                $this->addError('username',
-                    Yii::t('Default', 'The username is too short. Minimum length is {minimumLength}.', array('{minimumLength}' => $minLength)));
-            }
         }
 
         public function validateTimeZone($attribute, $params)

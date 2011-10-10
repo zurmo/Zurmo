@@ -58,7 +58,8 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null)
+                                                    $pageTitle = null,
+                                                    $stateMetadataAdapterClassName = null)
         {
             $portlet = Portlet::getById((int)$portletId);
             $modalListLinkProvider = new SelectFromRelatedListModalListLinkProvider(
@@ -71,7 +72,10 @@
                                             $this->getModule()->getId()
             );
             Yii::app()->getClientScript()->setToAjaxMode();
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider, $pageTitle);
+            echo ModalSearchListControllerUtil::renderModalSearchList($this,
+                                                                      $modalListLinkProvider,
+                                                                      $pageTitle,
+                                                                      $stateMetadataAdapterClassName);
         }
 
         public function actionAutoComplete($term)

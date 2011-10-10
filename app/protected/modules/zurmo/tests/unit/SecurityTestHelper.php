@@ -28,12 +28,12 @@
     {
         private static $usernamesToUserInfo = array(
                                // Title      Groups                         Role
-            'billy'    => array('Mr',   array('Administrators', 'Nerds'),   null),
-            'bobby'    => array('Mr',   array('Managers', 'Sales Staff'),   'Sales Manager'),
-            'benny'    => array('Mr',   array(            'Sales Staff'),   'Sales Person'),
-            'betty'    => array('Ms',   array(            'Sales Staff'),   'Junior Sales Person'),
-            'bernice'  => array('Miss', array('Managers', 'Support Staff'), 'Support Manager'),
-            'brian'    => array('Mr',   array(            'Support Staff'), 'Support Person')
+            'billy'    => array('Mr.',   array('Administrators', 'Nerds'),   null),
+            'bobby'    => array('Mr.',   array('Managers', 'Sales Staff'),   'Sales Manager'),
+            'benny'    => array('Mr.',   array(            'Sales Staff'),   'Sales Person'),
+            'betty'    => array('Ms.',   array(            'Sales Staff'),   'Junior Sales Person'),
+            'bernice'  => array('Ms.', array('Managers', 'Support Staff'), 'Support Manager'),
+            'brian'    => array('Mr.',   array(            'Support Staff'), 'Support Person')
         );
 
         private static $groupsNamesToGroupNames = array(
@@ -56,7 +56,7 @@
             {
                 $user = new User();
                 $user->username           = 'super';
-                $user->title->value       = 'Mr';
+                $user->title->value       = 'Mr.';
                 $user->firstName          = 'Clark';
                 $user->lastName           = 'Kent';
                 $user->setPassword('super');

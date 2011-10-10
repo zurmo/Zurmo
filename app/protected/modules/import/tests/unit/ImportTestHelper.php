@@ -30,7 +30,7 @@
                                                                      $tableName,
                                                                      $pathToFiles = null,
                                                                      $delimiter = ',', // Not Coding Standard
-                                                                     $enclosure = "'")
+                                                                     $enclosure = '"')
         {
             assert('is_string($fileName)');
             assert('is_string($tableName)');
@@ -39,10 +39,9 @@
                 $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
             }
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
-            $fileHandle  = fopen($filePath, 'r');
-            if ($fileHandle !== false)
+            if (is_file($filePath))
             {
-                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName,
+                $created = ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName($filePath, $tableName,
                                                                                          $delimiter, $enclosure);
                 assert('$created');
                 return true;
@@ -125,6 +124,65 @@
                 RedBeanDatabase::unfreeze();
             }
             return $model;
+        }
+
+        public static function updateModelsExternalId(RedBeanModel $model, $externalId)
+        {
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            R::exec("update " . $model::getTableName(get_class($model))
+            . " set $columnName = '" . $externalId . "' where id = {$model->id}");
+        }
+
+        public static function makeModelDerivedColumnMappingData($derivedAttributeName,
+                                                                 $type = IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+        {
+            return array('attributeIndexOrDerivedType'                        => $derivedAttributeName,
+                         'type'                                               => 'importColumn',
+                         'mappingRulesData'                                   => array(
+                         'IdValueTypeMappingRuleForm'                         => array('type' => $type),
+                         'DefaultModelNameIdDerivedAttributeMappingRuleForm'  => array('defaultModelId' => null)));
+        }
+
+        public static function makeTextAreaColumnMappingData($attributeName)
+        {
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn');
+        }
+
+        public static function makeDateTimeColumnMappingData($attributeName, $defaultValue = null,
+                                                             $format = 'MM-dd-yyyy hh:mm')
+        {
+            return array('attributeIndexOrDerivedType'               => $attributeName,
+                         'type'                                      => 'importColumn',
+                         'mappingRulesData'                          => array(
+                         'DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => $defaultValue),
+                          'ValueFormatMappingRuleForm'               => array('format' => $format)));
+        }
+
+        public static function makeDropDownColumnMappingData($attributeName, $defaultValue = null)
+        {
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn',
+                         'mappingRulesData'            => array(
+                             'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                             array('defaultValue'      => $defaultValue)),
+                         'importInstructionsData'      => array('DropDown' =>
+                             array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array())));
+        }
+
+        public static function makeStringColumnMappingData($attributeName, $defaultValue = null)
+        {
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn',
+                         'mappingRulesData'            => array(
+                             'DefaultValueModelAttributeMappingRuleForm' =>
+                             array('defaultValue' => $defaultValue)));
+        }
+
+        public static function makeBooleanColumnMappingData($attributeName)
+        {
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn');
         }
     }
 ?>

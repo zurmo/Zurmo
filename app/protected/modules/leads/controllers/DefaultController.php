@@ -154,7 +154,7 @@
                 $dataProvider
             );
             $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
-                new Contact(false),
+                $contact,
                 $activeAttributes,
                 $selectedRecordCount,
                 Yii::t('Default', 'Leads')

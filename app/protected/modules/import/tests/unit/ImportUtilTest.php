@@ -126,7 +126,7 @@
 
             //Confirm the messages are as expected.
             $compareMessages = array(
-                'ImportModelTestItem - Last name specified is too large.',
+                'ImportModelTestItem - Last name specified is too long.',
                 'ImportModelTestItem - Last Name - Last Name cannot be blank.',
             );
             $this->assertEquals($compareMessages, unserialize(current($beansWithErrors)->serializedmessages));

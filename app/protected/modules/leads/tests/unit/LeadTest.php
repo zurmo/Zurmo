@@ -163,7 +163,7 @@
 
             $contact = new Contact();
             $contact->owner           = $user;
-            $contact->title->value    = 'Mr';
+            $contact->title->value    = 'Mr.';
             $contact->firstName       = 'Super';
             $contact->lastName        = 'Man';
             $contact->companyName     = 'ABC Company';

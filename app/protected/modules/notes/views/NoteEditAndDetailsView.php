@@ -34,7 +34,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'CancelLink'),
+                            array('type' => 'CancelLink', 'renderType' => 'Edit'),
                             array('type' => 'SaveButton', 'renderType' => 'Edit'),
                             array('type' => 'EditLink', 'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
@@ -94,9 +94,8 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'detailViewOnly' => true,
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
+                                                array('attributeName' => 'owner', 'type' => 'User'),
                                             ),
                                         ),
                                     )
@@ -107,6 +106,16 @@
                                             'elements' => array(
                                                 array('attributeName' => 'null',
                                                       'type' => 'DerivedExplicitReadWriteModelPermissions'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'detailViewOnly' => true,
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
                                             ),
                                         ),
                                     )

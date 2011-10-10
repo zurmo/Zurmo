@@ -33,6 +33,7 @@
         public $listPageSize;
         public $subListPageSize;
         public $modalListPageSize;
+        public $dashboardListPageSize;
 
         public function rules()
         {
@@ -47,6 +48,9 @@
                 array('modalListPageSize',        'required'),
                 array('modalListPageSize',        'type',      'type' => 'integer'),
                 array('modalListPageSize',        'numerical', 'min' => 1),
+                array('dashboardListPageSize',    'required'),
+                array('dashboardListPageSize',    'type',      'type' => 'integer'),
+                array('dashboardListPageSize',    'numerical', 'min' => 1),
             );
         }
 
@@ -57,6 +61,7 @@
                 'listPageSize'              => Yii::t('Default', 'List page size'),
                 'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
                 'modalListPageSize'         => Yii::t('Default', 'Popup list page size'),
+                'dashboardListPageSize'     => Yii::t('Default', 'Dashboard portlet list page size'),
             );
         }
     }

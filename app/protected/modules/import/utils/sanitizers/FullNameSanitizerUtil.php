@@ -73,18 +73,18 @@
             }
             if ($lastName == null)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'The full name specified did not resolve to have a last name, which is required.'));
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'The full name must contain a last name, which is required.'));
             }
             $model              = new $modelClassName(false);
             $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
             $lastNameMaxLength  = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'lastName');
             if (strlen($lastName) > $lastNameMaxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too large.'));
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too long.'));
             }
             if ($firstName != null && strlen($firstName) > $firstNameMaxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'First name specified is too large.'));
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'First name specified is too long.'));
             }
             return $value;
         }

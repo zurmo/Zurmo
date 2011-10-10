@@ -61,6 +61,8 @@
             => '??',
         'Date Time'
             => '??',
+        'Default Value'
+            => '??',
         'Delete'
             => '??',
         'Detail View Only'
@@ -77,7 +79,7 @@
             => 'Fahrenheit',
         'Filtered List'
             => '??',
-        'firstDateTime must occur after  secondDateTime'
+        'firstDateTime must occur after secondDateTime'
             => '??',
         'firstDateTime must occur before secondDateTime'
             => '??',
@@ -101,6 +103,8 @@
             => '??',
         'List'
             => '??',
+        'Loading'
+            => '??',
         'Model Class Name'
             => '??',
         'Model Id'
@@ -114,6 +118,8 @@
         'More Details'
             => '??',
         'More Options'
+            => '??',
+        'My List View'
             => '??',
         'Name'
             => 'Nombre',
@@ -132,6 +138,8 @@
         'Panel Title'
             => '??',
         'Perform Action'
+            => '??',
+        'Radio Drop Down'
             => '??',
         'record'
             => 'registro',
@@ -161,6 +169,8 @@
         'This module doesn\'t have anything to configure.'
             => 'Este módulo no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
+            => '??',
+        'This portlet will be removed, ok?'
             => '??',
         'Time'
             => '??',

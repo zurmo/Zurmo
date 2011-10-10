@@ -72,6 +72,12 @@
     // Check it in as true!
     $dbLevelCaching = true;
 
+    // Turn this off when you debug css/javascript code.
+    // Turn it on for production websites, because it optimize and combine javascript/css
+    // files, so page can loads much faster
+    // Check it in as true!
+    $minifyScripts = true;
+
     // Set information related to function tests
     // 1. $seleniumServerPath is path to selenium server(selenium jar file)
     // 2. $testBaseUrl is url of website to be tested via selenium server. It can be local or remote
@@ -102,6 +108,7 @@
     define('PHP_CACHING_ON',     $phpLevelCaching);
     define('MEMCACHE_ON',        $memcacheLevelCaching);
     define('DB_CACHING_ON',      $dbLevelCaching);
+    define('MINIFY_SCRIPTS',     $minifyScripts);
 
     assert_options(ASSERT_ACTIVE,   $debugOn); // Don't even think about disabling asserts!
     assert_options(ASSERT_WARNING,  $debugOn);

@@ -25,4 +25,5 @@
      ********************************************************************************/
 
     //Console Application loader.
+    set_time_limit('7200');
     require_once('bootstrap.php');

@@ -34,11 +34,11 @@
             $passed = InstallUtil::isMbStringInstalled();
             if ($passed)
             {
-                $this->message .= Yii::t('Default', 'Mb String is installed.');
+                $this->message = Yii::t('Default', 'Mbstring is installed.');
             }
             else
             {
-                $this->message .= Yii::t('Default', 'Mb String is not installed.');
+                $this->message = Yii::t('Default', 'Mbstring is not installed.');
             }
             return $passed;
         }

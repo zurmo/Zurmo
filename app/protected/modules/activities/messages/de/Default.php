@@ -29,6 +29,16 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Activities'
+            => '??',
+        'Activity Items'
+            => '??',
+        'All Activities'
+            => '??',
+        'Latest Date Time'
+            => '??',
+        'No Activities found.'
+            => '??',
         'Related'
             => '??',
         'Related to'

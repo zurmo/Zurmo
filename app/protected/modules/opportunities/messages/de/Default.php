@@ -33,6 +33,8 @@
             => '??',
         'Create OpportunitiesModuleSingularLabel'
             => '?? OpportunitiesModuleSingularLabel',
+        'My OpportunitiesModulePluralLabel'
+            => '?? OpportunitiesModulePluralLabel',
         'Opportunities'
             => '??',
         'Opportunities By Lead Source'
@@ -50,6 +52,8 @@
         'OpportunitiesModuleSingularLabel Search'
             => 'OpportunitiesModuleSingularLabel ??',
         'Opportunity'
+            => '??',
+        'Probability'
             => '??',
     );
 ?>

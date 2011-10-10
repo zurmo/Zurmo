@@ -55,28 +55,38 @@
 
         public function actionAttributesList()
         {
-            $met = Account::getMetadata();
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $model = new $modelClassName();
-            $adapter = new ModelAttributesAdapter($model);
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
                  yii::t('Default', 'Fields'),
             );
-            $canvasView = new StandardAndCustomAttributesListView(
-                        $this->getId(),
-                        $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
-                        $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
-                        $adapter->getStandardAttributes(),
-                        $adapter->getCustomAttributes(),
-                        $modelClassName,
-                        $breadcrumbLinks
-            );
-
+            $overrideClassName = $moduleClassName . 'AttributesListView';
+            $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
+                                 $moduleClassName::getDirectoryName() .
+                                 DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $overrideClassName.'.php';
+            if(is_file($overrideClassFile) && class_exists($overrideClassName))
+            {
+                $viewClassName = $moduleClassName . 'AttributesListView';
+                $canvasView    = new $viewClassName($this->getId(), $this->getModule()->getId(), $breadcrumbLinks);
+            }
+            else
+            {
+                $modelClassName  = $moduleClassName::getPrimaryModelName();
+                $model           = new $modelClassName();
+                $adapter         = new ModelAttributesAdapter($model);
+                $canvasView = new StandardAndCustomAttributesListView(
+                            $this->getId(),
+                            $this->getModule()->getId(),
+                            $_GET['moduleClassName'],
+                            $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
+                            $adapter->getStandardAttributes(),
+                            $adapter->getCustomAttributes(),
+                            $modelClassName,
+                            $breadcrumbLinks
+                );
+            }
             $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
             echo $view->render();
         }

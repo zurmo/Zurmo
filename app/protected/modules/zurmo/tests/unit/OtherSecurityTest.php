@@ -123,8 +123,7 @@
             $this->assertEquals(
                 array('owner' =>
                     array('username' =>
-                        array('Username cannot be blank.',
-                              'The username is too short. Minimum length is 3.'),
+                        array('Username cannot be blank.'),
                           'lastName' =>
                         array('Last Name cannot be blank.'),
                     )
@@ -191,7 +190,7 @@
             $contact = new Contact();
             $contact->owner        = User::getByUsername('etester');
             $contact->account      = $account;
-            $contact->title->value = 'Mr';
+            $contact->title->value = 'Mr.';
             $contact->firstName    = 'Super';
             $contact->lastName     = 'Man';
             $contact->state        = $states[0];

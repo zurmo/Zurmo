@@ -60,6 +60,15 @@
                                         ),
                                     )
                                 ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'owner', 'type' => 'User'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                             ),
                         ),
                     ),

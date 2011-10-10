@@ -198,6 +198,10 @@
             {
                 return 'ModifiedDateTime';
             }
+            if ($attributeName =='username')
+            {
+                return 'Username';
+            }
             return $type;
         }
     }

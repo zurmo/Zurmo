@@ -102,7 +102,16 @@
                 }
                 else
                 {
-                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
+                    $importRulesClassName  = $importWizardForm->importRulesType . 'ImportRules';
+                    if(!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+                    {
+                        $nextStep = 'step4';
+                    }
+                    else
+                    {
+                        $nextStep = 'step3';
+                    }
+                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, $nextStep);
                 }
             }
             $importView = new GridView(2, 1);
@@ -119,9 +128,8 @@
          */
         public function actionStep3($id)
         {
-            $import           = Import::getById((int)$_GET['id']);
-            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
-
+            $import                = Import::getById((int)$_GET['id']);
+            $importWizardForm      = ImportWizardUtil::makeFormByImport($import);
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
@@ -154,7 +162,7 @@
                 $sanitizedPostData                          = ImportWizardFormPostUtil::
                                                               sanitizePostByTypeForSavingMappingData(
                                                               $importWizardForm->importRulesType, $reIndexedPostData);
-                                                              ImportWizardUtil::setFormByPostForStep4($importWizardForm, $sanitizedPostData);
+                ImportWizardUtil::setFormByPostForStep4($importWizardForm, $sanitizedPostData);
 
                 $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
                                                               makeFormsAndElementTypesByMappingDataAndImportRulesType(
@@ -443,7 +451,7 @@
             }
             elseif (!$importWizardForm->validate(array('rowColumnDelimiter')))
             {
-                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid enclosure'));
+                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid qualifier'));
             }
             else
             {
@@ -456,7 +464,7 @@
                     {
                         $tempTableName = $import->getTempTableName();
                         if (!ImportDatabaseUtil::
-                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
+                            makeDatabaseTableByFilePathAndTableName($uploadedFile->getTempName(), $tempTableName,
                                                                       $importWizardForm->rowColumnDelimiter,
                                                                       $importWizardForm->rowColumnEnclosure))
                         {

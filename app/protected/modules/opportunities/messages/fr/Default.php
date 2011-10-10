@@ -33,6 +33,8 @@
             => 'Date de clôture',
         'Create OpportunitiesModuleSingularLabel'
             => 'Nouvelle OpportunitiesModuleSingularLabel',
+        'My OpportunitiesModulePluralLabel'
+            => 'Mes OpportunitiesModulePluralLabel',
         'Opportunities'
             => 'Opportunités',
         'Opportunities By Lead Source'
@@ -51,5 +53,7 @@
             => 'Recherche OpportunitiesModuleSingularLabel',
         'Opportunity'
             => 'Opportunité',
+        'Probability'
+            => 'Probabilité',
     );
 ?>

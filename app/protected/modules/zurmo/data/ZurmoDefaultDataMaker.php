@@ -31,7 +31,7 @@
     {
         public function make()
         {
-            $values = array('Mr', 'Mrs', 'Ms', 'Dr');
+            $values = array('Mr.', 'Mrs.', 'Ms.', 'Dr.');
             static::makeCustomFieldDataByValuesAndDefault('Titles', $values);
             Currency::getAll(); //build base currency.
         }

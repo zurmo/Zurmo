@@ -44,8 +44,7 @@
                 }
                 else
                 {
-                    $this->message .= "\n";
-                    $this->message .= Yii::t('Default', 'Database max allowed packet size is:') . ' ';
+                    $this->message  = Yii::t('Default', 'Database max_allowed_packet size is:') . ' ';
                     $this->message .= round($actualBytes / 1024000) . 'M ';
                     $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
                     $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
@@ -54,7 +53,7 @@
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database max allowed packet size meets minimum requirement.');
+                $this->message = Yii::t('Default', 'Database max_allowed_packet size meets minimum requirement.');
             }
             return $passed;
         }

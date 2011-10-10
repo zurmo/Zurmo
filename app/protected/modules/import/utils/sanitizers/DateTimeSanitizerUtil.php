@@ -76,11 +76,11 @@
                 return $value;
             }
             $sanitizedValue = CDateTimeParser::parse($value, $mappingRuleData['format']);
-            if ($sanitizedValue === false)
+            if ($sanitizedValue === false || !is_int($sanitizedValue))
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid datetime format.'));
             }
-            return $sanitizedValue;
+            return DateTimeUtil::convertTimestampToDbFormatDateTime($sanitizedValue);
         }
     }
 ?>

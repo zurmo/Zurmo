@@ -74,7 +74,7 @@
         protected function makeDataProviderBySearchAttributeData($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('subListPageSize');
+            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('dashboardListPageSize');
             return new RedBeanModelDataProvider($this->modelClassName, $this->getSortAttributeForDataProvider(), false,
                                                                 $searchAttributeData, array(
                                                                     'pagination' => array(

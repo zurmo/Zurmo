@@ -1,0 +1,4 @@
+name,location,startDateTime,endDateTime,category,relatedAccount,relatedContact,relatedOpportunity,description
+meeting1,location1,12-22-2011 05:03,12-22-2011 06:03,Meeting,ACC,,,myDescription
+meeting2,location2,12-22-2011 05:03,12-22-2011 06:03,Call,,CON,,myDescription
+meeting3,location3,12-22-2011 06:03,12-22-2011 07:03,Call,,,OPP,myDescription

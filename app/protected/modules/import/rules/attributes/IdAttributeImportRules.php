@@ -42,7 +42,8 @@
 
         public function getDisplayLabel()
         {
-            return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' .Yii::t('Default', 'Id');
+            $model = $this->model;
+            return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' . Yii::t('Default', 'Id');
         }
 
         public static function getSanitizerUtilTypesInProcessingOrder()
