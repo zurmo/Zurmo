@@ -220,5 +220,37 @@
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
         }
+
+        /**
+         *
+         * Load data directly(fast) from csv file into database
+         * @param string $file
+         * @param string $tableName
+         * @param string $delimiter
+         * @param string $enclosure
+         * @param array $columns
+         */
+        public static function loadDataFromFileIntoDatabase($filePath, $tableName, $delimiter, $enclosure, $columns)
+        {
+            assert('is_string($filePath)');
+            assert('is_string($tableName)');
+            assert('is_string($delimiter)');
+            assert('is_string($enclosure)');
+            assert('is_array($columns)');
+
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+
+            $sql = "LOAD DATA LOCAL INFILE '$filePath'
+                    INTO TABLE $tableName
+                    FIELDS TERMINATED BY '$delimiter'
+                    OPTIONALLY ENCLOSED BY '\\".$enclosure."'
+                    LINES TERMINATED BY '\\n'
+                    (".implode(",", $columns).")
+                   ";
+            R::exec($sql);
+        }
     }
 ?>

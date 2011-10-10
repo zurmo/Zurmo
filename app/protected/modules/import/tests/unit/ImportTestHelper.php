@@ -39,10 +39,9 @@
                 $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
             }
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
-            $fileHandle  = fopen($filePath, 'r');
-            if ($fileHandle !== false)
+            if (is_file($filePath))
             {
-                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName,
+                $created = ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName($filePath, $tableName,
                                                                                          $delimiter, $enclosure);
                 assert('$created');
                 return true;
