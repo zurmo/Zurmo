@@ -255,7 +255,7 @@
 
         /**
          *
-         * Enter description here ...
+         * Test if import from file with Windows line-endings works file
          */
         public function testMakeDatabaseTableByFilePathAndTableNameOnWindowsCsvFile()
         {
@@ -263,7 +263,7 @@
             //We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
             //convert windows line endings into linux lineendings.
             $fileName = 'importTestWindows.csv';
-            $copyFileName - 'importTestWindowsCopy.csv';
+            $copyFileName = 'importTestWindowsCopy.csv';
             $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
             $copyFilePath    = $pathToFiles . DIRECTORY_SEPARATOR . $copyFileName;
@@ -272,8 +272,10 @@
                 unlink($copyFilePath);
             }
             $this->assertFalse(is_file($copyFilePath));
-
+            copy($filePath, $copyFilePath);
+            $this->assertTrue(is_file($copyFilePath));
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName($copyFileName, $testTableName));
+            unlink($copyFilePath);
             $sql = 'select * from ' . $testTableName;
             $tempTableData = R::getAll($sql);
             $compareData   = array(
