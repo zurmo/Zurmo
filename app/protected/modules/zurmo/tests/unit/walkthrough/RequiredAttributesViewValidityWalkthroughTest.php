@@ -106,5 +106,6 @@
         //todo: test switching existing attribute to required.
         //todo: test switching existing attribute to not required from required.
         //todo: test note inlineEditSave
+        //todo: test out multiple custom fields not placed, make sure array of config for RequiredAttributesValidViewUtil is working ok.
     }
 ?>

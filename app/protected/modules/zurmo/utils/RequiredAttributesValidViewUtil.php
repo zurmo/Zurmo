@@ -38,7 +38,50 @@
             assert('is_string($moduleClassName)');
             assert('is_string($viewClassName)');
             $key = $viewClassName . '_layoutMissingRequiredAttributes';
-            ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, true);
+
+            $value = ZurmoConfigurationUtil::getByModuleName($moduleClassName, $key);
+            if($value == null)
+            {
+                $value = 1;
+            }
+            else
+            {
+                $value ++;
+                if($value <= 1)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, $value);
+        }
+
+        public static function removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName)
+        {
+            assert('is_string($moduleClassName)');
+            assert('is_string($viewClassName)');
+            $key = $viewClassName . '_layoutMissingRequiredAttributes';
+
+            $value = ZurmoConfigurationUtil::getByModuleName($moduleClassName, $key);
+            if($value == null)
+            {
+                return;
+            }
+            else
+            {
+                if($value == 1)
+                {
+                    $value = null;
+                }
+                else
+                {
+                    $value = $value - 1;
+                    if($value >= 1)
+                    {
+                        throw new NotSupportedException();
+                    }
+                }
+            }
+            ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, $value);
         }
 
         public static function setAsContainingRequiredAttributes($moduleClassName, $viewClassName)
@@ -46,7 +89,7 @@
             assert('is_string($moduleClassName)');
             assert('is_string($viewClassName)');
             $key = $viewClassName . '_layoutMissingRequiredAttributes';
-            ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, false);
+            ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, null);
 
         }
 
@@ -56,7 +99,7 @@
             assert('is_string($viewClassName)');
             $key   = $viewClassName . '_layoutMissingRequiredAttributes';
             $value = ZurmoConfigurationUtil::getByModuleName($moduleClassName, $key);
-            if($value)
+            if($value !== null)
             {
                 return true;
             }

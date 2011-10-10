@@ -206,10 +206,18 @@
             $adapter = new $modelAttributesAdapterClassName($model);
             $adapter->setAttributeMetadataFromForm($attributeForm);
 
+            //if wasRequired and now is not... ( make sure you use oldAttributeName to catch proper array alignment)
+            //removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName, $attributeName)
+
             if($attributeForm->isRequired && !$wasRequired)
             {
                 RequiredAttributesValidViewUtil::
-                resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model));
+                resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
+            }
+            elseif(!$attributeForm->isRequired && $wasRequired)
+            {
+                RequiredAttributesValidViewUtil::
+                removeAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
             }
             $routeParams = array_merge($_GET, array(
                 'attributeName' => $attributeForm->attributeName,
