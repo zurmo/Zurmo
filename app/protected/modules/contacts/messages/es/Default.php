@@ -53,11 +53,21 @@
             => 'Crear una ContactsModuleSingularLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => '?? ContactsModuleSingularLowerCaseLabel ??',
+        'My ContactsModulePluralLabel'
+            => '??',
         'Order'
             => '??',
         'Starting Status'
             => '??',
         'Status'
+            => '??',
+        'The default status specified does not exist.'
+            => '??',
+        'The status is required.  Neither a value nor a default was specified.'
+            => '??',
+        'The status specified does not exist.'
+            => '??',
+        'The status specified is invalid.'
             => '??',
     );
 ?>

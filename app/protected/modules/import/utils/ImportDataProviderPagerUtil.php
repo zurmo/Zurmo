@@ -49,7 +49,7 @@
                 $nextStyle = 'display:none;';
             }
             $content .= '&#160;';
-            $content .= self::renderAjaxLink('sample-column-header-previous-page-link', Yii::t('Default', 'Prev'),
+            $content .= self::renderAjaxLink('sample-column-header-previous-page-link', Yii::t('Default', 'Previous'),
                                              $url, $dataProvider->getPagination()->pageVar, $currentPage, $previousStyle);
             $content .= '&#160;';
             $content .= self::renderAjaxLink('sample-column-header-next-page-link', Yii::t('Default', 'Next'),

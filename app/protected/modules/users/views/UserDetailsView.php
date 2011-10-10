@@ -45,6 +45,7 @@
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
                         'TitleFullName',
+                        'DerivedUserStatus'
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'title',
@@ -176,7 +177,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
+                                                array('attributeName' => 'null', 'type' => 'DerivedUserStatus'), // Not Coding Standard
                                             ),
                                         ),
                                     )

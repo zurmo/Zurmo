@@ -45,19 +45,17 @@
             => '??',
         'Default Name'
             => '??',
-        'Default Value'
-            => '??',
         'Delimiter'
             => '??',
         'Do not map this field'
             => '??',
         'Email was too long.'
             => '??',
-        'Enclosure'
+        'Qualifier'
             => '??',
         'Error: Invalid delimiter'
             => '??',
-        'Error: Invalid enclosure'
+        'Error: Invalid qualifier'
             => '??',
         'Failed to create temporary database table from CSV.'
             => '??',
@@ -95,19 +93,19 @@
             => '??',
         'Importing data...'
             => '??',
-        'Invalid check box format'
+        'Invalid check box format.'
             => '??',
-        'Invalid date format'
+        'Invalid date format.'
             => '??',
-        'Invalid datetime format'
+        'Invalid datetime format.'
             => '??',
-        'Invalid email format'
+        'Invalid email format.'
             => '??',
-        'Invalid integer format'
+        'Invalid integer format.'
             => '??',
-        'Invalid number format'
+        'Invalid number format.'
             => '??',
-        'Invalid url format'
+        'Invalid url format.'
             => '??',
         'Last name specified is too long.'
             => '??',
@@ -128,8 +126,6 @@
         'Please select the CSV to upload'
             => '??',
         'Please select the module you would like to import to:'
-            => '??',
-        'Prev'
             => '??',
         'Previous'
             => '??',

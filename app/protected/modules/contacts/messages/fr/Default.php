@@ -53,11 +53,21 @@
             => 'Nouveau ContactsModuleSingularLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Chaque état du ContactsModuleSingularLowerCaseLabel doit avoir un nom unique',
+        'My ContactsModulePluralLabel'
+            => 'Mes ContactsModulePluralLabel',
         'Order'
             => 'Ordre',
         'Starting Status'
             => 'Valeur par défaut',
         'Status'
             => 'Statut',
+        'The default status specified does not exist.'
+            => 'La valeur du statut par défault spécifié n\'existe pas',
+        'The status is required.  Neither a value nor a default was specified.'
+            => 'Le champs statut est requis.  Vous devez spécifiez soit une valeur par défault ',
+        'The status specified does not exist.'
+            => 'La valeur du statut spécifié n\'existe pas',
+        'The status specified is invalid.'
+            => 'La valeur du statut spécifié n\'est pas valide',
     );
 ?>

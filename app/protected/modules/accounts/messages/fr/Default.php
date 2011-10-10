@@ -53,6 +53,8 @@
             => 'Nouveau AccountsModuleSingularLabel',
         'Employees'
             => 'Employés',
+        'My AccountsModulePluralLabel'
+            => 'Mes AccountsModulePluralLabel',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel principal',
         'Type'
