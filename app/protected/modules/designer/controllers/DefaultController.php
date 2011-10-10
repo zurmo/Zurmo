@@ -200,10 +200,17 @@
         protected function actionAttributeSave($attributeForm, $model)
         {
             assert('!empty($_GET["moduleClassName"])');
+            $wasRequired = $attributeForm->isRequired;
             $attributeForm->setAttributes($_POST[get_class($attributeForm)]);
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName($model);
             $adapter->setAttributeMetadataFromForm($attributeForm);
+
+            if($attributeForm->isRequired && !$wasRequired)
+            {
+                RequiredAttributesValidViewUtil::
+                resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model));
+            }
             $routeParams = array_merge($_GET, array(
                 'attributeName' => $attributeForm->attributeName,
                 0 => 'default/attributeDetails'
@@ -259,13 +266,14 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["viewClassName"])');
+            $viewClassName           = $_GET['viewClassName'];
             $moduleClassName         = $_GET['moduleClassName'];
             $modelClassName          = $moduleClassName::getPrimaryModelName();
-            $editableMetadata        = $_GET['viewClassName']::getMetadata();
-            $designerRulesType       = $_GET['viewClassName']::getDesignerRulesType();
+            $editableMetadata        = $viewClassName::getMetadata();
+            $designerRulesType       = $viewClassName::getDesignerRulesType();
             $designerRulesClassName  = $designerRulesType . 'DesignerRules';
             $designerRules           = new $designerRulesClassName();
-            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($_GET['viewClassName'], $modelClassName);
+            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
             $attributeCollection     = $modelAttributesAdapter->getAttributes();
             $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
                 $attributeCollection,
@@ -275,8 +283,8 @@
             if (isset($_POST['layout']))
             {
                 $layoutMetadataAdapter = new LayoutMetadataAdapter(
-                    $_GET['viewClassName'],
-                    $_GET['moduleClassName'],
+                    $viewClassName,
+                    $moduleClassName,
                     $editableMetadata,
                     $designerRules,
                     $attributesLayoutAdapter->getPlaceableLayoutAttributes(),
@@ -291,6 +299,11 @@
                 }
                 elseif ($layoutMetadataAdapter->setMetadataFromLayout(ArrayUtil::getArrayValue($_POST, 'layout'), $savableMetadata))
                 {
+                    if($designerRules->requireAllRequiredFieldsInLayout())
+                    {
+                        RequiredAttributesValidViewUtil::
+                        setAsContainingRequiredAttributes($moduleClassName, $viewClassName);
+                    }
                     echo CJSON::encode(array('message' => $layoutMetadataAdapter->getMessage(), 'type' => 'message'));
                 }
                 else

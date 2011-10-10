@@ -82,6 +82,14 @@
 
         protected function renderNoteInlineEditContent()
         {
+            if(null != $messageContent = RequiredAttributesValidViewUtil::
+                                         resolveValidView('NotesModule', $this->getInlineEditViewClassName()))
+            {
+                $message = Yii::t('Default', 'The NotesModulePluralLabel form cannot be displayed.',
+                           LabelUtil::getTranslationParamsForAllModules());
+                $message .= '<br/>' . $messageContent . '<br/><br/>';
+                return $message;
+            }
             $note         = new Note();
             $note->activityItems->add($this->params["relationModel"]);
             $inlineViewClassName = $this->getInlineEditViewClassName();

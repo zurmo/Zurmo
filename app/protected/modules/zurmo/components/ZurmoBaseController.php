@@ -28,6 +28,8 @@
     {
         const RIGHTS_FILTER_PATH = 'application.modules.zurmo.controllers.filters.RightsControllerFilter';
 
+        const REQUIRED_ATTRIBUTES_FILTER_PATH = 'application.modules.zurmo.controllers.filters.RequiredAttributesControllerFilter';
+
         public function filters()
         {
             $moduleClassName = get_class($this->getModule());

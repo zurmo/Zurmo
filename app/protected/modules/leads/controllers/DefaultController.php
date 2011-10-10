@@ -35,6 +35,11 @@
                         'moduleClassName' => 'LeadsModule',
                         'rightName' => LeadsModule::RIGHT_CONVERT_LEADS,
                    ),
+                    array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, edit',
+                        'moduleClassName' => get_class($this->getModule()),
+                        'viewClassName'   => 'LeadsEditAndDetailsView',
+                   ),
                )
             );
         }
