@@ -41,7 +41,7 @@
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
             if (is_file($filePath))
             {
-                $created = ImportDatabaseUtil::makeDatabaseTableByFileHandleAndTableName($filePath, $tableName,
+                $created = ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName($filePath, $tableName,
                                                                                          $delimiter, $enclosure);
                 assert('$created');
                 return true;

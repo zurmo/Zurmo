@@ -36,7 +36,7 @@
          * @param string $tableName
          * @return true on success.
          */
-        public static function makeDatabaseTableByFileHandleAndTableName($csvFilePath, $tableName, $delimiter = ',', // Not Coding Standard
+        public static function makeDatabaseTableByFilePathAndTableName($csvFilePath, $tableName, $delimiter = ',', // Not Coding Standard
                                                                          $enclosure = "'")
         {
             assert('is_string($tableName)');
