@@ -57,7 +57,8 @@
                                         'install/default/checkSystem',
                                         'install/default/settings',
                                         'install/default/runInstallation',
-                                        'install/default/installDemoData')))
+                                        'install/default/installDemoData',
+                                        'min/serve')))
             {
                 $url = Yii::app()->createUrl('install/default');
                 Yii::app()->request->redirect($url);
@@ -88,7 +89,8 @@
         {
             if (!array_key_exists('r', $_GET) ||
                 !in_array($_GET['r'], array('zurmo/default/unsupportedBrowser',
-                                            'zurmo/default/login')))
+                                            'zurmo/default/login',
+                                            'min/serve')))
             {
                 if (Yii::app()->user->isGuest)
                 {

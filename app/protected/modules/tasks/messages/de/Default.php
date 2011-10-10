@@ -29,5 +29,23 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Completed'
+            => '??',
+        'Completed On'
+            => '??',
+        'Due On'
+            => '??',
+        'My Open TasksModulePluralLabel'
+            => '??',
+        'Open TasksModulePluralLabel'
+            => '??',
+        'Tasks'
+            => '??',
+        'TasksModulePluralLabel For AccountsModuleSingularLabel'
+            => '??',
+        'TasksModulePluralLabel For ContactsModuleSingularLabel'
+            => '??',
+        'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
+            => '??',
     );
 ?>

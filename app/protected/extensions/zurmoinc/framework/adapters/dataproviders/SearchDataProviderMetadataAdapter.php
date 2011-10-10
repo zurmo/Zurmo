@@ -189,6 +189,52 @@
             }
         }
 
+        /**
+         * Method for populating clauses for concated attributes.  The first concated attribute $attributeNames[0]
+         * will be used to determine the operator types.
+         */
+        protected function populateClausesAndStructureForConcatedAttributes($attributeNames,
+                                                                            $value,
+                                                                            &$adaptedMetadataClauses,
+                                                                            &$clauseCount,
+                                                                            &$structure,
+                                                                            $appendStructureAsAnd = true,
+                                                                            $operatorType = null)
+        {
+            assert('is_array($attributeNames) && count($attributeNames) == 2');
+            assert('is_array($adaptedMetadataClauses) || $adaptedMetadataClauses == null');
+            assert('is_int($clauseCount)');
+            assert('$structure == null || is_string($structure)');
+            assert('is_bool($appendStructureAsAnd)');
+            if ($value !== null)
+            {
+                if($operatorType == null)
+                {
+                    $operatorType        = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeNames[0]);
+                    $operatorTypeCompare = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeNames[1]);
+                    if($operatorType != $operatorTypeCompare)
+                    {
+                        throw New NotSupportedException();
+                    }
+                }
+                $value = ModelAttributeToCastTypeUtil::resolveValueForCast($this->model, $attributeNames[0], $value);
+                $adaptedMetadataClauses[($clauseCount)] = array(
+                    'concatedAttributeNames' => $attributeNames,
+                    'operatorType'           => $operatorType,
+                    'value'                  => $value,
+                );
+                if ($appendStructureAsAnd)
+                {
+                    static::appendClauseAsAndToStructureString($structure, $clauseCount);
+                }
+                else
+                {
+                    static::appendClauseAsOrToStructureString($structure, $clauseCount);
+                }
+                $clauseCount++;
+            }
+        }
+
         protected function populateAdaptedMetadataFromSearchFormAttributes( $attributeName,
                                                                             $value,
                                                                             &$adaptedMetadataClauses,
@@ -206,31 +252,47 @@
                                                 $this->model, $attributeName, $value);
             foreach ($metadataFromSearchFormAttributes as $searchFormClause)
             {
-                foreach($searchFormClause as $searchFormAttributeName => $searchFormStructure)
+                if(isset($searchFormClause['concatedAttributeNames']))
                 {
-                    if(isset($searchFormStructure['operatorType']))
+                    assert('is_array($searchFormClause["concatedAttributeNames"][0]) &&
+                             count($searchFormClause["concatedAttributeNames"][0]) == 2');
+                    assert('!isset($searchFormClause["concatedAttributeNames"]["operatorType"])');
+                    assert('!isset($searchFormClause["concatedAttributeNames"]["appendStructureAsAnd"])');
+                    static::populateClausesAndStructureForConcatedAttributes($searchFormClause['concatedAttributeNames'][0],
+                                                                             $searchFormClause['concatedAttributeNames']['value'],
+                                                                             $adaptedMetadataClauses,
+                                                                             $clauseCount,
+                                                                             $tempStructure,
+                                                                             false);
+                }
+                else
+                {
+                    foreach($searchFormClause as $searchFormAttributeName => $searchFormStructure)
                     {
-                        $operatorType = $searchFormStructure['operatorType'];
+                        if(isset($searchFormStructure['operatorType']))
+                        {
+                            $operatorType = $searchFormStructure['operatorType'];
+                        }
+                        else
+                        {
+                            $operatorType = null;
+                        }
+                        if(isset($searchFormStructure['appendStructureAsAnd']))
+                        {
+                            $appendTempStructureAsAnd = $searchFormStructure['appendStructureAsAnd'];
+                        }
+                        else
+                        {
+                            $appendTempStructureAsAnd = false;
+                        }
+                        static::populateClausesAndStructureForAttribute($searchFormAttributeName,
+                                                                        $searchFormStructure['value'],
+                                                                        $adaptedMetadataClauses,
+                                                                        $clauseCount,
+                                                                        $tempStructure,
+                                                                        $appendTempStructureAsAnd,
+                                                                        $operatorType);
                     }
-                    else
-                    {
-                        $operatorType = null;
-                    }
-                    if(isset($searchFormStructure['appendStructureAsAnd']))
-                    {
-                        $appendTempStructureAsAnd = $searchFormStructure['appendStructureAsAnd'];
-                    }
-                    else
-                    {
-                        $appendTempStructureAsAnd = false;
-                    }
-                    static::populateClausesAndStructureForAttribute($searchFormAttributeName,
-                                                                    $searchFormStructure['value'],
-                                                                    $adaptedMetadataClauses,
-                                                                    $clauseCount,
-                                                                    $tempStructure,
-                                                                    $appendTempStructureAsAnd,
-                                                                    $operatorType);
                 }
             }
             if ($tempStructure != null)

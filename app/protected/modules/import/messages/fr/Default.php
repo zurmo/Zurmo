@@ -45,19 +45,17 @@
             => 'Félicitations!  Votre import est complet.  Voici un sommaire des résultats.',
         'Default Name'
             => 'Nom par défaut',
-        'Default Value'
-            => 'Valeur par défaut',
         'Delimiter'
             => 'Délimiteur',
         'Do not map this field'
             => 'Ne pas mapper ce champs',
         'Email was too long.'
             => 'Email trop long.',
-        'Enclosure'
+        'Qualifier'
             => 'Délimiteur de texte',
         'Error: Invalid delimiter'
             => 'Erreur: délimiteur invalide',
-        'Error: Invalid enclosure'
+        'Error: Invalid qualifier'
             => 'Erreur: qualificateur invalide',
         'Failed to create temporary database table from CSV.'
             => 'Impossible de créer une table temporaire du fichier CSV',
@@ -95,32 +93,32 @@
             => 'Assistant d\'importation: Étape 6 sur 6',
         'Importing data...'
             => 'Importation en progrès',
-        'Invalid check box format'
-            => 'La valeur du checkbox n\'est pas valide',
-        'Invalid date format'
-            => 'La date indiquée n\'est pas valide',
-        'Invalid datetime format'
-            => 'La valeur date/heure n\'est pas valide',
-        'Invalid email format'
-            => 'La valeur email indiquée n\'est pas valide',
-        'Invalid integer format'
-            => 'La valeur du nombre entier n\'est pas valide',
-        'Invalid number format'
-            => 'La valeur numérique indiquée n\'est pas valide',
-        'Invalid url format'
-            => 'URL invalide',
-        'Last name specified is too long.'
+        'Invalid check box format.'
+            => 'La valeur du checkbox n\'est pas valide.',
+        'Invalid date format.'
+            => 'La date indiquée n\'est pas valide.',
+        'Invalid datetime format.'
+            => 'La valeur date/heure n\'est pas valide.',
+        'Invalid email format.'
+            => 'La valeur email indiquée n\'est pas valide.',
+        'Invalid integer format.'
+            => 'La valeur du nombre entier n\'est pas valide.',
+        'Invalid number format.'
+            => 'La valeur numérique indiquée n\'est pas valide.',
+        'Invalid url format.'
+            => 'URL invalide.',
+        'Last name specified is too large.'
             => 'Le Nom contient trop de caractères',
         'Mapping Data'
-            => '??',
+            => 'Mappage des données',
         'Model Permissions'
-            => '??',
+            => 'Modèle d\'autorisations',
         'Module To Import To'
             => 'Module à importer',
         'Next'
             => 'Suivant',
         'Pick list is missing corresponding custom field data.'
-            => '??',
+            => 'La liste déroulante manque les données correspondantes personnalisés',
         'Pick list value required, but missing.'
             => 'La valeur de la liste déroulante est obligatoire',
         'Please map the fields you would like to import.'
@@ -129,14 +127,12 @@
             => 'Veuillez télécharger un CSV',
         'Please select the module you would like to import to:'
             => 'Veuillez sélectionner le module d\'importation',
-        'Prev'
-            => 'Préc',
         'Previous'
             => 'Précédent',
         'Processing'
             => 'Veuillez patienter, importation en cours',
         'Record saved correctly.'
-            => '??',
+            => 'Enregistrement sauvegardé correctement',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'
             => 'Enregistrement(s) {startItemCount} - {endItemCount} de {totalItemCount}',
         'Records created: {created}'

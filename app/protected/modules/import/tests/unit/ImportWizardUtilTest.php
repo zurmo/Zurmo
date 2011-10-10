@@ -81,7 +81,7 @@
             $compareDataToSerialize                 = array( 'importRulesType' => 'xx',
                                                              'fileUploadData'       => array('aa' => 'bb'),
                                                              'rowColumnDelimiter'  => ',', // Not Coding Standard
-                                                             'rowColumnEnclosure'  => "'",
+                                                             'rowColumnEnclosure'  => '"',
                                                              'firstRowIsHeaderRow'  => true,
                                                              'explicitReadWriteModelPermissions'     => null,
                                                              'mappingData'          => array('xx' => 'yy'),

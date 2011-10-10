@@ -51,8 +51,8 @@
 
         public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
-            $attributeNames = $this->getModelAttributeNames();
-            assert('count$attributeNames) == 1');
+            $attributeNames = $this->getRealModelAttributeNames();
+            assert('count($attributeNames) == 1');
             assert('$attributeNames[0] == "hash"');
             assert('is_array($columnMappingData)');
             $modelClassName = $this->getModelClassName();

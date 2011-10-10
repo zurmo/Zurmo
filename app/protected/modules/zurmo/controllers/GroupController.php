@@ -191,9 +191,9 @@
                 $castedPostData = RightsFormUtil::typeCastPostData($_POST[$postVariableName]);
                 if (RightsFormUtil::setRightsFromCastedPost($castedPostData, $group))
                 {
+                    PermissionsCache::forgetAll();
                     $group->forget();
                     $group      = Group::getById(intval($id));
-                    $rightsData = RightsUtil::getAllModuleRightsDataByPermitable($group);
                     Yii::app()->user->setFlash('notification', yii::t('Default', 'Rights Saved Successfully.'));
                     $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                     Yii::app()->end(0, false);
@@ -229,6 +229,7 @@
                 {
                     if (PoliciesFormUtil::setPoliciesFromCastedPost($castedPostData, $group))
                     {
+                        PermissionsCache::forgetAll();
                         Yii::app()->user->setFlash('notification',
                             yii::t('Default', 'Policies Saved Successfully.')
                         );

@@ -35,6 +35,8 @@
             => '??',
         'Create User'
             => '??',
+        'Hash'
+            => '??',
         'Manage Users'
             => '??',
         'Manager'

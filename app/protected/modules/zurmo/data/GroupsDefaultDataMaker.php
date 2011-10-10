@@ -33,6 +33,7 @@
         {
             $everyone   = Group::getByName(Group::EVERYONE_GROUP_NAME);
             $everyone->setRight('UsersModule',         UsersModule::RIGHT_LOGIN_VIA_WEB);
+            $everyone->setRight('UsersModule',         UsersModule::RIGHT_LOGIN_VIA_MOBILE);
             $everyone->setRight('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS, Right::ALLOW);
             $everyone->setRight('AccountsModule',      AccountsModule::RIGHT_CREATE_ACCOUNTS, Right::ALLOW);
             $everyone->setRight('AccountsModule',      AccountsModule::RIGHT_DELETE_ACCOUNTS, Right::ALLOW);

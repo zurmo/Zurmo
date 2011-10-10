@@ -35,6 +35,8 @@
             => 'Confirmar Contraseña',
         'Create User'
             => 'Crear Usario',
+        'Hash'
+            => '??',
         'Manage Users'
             => 'Administrar Usarios',
         'Manager'

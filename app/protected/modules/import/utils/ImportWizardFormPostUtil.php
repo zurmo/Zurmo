@@ -45,8 +45,11 @@
             {
                 if (!isset($mappingData['mappingRulesData']))
                 {
-                    continue;
+                    $postMappingData[$columnName]['mappingRulesData'] = array();
                 }
+            }
+            foreach ($postMappingData as $columnName => $mappingData)
+            {
                 foreach ($mappingData['mappingRulesData'] as $mappingRuleFormClassName => $mappingRuleFormData)
                 {
                     $model = MappingRuleFormAndElementTypeUtil::
