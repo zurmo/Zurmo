@@ -261,6 +261,10 @@
                         break;
                     case 'CDefaultValueValidator':
                     case 'RedBeanModelDefaultValueValidator':
+                        if($validator->value === null || $validator->value === '')
+                        {
+                            throw new NotSupportedException();
+                        }
                         $model->$memberName = $validator->value;
                         $memberSet = true;
                         break;
