@@ -38,7 +38,7 @@
                     array(
                         ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, edit',
                         'moduleClassName' => get_class($this->getModule()),
-                        'viewClassName'   => 'LeadsEditAndDetailsView',
+                        'viewClassName'   => 'LeadEditAndDetailsView',
                    ),
                )
             );

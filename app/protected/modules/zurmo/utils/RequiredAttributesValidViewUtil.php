@@ -67,7 +67,7 @@
         {
             assert('is_string($moduleClassName)');
             assert('is_string($viewClassName)');
-            if(static::isViewMissingRequiredAttributes($moduleClassName, $viewClassName))
+            if(!static::isViewMissingRequiredAttributes($moduleClassName, $viewClassName))
             {
                 return;
             }
@@ -81,7 +81,7 @@
 
         public static function resolveToSetAsMissingRequiredAttributesByModelClassName($modelClassName)
         {
-            assert('is_string($melClassName)');
+            assert('is_string($modelClassName)');
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -96,6 +96,7 @@
                             if (is_subclass_of($viewClassName, 'MetadataView') && !$classToEvaluate->isAbstract() &&
                                 $viewClassName::getDesignerRulesType() != null)
                             {
+
                                 $designerRules = DesignerRulesFactory::createDesignerRulesByView($viewClassName);
                                 if($designerRules->allowEditInLayoutTool() &&
                                    $designerRules->requireAllRequiredFieldsInLayout())

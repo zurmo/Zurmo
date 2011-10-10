@@ -60,5 +60,88 @@
         }
 
         //todo: test lead conversion.
+
+
+
+        public function testUserHasNoAccessToAccountsAndTriesToConvertWhenAccountIsOptional()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $belina = UserTestHelper::createBasicUser('belina');
+            $lead = LeadTestHelper::createLeadbyNameForOwner('BelinaLead1', $belina);
+            $belina->setRight   ('LeadsModule', LeadsModule::RIGHT_CONVERT_LEADS, Right::ALLOW);
+            $belina->setRight   ('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS, Right::ALLOW);
+            $belina->setRight   ('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS, Right::ALLOW);
+            $belina->setRight   ('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS, Right::ALLOW);
+            $this->assertTrue($belina->save());
+            $this->assertEquals(Right::DENY, $belina->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS));
+            $belina = $this->logoutCurrentUserLoginNewUserAndGetByUsername('belina');
+
+            //Now check that when belina tries to convert a lead, it will automatically make it an account.
+            $convertToAccountSetting = LeadsModule::getConvertToAccountSetting();
+            $this->assertTrue($convertToAccountSetting == LeadsModule::CONVERT_NO_ACCOUNT ||
+                              $convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED);
+
+            $oldStateValue = $lead->state->name;
+            $this->setGetArray (array('id' => $lead->id));
+            $this->runControllerWithRedirectExceptionAndGetContent('leads/default/convert');
+
+            $contact = Contact::getById($lead->id);
+            $this->assertNotEquals($oldStateValue, $contact->state->name);
+        }
+
+        /**
+         * @depends testUserHasNoAccessToAccountsAndTriesToConvertWhenAccountIsOptional
+         */
+        public function testUserCanAccessAccountsButCannotCreateAccountShowConvertAction()
+        {
+            $super  = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $belina = User::getByUserName('belina');
+            $lead   = LeadTestHelper::createLeadbyNameForOwner('BelinaLead1', $belina);
+            $belina->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS, Right::ALLOW);
+            $this->assertTrue($belina->save());
+            $belina = $this->logoutCurrentUserLoginNewUserAndGetByUsername('belina');
+            $convertToAccountSetting = LeadsModule::getConvertToAccountSetting();
+            $this->assertEquals(Right::DENY, $belina->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS));
+
+            //The convert view should load up normally, except the option to create an account will not be pressent.
+            //This tests that the view does in fact come up.
+            $this->setGetArray (array('id' => $lead->id));
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/convert');
+        }
+
+        /**
+         * @depends testUserCanAccessAccountsButCannotCreateAccountShowConvertAction
+         */
+        public function testLeadConversionMisconfigurationScenarios()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $bubby = UserTestHelper::createBasicUser('bubby');
+            $lead  = LeadTestHelper::createLeadbyNameForOwner('BelinaLead1', $bubby);
+            $bubby->setRight   ('LeadsModule', LeadsModule::RIGHT_CONVERT_LEADS, Right::ALLOW);
+            $bubby->setRight   ('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS, Right::ALLOW);
+            $this->assertTrue($bubby->save());
+
+            //Scenario #1 - User does not have access to contacts
+            $this->assertEquals(Right::DENY, $bubby->getEffectiveRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS));
+            $bubby = $this->logoutCurrentUserLoginNewUserAndGetByUsername('bubby');
+            //View will not show up properly.
+            $this->setGetArray (array('id' => $lead->id));
+            $this->runControllerWithExitExceptionAndGetContent('leads/default/convert');
+
+
+            //Scenario #2 - User cannot access accounts and an account is required for conversion
+            $bubby->setRight   ('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS, Right::ALLOW);
+            $bubby->setRight   ('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS, Right::ALLOW);
+            $this->assertTrue($bubby->save());
+            $metadata = LeadsModule::getMetadata();
+            $metadata['global']['convertToAccountSetting'] = LeadsModule::CONVERT_ACCOUNT_REQUIRED;
+            LeadsModule::setMetadata($metadata);
+
+            //At this point because the account is required, the view will not come up properly.
+            $this->setGetArray (array('id' => $lead->id));
+            $content = $this->runControllerWithExitExceptionAndGetContent('leads/default/convert');
+            $this->assertFalse(strpos($content, 'Conversion is set to require an account. Currently you do not have access to the accounts module.') === false);
+        }
     }
 ?>

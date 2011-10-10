@@ -35,7 +35,6 @@
          * if present, will alert the user that there is a misconfiguration and they should contact their administrator.
          * Scenario #1 - User does not have access to contacts
          * Scenario #2 - User cannot access accounts and an account is required for conversion
-         * Scenario #3 -
          */
         public static function resolveCanUserProperlyConvertLead($userCanAccessContacts, $userCanAccessAccounts,
                                                                  $convertToAccountSetting)
