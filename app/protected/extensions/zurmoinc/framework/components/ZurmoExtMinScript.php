@@ -36,72 +36,24 @@
          * Used to avoid call to ExtMinScript::init() function
          * @see ExtMinScript::init()
          */
-        public function init()
-        {
+        public function init() {
             CApplicationComponent::init();
-        }
-
-        /**
-         * Initialize groupsConfig.php file that is used to store group information.
-         * Latter configured groupsConfig.php is used by minify script(extensions/minscript/vendors/minify)
-         * @see ExtMinScript::init()
-         * @throws CException
-         */
-        public function initializeGroups()
-        {
-            $minifyDir = dirname(dirname(__FILE__)) . '/../../minscript/vendors/minify/min';
-            $this->_minifyDir = $minifyDir;
+            $minifyDir = dirname(dirname(__FILE__)) . '/vendors/minify/min';
+            $this -> _minifyDir = $minifyDir;
             if (!extension_loaded('apc'))
             {
-                $cachePath = Yii::app() -> runtimePath . '/minScript/cache';
-                if (!is_dir($cachePath))
-                {
-                    mkdir($cachePath, 0777, true);
-                } elseif (!is_writable($cachePath))
-                {
-                    throw new FileNotWriteableException('ZurmoExtMinScript: ' . $cachePath . ' is not writable.');
-                }
+              $cachePath = Yii::app() -> runtimePath . '/minScript/cache';
+              if (!is_dir($cachePath))
+              {
+                  mkdir($cachePath, 0777, true);
+              }
+              elseif (!is_writable($cachePath))
+              {
+                  throw new CException('ext.minScript: ' . $cachePath . ' is not writable.');
+              }
             }
-            if (!is_writable($minifyDir . '/groupsConfig.php'))
-            {
-                throw new FileNotWriteableException('ZurmoExtMinScript: ' . $minifyDir . '/groupsConfig.php is not writable.');
-            }
-            $this->loadGroups();
             $this -> _processGroupMap();
             $this -> _readOnlyGroupMap = true;
-        }
-
-        /**
-         * Define and load groups
-         */
-        public function loadGroups()
-        {
-            $themePath = $this->getThemePath();
-            $groupMap = array(
-                'css' => array(
-                    $themePath . '/css/screen.css',
-                    $themePath . '/css/theme.css',
-                    $themePath . '/css/cgrid-view.css',
-                    $themePath . '/css/designer.css',
-                    $themePath . '/css/form.css',
-                    $themePath . '/css/jquery-ui.css',
-                    $themePath . '/css/main.css',
-                    $themePath . '/css/mbmenu.css',
-                    $themePath . '/css/widget-juiportlets.css',
-                ),
-                'js' => array(
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.min.js',
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.ba-bbq.js',
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-1.0.0-rc3.min.js',
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/fusionChart/jquery.fusioncharts.js',
-
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/rssReader/jquery.zrssfeed.min.js',
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/juiportlets/JuiPortlets.js',
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/jnotify/jquery.jnotify.js',
-                    INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/designer/Designer.js',
-                )
-            );
-            $this->setGroupMap($groupMap);
         }
 
         /**
@@ -119,6 +71,15 @@
         public function getThemePath()
         {
             return $this->themePath;
+        }
+
+        /**
+         * We don't need to load data into groupsConfig.php
+         * @see ExtMinScript::_processGroupMap()
+         */
+        protected function _processGroupMap() {
+            $groupMap = $this->getGroupMap();
+            $this -> setGroupMap($groupMap);
         }
     }
 ?>

@@ -225,9 +225,6 @@
 
             if (MINIFY_SCRIPTS)
             {
-                Yii::app()->minScript->setThemePath(INSTANCE_ROOT . DIRECTORY_SEPARATOR . $defaultTheme);
-                Yii::app()->minScript->initializeGroups();
-
                 Yii::app()->minScript->generateScriptMap('css');
                 Yii::app()->minScript->generateScriptMap('js');
             }
