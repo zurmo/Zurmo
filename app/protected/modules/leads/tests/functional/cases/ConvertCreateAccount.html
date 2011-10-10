@@ -33,8 +33,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>LeadsSearchForm_officePhone</td>
-	<td>456-777-6655</td>
+	<td>LeadsSearchForm_fullName</td>
+	<td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -42,9 +42,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForText</td>
-	<td>link=Silly Sally</td>
-	<td>Silly Sally</td>
+	<td>link=Silly Sally ${randomSuffix}</td>
+	<td>Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>setSpeed</td>
@@ -53,7 +58,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Silly Sally</td>
+	<td>link=Silly Sally ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,7 +69,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Silly Sally</td>
+	<td>exact:Leads: Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -75,11 +80,6 @@
 	<td>waitForPageToLoad</td>
 	<td></td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>Account_name</td>
-	<td>Rabbit Technology</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -134,7 +134,7 @@
 <tr>
 	<td>type</td>
 	<td>Account_name</td>
-	<td>RabbitLand</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>waitForPageToLoad</td>
@@ -153,8 +153,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=RabbitLand</td>
-	<td>RabbitLand</td>
+	<td>link=my account ${randomSuffix}</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -163,18 +163,18 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=RabbitLand</td>
+	<td>link=my account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Accounts: RabbitLand</td>
+	<td>exact:Accounts: my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>RabbitLand</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>

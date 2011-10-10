@@ -17,6 +17,41 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>index.php?r=contacts/default</td>
 	<td></td>
@@ -39,7 +74,7 @@
 <tr>
 	<td>type</td>
 	<td>Contact_lastName</td>
-	<td>Jane</td>
+	<td>Jane ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -102,24 +137,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Sally Smith</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Sally Smith</td>
+	<td>link=Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Contact_owner_name</td>
-	<td>Sally Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -197,14 +247,29 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>Account[name]</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=Primatech</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=my account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Contact_account_name</td>
-	<td>Primatech</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -218,13 +283,13 @@
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Contacts: Jinny Jane</td>
+	<td>Contacts: Jinny Jane ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mrs Jinny Jane</td>
+	<td>Mrs Jinny Jane ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -243,8 +308,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Sally Smith</td>
-	<td>Sally Smith</td>
+	<td>link=Sam Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -253,8 +318,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Primatech</td>
-	<td>Primatech</td>
+	<td>link=my account ${randomSuffix}</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>

@@ -44,7 +44,7 @@
 <tr>
 	<td>type</td>
 	<td>Contact_lastName</td>
-	<td>Sanny</td>
+	<td>Sanny ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -87,24 +87,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Sally Smith</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Sally Smith</td>
+	<td>link=Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Contact_owner_name</td>
-	<td>Sally Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -214,12 +229,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Sizzy Sanny</td>
+	<td>exact:Leads: Sizzy Sanny ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mrs Sizzy Sanny</td>	
+	<td>Mrs Sizzy Sanny ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -268,8 +283,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Sally Smith</td>
-	<td>Sally Smith</td>
+	<td>link=Sam Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -293,8 +308,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>LeadsSearchForm_officePhone</td>
-	<td>456-777-6654</td>
+	<td>LeadsSearchForm_fullName</td>
+	<td>Sanny ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -302,9 +317,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForText</td>
-	<td>link=Sizzy Sanny</td>
-	<td>Sizzy Sanny</td>
+	<td>link=Sizzy Sanny ${randomSuffix}</td>
+	<td>Sizzy Sanny ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>setSpeed</td>
@@ -313,7 +333,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Sizzy Sanny</td>
+	<td>link=Sizzy Sanny ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -347,19 +367,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>link=Primatech</td>
-	<td>Primatech</td>
+	<td>waitForTextPresent</td>
+	<td>Account Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[@id='search-form']/table/tbody[1]/tr/td[1]/input</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Primatech</td>
+	<td>//form[@id='search-form']/table/tbody[3]/tr/td/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=my account ${randomSuffix}</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=my account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>AccountSelectForm_accountName</td>
-	<td>Primatech</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -379,12 +414,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>Contacts: Sizzy Sanny</td>
+	<td>Contacts: Sizzy Sanny ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Primatech</td>
-	<td>Primatech</td>
+	<td>link=my account ${randomSuffix}</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 </tbody></table>
 </body>

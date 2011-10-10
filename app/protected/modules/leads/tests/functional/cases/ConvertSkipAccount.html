@@ -44,7 +44,7 @@
 <tr>
 	<td>type</td>
 	<td>Contact_lastName</td>
-	<td>Dunes</td>
+	<td>Dunes ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -87,24 +87,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Sally Smith</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Sally Smith</td>
+	<td>link=Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Contact_owner_name</td>
-	<td>Sally Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -209,12 +224,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Sunny Dunes</td>
+	<td>exact:Leads: Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mrs Sunny Dunes</td>	
+	<td>Mrs Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -263,8 +278,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Sally Smith</td>
-	<td>Sally Smith</td>
+	<td>link=Sam Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -288,8 +303,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>LeadsSearchForm_officePhone</td>
-	<td>456-777-6655</td>
+	<td>LeadsSearchForm_fullName</td>
+	<td>Dunes ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -297,9 +312,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForText</td>
-	<td>link=Sunny Dunes</td>
-	<td>Sunny Dunes</td>
+	<td>link=Sunny Dunes ${randomSuffix}</td>
+	<td>Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>setSpeed</td>
@@ -308,7 +328,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Sunny Dunes</td>
+	<td>link=Sunny Dunes ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -349,7 +369,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Contacts: Sunny Dunes</td>
+	<td>exact:Contacts: Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>

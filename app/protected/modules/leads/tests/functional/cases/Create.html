@@ -18,6 +18,41 @@
 </tr>
 <tr>
 	<td>open</td>
+	<td>index.php?r=accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
 	<td>index.php?r=leads/default</td>
 	<td></td>
 </tr>
@@ -39,7 +74,7 @@
 <tr>
 	<td>type</td>
 	<td>Contact_lastName</td>
-	<td>Sally</td>
+	<td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -82,8 +117,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
 	<td></td>
 </tr>
 <tr>
@@ -204,12 +254,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Silly Sally</td>
+	<td>exact:Leads: Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mrs Silly Sally</td>
+	<td>Mrs Silly Sally ${randomSuffix}</td>	
 </tr>
 <tr>
 	<td>assertText</td>
