@@ -32,45 +32,69 @@
         /**
          * Given a file resource, convert the file into a database table based on the table name provided.
          * Assumes the file is a csv.
-         * @param resource $fileHandle
+         * @param string $csvFilePath
          * @param string $tableName
          * @return true on success.
          */
-        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName, $delimiter = ',', // Not Coding Standard
+        public static function makeDatabaseTableByFilePathAndTableName($csvFilePath, $tableName, $delimiter = ',', // Not Coding Standard
                                                                          $enclosure = "'")
         {
-            assert('gettype($fileHandle) == "resource"');
             assert('is_string($tableName)');
             assert('$tableName == strtolower($tableName)');
             assert('$delimiter != null && is_string($delimiter)');
             assert('$enclosure != null && is_string($enclosure)');
-            $freezeWhenComplete = false;
-            if (RedBeanDatabase::isFrozen())
+
+            //Replace /r/n in file with /n.
+            $fileContent = file_get_contents($csvFilePath);
+            $fileContent = str_replace("\r\n" ,"\n", trim($fileContent));
+            file_put_contents($csvFilePath, $fileContent);
+
+            $fileHandle  = fopen($csvFilePath, 'r');
+            assert('gettype($fileHandle) == "resource"');
+
+            $sql = "drop table if exists $tableName";
+            R::exec($sql);
+
+            if ($fileHandle !== false)
             {
-                RedBeanDatabase::unfreeze();
-                $freezeWhenComplete = true;
-            }
-            R::exec("drop table if exists $tableName");
-            while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
-            {
-                if (count($data) > 0)
+                $freezeWhenComplete = false;
+                if (RedBeanDatabase::isFrozen())
+                {
+                    RedBeanDatabase::unfreeze();
+                    $freezeWhenComplete = true;
+                }
+
+                $columns = array();
+                $data = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
+                if (count($data) > 0 && $data !== false)
                 {
                     $newBean = R::dispense($tableName);
                     foreach ($data as $columnId => $value)
                     {
                         $columnName = 'column_' . $columnId;
-                        $newBean->{$columnName} = $value;
+                        $newBean->{$columnName} = str_repeat(' ', 256);
+                        $columns[] = $columnName;
                     }
                     $newBean->status             = null;
                     $newBean->serializedmessages = null;
+
                     R::store($newBean);
-                    unset($newBean);
+                    R::trash($newBean);
+                    R::exec("TRUNCATE TABLE $tableName");
+
+                    DatabaseCompatibilityUtil::loadDataFromFileIntoDatabase($csvFilePath, $tableName, $delimiter,
+                                                                            $enclosure, $columns);
+                }
+
+                self::optimizeTable($tableName);
+                if ($freezeWhenComplete)
+                {
+                    RedBeanDatabase::freeze();
                 }
             }
-            self::optimizeTable($tableName);
-            if ($freezeWhenComplete)
+            else
             {
-                RedBeanDatabase::freeze();
+                return false;
             }
             return true;
         }
