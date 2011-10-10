@@ -595,7 +595,7 @@
          */
         public static function writeConfiguration($instanceRoot,
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
-                                                  $memcacheHost = null, $memcachePort = null,
+                                                  $memcacheHost = null, $memcachePort = null, $minifyScripts = true,
                                                   $language,
                                                   $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
         {
@@ -619,7 +619,6 @@
             copy($debugConfigFileDist, $debugConfigFile);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
-
             $contents = file_get_contents($debugConfigFile);
             $contents = preg_replace('/\$debugOn\s*=\s*true;/',
                                      '$debugOn = false;',
@@ -627,6 +626,12 @@
             $contents = preg_replace('/\$forceNoFreeze\s*=\s*true;/',
                                      '$forceNoFreeze = false;',
                                      $contents);
+            if ($minifyScripts)
+            {
+                $contents = preg_replace('/\$minifyScripts\s*=\s*false;/',
+                                         '$minifyScripts = true;',
+                                         $contents);
+            }
             if ($memcacheHost == null && $memcachePort == null)
             {
                 $contents = preg_replace('/\$memcacheLevelCaching\s*=\s*true;/',
@@ -767,6 +772,7 @@
                                             $form->databasePassword,
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
+                                            true,
                                             Yii::app()->language,
                                             $perInstanceFilename,
                                             $debugFilename);

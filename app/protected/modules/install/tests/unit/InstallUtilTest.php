@@ -420,7 +420,7 @@
             {
                 InstallUtil::writeConfiguration($instanceRoot,
                                                 'mysql', 'databases.r-us.com', 'wacky', 'wacko', 'wacked',
-                                                'memcache.jason.com', 5432,
+                                                'memcache.jason.com', 5432, false,
                                                 'es',
                                                 'perInstanceTest.php', 'debugTest.php');
                 $debugConfiguration       = file_get_contents($debugConfigFile);

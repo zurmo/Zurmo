@@ -76,7 +76,7 @@
     // Turn it on for production websites, because it optimize and combine javascript/css
     // files, so page can loads much faster
     // Check it in as true!
-    $minifyScripts = true;
+    $minifyScripts = false;
 
     // Set information related to function tests
     // 1. $seleniumServerPath is path to selenium server(selenium jar file)
