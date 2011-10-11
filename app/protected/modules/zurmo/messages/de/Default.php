@@ -197,7 +197,7 @@
             => '??',
         'Inherited - Allow'
             => '??',
-        'Invalid currency code.'
+        'Invalid currency code'
             => '??',
         'Is Invalid'
             => '??',
@@ -252,8 +252,6 @@
         'Module Name - Singular (lowercase)'
             => '??',
         'Module Permissions'
-            => '??',
-        'Munge rebuild complete.'
             => '??',
         'My List Configuration View'
             => '??',
@@ -361,8 +359,6 @@
             => '??',
         'Super Administrators'
             => '???',
-        'The currency code is invalid'
-            => '??',
         'The file did not exist'
             => '??',
         'There are no recently viewed items.'

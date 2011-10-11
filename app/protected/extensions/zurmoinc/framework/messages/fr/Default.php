@@ -30,7 +30,7 @@
     // DON'T MAKE A MESS!
     return array(
         '(None)'
-            => '--Aucun--',
+            => '(Aucun)',
         'Advanced Search'
             => 'Recherche avancée',
         'All'
@@ -61,10 +61,10 @@
             => 'Date',
         'Date Time'
             => 'Date/Heure',
-        'Delete'
-            => 'Supprimer',
         'Default Value'
             => 'Valeur par défault',
+        'Delete'
+            => 'Supprimer',
         'Detail View Only'
             => 'Vue détaillée uniquement',
         'Details'

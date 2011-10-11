@@ -107,7 +107,7 @@
             => 'La valeur numérique indiquée n\'est pas valide.',
         'Invalid url format.'
             => 'URL invalide.',
-        'Last name specified is too large.'
+        'Last name specified is too long.'
             => 'Le Nom contient trop de caractères',
         'Mapping Data'
             => 'Mappage des données',

@@ -253,8 +253,6 @@
             => 'Nom du module - au singulier (miniscule)',
         'Module Permissions'
             => 'Permissions',
-        'Munge rebuild complete.'
-            => 'La permission de sécurité de vue liste a été reconstruite.',
         'My List Configuration View'
             => 'Ma Vue Liste Configuration',
         'Never'
@@ -361,8 +359,6 @@
             => 'Mise à jour réussie',
         'Super Administrators'
             => 'Super Administrateur',
-        'The currency code is invalid'
-            => 'Le code de devise est invalide.',
         'The file did not exist'
             => 'Le fichier n\'existe pas.',
         'There are no recently viewed items.'

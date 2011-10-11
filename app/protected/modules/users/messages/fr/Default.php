@@ -54,7 +54,7 @@
         'The time zone is invalid.'
             => 'Le fuseau horaire indiqué est invalide',
         'The username is too short. Minimum length is {minimumLength}.'
-            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum {minimumLength} characteres ',
+            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum {minimumLength} charactères ',
         'Time Zone'
             => 'Fuseau Horaire',
         'User'
