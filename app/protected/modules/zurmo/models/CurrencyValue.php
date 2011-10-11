@@ -49,7 +49,7 @@
         {
             if (trim($this->value) == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $this->value;
         }

@@ -40,11 +40,11 @@
 
             if (empty($attributeForm->attributeName))
             {
-                $tileBarView = new TitleBarView(yii::t('Default', 'Create Field'), $attributeForm::getAttributeTypeDisplayName());
+                $tileBarView = new TitleBarView(Yii::t('Default', 'Create Field'), $attributeForm::getAttributeTypeDisplayName());
             }
             else
             {
-                $tileBarView = new TitleBarView(yii::t('Default', 'Edit Field'), $attributeForm);
+                $tileBarView = new TitleBarView(Yii::t('Default', 'Edit Field'), $attributeForm);
             }
             $this->setView($tileBarView, 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);

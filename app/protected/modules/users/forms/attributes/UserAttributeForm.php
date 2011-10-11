@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'User');
+            return Yii::t('Default', 'User');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A user field');
+            return Yii::t('Default', 'A user field');
         }
 
         public function getAttributeTypeName()

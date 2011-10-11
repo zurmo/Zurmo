@@ -266,12 +266,12 @@
             if ($contact->save())
             {
                 Yii::app()->user->setFlash('notification',
-                    yii::t('Default', 'Lead successfully converted.')
+                    Yii::t('Default', 'Lead successfully converted.')
                 );
                 $this->redirect(array('/contacts/default/details', 'id' => $contact->id));
             }
             Yii::app()->user->setFlash('notification',
-                yii::t('Default', 'Lead was not converted. An error occured.')
+                Yii::t('Default', 'Lead was not converted. An error occured.')
             );
             $this->redirect(array('default/details', 'id' => $contact->id));
             Yii::app()->end(0, false);

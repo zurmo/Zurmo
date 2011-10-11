@@ -56,17 +56,17 @@
             if ($expiresValue == Policy::YES)
             {
                 $expiryValue = $this->model->{$this->getExpiryAttributeName()};
-                $content    .= Yii::app()->format->text(yii::t('Default', 'Yes'));
+                $content    .= Yii::app()->format->text(Yii::t('Default', 'Yes'));
                 $content    .= ',&#160;';
-                $content    .= Yii::app()->format->text(yii::t('Default', 'every'));
+                $content    .= Yii::app()->format->text(Yii::t('Default', 'every'));
                 $content    .= '&#160;';
                 $content    .= $expiryValue;
                 $content    .= '&#160;';
-                $content    .= Yii::app()->format->text(yii::t('Default', 'day(s)'));
+                $content    .= Yii::app()->format->text(Yii::t('Default', 'day(s)'));
             }
             elseif ($expiresValue == Policy::NO || $expiresValue == null)
             {
-                $content    .= Yii::app()->format->text(yii::t('Default', 'No'));
+                $content    .= Yii::app()->format->text(Yii::t('Default', 'No'));
             }
             else
             {

@@ -71,7 +71,7 @@
         {
             if (trim($this->code) == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $this->code;
         }

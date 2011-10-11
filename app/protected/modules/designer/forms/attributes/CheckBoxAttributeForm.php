@@ -35,12 +35,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Check Box');
+            return Yii::t('Default', 'Check Box');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A check box');
+            return Yii::t('Default', 'A check box');
         }
 
         public function getAttributeTypeName()

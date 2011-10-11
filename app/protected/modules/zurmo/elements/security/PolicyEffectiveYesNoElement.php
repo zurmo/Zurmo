@@ -39,11 +39,11 @@
             $value = $this->model->{$this->attribute};
             if ($value == Policy::NO || $value == Policy::NONE)
             {
-                return Yii::app()->format->text(yii::t('Default', 'No'));
+                return Yii::app()->format->text(Yii::t('Default', 'No'));
             }
             elseif ($value == Policy::YES)
             {
-                return Yii::app()->format->text(yii::t('Default', 'Yes'));
+                return Yii::app()->format->text(Yii::t('Default', 'Yes'));
             }
             throw new NotSupportedException();
         }

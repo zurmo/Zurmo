@@ -36,7 +36,7 @@
         )
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView(yii::t('Default', $moduleDisplayName), yii::t('Default', 'Layouts')), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Layouts')), 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
             $this->setView(new ModuleEditableMetadataCollectionView(
                 $controllerId,

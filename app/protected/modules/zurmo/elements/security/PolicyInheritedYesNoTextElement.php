@@ -34,11 +34,11 @@
         {
             if ($this->model->{$this->attribute} == Policy::YES)
             {
-                return Yii::app()->format->text(yii::t('Default', 'Inherited - Yes'));
+                return Yii::app()->format->text(Yii::t('Default', 'Inherited - Yes'));
             }
             else
             {
-                return Yii::app()->format->text(yii::t('Default', 'Inherited - No'));
+                return Yii::app()->format->text(Yii::t('Default', 'Inherited - No'));
             }
             throw new NotSupportedException();
         }

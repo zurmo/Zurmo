@@ -34,12 +34,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Integer');
+            return Yii::t('Default', 'Integer');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'An integer field');
+            return Yii::t('Default', 'An integer field');
         }
 
         public function getAttributeTypeName()

@@ -29,7 +29,7 @@
         public function __construct($controllerId, $moduleId, $module, $breadcrumbLinks)
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView($module::getModuleLabelByTypeAndLanguage('Plural'), yii::t('Default', 'Menu')), 0, 0);
+            $this->setView(new TitleBarView($module::getModuleLabelByTypeAndLanguage('Plural'), Yii::t('Default', 'Menu')), 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
             $this->setView(new ModulesMenuView($controllerId, $moduleId, $module), 2, 0);
         }

@@ -39,11 +39,11 @@
             $value = $this->model->{$this->attribute};
             if ($value == Right::DENY || $value == Right::NONE)
             {
-                return Yii::app()->format->text(yii::t('Default', 'Deny'));
+                return Yii::app()->format->text(Yii::t('Default', 'Deny'));
             }
             elseif ($value == Right::ALLOW)
             {
-                return Yii::app()->format->text(yii::t('Default', 'Allow'));
+                return Yii::app()->format->text(Yii::t('Default', 'Allow'));
             }
             throw new NotSupportedException();
         }

@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Radio Pick List');
+            return Yii::t('Default', 'Radio Pick List');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A radio button pick list');
+            return Yii::t('Default', 'A radio button pick list');
         }
 
         public function getAttributeTypeName()

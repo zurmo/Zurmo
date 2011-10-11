@@ -31,7 +31,7 @@
             $s = strval($this->value);
             if ($s == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $s;
         }

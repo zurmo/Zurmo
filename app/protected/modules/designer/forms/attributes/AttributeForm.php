@@ -74,7 +74,7 @@
             $attributeLabel = ModelFormAttributeLabelsUtil::getTranslatedAttributeLabelByLabels($this->attributeLabels);
             if ($attributeLabel == null)
             {
-                return yii::t('Default', '(Unnamed)');
+                return Yii::t('Default', '(Unnamed)');
             }
             return $attributeLabel;
         }
@@ -84,10 +84,10 @@
             return array(
                 array('attributeName', 'required'),
                 array('attributeName', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/', // Not Coding Standard
-                                                'message' =>  yii::t('Default', 'Name must not contain spaces or special characters'),
+                                                'message' =>  Yii::t('Default', 'Name must not contain spaces or special characters'),
                 ),
                 array('attributeName', 'match', 'pattern' => '/^[a-z]/', // Not Coding Standard
-                                                'message' =>  yii::t('Default', 'First character must be a lower case letter'),
+                                                'message' =>  Yii::t('Default', 'First character must be a lower case letter'),
                 ),
                 array('attributeLabels',   'validateAttributeLabels'),
                 array('defaultValue',  'safe'),

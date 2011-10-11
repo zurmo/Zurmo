@@ -103,22 +103,22 @@
             $content .= '<div id="account-select-title" style="margin-bottom:5px;">';
             if($this->userCanCreateAccount)
             {
-                $content .= $createLink .  '&#160;' . yii::t('Default', 'or') . '&#160;';
+                $content .= $createLink .  '&#160;' . Yii::t('Default', 'or') . '&#160;';
             }
             $content .= '<b>' . Yii::t('Default', 'Select AccountsModuleSingularLabel',
                                     LabelUtil::getTranslationParamsForAllModules()) . '</b>&#160;';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $content .= yii::t('Default', 'or') . '&#160;' . $skipLink;
+                $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
             }
             $content .= '</div>';
             $content .= '<div id="account-create-title" style="margin-bottom:5px;">';
             $content .= '<b>' . Yii::t('Default', 'Create AccountsModuleSingularLabel',
                                     LabelUtil::getTranslationParamsForAllModules()) . '</b>&#160;';
-            $content .= yii::t('Default', 'or') . '&#160;' . $selectLink . '&#160;';
+            $content .= Yii::t('Default', 'or') . '&#160;' . $selectLink . '&#160;';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $content .= yii::t('Default', 'or') . '&#160;' . $skipLink;
+                $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
             }
             $content .= '</div>';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
@@ -126,9 +126,9 @@
                 $content .= '<div id="account-skip-title" style="margin-bottom:5px;">';
                 if($this->userCanCreateAccount)
                 {
-                    $content .= $createLink . '&#160;' . yii::t('Default', 'or') . '&#160;';
+                    $content .= $createLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
                 }
-                $content .= $selectLink . '&#160;' . yii::t('Default', 'or') . '&#160;';
+                $content .= $selectLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
                 $content .= '<b>' . Yii::t('Default', 'Skip AccountsModuleSingularLabel',
                                         LabelUtil::getTranslationParamsForAllModules()) . '</b>&#160;';
                 $content .= '</div>';

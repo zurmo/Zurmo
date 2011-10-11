@@ -92,7 +92,7 @@
                 $gridSize = 4;
             }
             parent::__construct($gridSize, 1);
-            $this->setView(new TitleBarView(yii::t('Default', 'LeadsModuleSingularLabel Conversion',
+            $this->setView(new TitleBarView(Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
                                                 LabelUtil::getTranslationParamsForAllModules()), $title), 0, 0);
             $this->setView(new LeadConvertActionsView($controllerId, $moduleId, $modelId, $convertToAccountSetting,
                                                       $userCanCreateAccount), 1, 0);

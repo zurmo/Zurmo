@@ -105,12 +105,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Pick List');
+            return Yii::t('Default', 'Pick List');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A pick list with specific values to select from');
+            return Yii::t('Default', 'A pick list with specific values to select from');
         }
 
         public function getAttributeTypeName()

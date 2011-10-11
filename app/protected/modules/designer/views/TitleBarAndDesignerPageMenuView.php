@@ -29,7 +29,7 @@
         public function __construct($controllerId, $moduleId)
         {
             parent::__construct(2, 1);
-            $this->setView(new TitleBarView(yii::t('Default', 'Designer Tool'), yii::t('Default', 'Modules')), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', 'Designer Tool'), Yii::t('Default', 'Modules')), 0, 0);
             $this->setView(new DesignerPageMenuView($controllerId, $moduleId), 1, 0);
         }
 

@@ -38,7 +38,7 @@
         )
         {
             parent::__construct(5, 1);
-            $this->setView(new TitleBarView(yii::t('Default', $moduleDisplayName), yii::t('Default', 'Standard Fields')), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Standard Fields')), 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
             $this->setView(new AttributesCollectionView(
                 $controllerId,
@@ -47,7 +47,7 @@
                 $moduleClassName,
                 $modelClassName
             ), 2, 0);
-            $this->setView(new TitleBarView(yii::t('Default', $moduleDisplayName), yii::t('Default', 'Custom Fields')), 3, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Custom Fields')), 3, 0);
             $this->setView(new CustomAttributesCollectionView(
                 $controllerId,
                 $moduleId,

@@ -60,7 +60,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 yii::t('Default', 'Fields'),
+                 Yii::t('Default', 'Fields'),
             );
             $overrideClassName = $moduleClassName . 'AttributesListView';
             $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
@@ -100,9 +100,9 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',    'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Fields') =>
+                Yii::t('Default', 'Fields') =>
                     array('default/attributesList', 'moduleClassName' => $_GET['moduleClassName']),
-                 yii::t('Default', 'Create Field'),
+                 Yii::t('Default', 'Create Field'),
             );
             $canvasView = new TitleBarAndAttributeCreateView(
                         $this->getId(),
@@ -145,7 +145,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Fields') =>
+                Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 strval($attributeForm),
             );
@@ -180,7 +180,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Fields') =>
+                Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 $attributeForm,
             );
@@ -256,7 +256,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 yii::t('Default', 'Layouts'),
+                 Yii::t('Default', 'Layouts'),
             );
             $canvasView = new TitleBarAndModuleEditableMetadataCollectionView(
                         $this->getId(),
@@ -323,7 +323,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Layouts') =>
+                Yii::t('Default', 'Layouts') =>
                     array('default/moduleLayoutsList',  'moduleClassName' => $_GET['moduleClassName']),
                  $designerRules->resolveDisplayNameByView($_GET['viewClassName']),
             );
@@ -360,7 +360,7 @@
             $breadcrumbLinks = array(
                 $module::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                    yii::t('Default', 'General Edit'),
+                    Yii::t('Default', 'General Edit'),
             );
             $canvasView = new TitleBarAndModuleEditView(
                         $this->getId(),

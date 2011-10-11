@@ -126,7 +126,7 @@
                 if (GroupUserMembershipFormUtil::setMembershipFromForm($membershipForm, $group))
                 {
                         Yii::app()->user->setFlash('notification',
-                            yii::t('Default', 'User Membership Saved Successfully.')
+                            Yii::t('Default', 'User Membership Saved Successfully.')
                         );
                         $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                         Yii::app()->end(0, false);
@@ -157,7 +157,7 @@
                 if (ModulePermissionsFormUtil::setPermissionsFromCastedPost($readyToSetPostData, $group))
                 {
                         Yii::app()->user->setFlash('notification',
-                            yii::t('Default', 'Module Permissions Saved Successfully.')
+                            Yii::t('Default', 'Module Permissions Saved Successfully.')
                         );
                         $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                         Yii::app()->end(0, false);
@@ -194,7 +194,7 @@
                     PermissionsCache::forgetAll();
                     $group->forget();
                     $group      = Group::getById(intval($id));
-                    Yii::app()->user->setFlash('notification', yii::t('Default', 'Rights Saved Successfully.'));
+                    Yii::app()->user->setFlash('notification', Yii::t('Default', 'Rights Saved Successfully.'));
                     $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                     Yii::app()->end(0, false);
                 }
@@ -231,7 +231,7 @@
                     {
                         PermissionsCache::forgetAll();
                         Yii::app()->user->setFlash('notification',
-                            yii::t('Default', 'Policies Saved Successfully.')
+                            Yii::t('Default', 'Policies Saved Successfully.')
                         );
                         $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                         Yii::app()->end(0, false);

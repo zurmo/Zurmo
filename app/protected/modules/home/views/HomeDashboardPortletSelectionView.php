@@ -65,7 +65,7 @@
                                     )
                                 );
                                 $onClick = 'window.location.href = "' . $url . '"';
-                                $content .= CHtml::button(yii::t('Default', 'Select'), array('onClick' => $onClick));
+                                $content .= CHtml::button(Yii::t('Default', 'Select'), array('onClick' => $onClick));
                                 $title    = $metadata['perUser']['title'];
                                 MetadataUtil::resolveEvaluateSubString($title);
                                 $content .= '&#160;' . $title;

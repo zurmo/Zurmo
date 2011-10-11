@@ -33,7 +33,7 @@
         protected function renderContent()
         {
             $content  = $this->renderViewToolBar(false);
-            $content .= $this->renderTreeMenu('role', 'roles', yii::t('Default', 'Roles'));
+            $content .= $this->renderTreeMenu('role', 'roles', Yii::t('Default', 'Roles'));
             return $content;
         }
 
