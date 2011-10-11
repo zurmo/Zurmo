@@ -71,7 +71,7 @@
          */
         protected function renderContent()
         {
-            return $this->renderTreeMenu('group', 'groups', yii::t('Default', 'Group'));
+            return $this->renderTreeMenu('group', 'groups', Yii::t('Default', 'Group'));
         }
 
         protected function makeTreeMenuNodeLink($label, $action, $groupId)

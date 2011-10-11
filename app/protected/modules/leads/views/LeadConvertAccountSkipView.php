@@ -62,11 +62,11 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr>';
-            $content .= '<th>' . yii::t('Default', 'Complete lead conversion without selecting or creating an account.') . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Complete lead conversion without selecting or creating an account.') . '</th>';
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= CHtml::submitButton(yii::t('Default', 'Complete Conversion'), array('name' => 'AccountSkip'));
+            $content .= CHtml::submitButton(Yii::t('Default', 'Complete Conversion'), array('name' => 'AccountSkip'));
             return $content;
         }
     }
