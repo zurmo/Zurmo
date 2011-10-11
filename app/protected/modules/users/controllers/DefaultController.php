@@ -183,7 +183,15 @@
                 {
                     if($userStatus != null)
                     {
-                        UserStatusUtil::resolveUserStatus($model, $userStatus);
+                        if($model instanceof UserPasswordForm)
+                        {
+                            UserStatusUtil::resolveUserStatus($model->getModel(), $userStatus);
+                        }
+                        else
+                        {
+                            UserStatusUtil::resolveUserStatus($model, $userStatus);
+                        }
+
                     }
                     $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                 }
