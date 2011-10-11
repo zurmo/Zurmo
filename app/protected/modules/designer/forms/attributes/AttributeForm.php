@@ -170,11 +170,6 @@
                 {
                     $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
                 }
-                if (!preg_match('/^[A-Za-z0-9_ ]+$/', $data[$language])) // Not Coding Standard
-                {
-                    $this->addError($attribute . '[' . $language . ']',
-                        Yii::t('Default', 'Label must not contain any special characters.'));
-                }
             }
         }
 

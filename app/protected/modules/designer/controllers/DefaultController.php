@@ -385,6 +385,7 @@
             $adapter = new ModuleFormToMetadataAdapter($module, $moduleForm);
             $adapter->setMetadata();
             Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
+            GeneralCache::forgetAll();
             $routeParams = array_merge($_GET, array(
                 'moduleClassName' => get_class($module),
                 0 => 'default/modulesMenu'
