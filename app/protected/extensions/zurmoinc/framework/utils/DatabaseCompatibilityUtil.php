@@ -243,6 +243,8 @@
                 throw new NotSupportedException();
             }
 
+            //fix for windows paths
+            $filePath = str_replace('\\', '\\\\', $filePath);
             $sql = "LOAD DATA LOCAL INFILE '$filePath'
                     INTO TABLE $tableName
                     FIELDS TERMINATED BY '$delimiter'
