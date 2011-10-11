@@ -147,7 +147,7 @@
             $anyValidatedFalse = false;
             foreach ($mappingDataMappingRuleFormsData as $notUsed => $mappingRuleFormsData)
             {
-                foreach ($mappingRuleFormsData as $mappingRuleFormData)
+                foreach ($mappingRuleFormsData as $a => $mappingRuleFormData)
                 {
                     assert('$mappingRuleFormData["mappingRuleForm"] instanceof MappingRuleForm');
                     if (!$mappingRuleFormData["mappingRuleForm"]->validate())

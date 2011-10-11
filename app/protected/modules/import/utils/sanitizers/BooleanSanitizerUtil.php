@@ -115,7 +115,7 @@
                 }
                 else
                 {
-                    return $value;
+                    return null;
                 }
             }
             if (!in_array(strtolower($value), $acceptableValues))

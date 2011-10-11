@@ -114,7 +114,7 @@
                     throw new InvalidValueToSanitizeException(Yii::t('Default', $message));
                 }
             }
-            $customField        = new CustomField();
+            $customField        = new OwnedCustomField();
             $customField->value = $resolvedValueToUse;
             $customField->data  = $customFieldData;
             return $customField;

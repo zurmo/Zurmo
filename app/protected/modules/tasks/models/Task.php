@@ -120,10 +120,12 @@
             if (parent::beforeSave())
             {
                 if (array_key_exists('completed', $this->originalAttributeValues) &&
-                    $this->completed == true &&
-                    $this->completedDateTime == null)
+                    $this->completed == true)
                 {
-                    $this->completedDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+                    if($this->completedDateTime == null)
+                    {
+                        $this->completedDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+                    }
                     $this->unrestrictedSet('latestDateTime', $this->completedDateTime);
                 }
                 return true;

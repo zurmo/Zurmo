@@ -60,11 +60,9 @@
         {
             assert('$this->attribute == "null"');
             assert('$this->model instanceof Person || $this->model instanceof User');
-            $dropDownModel = $this->model->title;
-            $dropDownArray = unserialize($dropDownModel->data->serializedData);
-            $title = Yii::app()->format->text(ArrayUtil::getArrayValue($dropDownArray, $dropDownModel->value));
-            if (!empty($title))
+            if($this->model->title != null)
             {
+                $title  = Yii::app()->format->text($this->model->title);
                 $title .= ' ';
             }
             return Yii::app()->format->text($title . $this->model);

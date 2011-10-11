@@ -868,7 +868,7 @@
         public function testGetModelClassNames()
         {
             $modelClassNames = UsersModule::getModelClassNames();
-            $this->assertEquals(2, count($modelClassNames));
+            $this->assertEquals(3, count($modelClassNames));
             $this->assertEquals('User', $modelClassNames[0]);
             $this->assertEquals('UserModelSearch', $modelClassNames[1]);
         }
