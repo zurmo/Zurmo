@@ -253,8 +253,6 @@
             => '??',
         'Module Permissions'
             => '??',
-        'Munge rebuild complete.'
-            => '??',
         'My List Configuration View'
             => '??',
         'Never'
@@ -361,8 +359,6 @@
             => '??',
         'Super Administrators'
             => '???',
-        'The currency code is invalid'
-            => '??',
         'The file did not exist'
             => '??',
         'There are no recently viewed items.'

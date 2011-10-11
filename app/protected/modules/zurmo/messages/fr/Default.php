@@ -253,8 +253,6 @@
             => 'Nom du module - au singulier (miniscule)',
         'Module Permissions'
             => 'Permissions',
-        'Munge rebuild complete.'
-            => 'La permission de sécurité de vue liste a été reconstruite.',
         'My List Configuration View'
             => 'Ma Vue Liste Configuration',
         'Never'

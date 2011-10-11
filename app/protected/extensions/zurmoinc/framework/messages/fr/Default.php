@@ -30,7 +30,7 @@
     // DON'T MAKE A MESS!
     return array(
         '(None)'
-            => '--Aucun--',
+            => '(Aucun)',
         'Advanced Search'
             => 'Recherche avancée',
         'All'
