@@ -197,7 +197,7 @@
             => '??',
         'Inherited - Allow'
             => '??',
-        'Invalid currency code.'
+        'Invalid currency code'
             => '??',
         'Is Invalid'
             => '??',

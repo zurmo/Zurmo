@@ -33,7 +33,7 @@
             => 'Apache',
         'APC'
             => 'APC',
-        'Below you will find the results of the system check.  If any required ' .
+        'Below you will find the results of the system check. If any required ' .
         'services are not setup correctly, you will need to make sure they are ' .
         'installed correctly before you can continue.'
             => 'Voici les résultats du scan. Si un des éléments requis n\'est ' .

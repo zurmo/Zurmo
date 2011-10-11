@@ -61,10 +61,10 @@
             => 'Date',
         'Date Time'
             => 'Date/Heure',
-        'Delete'
-            => 'Supprimer',
         'Default Value'
             => 'Valeur par défault',
+        'Delete'
+            => 'Supprimer',
         'Detail View Only'
             => 'Vue détaillée uniquement',
         'Details'
