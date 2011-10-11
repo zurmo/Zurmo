@@ -292,7 +292,7 @@
                 $this->getId(),
                 $this->getModule()->getId(),
                 $model,
-                GroupsModule::getModuleLabelByTypeAndLanguage('Plural'),
+                GroupsModule::getPluralCamelCasedName(),
                 $renderType
             );
         }
