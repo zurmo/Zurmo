@@ -243,9 +243,9 @@
                 throw new NotSupportedException();
             }
 
-            //fix for windows paths
+            //Fix for windows paths
             $filePath = str_replace('\\', '\\\\', $filePath);
-            $sql = "LOAD DATA LOCAL INFILE '$filePath'
+            $sql = "LOAD DATA INFILE '$filePath'
                     INTO TABLE $tableName
                     FIELDS TERMINATED BY '$delimiter'
                     OPTIONALLY ENCLOSED BY '\\".$enclosure."'
