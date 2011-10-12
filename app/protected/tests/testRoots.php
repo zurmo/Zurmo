@@ -24,6 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    define('IS_LINUX', PHP_OS == 'Linux');
+    define('IS_WINNT', PHP_OS == 'WINNT');
     // $cwd is set in TestSuite.php so that it is the
     // real cwd when the script is run as a symlink.
     define('COMMON_ROOT',   realpath(dirname(__FILE__) . '/../..'));
