@@ -33,7 +33,7 @@
             $selectQueryAdapter = new RedBeanModelSelectQueryAdapter();
             $selectQueryAdapter->addClause('a', 'b', 'c');
             $joinTablesAdapter  = new RedBeanModelJoinTablesQueryAdapter('A');
-            $sql = SqlQueryUtil::
+            $sql = SQLQueryUtil::
                    makeQuery('myTable', $selectQueryAdapter, $joinTablesAdapter, 2, 4, 'a = x', 'something asc');
             $compareSql  = "select {$quote}a{$quote}.{$quote}b{$quote} c ";
             $compareSql .= "from {$quote}myTable{$quote} ";
@@ -50,7 +50,7 @@
             $selectQueryAdapter = new RedBeanModelSelectQueryAdapter();
             $selectQueryAdapter->addClause('a', 'b', 'c');
             $joinTablesAdapter  = new RedBeanModelJoinTablesQueryAdapter('A');
-            $sql = SqlQueryUtil::
+            $sql = SQLQueryUtil::
                    makeQuery('myTable', $selectQueryAdapter, $joinTablesAdapter, 2, 4, 'a = x', null, 'a.group');
             $compareSql  = "select {$quote}a{$quote}.{$quote}b{$quote} c ";
             $compareSql .= "from {$quote}myTable{$quote} ";
