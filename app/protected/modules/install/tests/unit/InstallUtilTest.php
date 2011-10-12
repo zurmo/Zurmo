@@ -259,7 +259,8 @@
                                 10060 == $results[0]);
             $results = InstallUtil::checkMemcacheConnection('localhost', 12345);
             $this->assertTrue(  111 == $results[0] ||
-                                10061 == $results[0]);
+                                10061 == $results[0] ||
+                                10060 == $results[0]);
         }
 
         public function testDatabaseConnection_mysql()

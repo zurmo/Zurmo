@@ -86,6 +86,8 @@
             }
             if (!AUDITING_OPTIMIZED || !RedBeanDatabase::isFrozen())
             {
+                $tableName  = self::getTableName('AuditEvent');
+                RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, strtolower('modelId'));
                 $auditEvent = new AuditEvent();
                 $auditEvent->dateTime       = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                 $auditEvent->moduleName     = $moduleName;
