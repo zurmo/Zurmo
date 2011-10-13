@@ -1687,7 +1687,7 @@
                                                                self::HAS_MANY_BELONGS_TO)))
                             {
                                 if ($relatedModel->isModified() ||
-                                    $this->isAttributeRequired($relationName))
+                                    ($this->isAttributeRequired($relationName) && $relatedModel->id <= 0))
                                 {
                                     // Validation of this model has already done.
                                     if (!$relatedModel->save(false))
