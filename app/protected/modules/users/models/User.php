@@ -318,15 +318,6 @@
             assert('is_string($rightName)');
             assert('$moduleName != ""');
             assert('$rightName  != ""');
-            try
-            {
-                throw new NotFoundException(); //undo once we figure this out.
-                //TODO: this key entry is wrong because it is a PER USER thing. i have a feeling this caching might
-                //need to be removed entirely.... since i am not sure this will be very practical...
-                //return GeneralCache::getEntry($moduleName . $rightName . 'ActualRight');
-            }
-            catch (NotFoundException $e)
-            {
                 if (!SECURITY_OPTIMIZED)
                 {
                     // The slow way will remain here as documentation
@@ -342,15 +333,22 @@
                 }
                 else
                 {
-                    // Optimizations work on the database,
-                    // anything not saved will not work.
-                    assert('$this->id > 0');
-                    $actualRight     = intval(ZurmoDatabaseCompatibilityUtil::
-                                       callFunction("get_user_actual_right({$this->id}, '$moduleName', '$rightName')"));
+                    $identifier = $this->id . $moduleName . $rightName . 'ActualRight';
+                    try
+                    {
+                        return RightsCache::getEntry($identifier);
+                    }
+                    catch (NotFoundException $e)
+                    {
+                        // Optimizations work on the database,
+                        // anything not saved will not work.
+                        assert('$this->id > 0');
+                        $actualRight     = intval(ZurmoDatabaseCompatibilityUtil::
+                                           callFunction("get_user_actual_right({$this->id}, '$moduleName', '$rightName')"));
+                        RightsCache::cacheEntry($identifier, $actualRight);
+                    }
                 }
-                //GeneralCache::cacheEntry($moduleName . $rightName . 'ActualRight', $actualRight);
-                return $actualRight;
-            }
+            return $actualRight;
         }
 
         public function getPropagatedActualAllowRight($moduleName, $rightName)

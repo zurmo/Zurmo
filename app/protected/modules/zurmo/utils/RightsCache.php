@@ -25,17 +25,25 @@
      ********************************************************************************/
 
     /**
-     * Helper class to organize forgetting all possible caches in application.  This class should be used anytime
-     * all caches need to be forgotten, instead of individual forgetAll being called. This will help make it easier
-     * to maintain new caches going forward.
+     * This is a rights caching helper. Currently it just wraps the general cache until we can split out the caching
+     * in memcache by categories. This way in the future we can flush just the rights cache instead of having to flush
+     * the entire cache like we are doing now.
      */
-    class ForgetAllCacheUtil
+    class RightsCache
     {
-        public static function forgetAllCaches()
+        public static function getEntry($identifier)
         {
-            RedBeanModelsCache::forgetAll();
-            PermissionsCache::forgetAll();
-            RightsCache::forgetAll();
+            return GeneralCache::getEntry($identifier);
+        }
+
+        public static function cacheEntry($identifier, $entry)
+        {
+            GeneralCache::cacheEntry($identifier, $entry);
+        }
+
+        public static function forgetAll()
+        {
             GeneralCache::forgetAll();
         }
     }
+?>
