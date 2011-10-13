@@ -69,7 +69,7 @@
                 if ($information['canRemoveFrom'])
                 {
                     $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
-                    $removeLinkContent = CHtml::link(yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
+                    $removeLinkContent = CHtml::link(Yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
                         array(
                             'groupId' => $groupId
                         )

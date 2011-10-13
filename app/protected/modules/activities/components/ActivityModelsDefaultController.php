@@ -30,6 +30,21 @@
      */
     abstract class ActivityModelsDefaultController extends ActivitiesModuleController
     {
+        public function filters()
+        {
+            $modelClassName   = $this->getModule()->getPrimaryModelName();
+            $viewClassName    = $modelClassName . 'EditAndDetailsView';
+            return array_merge(parent::filters(),
+                array(
+                    array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, createFromRelation, edit',
+                        'moduleClassName' => get_class($this->getModule()),
+                        'viewClassName'   => $viewClassName,
+                   ),
+               )
+            );
+        }
+
         protected function getPageViewClassName()
         {
             return $this->getModule()->getPluralCamelCasedName() . 'PageView';

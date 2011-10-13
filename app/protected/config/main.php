@@ -66,7 +66,7 @@
         require_once($perInstanceConfigInSameDirAsMainConfig);
     }
 
-    return CMap::mergeArray(
+    $config = CMap::mergeArray(
         require(COMMON_ROOT . '/protected/config/common.php'),
         array(
             'language' => $language,
@@ -84,4 +84,12 @@
             ),
         )
     );
+    if(isset($instanceConfig))
+    {
+        return CMap::mergeArray($config, $instanceConfig);
+    }
+    else
+    {
+        return $config;
+    }
 ?>

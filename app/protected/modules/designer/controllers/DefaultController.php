@@ -60,7 +60,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 yii::t('Default', 'Fields'),
+                 Yii::t('Default', 'Fields'),
             );
             $overrideClassName = $moduleClassName . 'AttributesListView';
             $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
@@ -100,9 +100,9 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',    'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Fields') =>
+                Yii::t('Default', 'Fields') =>
                     array('default/attributesList', 'moduleClassName' => $_GET['moduleClassName']),
-                 yii::t('Default', 'Create Field'),
+                 Yii::t('Default', 'Create Field'),
             );
             $canvasView = new TitleBarAndAttributeCreateView(
                         $this->getId(),
@@ -145,7 +145,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Fields') =>
+                Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 strval($attributeForm),
             );
@@ -180,7 +180,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Fields') =>
+                Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 $attributeForm,
             );
@@ -200,10 +200,25 @@
         protected function actionAttributeSave($attributeForm, $model)
         {
             assert('!empty($_GET["moduleClassName"])');
+            $wasRequired = $attributeForm->isRequired;
             $attributeForm->setAttributes($_POST[get_class($attributeForm)]);
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName($model);
             $adapter->setAttributeMetadataFromForm($attributeForm);
+
+            //if wasRequired and now is not... ( make sure you use oldAttributeName to catch proper array alignment)
+            //removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName, $attributeName)
+
+            if($attributeForm->isRequired && !$wasRequired)
+            {
+                RequiredAttributesValidViewUtil::
+                resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
+            }
+            elseif(!$attributeForm->isRequired && $wasRequired)
+            {
+                RequiredAttributesValidViewUtil::
+                removeAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
+            }
             $routeParams = array_merge($_GET, array(
                 'attributeName' => $attributeForm->attributeName,
                 0 => 'default/attributeDetails'
@@ -241,7 +256,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 yii::t('Default', 'Layouts'),
+                 Yii::t('Default', 'Layouts'),
             );
             $canvasView = new TitleBarAndModuleEditableMetadataCollectionView(
                         $this->getId(),
@@ -259,13 +274,14 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["viewClassName"])');
+            $viewClassName           = $_GET['viewClassName'];
             $moduleClassName         = $_GET['moduleClassName'];
             $modelClassName          = $moduleClassName::getPrimaryModelName();
-            $editableMetadata        = $_GET['viewClassName']::getMetadata();
-            $designerRulesType       = $_GET['viewClassName']::getDesignerRulesType();
+            $editableMetadata        = $viewClassName::getMetadata();
+            $designerRulesType       = $viewClassName::getDesignerRulesType();
             $designerRulesClassName  = $designerRulesType . 'DesignerRules';
             $designerRules           = new $designerRulesClassName();
-            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($_GET['viewClassName'], $modelClassName);
+            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
             $attributeCollection     = $modelAttributesAdapter->getAttributes();
             $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
                 $attributeCollection,
@@ -275,8 +291,8 @@
             if (isset($_POST['layout']))
             {
                 $layoutMetadataAdapter = new LayoutMetadataAdapter(
-                    $_GET['viewClassName'],
-                    $_GET['moduleClassName'],
+                    $viewClassName,
+                    $moduleClassName,
                     $editableMetadata,
                     $designerRules,
                     $attributesLayoutAdapter->getPlaceableLayoutAttributes(),
@@ -291,6 +307,11 @@
                 }
                 elseif ($layoutMetadataAdapter->setMetadataFromLayout(ArrayUtil::getArrayValue($_POST, 'layout'), $savableMetadata))
                 {
+                    if($designerRules->requireAllRequiredFieldsInLayout())
+                    {
+                        RequiredAttributesValidViewUtil::
+                        setAsContainingRequiredAttributes($moduleClassName, $viewClassName);
+                    }
                     echo CJSON::encode(array('message' => $layoutMetadataAdapter->getMessage(), 'type' => 'message'));
                 }
                 else
@@ -302,7 +323,7 @@
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                yii::t('Default', 'Layouts') =>
+                Yii::t('Default', 'Layouts') =>
                     array('default/moduleLayoutsList',  'moduleClassName' => $_GET['moduleClassName']),
                  $designerRules->resolveDisplayNameByView($_GET['viewClassName']),
             );
@@ -339,7 +360,7 @@
             $breadcrumbLinks = array(
                 $module::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                    yii::t('Default', 'General Edit'),
+                    Yii::t('Default', 'General Edit'),
             );
             $canvasView = new TitleBarAndModuleEditView(
                         $this->getId(),
@@ -364,6 +385,7 @@
             $adapter = new ModuleFormToMetadataAdapter($module, $moduleForm);
             $adapter->setMetadata();
             Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
+            GeneralCache::forgetAll();
             $routeParams = array_merge($_GET, array(
                 'moduleClassName' => get_class($module),
                 0 => 'default/modulesMenu'

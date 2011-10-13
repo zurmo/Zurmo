@@ -55,7 +55,7 @@
                         $content .= CHtml::link($unserializedData,
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName), $linkHtmlOptions);
                         $content .= '&#160;-&#160;<span style="font-size:75%">';
-                        $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span></br>';
+                        $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span><br/>';
                     }
                 }
             }

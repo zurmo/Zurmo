@@ -85,14 +85,14 @@
                     if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
                     {
                         Yii::app()->user->setFlash('notification',
-                                yii::t('Default', 'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.')
+                                Yii::t('Default', 'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.')
                         );
                         $currencyHelper->resetErrors();
                     }
                     elseif ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_WEB_SERVICE)
                     {
                         Yii::app()->user->setFlash('notification',
-                                yii::t('Default', 'The currency rate web service was unavailable. The rate could not be automatically updated.')
+                                Yii::t('Default', 'The currency rate web service was unavailable. The rate could not be automatically updated.')
                         );
                         $currencyHelper->resetErrors();
                     }
@@ -160,7 +160,7 @@
             else
             {
                 Yii::app()->user->setFlash('notification',
-                        yii::t('Default', 'The currency was not removed because it is in use.')
+                        Yii::t('Default', 'The currency was not removed because it is in use.')
                 );
             }
             $this->redirect(array($this->getId() . '/configurationList'));

@@ -63,7 +63,7 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Date Time');
+            return Yii::t('Default', 'Date Time');
         }
 
         public function getAttributeTypeName()
@@ -73,7 +73,7 @@
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A date/time field');
+            return Yii::t('Default', 'A date/time field');
         }
 
         public function getModelAttributePartialRule()

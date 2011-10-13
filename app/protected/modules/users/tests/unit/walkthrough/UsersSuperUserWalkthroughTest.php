@@ -345,6 +345,20 @@
          */
         public function testSuperUserCreateAction()
         {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $this->setPostArray(array('UserPasswordForm' =>
+                                array('firstName'          => 'Some',
+                                      'lastName'           => 'Body',
+                                      'username'           => 'somenewuser',
+                                      'newPassword'        => 'myPassword123',
+                                      'newPassword_repeat' => 'myPassword123',
+                                      'officePhone'        => '456765421',
+                                      'userStatus'         => 'Active')));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/create');
+
+            $user = User::getByUsername('somenewuser');
+            $this->assertEquals('Some', $user->firstName);
+            $this->assertEquals('Body', $user->lastName);
         }
     }
 ?>

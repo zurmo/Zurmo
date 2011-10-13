@@ -49,7 +49,7 @@
          */
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Field Type');
+            return CHtml::label(Yii::t('Default', 'Field Type'), false);
         }
 
         public static function isReadOnly()

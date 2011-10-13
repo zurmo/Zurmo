@@ -170,7 +170,7 @@
             {
                 if ($value === null || $value == '')
                 {
-                    $value = yii::t('Default', '(None)');
+                    $value = Yii::t('Default', '(None)');
                 }
                 $s = $value;
             }
@@ -179,7 +179,7 @@
                 assert('is_array($value)');
                 if ($value[1] < 0)
                 {
-                    $s = yii::t('Default', '(None)');
+                    $s = Yii::t('Default', '(None)');
                 }
                 else
                 {
@@ -195,7 +195,7 @@
                     }
                     if ($value[2] === null || $value == '')
                     {
-                        $s .= yii::t('Default', '(None)');
+                        $s .= Yii::t('Default', '(None)');
                     }
                     else
                     {

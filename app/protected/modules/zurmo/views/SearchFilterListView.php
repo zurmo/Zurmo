@@ -48,7 +48,7 @@
                 $moduleId,
                 $menuItems
             );
-            $this->setView(new TitleBarView($title, yii::t('Default', 'Home'), 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new TitleBarView($title, Yii::t('Default', 'Home'), 1, $shortcutsMenu->render()), 0, 0);
             $searchViewClassName = $moduleName . 'SearchView';
             $this->setView(new $searchViewClassName($searchModel, get_class($listModel), null, true, !empty($filteredListId)), 1, 0);
             $this->setView(new FilteredListView($controllerId, $moduleId, $filteredList, $filteredListId, get_class($listModel)), 2, 0);

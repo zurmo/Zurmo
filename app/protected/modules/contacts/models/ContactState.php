@@ -39,7 +39,7 @@
         {
             if (trim($this->name) == '')
             {
-                return yii::t('Default', '(Unnamed)');
+                return Yii::t('Default', '(Unnamed)');
             }
             return $this->name;
         }

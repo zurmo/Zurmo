@@ -34,7 +34,7 @@
          */
         protected function renderControlNonEditable()
         {
-            return Yii::app()->format->text(yii::t('Default', 'Inherited - Owner Only'));
+            return Yii::app()->format->text(Yii::t('Default', 'Inherited - Owner Only'));
         }
     }
 ?>

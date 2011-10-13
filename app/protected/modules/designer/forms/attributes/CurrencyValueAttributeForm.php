@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Currency');
+            return Yii::t('Default', 'Currency');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A currency field');
+            return Yii::t('Default', 'A currency field');
         }
 
         public function getAttributeTypeName()

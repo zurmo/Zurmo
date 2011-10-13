@@ -70,7 +70,7 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= CHtml::submitButton(yii::t('Default', 'Complete Conversion'));
+            $content .= CHtml::submitButton(Yii::t('Default', 'Complete Conversion'));
             return $content;
         }
     }

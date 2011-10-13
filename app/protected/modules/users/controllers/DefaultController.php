@@ -39,7 +39,7 @@
             $filters = array();
             $filters[] = array(
                     ZurmoBaseController::RIGHTS_FILTER_PATH .
-                    ' - modalList, autoComplete, details, edit, changePassword, configurationEdit, securityDetails',
+                    ' - modalList, autoComplete, details, profile, edit, changePassword, configurationEdit, securityDetails',
                     'moduleClassName' => 'UsersModule',
                     'rightName' => UsersModule::getAccessRight(),
             );
@@ -183,7 +183,15 @@
                 {
                     if($userStatus != null)
                     {
-                        UserStatusUtil::resolveUserStatus($model, $userStatus);
+                        if($model instanceof UserPasswordForm)
+                        {
+                            UserStatusUtil::resolveUserStatus($model->getModel(), $userStatus);
+                        }
+                        else
+                        {
+                            UserStatusUtil::resolveUserStatus($model, $userStatus);
+                        }
+
                     }
                     $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                 }
@@ -335,7 +343,7 @@
                         UserConfigurationFormAdapter::setConfigurationFromFormForCurrentUser($configurationForm);
                     }
                     Yii::app()->user->setFlash('notification',
-                        yii::t('Default', 'User configuration saved successfully.')
+                        Yii::t('Default', 'User configuration saved successfully.')
                     );
                     $this->redirect(array($this->getId() . '/index'));
                 }

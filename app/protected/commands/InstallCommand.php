@@ -62,6 +62,7 @@ EOD;
      */
     public function run($args)
     {
+        set_time_limit('7200');
         if (!isset($args[0]) || !isset($args[1]) || !isset($args[2]) || !isset($args[3]) || !isset($args[4]))
         {
             $this->usageError('The database user, password, and host must be specified.');

@@ -133,7 +133,7 @@
                     {
                         $s             .= strval($auditEvent);
                         $s             .= ", $name";
-                        $s             .= ', ' . yii::t('Default', 'Changed') . ' ';
+                        $s             .= ', ' . Yii::t('Default', 'Changed') . ' ';
                     }
                     $attributeModel = $model;
                     $attributeLabels = array();
@@ -156,9 +156,9 @@
                         }
                     }
                     $s .= join(' ', $attributeLabels);
-                    $s .= ' ' . yii::t('Default', 'from') . ' ';
+                    $s .= ' ' . Yii::t('Default', 'from') . ' ';
                     $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $oldValue, $format) . ' ';
-                    $s .= yii::t('Default', 'to') . ' ';
+                    $s .= Yii::t('Default', 'to') . ' ';
                     $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $newValue, $format);
                     break;
             }

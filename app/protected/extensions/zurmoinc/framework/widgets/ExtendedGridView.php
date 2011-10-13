@@ -124,7 +124,7 @@
                         {
                             if ($('#" . $this->id . "-selectedIds').val() == '')
                             {
-                                alert('" . yii::t('Default', 'You must select at least one record') . "');
+                                alert('" . Yii::t('Default', 'You must select at least one record') . "');
                                 $(this).val('');
                                 return false;
                             }

@@ -31,7 +31,7 @@
             $address = $this->makeAddress();
             if ($address == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $address;
         }

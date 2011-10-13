@@ -32,7 +32,7 @@
             SecurityTestHelper::createSuperAdmin();
         }
 
-        public function testMakeDatabaseTableByFilePathAndTableName()
+        public function testMakeDatabaseTableByFileHandleAndTableName()
         {
             $testTableName = 'testimporttable';
             $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName));
@@ -163,7 +163,7 @@
         }
 
         /**
-         * @depends testMakeDatabaseTableByFilePathAndTableName
+         * @depends testMakeDatabaseTableByFileHandleAndTableName
          */
         public function testGetColumnCountByTableName()
         {
@@ -254,10 +254,10 @@
         }
 
         /**
-         *
-         * Test if import from file with Windows line-endings works file
-         */
-        public function testMakeDatabaseTableByFilePathAndTableNameOnWindowsCsvFile()
+        *
+        * Test if import from file with Windows line-endings works file
+        */
+        public function testMakeDatabaseTableByFilePathAndTableNameUsingWindowsCsvFile()
         {
             $testTableName = 'testimporttable';
             //We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
@@ -281,48 +281,48 @@
             $compareData   = array(
             array
             (
-                            'id' => 1,
-                            'column_0'           => 'name',
-                            'column_1'           => 'phone',
-                            'column_2'           => 'industry',
-                            'status'             => null,
-                            'serializedmessages' => null,
+                                    'id' => 1,
+                                    'column_0'           => 'name',
+                                    'column_1'           => 'phone',
+                                    'column_2'           => 'industry',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
             ),
             array
             (
-                            'id' => 2,
-                            'column_0'           => 'abc',
-                            'column_1'           => '123',
-                            'column_2'           => 'a',
-                            'status'             => null,
-                            'serializedmessages' => null,
+                                    'id' => 2,
+                                    'column_0'           => 'abc',
+                                    'column_1'           => '123',
+                                    'column_2'           => 'a',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
             ),
             array
             (
-                            'id' => 3,
-                            'column_0'           => 'def',
-                            'column_1'           => '563',
-                            'column_2'           => 'b',
-                            'status'             => null,
-                            'serializedmessages' => null,
+                                    'id' => 3,
+                                    'column_0'           => 'def',
+                                    'column_1'           => '563',
+                                    'column_2'           => 'b',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
             ),
             array
             (
-                            'id' => 4,
-                            'column_0'           => 'efg',
-                            'column_1'           => '456',
-                            'column_2'           => 'a',
-                            'status'             => null,
-                            'serializedmessages' => null,
+                                    'id' => 4,
+                                    'column_0'           => 'efg',
+                                    'column_1'           => '456',
+                                    'column_2'           => 'a',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
             ),
             array
             (
-                            'id' => 5,
-                            'column_0'           => 'we1s',
-                            'column_1'           => null,
-                            'column_2'           => 'b',
-                            'status'             => null,
-                            'serializedmessages' => null,
+                                    'id' => 5,
+                                    'column_0'           => 'we1s',
+                                    'column_1'           => null,
+                                    'column_2'           => 'b',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
             ),
             );
             $this->assertEquals($compareData, $tempTableData);

@@ -67,8 +67,8 @@
 
         protected function getMessage()
         {
-            return yii::t('Default', 'Updating') . "&#160;" . $this->start . "-" . $this->getEndSize() . "&#160;" . yii::t('Default', 'of') . "&#160;" .
-            $this->totalRecordCount . "&#160;" . yii::t('Default', 'total') . "&#160;" .
+            return Yii::t('Default', 'Updating') . "&#160;" . $this->start . "-" . $this->getEndSize() . "&#160;" . Yii::t('Default', 'of') . "&#160;" .
+            $this->totalRecordCount . "&#160;" . Yii::t('Default', 'total') . "&#160;" .
             Yii::t('Default', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
         }
 
@@ -78,7 +78,7 @@
                             $this->totalRecordCount, $this->skipCount);
             $content =  $successfulCount . "&#160;" .
             LabelUtil::getUncapitalizedRecordLabelByCount($successfulCount)
-            . "&#160;" . yii::t('Default', 'updated successfully.');
+            . "&#160;" . Yii::t('Default', 'updated successfully.');
             if ($this->skipCount > 0)
             {
                 $content .= '<br/>' .

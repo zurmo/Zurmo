@@ -41,8 +41,7 @@
             $defaultValueCalculationType = $attributeForm->defaultValueCalculationType;
             $isRequired                  = (boolean)$attributeForm->isRequired;
             $isAudited                   = (boolean)$attributeForm->isAudited;
-
-            $mixedRule       = array('dateTimeDefault', 'value' => $defaultValueCalculationType);
+            $mixedRule                   = array('dateTimeDefault', 'value' => $defaultValueCalculationType);
             ModelMetadataUtil::addOrUpdateMember($modelClassName,
                                                  $attributeName,
                                                  $attributeLabels,

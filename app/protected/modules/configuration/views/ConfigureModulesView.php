@@ -29,7 +29,7 @@
         public function __construct()
         {
             parent::__construct(2, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'Administration'), yii::t('Default', 'Menu')), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', 'Administration'), Yii::t('Default', 'Menu')), 0, 0);
             $this->setView(new ConfigureModulesMenuView(), 1, 0);
         }
 

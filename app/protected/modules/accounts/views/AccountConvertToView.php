@@ -61,7 +61,7 @@
 
         protected function renderAfterFormLayout($form)
         {
-            return CHtml::submitButton(yii::t('Default', 'Complete Conversion'));
+            return CHtml::submitButton(Yii::t('Default', 'Complete Conversion'));
         }
     }
 ?>

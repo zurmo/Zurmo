@@ -84,6 +84,7 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/THEME_NAME/css/mbmenu.css',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/THEME_NAME/css/widget-juiportlets.css',
                     ),
+
                     'js' => array(
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.ba-bbq.js',
@@ -273,6 +274,7 @@
         $common_config['import'][] = "application.modules.$moduleName.utils.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.charts.*";              // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.sanitizers.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.security.*";            // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.utils.analyzers.*";           // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.validators.*";                // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.views.*";                     // Not Coding Standard

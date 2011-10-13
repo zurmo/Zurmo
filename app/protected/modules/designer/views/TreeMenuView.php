@@ -47,7 +47,7 @@
             $modules = Module::getModuleObjects();
             $parentNode = array(
                 'text' => $this->makeTreeMenuNodeAjaxLink(
-                    yii::t('Default', 'Modules'),
+                    Yii::t('Default', 'Modules'),
                     'index',
                     null
                 ),

@@ -69,7 +69,7 @@
         {
             $titleDisplay    = $this->designerRules->resolveDisplayNameByView($this->metadataViewClassName);
             $titleBarView    = new TitleBarView(
-                                        yii::t('Default', 'Edit Layout'), $titleDisplay);
+                                        Yii::t('Default', 'Edit Layout'), $titleDisplay);
             $content         = $titleBarView->render();
             $breadcrumbView  = new DesignerBreadCrumbView(
                                         $this->controllerId, $this->moduleId, $this->breadcrumbLinks);

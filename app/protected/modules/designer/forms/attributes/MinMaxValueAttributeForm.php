@@ -63,7 +63,7 @@
                     'compareAttribute' => 'minValue',
                     'operator' => '>',
                     'allowEmpty' => true,
-                    'message' => yii::t('Default', 'Maximum Value must be larger than the minimum value')
+                    'message' => Yii::t('Default', 'Maximum Value must be larger than the minimum value')
                 ),
             ));
         }

@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Text');
+            return Yii::t('Default', 'Text');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A text field');
+            return Yii::t('Default', 'A text field');
         }
 
         public function getModelAttributePartialRule()

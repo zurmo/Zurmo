@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Multi-Select Pick List');
+            return Yii::t('Default', 'Multi-Select Pick List');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A pick list that can have multiple selections');
+            return Yii::t('Default', 'A pick list that can have multiple selections');
         }
 
         public function getAttributeTypeName()

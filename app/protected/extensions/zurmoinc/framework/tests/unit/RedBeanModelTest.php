@@ -1452,7 +1452,7 @@
             $quotedExtraSelectColumnNameAndAliases = array('a' => 'aAlias', 'b' => 'bAlias');
             $subsetSql = I::makeSubsetOrCountSqlQuery('i', $joinTablesAdapter, 1, 5, null, null, false, false,
                                                                  $quotedExtraSelectColumnNameAndAliases);
-            $compareSubsetSql  = "select {$quote}i{$quote}.{$quote}id{$quote} id , a aAlias , b bAlias ";
+            $compareSubsetSql  = "select {$quote}i{$quote}.{$quote}id{$quote} id, a aAlias, b bAlias ";
             $compareSubsetSql .= "from {$quote}i{$quote} ";
             $compareSubsetSql .= ' limit 5 offset 1';
             $this->assertEquals($compareSubsetSql, $subsetSql);

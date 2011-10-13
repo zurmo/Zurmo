@@ -30,7 +30,7 @@
         {
             if (trim($this->emailAddress) == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $this->emailAddress;
         }

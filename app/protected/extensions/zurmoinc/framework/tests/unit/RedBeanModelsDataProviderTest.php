@@ -93,15 +93,15 @@
             $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                     null, false, 2, 7);
             $compareSubsetSql  = "(";
-            $compareSubsetSql .= "select {$quote}i{$quote}.{$quote}id{$quote} id , 'I' modelClassName from {$quote}i{$quote} ";
+            $compareSubsetSql .= "select {$quote}i{$quote}.{$quote}id{$quote} id, 'I' modelClassName from {$quote}i{$quote} ";
             $compareSubsetSql .= "where ({$quote}i{$quote}.{$quote}imember{$quote} like lower('iString%'))";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id , 'J' modelClassName from {$quote}j{$quote} ";
+            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id, 'J' modelClassName from {$quote}j{$quote} ";
             $compareSubsetSql .= "where ({$quote}j{$quote}.{$quote}jmember{$quote} like lower('jString%'))";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}k{$quote}.{$quote}id{$quote} id , 'K' modelClassName from {$quote}k{$quote} ";
+            $compareSubsetSql .= "select {$quote}k{$quote}.{$quote}id{$quote} id, 'K' modelClassName from {$quote}k{$quote} ";
             $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} like lower('kString%'))";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= 'limit 7 offset 2';
@@ -142,20 +142,20 @@
             $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                     $modelClassNamesAndSortAttributes, true, 2, 7);
             $compareSubsetSql  = "(";
-            $compareSubsetSql .= "select {$quote}i{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'I' modelClassName , {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}i{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'I' modelClassName, {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= " where {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'J' modelClassName , {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'J' modelClassName, {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
             $compareSubsetSql .= "from ({$quote}j{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= " where {$quote}h{$quote}.{$quote}id{$quote} = {$quote}j{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}k{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'K' modelClassName , {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}k{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'K' modelClassName, {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
             $compareSubsetSql .= "from ({$quote}k{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= " where {$quote}h{$quote}.{$quote}id{$quote} = {$quote}k{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
@@ -205,19 +205,19 @@
             $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                     $modelClassNamesAndSortAttributes, true, 2, 7);
             $compareSubsetSql  = "(";
-            $compareSubsetSql .= "select {$quote}i{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'I' modelClassName , {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}i{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'I' modelClassName, {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= " where {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'J' modelClassName , {$quote}j{$quote}.{$quote}jmember{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'J' modelClassName, {$quote}j{$quote}.{$quote}jmember{$quote} orderByColumn ";
             $compareSubsetSql .= "from {$quote}j{$quote} ";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}k{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'K' modelClassName , {$quote}k{$quote}.{$quote}kmember{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}k{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'K' modelClassName, {$quote}k{$quote}.{$quote}kmember{$quote} orderByColumn ";
             $compareSubsetSql .= "from {$quote}k{$quote} ";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "order by orderByColumn desc ";
@@ -262,8 +262,8 @@
             $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                     $modelClassNamesAndSortAttributes, true, 2, 7);
             $compareSubsetSql  = "(";
-            $compareSubsetSql .= "select distinct {$quote}i{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'I' modelClassName , {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
+            $compareSubsetSql .= "select distinct {$quote}i{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'I' modelClassName, {$quote}h{$quote}.{$quote}name{$quote} orderByColumn ";
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= "left join {$quote}k{$quote} on {$quote}k{$quote}.{$quote}i_id{$quote} = ";
             $compareSubsetSql .= "{$quote}i{$quote}.{$quote}id{$quote} ";
@@ -271,8 +271,8 @@
             $compareSubsetSql .= " and {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
-            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id ";
-            $compareSubsetSql .= ", 'J' modelClassName , {$quote}j{$quote}.{$quote}jmember{$quote} orderByColumn ";
+            $compareSubsetSql .= "select {$quote}j{$quote}.{$quote}id{$quote} id";
+            $compareSubsetSql .= ", 'J' modelClassName, {$quote}j{$quote}.{$quote}jmember{$quote} orderByColumn ";
             $compareSubsetSql .= "from {$quote}j{$quote} ";
             $compareSubsetSql .= "where ({$quote}j{$quote}.{$quote}jmember{$quote} IN(lower('a'),lower('b'),lower('c')))"; // Not Coding Standard
             $compareSubsetSql .= ") ";

@@ -135,7 +135,7 @@
             $fullName = $this->getFullName();
             if ($fullName == '')
             {
-                return yii::t('Default', '(Unnamed)');
+                return Yii::t('Default', '(Unnamed)');
             }
             return $fullName;
         }

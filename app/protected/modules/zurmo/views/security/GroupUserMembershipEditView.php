@@ -63,9 +63,9 @@
                 'model'                  => $this->model,
                 'form'                   => $form,
                 'leftSideAttributeName'  => 'userNonMembershipData',
-                'leftSideDisplayLabel'   => yii::t('Default', 'Non Members'),
+                'leftSideDisplayLabel'   => Yii::t('Default', 'Non Members'),
                 'rightSideAttributeName' => 'userMembershipData',
-                'rightSideDisplayLabel'  => yii::t('Default', 'Members'),
+                'rightSideDisplayLabel'  => Yii::t('Default', 'Members'),
             ));
             $cClipWidget->endClip();
             $cellsContent  = $cClipWidget->getController()->clips['SortableCompareLists'];

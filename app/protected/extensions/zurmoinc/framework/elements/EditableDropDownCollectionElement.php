@@ -139,7 +139,7 @@
             $content .= '<td>';
             $content .= CHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
             $content .= '&#160;&#160;';
-            $content .= CHtml::button(yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
+            $content .= CHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
             $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
             $content .= '</td>';
             $content .= '</tr>';

@@ -98,13 +98,13 @@
                 $permissionNames = ModulePermissionsEditViewUtil::getPermissionNamesForView();
                 foreach ($permissionNames as $permission)
                 {
-                    $content .= '<th>' . yii::t('Default', $permission) . '</th>';
+                    $content .= '<th>' . Yii::t('Default', $permission) . '</th>';
                 }
                 $content .= '</tr>';
                 foreach ($panel['rows'] as $row)
                 {
                     assert('!empty($row["title"])');
-                    $cellsContent = '<th>' . yii::t('Default', $row['title']) . '</th>';
+                    $cellsContent = '<th>' . Yii::t('Default', $row['title']) . '</th>';
                     foreach ($row['cells'] as $cell)
                     {
                         if (is_array($cell['elements']) && $this->shouldDisplayCell(ArrayUtil::getArrayValue($cell, 'detailViewOnly')))

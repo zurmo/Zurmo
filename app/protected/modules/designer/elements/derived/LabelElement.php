@@ -57,7 +57,12 @@
          */
         protected function renderLabel()
         {
-            return $this->getFormattedAttributeLabel();
+            $label = $this->getFormattedAttributeLabel();
+            if ($this->form === null)
+            {
+                return $label;
+            }
+            return CHtml::label($label, false);
         }
 
         protected function getElementViewMetadata()

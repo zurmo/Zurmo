@@ -273,7 +273,7 @@
                 $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like lower('test4%'))";
                 $compareWhere2 = "({$quote}ownedsecurabletestitem2{$quote}.{$quote}member{$quote} like lower('test4%'))";
                 $compareSubsetSql  = "(";
-                $compareSubsetSql .= "select distinct {$quote}ownedsecurabletestitem{$quote}.{$quote}id{$quote} id ";
+                $compareSubsetSql .= "select distinct {$quote}ownedsecurabletestitem{$quote}.{$quote}id{$quote} id";
                 $compareSubsetSql .= ", 'OwnedSecurableTestItem' modelClassName ";
                 $compareSubsetSql .= "from ({$quote}ownedsecurabletestitem{$quote}, {$quote}ownedsecurableitem{$quote}) ";
                 $compareSubsetSql .= "left join {$quote}ownedsecurabletestitem_read{$quote} on ";
@@ -286,7 +286,7 @@
                 $compareSubsetSql .= "{$quote}ownedsecurabletestitem{$quote}.{$quote}ownedsecurableitem_id{$quote}";
                 $compareSubsetSql .= ") ";
                 $compareSubsetSql .= "UNION (";
-                $compareSubsetSql .= "select distinct {$quote}ownedsecurabletestitem2{$quote}.{$quote}id{$quote} id ";
+                $compareSubsetSql .= "select distinct {$quote}ownedsecurabletestitem2{$quote}.{$quote}id{$quote} id";
                 $compareSubsetSql .= ", 'OwnedSecurableTestItem2' modelClassName ";
                 $compareSubsetSql .= "from ({$quote}ownedsecurabletestitem2{$quote}, {$quote}ownedsecurableitem{$quote}) ";
                 $compareSubsetSql .= "left join {$quote}ownedsecurabletestitem2_read{$quote} on ";
