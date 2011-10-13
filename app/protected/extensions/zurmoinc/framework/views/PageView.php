@@ -226,7 +226,10 @@
             if (MINIFY_SCRIPTS)
             {
                 Yii::app()->minScript->generateScriptMap('css');
-                Yii::app()->minScript->generateScriptMap('js');
+                if(!YII_DEBUG)
+                {
+                    Yii::app()->minScript->generateScriptMap('js');
+                }
             }
 
             $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
