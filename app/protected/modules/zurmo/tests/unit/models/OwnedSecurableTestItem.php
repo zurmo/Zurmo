@@ -36,6 +36,9 @@
                 'rules' => array(
                     array('member', 'required'),
                 ),
+                'relations' => array(
+                    'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
+                ),
             );
             return $metadata;
         }
@@ -45,7 +48,7 @@
             return 'ZurmoModule';
         }
 
-        public static function hasReadPermissionsOptimization()
+        public static function isTypeDeletable()
         {
             return true;
         }

@@ -51,6 +51,9 @@
             $this->assertEquals(array('d' => 'e', 'k' => 'j'), $unserializedData['dataAnalyzerMessagesData']);
         }
 
+        /**
+         * @depends testSetDataAnalyzerMessagesDataToImport
+         */
         public function testSimpleImportWithStringAndFullNameWhichAreRequiredAttributeOnImportTestModelItem()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -238,7 +241,7 @@
             $jim = User::getByUsername('jim');
             foreach ($testModels as $model)
             {
-                $this->assertEquals(array(Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::NONE), $model->getExplicitActualPermissions ($jim));
+                $this->assertEquals(array(Permission::READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER, Permission::NONE), $model->getExplicitActualPermissions ($jim));
             }
 
             //Re-freeze if needed.

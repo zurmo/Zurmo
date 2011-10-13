@@ -248,8 +248,7 @@
                 $saveSecurableItem = true;
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
                 {
-                    $securableItem->addPermissions($permitable, Permission::READ_WRITE_CHANGE_PERMISSIONS);
-                    $securableItem->addPermissions($permitable, Permission::CHANGE_OWNER);
+                    $securableItem->addPermissions($permitable, Permission::READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER);
                     if ($permitable instanceof Group)
                     {
                         ReadPermissionsOptimizationUtil::
@@ -294,8 +293,7 @@
                 foreach ($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove() as $permitable)
                 {
                     $securableItem->removePermissions($permitable,
-                                                      Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::ALLOW);
-                    $securableItem->removePermissions($permitable, Permission::CHANGE_OWNER, Permission::ALLOW);
+                                                      Permission::READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER, Permission::ALLOW);
                     if ($permitable instanceof Group)
                     {
                         ReadPermissionsOptimizationUtil::
