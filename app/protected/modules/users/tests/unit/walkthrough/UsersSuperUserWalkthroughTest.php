@@ -289,7 +289,6 @@
             $this->assertEquals(4, Yii::app()->user->getState('subListPageSize'));
         }
 
-
         /**
          * @depends testSuperUserAllDefaultControllerActions
          */

@@ -372,7 +372,7 @@
             assert('is_array($metadata)');
             assert('is_string($modelClassName)');
             assert('is_string($labelsAttributeName)');
-            if(!isset($metadata[$modelClassName]['labels'][$labelsAttributeName]))
+            if (!isset($metadata[$modelClassName]['labels'][$labelsAttributeName]))
             {
                 $metadata[$modelClassName]['labels'][$labelsAttributeName] = array();
             }

@@ -101,7 +101,7 @@
                 }
                 elseif (!$userCanAccess && $userCanReadItem)
                 {
-                    if($model->$attributeName->id < 0)
+                    if ($model->$attributeName->id < 0)
                     {
                         $elementInformation['attributeName'] = null;
                         $elementInformation['type']          = 'Null'; // Not Coding Standard

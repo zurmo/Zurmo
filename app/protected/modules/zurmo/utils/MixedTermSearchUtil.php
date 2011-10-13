@@ -37,7 +37,7 @@
             $metadata                   = $module::getMetadata();
             $globalSearchAttributeNames = $metadata['global']['globalSearchAttributeNames'];
             $searchAttributes           = array();
-            foreach($globalSearchAttributeNames as $realOrDerivedAttributeName)
+            foreach ($globalSearchAttributeNames as $realOrDerivedAttributeName)
             {
                 $searchAttributes[$realOrDerivedAttributeName] = $partialTerm;
             }

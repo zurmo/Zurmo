@@ -97,7 +97,7 @@
             {
                 if ($value !== null)
                 {
-                    if($operatorType == null)
+                    if ($operatorType == null)
                     {
                         $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeName);
                     }
@@ -125,7 +125,7 @@
             {
                 if (isset($value['value']))
                 {
-                    if($operatorType == null)
+                    if ($operatorType == null)
                     {
                         $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                             $this->model, $attributeName);
@@ -157,7 +157,7 @@
                     {
                         if ($this->model->isRelation($attributeName))
                         {
-                            if($operatorType == null)
+                            if ($operatorType == null)
                             {
                                 $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                                 $this->model->$attributeName, $relatedAttributeName);
@@ -208,11 +208,11 @@
             assert('is_bool($appendStructureAsAnd)');
             if ($value !== null)
             {
-                if($operatorType == null)
+                if ($operatorType == null)
                 {
                     $operatorType        = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeNames[0]);
                     $operatorTypeCompare = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeNames[1]);
-                    if($operatorType != $operatorTypeCompare)
+                    if ($operatorType != $operatorTypeCompare)
                     {
                         throw New NotSupportedException();
                     }
@@ -252,7 +252,7 @@
                                                 $this->model, $attributeName, $value);
             foreach ($metadataFromSearchFormAttributes as $searchFormClause)
             {
-                if(isset($searchFormClause['concatedAttributeNames']))
+                if (isset($searchFormClause['concatedAttributeNames']))
                 {
                     assert('is_array($searchFormClause["concatedAttributeNames"][0]) &&
                              count($searchFormClause["concatedAttributeNames"][0]) == 2');
@@ -267,9 +267,9 @@
                 }
                 else
                 {
-                    foreach($searchFormClause as $searchFormAttributeName => $searchFormStructure)
+                    foreach ($searchFormClause as $searchFormAttributeName => $searchFormStructure)
                     {
-                        if(isset($searchFormStructure['operatorType']))
+                        if (isset($searchFormStructure['operatorType']))
                         {
                             $operatorType = $searchFormStructure['operatorType'];
                         }
@@ -277,7 +277,7 @@
                         {
                             $operatorType = null;
                         }
-                        if(isset($searchFormStructure['appendStructureAsAnd']))
+                        if (isset($searchFormStructure['appendStructureAsAnd']))
                         {
                             $appendTempStructureAsAnd = $searchFormStructure['appendStructureAsAnd'];
                         }

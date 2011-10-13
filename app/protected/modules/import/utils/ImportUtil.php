@@ -204,7 +204,7 @@
                     $importRowDataResultsUtil->addMessage(Yii::t('Default', 'Record saved correctly.'));
                     if ($makeNewModel)
                     {
-                        if($model instanceof SecurableItem)
+                        if ($model instanceof SecurableItem)
                         {
                             try
                             {
@@ -242,7 +242,7 @@
                     $importRowDataResultsUtil->addMessages($importSanitizeResultsUtil->getMessages());
                 }
                 $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModel($model);
-                if(count($messages) > 0)
+                if (count($messages) > 0)
                 {
                     $importRowDataResultsUtil->addMessages($messages);
                 }
@@ -253,7 +253,7 @@
         protected static function processAfterSaveActions($afterSaveActionsData, RedBeanModel $model)
         {
             assert('is_array($afterSaveActionsData)');
-            foreach($afterSaveActionsData as $attributeImportRuleClassNameAndAttributeValueData)
+            foreach ($afterSaveActionsData as $attributeImportRuleClassNameAndAttributeValueData)
             {
                 assert('count($attributeImportRuleClassNameAndAttributeValueData) == 2');
                 $attributeImportRulesClassName = $attributeImportRuleClassNameAndAttributeValueData[0];
@@ -363,7 +363,7 @@
             $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
                                                                                  $columnMappingData,
                                                                                  $importSanitizeResultsUtil);
-            if($attributeValueData != null)
+            if ($attributeValueData != null)
             {
                 $afterSaveActionsData[] = array(get_class($attributeImportRules), $attributeValueData);
             }

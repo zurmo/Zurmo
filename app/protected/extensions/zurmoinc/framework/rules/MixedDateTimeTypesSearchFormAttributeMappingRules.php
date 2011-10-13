@@ -42,37 +42,36 @@
             assert('empty($value) || $value == null || is_array($value)');
             $delimiter                      = FormModelUtil::DELIMITER;
             $parts = explode($delimiter, $attributeName);
-            if(count($parts) != 2)
+            if (count($parts) != 2)
             {
                 throw new NotSupportedException();
             }
             list($realAttributeName, $type) = $parts;
-            if(isset($value['type']) && $value['type'] != null)
+            if (isset($value['type']) && $value['type'] != null)
             {
-                if($value['type'] == self::TYPE_YESTERDAY ||
+                if ($value['type'] == self::TYPE_YESTERDAY ||
                    $value['type'] == self::TYPE_TODAY ||
                    $value['type'] == self::TYPE_TOMORROW)
                 {
-
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $greaterThanValue      = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($dateValue);
                     $lessThanValue         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($dateValue);
                     $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue, true),
                                                    array($realAttributeName, null, 'lessThanOrEqualTo',    $lessThanValue, true));
                 }
-                elseif($value['type'] == self::TYPE_AFTER)
+                elseif ($value['type'] == self::TYPE_AFTER)
                 {
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $greaterThanValue      = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($dateValue);
                     $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue));
                 }
-                elseif($value['type'] == self::TYPE_BEFORE)
+                elseif ($value['type'] == self::TYPE_BEFORE)
                 {
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $lessThanValue         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($dateValue);
                     $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', $lessThanValue));
                 }
-                elseif($value['type'] == self::TYPE_NEXT_7_DAYS)
+                elseif ($value['type'] == self::TYPE_NEXT_7_DAYS)
                 {
                     $today                 = static::calculateNewDateByDaysFromNow(0);
                     $todayPlusSevenDays    = static::calculateNewDateByDaysFromNow(7);
@@ -81,7 +80,7 @@
                     $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue, true),
                                                    array($realAttributeName, null, 'lessThanOrEqualTo',    $lessThanValue, true));
                 }
-                elseif($value['type'] == self::TYPE_LAST_7_DAYS)
+                elseif ($value['type'] == self::TYPE_LAST_7_DAYS)
                 {
                     $today                 = static::calculateNewDateByDaysFromNow(0);
                     $todayMinusSevenDays   = static::calculateNewDateByDaysFromNow(-7);

@@ -118,7 +118,7 @@
                 'massEditProgressPageSize' => 5,
                 'autoCompleteListPageSize' => 5,
                 'importPageSize'           => 50,
-                'dashboardListPageSize'	   => 5,
+                'dashboardListPageSize'    => 5,
             ),
             'performance' => array(
                 'class'          => 'application.extensions.zurmoinc.framework.components.PerformanceMeasurement',
@@ -168,8 +168,8 @@
                 ),
             ),
         ),
-        'controllerMap'=>array(
-            'min'=>'application.extensions.minscript.controllers.ExtMinScriptController',
+        'controllerMap' => array(
+            'min' => 'application.extensions.minscript.controllers.ExtMinScriptController',
         ),
         'import' => array(
             'application.extensions.zurmoinc.framework.adapters.*',

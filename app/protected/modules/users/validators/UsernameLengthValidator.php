@@ -37,11 +37,11 @@
          */
         protected function validateAttribute($model, $attributeName)
         {
-            if($model instanceof User)
+            if ($model instanceof User)
             {
                 $minLength = $model->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH);
             }
-            elseif($model instanceof CFormModel)
+            elseif ($model instanceof CFormModel)
             {
                 $group     = Group::getByName(Group::EVERYONE_GROUP_NAME);
                 $minLength = $group->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH);

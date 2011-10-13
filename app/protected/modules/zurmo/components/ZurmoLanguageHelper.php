@@ -150,9 +150,9 @@
         {
             $supportedLanguages = $this->getSupportedLanguagesData();
             $activeLanguages    = $this->getActiveLanguages();
-            foreach($supportedLanguages as $language => $notUsed)
+            foreach ($supportedLanguages as $language => $notUsed)
             {
-                if(!in_array($language, $activeLanguages))
+                if (!in_array($language, $activeLanguages))
                 {
                     unset($supportedLanguages[$language]);
                 }
@@ -167,7 +167,7 @@
         public function canInactivateLanguage($language)
         {
             assert('is_string($language)');
-            if($language == $this->baseLanguage || $this->isLanguageADefaultLanguageForAnyUsers($language))
+            if ($language == $this->baseLanguage || $this->isLanguageADefaultLanguageForAnyUsers($language))
             {
                 return false;
             }
@@ -180,11 +180,11 @@
         public function getActiveLanguages()
         {
             $activeLanguages = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'activeLanguages');
-            if($activeLanguages == null)
+            if ($activeLanguages == null)
             {
                 $activeLanguages = array();
             }
-            if(!in_array($this->baseLanguage, $activeLanguages))
+            if (!in_array($this->baseLanguage, $activeLanguages))
             {
                 $activeLanguages[] = $this->baseLanguage;
             }
@@ -211,7 +211,7 @@
             assert('is_string($language)');
             $tableName = User::getTableName('User');
             $beans = RedBean_Plugin_Finder::where($tableName, "language = '$language'");
-            if(count($beans) > 0)
+            if (count($beans) > 0)
             {
                 return true;
             }

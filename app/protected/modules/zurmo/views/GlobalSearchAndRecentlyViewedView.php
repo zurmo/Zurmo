@@ -53,7 +53,7 @@
                 'hide'     => array('when'    => 'click'),
                 'position' => array('corner'  => array(
                                 'target'      => 'bottomRight',
-                                'tooltip'	  => 'topRight')),
+                                'tooltip'     => 'topRight')),
                 'style'    => array('width'   =>  300));
             $qtip->addQTip("#recently-viewed", $params);
             return $content;
@@ -75,16 +75,18 @@
                 'value'       => $hintMessage,
                 'source'      => Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete'),
                 'htmlOptions' => $htmlOptions,
-                'options'	  => array('select' => 'js: function(event, ui) {if(ui.item.href.length > 0)' .
+                'options'     => array('select' => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
                                                    '{window.location = ui.item.href;} return false;}')
             ));
             $cClipWidget->endClip();
             $content .= '&#160;' . $cClipWidget->getController()->clips['GlobalSearchElement'];
+            // Begin Not Coding Standard
             $script = '$(".ui-autocomplete").position({
                             my: "right top",
                             at: "right bottom",
                             of: $("#globalSearchInput"),
                             collision: "flip flip"});';
+            /// End Not Coding Standard
             Yii::app()->clientScript->registerScript('GlobalSearchElementPosition', $script);
             return $content;
         }

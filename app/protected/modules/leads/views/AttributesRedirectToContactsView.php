@@ -43,7 +43,7 @@
         protected function renderContent()
         {
             $content  = '<div class="horizontal-line">';
-            $content .= Yii::t('Default', 'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
+            $content .= Yii::t('Default', 'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' . // Not Coding Standard
                                           ' just in a different statuses. To create a LeadsModuleSingularLowerCaseLabel' .
                                           ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
                                           ' will be placable in the LeadsModulePluralLowerCaseLabel layouts.',

@@ -58,7 +58,7 @@
 
         protected function increaseClausesCountByOne()
         {
-            $this->clausesCount ++;
+            $this->clausesCount++;
         }
 
         public function isDistinct()
@@ -78,7 +78,7 @@
 
         public function getSelect()
         {
-            if($this->getClausesCount() == 0)
+            if ($this->getClausesCount() == 0)
             {
                 throw new NotSupportedException();
             }
@@ -87,13 +87,12 @@
             {
                 $selectQuery .= 'distinct ';
             }
-            foreach($this->clauses as $clauseCount => $clause)
+            foreach ($this->clauses as $clauseCount => $clause)
             {
-
                 $selectQuery .= $clause;
-                if($this->getClausesCount() > 1 && ($clauseCount + 1) < $this->getClausesCount())
+                if ($this->getClausesCount() > 1 && ($clauseCount + 1) < $this->getClausesCount())
                 {
-                    $selectQuery .= ',';
+                    $selectQuery .= ','; // Not Coding Standard
                 }
                 $selectQuery .= ' ';
             }
@@ -107,12 +106,12 @@
             assert('is_string($aliasName) || $aliasName == null');
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $distinctPart = null;
-            if($this->distinct)
+            if ($this->distinct)
             {
                 $distinctPart = 'distinct ';
             }
             $clause = "count({$distinctPart}{$quote}$tableName{$quote}.{$quote}$columnName{$quote})";
-            if($aliasName != null)
+            if ($aliasName != null)
             {
                 $clause .= " $aliasName";
             }
@@ -128,7 +127,7 @@
             assert('is_string($aliasName) || $aliasName == null');
             $quote  = DatabaseCompatibilityUtil::getQuote();
             $clause = "{$quote}$tableName{$quote}.{$quote}$columnName{$quote}";
-            if($aliasName != null)
+            if ($aliasName != null)
             {
                 $clause .= " $aliasName";
             }
@@ -141,7 +140,7 @@
             assert('is_string($columnName)');
             assert('is_string($aliasName) || $aliasName == null');
             $clause = "$columnName";
-            if($aliasName != null)
+            if ($aliasName != null)
             {
                 $clause .= " $aliasName";
             }
@@ -149,13 +148,12 @@
             $this->increaseClausesCountByOne();
         }
 
-
         public function addSummationClause($summationQueryPart, $aliasName = null)
         {
             assert('is_string($summationQueryPart)');
             assert('is_string($aliasName) || $aliasName == null');
             $clause = "sum({$summationQueryPart})";
-            if($aliasName != null)
+            if ($aliasName != null)
             {
                 $clause .= " $aliasName";
             }

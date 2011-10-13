@@ -217,8 +217,6 @@
                 $this->assertEquals('The Zoo - Account', $data[0]['label']);
                 $this->assertEquals('Big Elephant - Contact', $data[1]['label']);
                 $this->assertEquals('Animal Crackers - Opportunity', $data[2]['label']);
-
-
             }
         }
 

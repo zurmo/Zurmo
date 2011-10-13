@@ -70,8 +70,8 @@
             $opportunity3 = OpportunityTestHelper::createOpportunityByNameForOwner('opportunity3', $super);
 
             //Make models externally linked for testing.
-            ImportTestHelper::updateModelsExternalId($account2, 	'ACC');
-            ImportTestHelper::updateModelsExternalId($contact2, 	'CON');
+            ImportTestHelper::updateModelsExternalId($account2,     'ACC');
+            ImportTestHelper::updateModelsExternalId($contact2,     'CON');
             ImportTestHelper::updateModelsExternalId($opportunity2, 'OPP');
 
             ImportTestHelper::

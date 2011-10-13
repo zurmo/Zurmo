@@ -44,25 +44,25 @@
             assert('is_int($convertToAccountSetting)');
             $userCanConvertProperly = true;
             //Scenario #1 - User does not have access to contacts
-            if(!$userCanAccessContacts)
+            if (!$userCanAccessContacts)
             {
-                $scenarioSpecificContent =
+                $scenarioSpecificContent = // Not Coding Standard
                 Yii::t('Default', 'Conversion requires access to the ContactsModulePluralLowerCaseLabel' .
                                   ' module which you do not have. Please contact your administrator regarding this.',
                        LabelUtil::getTranslationParamsForAllModules());
                 $userCanConvertProperly  = false;
             }
             //Scenario #2 - User cannot access accounts and an account is required for conversion
-            elseif( !$userCanAccessAccounts && $convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_REQUIRED)
+            elseif ( !$userCanAccessAccounts && $convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_REQUIRED)
             {
-                $scenarioSpecificContent =
+                $scenarioSpecificContent = // Not Coding Standard
                 Yii::t('Default', 'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently' .
                                   ' you do not have access to the AccountsModulePluralLowerCaseLabel module.' .
                                   ' Please contact your administrator regarding this.',
                        LabelUtil::getTranslationParamsForAllModules());
                 $userCanConvertProperly  = false;
             }
-            if($userCanConvertProperly)
+            if ($userCanConvertProperly)
             {
                 return;
             }

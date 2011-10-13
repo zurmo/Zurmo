@@ -765,7 +765,7 @@
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
 
-            if(defined('IS_TEST'))
+            if (defined('IS_TEST'))
             {
                 $perInstanceFilename     = "perInstanceTest.php";
                 $debugFilename     = "debugTest.php";

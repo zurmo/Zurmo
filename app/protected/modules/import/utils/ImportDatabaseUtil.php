@@ -77,7 +77,7 @@
                 }
             }
 
-            if(count($importArray > 0))
+            if (count($importArray > 0))
             {
                 DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns);
             }

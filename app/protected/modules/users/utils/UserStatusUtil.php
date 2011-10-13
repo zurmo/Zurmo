@@ -42,7 +42,7 @@
         public static function makeByUser(User $user)
         {
             $userStatus = new UserStatus();
-            if( Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) &&
+            if ( Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) &&
                 Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE) &&
                 Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API))
             {
@@ -54,7 +54,7 @@
         public static function getSelectedValueByUser(User $user)
         {
             $userStatus = self::makeByUser($user);
-            if($userStatus->isActive())
+            if ($userStatus->isActive())
             {
                 return self::ACTIVE;
             }
@@ -64,7 +64,6 @@
             }
         }
 
-
         /**
          * @param array $postData
          */
@@ -72,15 +71,15 @@
         {
             assert('is_array($postData)');
             $userStatus = new UserStatus();
-            if(!isset($postData['userStatus']))
+            if (!isset($postData['userStatus']))
             {
                 return null;
             }
-            elseif($postData['userStatus'] == self::ACTIVE)
+            elseif ($postData['userStatus'] == self::ACTIVE)
             {
                 return $userStatus;
             }
-            elseif($postData['userStatus'] == self::INACTIVE)
+            elseif ($postData['userStatus'] == self::INACTIVE)
             {
                 $userStatus->setInactive();
                 return $userStatus;
@@ -114,9 +113,9 @@
         public static function resolveUserStatus(User $user, UserStatus $userStatus)
         {
             assert('$user->id > 0');
-            if($userStatus->isActive())
+            if ($userStatus->isActive())
             {
-                if( Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) ||
+                if ( Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) ||
                     Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE) ||
                     Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API))
                 {
@@ -125,7 +124,7 @@
             }
             else
             {
-                if( Right::DENY != $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) ||
+                if ( Right::DENY != $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) ||
                     Right::DENY != $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE) ||
                     Right::DENY != $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API))
                 {
@@ -141,7 +140,7 @@
             $user->removeRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE,  Right::DENY);
             $user->removeRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API, Right::DENY);
             $saved = $user->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -154,7 +153,7 @@
             $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE,  Right::DENY);
             $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API, Right::DENY);
             $saved = $user->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

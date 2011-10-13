@@ -74,7 +74,7 @@
                 {
                     $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
                 }
-                if($this->message != null)
+                if ($this->message != null)
                 {
                     $this->message .= "\n";
                 }
