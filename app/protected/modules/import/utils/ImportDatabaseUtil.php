@@ -51,22 +51,37 @@
                 $freezeWhenComplete = true;
             }
             R::exec("drop table if exists $tableName");
+
+            $importArray = array();
+            $data = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
+            if (count($data) > 0)
+            {
+                $newBean = R::dispense($tableName);
+                foreach ($data as $columnId => $value)
+                {
+                    $columnName = 'column_' . $columnId;
+                    $newBean->{$columnName} = str_repeat(' ', 256);
+                    $columns[] = $columnName;
+                }
+                R::store($newBean);
+                R::trash($newBean);
+                R::wipe($tableName);
+                $importArray[] = $data;
+            }
+
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
                 if (count($data) > 0)
                 {
-                    $newBean = R::dispense($tableName);
-                    foreach ($data as $columnId => $value)
-                    {
-                        $columnName = 'column_' . $columnId;
-                        $newBean->{$columnName} = $value;
-                    }
-                    $newBean->status             = null;
-                    $newBean->serializedmessages = null;
-                    R::store($newBean);
-                    unset($newBean);
+                    $importArray[] = $data;
                 }
             }
+
+            if(count($importArray > 0))
+            {
+                DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns);
+            }
+
             self::optimizeTable($tableName);
             if ($freezeWhenComplete)
             {

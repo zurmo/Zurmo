@@ -220,5 +220,47 @@
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
         }
+
+        /**
+         * Insert multiple columns into database.
+         * Currently it supports only mysql database.
+         * @param string $tableName
+         * @param array $data
+         * @param array $columns
+         * @throws NotSupportedException
+         */
+        public static function bulkInsert($tableName, &$data, &$columns)
+        {
+            assert('is_string($tableName)');
+            assert('is_array($data)');
+            assert('is_array($columns)');
+
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            $counter = 0;
+            foreach($data as $row)
+            {
+                if ($counter == 0)
+                {
+                    $sql = "INSERT INTO $tableName (" . implode(',', $columns) . ") VALUES ";
+                }
+                //Limit Write to 500 rows at once
+                if ($counter == 500)
+                {
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')";
+                    R::exec($sql);
+                    $counter = 0;
+                }
+                else
+                {
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),";
+                    $counter++;
+                }
+            }
+            $sql = trim($sql, ',');
+            R::exec($sql);
+        }
     }
 ?>

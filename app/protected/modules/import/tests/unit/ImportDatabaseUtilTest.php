@@ -257,7 +257,7 @@
         *
         * Test if import from file with Windows line-endings works file
         */
-        public function testMakeDatabaseTableByFilePathAndTableNameOnWindowsCsvFile()
+        public function testMakeDatabaseTableByFilePathAndTableNameUsingWindowsCsvFile()
         {
             $testTableName = 'testimporttable';
             //We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
