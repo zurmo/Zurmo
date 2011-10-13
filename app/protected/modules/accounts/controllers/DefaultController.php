@@ -184,6 +184,7 @@
         public function actionDelete($id)
         {
             $account = Account::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($account);
             $account->delete();
             $this->redirect(array($this->getId() . '/index'));
         }

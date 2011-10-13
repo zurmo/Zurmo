@@ -27,9 +27,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>Account_name</td>
-	<td>my account</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -42,24 +47,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Sally Smith</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Sally Smith</td>
+	<td>link=Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Account_owner_name</td>
-	<td>Sally Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -73,12 +93,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>Account_phoneFax</td>
+	<td>Account_officeFax</td>
 	<td>123555</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>Account_phoneOffice</td>
+	<td>Account_officePhone</td>
 	<td>456777</td>
 </tr>
 <tr>
@@ -192,11 +212,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Go to Details</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>save</td>
 	<td></td>
@@ -204,12 +219,12 @@
 <tr>
 	<td>verifyValue</td>
 	<td>Account_name</td>
-	<td>my account</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
 	<td>Account_owner_name</td>
-	<td>Sally Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>verifySelectedLabel</td>
@@ -258,12 +273,12 @@
 </tr>
 <tr>
 	<td>verifyValue</td>
-	<td>Account_phoneOffice</td>
+	<td>Account_officePhone</td>
 	<td>456777</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
-	<td>Account_phoneFax</td>
+	<td>Account_officeFax</td>
 	<td>123555</td>
 </tr>
 <tr>
@@ -309,7 +324,7 @@
 <tr>
 	<td>type</td>
 	<td>Account_name</td>
-	<td>Changing The Account</td>
+	<td>Changing The Account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

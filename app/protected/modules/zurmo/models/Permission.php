@@ -42,9 +42,10 @@
         // combinations, not an excuse to not know how to
         // use & | and ~ to do bitwise operations to
         // do all the possible necessary combinations.
-        const READ_WRITE         = 0x03;
-        const READ_DELETE        = 0x05;
-        const READ_WRITE_DELETE  = 0x07;
+        const READ_WRITE                     = 0x03;
+        const READ_DELETE                    = 0x05;
+        const READ_WRITE_DELETE              = 0x07;
+        const READ_WRITE_CHANGE_PERMISSIONS  = 0xB;
 
         protected function constructDerived($bean, $setDefaults)
         {

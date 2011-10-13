@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Functestradiodropdownfield</td>
+	<td>functestradiodropdownfield_${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,13 +68,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>RadioDropDownAttributeForm_displayName</td>
-	<td>functestradiodropdownfield${randomSuffix}</td>
+	<td>RadioDropDownAttributeForm_attributeName</td>
+	<td>functestradiodropdownfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>RadioDropDownAttributeForm_attributeName</td>
-	<td>functestradiodropdownfield${randomSuffix}</td>
+	<td>RadioDropDownAttributeForm_attributeLabels_en</td>
+	<td>functestradiodropdownfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -108,8 +108,38 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>RadioDropDownAttributeForm_defaultValue</td>
+	<td>RadioDropDownAttributeForm_defaultValueOrder</td>
 	<td>label=testr3</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>RadioDropDownAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>RadioDropDownAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>RadioDropDownAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>RadioDropDownAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>RadioDropDownAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>RadioDropDownAttributeForm_isAudited</td>
+	<td>on</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -119,7 +149,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: Functestradiodropdownfield${randomSuffix}</td>
+	<td>exact:Field: functestradiodropdownfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -128,23 +158,113 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functestradiodropdownfield${randomSuffix}</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//*[@id=&quot;RadioDropDownAttributeForm_isRequired&quot;]</td>
-	<td>off</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>functestradiodropdownfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[7]/td</td>
-	<td>testr1<br /> testr2<br /> testr3</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>functestradiodropdownfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[4]/td</td>
 	<td>testr3</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>testr1<br />testr2<br />testr3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+	<td>exact:Edit Field: functestradiodropdownfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>customFieldDataData_AddInput</td>
+	<td>testr4</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>RadioDropDownAttributeForm_defaultValueOrder</td>
+	<td>label=testr4</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>RadioDropDownAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>RadioDropDownAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>RadioDropDownAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: functestradiodropdownfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>testr4</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='RadioDropDownAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>testr1<br />testr2<br />testr3<br />testr4</td>
 </tr>
 </tbody></table>
 </body>

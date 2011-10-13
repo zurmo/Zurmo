@@ -31,13 +31,42 @@
      */
     class AddLinkViewMetadataRules
     {
+        /**
+         * This method relies on some assumptions that might not always be true. It assumes if you are using a related
+         * link, the type is exactly named as the model.  This might not be true, but for now this is the best way to
+         * handle this.
+         * @param array $elementInformation
+         * @param array $elementMetadata
+         */
         public static function resolveElementMetadata($elementInformation, & $elementMetadata)
         {
+            $modelNames = static::getAcceptableModelsForAttributeNames();
             if ($elementInformation['attributeName'] == 'name' ||
-            $elementInformation['type'] == 'FullName')
+            $elementInformation['type'] == 'FullName' || in_array($elementInformation['type'], $modelNames))
             {
                 $elementMetadata['isLink'] = true;
             }
+        }
+
+        protected static function getAcceptableModelsForAttributeNames()
+        {
+            $modules = Module::getModuleObjects();
+            $modelNames  = array();
+            foreach ($modules as $module)
+            {
+                if($module != 'UsersModule')
+                {
+                    try
+                    {
+                        $modelNames[] = $module::getPrimaryModelName();
+                    }
+                    catch (NotSupportedException $e)
+                    {
+
+                    }
+                }
+            }
+            return $modelNames;
         }
     }
 ?>
