@@ -92,7 +92,7 @@
         protected function actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams = null)
         {
             PermissionsCache::forgetAll();
-            Rights:Cache::forgetAll();
+            RightsCache::forgetAll();
             parent::actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
         }
 

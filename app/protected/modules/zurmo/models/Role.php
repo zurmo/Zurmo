@@ -130,7 +130,7 @@
         protected function afterDelete()
         {
             PermissionsCache::forgetAll();
-            Rights:Cache::forgetAll();
+            RightsCache::forgetAll();
         }
     }
 ?>
