@@ -55,6 +55,10 @@
             $user = User::getByUsername($username);
              //todo: actually run login?
             Yii::app()->user->userModel = $user;
+            //Mimic page request to page request behavior where the php cache would be reset.
+            RedBeanModelsCache::forgetAll(true);
+            //todo: maybe call GeneralCache forgetAllPHPCache and also expand PermissionsCache
+            //to have flags for php cache forgetting only.
             //todo: can we somehow use behavior to do these type of loads like languageHelper->load()?
             //this way we can utilize the same process as the normal production run of the application.
             Yii::app()->languageHelper->load();

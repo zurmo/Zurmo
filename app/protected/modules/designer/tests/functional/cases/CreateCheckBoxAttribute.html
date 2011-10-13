@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Functestcheckboxfield</td>
+	<td>functestcheckboxfield_${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,18 +68,43 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>CheckBoxAttributeForm_displayName</td>
-	<td>functestcheckboxfield${randomSuffix}</td>
+	<td>CheckBoxAttributeForm_attributeName</td>
+	<td>functestcheckboxfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>CheckBoxAttributeForm_attributeName</td>
-	<td>functestcheckboxfield${randomSuffix}</td>
+	<td>CheckBoxAttributeForm_attributeLabels_en</td>
+	<td>functestcheckboxfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>CheckBoxAttributeForm_defaultValue</td>
+	<td>off</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>CheckBoxAttributeForm_defaultValue</td>
 	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>CheckBoxAttributeForm_defaultValue</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>CheckBoxAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>CheckBoxAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>CheckBoxAttributeForm_isAudited</td>
+	<td>on</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -89,7 +114,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: Functestcheckboxfield${randomSuffix}</td>
+	<td>exact:Field: functestcheckboxfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -98,13 +123,78 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functestcheckboxfield${randomSuffix}</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>functestcheckboxfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//*[@id=&quot;CheckBoxAttributeForm_defaultValue&quot;]</td>
+	<td>assertText</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>functestcheckboxfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[4]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[4]/td/input[2]</td>
 	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+	<td>exact:Edit Field: functestcheckboxfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>CheckBoxAttributeForm_defaultValue</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>CheckBoxAttributeForm_defaultValue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>CheckBoxAttributeForm_defaultValue</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: functestcheckboxfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[4]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='CheckBoxAttributeDetailsView']/table/tbody/tr[4]/td/input[2]</td>
+	<td>off</td>
 </tr>
 </tbody></table>
 </body>

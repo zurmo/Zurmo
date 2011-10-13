@@ -27,16 +27,31 @@
     class NotesDefaultController extends ActivityModelsDefaultController
     {
         /**
-         * Action for saving a note inline edit form.
+         * Action for saving a new note inline edit form.
          * @param string or array $redirectUrl
          */
-        public function actionInlineEditSave($redirectUrl = null)
+        public function actionInlineCreateSave($redirectUrl = null)
         {
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'inline-edit-form')
             {
                 $this->actionInlineEditValidate(new Note(), 'Note');
             }
             $this->attemptToSaveModelFromPost(new Note(), $redirectUrl);
+        }
+
+        /**
+         * Action for saving an existing note inline edit form.
+         * @param string or array $redirectUrl
+         */
+        public function actionInlineEditSave($id, $redirectUrl = null)
+        {
+            $note = Note::getById((int)$id);
+            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($note);
+            if (isset($_POST['ajax']) && $_POST['ajax'] === 'inline-edit-form')
+            {
+                $this->actionInlineEditValidate($note, 'Note');
+            }
+            $this->attemptToSaveModelFromPost($note, $redirectUrl);
         }
 
         protected function actionInlineEditValidate($model)
