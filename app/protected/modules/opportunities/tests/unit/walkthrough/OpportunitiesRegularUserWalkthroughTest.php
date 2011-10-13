@@ -66,9 +66,9 @@
 
             //Test peon create/select from sublist actions with none and elevated permissions
         }
-		
-		public function testRegularUserAllControllerActionsNoElevation()
-        {		
+
+        public function testRegularUserAllControllerActionsNoElevation()
+        {
             //Create opportunity owned by user super.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('Opportunity', $super);
@@ -121,6 +121,7 @@
             //Now test peon with elevated rights to opportunities
             $nobody->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
             $nobody->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_CREATE_OPPORTUNITIES);
+            $nobody->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_DELETE_OPPORTUNITIES);
             $this->assertTrue($nobody->save());
 
             //Test nobody with elevated rights.
@@ -149,7 +150,7 @@
             ));
             $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/modalList');
         }
-        
+
         /**
          * @depends testRegularUserControllerActionsWithElevationToAccessAndCreate
          */
@@ -232,7 +233,7 @@
             $this->setGetArray(array('id' => $opportunity2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
             $this->setGetArray(array('id' => $opportunity2->id));
-            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');	
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
 
             //give userInChildRole access to READ
             Yii::app()->user->userModel = $super;
@@ -382,9 +383,9 @@
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $opportunity3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/details');
-            $this->setGetArray(array('id' => $opportunity3->id));			
-            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');	
-            
+            $this->setGetArray(array('id' => $opportunity3->id));
+            $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
+
             //clear up the role relationships between users so not to effect next assertions
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);
