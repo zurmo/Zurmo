@@ -1086,7 +1086,7 @@
                                         }
                                         if ($relatedBean !== null && $relatedBean->id > 0)
                                         {
-                                            $relatedModel = self::makeModel($relatedBean, $relatedModelClassName, true);
+                                            $relatedModel = self::makeModel($relatedBean, $relatedModelClassName);
                                         }
                                     }
 
