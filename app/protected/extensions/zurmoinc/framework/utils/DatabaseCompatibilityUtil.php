@@ -240,26 +240,26 @@
                 throw new NotSupportedException();
             }
             $counter = 0;
-            foreach($data as $row)
+            foreach ($data as $row)
             {
                 if ($counter == 0)
                 {
-                    $sql = "INSERT INTO $tableName (" . implode(',', $columns) . ") VALUES ";
+                    $sql = "INSERT INTO $tableName (" . implode(',', $columns) . ") VALUES "; // Not Coding Standard
                 }
                 //Limit Write to 500 rows at once
                 if ($counter == 500)
                 {
-                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')";
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
                     R::exec($sql);
                     $counter = 0;
                 }
                 else
                 {
-                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),";
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
                     $counter++;
                 }
             }
-            $sql = trim($sql, ',');
+            $sql = trim($sql, ','); // Not Coding Standard
             R::exec($sql);
         }
     }

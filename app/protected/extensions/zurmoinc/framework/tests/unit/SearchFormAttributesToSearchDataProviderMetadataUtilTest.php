@@ -73,7 +73,6 @@
 
             $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
 
-
             //TEST when no value present
             $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
                         getMetadata($searchForm, 'date__Date', null);

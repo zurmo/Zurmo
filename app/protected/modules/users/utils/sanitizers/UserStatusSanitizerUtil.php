@@ -58,11 +58,11 @@
             }
             try
             {
-                if(strtolower($value) == strtolower(UserStatusUtil::ACTIVE))
+                if (strtolower($value) == strtolower(UserStatusUtil::ACTIVE))
                 {
                     return UserStatusUtil::ACTIVE;
                 }
-                elseif(strtolower($value) == strtolower(UserStatusUtil::INACTIVE))
+                elseif (strtolower($value) == strtolower(UserStatusUtil::INACTIVE))
                 {
                     return UserStatusUtil::INACTIVE;
                 }

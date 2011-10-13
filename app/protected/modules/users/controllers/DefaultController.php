@@ -179,11 +179,11 @@
                 $savedSucessfully   = false;
                 $modelToStringValue = null;
                 $model            = $this->saveModelFromPost($sanitizedPostdata, $model, $savedSucessfully, $modelToStringValue);
-                if($savedSucessfully)
+                if ($savedSucessfully)
                 {
-                    if($userStatus != null)
+                    if ($userStatus != null)
                     {
-                        if($model instanceof UserPasswordForm)
+                        if ($model instanceof UserPasswordForm)
                         {
                             UserStatusUtil::resolveUserStatus($model->getModel(), $userStatus);
                         }
@@ -191,7 +191,6 @@
                         {
                             UserStatusUtil::resolveUserStatus($model, $userStatus);
                         }
-
                     }
                     $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                 }

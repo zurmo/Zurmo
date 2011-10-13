@@ -73,7 +73,6 @@
             $this->assertEquals($compareString, $adapter->getSelect());
         }
 
-
         public function testAddCountClause()
         {
             $quote   = DatabaseCompatibilityUtil::getQuote();

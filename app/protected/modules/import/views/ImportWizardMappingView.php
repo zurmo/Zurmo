@@ -233,7 +233,7 @@
         protected function renderPreviousPageLinkContent()
         {
             $importRulesClassName  = $this->model->importRulesType . 'ImportRules';
-            if(!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+            if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
             {
                 $previousStep = 'step2';
             }

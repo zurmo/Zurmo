@@ -103,13 +103,13 @@
             assert('is_int($pageSize)');
             assert('$user->id > 0');
             $modelClassNamesAndSearchAttributeData = self::makeMmodelClassNamesAndSearchAttributeData($partialTerm, $user);
-            if(empty($modelClassNamesAndSearchAttributeData))
+            if (empty($modelClassNamesAndSearchAttributeData))
             {
                 return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
             }
             $dataProvider = new RedBeanModelsDataProvider('anId', null, false, $modelClassNamesAndSearchAttributeData);
             $data = $dataProvider->getData();
-            if(empty($data))
+            if (empty($data))
             {
                 return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
             }
@@ -137,13 +137,13 @@
             foreach ($modules as $module)
             {
                 $globalSearchFormClassName = $module::getGlobalSearchFormClassName();
-                if($globalSearchFormClassName != null && RightsUtil::canUserAccessModule(get_class($module), $user))
+                if ($globalSearchFormClassName != null && RightsUtil::canUserAccessModule(get_class($module), $user))
                 {
                     $modelClassName                = $module::getPrimaryModelName();
                     $searchAttributes              = MixedTermSearchUtil::
                                                      getGlobalSearchAttributeByModuleAndPartialTerm($module,
                                                                                                     $partialTerm);
-                    if(!empty($searchAttributes))
+                    if (!empty($searchAttributes))
                     {
                         $model                         = new $modelClassName(false);
                         assert('$model instanceof RedBeanModel');

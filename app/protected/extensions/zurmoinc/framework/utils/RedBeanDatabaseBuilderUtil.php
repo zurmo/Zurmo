@@ -261,7 +261,7 @@
                         break;
                     case 'CDefaultValueValidator':
                     case 'RedBeanModelDefaultValueValidator':
-                        if($validator->value === null || $validator->value === '')
+                        if ($validator->value === null || $validator->value === '')
                         {
                             throw new NotSupportedException();
                         }

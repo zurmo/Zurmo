@@ -65,9 +65,9 @@
             {
                 $languageCollectionActiveData = $_POST['LanguageCollection'];
                 $activeLanguages = array();
-                foreach($languageCollectionActiveData as $language => $languageData)
+                foreach ($languageCollectionActiveData as $language => $languageData)
                 {
-                    if($languageData['active'])
+                    if ($languageData['active'])
                     {
                         $activeLanguages[] = $language;
                     }

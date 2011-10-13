@@ -111,11 +111,11 @@
 
         protected function getUserModel()
         {
-            if($this->model instanceof User)
+            if ($this->model instanceof User)
             {
                 return $this->model;
             }
-            elseif($this->model instanceof ModelForm)
+            elseif ($this->model instanceof ModelForm)
             {
                 return $this->model->getModel();
             }

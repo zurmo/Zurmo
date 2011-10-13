@@ -102,10 +102,10 @@
             assert('is_string($rule)');
             assert('is_array($elementInformation)');
             assert('is_string($viewClassName)');
-            if($elementInformation['attributeName'] != null)
+            if ($elementInformation['attributeName'] != null)
             {
                 $modelForMetadataClassName = $viewClassName::getModelForMetadataClassName();
-                if($modelForMetadataClassName == 'SearchForm' || is_subclass_of($modelForMetadataClassName, 'SearchForm'))
+                if ($modelForMetadataClassName == 'SearchForm' || is_subclass_of($modelForMetadataClassName, 'SearchForm'))
                 {
                     try
                     {
@@ -114,12 +114,12 @@
                                                            $elementInformation['attributeName']);
                         $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
                         $ignoredRules                    = $className::getIgnoredSavableMetadataRules();
-                        if(in_array($rule, $ignoredRules))
+                        if (in_array($rule, $ignoredRules))
                         {
                             return false;
                         }
                     }
-                    catch(NotSupportedException $e)
+                    catch (NotSupportedException $e)
                     {
                     }
                 }

@@ -58,7 +58,7 @@
                                                             );
             $content .= $formStart;
 
-            if($this->messageBoxContent != null)
+            if ($this->messageBoxContent != null)
             {
                 $content .= $this->messageBoxContent;
                 $content .= '<br/>';
@@ -147,7 +147,7 @@
         {
             $content = Yii::t('Default', 'Last Updated') . ': ';
             $lastAttempedDateTime = Yii::app()->currencyHelper->getLastAttemptedRateUpdateDateTime();
-            if($lastAttempedDateTime == null)
+            if ($lastAttempedDateTime == null)
             {
                 $content .= Yii::t('Default', 'Never');
             }

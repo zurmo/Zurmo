@@ -84,7 +84,7 @@
             ),
         )
     );
-    if(isset($instanceConfig))
+    if (isset($instanceConfig))
     {
         return CMap::mergeArray($config, $instanceConfig);
     }

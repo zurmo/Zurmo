@@ -164,7 +164,7 @@
             $isAudited       = (boolean)$attributeForm->isAudited;
             if (!$attributeForm instanceof DropDownAttributeForm)
             {
-                if($defaultValue === '')
+                if ($defaultValue === '')
                 {
                     $defaultValue = null;
                 }

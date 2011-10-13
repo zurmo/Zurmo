@@ -101,7 +101,7 @@
             $content   .= $cancelLink->render() . '&#160;';
             $content .= '</div>';
             $content .= '<div id="account-select-title" style="margin-bottom:5px;">';
-            if($this->userCanCreateAccount)
+            if ($this->userCanCreateAccount)
             {
                 $content .= $createLink .  '&#160;' . Yii::t('Default', 'or') . '&#160;';
             }
@@ -124,7 +124,7 @@
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
                 $content .= '<div id="account-skip-title" style="margin-bottom:5px;">';
-                if($this->userCanCreateAccount)
+                if ($this->userCanCreateAccount)
                 {
                     $content .= $createLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
                 }

@@ -82,7 +82,7 @@
 
         protected function renderNoteInlineEditContent()
         {
-            if(null != $messageContent = RequiredAttributesValidViewUtil::
+            if (null != $messageContent = RequiredAttributesValidViewUtil::
                                          resolveValidView('NotesModule', $this->getInlineEditViewClassName()))
             {
                 $message = Yii::t('Default', 'The NotesModulePluralLabel form cannot be displayed.',

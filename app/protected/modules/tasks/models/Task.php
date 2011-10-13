@@ -122,7 +122,7 @@
                 if (array_key_exists('completed', $this->originalAttributeValues) &&
                     $this->completed == true)
                 {
-                    if($this->completedDateTime == null)
+                    if ($this->completedDateTime == null)
                     {
                         $this->completedDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                     }

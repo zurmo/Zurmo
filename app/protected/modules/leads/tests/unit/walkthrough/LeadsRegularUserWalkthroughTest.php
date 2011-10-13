@@ -504,8 +504,6 @@
         }
         //todo: test lead conversion.
 
-
-
         public function testUserHasNoAccessToAccountsAndTriesToConvertWhenAccountIsOptional()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -571,7 +569,6 @@
             //View will not show up properly.
             $this->setGetArray (array('id' => $lead->id));
             $this->runControllerWithExitExceptionAndGetContent('leads/default/convert');
-
 
             //Scenario #2 - User cannot access accounts and an account is required for conversion
             $bubby->setRight   ('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS, Right::ALLOW);

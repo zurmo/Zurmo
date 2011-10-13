@@ -71,7 +71,7 @@
             $typeFieldData                 = CustomFieldData::getByName('MeetingCategories');
             $typeFieldData->serializedData = serialize($values);
             $saved                         = $typeFieldData->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

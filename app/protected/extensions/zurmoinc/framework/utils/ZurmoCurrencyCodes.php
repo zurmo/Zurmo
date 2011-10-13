@@ -168,7 +168,7 @@
                 'SLL' => 'Sierra Leone Leone',
                 'SOS' => 'Somalia Shilling',
                 'SRD' => 'Suriname Dollar',
-                'STD' => 'São Principe and Tome Dobra',
+                'STD' => 'Sï¿½o Principe and Tome Dobra',
                 'SVC' => 'El Salvador Colon',
                 'SYP' => 'Syria Pound',
                 'SZL' => 'Swaziland Lilangeni',
@@ -209,10 +209,9 @@
             assert('is_string($partialCodeOrName)');
             $matches = array();
             $codesAndNames = self::getCodes();
-            foreach($codesAndNames as $code => $name)
+            foreach ($codesAndNames as $code => $name)
             {
-
-                if(stripos($code, $partialCodeOrName) !== false || stripos($name, $partialCodeOrName) !== false)
+                if (stripos($code, $partialCodeOrName) !== false || stripos($name, $partialCodeOrName) !== false)
                 {
                     $matches[$code] = $name;
                 }
