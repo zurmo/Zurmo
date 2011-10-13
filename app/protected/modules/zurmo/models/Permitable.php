@@ -244,7 +244,7 @@
                 $permitableName = 'Everyone';
                 try
                 {
-                    return RightsCache::getEntry($permitableName . $moduleName . $policyName .  'ActualPolicy');
+                    return PoliciesCache::getEntry($permitableName . $moduleName . $policyName .  'ActualPolicy');
                 }
                 catch (NotFoundException $e)
                 {
@@ -252,7 +252,7 @@
                                     callFunction("get_named_group_explicit_actual_policy(
                                                  'Everyone', '$moduleName', '$policyName')");
                 }
-                RightsCache::
+                PoliciesCache::
                 cacheEntry($permitableName . $moduleName . $policyName .  'ActualPolicy', $actualPolicy);
                 return $actualPolicy;
             }
@@ -283,7 +283,7 @@
                 $permitableId = $this->getClassId('Permitable');
                 try
                 {
-                    return RightsCache::getEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy');
+                    return PoliciesCache::getEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy');
                 }
                 catch (NotFoundException $e)
                 {
@@ -292,7 +292,7 @@
                                             callFunction("get_permitable_explicit_actual_policy(
                                                          $permitableId, '$moduleName', '$policyName')");
                 }
-                RightsCache::
+                PoliciesCache::
                 cacheEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy', $explictActualPolicy);
                 return $explictActualPolicy;
             }

@@ -37,6 +37,7 @@
             RedBeansCache::forgetAll();
             PermissionsCache::forgetAll();
             RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
             GeneralCache::forgetAll();
         }
     }
