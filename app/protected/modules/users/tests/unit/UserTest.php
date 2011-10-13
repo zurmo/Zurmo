@@ -848,6 +848,7 @@
             unset($user);
 
             RedBeanModelsCache::forgetAll(true); // Forget it at the php level.
+            RedBeansCache::forgetAll();
 
             if (MEMCACHE_ON)
             {

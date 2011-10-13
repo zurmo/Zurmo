@@ -34,6 +34,7 @@
         public static function forgetAllCaches()
         {
             RedBeanModelsCache::forgetAll();
+            RedBeansCache::forgetAll();
             PermissionsCache::forgetAll();
             RightsCache::forgetAll();
             GeneralCache::forgetAll();
