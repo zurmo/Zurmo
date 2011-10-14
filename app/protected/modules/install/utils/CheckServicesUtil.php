@@ -51,7 +51,6 @@
                          'PhpPostSize',
                          'FilePermissions',
                          'Database',
-                         'DatabaseMaxAllowedPacketSize',
                          'APC',
                          'Soap',
                          'Tidy',
@@ -63,16 +62,30 @@
             );
         }
 
+        private static function getAdditionalServicesToCheck()
+        {
+            return array('DatabaseCheckSafeMode',
+                         'DatabaseMaxAllowedPacketSize',
+            );
+        }
         /**
          * Check all services and return the resulting data in an array. The resulting data is organized first by
          * whether a service passed or not, and then by if it is a required or optional service.
          */
-        public static function checkServicesAndGetResultsDataForDisplay()
+        public static function checkServicesAndGetResultsDataForDisplay($checkAdditionalServices = false, $form = null)
         {
-            $servicesToCheck                                                  = self::getServicesToCheck();
-            $resultsData                                                      = array();
-            $resultsData[self::CHECK_PASSED]                                  = array();
-            $resultsData[self::CHECK_FAILED]                                  = array();
+            if(!$checkAdditionalServices)
+            {
+                $servicesToCheck                                                  = self::getServicesToCheck();
+            }
+            else
+            {
+                $servicesToCheck                                                  = self::getAdditionalServicesToCheck();
+            }
+
+            $resultsData                                                       = array();
+            $resultsData[self::CHECK_PASSED]                                   = array();
+            $resultsData[self::CHECK_FAILED]                                   = array();
             $resultsData[self::CHECK_FAILED] [ServiceHelper::REQUIRED_SERVICE] = array();
             $resultsData[self::CHECK_FAILED] [ServiceHelper::OPTIONAL_SERVICE] = array();
             $resultsData[self::CHECK_WARNING]                                  = array();
@@ -80,8 +93,15 @@
             foreach ($servicesToCheck as $service)
             {
                 $serviceHelperClassName = $service . 'ServiceHelper';
-                $serviceHelper = new $serviceHelperClassName();
 
+                if ($form && property_exists($serviceHelperClassName, 'form'))
+                {
+                    $serviceHelper = new $serviceHelperClassName($form);
+                }
+                else
+                {
+                    $serviceHelper = new $serviceHelperClassName();
+                }
                 if ($serviceHelper->runCheckAndGetIfSuccessful())
                 {
                     $resultsData[self::CHECK_PASSED][] = array('service' => $service,

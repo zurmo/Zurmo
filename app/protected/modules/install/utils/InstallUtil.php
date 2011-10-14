@@ -298,18 +298,61 @@
             return array($errorNumber, $errorString);
         }
 
-        public static function getDatabaseMaxAllowedPacketsSize($databaseType, $minimumRequireBytes, /* out */ & $actualBytes)
+        public static function getDatabaseMaxAllowedPacketsSize($databaseType,
+                                                                $databaseHostname,
+                                                                $databaseUsername,
+                                                                $databasePassword,
+                                                                $minimumRequireBytes,
+                                                                /* out */ & $actualBytes)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             switch ($databaseType)
             {
                 case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
                     $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
                     if (isset($row[1]))
                     {
                         $actualBytes = $row[1];
                         return $minimumRequireBytes <= $actualBytes;
+                    }
+                    return false;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        public static function isDatabaseStrictMode($databaseType,
+                                                    $databaseHostname,
+                                                    $databaseUsername,
+                                                    $databasePassword)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SELECT @@sql_mode;");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[0]))
+                    {
+                        if ($row[0] == '' || strstr($row[0], 'STRICT_TRANS_TABLES') !== false)
+                        {
+                            $isStrict = true;
+                        }
+                        else {
+                            $isStrict = false;
+                        }
+                        return $isStrict;
                     }
                     return false;
                 default:

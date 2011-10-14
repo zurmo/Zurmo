@@ -27,12 +27,9 @@
     /**
      * Makes sure the upload file size is large enough.
      */
-    class DatabaseMaxAllowedPacketSizeServiceHelper extends ServiceHelper
+    class DatabaseCheckSafeModeServiceHelper extends ServiceHelper
     {
-        protected $required = false;
         protected $form;
-
-        protected $minimumUploadRequireBytes = 20000000;
 
         public function __construct($form)
         {
@@ -43,29 +40,17 @@
         protected function checkService()
         {
             $passed = true;
-            $actualBytes = null;
-            if (!InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql',
-                                                               $this->form->databaseHostname,
-                                                               $this->form->databaseUsername,
-                                                               $this->form->databasePassword,
-                                                               $this->minimumUploadRequireBytes,
-                                                               $actualBytes))
+            if (!InstallUtil::isDatabaseStrictMode('mysql',
+                                                   $this->form->databaseHostname,
+                                                   $this->form->databaseUsername,
+                                                   $this->form->databasePassword))
             {
-                if ($actualBytes == null)
-                {
-                }
-                else
-                {
-                    $this->message  = Yii::t('Default', 'Database max_allowed_packet size is:') . ' ';
-                    $this->message .= round($actualBytes / 1024000) . 'M ';
-                    $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
-                    $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
-                }
+                $this->message  = Yii::t('Default', 'Database is in strict mode.');
                 $passed = false;
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database max_allowed_packet size meets minimum requirement.');
+                $this->message = Yii::t('Default', 'Database is not in strict mode.');
             }
             return $passed;
         }
