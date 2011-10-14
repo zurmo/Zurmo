@@ -57,6 +57,9 @@
                 'class' => 'application.modules.zurmo.components.ZurmoCurrencyHelper',
                 'baseCode' => 'USD',
             ),
+            'custom' => array(
+                'class' => 'application.extensions.zurmoinc.framework.components.CustomManagement',
+            ),
             'db' => array(
                 'emulatePrepare' => true,
                 'charset'        => 'utf8',
