@@ -238,7 +238,6 @@
         $problems = array();
         $fileNamesToCategoriesToMessages = findFileNameToCategoryToMessage($messagesDirectoryName . '/..');
         $categoriesToMessagesToFileNames = convertFileNameToCategoryToMessageToCategoryToMessageToFileName($fileNamesToCategoriesToMessages);
-
         unset($categoriesToMessagesToFileNames['yii']);
         $languages = getLanguages($messagesDirectoryName);
         if (count($languages) > 0)
@@ -332,6 +331,29 @@
                            }
                         }
                     }
+                    //Check for any rights, policies, or audit event names in the modules.
+                    if ( strpos($fullEntryName, 'Module.php') !== false)
+                    {
+                        $moduleClassName = basename(substr($fullEntryName, 0, -4));
+                        $moduleReflectionClass = new ReflectionClass($moduleClassName);
+                        if ($moduleReflectionClass->isSubclassOf('SecurableModule') &&
+                            !$moduleReflectionClass->isAbstract())
+                        {
+                            $labelsData = getSecurableModuleRightsPoliciesAndAuditEventLabels($moduleClassName);
+                            if(!empty($labelsData))
+                            {
+                                if(isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                                {
+                                    $fileNamesToCategoriesToMessages[$entry]['Default'] =
+                                    array_merge($fileNamesToCategoriesToMessages[$entry]['Default'], $labelsData);
+                                }
+                                else
+                                {
+                                    $fileNamesToCategoriesToMessages[$entry]['Default'] = $labelsData;
+                                }
+                            }
+                        }
+                    }
                     $content = file_get_contents($fullEntryName);
                     $content = str_replace('\\\'', '\'', $content);
                     if (preg_match_all(GOOD_YII_T, $content, $matches))
@@ -357,6 +379,16 @@
             }
         }
         return $fileNamesToCategoriesToMessages;
+    }
+
+    function getSecurableModuleRightsPoliciesAndAuditEventLabels($moduleClassName)
+    {
+        assert('is_string($moduleClassName)');
+        $rightsNames     = $moduleClassName::getRightsNames();
+        $policiesNames   = $moduleClassName::getPolicyNames();
+        $auditEventNames = $moduleClassName::getAuditEventNames();
+        $labelsData = array_merge($rightsNames, $policiesNames);
+        return        array_merge($labelsData, $auditEventNames);
     }
 
     function findFileNameToUnexpectedlyFormattedYiiT($path)
