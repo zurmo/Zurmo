@@ -46,7 +46,7 @@
         const READ_DELETE                                = 0x05;
         const READ_WRITE_DELETE                          = 0x07;
         const READ_WRITE_CHANGE_PERMISSIONS              = 0xB;
-        const READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER = 0x15;
+        const READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER = 0x1B;
 
         protected function constructDerived($bean, $setDefaults)
         {

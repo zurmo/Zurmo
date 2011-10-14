@@ -52,5 +52,10 @@
         {
             return true;
         }
+
+        public static function hasReadPermissionsOptimization()
+        {
+            return true;
+        }
     }
 ?>

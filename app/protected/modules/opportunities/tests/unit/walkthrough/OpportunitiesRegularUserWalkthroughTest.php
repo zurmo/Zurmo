@@ -387,6 +387,15 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('opportunities/default/edit');
 
             //clear up the role relationships between users so not to effect next assertions
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $userInParentGroup->forget();
+            $userInChildGroup->forget();
+            $childGroup->forget();
+            $userInParentGroup          = User::getByUsername('nobody');
+            $userInChildGroup           = User::getByUsername('confused');
+            $childGroup                 = Group::getByName('BBB');
+
+            //clear up the role relationships between users so not to effect next assertions
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);
             $this->assertTrue($parentGroup->save());
