@@ -138,8 +138,8 @@
             $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('AccountsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('AccountsModule', 'picklist');
-            $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('AccountsModule', 'multiselect');
+            $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');            
             $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radio');
             $this->createTextCustomFieldByModule                ('AccountsModule', 'text');
@@ -241,49 +241,76 @@
          * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForAccountsModule
          */
         public function testCreateAnAccountUserAfterTheCustomFieldsArePlacedForAccountsModule()
-        {
-        
+        {        
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             
-            //Create a new account.
-            $this->resetGetArray();
+            //set the date and datetime variable values here
+            $date = date('m/d/y');
+            $dateAssert = date('Y-m-d');
+            $datetime = date('m/d/y h:i A');
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            
+            //Create a new account based on the custom fields.
+            $this->resetGetArray();           
             $this->setPostArray(array('Account' => array(
-                                            'name'        => 'myNewAccount',                                            
-                                            'checkbox'=>'1',
-                                            'currency'=>'45',
-                                            'date'=>'',
-                                            'datetime'=>'',
-                                            'decimal'=>'123',
-                                            'picklist'=>'a',
-                                            'integer'=>'12',
-                                            'multiselect'=>'gg',
-                                            'phone' => '456765421',
-                                            'radio'=>'e',
-                                            'text'=>'This is a test Text',
-                                            'textarea'=>'This is a test TextArea',
-                                            'url'=>'http://wwww.abc.com',
+                                            'name'      =>  'myNewAccount',                                            
+                                            'checkbox'  =>  '1',
+                                            'currency'  =>  array('value'   => 45,
+                                                                  'currency'=> array('id' => 1)),
+                                            'date'      =>  $date,
+                                            'datetime'  =>  $datetime,
+                                            'decimal'   =>  '123',
+                                            'picklist'  =>  array('value'=>'a'),
+                                            'integer'   =>  '12',                                            
+                                            'phone'     =>  '456765421',
+                                            'radio'     =>  array('value'=>'d'),
+                                            'text'      =>  'This is a test Text',
+                                            'textarea'  =>  'This is a test TextArea',
+                                            'url'       =>  'http://wwww.abc.com',
                                             )));
                                             
-            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
-                      
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');         
+                 
             $account = Account::getByName('myNewAccount');
+            //check the details if they are save properly for the custom fields
             $this->assertEquals(1, count($account));
-            echo " MultiSelectDropDown :: ".$account[0]->MultiSelectDropDown;
-        }
-        
+            
+            $this->assertEquals($account[0]->name               , 'myNewAccount');
+            $this->assertEquals($account[0]->checkbox           , '1');
+            $this->assertEquals($account[0]->currency->value    , 45);
+            $this->assertEquals($account[0]->date               , $dateAssert);
+            $this->assertEquals($account[0]->datetime           , $datetimeAssert);
+            $this->assertEquals($account[0]->decimal            , '123');
+            $this->assertEquals($account[0]->picklist->value    , 'a');
+            $this->assertEquals($account[0]->integer            , 12);
+            $this->assertEquals($account[0]->phone              , '456765421');
+            $this->assertEquals($account[0]->radio->value       , 'd');
+            $this->assertEquals($account[0]->text               , 'This is a test Text');
+            $this->assertEquals($account[0]->textarea           , 'This is a test TextArea');
+            $this->assertEquals($account[0]->url                , 'http://wwww.abc.com');          
+        }        
         
         /**
          * @depends testCreateAnAccountUserAfterTheCustomFieldsArePlacedForAccountsModule
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterCreatingTheAccountUser()
         {
-        
-        
-        
+            
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //search a created account using the customfield.
+            $this->resetGetArray();
+            $this->setGetArray(array('AccountsSearchForm ' => array(
+                                            'name'      =>  'myNewAccount'),
+                                     'ajax'=>'list-view'));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default'); 
+             
+            $this->assertTrue(strpos($content, "myNewAccount")>0);
         }
         
         /**
-         * @depends testCreateAccountUserAfterTheCustomFieldsPlacedForAccountsModule
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterCreatingTheAccountUser
          */
         public function testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
         {
@@ -313,4 +340,4 @@
         }
         
     }    
-?>     
+?>
