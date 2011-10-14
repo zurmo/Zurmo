@@ -210,10 +210,10 @@
             //give nobody access to read, write and delete
             Yii::app()->user->userModel = $super;
             $lead->addPermissions($nobody, Permission::READ_WRITE_DELETE);
-            $this->assertTrue($lead->save());            
+            $this->assertTrue($lead->save());
 
             //now nobody should be able to delete a lead
-            Yii::app()->user->userModel = $nobody;            
+            Yii::app()->user->userModel = $nobody;
             $this->setGetArray(array('id' => $lead->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
@@ -279,7 +279,7 @@
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
-            
+
             //Test userInParentRole, access to edit and delete should fail.
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
@@ -295,7 +295,7 @@
             Yii::app()->user->userModel = $userInChildRole;
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
-            
+
             //Test userInChildRole, access to delete should fail.
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
@@ -304,7 +304,7 @@
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInParentRole->username);
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
-            
+
             //Test userInParentRole, access to delete should fail.
             $this->setGetArray(array('id' => $lead2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
@@ -421,7 +421,7 @@
             Yii::app()->user->userModel = $userInChildGroup;
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
-            
+
             //Test userInChildGroup, access to edit and delete should fail.
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/edit');
@@ -437,7 +437,7 @@
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
-            
+
             //Test userInParentGroup, access to delete should fail.
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
@@ -447,7 +447,7 @@
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
-            
+
             //Test userInChildGroup, access to delete should fail.
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('leads/default/delete');
@@ -479,22 +479,24 @@
             Yii::app()->user->userModel = $super;
             $lead3->addPermissions($parentGroup, Permission::READ_WRITE_DELETE);
             $this->assertTrue($lead3->save());
-            
+
             //Test userInChildGroup, access to delete should not fail.
             Yii::app()->user->userModel = $userInChildGroup;
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
                         Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
-            
+
             //clear up the role relationships between users so not to effect next assertions
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);

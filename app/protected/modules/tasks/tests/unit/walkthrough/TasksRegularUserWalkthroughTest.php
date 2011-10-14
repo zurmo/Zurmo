@@ -442,9 +442,11 @@
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);

@@ -85,7 +85,7 @@
             $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
 
             //Now test peon with elevated rights to accounts
-            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);            
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $this->assertTrue($nobody->save());
 
             //create the account as nobody user as the owner
@@ -532,7 +532,7 @@
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $meeting3->id));
             $this->runControllerWithNoExceptionsAndGetContent('meetings/default/edit');
-            
+
             //Test userInParentGroup, access to meetings delete should fail.
             $this->setGetArray(array('id' => $meeting3->id));
             $this->resetPostArray();
@@ -590,9 +590,11 @@
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);

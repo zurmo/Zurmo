@@ -391,9 +391,11 @@
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             //clear up the role relationships between users so not to effect next assertions
             $parentGroup->users->remove($userInParentGroup);

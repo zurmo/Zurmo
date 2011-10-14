@@ -279,7 +279,7 @@
             Yii::app()->user->userModel = $userInParentRole;
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            
+
             //Test userInParentRole, access to edit and delete should fail.
             $this->setGetArray(array('id' => $contact2->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/edit');
@@ -490,9 +490,11 @@
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);
