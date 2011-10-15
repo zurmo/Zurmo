@@ -220,7 +220,13 @@
                 $messagesNotInSourceFiles = array_diff($messagesInMessageFile, $messagesInSourceFiles);
                 foreach ($messagesNotInSourceFiles as $message)
                 {
-                    $problems[] = "'$message' in $firstLanguage/$category.php not in any source file in $moduleName.";
+                    if(strpos($message, 'ModulePluralLabel') === false &&
+                       strpos($message, 'ModuleSingularLabel') === false &&
+                       strpos($message, 'ModulePluralLowerCaseLabel') === false &&
+                       strpos($message, 'ModuleSingularLowerCaseLabel') === false )
+                    {
+                        $problems[] = "(This might be ok) '$message' in $firstLanguage/$category.php not in any source file in $moduleName.";
+                    }
                 }
             }
         }
@@ -312,12 +318,14 @@
                 elseif (is_file($fullEntryName) &&
                     pathinfo($entry, PATHINFO_EXTENSION) == 'php')
                 {
-                    //Avoid any models in the framework/models folder.
+
+                    //Avoid any models in the framework/models folder and test models
                     if ( strpos($path, '/framework') === false &&
-                        strpos($path, '/models') !== false && strpos($fullEntryName, '.php') !== false)
+                         strpos($path, '/tests') === false &&
+                         strpos($path, '/models') !== false &&
+                         strpos($fullEntryName, '.php') !== false)
                     {
                         $modelClassName = basename(substr($fullEntryName, 0, -4));
-
                         $modelReflectionClass = new ReflectionClass($modelClassName);
                         if ($modelReflectionClass->isSubclassOf('RedBeanModel') &&
                             !$modelReflectionClass->isAbstract())
@@ -354,24 +362,28 @@
                             }
                         }
                     }
-                    $content = file_get_contents($fullEntryName);
-                    $content = str_replace('\\\'', '\'', $content);
-                    if (preg_match_all(GOOD_YII_T, $content, $matches))
+                    //Avoid picking up any models or anything in the test folders
+                    if ( strpos($path, '/tests') === false)
                     {
-                        foreach ($matches[1] as $index => $category)
+                        $content = file_get_contents($fullEntryName);
+                        $content = str_replace('\\\'', '\'', $content);
+                        if (preg_match_all(GOOD_YII_T, $content, $matches))
                         {
-                            if (!isset($fileNamesToCategoriesToMessages[$entry][$category]))
+                            foreach ($matches[1] as $index => $category)
                             {
-                                $fileNamesToCategoriesToMessages[$entry][$category] = array();
-                            }
-                            //Remove extra lines caused by ' . ' which is used for line breaks in php. Minimum 3 spaces
-                            //will avoid catching 2 spaces between words which can be legitimate.
-                            $massagedString = preg_replace('/[\p{Z}\s]{3,}/u', ' ', $matches[2][$index]); // Not Coding Standard
-                            $massagedString = str_replace("' . '", '', $massagedString);
-                            $fileNamesToCategoriesToMessages[$entry][$category][] = $massagedString;
-                            if ($matches[2][$index] != $massagedString && strpos($matches[2][$index], "' .") === false)
-                            {
-                                echo 'The following message should be using proper line breaks: ' . $matches[2][$index] . "\n";
+                                if (!isset($fileNamesToCategoriesToMessages[$entry][$category]))
+                                {
+                                    $fileNamesToCategoriesToMessages[$entry][$category] = array();
+                                }
+                                //Remove extra lines caused by ' . ' which is used for line breaks in php. Minimum 3 spaces
+                                //will avoid catching 2 spaces between words which can be legitimate.
+                                $massagedString = preg_replace('/[\p{Z}\s]{3,}/u', ' ', $matches[2][$index]); // Not Coding Standard
+                                $massagedString = str_replace("' . '", '', $massagedString);
+                                $fileNamesToCategoriesToMessages[$entry][$category][] = $massagedString;
+                                if ($matches[2][$index] != $massagedString && strpos($matches[2][$index], "' .") === false)
+                                {
+                                    echo 'The following message should be using proper line breaks: ' . $matches[2][$index] . "\n";
+                                }
                             }
                         }
                     }
@@ -419,11 +431,14 @@
                             $code = str_replace('\\\'', '\'', $code);
                             if (!preg_match(GOOD_YII_T, $code))
                             {
-                                if (!isset($fileNamesToUnexpectedlyFormattedYiiTs[$entry]))
+                                if (!preg_match(GOOD_YII_T_WITH_LINEBREAK, $code))
                                 {
-                                    $fileNamesToUnexpectedlyFormattedYiiTs[$entry] = array();
+                                    if (!isset($fileNamesToUnexpectedlyFormattedYiiTs[$entry]))
+                                    {
+                                        $fileNamesToUnexpectedlyFormattedYiiTs[$entry] = array();
+                                    }
+                                    $fileNamesToUnexpectedlyFormattedYiiTs[$entry][] = $code;
                                 }
-                                $fileNamesToUnexpectedlyFormattedYiiTs[$entry][] = $code;
                             }
                         }
                     }
