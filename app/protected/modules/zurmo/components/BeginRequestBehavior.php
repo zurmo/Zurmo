@@ -159,9 +159,9 @@
 
         public function handleLoadLanguage($event)
         {
-            if (isset($_POST['lang']) && $_POST['lang'] != null)
+            if (isset($_GET['lang']) && $_GET['lang'] != null)
             {
-                Yii::app()->languageHelper->setActive($_POST['lang']);
+                Yii::app()->languageHelper->setActive($_GET['lang']);
             }
             Yii::app()->languageHelper->load();
         }
