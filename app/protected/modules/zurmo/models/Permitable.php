@@ -267,8 +267,20 @@
             }
             else
             {
-                return ZurmoDatabaseCompatibilityUtil::
-                        callFunction("get_named_group_explicit_actual_policy('Everyone', '$moduleName', '$policyName')");
+                $permitableName = 'Everyone';
+                try
+                {
+                    return PoliciesCache::getEntry($permitableName . $moduleName . $policyName .  'ActualPolicy');
+                }
+                catch (NotFoundException $e)
+                {
+                    $actualPolicy = ZurmoDatabaseCompatibilityUtil::
+                                    callFunction("get_named_group_explicit_actual_policy(
+                                                 'Everyone', '$moduleName', '$policyName')");
+                }
+                PoliciesCache::
+                cacheEntry($permitableName . $moduleName . $policyName .  'ActualPolicy', $actualPolicy);
+                return $actualPolicy;
             }
         }
 
@@ -295,8 +307,20 @@
             else
             {
                 $permitableId = $this->getClassId('Permitable');
-                return ZurmoDatabaseCompatibilityUtil::
-                        callFunction("get_permitable_explicit_actual_policy($permitableId, '$moduleName', '$policyName')");
+                try
+                {
+                    return PoliciesCache::getEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy');
+                }
+                catch (NotFoundException $e)
+                {
+
+                    $explictActualPolicy =  ZurmoDatabaseCompatibilityUtil::
+                                            callFunction("get_permitable_explicit_actual_policy(
+                                                         $permitableId, '$moduleName', '$policyName')");
+                }
+                PoliciesCache::
+                cacheEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy', $explictActualPolicy);
+                return $explictActualPolicy;
             }
         }
 

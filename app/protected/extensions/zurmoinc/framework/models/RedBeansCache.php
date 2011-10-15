@@ -24,40 +24,60 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ZurmoBaseTest extends BaseTest
+    /**
+     * Caches RedBeans. Currently this cache only persists through the page request.
+     */
+    class RedBeansCache
     {
-        public static function setUpBeforeClass()
+        private static $beanIdentifiersToBeans = array();
+
+        /**
+         * Get a cached model.
+         */
+        public static function getBean($beanIdentifier)
         {
-            parent::setUpBeforeClass();
-            ZurmoDatabaseCompatibilityUtil::createActualPermissionsCacheTable();
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
-            PermissionsCache::forgetAll();
-            RightsCache::forgetAll();
-            PoliciesCache::forgetAll();
+            assert('is_string($beanIdentifier)');
+            assert('$beanIdentifier != ""');
+            if (PHP_CACHING_ON && isset(self::$beanIdentifiersToBeans[$beanIdentifier]))
+            {
+                return self::$beanIdentifiersToBeans[$beanIdentifier];
+            }
+            throw new NotFoundException();
         }
 
-        public static function tearDownAfterClass()
+        /**
+         * Cache a model maintaining the bean properties
+         */
+        public static function cacheBean(RedBean_OODBBean $bean, $beanIdentifier)
         {
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
-            parent::tearDownAfterClass();
+            assert('is_string($beanIdentifier)');
+            assert('$beanIdentifier != ""');
+            if (PHP_CACHING_ON)
+            {
+                self::$beanIdentifiersToBeans[$beanIdentifier] = $bean;
+            }
         }
 
-        protected static function startOutputBuffer()
+        /**
+         * Forget a cached bean.
+         */
+        public static function forgetBean($beanIdentifier)
         {
-            ob_start();
+            if (PHP_CACHING_ON)
+            {
+                unset(self::$beanIdentifiersToBeans[$beanIdentifier]);
+            }
         }
 
-        protected static function endAndGetOutputBuffer()
+        /**
+         * Forget all cached beans.
+         */
+        public static function forgetAll()
         {
-            $content = ob_get_contents();
-            ob_end_clean();
-            return $content;
-        }
-
-        protected function endPrintOutputBufferAndFail()
-        {
-            echo $this->endAndGetOutputBuffer();
-            $this->fail();
+            if (PHP_CACHING_ON)
+            {
+                self::$beanIdentifiersToBeans = array();
+            }
         }
     }
 ?>
