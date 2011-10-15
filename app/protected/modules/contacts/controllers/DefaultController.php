@@ -194,7 +194,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                 Yii::t('Default', 'ContactsModuleSingularLabel Search',
                                                 LabelUtil::getTranslationParamsForAllModules()),
                                                 'ContactsStateMetadataAdapter');

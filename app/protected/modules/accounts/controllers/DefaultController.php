@@ -176,9 +176,10 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
-                                                Yii::t('Default', 'AccountsModuleSingularLabel Search',
-                                                LabelUtil::getTranslationParamsForAllModules()));
+            echo ModalSearchListControllerUtil::
+                 setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
+                                                     Yii::t('Default', 'AccountsModuleSingularLabel Search',
+                                                     LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public function actionDelete($id)
