@@ -192,7 +192,6 @@
                 if (RightsFormUtil::setRightsFromCastedPost($castedPostData, $group))
                 {
                     PermissionsCache::forgetAll();
-                    RightsCache::forgetAll();
                     $group->forget();
                     $group      = Group::getById(intval($id));
                     Yii::app()->user->setFlash('notification', Yii::t('Default', 'Rights Saved Successfully.'));
@@ -231,7 +230,6 @@
                     if (PoliciesFormUtil::setPoliciesFromCastedPost($castedPostData, $group))
                     {
                         PermissionsCache::forgetAll();
-                        RightsCache::forgetAll();
                         Yii::app()->user->setFlash('notification',
                             Yii::t('Default', 'Policies Saved Successfully.')
                         );

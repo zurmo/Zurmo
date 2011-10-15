@@ -26,6 +26,13 @@
 
     class Permitable extends Item
     {
+        /**
+         * Set to indicate the rights for this permitable have been changed. Is looked at during afterSave to determine
+         * if the RightsCache needs to be forgotten.
+         * @var boolean
+         */
+        private $rightsChanged = false;
+
         public function contains(Permitable $permitable)
         {
             return $this->isSame($permitable);
@@ -166,6 +173,7 @@
                 {
                     $right->type = $type;
                     $found = true;
+                    $this->onChangeRights();
                     break;
                 }
             }
@@ -176,6 +184,7 @@
                 $right->name        = $rightName;
                 $right->type        = $type;
                 $this->rights->add($right);
+                $this->onChangeRights();
             }
         }
 
@@ -192,6 +201,7 @@
                     $right->name       == $rightName)
                 {
                     $this->rights->remove($right);
+                    $this->onChangeRights();
                 }
             }
         }
@@ -199,6 +209,22 @@
         public function removeAllRights()
         {
             $this->rights->removeAll();
+            $this->onChangeRights();
+        }
+
+        protected function onChangeRights()
+        {
+            $this->rightsChanged = true;
+        }
+
+        protected function afterSave()
+        {
+            parent::afterSave();
+            if($this->rightsChanged)
+            {
+                RightsCache::forgetAll();
+                $this->rightsChanged = false;
+            }
         }
 
         public function getEffectivePolicy($moduleName, $policyName)
