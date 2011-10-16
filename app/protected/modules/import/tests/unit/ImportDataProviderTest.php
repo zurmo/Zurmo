@@ -59,5 +59,30 @@
             $this->assertNotNull($content);
             //todo: add more pager content tests, based on offset changes.
         }
+
+        /**
+         * @depends testGetData
+         */
+        public function testGetDataFilteredByStatus()
+        {
+            $testTableName = 'testimporttable';
+            ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $testTableName);
+            $config = array('pagination' => array('pageSize' => 99));
+            $dataProvider = new ImportDataProvider($testTableName, true, $config);
+            $data = $dataProvider->getData();
+            $this->assertEquals(4, count($data));
+            R::exec("update " . $testTableName . " set status = " . ImportRowDataResultsUtil::ERROR . " where id != 1 limit 1");
+
+            //Filter by error status.
+            $dataProvider = new ImportDataProvider($testTableName, true, $config, ImportRowDataResultsUtil::ERROR);
+            $data = $dataProvider->getData();
+            $this->assertEquals(1, count($data));
+
+            //Do without a filter
+            $dataProvider = new ImportDataProvider($testTableName, true, $config);
+            $data = $dataProvider->getData();
+            $this->assertEquals(4, count($data));
+
+        }
     }
 ?>

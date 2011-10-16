@@ -68,18 +68,7 @@
                 $limit  = null;
             }
             $where = null;
-            if ($this->excludeFirstRow)
-            {
-                $where = 'id != 1';
-            }
-            if($this->filterByStatus)
-            {
-                if($where != null)
-                {
-                    $where .= ' AND ';
-                }
-                $where = 'status = ' . $this->filterByStatus;
-            }
+            $this->resolveWhereClause($where);
             $beans        = ImportDatabaseUtil::getSubset($this->tableName, $where, $limit, $offset);
             $indexedBeans = array();
             foreach($beans as $bean)
@@ -95,10 +84,7 @@
         public function calculateTotalItemCount()
         {
             $where = null;
-            if ($this->excludeFirstRow)
-            {
-                $where = 'id != 1';
-            }
+            $this->resolveWhereClause($where);
             return ImportDatabaseUtil::getCount($this->tableName, $where);
         }
 
@@ -121,10 +107,7 @@
         public function getCountByWhere($where)
         {
             assert('$where != null');
-            if ($this->excludeFirstRow)
-            {
-                $where .= ' and id != 1';
-            }
+            $this->resolveWhereClause($where);
             return ImportDatabaseUtil::getCount($this->tableName, $where);
         }
 
@@ -136,20 +119,33 @@
             assert(is_string($groupbyColumnName)); // Not Coding Standard
             assert('is_string($where) || $where == null');
             $sql = "select count(*) count, {$groupbyColumnName} from {$this->tableName} ";
-            if ($this->excludeFirstRow)
-            {
-                if ($where != null)
-                {
-                    $where .= 'and ';
-                }
-                $where .= 'id != 1';
-            }
+            $this->resolveWhereClause($where);
             if ($where != null)
             {
                 $sql .= 'where ' . $where . ' ';
             }
             $sql .= 'group by ' . $groupbyColumnName;
             return R::getAll($sql);
+        }
+
+        protected function resolveWhereClause(& $where)
+        {
+            if ($this->excludeFirstRow)
+            {
+                if ($where != null)
+                {
+                    $where .= ' and ';
+                }
+                $where .= 'id != 1';
+            }
+            if($this->filterByStatus)
+            {
+                if($where != null)
+                {
+                    $where .= ' and ';
+                }
+                $where .= 'status = ' . $this->filterByStatus;
+            }
         }
     }
 ?>

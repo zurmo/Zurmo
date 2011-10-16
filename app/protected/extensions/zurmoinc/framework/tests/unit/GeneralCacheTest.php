@@ -24,19 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Import rules for any attributes that are type Text.
-     */
-    class TextAttributeImportRules extends NonDerivedAttributeImportRules
+    class GeneralCacheTest extends BaseTest
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public function tearDown()
         {
-            return array('DefaultValueModelAttribute' => 'Text');
+            GeneralCache::forgetAll();
         }
 
-        public static function getSanitizerUtilTypesInProcessingOrder()
+        public function testCanSetNullValueToCache()
         {
-            return array('MinimumLength', 'Truncate', 'Required');
+            GeneralCache::cacheEntry('somethingForTesting', null);
+            $value = GeneralCache::getEntry('somethingForTesting');
+            $this->assertNull($value);
         }
     }
 ?>

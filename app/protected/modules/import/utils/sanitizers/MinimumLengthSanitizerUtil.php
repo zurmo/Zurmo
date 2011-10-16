@@ -25,18 +25,44 @@
      ********************************************************************************/
 
     /**
-     * Import rules for any attributes that are type Text.
+     * Sanitizer for resolving whether a value is too short based on an attribute's rules.
      */
-    class TextAttributeImportRules extends NonDerivedAttributeImportRules
+    class MinimumLengthSanitizerUtil extends SanitizerUtil
     {
-        protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
+        public static function getSqlAttributeValueDataAnalyzerType()
         {
-            return array('DefaultValueModelAttribute' => 'Text');
+            return 'MinimumLength';
         }
 
-        public static function getSanitizerUtilTypesInProcessingOrder()
+        public static function getBatchAttributeValueDataAnalyzerType()
         {
-            return array('MinimumLength', 'Truncate', 'Required');
+            return 'MinimumLength';
+        }
+
+        /**
+         * Given a value, resolve that the value not too large for the attribute based on the attribute's type.  If
+         * the value is too large, then it is truncated.
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param mixed $value
+         * @param array $mappingRuleData
+         */
+        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            assert('$mappingRuleData == null');
+            $model     = new $modelClassName(false);
+            $minLength = StringValidatorHelper::getMinLengthByModelAndAttributeName($model, $attributeName);
+            if ($value == null)
+            {
+                return $value;
+            }
+            if (strlen($value) >= $minLength)
+            {
+                return $value;
+            }
+            throw new InvalidValueToSanitizeException(Yii::t('Default', 'Value is too short.'));
         }
     }
 ?>

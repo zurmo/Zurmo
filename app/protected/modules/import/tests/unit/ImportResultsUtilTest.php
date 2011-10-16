@@ -107,5 +107,13 @@
             );
             $this->assertEquals($compareData, $tempTableData);
         }
+
+        public function testConvertSerializedMessagesToDisplayReadyString()
+        {
+            $messages = array('a', 'b', 'c');
+            $string = ImportResultsUtil::convertSerializedMessagesToDisplayReadyString(serialize($messages));
+            $compareString = 'a<br/>b<br/>c';
+            $this->assertEquals($compareString, $string);
+        }
     }
 ?>
