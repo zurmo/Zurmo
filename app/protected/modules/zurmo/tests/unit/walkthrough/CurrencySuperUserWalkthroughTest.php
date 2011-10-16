@@ -95,7 +95,7 @@
             $this->setPostArray(array('CurrencyCollection' => array(
                 'EUR' => array('active' => ''), 'USD' => array('active' => '1'))));
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/currency/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active currencies changed successfully.') !==false);
+            $this->assertTrue(strpos($content, 'Changes to active currencies changed successfully.') !== false);
 
             //Confirm that the EUR is inactive and the USD is still active.
             $currency = Currency::getByCode('EUR');
@@ -108,7 +108,7 @@
             $this->setPostArray(array('CurrencyCollection' => array(
                 'EUR' => array('active' => ''), 'USD' => array('active' => ''))));
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/currency/configurationList');
-            $this->assertTrue(strpos($content, 'You must have at least one active currency.') !==false);
+            $this->assertTrue(strpos($content, 'You must have at least one active currency.') !== false);
 
             //Confirm that the EUR is inactive and the USD is still active.
             $currency = Currency::getByCode('EUR');

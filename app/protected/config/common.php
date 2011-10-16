@@ -57,6 +57,9 @@
                 'class' => 'application.modules.zurmo.components.ZurmoCurrencyHelper',
                 'baseCode' => 'USD',
             ),
+            'custom' => array(
+                'class' => 'application.extensions.zurmoinc.framework.components.CustomManagement',
+            ),
             'db' => array(
                 'emulatePrepare' => true,
                 'charset'        => 'utf8',
@@ -88,6 +91,7 @@
                     'js' => array(
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.ba-bbq.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jui/js/jquery-ui.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-1.0.0-rc3.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/fusionChart/jquery.fusioncharts.js',
 
@@ -118,7 +122,7 @@
                 'massEditProgressPageSize' => 5,
                 'autoCompleteListPageSize' => 5,
                 'importPageSize'           => 50,
-                'dashboardListPageSize'	   => 5,
+                'dashboardListPageSize'    => 5,
             ),
             'performance' => array(
                 'class'          => 'application.extensions.zurmoinc.framework.components.PerformanceMeasurement',
@@ -168,8 +172,8 @@
                 ),
             ),
         ),
-        'controllerMap'=>array(
-            'min'=>'application.extensions.minscript.controllers.ExtMinScriptController',
+        'controllerMap' => array(
+            'min' => 'application.extensions.minscript.controllers.ExtMinScriptController',
         ),
         'import' => array(
             'application.extensions.zurmoinc.framework.adapters.*',

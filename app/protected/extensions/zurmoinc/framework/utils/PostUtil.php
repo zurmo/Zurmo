@@ -83,7 +83,6 @@
                                                                          resolveValueForDateDBFormatted(
                                                                          $value['firstDate']);
                             }
-
                         }
                     }
                 }

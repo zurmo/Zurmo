@@ -39,9 +39,9 @@
         {
             //Replace THEME_NAME string used in common config, with real theme path, and return modified array
             $groupMap = Yii::app()->minScript->getGroupMap();
-            foreach($groupMap as $groupId => $group)
+            foreach ($groupMap as $groupId => $group)
             {
-                foreach($group as $fileId => $filePath)
+                foreach ($group as $fileId => $filePath)
                 {
                     $groupMap[$groupId][$fileId] = str_replace('THEME_NAME', Yii::app()->theme->name, $filePath);
                 }

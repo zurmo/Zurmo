@@ -79,7 +79,7 @@
             $joinTablesAdapter->addFromTableAndGetAliasName('customfield', 'stage_ownedcustomfield_id', 'opportunity');
             $joinTablesAdapter->addFromTableAndGetAliasName('currencyvalue', 'amount_currencyvalue_id', 'opportunity');
             $groupBy                   = "{$quote}customfield{$quote}.{$quote}value{$quote}";
-            $sql                       = SqlQueryUtil::makeQuery('opportunity', $selectQueryAdapter,
+            $sql                       = SQLQueryUtil::makeQuery('opportunity', $selectQueryAdapter,
                                                                  $joinTablesAdapter, null, null, $where, null, $groupBy);
             return $sql;
         }

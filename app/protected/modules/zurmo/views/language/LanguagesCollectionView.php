@@ -58,7 +58,7 @@
                                                             );
             $content .= $formStart;
 
-            if($this->messageBoxContent != null)
+            if ($this->messageBoxContent != null)
             {
                 $content .= $this->messageBoxContent;
                 $content .= '<br/>';
@@ -134,7 +134,7 @@
             $htmlOptions         = array();
             $htmlOptions['id']   = 'LanguageCollection_' . $language . '_active';
 
-            if(!$canInactivate)
+            if (!$canInactivate)
             {
                 $htmlOptions['disabled'] = 'disabled';
             }

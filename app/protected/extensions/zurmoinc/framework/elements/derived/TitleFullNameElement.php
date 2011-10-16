@@ -61,7 +61,7 @@
             assert('$this->attribute == "null"');
             assert('$this->model instanceof Person || $this->model instanceof User');
             $title = null;
-            if($this->model->title != null && $this->model->title->value != null)
+            if ($this->model->title != null && $this->model->title->value != null)
             {
                 $title  = Yii::app()->format->text($this->model->title);
                 $title .= ' ';

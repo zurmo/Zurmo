@@ -45,7 +45,7 @@
                 $('#{$valueTypeid}').change( function()
                     {
                         arr = " . CJSON::encode($valueTypesRequiringFirstDateInput) . ";
-                        if($.inArray($(this).val(), arr) != -1)
+                        if ($.inArray($(this).val(), arr) != -1)
                         {
                                $('#{$firstDateSpanAreaId}').show();
                             $('#{$valueFirstDateId}').prop('disabled', false);
@@ -55,8 +55,6 @@
                             $('#{$firstDateSpanAreaId}').hide();
                             $('#{$valueFirstDateId}').prop('disabled', true);
                         }
-
-
                     }
                 );
             ");

@@ -36,7 +36,7 @@
 
         protected function preFilter($filterChain)
         {
-            if(null == $messageContent = RequiredAttributesValidViewUtil::
+            if (null == $messageContent = RequiredAttributesValidViewUtil::
                                   resolveValidView($this->moduleClassName, $this->viewClassName))
             {
                 return true;

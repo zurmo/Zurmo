@@ -41,9 +41,9 @@
         {
             $modelClassName  = get_class($model);
             $moduleClassName = $modelClassName::getModuleClassName();
-            if($moduleClassName == 'ContactsModule')
+            if ($moduleClassName == 'ContactsModule')
             {
-                if(LeadsUtil::isStateALead($model->state))
+                if (LeadsUtil::isStateALead($model->state))
                 {
                     return 'LeadsModule';
                 }

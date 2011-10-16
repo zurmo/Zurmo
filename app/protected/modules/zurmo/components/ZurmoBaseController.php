@@ -42,7 +42,7 @@
                         'rightName' => $moduleClassName::getAccessRight(),
                 );
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + create, createFromRelation',
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + create, createFromRelation, inlineCreateSave',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );
@@ -403,7 +403,7 @@
                 $postData = $_POST[$postVariableName];
                 $model            = $this->saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             }
-            if($savedSucessfully)
+            if ($savedSucessfully)
             {
                 $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
             }
@@ -458,7 +458,6 @@
             }
             return $model;
         }
-
 
         protected function actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams = null)
         {

@@ -13,7 +13,6 @@ DB_ZURMO_USERNAME=zurmo
 DB_ZURMO_PASSWORD=zurmo
 
 ##### Setup Directories and Permissions #######################################
-
 clear
 echo Setting up Zurmo.
 

@@ -103,7 +103,7 @@
                 else
                 {
                     $importRulesClassName  = $importWizardForm->importRulesType . 'ImportRules';
-                    if(!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+                    if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
                     {
                         $nextStep = 'step4';
                     }
@@ -464,7 +464,7 @@
                     {
                         $tempTableName = $import->getTempTableName();
                         if (!ImportDatabaseUtil::
-                            makeDatabaseTableByFilePathAndTableName($uploadedFile->getTempName(), $tempTableName,
+                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
                                                                       $importWizardForm->rowColumnDelimiter,
                                                                       $importWizardForm->rowColumnEnclosure))
                         {

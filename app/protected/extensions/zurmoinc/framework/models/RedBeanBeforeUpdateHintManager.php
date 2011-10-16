@@ -40,7 +40,7 @@
         public function onEvent($type, $info)
         {
             assert('$type == "update"');
-            if(RedBeanDatabase::isFrozen())
+            if (RedBeanDatabase::isFrozen())
             {
                 return;
             }

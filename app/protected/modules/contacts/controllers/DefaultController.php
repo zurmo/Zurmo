@@ -194,7 +194,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                 Yii::t('Default', 'ContactsModuleSingularLabel Search',
                                                 LabelUtil::getTranslationParamsForAllModules()),
                                                 'ContactsStateMetadataAdapter');
@@ -203,6 +203,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($contact);
             $contact->delete();
             $this->redirect(array($this->getId() . '/index'));
         }

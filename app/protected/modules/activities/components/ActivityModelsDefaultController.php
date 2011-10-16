@@ -102,6 +102,7 @@
             }
             $modelClassName    = $this->getModule()->getPrimaryModelName();
             $activity          = $modelClassName::getById(intval($id));
+			ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($activity);
             $activity->delete();
             $this->redirect($redirectUrl);
         }

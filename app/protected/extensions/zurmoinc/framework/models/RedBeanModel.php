@@ -1450,9 +1450,9 @@
                     }
                     foreach ($this->getValidators() as $validator)
                     {
-                        if($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
+                        if ($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
                         {
-                            if(!$ignoreRequiredValidator)
+                            if (!$ignoreRequiredValidator)
                             {
                                 $validator->validate($this, $attributeNames);
                             }

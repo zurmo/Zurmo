@@ -259,7 +259,8 @@
                                 10060 == $results[0]);
             $results = InstallUtil::checkMemcacheConnection('localhost', 12345);
             $this->assertTrue(  111 == $results[0] ||
-                                10061 == $results[0]);
+                                10061 == $results[0] ||
+                                10060 == $results[0]);
         }
 
         public function testDatabaseConnection_mysql()
@@ -512,7 +513,7 @@
             $this->assertTrue(!is_file($perInstanceConfigFile));
             $this->assertTrue(!is_file($debugConfigFile));
 
-            InstallUtil::runInstallation($form, $messageStreamer, 'perInstanceTest.php', 'debugTest.php');
+            InstallUtil::runInstallation($form, $messageStreamer);
             $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
             $debugConfiguration = file_get_contents($debugConfigFile);
             //Check if super user is created.

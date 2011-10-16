@@ -75,8 +75,6 @@
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new DateDateTime(),
                                                                                     array('aDateTime' => ''));
             $this->assertEmpty($sanitizedPostData['aDateTime']);
-
-
         }
 
         /**

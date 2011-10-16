@@ -86,7 +86,7 @@
         public function getViewMetadata()
         {
             $viewMetadata = array();
-            if($this->searchAttributes != null)
+            if ($this->searchAttributes != null)
             {
                 $viewMetadata['searchAttributes'] = $this->searchAttributes;
             }

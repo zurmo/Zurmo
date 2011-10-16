@@ -30,7 +30,7 @@
         {
             $activeLanguages    = Yii::app()->languageHelper->getActiveLanguages();
             $languagesData       = array();
-            foreach(Yii::app()->languageHelper->getSupportedLanguagesData() as $language => $label)
+            foreach (Yii::app()->languageHelper->getSupportedLanguagesData() as $language => $label)
             {
                 $languagesData[$language] = array('label'         => $label,
                                                  'active'        => in_array($language, $activeLanguages),

@@ -46,7 +46,7 @@
                     $attributesAndRelationsValue = $value;
                     assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 6');
                     $adaptedMetadataClause = array();
-                    if(isset($attributesAndRelations['concatedAttributeNames']))
+                    if (isset($attributesAndRelations['concatedAttributeNames']))
                     {
                         assert('count($attributesAndRelations["concatedAttributeNames"]) == 2');
                         $adaptedMetadataClause['concatedAttributeNames'] = array($attributesAndRelations['concatedAttributeNames'],
@@ -54,9 +54,9 @@
                     }
                     else
                     {
-                        if(isset($attributesAndRelations[3]))
+                        if (isset($attributesAndRelations[3]))
                         {
-                            if($attributesAndRelations[3] == 'resolveValueByRules')
+                            if ($attributesAndRelations[3] == 'resolveValueByRules')
                             {
                                 $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
                                                                    $attributeName);
@@ -64,7 +64,7 @@
                                 $attributesAndRelationsValue     = $className::resolveValueDataIntoUsableValue(
                                                                    $attributesAndRelationsValue);
                             }
-                            elseif($attributesAndRelations[3] != null)
+                            elseif ($attributesAndRelations[3] != null)
                             {
                                 $attributesAndRelationsValue = $attributesAndRelations[3];
                             }
@@ -100,16 +100,15 @@
             assert('$model instanceof SearchForm');
             assert('is_array($metadata)');
             assert('is_string($attributeName)');
-            if(!is_array($metadata[$attributeName]))
+            if (!is_array($metadata[$attributeName]))
             {
-                if($metadata[$attributeName] == 'resolveEntireMappingByRules')
+                if ($metadata[$attributeName] == 'resolveEntireMappingByRules')
                 {
                     $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
                                                        $attributeName);
                     $className                       = $searchFormAttributeMappingRules .
                                                        'SearchFormAttributeMappingRules';
                     $className::resolveAttributesAndRelations($attributeName, $metadata[$attributeName], $value);
-
                 }
                 else
                 {

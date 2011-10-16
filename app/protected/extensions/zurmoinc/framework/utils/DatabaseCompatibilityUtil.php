@@ -222,34 +222,44 @@
         }
 
         /**
-         *
-         * Load data directly(fast) from csv file into database
-         * @param string $file
+         * Insert multiple columns into database.
+         * Currently it supports only mysql database.
          * @param string $tableName
-         * @param string $delimiter
-         * @param string $enclosure
+         * @param array $data
          * @param array $columns
+         * @throws NotSupportedException
          */
-        public static function loadDataFromFileIntoDatabase($filePath, $tableName, $delimiter, $enclosure, $columns)
+        public static function bulkInsert($tableName, &$data, &$columns)
         {
-            assert('is_string($filePath)');
             assert('is_string($tableName)');
-            assert('is_string($delimiter)');
-            assert('is_string($enclosure)');
+            assert('is_array($data)');
             assert('is_array($columns)');
 
             if (RedBeanDatabase::getDatabaseType() != 'mysql')
             {
                 throw new NotSupportedException();
             }
-
-            $sql = "LOAD DATA LOCAL INFILE '$filePath'
-                    INTO TABLE $tableName
-                    FIELDS TERMINATED BY '$delimiter'
-                    OPTIONALLY ENCLOSED BY '\\".$enclosure."'
-                    LINES TERMINATED BY '\\n'
-                    (".implode(",", $columns).")
-                   ";
+            $counter = 0;
+            foreach ($data as $row)
+            {
+                if ($counter == 0)
+                {
+                    $sql = "INSERT INTO $tableName (" . implode(',', $columns) . ") VALUES "; // Not Coding Standard
+                }
+                //Limit Write to 500 rows at once
+                if ($counter == 500)
+                {
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
+                    R::exec($sql);
+                    $counter = 0;
+                }
+                else
+                {
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
+                    $counter++;
+                }
+            }
+            $sql = trim($sql, ','); // Not Coding Standard
             R::exec($sql);
         }
     }

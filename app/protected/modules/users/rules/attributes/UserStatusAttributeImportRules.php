@@ -83,7 +83,7 @@
                     $attributeValueData["status"] == UserStatusUtil::INACTIVE)');
             $userStatus = new UserStatus();
 
-            if($attributeValueData['status'] == UserStatusUtil::INACTIVE)
+            if ($attributeValueData['status'] == UserStatusUtil::INACTIVE)
             {
                 $userStatus->setInactive();
             }

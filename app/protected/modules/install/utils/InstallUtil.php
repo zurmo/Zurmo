@@ -668,20 +668,38 @@
         public static function isDebugConfigWritable($instanceRoot)
         {
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
-            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+
+            if (defined('IS_TEST'))
+            {
+                $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
+            }
+            else
+            {
+                $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+            }
             copy($debugConfigFileDist, $debugConfigFile);
             $isWritable = is_writable($debugConfigFile);
             unlink($debugConfigFile);
+
             return $isWritable;
         }
 
         public static function isPerInstanceConfigWritable($instanceRoot)
         {
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            if (defined('IS_TEST'))
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
+            }
+            else
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            }
+
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             $isWritable = is_writable($perInstanceConfigFile);
             unlink($perInstanceConfigFile);
+
             return $isWritable;
         }
 
@@ -691,7 +709,14 @@
         public static function writeInstallComplete($instanceRoot)
         {
             assert('is_dir($instanceRoot)');
-            $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
+            if (defined('IS_TEST'))
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
+            }
+            else
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            };
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
             $contents = file_get_contents($perInstanceConfigFile);
             $contents = preg_replace('/\$installed\s*=\s*false;/',
@@ -735,13 +760,22 @@
          * @param object $form
          * @param object $messageStreamer
          */
-        public static function runInstallation($form, & $messageStreamer,
-                                               $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
+        public static function runInstallation($form, & $messageStreamer)
         {
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
-            assert('is_string($perInstanceFilename)');
-            assert('is_string($debugFilename)');
+
+            if (defined('IS_TEST'))
+            {
+                $perInstanceFilename     = "perInstanceTest.php";
+                $debugFilename     = "debugTest.php";
+            }
+            else
+            {
+                $perInstanceFilename     = "perInstance.php";
+                $debugFilename     = "debug.php";
+            }
+
             $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,
@@ -755,6 +789,7 @@
             InstallUtil::createSuperUser(   'super',
                                             $form->superUserPassword);
             $messageLogger = new MessageLogger($messageStreamer);
+            Yii::app()->custom->runBeforeInstallationAutoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Starting database schema creation.'));
             InstallUtil::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Database schema creation complete.'));
@@ -778,6 +813,7 @@
                                             $debugFilename);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
+            Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 

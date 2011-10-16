@@ -56,7 +56,7 @@
             }
             else
             {
-                if($userCanCreateAccount)
+                if ($userCanCreateAccount)
                 {
                     Yii::app()->clientScript->registerScript('leadConvert', "
                         $(document).ready(function()

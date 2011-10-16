@@ -39,9 +39,9 @@
             parent::__construct($model);
             $modelAttributesAdapter = new ModelAttributesAdapter($this->model);
             $attributeInformation   = $modelAttributesAdapter->getAttributes();
-            foreach($attributeInformation as $attributeName => $attributeData)
+            foreach ($attributeInformation as $attributeName => $attributeData)
             {
-                if(in_array($attributeData['elementType'], static::getDynamicAttributeTypes()))
+                if (in_array($attributeData['elementType'], static::getDynamicAttributeTypes()))
                 {
                     $this->dynamicAttributeNames[] = $attributeName .
                                                      FormModelUtil::DELIMITER . $attributeData['elementType'];
@@ -56,7 +56,7 @@
         public function rules()
         {
             $dynamicAttributeRules = array();
-            foreach($this->dynamicAttributeNames as $attributeName)
+            foreach ($this->dynamicAttributeNames as $attributeName)
             {
                 $dynamicAttributeRules[] = array($attributeName, 'safe');
             }
@@ -70,7 +70,7 @@
         public function attributeLabels()
         {
             $dynamicAttributeLabels = array();
-            foreach($this->dynamicAttributeNames as $attributeName)
+            foreach ($this->dynamicAttributeNames as $attributeName)
             {
                 $delimiter                              = FormModelUtil::DELIMITER;
                 list($realAttributeName, $type)         = explode($delimiter, $attributeName);
@@ -85,7 +85,7 @@
          */
         public function __set($name, $value)
         {
-            if($this->doesNameResolveNameForDelimiterSplit($name))
+            if ($this->doesNameResolveNameForDelimiterSplit($name))
             {
                 return $this->dynamicAttributeData[$name] = $value;
             }
@@ -98,7 +98,7 @@
          */
         public function __get($name)
         {
-            if($this->doesNameResolveNameForDelimiterSplit($name))
+            if ($this->doesNameResolveNameForDelimiterSplit($name))
             {
                 return $this->dynamicAttributeData[$name];
             }
@@ -114,7 +114,7 @@
             {
                 return true;
             }
-            if($this->doesNameResolveNameForDelimiterSplit($attributeName))
+            if ($this->doesNameResolveNameForDelimiterSplit($attributeName))
             {
                 return true;
             }
@@ -129,7 +129,7 @@
         {
             $metadata = parent::getMetadata();
             $dynamicAttributeToElementTypes = static::getDynamicAttributeToElementTypes();
-            foreach($this->dynamicAttributeNames as $attributeName)
+            foreach ($this->dynamicAttributeNames as $attributeName)
             {
                 $delimiter                      = FormModelUtil::DELIMITER;
                 list($realAttributeName, $type) = explode($delimiter, $attributeName);
@@ -145,7 +145,7 @@
          */
         public function isRelation($attributeName)
         {
-            if($this->doesNameResolveNameForDelimiterSplit($attributeName))
+            if ($this->doesNameResolveNameForDelimiterSplit($attributeName))
             {
                 return false;
             }
@@ -158,7 +158,7 @@
          */
         public function getRelationModelClassName($relationName)
         {
-            if($this->doesNameResolveNameForDelimiterSplit($relationName))
+            if ($this->doesNameResolveNameForDelimiterSplit($relationName))
             {
                 return false;
             }
@@ -173,7 +173,7 @@
         {
             assert('is_string($attributeName)');
             assert('$attributeName != ""');
-            if($this->doesNameResolveNameForDelimiterSplit($attributeName))
+            if ($this->doesNameResolveNameForDelimiterSplit($attributeName))
             {
                 return true;
             }
@@ -186,7 +186,7 @@
          */
         public function isAttributeRequired($attribute)
         {
-            if($this->doesNameResolveNameForDelimiterSplit($attribute))
+            if ($this->doesNameResolveNameForDelimiterSplit($attribute))
             {
                 return false;
             }
@@ -212,7 +212,7 @@
             $nonDyanmicAttributeValues = array();
             foreach ($values as $name => $value)
             {
-                if($this->doesNameResolveNameForDelimiterSplit($name))
+                if ($this->doesNameResolveNameForDelimiterSplit($name))
                 {
                     $this->$name = $value;
                 }
@@ -222,7 +222,6 @@
                 }
             }
             parent::setAttributes($nonDyanmicAttributeValues, $safeOnly);
-
         }
 
         /**
@@ -238,11 +237,11 @@
             assert('is_string($name)');
             $delimiter                  = FormModelUtil::DELIMITER;
             $parts                      = explode($delimiter, $name);
-            if(isset($parts[1]) && $parts[1] != null)
+            if (isset($parts[1]) && $parts[1] != null)
             {
                 //also wanted to check for safety:
                 //&& in_array($name, $this->dynamicAttributeNames) but that cant be done statically.
-                if(in_array($parts[1], static::getDynamicAttributeTypes()))
+                if (in_array($parts[1], static::getDynamicAttributeTypes()))
                 {
                     return true;
                 }
@@ -279,7 +278,7 @@
         public function getAttributesMappedToRealAttributesMetadata()
         {
             $dynamicMappingData = array();
-            foreach($this->dynamicAttributeNames as $attributeName)
+            foreach ($this->dynamicAttributeNames as $attributeName)
             {
                 $dynamicMappingData[$attributeName] = 'resolveEntireMappingByRules';
             }
@@ -310,15 +309,15 @@
         public static function getSearchFormAttributeMappingRulesTypeByAttribute($attributeName)
         {
             assert('is_string($attributeName)');
-            if(static::doesNameResolveNameForDelimiterSplit($attributeName))
+            if (static::doesNameResolveNameForDelimiterSplit($attributeName))
             {
                 $delimiter                      = FormModelUtil::DELIMITER;
                 list($realAttributeName, $type) = explode($delimiter, $attributeName);
-                if($type == 'Date')
+                if ($type == 'Date')
                 {
                     return 'MixedDateTypes';
                 }
-                elseif($type == 'DateTime')
+                elseif ($type == 'DateTime')
                 {
                     return 'MixedDateTimeTypes';
                 }
@@ -330,7 +329,7 @@
             else
             {
                 $ruleTypesIndexedByAttributeName = static::getSearchFormAttributeMappingRulesTypes();
-                if(isset($ruleTypesIndexedByAttributeName[$attributeName]))
+                if (isset($ruleTypesIndexedByAttributeName[$attributeName]))
                 {
                     return $ruleTypesIndexedByAttributeName[$attributeName];
                 }

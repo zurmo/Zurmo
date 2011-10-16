@@ -36,7 +36,8 @@
          * Used to avoid call to ExtMinScript::init() function
          * @see ExtMinScript::init()
          */
-        public function init() {
+        public function init()
+        {
             CApplicationComponent::init();
             $minifyDir = dirname(dirname(__FILE__)) . '/vendors/minify/min';
             $this -> _minifyDir = $minifyDir;
@@ -77,7 +78,8 @@
          * We don't need to load data into groupsConfig.php
          * @see ExtMinScript::_processGroupMap()
          */
-        protected function _processGroupMap() {
+        protected function _processGroupMap()
+        {
             $groupMap = $this->getGroupMap();
             $this -> setGroupMap($groupMap);
         }
