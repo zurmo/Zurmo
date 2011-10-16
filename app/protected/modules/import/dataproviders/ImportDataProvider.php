@@ -34,12 +34,16 @@
 
         private $excludeFirstRow;
 
-        public function __construct($tableName, $excludeFirstRow = false, array $config = array())
+        private $filterByStatus;
+
+        public function __construct($tableName, $excludeFirstRow = false, array $config = array(), $filterByStatus = null)
         {
             assert('is_string($tableName) && $tableName != ""');
             assert('is_bool($excludeFirstRow)');
+            assert('is_int($filterByStatus) || $filterByStatus == null');
             $this->tableName       = $tableName;
             $this->excludeFirstRow = $excludeFirstRow;
+            $this->filterByStatus  = $filterByStatus;
             foreach ($config as $key => $value)
             {
                 $this->$key = $value;
@@ -68,7 +72,21 @@
             {
                 $where = 'id != 1';
             }
-            return ImportDatabaseUtil::getSubset($this->tableName, $where, $limit, $offset);
+            if($this->filterByStatus)
+            {
+                if($where != null)
+                {
+                    $where .= ' AND ';
+                }
+                $where = 'status = ' . $this->filterByStatus;
+            }
+            $beans        = ImportDatabaseUtil::getSubset($this->tableName, $where, $limit, $offset);
+            $indexedBeans = array();
+            foreach($beans as $bean)
+            {
+                $indexedBeans[] = $bean;
+            }
+            return $indexedBeans;
         }
 
         /**
