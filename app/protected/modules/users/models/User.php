@@ -184,8 +184,8 @@
                 $this->role != null && $this->role->id > 0)
             {
                 ReadPermissionsOptimizationUtil::userAddedToRole($this);
-                $this->onChangeRights()
-                $this->onChangePolicies()
+                $this->onChangeRights();
+                $this->onChangePolicies();
             }
             if (isset($this->originalAttributeValues['language']) && Yii::app()->user->userModel != null &&
                 Yii::app()->user->userModel == $this)
