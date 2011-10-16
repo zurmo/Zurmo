@@ -355,6 +355,7 @@
                 $this->assertTrue($memcache->set("M:$i", serialize($account)));
             }
             RedBeanModelsCache::forgetAll(true);
+            RedBeansCache::forgetAll();
             Yii::app()->user->userModel = User::getByUsername('super');
             $memoryBefore = memory_get_usage(true);
             for ($i = 0; $i < $count; $i++)

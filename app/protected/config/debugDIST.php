@@ -40,6 +40,10 @@
     // Check it in as false!
     $redBeanDebugOn = false;
 
+    // Turn this on to see extra query data such as total count, duplicate count, and duplicate queries
+    // Check it in as false!
+    $queryDataOn = false;
+
     // Turn this off to use php to do permissions, rights, and polices.
     // Use this to comparatively test the mysql stored functions and procedures.
     // Check it in as true!
@@ -98,17 +102,18 @@
         error_reporting(E_ALL | E_STRICT);
     }
 
-    define('YII_DEBUG',          $debugOn);
-    define('YII_TRACE_LEVEL',    $debugOn ? 3 : 0);
-    define('FORCE_NO_FREEZE',    $forceNoFreeze);
-    define('SHOW_PERFORMANCE',   $performanceOn);
-    define('REDBEAN_DEBUG',      $redBeanDebugOn);
-    define('SECURITY_OPTIMIZED', $securityOptimized);
-    define('AUDITING_OPTIMIZED', $auditingOptimized);
-    define('PHP_CACHING_ON',     $phpLevelCaching);
-    define('MEMCACHE_ON',        $memcacheLevelCaching);
-    define('DB_CACHING_ON',      $dbLevelCaching);
-    define('MINIFY_SCRIPTS',     $minifyScripts);
+    define('YII_DEBUG',              $debugOn);
+    define('YII_TRACE_LEVEL',        $debugOn ? 3 : 0);
+    define('FORCE_NO_FREEZE',        $forceNoFreeze);
+    define('SHOW_PERFORMANCE',       $performanceOn);
+    define('SHOW_QUERY_DATA',        $queryDataOn);
+    define('REDBEAN_DEBUG',          $redBeanDebugOn);
+    define('SECURITY_OPTIMIZED',     $securityOptimized);
+    define('AUDITING_OPTIMIZED',     $auditingOptimized);
+    define('PHP_CACHING_ON',         $phpLevelCaching);
+    define('MEMCACHE_ON',            $memcacheLevelCaching);
+    define('DB_CACHING_ON',          $dbLevelCaching);
+    define('MINIFY_SCRIPTS',         $minifyScripts);
 
     assert_options(ASSERT_ACTIVE,   $debugOn); // Don't even think about disabling asserts!
     assert_options(ASSERT_WARNING,  $debugOn);

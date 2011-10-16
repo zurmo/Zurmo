@@ -26,6 +26,20 @@
 
     class Permitable extends Item
     {
+        /**
+         * Set to indicate the rights for this permitable have been changed. Is looked at during afterSave to determine
+         * if the RightsCache needs to be forgotten.
+         * @var boolean
+         */
+        private $rightsChanged = false;
+
+        /**
+         * Set to indicate the policies for this permitable have been changed. Is looked at during afterSave to determine
+         * if the PoliciesCache needs to be forgotten.
+         * @var boolean
+         */
+        private $policiesChanged = false;
+
         public function contains(Permitable $permitable)
         {
             return $this->isSame($permitable);
@@ -166,6 +180,7 @@
                 {
                     $right->type = $type;
                     $found = true;
+                    $this->onChangeRights();
                     break;
                 }
             }
@@ -176,6 +191,7 @@
                 $right->name        = $rightName;
                 $right->type        = $type;
                 $this->rights->add($right);
+                $this->onChangeRights();
             }
         }
 
@@ -192,6 +208,7 @@
                     $right->name       == $rightName)
                 {
                     $this->rights->remove($right);
+                    $this->onChangeRights();
                 }
             }
         }
@@ -199,6 +216,27 @@
         public function removeAllRights()
         {
             $this->rights->removeAll();
+            $this->onChangeRights();
+        }
+
+        protected function onChangeRights()
+        {
+            $this->rightsChanged = true;
+        }
+
+        protected function afterSave()
+        {
+            parent::afterSave();
+            if($this->rightsChanged)
+            {
+                RightsCache::forgetAll();
+                $this->rightsChanged = false;
+            }
+            if($this->policiesChanged)
+            {
+                PoliciesCache::forgetAll();
+                $this->policiesChanged = false;
+            }
         }
 
         public function getEffectivePolicy($moduleName, $policyName)
@@ -241,8 +279,20 @@
             }
             else
             {
-                return ZurmoDatabaseCompatibilityUtil::
-                        callFunction("get_named_group_explicit_actual_policy('Everyone', '$moduleName', '$policyName')");
+                $permitableName = 'Everyone';
+                try
+                {
+                    return PoliciesCache::getEntry($permitableName . $moduleName . $policyName .  'ActualPolicy');
+                }
+                catch (NotFoundException $e)
+                {
+                    $actualPolicy = ZurmoDatabaseCompatibilityUtil::
+                                    callFunction("get_named_group_explicit_actual_policy(
+                                                 'Everyone', '$moduleName', '$policyName')");
+                }
+                PoliciesCache::
+                cacheEntry($permitableName . $moduleName . $policyName .  'ActualPolicy', $actualPolicy);
+                return $actualPolicy;
             }
         }
 
@@ -269,8 +319,20 @@
             else
             {
                 $permitableId = $this->getClassId('Permitable');
-                return ZurmoDatabaseCompatibilityUtil::
-                        callFunction("get_permitable_explicit_actual_policy($permitableId, '$moduleName', '$policyName')");
+                try
+                {
+                    return PoliciesCache::getEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy');
+                }
+                catch (NotFoundException $e)
+                {
+
+                    $explictActualPolicy =  ZurmoDatabaseCompatibilityUtil::
+                                            callFunction("get_permitable_explicit_actual_policy(
+                                                         $permitableId, '$moduleName', '$policyName')");
+                }
+                PoliciesCache::
+                cacheEntry($permitableId . $moduleName . $policyName .  'ExplicitActualPolicy', $explictActualPolicy);
+                return $explictActualPolicy;
             }
         }
 
@@ -304,6 +366,7 @@
                 {
                     $policy->value = $value;
                     $found = true;
+                    $this->onChangePolicies();
                     break;
                 }
             }
@@ -314,6 +377,7 @@
                 $policy->name       = $policyName;
                 $policy->value      = $value;
                 $this->policies->add($policy);
+                $this->onChangePolicies();
             }
         }
 
@@ -329,6 +393,7 @@
                     $policy->name       == $policyName)
                 {
                     $this->policies->remove($policy);
+                    $this->onChangePolicies();
                 }
             }
         }
@@ -336,6 +401,11 @@
         public function removeAllPolicies()
         {
             $this->policies->removeAll();
+        }
+
+        protected function onChangePolicies()
+        {
+            $this->policiesChanged = true;
         }
 
         public static function getDefaultMetadata()

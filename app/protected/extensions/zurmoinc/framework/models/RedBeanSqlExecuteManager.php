@@ -23,41 +23,23 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    class ZurmoBaseTest extends BaseTest
+    /**
+     * Event listener to manage when sql queries are executed.
+     */
+    class RedBeanSqlExecuteManager implements RedBean_Observer
     {
-        public static function setUpBeforeClass()
+        public function onEvent($type, $info)
         {
-            parent::setUpBeforeClass();
-            ZurmoDatabaseCompatibilityUtil::createActualPermissionsCacheTable();
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
-            PermissionsCache::forgetAll();
-            RightsCache::forgetAll();
-            PoliciesCache::forgetAll();
-        }
-
-        public static function tearDownAfterClass()
-        {
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
-            parent::tearDownAfterClass();
-        }
-
-        protected static function startOutputBuffer()
-        {
-            ob_start();
-        }
-
-        protected static function endAndGetOutputBuffer()
-        {
-            $content = ob_get_contents();
-            ob_end_clean();
-            return $content;
-        }
-
-        protected function endPrintOutputBufferAndFail()
-        {
-            echo $this->endAndGetOutputBuffer();
-            $this->fail();
+            assert('$type == "sql_exec"');
+            if(!RedBeanDatabase::isFrozen())
+            {
+                return;
+            }
+            //echo "<pre>";
+            //print_r($info->getSQL());
+            //echo "</pre>";
+            //now we can count total queries, how many time the same query is run,
+            //if we want to do db timings we would need to do this from a different listener. (actually not sure how this will work...)
         }
     }
 ?>

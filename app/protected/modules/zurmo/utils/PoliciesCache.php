@@ -24,40 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ZurmoBaseTest extends BaseTest
+    /**
+     * This is a policy caching helper. Currently it just wraps the general cache until we can split out the caching
+     * in memcache by categories. This way in the future we can flush just the policies cache instead of having to flush
+     * the entire cache like we are doing now.
+     */
+    class PoliciesCache
     {
-        public static function setUpBeforeClass()
+        public static function getEntry($identifier)
         {
-            parent::setUpBeforeClass();
-            ZurmoDatabaseCompatibilityUtil::createActualPermissionsCacheTable();
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
-            PermissionsCache::forgetAll();
-            RightsCache::forgetAll();
-            PoliciesCache::forgetAll();
+            return GeneralCache::getEntry($identifier);
         }
 
-        public static function tearDownAfterClass()
+        public static function cacheEntry($identifier, $entry)
         {
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
-            parent::tearDownAfterClass();
+            GeneralCache::cacheEntry($identifier, $entry);
         }
 
-        protected static function startOutputBuffer()
+        public static function forgetAll()
         {
-            ob_start();
-        }
-
-        protected static function endAndGetOutputBuffer()
-        {
-            $content = ob_get_contents();
-            ob_end_clean();
-            return $content;
-        }
-
-        protected function endPrintOutputBufferAndFail()
-        {
-            echo $this->endAndGetOutputBuffer();
-            $this->fail();
+            GeneralCache::forgetAll();
         }
     }
 ?>
