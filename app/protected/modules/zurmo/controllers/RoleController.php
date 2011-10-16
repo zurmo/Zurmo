@@ -93,6 +93,7 @@
         {
             PermissionsCache::forgetAll();
             RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
             parent::actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
         }
 

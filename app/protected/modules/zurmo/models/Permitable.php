@@ -33,6 +33,13 @@
          */
         private $rightsChanged = false;
 
+        /**
+         * Set to indicate the policies for this permitable have been changed. Is looked at during afterSave to determine
+         * if the PoliciesCache needs to be forgotten.
+         * @var boolean
+         */
+        private $policiesChanged = false;
+
         public function contains(Permitable $permitable)
         {
             return $this->isSame($permitable);
@@ -225,6 +232,11 @@
                 RightsCache::forgetAll();
                 $this->rightsChanged = false;
             }
+            if($this->policiesChanged)
+            {
+                PoliciesCache::forgetAll();
+                $this->policiesChanged = false;
+            }
         }
 
         public function getEffectivePolicy($moduleName, $policyName)
@@ -354,6 +366,7 @@
                 {
                     $policy->value = $value;
                     $found = true;
+                    $this->onChangePolicies();
                     break;
                 }
             }
@@ -364,6 +377,7 @@
                 $policy->name       = $policyName;
                 $policy->value      = $value;
                 $this->policies->add($policy);
+                $this->onChangePolicies();
             }
         }
 
@@ -379,6 +393,7 @@
                     $policy->name       == $policyName)
                 {
                     $this->policies->remove($policy);
+                    $this->onChangePolicies();
                 }
             }
         }
@@ -386,6 +401,11 @@
         public function removeAllPolicies()
         {
             $this->policies->removeAll();
+        }
+
+        protected function onChangePolicies()
+        {
+            $this->policiesChanged = true;
         }
 
         public static function getDefaultMetadata()

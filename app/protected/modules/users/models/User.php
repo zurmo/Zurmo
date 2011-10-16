@@ -173,12 +173,19 @@
             return $saved;
         }
 
+        /**
+         * If a user is being added to a role, raise two events signaling a potential change in
+         * Rights/Policies for this user.
+         * @see Permitable::afterSave()
+         */
         protected function afterSave()
         {
             if (((isset($this->originalAttributeValues['role'])) || $this->isNewModel) &&
                 $this->role != null && $this->role->id > 0)
             {
                 ReadPermissionsOptimizationUtil::userAddedToRole($this);
+                $this->onChangeRights()
+                $this->onChangePolicies()
             }
             if (isset($this->originalAttributeValues['language']) && Yii::app()->user->userModel != null &&
                 Yii::app()->user->userModel == $this)
@@ -188,6 +195,11 @@
             parent::afterSave();
         }
 
+        /**
+         * If a user is removed from a role, raise two events signaling a potential change in
+         * Rights/Policies for this user.
+         * @see Item::beforeSave()
+         */
         protected function beforeSave()
         {
             if (parent::beforeSave())
@@ -195,6 +207,8 @@
                 if (isset($this->originalAttributeValues['role']) && $this->originalAttributeValues['role'][1] > 0)
                 {
                     ReadPermissionsOptimizationUtil::userBeingRemovedFromRole($this, Role::getById($this->originalAttributeValues['role'][1]));
+                    $this->onChangeRights();
+                    $this->onChangePolicies();
                 }
                 return true;
             }

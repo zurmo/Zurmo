@@ -131,6 +131,7 @@
         {
             PermissionsCache::forgetAll();
             RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
         }
     }
 ?>
