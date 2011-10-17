@@ -29,7 +29,8 @@
     * Walkthrough for the super user of all possible controller actions.
     * Since this is a super user, he should have access to all controller actions
     * without any exceptions being thrown.
-    *   
+    * This also test the creation of the customfileds, addition of custom fields to all the layouts including the search views
+    * This also test creation, search and edit of the account based on the custom fields
     */
     class AccountsDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
@@ -266,8 +267,7 @@
                                             'radio'     =>  array('value'=>'d'),
                                             'text'      =>  'This is a test Text',
                                             'textarea'  =>  'This is a test TextArea',
-                                            'url'       =>  'http://wwww.abc.com',
-                                            )));
+                                            'url'       =>  'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
 
             //check the details if they are saved properly for the custom fields
@@ -307,9 +307,8 @@
                                                                     'checkbox'  =>  '1',
                                                                     'currency'  =>  array('value'  =>  45),
                                                                     'picklist'  =>  array('value'  =>  'a'),
-                                                                    'radio'     =>  array('value'  =>  'd')
-                                                                    ),
-                                    'ajax' =>  'list-view'          ));
+                                                                    'radio'     =>  array('value'  =>  'd')),
+                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
             //check if the account name exiits after the search is performed on the basis of the
@@ -343,8 +342,7 @@
                                                             'radio'     =>  array('value'=>'e'),
                                                             'text'      =>  'This is a test Edit Text',
                                                             'textarea'  =>  'This is a test Edit TextArea',
-                                                            'url'       =>  'http://wwww.abc-edit.com'
-                                                            ),
+                                                            'url'       =>  'http://wwww.abc-edit.com'),
                                       'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
 
@@ -385,7 +383,7 @@
                                                                     'currency'  =>  array('value'  =>  40),
                                                                     'picklist'  =>  array('value'  =>  'b'),
                                                                     'radio'     =>  array('value'  =>  'e')),
-                                    'ajax' =>  'list-view'          ));
+                                    'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
             //assert that the edit account exits after the edit and is diaplayed on the search page
@@ -430,7 +428,7 @@
                                                                     'currency'  =>  array('value'  =>  40),
                                                                     'picklist'  =>  array('value'  =>  'b'),
                                                                     'radio'     =>  array('value'  =>  'e')),
-                                    'ajax' =>  'list-view'          ));
+                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
             //assert that the edit account exits after the search
