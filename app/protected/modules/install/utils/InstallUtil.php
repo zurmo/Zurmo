@@ -162,7 +162,12 @@
         /**
          * @returns true, or the MySQL version if less than required, or false if not installed.
          */
-        public static function checkDatabase($databaseType, $minimumRequiredVersion, /* out */ &$actualVersion)
+        public static function checkDatabase($databaseType,
+                                            $databaseHostname,
+                                            $databaseUsername,
+                                            $databasePassword,
+                                            $minimumRequiredVersion,
+                                            /* out */ &$actualVersion)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             switch ($databaseType)
@@ -171,15 +176,17 @@
                         $PhpDriverVersion = phpversion('mysql');
                         if ($PhpDriverVersion !== null)
                         {
-                            $output = shell_exec('mysql -V 2>&1');
-                            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches); // Not Coding Standard
-                            if ($matches != null)
+                            $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                            $result = @mysql_query("SELECT VERSION()");
+                            $row    = @mysql_fetch_row($result);
+                            if (is_resource($connection))
                             {
-                                $actualVersion =  $matches[0];
-                                if ($actualVersion !== null)
-                                {
-                                    return self::checkVersion($minimumRequiredVersion, $actualVersion);
-                                }
+                                mysql_close($connection);
+                            }
+                            if (isset($row[0]))
+                            {
+                                $actualVersion = $row[0];
+                                return self::checkVersion($minimumRequiredVersion, $actualVersion);
                             }
                         }
                         return false;

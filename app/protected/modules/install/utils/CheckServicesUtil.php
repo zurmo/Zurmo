@@ -50,7 +50,6 @@
                          'PhpUploadSize',
                          'PhpPostSize',
                          'FilePermissions',
-                         'Database',
                          'APC',
                          'Soap',
                          'Tidy',
@@ -64,7 +63,8 @@
 
         private static function getAdditionalServicesToCheck()
         {
-            return array('DatabaseCheckSafeMode',
+            return array('Database',
+                         'DatabaseCheckSafeMode',
                          'DatabaseMaxAllowedPacketSize',
             );
         }
