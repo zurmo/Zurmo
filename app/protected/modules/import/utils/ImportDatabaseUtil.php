@@ -32,69 +32,60 @@
         /**
          * Given a file resource, convert the file into a database table based on the table name provided.
          * Assumes the file is a csv.
-         * @param string $csvFilePath
+         * @param resource $fileHandle
          * @param string $tableName
          * @return true on success.
          */
-        public static function makeDatabaseTableByFilePathAndTableName($csvFilePath, $tableName, $delimiter = ',', // Not Coding Standard
+        public static function makeDatabaseTableByFileHandleAndTableName($fileHandle, $tableName, $delimiter = ',', // Not Coding Standard
                                                                          $enclosure = "'")
         {
+            assert('gettype($fileHandle) == "resource"');
             assert('is_string($tableName)');
             assert('$tableName == strtolower($tableName)');
             assert('$delimiter != null && is_string($delimiter)');
             assert('$enclosure != null && is_string($enclosure)');
-
-            //Replace /r/n in file with /n.
-            $fileContent = file_get_contents($csvFilePath);
-            $fileContent = str_replace("\r\n" ,"\n", trim($fileContent));
-            file_put_contents($csvFilePath, $fileContent);
-
-            $fileHandle  = fopen($csvFilePath, 'r');
-            assert('gettype($fileHandle) == "resource"');
-
-            $sql = "drop table if exists $tableName";
-            R::exec($sql);
-
-            if ($fileHandle !== false)
+            $freezeWhenComplete = false;
+            if (RedBeanDatabase::isFrozen())
             {
-                $freezeWhenComplete = false;
-                if (RedBeanDatabase::isFrozen())
+                RedBeanDatabase::unfreeze();
+                $freezeWhenComplete = true;
+            }
+            R::exec("drop table if exists $tableName");
+
+            $importArray = array();
+            $data = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
+            if (count($data) > 0)
+            {
+                $newBean = R::dispense($tableName);
+                foreach ($data as $columnId => $value)
                 {
-                    RedBeanDatabase::unfreeze();
-                    $freezeWhenComplete = true;
+                    $columnName = 'column_' . $columnId;
+                    $newBean->{$columnName} = str_repeat(' ', 256);
+                    $columns[] = $columnName;
                 }
+                R::store($newBean);
+                R::trash($newBean);
+                R::wipe($tableName);
+                $importArray[] = $data;
+            }
 
-                $columns = array();
-                $data = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
-                if (count($data) > 0 && $data !== false)
+            while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
+            {
+                if (count($data) > 0)
                 {
-                    $newBean = R::dispense($tableName);
-                    foreach ($data as $columnId => $value)
-                    {
-                        $columnName = 'column_' . $columnId;
-                        $newBean->{$columnName} = str_repeat(' ', 256);
-                        $columns[] = $columnName;
-                    }
-                    $newBean->status             = null;
-                    $newBean->serializedmessages = null;
-
-                    R::store($newBean);
-                    R::trash($newBean);
-                    R::exec("TRUNCATE TABLE $tableName");
-
-                    DatabaseCompatibilityUtil::loadDataFromFileIntoDatabase($csvFilePath, $tableName, $delimiter,
-                                                                            $enclosure, $columns);
-                }
-
-                self::optimizeTable($tableName);
-                if ($freezeWhenComplete)
-                {
-                    RedBeanDatabase::freeze();
+                    $importArray[] = $data;
                 }
             }
-            else
+
+            if (count($importArray > 0))
             {
-                return false;
+                DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns);
+            }
+
+            self::optimizeTable($tableName);
+            if ($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
             }
             return true;
         }

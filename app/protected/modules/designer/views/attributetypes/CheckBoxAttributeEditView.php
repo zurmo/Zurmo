@@ -52,7 +52,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'attributeLabels', 'type' => 'AttributeLabel'),
+                                                array('attributeName' => 'attributeName', 'type' => 'Text'),
                                             ),
                                         ),
                                     )
@@ -61,11 +61,11 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'attributeName', 'type' => 'Text'),
+                                                array('attributeName' => 'attributeLabels', 'type' => 'AttributeLabel'),
                                             ),
                                         ),
                                     )
-                                ),
+                                ),                               
                                 array('cells' =>
                                     array(
                                         array(

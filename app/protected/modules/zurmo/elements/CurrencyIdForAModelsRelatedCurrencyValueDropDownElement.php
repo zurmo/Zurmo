@@ -61,7 +61,7 @@
         protected function getDropDownArray()
         {
            $selectedCurrencyId = $this->model->{$this->attribute}->currency->id;
-           if($selectedCurrencyId < 0)
+           if ($selectedCurrencyId < 0)
            {
                $selectedCurrencyId = null;
            }

@@ -314,22 +314,6 @@
             return array();
         }
 
-        /**
-         * Returns an array of names of rights applicable to the module.
-         */
-        public static function getRightsNames()
-        {
-            return array();
-        }
-
-        /**
-         * Returns an array of names of policies applicable to the module.
-         */
-        public static function getPolicyNames()
-        {
-            return array();
-        }
-
         /*
          * Returns the stronger of the two policy values, being the more
          * restrictive given the nature of that specific policy.

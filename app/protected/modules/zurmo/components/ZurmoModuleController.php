@@ -71,11 +71,9 @@
                                             (int)$portlet->id,
                                             $this->getModule()->getId()
             );
-            Yii::app()->getClientScript()->setToAjaxMode();
-            echo ModalSearchListControllerUtil::renderModalSearchList($this,
-                                                                      $modalListLinkProvider,
-                                                                      $pageTitle,
-                                                                      $stateMetadataAdapterClassName);
+            echo ModalSearchListControllerUtil::
+                 setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider, $pageTitle,
+                                                     $stateMetadataAdapterClassName);
         }
 
         public function actionAutoComplete($term)

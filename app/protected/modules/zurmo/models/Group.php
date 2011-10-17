@@ -432,6 +432,8 @@
         protected function afterDelete()
         {
             PermissionsCache::forgetAll();
+            RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
         }
     }
 ?>

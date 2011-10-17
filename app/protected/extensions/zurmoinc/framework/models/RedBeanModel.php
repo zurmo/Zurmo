@@ -1071,11 +1071,25 @@
                                 }
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
                                 {
-                                    $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
-                                    if ($relatedBean !== null && $relatedBean->id > 0)
+                                    $linkFieldName = R::$linkManager->getLinkField($relatedTableName, $linkName);
+                                    if((int)$bean->$linkFieldName > 0)
                                     {
-                                        $relatedModel = self::makeModel($relatedBean, $relatedModelClassName, true);
+                                        $beanIdentifier = $relatedTableName .(int)$bean->$linkFieldName;
+                                        try
+                                        {
+                                            $relatedBean = RedBeansCache::getBean($beanIdentifier);
+                                        }
+                                        catch (NotFoundException $e)
+                                        {
+                                            $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
+                                            RedBeansCache::cacheBean($relatedBean, $beanIdentifier);
+                                        }
+                                        if ($relatedBean !== null && $relatedBean->id > 0)
+                                        {
+                                            $relatedModel = self::makeModel($relatedBean, $relatedModelClassName);
+                                        }
                                     }
+
                                 }
                                 if (!isset($relatedModel))
                                 {
@@ -1436,9 +1450,9 @@
                     }
                     foreach ($this->getValidators() as $validator)
                     {
-                        if($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
+                        if ($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
                         {
-                            if(!$ignoreRequiredValidator)
+                            if (!$ignoreRequiredValidator)
                             {
                                 $validator->validate($this, $attributeNames);
                             }
@@ -1673,7 +1687,7 @@
                                                                self::HAS_MANY_BELONGS_TO)))
                             {
                                 if ($relatedModel->isModified() ||
-                                    $this->isAttributeRequired($relationName))
+                                    ($this->isAttributeRequired($relationName) && $relatedModel->id <= 0))
                                 {
                                     // Validation of this model has already done.
                                     if (!$relatedModel->save(false))
@@ -1947,6 +1961,7 @@
         public static function forgetAll()
         {
             RedBeanModelsCache::forgetAll();
+            RedBeansCache::forgetAll();
         }
 
         /**
@@ -1956,6 +1971,7 @@
         public function forget()
         {
             RedBeanModelsCache::forgetModel($this);
+            RedBeansCache::forgetBean(self::getTableName(get_called_class()) . $this->id);
         }
 
         /**

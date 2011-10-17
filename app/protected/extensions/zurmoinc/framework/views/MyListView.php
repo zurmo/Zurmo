@@ -95,7 +95,7 @@
 
         protected function getSearchAttributes()
         {
-            if($this->viewData != null && isset($this->viewData['searchAttributes']))
+            if ($this->viewData != null && isset($this->viewData['searchAttributes']))
             {
                 return $this->viewData['searchAttributes'];
             }
@@ -106,7 +106,7 @@
         {
             $searchForm   = $this->getSearchModel();
             $formModel    = new MyListForm();
-            if($this->viewData != null)
+            if ($this->viewData != null)
             {
                 if (isset($this->viewData['searchAttributes']))
                 {
@@ -163,7 +163,7 @@
         public static function getDefaultSearchAttributes()
         {
             $metadata = self::getMetadata();
-            if(isset($metadata['perUser']['searchAttributes']))
+            if (isset($metadata['perUser']['searchAttributes']))
             {
                 return $metadata['perUser']['searchAttributes'];
             }

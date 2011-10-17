@@ -44,7 +44,7 @@
             assert('$where   === null || is_string ($where)   && $where   != ""');
             assert('$orderBy === null || is_string ($orderBy) && $orderBy != ""');
             assert('$groupBy === null || is_string ($groupBy) && $groupBy != ""');
-            if($groupBy != null && $orderBy != null)
+            if ($groupBy != null && $orderBy != null)
             {
                 throw new NotSupportedException();
             }

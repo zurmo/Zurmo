@@ -105,7 +105,8 @@
                 {
                     self::buildJoinAndWhereForNonRelatedConcatedAttributes( $model, $clauseInformation,
                                                                             $key, $joinTablesAdapter, $where);
-                }elseif (!isset($clauseInformation['relatedAttributeName']))
+                }
+                elseif (!isset($clauseInformation['relatedAttributeName']))
                 {
                     self::buildJoinAndWhereForNonRelatedAttribute( $model, $clauseInformation,
                                                                     $key, $joinTablesAdapter, $where);
@@ -180,7 +181,7 @@
             assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
             assert('is_array($where)');
             $tableAliasAndColumnNames = array();
-            foreach($clauseInformation['concatedAttributeNames'] as $attributeName)
+            foreach ($clauseInformation['concatedAttributeNames'] as $attributeName)
             {
                 $attributeModelClassName = self::resolveAttributeModelClassName($model, $attributeName);
                 $attributeTableName      = RedBeanModel::getTableName($attributeModelClassName);
@@ -196,8 +197,6 @@
                                                     $clauseInformation['value'],
                                                     $where, $whereKey, $tableAliasAndColumnNames);
         }
-
-
 
         /**
          * Given a related attribute on a model, build the jion and where sql string information.

@@ -43,6 +43,7 @@
             $this->setAndGetCheckBoxAttribute('testCheckBox2', true);
             $this->setAndGetCheckBoxAttribute('testCheckBox3', false);
         }
+
         protected function setAndGetCheckBoxAttribute($attributeName, $withDefaultData)
         {
             $this->assertTrue(isset($attributeName) && $attributeName != '');
@@ -353,6 +354,7 @@
             $this->setAndGetDecimalAttribute('testDecimal2', true);
             $this->setAndGetDecimalAttribute('testDecimal3', false);
         }
+
         protected function setAndGetDecimalAttribute($attributeName, $withDefaultData)
         {
             $this->assertTrue(isset($attributeName) && $attributeName != '');
@@ -684,7 +686,7 @@
             $this->assertEquals(true,             $attributeForm->isRequired);
             $this->assertEquals(20,               $attributeForm->maxLength);
 
-            if($withDefaultData)
+            if ($withDefaultData)
             {
                 $this->assertEquals('1-800-111-2233', $attributeForm->defaultValue);
             }
@@ -917,7 +919,7 @@
             $attributeForm->isRequired    = true;
             $attributeForm->maxLength     = 50;
 
-            if($withDefaultData)
+            if ($withDefaultData)
             {
                 $attributeForm->defaultValue  = 'http://www.outback.com';
             }
@@ -949,7 +951,7 @@
             $this->assertEquals(true,                     $attributeForm->isRequired);
             $this->assertEquals(50,                       $attributeForm->maxLength);
 
-            if($withDefaultData)
+            if ($withDefaultData)
             {
                 $this->assertEquals('http://www.outback.com', $attributeForm->defaultValue);
             }
@@ -957,7 +959,6 @@
             {
                 $this->assertEquals(null,                     $attributeForm->defaultValue);
             }
-
         }
 
         /**

@@ -41,15 +41,15 @@
         public function testConvertSizeToHumanReadableAndGet()
         {
             $readableSize = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(5000);
-            $this->assertEquals('4.88Kb', $readableSize);
+            $this->assertEquals('4.88KB', $readableSize);
             $readableSize = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(500000);
-            $this->assertEquals('488.28Kb', $readableSize);
+            $this->assertEquals('488.28KB', $readableSize);
             $readableSize = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(5000000);
-            $this->assertEquals('4.77Mb', $readableSize);
+            $this->assertEquals('4.77MB', $readableSize);
             $readableSize = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(500000000);
-            $this->assertEquals('476.84Mb', $readableSize);
+            $this->assertEquals('476.84MB', $readableSize);
             $readableSize = FileModelDisplayUtil::convertSizeToHumanReadableAndGet(5000000000);
-            $this->assertEquals('4.66Gb', $readableSize);
+            $this->assertEquals('4.66GB', $readableSize);
         }
 
         public function testRenderDownloadLinkContentByRelationModelAndFileModel()

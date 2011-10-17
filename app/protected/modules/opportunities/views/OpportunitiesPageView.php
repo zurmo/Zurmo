@@ -33,7 +33,7 @@
 
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Opportunities');
+            return Yii::t('Default', 'OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

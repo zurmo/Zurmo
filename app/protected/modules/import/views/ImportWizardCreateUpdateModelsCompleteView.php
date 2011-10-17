@@ -37,16 +37,20 @@
 
         protected $rowsWithErrors   = 0;
 
+        protected $importErrorsListView;
+
         public function __construct($controllerId, $moduleId, ImportWizardForm $model,
-                                    $modelsCreated = 0, $modelsUpdated = 0, $rowsWithErrors = 0)
+                                    $modelsCreated = 0, $modelsUpdated = 0, $rowsWithErrors = 0,
+                                    ImportErrorsListView $importErrorsListView)
         {
             assert('is_int($modelsCreated)');
             assert('is_int($modelsUpdated)');
             assert('is_int($rowsWithErrors)');
             parent::__construct($controllerId, $moduleId, $model);
-            $this->modelsCreated  = $modelsCreated;
-            $this->modelsUpdated  = $modelsUpdated;
-            $this->rowsWithErrors = $rowsWithErrors;
+            $this->modelsCreated            = $modelsCreated;
+            $this->modelsUpdated            = $modelsUpdated;
+            $this->rowsWithErrors           = $rowsWithErrors;
+            $this->importErrorsListView     = $importErrorsListView;
         }
 
         /**
@@ -72,7 +76,21 @@
             $content .= '</td></tr>'   . "\n";
             $content .= '</tbody>'     . "\n";
             $content .= '</table>'     . "\n";
-            $content .= $this->renderActionLinksContent();
+            $content .= $this->renderErrorListContent();
+            if($this->rowsWithErrors > 0)
+            {
+                $content .= $this->renderActionLinksContent();
+            }
+            return $content;
+        }
+
+        protected function renderErrorListContent()
+        {
+            $content  = '<br/>';
+            $content .= '<h3>' . "\n";
+            $content .= Yii::t('Default', 'Information about the rows with errors');
+            $content .= '</h3>'   . "\n";
+            $content .= $this->importErrorsListView->render();
             return $content;
         }
 

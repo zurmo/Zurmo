@@ -66,7 +66,7 @@
             $this->setPostArray(array('LanguageCollection' => array(
                 'fr' => array('active' => '1'), 'de' => array('active' => '1'))));
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !==false);
+            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !== false);
 
             //Confirm the new languages are active
             $data = Yii::app()->languageHelper->getActiveLanguages();
@@ -82,7 +82,7 @@
             $this->setPostArray(array('LanguageCollection' => array(
                 'fr' => array('active' => '1'), 'de' => array('active' => ''))));
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !==false);
+            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !== false);
 
             //Confirm the correct languages are active.
             $data = Yii::app()->languageHelper->getActiveLanguages();

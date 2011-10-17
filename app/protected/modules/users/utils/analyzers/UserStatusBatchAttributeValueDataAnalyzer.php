@@ -44,7 +44,7 @@
 
         protected function analyzeByValue($value)
         {
-            if($value != null &&
+            if ($value != null &&
                strtolower($value) != strtolower(UserStatusUtil::ACTIVE) &&
                strtolower($value) == strtolower(UserStatusUtil::INACTIVE))
             {

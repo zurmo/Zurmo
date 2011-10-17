@@ -73,6 +73,7 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
@@ -80,7 +81,6 @@
             }
             else
             {
-                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
                 AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($contact), $contact);
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
@@ -103,6 +103,7 @@
         public function actionEdit($id, $redirectUrl = null)
         {
             $contact = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/edit', 'id' => $contact->id);
@@ -110,7 +111,6 @@
             }
             else
             {
-                ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
                 $view = new LeadsPageView($this,
                     $this->makeTitleBarAndEditAndDetailsView(
                         $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
@@ -283,7 +283,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                 Yii::t('Default', 'LeadsModuleSingularLabel Search',
                                                 LabelUtil::getTranslationParamsForAllModules()),
                                                 'LeadsStateMetadataAdapter');
@@ -292,6 +292,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/delete', 'id' => $contact->id);

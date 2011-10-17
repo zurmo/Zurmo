@@ -31,7 +31,7 @@
         public function __construct($failureMessageContent = null)
         {
             assert('$failureMessageContent == null || is_string($failureMessageContent)');
-            if($failureMessageContent == null)
+            if ($failureMessageContent == null)
             {
                 $failureMessageContent = Yii::t('Default', 'You have tried to access a page you do not have access to.');
             }

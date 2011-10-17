@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Functestintegerfield</td>
+	<td>functestintegerfield_${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,13 +68,13 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>IntegerAttributeForm_displayName</td>
-	<td>functestintegerfield${randomSuffix}</td>
+	<td>IntegerAttributeForm_attributeName</td>
+	<td>functestintegerfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>IntegerAttributeForm_attributeName</td>
-	<td>functestintegerfield${randomSuffix}</td>
+	<td>IntegerAttributeForm_attributeLabels_en</td>
+	<td>functestintegerfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -97,6 +97,36 @@
 	<td>5000</td>
 </tr>
 <tr>
+	<td>verifyValue</td>
+	<td>IntegerAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>IntegerAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>IntegerAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>IntegerAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>IntegerAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>IntegerAttributeForm_isAudited</td>
+	<td>on</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
@@ -104,7 +134,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: Functestintegerfield${randomSuffix}</td>
+	<td>exact:Field: functestintegerfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -113,8 +143,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>functestintegerfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
 	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functestintegerfield${randomSuffix}</td>
+	<td>functestintegerfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -122,9 +157,9 @@
 	<td>1500</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//*[@id=&quot;IntegerAttributeForm_isRequired&quot;]</td>
-	<td>off</td>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[5]/td</td>
+	<td>6</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -135,6 +170,81 @@
 	<td>assertText</td>
 	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[7]/td</td>
 	<td>5000</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[9]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[9]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+	<td>exact:Edit Field: functestintegerfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>IntegerAttributeForm_defaultValue</td>
+	<td>1600</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>IntegerAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>IntegerAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>IntegerAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: functestintegerfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>1600</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td>off</td>
 </tr>
 </tbody></table>
 </body>

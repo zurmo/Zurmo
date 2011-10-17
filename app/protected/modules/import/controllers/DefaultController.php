@@ -103,7 +103,7 @@
                 else
                 {
                     $importRulesClassName  = $importWizardForm->importRulesType . 'ImportRules';
-                    if(!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+                    if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
                     {
                         $nextStep = 'step4';
                     }
@@ -308,9 +308,17 @@
             }
             assert('$step == null || is_string($step)');
             assert('$nextParams == null || is_array($nextParams)');
-
             $import               = Import::getById((int)$id);
             $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
+            $cs                   = Yii::app()->getClientScript();
+            $cs->registerCoreScript('bbq');
+            if (isset($_GET['ajax']) && $_GET['ajax'] == 'list-view')
+            {
+                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm);
+                $view               = new AjaxPageView($importCompleteView);
+                echo $view->render();
+                Yii::app()->end(0, false);
+            }
             $unserializedData     = unserialize($import->serializedData);
             $pageSize             = Yii::app()->pagination->resolveActiveForCurrentUserByType('importPageSize');
             $config               = array('pagination' => array('pageSize' => $pageSize));
@@ -323,14 +331,8 @@
             $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step6';
             if ($sequentialProcess->isComplete())
             {
-                $dataAnalysisCompleteView = new ImportWizardCreateUpdateModelsCompleteView($this->getId(),
-                                                $this->getModule()->getId(),
-                                                $importWizardForm,
-                                                (int)ImportRowDataResultsUtil::getCreatedCount($import->getTempTableName()),
-                                                (int)ImportRowDataResultsUtil::getUpdatedCount($import->getTempTableName()),
-                                                (int)ImportRowDataResultsUtil::getErrorCount($import->getTempTableName()));
-
-                $sequenceView = new ContainedViewCompleteSequentialProcessView($dataAnalysisCompleteView);
+                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm);
+                $sequenceView       = new ContainedViewCompleteSequentialProcessView($importCompleteView);
             }
             else
             {
@@ -350,6 +352,30 @@
                 $view        = new AjaxPageView($sequenceView);
             }
             echo $view->render();
+        }
+
+        protected function makeImportCompleteView(Import $import, ImportWizardForm $importWizardForm)
+        {
+            $pageSize                 = Yii::app()->pagination->resolveActiveForCurrentUserByType('listPageSize');
+            $config                   = array('pagination' => array('pageSize' => $pageSize));
+            $importErrorsDataProvider = new ImportDataProvider($import->getTempTableName(),
+                                                               (bool)$importWizardForm->firstRowIsHeaderRow,
+                                                               $config,
+                                                               ImportRowDataResultsUtil::ERROR);
+            $errorListView            = new ImportErrorsListView(
+                                            $this->getId(),
+                                            $this->getModule()->getId(),
+                                            'NotUsed',
+                                            $importErrorsDataProvider
+                                            );
+            $importCompleteView       = new ImportWizardCreateUpdateModelsCompleteView($this->getId(),
+                                            $this->getModule()->getId(),
+                                            $importWizardForm,
+                                            (int)ImportRowDataResultsUtil::getCreatedCount($import->getTempTableName()),
+                                            (int)ImportRowDataResultsUtil::getUpdatedCount($import->getTempTableName()),
+                                            (int)ImportRowDataResultsUtil::getErrorCount($import->getTempTableName()),
+                                            $errorListView);
+            return $importCompleteView;
         }
 
         /**
@@ -464,7 +490,7 @@
                     {
                         $tempTableName = $import->getTempTableName();
                         if (!ImportDatabaseUtil::
-                            makeDatabaseTableByFilePathAndTableName($uploadedFile->getTempName(), $tempTableName,
+                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
                                                                       $importWizardForm->rowColumnDelimiter,
                                                                       $importWizardForm->rowColumnEnclosure))
                         {

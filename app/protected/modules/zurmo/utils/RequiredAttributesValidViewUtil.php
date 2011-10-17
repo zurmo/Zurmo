@@ -40,14 +40,14 @@
             $key = $viewClassName . '_layoutMissingRequiredAttributes';
 
             $value = ZurmoConfigurationUtil::getByModuleName($moduleClassName, $key);
-            if($value == null)
+            if ($value == null)
             {
                 $value = 1;
             }
             else
             {
-                $value ++;
-                if($value <= 1)
+                $value++;
+                if ($value <= 1)
                 {
                     throw new NotSupportedException();
                 }
@@ -62,20 +62,20 @@
             $key = $viewClassName . '_layoutMissingRequiredAttributes';
 
             $value = ZurmoConfigurationUtil::getByModuleName($moduleClassName, $key);
-            if($value == null)
+            if ($value == null)
             {
                 return;
             }
             else
             {
-                if($value == 1)
+                if ($value == 1)
                 {
                     $value = null;
                 }
                 else
                 {
                     $value = $value - 1;
-                    if($value >= 1)
+                    if ($value >= 1)
                     {
                         throw new NotSupportedException();
                     }
@@ -90,7 +90,6 @@
             assert('is_string($viewClassName)');
             $key = $viewClassName . '_layoutMissingRequiredAttributes';
             ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, null);
-
         }
 
         public static function isViewMissingRequiredAttributes($moduleClassName, $viewClassName)
@@ -99,7 +98,7 @@
             assert('is_string($viewClassName)');
             $key   = $viewClassName . '_layoutMissingRequiredAttributes';
             $value = ZurmoConfigurationUtil::getByModuleName($moduleClassName, $key);
-            if($value !== null)
+            if ($value !== null)
             {
                 return true;
             }
@@ -110,7 +109,7 @@
         {
             assert('is_string($moduleClassName)');
             assert('is_string($viewClassName)');
-            if(!static::isViewMissingRequiredAttributes($moduleClassName, $viewClassName))
+            if (!static::isViewMissingRequiredAttributes($moduleClassName, $viewClassName))
             {
                 return;
             }
@@ -130,7 +129,7 @@
             {
                 try
                 {
-                    if($module::getPrimaryModelName() == $modelClassName)
+                    if ($module::getPrimaryModelName() == $modelClassName)
                     {
                         $viewClassNames          = $module::getViewClassNames();
                         foreach ($viewClassNames as $viewClassName)
@@ -139,9 +138,8 @@
                             if (is_subclass_of($viewClassName, 'MetadataView') && !$classToEvaluate->isAbstract() &&
                                 $viewClassName::getDesignerRulesType() != null)
                             {
-
                                 $designerRules = DesignerRulesFactory::createDesignerRulesByView($viewClassName);
-                                if($designerRules->allowEditInLayoutTool() &&
+                                if ($designerRules->allowEditInLayoutTool() &&
                                    $designerRules->requireAllRequiredFieldsInLayout())
                                 {
                                     self::setAsMissingRequiredAttributes(get_class($module), $viewClassName);

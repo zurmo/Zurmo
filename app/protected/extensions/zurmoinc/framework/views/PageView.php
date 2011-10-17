@@ -94,6 +94,10 @@
             }
             if (SHOW_PERFORMANCE)
             {
+                if(SHOW_QUERY_DATA)
+                {
+                    $performanceMessage .= self::makeShowQueryDataContent();
+                }
                 foreach (Yii::app()->performance->getTimings() as $id => $time)
                 {
                     $performanceMessage .= 'Timing: ' . $id . ' total time: ' . number_format(($time), 3) . "</br>";
@@ -226,7 +230,10 @@
             if (MINIFY_SCRIPTS)
             {
                 Yii::app()->minScript->generateScriptMap('css');
-                Yii::app()->minScript->generateScriptMap('js');
+                if (!YII_DEBUG)
+                {
+                    Yii::app()->minScript->generateScriptMap('js');
+                }
             }
 
             $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
@@ -311,6 +318,22 @@
         protected function renderXHtmlEnd()
         {
             return '</html>';
+        }
+
+        public static function makeShowQueryDataContent()
+        {
+            $performanceMessage  = 'Total/Duplicate Queries: ' . Yii::app()->performance->getRedBeanQueryLogger()->getQueriesCount();
+            $performanceMessage .= '/'   . Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesCount();
+            $duplicateData = Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesData();
+            if(count($duplicateData) > 0)
+            {
+                $performanceMessage .= '</br></br>Duplicate Queries:</br>';
+            }
+            foreach ($duplicateData as $query => $count)
+            {
+                $performanceMessage .= 'Count: ' . $count . '&#160;&#160;&#160;Query: ' . $query . "</br>";
+            }
+            return $performanceMessage;
         }
     }
 ?>

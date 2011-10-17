@@ -39,7 +39,6 @@
             assert(AuditEvent::getCount() == 4); // Not Coding Standard
         }
 
-
         public function testFetRecentlyViewedAjaxContentByUser()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -71,8 +70,8 @@
 
             $content = AuditEventsRecentlyViewedUtil::getRecentlyViewedAjaxContentByUser(Yii::app()->user->userModel, 5);
             $this->assertNotEmpty($content);
-            $this->assertTrue(strpos($content, 'Dooble2') !==false);
-            $this->assertTrue(strpos($content, 'Dooble1') !==false);
+            $this->assertTrue(strpos($content, 'Dooble2') !== false);
+            $this->assertTrue(strpos($content, 'Dooble1') !== false);
         }
     }
 ?>

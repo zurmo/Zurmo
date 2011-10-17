@@ -45,6 +45,7 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
             }
         }
 
@@ -158,9 +159,9 @@
 
         public function handleLoadLanguage($event)
         {
-            if (isset($_POST['lang']) && $_POST['lang'] != null)
+            if (isset($_GET['lang']) && $_GET['lang'] != null)
             {
-                Yii::app()->languageHelper->setActive($_POST['lang']);
+                Yii::app()->languageHelper->setActive($_GET['lang']);
             }
             Yii::app()->languageHelper->load();
         }
@@ -173,6 +174,14 @@
         public function handleCheckAndUpdateCurrencyRates($event)
         {
             Yii::app()->currencyHelper->checkAndUpdateCurrencyRates();
+        }
+
+        public function handleResolveCustomData($event)
+        {
+            if (isset($_GET['resolveCustomData']) && $_GET['resolveCustomData'] == 1)
+            {
+                Yii::app()->custom->resolveIsCustomDataLoaded();
+            }
         }
     }
 ?>

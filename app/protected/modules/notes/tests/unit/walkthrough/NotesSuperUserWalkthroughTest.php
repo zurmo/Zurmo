@@ -123,27 +123,27 @@
             $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
                                       'ajax' => 'inline-edit-form',
                                       'Note' => array('description' => '')));
-            $content = $this->runControllerWithExitExceptionAndGetContent('notes/default/inlineEditSave');
+            $content = $this->runControllerWithExitExceptionAndGetContent('notes/default/inlineCreateSave');
             $this->assertTrue(strlen($content) > 20); //approximate, but should definetely be larger than 20.
 
             //Test validating an existing note via the inline edit validation (Success)
             $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
                                       'ajax' => 'inline-edit-form',
                                       'Note' => array('description' => 'a Valid Name of a Note')));
-            $content = $this->runControllerWithExitExceptionAndGetContent('notes/default/inlineEditSave');
+            $content = $this->runControllerWithExitExceptionAndGetContent('notes/default/inlineCreateSave');
             $this->assertEquals('[]', $content);
 
             //Test saving an existing note via the inline edit validation
             $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
                                       'Note' => array('description' => 'a Valid Name of a Note')));
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('notes/default/inlineEditSave');
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('notes/default/inlineCreateSave');
             //Confirm changes applied correctly.
-            $notes = Note::getAll();
+            $notes = Note::getAll();            
             $this->assertEquals(2, count($notes));
-            $this->assertEquals('myNoteX', $notes[0]->description);
+            $this->assertEquals('a Valid Name of a Note', $notes[1]->description);
 
             //test removing a note.
-            $this->setGetArray(array('id' => $notes[0]->id));
+            $this->setGetArray(array('id' => $notes[1]->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('notes/default/delete');
             //Confirm no more notes exist.

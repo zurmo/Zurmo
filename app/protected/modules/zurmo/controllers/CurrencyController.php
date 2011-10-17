@@ -74,7 +74,7 @@
                 $model->setAttributes($_POST[$postVariableName]);
                 if ($model->rateToBase == null && $model->code != null)
                 {
-                    if(!ZurmoCurrencyCodes::isValidCode($model->code))
+                    if (!ZurmoCurrencyCodes::isValidCode($model->code))
                     {
                         $model->addError('code', Yii::t('Default', 'Invalid currency code'));
                         $currencyHelper->resetErrors();
@@ -112,25 +112,25 @@
             {
                 $currencyCollectionActiveData = $_POST['CurrencyCollection'];
                 $atLeastOneCurrencyIsActive = false;
-                foreach($currencyCollectionActiveData as $currencyCode => $currencyData)
+                foreach ($currencyCollectionActiveData as $currencyCode => $currencyData)
                 {
                     assert('isset($currencyData["active"])');
-                    if($currencyData['active'])
+                    if ($currencyData['active'])
                     {
                         $atLeastOneCurrencyIsActive = true;
                     }
                 }
-                if(!$atLeastOneCurrencyIsActive)
+                if (!$atLeastOneCurrencyIsActive)
                 {
                     return HtmlNotifyUtil::renderAlertBoxByMessage(
                                            Yii::t('Default', 'You must have at least one active currency.'));
                 }
                 else
                 {
-                    foreach($currencyCollectionActiveData as $currencyCode => $currencyData)
+                    foreach ($currencyCollectionActiveData as $currencyCode => $currencyData)
                     {
                         $currency = Currency::getByCode($currencyCode);
-                        if($currencyData['active'])
+                        if ($currencyData['active'])
                         {
                             $currency->active = 1;
                         }

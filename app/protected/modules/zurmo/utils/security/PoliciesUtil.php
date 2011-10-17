@@ -42,18 +42,23 @@
                 {
                     $moduleClassName = get_class($module);
                     $policies        = $moduleClassName::getPolicyNames();
+                    $policyLabels    = $moduleClassName::getTranslatedPolicyLabels();
                     $reflectionClass = new ReflectionClass($moduleClassName);
                     $constants  = $reflectionClass->getConstants();
                     if (!empty($policies))
                     {
                         foreach ($policies as $policy)
                         {
+                            if(!isset($policyLabels[$policy]))
+                            {
+                                throw new NotSupportedException();
+                            }
                             $explicit   = $permitable->getExplicitActualPolicy ($moduleClassName, $policy);
                             $inherited  = $permitable->getInheritedActualPolicy($moduleClassName, $policy);
                             $effective  = $permitable->getEffectivePolicy      ($moduleClassName, $policy);
                             $constantId = array_search($policy, $constants);
                             $data[$moduleClassName][$constantId] = array(
-                                'displayName' => $policy,
+                                'displayName' => $policyLabels[$policy],
                                 'explicit'    => $explicit,
                                 'inherited'   => $inherited,
                                 'effective'   => $effective,

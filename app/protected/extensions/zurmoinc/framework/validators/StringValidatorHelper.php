@@ -52,5 +52,29 @@
             }
             return $maxLength;
         }
+
+        /**
+         * Given a model and attributeName, get the min length for that attribute as defined by the metadata rules.
+         * @param object $model RedBeanModel
+         * @param string $attributeName
+         */
+        public static function getMinLengthByModelAndAttributeName(RedBeanModel $model, $attributeName)
+        {
+            assert('is_string($attributeName)');
+            $validators     = $model->getValidators($attributeName);
+            $minLength      = null;
+            foreach ($validators as $validator)
+            {
+                if ($validator instanceof CStringValidator)
+                {
+                    if ($validator->min !== null)
+                    {
+                        $minLength = $validator->min;
+                        break;
+                    }
+                }
+            }
+            return $minLength;
+        }
     }
 ?>

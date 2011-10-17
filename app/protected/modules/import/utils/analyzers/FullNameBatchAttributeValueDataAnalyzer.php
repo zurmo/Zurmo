@@ -37,6 +37,12 @@
         const FULL_NAME_TOO_LONG = 'Full name too long';
 
         /**
+         * A variable used to index a count of values that are too long.
+         * @var string
+         */
+        const FULL_NAME_TOO_SHORT = 'Full name too short';
+
+        /**
          * The max allowed length for the first name attribute.
          * @var integer
          */
@@ -48,16 +54,25 @@
          */
         protected $lastNameMaxLength;
 
+        /**
+         * The minimum allowed length for the last name attribute.
+         * @var integer
+         */
+        protected $lastNameMinLength;
+
         public function __construct($modelClassName, $attributeName)
         {
             parent:: __construct($modelClassName, $attributeName);
             assert('$attributeName == null');
             $this->messageCountData[static::FULL_NAME_TOO_LONG] = 0;
+            $this->messageCountData[static::FULL_NAME_TOO_SHORT] = 0;
             $model                    = new $modelClassName(false);
             $this->firstNameMaxLength = StringValidatorHelper::
                                         getMaxLengthByModelAndAttributeName($model, 'firstName');
             $this->lastNameMaxLength  = StringValidatorHelper::
                                         getMaxLengthByModelAndAttributeName($model, 'lastName');
+            $this->lastNameMinLength  = StringValidatorHelper::
+                                        getMinLengthByModelAndAttributeName($model, 'lastName');
         }
 
         /**
@@ -88,6 +103,10 @@
             {
                 $this->messageCountData[static::FULL_NAME_TOO_LONG] ++;
             }
+            if (strlen($lastName) < $this->lastNameMinLength)
+            {
+                $this->messageCountData[static::FULL_NAME_TOO_SHORT] ++;
+            }
         }
 
         /**
@@ -96,12 +115,21 @@
         protected function makeMessages()
         {
             $tooLarge = $this->messageCountData[static::FULL_NAME_TOO_LONG];
+            $tooShort = $this->messageCountData[static::FULL_NAME_TOO_SHORT];
             if ($tooLarge > 0)
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These rows will be skipped during import.';
                 $this->addMessage(Yii::t('Default', $label,
                                   array('{count}' => $tooLarge)));
+            }
+                    $tooLarge = $this->messageCountData[static::FULL_NAME_TOO_LONG];
+            if ($tooShort > 0)
+            {
+                $label   = '{count} value(s) are too short for this field. ';
+                $label  .= 'These rows will be skipped during import.';
+                $this->addMessage(Yii::t('Default', $label,
+                                  array('{count}' => $tooShort)));
             }
         }
     }

@@ -26,6 +26,9 @@
 
     abstract class SecurableModule extends Module
     {
+        /**
+         * Returns an array of names of rights applicable to the module.
+         */
         public static function getRightsNames()
         {
             $rightNames = array();
@@ -40,6 +43,20 @@
             return $rightNames;
         }
 
+        public static function getTranslatedRightsLabels()
+        {
+            $labels = array();
+            $rightsNames = self::getRightsNames();
+            foreach($rightsNames as $name)
+            {
+                $labels[$name] = Yii::t('Default', $name);
+            }
+            return $labels;
+        }
+
+        /**
+         * Returns an array of names of policies applicable to the module.
+         */
         public static function getPolicyNames()
         {
             $policyNames = array();
@@ -52,6 +69,17 @@
                 }
             }
             return $policyNames;
+        }
+
+        public static function getTranslatedPolicyLabels()
+        {
+            $labels = array();
+            $policyNames = self::getPolicyNames();
+            foreach($policyNames as $name)
+            {
+                $labels[$name] = Yii::t('Default', $name);
+            }
+            return $labels;
         }
 
         public static function getAuditEventNames()

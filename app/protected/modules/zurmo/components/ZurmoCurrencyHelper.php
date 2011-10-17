@@ -196,7 +196,7 @@
             $data       = array();
             foreach ($currencies as $currency)
             {
-                if($currency->active || ($selectedCurrencyId != null && $currency->id == $selectedCurrencyId))
+                if ($currency->active || ($selectedCurrencyId != null && $currency->id == $selectedCurrencyId))
                 {
                     $data[$currency->id] = $currency->code;
                 }
@@ -207,7 +207,7 @@
         public function getLastAttemptedRateUpdateDateTime()
         {
             $metadata = Currency::getMetadata();
-            if($metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null)
+            if ($metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null)
             {
                 return null;
             }

@@ -65,8 +65,8 @@
             $overrideClassName = $moduleClassName . 'AttributesListView';
             $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
                                  $moduleClassName::getDirectoryName() .
-                                 DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $overrideClassName.'.php';
-            if(is_file($overrideClassFile) && class_exists($overrideClassName))
+                                 DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $overrideClassName . '.php';
+            if (is_file($overrideClassFile) && class_exists($overrideClassName))
             {
                 $viewClassName = $moduleClassName . 'AttributesListView';
                 $canvasView    = new $viewClassName($this->getId(), $this->getModule()->getId(), $breadcrumbLinks);
@@ -209,12 +209,12 @@
             //if wasRequired and now is not... ( make sure you use oldAttributeName to catch proper array alignment)
             //removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName, $attributeName)
 
-            if($attributeForm->isRequired && !$wasRequired)
+            if ($attributeForm->isRequired && !$wasRequired)
             {
                 RequiredAttributesValidViewUtil::
                 resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
             }
-            elseif(!$attributeForm->isRequired && $wasRequired)
+            elseif (!$attributeForm->isRequired && $wasRequired)
             {
                 RequiredAttributesValidViewUtil::
                 removeAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
@@ -307,7 +307,7 @@
                 }
                 elseif ($layoutMetadataAdapter->setMetadataFromLayout(ArrayUtil::getArrayValue($_POST, 'layout'), $savableMetadata))
                 {
-                    if($designerRules->requireAllRequiredFieldsInLayout())
+                    if ($designerRules->requireAllRequiredFieldsInLayout())
                     {
                         RequiredAttributesValidViewUtil::
                         setAsContainingRequiredAttributes($moduleClassName, $viewClassName);

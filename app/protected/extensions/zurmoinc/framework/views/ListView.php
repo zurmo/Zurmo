@@ -130,7 +130,6 @@
                 'dataProvider' => $this->getDataProvider(),
                 'selectableRows' => $this->getCGridViewSelectableRowsCount(),
                 'selectAll' => $this->selectAll,
-                //'filter' => $this->model, add in when search is working
                 'pager' => $this->getCGridViewPagerParams(),
                 'beforeAjaxUpdate' => $this->getCGridViewBeforeAjaxUpdate(),
                 'afterAjaxUpdate'  => 'js:function(id, data) {processAjaxSuccessError(id, data)}',
@@ -179,8 +178,7 @@
                 );
                 array_push($columns, $firstColumn);
             }
-            $metadata = self::getMetadata();
-            $modelClassName = $this->modelClassName;
+            $metadata = $this->resolveMetadata();
             foreach ($metadata['global']['panels'] as $panel)
             {
                 foreach ($panel['rows'] as $row)
@@ -202,7 +200,12 @@
                 array_push($columns, $lastColumn);
             }
             return $columns;
-         }
+        }
+
+        protected function resolveMetadata()
+        {
+            return self::getMetadata();
+        }
 
         protected function getCGridViewBeforeAjaxUpdate()
         {

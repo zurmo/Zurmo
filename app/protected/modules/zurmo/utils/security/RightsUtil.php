@@ -41,19 +41,24 @@
                 if ($module instanceof SecurableModule)
                 {
                     $moduleClassName = get_class($module);
-                    $rights = $moduleClassName::getRightsNames();
+                    $rights          = $moduleClassName::getRightsNames();
+                    $rightLabels    = $moduleClassName::getTranslatedRightsLabels();
                     $reflectionClass = new ReflectionClass($moduleClassName);
                     if (!empty($rights))
                     {
                         foreach ($rights as $right)
                         {
+                            if(!isset($rightLabels[$right]))
+                            {
+                                throw new NotSupportedException();
+                            }
                             $explicit = $permitable->getExplicitActualRight  ($moduleClassName, $right);
                             $inherited = $permitable->getInheritedActualRight($moduleClassName, $right);
                             $effective = $permitable->getEffectiveRight      ($moduleClassName, $right);
                             $constants = $reflectionClass->getConstants();
                             $constantId = array_search($right, $constants);
                             $data[$moduleClassName][$constantId] = array(
-                                'displayName' => $right,
+                                'displayName' => $rightLabels[$right],
                                 'explicit'    => RightsUtil::getRightStringFromRight($explicit),
                                 'inherited'   => RightsUtil::getRightStringFromRight($inherited),
                                 'effective'   => RightsUtil::getRightStringFromRight($effective),

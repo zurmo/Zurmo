@@ -222,37 +222,69 @@
         }
 
         /**
-         *
-         * Load data directly(fast) from csv file into database
-         * @param string $file
+         * Insert multiple columns into database.
+         * Currently it supports only mysql database.
+         * Limit write to 500 rows at once
          * @param string $tableName
-         * @param string $delimiter
-         * @param string $enclosure
-         * @param array $columns
+         * @param array $rowsOfColumnValues
+         * @param array $columnNames
+         * @throws NotSupportedException
          */
-        public static function loadDataFromFileIntoDatabase($filePath, $tableName, $delimiter, $enclosure, $columns)
+        public static function bulkInsert($tableName, &$rowsOfColumnValues, &$columnNames)
         {
-            assert('is_string($filePath)');
             assert('is_string($tableName)');
-            assert('is_string($delimiter)');
-            assert('is_string($enclosure)');
-            assert('is_array($columns)');
+            assert('is_array($rowsOfColumnValues)');
+            assert('is_array($columnNames)');
 
             if (RedBeanDatabase::getDatabaseType() != 'mysql')
             {
                 throw new NotSupportedException();
             }
-
-            //fix for windows paths
-            $filePath = str_replace('\\', '\\\\', $filePath);
-            $sql = "LOAD DATA LOCAL INFILE '$filePath'
-                    INTO TABLE $tableName
-                    FIELDS TERMINATED BY '$delimiter'
-                    OPTIONALLY ENCLOSED BY '\\".$enclosure."'
-                    LINES TERMINATED BY '\\n'
-                    (".implode(",", $columns).")
-                   ";
+            $counter = 0;
+            foreach ($rowsOfColumnValues as $row)
+            {
+                if ($counter == 0)
+                {
+                    $columnNamesString = self::getQuote() . implode(self::getQuote() . ',' . self::getQuote(), $columnNames) . self::getQuote();
+                    $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
+                }
+                if ($counter == 500)
+                {
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
+                    R::exec($sql);
+                    $counter = 0;
+                }
+                else
+                {
+                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
+                    $counter++;
+                }
+            }
+            $sql = trim($sql, ','); // Not Coding Standard
             R::exec($sql);
+        }
+
+        /**
+         * Get database max alowed packet size.
+         * @throws NotSupportedException
+         */
+        public static function getDatabaseMaxAllowedPacketsSize()
+        {
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+
+            $row = R::getRow("SHOW VARIABLES LIKE 'max_allowed_packet'");
+
+            if(isset($row['Value']))
+            {
+                return $row['Value'];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 ?>
