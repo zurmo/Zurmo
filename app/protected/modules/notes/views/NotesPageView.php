@@ -33,7 +33,7 @@
 
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Notes');
+            return Yii::t('Default', 'NotesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

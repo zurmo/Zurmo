@@ -34,12 +34,16 @@
 
         private $excludeFirstRow;
 
-        public function __construct($tableName, $excludeFirstRow = false, array $config = array())
+        private $filterByStatus;
+
+        public function __construct($tableName, $excludeFirstRow = false, array $config = array(), $filterByStatus = null)
         {
             assert('is_string($tableName) && $tableName != ""');
             assert('is_bool($excludeFirstRow)');
+            assert('is_int($filterByStatus) || $filterByStatus == null');
             $this->tableName       = $tableName;
             $this->excludeFirstRow = $excludeFirstRow;
+            $this->filterByStatus  = $filterByStatus;
             foreach ($config as $key => $value)
             {
                 $this->$key = $value;
@@ -64,11 +68,14 @@
                 $limit  = null;
             }
             $where = null;
-            if ($this->excludeFirstRow)
+            $this->resolveWhereClause($where);
+            $beans        = ImportDatabaseUtil::getSubset($this->tableName, $where, $limit, $offset);
+            $indexedBeans = array();
+            foreach($beans as $bean)
             {
-                $where = 'id != 1';
+                $indexedBeans[] = $bean;
             }
-            return ImportDatabaseUtil::getSubset($this->tableName, $where, $limit, $offset);
+            return $indexedBeans;
         }
 
         /**
@@ -77,10 +84,7 @@
         public function calculateTotalItemCount()
         {
             $where = null;
-            if ($this->excludeFirstRow)
-            {
-                $where = 'id != 1';
-            }
+            $this->resolveWhereClause($where);
             return ImportDatabaseUtil::getCount($this->tableName, $where);
         }
 
@@ -103,10 +107,7 @@
         public function getCountByWhere($where)
         {
             assert('$where != null');
-            if ($this->excludeFirstRow)
-            {
-                $where .= ' and id != 1';
-            }
+            $this->resolveWhereClause($where);
             return ImportDatabaseUtil::getCount($this->tableName, $where);
         }
 
@@ -118,20 +119,33 @@
             assert(is_string($groupbyColumnName)); // Not Coding Standard
             assert('is_string($where) || $where == null');
             $sql = "select count(*) count, {$groupbyColumnName} from {$this->tableName} ";
-            if ($this->excludeFirstRow)
-            {
-                if ($where != null)
-                {
-                    $where .= 'and ';
-                }
-                $where .= 'id != 1';
-            }
+            $this->resolveWhereClause($where);
             if ($where != null)
             {
                 $sql .= 'where ' . $where . ' ';
             }
             $sql .= 'group by ' . $groupbyColumnName;
             return R::getAll($sql);
+        }
+
+        protected function resolveWhereClause(& $where)
+        {
+            if ($this->excludeFirstRow)
+            {
+                if ($where != null)
+                {
+                    $where .= ' and ';
+                }
+                $where .= 'id != 1';
+            }
+            if($this->filterByStatus)
+            {
+                if($where != null)
+                {
+                    $where .= ' and ';
+                }
+                $where .= 'status = ' . $this->filterByStatus;
+            }
         }
     }
 ?>

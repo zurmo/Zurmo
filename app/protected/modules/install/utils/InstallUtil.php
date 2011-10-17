@@ -832,6 +832,7 @@
             InstallUtil::createSuperUser(   'super',
                                             $form->superUserPassword);
             $messageLogger = new MessageLogger($messageStreamer);
+            Yii::app()->custom->runBeforeInstallationAutoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Starting database schema creation.'));
             InstallUtil::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Database schema creation complete.'));
@@ -855,6 +856,7 @@
                                             $debugFilename);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
+            Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 

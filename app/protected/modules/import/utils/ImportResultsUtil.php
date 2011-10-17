@@ -86,5 +86,21 @@
                 ImportDatabaseUtil::updateRowAfterProcessing($tableName, $rowId, $status, $serializedMessagesOrNull);
             }
         }
+
+        public static function convertSerializedMessagesToDisplayReadyString($messages)
+        {
+            assert('is_string($messages)');
+            $unserializedMessages = unserialize($messages);
+            $content = null;
+            foreach($unserializedMessages as $message)
+            {
+                if($content != null)
+                {
+                    $content .= '<br/>';
+                }
+                $content .= $message;
+            }
+            return $content;
+        }
     }
 ?>

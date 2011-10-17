@@ -77,7 +77,7 @@
             => '??',
         'Fahrenheit'
             => 'Fahrenheit',
-        'Filtered List'
+        'Filtered Lists'
             => '??',
         'firstDateTime must occur after secondDateTime'
             => '??',
