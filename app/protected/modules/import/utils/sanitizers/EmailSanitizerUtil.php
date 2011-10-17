@@ -75,7 +75,7 @@
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Email was too long.'));
             }
-            return  $validatedEmail;
+            return  $value;
         }
     }
 ?>
