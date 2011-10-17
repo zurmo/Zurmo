@@ -247,7 +247,23 @@
         {
             $minimumRequireBytes = 1;
             $actualBytes         = null;
-            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualBytes));
+            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql',
+                                                                               $this->hostname,
+                                                                               $this->rootUsername,
+                                                                               $this->rootPassword,
+                                                                               1,
+                                                                               $actualBytes));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testIsDatabaseStrictMode()
+        {
+            $this->assertNotNull(InstallUtil::isDatabaseStrictMode('mysql',
+                                                                   $this->hostname,
+                                                                   $this->rootUsername,
+                                                                   $this->rootPassword));
         }
 
         public function testCheckMemcacheConnection()
