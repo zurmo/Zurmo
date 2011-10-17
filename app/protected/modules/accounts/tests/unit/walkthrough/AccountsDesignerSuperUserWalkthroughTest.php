@@ -298,15 +298,30 @@
             
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
+            //set the date and datetime variable values here for searching the account
+            $dateSearch = date('Y-m-d');           
+            $datetimeSearch = date('Y-m-d H:i:')."00";
+            
             //search a created account using the customfield.
-            $this->resetGetArray();
-            $this->setGetArray(array('AccountsSearchForm ' => array(
-                                            'name'      =>  'myNewAccount'),
-                                     'ajax'=>'list-view'));
+            $this->resetGetArray();          
+            $this->setGetArray(array('AccountsSearchForm ' => array('name'   =>  'sdfsdfsdfsdfsdf',
+                                                                    'decimal'   =>  '123',
+                                                                    'integer'   =>  '12',
+                                                                    'phone'     =>  '456765421',
+                                                                    'text'      =>  'This is a test 2132 Text',
+                                                                    'textarea'  =>  'This is a test TextArea',
+                                                                    'url'       =>  'http://wwww.abc.com',
+                                                                    'checkbox'  =>  '1',                                          
+                                                                    'currency'  =>  array('value'  =>  45),
+                                                                    'picklist'  =>  array('value'  =>  'a'),
+                                                                    'radio'     =>  array('value'  =>  'd'),
+                                                                    'date'      =>  $dateSearch,
+                                                                    'datetime'  =>  $datetimeSearch),
+                                    'ajax' =>  'list-view'          ));
 
-            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default'); 
-             
-            $this->assertTrue(strpos($content, "myNewAccount")>0);
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');           
+            echo $content;             
+            //$this->assertTrue(strpos($content, "asdasdasd"));
         }
         
         /**
@@ -315,8 +330,47 @@
         public function testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
         {
         
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            
+            //get the account id from the recently craeted account
+            $account = Account::getByName('myNewAccount');            
+            $this->assertEquals(1, count($account));
+            $accountId = $account[0]->id;            
+            
+            $this->setGetArray(array('id ' => $accountId));
+            $this->setPostArray(array('Account' => array(
+                                                            'name'      =>  'myEditAccount',           
+                                                            'checkbox'  =>  '0',
+                                                            'currency'  =>  array('value'   => 40,
+                                                                                  'currency'=> array('id' => 1)),
+                                                            'decimal'   =>  '12',
+                                                            'picklist'  =>  array('value'=>'b'),
+                                                            'integer'   =>  '11',                                            
+                                                            'phone'     =>  '123456',
+                                                            'radio'     =>  array('value'=>'e'),
+                                                            'text'      =>  'This is a test Edit Text',
+                                                            'textarea'  =>  'This is a test Edit TextArea',
+                                                            'url'       =>  'http://wwww.abc-edit.com' 
+                                                            ),
+                                      'save' => 'Save'));            
         
-        
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
+            
+            $account = Account::getByName('myNewAccount');
+            //check the details if they are save properly for the custom fields
+            $this->assertEquals(1, count($account));
+            
+            $this->assertEquals($account[0]->name               , 'myEditAccount');
+            $this->assertEquals($account[0]->checkbox           , '0');
+            $this->assertEquals($account[0]->currency->value    , 40);           
+            $this->assertEquals($account[0]->decimal            , '12');
+            $this->assertEquals($account[0]->picklist->value    , 'b');
+            $this->assertEquals($account[0]->integer            , 11);
+            $this->assertEquals($account[0]->phone              , '123456');
+            $this->assertEquals($account[0]->radio->value       , 'e');
+            $this->assertEquals($account[0]->text               , 'This is a test Edit Text');
+            $this->assertEquals($account[0]->textarea           , 'This is a test Edit TextArea');
+            $this->assertEquals($account[0]->url                , 'http://wwww.abc-edit.com');
         }
         
         /**
