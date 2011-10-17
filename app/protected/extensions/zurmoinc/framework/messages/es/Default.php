@@ -69,6 +69,8 @@
             => 'Solo Vista de Detalles',
         'Details'
             => 'Detalles',
+        'Done'
+            => '??',
         'Edit'
             => 'Editar',
         'Edit Portlet'
@@ -91,6 +93,8 @@
             => '??',
         'Go to Details'
             => '??',
+        'Hour'
+            => '??',
         'Inline Edit View'
             => '??',
         'Integer'
@@ -104,6 +108,8 @@
         'List'
             => '??',
         'Loading'
+            => '??',
+        'Minute'
             => '??',
         'Model Class Name'
             => '??',
@@ -155,6 +161,8 @@
             => 'Guardar',
         'Search'
             => 'Buscar',
+        'Second'
+            => 'Seconde',
         'Select'
             => 'Seleccionar',
         'selected for updating.'

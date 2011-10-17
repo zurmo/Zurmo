@@ -51,8 +51,6 @@
             => 'Ne pas mapper ce champs',
         'Email was too long.'
             => 'Email trop long.',
-        'Qualifier'
-            => 'Délimiteur de texte',
         'Error: Invalid delimiter'
             => 'Erreur: délimiteur invalide',
         'Error: Invalid qualifier'
@@ -131,6 +129,8 @@
             => 'Précédent',
         'Processing'
             => 'Veuillez patienter, importation en cours',
+        'Qualifier'
+            => 'Délimiteur de texte',
         'Record saved correctly.'
             => 'Enregistrement sauvegardé correctement',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'

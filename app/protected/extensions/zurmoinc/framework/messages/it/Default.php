@@ -69,6 +69,8 @@
             => '??',
         'Details'
             => '??',
+        'Done'
+            => '??',
         'Edit'
             => '??',
         'Edit Portlet'
@@ -91,6 +93,8 @@
             => '??',
         'Go to Details'
             => '??',
+        'Hour'
+            => '??',
         'Inline Edit View'
             => '??',
         'Integer'
@@ -104,6 +108,8 @@
         'List'
             => '??',
         'Loading'
+            => '??',
+        'Minute'
             => '??',
         'Model Class Name'
             => '??',
@@ -154,6 +160,8 @@
         'Save'
             => '??',
         'Search'
+            => '??',
+        'Second'
             => '??',
         'Select'
             => '??',

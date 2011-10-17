@@ -51,8 +51,6 @@
             => '??',
         'Email was too long.'
             => '??',
-        'Qualifier'
-            => '??',
         'Error: Invalid delimiter'
             => '??',
         'Error: Invalid qualifier'
@@ -130,6 +128,8 @@
         'Previous'
             => '??',
         'Processing'
+            => '??',
+        'Qualifier'
             => '??',
         'Record saved correctly.'
             => '??',

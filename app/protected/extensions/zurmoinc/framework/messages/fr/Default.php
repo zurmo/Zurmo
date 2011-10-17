@@ -69,6 +69,8 @@
             => 'Vue détaillée uniquement',
         'Details'
             => 'Détails',
+        'Done'
+            => 'Fini',
         'Edit'
             => 'Modifier',
         'Edit Portlet'
@@ -91,6 +93,8 @@
             => 'Nom',
         'Go to Details'
             => 'Au détails',
+        'Hour'
+            => 'Heure',
         'Inline Edit View'
             => 'Formulaire de saisie Inline',
         'Integer'
@@ -105,6 +109,8 @@
             => 'Liste',
         'Loading'
             => 'Chargement en cours',
+        'Minute'
+            => 'Minute',
         'Model Class Name'
             => 'Nom de la classe du modèle',
         'Model Id'
@@ -155,6 +161,8 @@
             => 'Sauvegarder',
         'Search'
             => 'Rechercher',
+        'Second'
+            => '??',
         'Select'
             => 'Sélectionner',
         'selected for updating.'
