@@ -867,25 +867,6 @@
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 
-        public static function getDatabaseMaxAllowedPacketsSizeWithoutDb($databaseType, $minimumRequireBytes, /* out */ & $actualBytes)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
-                    $row    = @mysql_fetch_row($result);
-                    if (isset($row[1]))
-                    {
-                        $actualBytes = $row[1];
-                        return $minimumRequireBytes <= $actualBytes;
-                    }
-                    return false;
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
         /**
          * Looks at the post max size, upload max size, and database max_allowed_packets
          * @return integer of max allowed file size for uploads.
@@ -897,8 +878,7 @@
             InstallUtil::checkPhpPostSizeSetting(1, $actualPostLimitBytes);
             $actualUploadLimitBytes = null;
             InstallUtil::checkPhpUploadSizeSetting(1, $actualUploadLimitBytes);
-            $actualMaxAllowedBytes  = null;
-            InstallUtil::getDatabaseMaxAllowedPacketsSizeWithoutDb('mysql', 1, $actualMaxAllowedBytes);
+            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize();
             return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
     }

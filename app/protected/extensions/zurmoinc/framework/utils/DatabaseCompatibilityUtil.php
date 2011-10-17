@@ -263,5 +263,28 @@
             $sql = trim($sql, ','); // Not Coding Standard
             R::exec($sql);
         }
+
+        /**
+         * Get database max alowed packet size.
+         * @throws NotSupportedException
+         */
+        public static function getDatabaseMaxAllowedPacketsSize()
+        {
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+
+            $row = R::getRow("SHOW VARIABLES LIKE 'max_allowed_packet'");
+
+            if(isset($row['Value']))
+            {
+                return $row['Value'];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 ?>
