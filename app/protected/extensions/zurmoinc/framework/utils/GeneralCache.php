@@ -61,7 +61,7 @@
         public static function cacheEntry($identifier, $entry)
         {
             assert('is_string($identifier)');
-            assert('is_string($entry) || is_array($entry) || is_numeric($entry) || is_object($entry)');
+            assert('is_string($entry) || is_array($entry) || is_numeric($entry) || is_object($entry) || $entry == null');
             if (PHP_CACHING_ON)
             {
                 self::$cachedEntries[$identifier] = $entry;

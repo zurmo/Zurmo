@@ -31,6 +31,14 @@
     {
         protected $minimumVersion = '5.0.0';
 
+        protected $form;
+
+        public function __construct($form)
+        {
+            assert('$form instanceof InstallSettingsForm');
+            $this->form = $form;
+        }
+
         protected function checkService()
         {
             return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkDatabase', Yii::t('Default', 'Mysql'));
@@ -38,7 +46,12 @@
 
         protected function callCheckServiceMethod($methodName, & $actualVersion)
         {
-            return InstallUtil::$methodName('mysql', $this->minimumVersion, $actualVersion);
+            return InstallUtil::$methodName('mysql',
+                                            $this->form->databaseHostname,
+                                            $this->form->databaseUsername,
+                                            $this->form->databasePassword,
+                                            $this->minimumVersion,
+                                            $actualVersion);
         }
     }
 ?>

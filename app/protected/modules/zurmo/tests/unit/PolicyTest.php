@@ -145,6 +145,7 @@
 
             $salesman->removeAllPolicies();
             $this->assertTrue($salesman->save());
+            PoliciesCache::forgetAll();
             $this->assertEquals(69,   $nerd      ->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
             $this->assertEquals(69,   $salesman  ->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
             $this->assertEquals(69,   $salesStaff->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
@@ -152,6 +153,7 @@
 
             $everyone->removeAllPolicies();
             $this->assertTrue($everyone->save());
+            PoliciesCache::forgetAll();
             $this->assertEquals(null, $nerd      ->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
             $this->assertEquals(null, $salesman  ->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
             $this->assertEquals(null, $salesStaff->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
@@ -183,6 +185,7 @@
             $this->assertEquals(10,   $salesStaff->getActualPolicy('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
 
             Policy::removeAllForPermitable($nerd);
+            PoliciesCache::forgetAll();
 
             unset($nerd);
             unset($salesStaff);
@@ -195,6 +198,7 @@
             $this->assertEquals(10,   $salesStaff->getActualPolicy   ('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRY_DAYS));
 
             Policy::removeAll($nerd);
+            PoliciesCache::forgetAll();
 
             unset($nerd);
             unset($salesStaff);

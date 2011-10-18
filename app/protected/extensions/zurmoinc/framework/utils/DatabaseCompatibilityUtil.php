@@ -224,29 +224,30 @@
         /**
          * Insert multiple columns into database.
          * Currently it supports only mysql database.
+         * Limit write to 500 rows at once
          * @param string $tableName
-         * @param array $data
-         * @param array $columns
+         * @param array $rowsOfColumnValues
+         * @param array $columnNames
          * @throws NotSupportedException
          */
-        public static function bulkInsert($tableName, &$data, &$columns)
+        public static function bulkInsert($tableName, &$rowsOfColumnValues, &$columnNames)
         {
             assert('is_string($tableName)');
-            assert('is_array($data)');
-            assert('is_array($columns)');
+            assert('is_array($rowsOfColumnValues)');
+            assert('is_array($columnNames)');
 
             if (RedBeanDatabase::getDatabaseType() != 'mysql')
             {
                 throw new NotSupportedException();
             }
             $counter = 0;
-            foreach ($data as $row)
+            foreach ($rowsOfColumnValues as $row)
             {
                 if ($counter == 0)
                 {
-                    $sql = "INSERT INTO $tableName (" . implode(',', $columns) . ") VALUES "; // Not Coding Standard
+                    $columnNamesString = self::getQuote() . implode(self::getQuote() . ',' . self::getQuote(), $columnNames) . self::getQuote();
+                    $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
                 }
-                //Limit Write to 500 rows at once
                 if ($counter == 500)
                 {
                     $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
@@ -261,6 +262,29 @@
             }
             $sql = trim($sql, ','); // Not Coding Standard
             R::exec($sql);
+        }
+
+        /**
+         * Get database max alowed packet size.
+         * @throws NotSupportedException
+         */
+        public static function getDatabaseMaxAllowedPacketsSize()
+        {
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+
+            $row = R::getRow("SHOW VARIABLES LIKE 'max_allowed_packet'");
+
+            if(isset($row['Value']))
+            {
+                return $row['Value'];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 ?>

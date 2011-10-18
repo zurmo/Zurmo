@@ -75,13 +75,29 @@
                 if (isset($_POST['InstallSettingsForm']))
                 {
                     $form->setAttributes($_POST['InstallSettingsForm']);
-                    $this->actionRunInstallation($form);
+                    //in case if additionalCheckSystem t will render its own screen
+                    $this->additionalCheckSystem($form);
                     Yii::app()->end(0, false);
                 }
             }
             $settingsView = new InstallSettingsView($this->getId(), $this->getModule()->getId(), $form);
             $view = new InstallPageView($this, $settingsView);
             echo $view->render();
+        }
+
+        protected function additionalCheckSystem($form)
+        {
+            $serviceCheckResultsDataForDisplay = CheckServicesUtil::checkServicesAndGetResultsDataForDisplay(true, $form);
+
+            if (count($serviceCheckResultsDataForDisplay[CheckServicesUtil::CHECK_FAILED][ServiceHelper::REQUIRED_SERVICE]))
+            {
+                $checkServicesView = new InstallAdditionalCheckServicesView($this->getId(), $this->getModule()->getId(),
+                                                                           $serviceCheckResultsDataForDisplay);
+                $view = new InstallPageView($this, $checkServicesView);
+                echo $view->render();
+            }
+            $this->actionRunInstallation($form);
+            Yii::app()->end(0, false);
         }
 
         protected function actionValidateSettings($model)
@@ -103,6 +119,7 @@
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($this, $nextView);
             echo $view->render();
+
             $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             InstallUtil::runInstallation($form, $messageStreamer);

@@ -48,7 +48,7 @@
         }
 
         public function testRegularUserAllControllerActionsNoElevation()
-        {           
+        {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             Yii::app()->user->userModel = User::getByUsername('nobody');
@@ -95,7 +95,7 @@
         public function testRegularUserControllerActionsWithElevationToAccessAndCreate()
         {
             $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
-            
+
             //Now test peon with elevated rights to accounts
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $nobody->setRight('AccountsModule', AccountsModule::RIGHT_CREATE_ACCOUNTS);
@@ -456,7 +456,7 @@
             Yii::app()->user->userModel = $userInParentGroup;
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
-            $this->setGetArray(array('id' => $account3->id));			
+            $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/edit');
             $this->setGetArray(array('id' => $account3->id));
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/delete');
@@ -478,9 +478,11 @@
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);
@@ -592,8 +594,8 @@
             Yii::app()->user->userModel = $super;
             $account1 = Account::getById($account1->id);
             $account2 = Account::getById($account2->id);
-            $account3 = Account::getById($account3->id);          
-            
+            $account3 = Account::getById($account3->id);
+
             $this->assertEquals ('7799',        $account1->name);
             $this->assertEquals ('7799',        $account2->name);
             $this->assertEquals ('cannotUpdate',$account3->name);

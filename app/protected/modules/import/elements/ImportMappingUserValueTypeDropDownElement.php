@@ -44,7 +44,7 @@
         {
             return array(
                 UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID            => Yii::t('Default', 'Zurmo Id'),
-                UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID  => Yii::t('Default', 'Other id'),
+                UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID  => Yii::t('Default', 'Other Id'),
                 UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME           => Yii::t('Default', 'Zurmo Username'));
         }
     }

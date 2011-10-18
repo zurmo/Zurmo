@@ -40,6 +40,11 @@
             Yii::app()->user->userModel = $super;
             $aUser = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB);
+            $saved = $aUser->save();
+            if(!$saved)
+            {
+                throw new NotSupportedException();
+            }
             $bUser = UserTestHelper::createBasicUser('bUser');
             $cUser = UserTestHelper::createBasicUser('cUser');
             $dUser = UserTestHelper::createBasicUser('dUser');

@@ -75,12 +75,13 @@
             {
                 return $value;
             }
-            $sanitizedValue = CDateTimeParser::parse($value, $mappingRuleData['format']);
-            if ($sanitizedValue === false)
+            $timeStamp = CDateTimeParser::parse($value, $mappingRuleData['format']);
+            if ($timeStamp === false)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid date format.'));
             }
-            return $sanitizedValue;
+            $dbDateValue = DateTimeUtil::convertTimestampToDbFormatDate($timeStamp);
+            return $dbDateValue;
         }
     }
 ?>

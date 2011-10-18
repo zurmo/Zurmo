@@ -29,12 +29,20 @@
      */
     class ModalSearchListControllerUtil
     {
+        public static function setAjaxModeAndRenderModalSearchList(CController $controller, $modalListLinkProvider,
+                                                 $pageTitle = null,
+                                                 $stateMetadataAdapterClassName = null)
+        {
+            Yii::app()->getClientScript()->setToAjaxMode();
+            return self::renderModalSearchList($controller, $modalListLinkProvider, $pageTitle,
+                                               $stateMetadataAdapterClassName);
+        }
         /**
          * @return rendered content from view as string.
          */
-        public static function renderModalSearchList(CController $controller, $modalListLinkProvider,
-                                                 $pageTitle = null,
-                                                 $stateMetadataAdapterClassName = null)
+        protected static function renderModalSearchList(CController $controller, $modalListLinkProvider,
+                                                        $pageTitle = null,
+                                                        $stateMetadataAdapterClassName = null)
         {
             assert('$modalListLinkProvider instanceof ModalListLinkProvider');
             $userId = Yii::app()->user->userModel->id;

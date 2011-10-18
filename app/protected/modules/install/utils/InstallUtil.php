@@ -162,7 +162,12 @@
         /**
          * @returns true, or the MySQL version if less than required, or false if not installed.
          */
-        public static function checkDatabase($databaseType, $minimumRequiredVersion, /* out */ &$actualVersion)
+        public static function checkDatabase($databaseType,
+                                            $databaseHostname,
+                                            $databaseUsername,
+                                            $databasePassword,
+                                            $minimumRequiredVersion,
+                                            /* out */ &$actualVersion)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             switch ($databaseType)
@@ -171,15 +176,17 @@
                         $PhpDriverVersion = phpversion('mysql');
                         if ($PhpDriverVersion !== null)
                         {
-                            $output = shell_exec('mysql -V 2>&1');
-                            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches); // Not Coding Standard
-                            if ($matches != null)
+                            $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                            $result = @mysql_query("SELECT VERSION()");
+                            $row    = @mysql_fetch_row($result);
+                            if (is_resource($connection))
                             {
-                                $actualVersion =  $matches[0];
-                                if ($actualVersion !== null)
-                                {
-                                    return self::checkVersion($minimumRequiredVersion, $actualVersion);
-                                }
+                                mysql_close($connection);
+                            }
+                            if (isset($row[0]))
+                            {
+                                $actualVersion = $row[0];
+                                return self::checkVersion($minimumRequiredVersion, $actualVersion);
                             }
                         }
                         return false;
@@ -298,18 +305,61 @@
             return array($errorNumber, $errorString);
         }
 
-        public static function getDatabaseMaxAllowedPacketsSize($databaseType, $minimumRequireBytes, /* out */ & $actualBytes)
+        public static function getDatabaseMaxAllowedPacketsSize($databaseType,
+                                                                $databaseHostname,
+                                                                $databaseUsername,
+                                                                $databasePassword,
+                                                                $minimumRequireBytes,
+                                                                /* out */ & $actualBytes)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             switch ($databaseType)
             {
                 case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
                     $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
                     if (isset($row[1]))
                     {
                         $actualBytes = $row[1];
                         return $minimumRequireBytes <= $actualBytes;
+                    }
+                    return false;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        public static function isDatabaseStrictMode($databaseType,
+                                                    $databaseHostname,
+                                                    $databaseUsername,
+                                                    $databasePassword)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SELECT @@sql_mode;");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[0]))
+                    {
+                        if ($row[0] == '' || strstr($row[0], 'STRICT_TRANS_TABLES') !== false)
+                        {
+                            $isStrict = true;
+                        }
+                        else {
+                            $isStrict = false;
+                        }
+                        return $isStrict;
                     }
                     return false;
                 default:
@@ -789,6 +839,7 @@
             InstallUtil::createSuperUser(   'super',
                                             $form->superUserPassword);
             $messageLogger = new MessageLogger($messageStreamer);
+            Yii::app()->custom->runBeforeInstallationAutoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Starting database schema creation.'));
             InstallUtil::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Database schema creation complete.'));
@@ -812,6 +863,7 @@
                                             $debugFilename);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
+            Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 
@@ -826,8 +878,7 @@
             InstallUtil::checkPhpPostSizeSetting(1, $actualPostLimitBytes);
             $actualUploadLimitBytes = null;
             InstallUtil::checkPhpUploadSizeSetting(1, $actualUploadLimitBytes);
-            $actualMaxAllowedBytes  = null;
-            InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualMaxAllowedBytes);
+            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize();
             return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
     }

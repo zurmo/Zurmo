@@ -1015,6 +1015,7 @@
                 $r2->role = null;
                 $this->assertTrue($r2->save());
                 RedBeanModelsCache::forgetAll();
+                RedBeansCache::forgetAll();
                 $r2 = Role::getByName('R2.');
                 $this->assertTrue($r2->role->id < 0);
 
@@ -1121,6 +1122,7 @@
                 $r2->role = $r3;
                 $this->assertTrue($r2->save());
                 RedBeanModelsCache::forgetAll();
+                RedBeansCache::forgetAll();
                 $r2 = Role::getByName('R2.');
                 $this->assertTrue($r2->role->isSame($r3));
                 //Role->afterSave() is where this is being called from.
@@ -1430,6 +1432,7 @@
                 $g1->group = $g2;
                 $this->assertTrue($g1->save());
                 RedBeanModelsCache::forgetAll();
+                RedBeansCache::forgetAll();
                 $g1 = Group::getByName('G1.');
                 $g2 = Group::getByName('G2.');
                 $this->assertTrue($g1->group->isSame($g2));
@@ -1789,6 +1792,7 @@
                 $this->assertTrue($u1->save());
 
                 RedBeanModelsCache::forgetAll();
+                RedBeansCache::forgetAll();
 
                 $this->assertEquals(array(
                                         array('A1', 'G1', 1),

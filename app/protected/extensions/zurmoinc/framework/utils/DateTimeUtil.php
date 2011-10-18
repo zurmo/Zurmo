@@ -122,6 +122,13 @@
             return $utcTimeStamp - $offset;
         }
 
+        public static function convertTimestampToDbFormatDate($timestamp)
+        {
+            assert('is_int($timestamp)');
+            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                                     $timestamp);
+        }
+
         public static function convertTimestampToDbFormatDateTime($timestamp)
         {
             assert('is_int($timestamp)');

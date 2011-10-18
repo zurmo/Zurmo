@@ -33,7 +33,7 @@
 
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Contacts');
+            return Yii::t('Default', 'ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

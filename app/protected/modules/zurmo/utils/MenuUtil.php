@@ -188,13 +188,16 @@
         protected static function getModuleOrderingForTabMenuByUser($user)
         {
             assert('$user instanceof User');
-            $orderedModules = array(
-                'home',
-                'accounts',
-                'leads',
-                'contacts',
-                'opportunities'
-            );
+            $metadata = ZurmoModule::getMetadata();
+            if(isset($metadata['global']['tabMenuItemsModuleOrdering']))
+            {
+                assert('is_array($metadata["global"]["tabMenuItemsModuleOrdering"])');
+                $orderedModules = $metadata['global']['tabMenuItemsModuleOrdering'];
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
             return $orderedModules;
         }
 

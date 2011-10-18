@@ -78,9 +78,14 @@
             $model              = new $modelClassName(false);
             $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
             $lastNameMaxLength  = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'lastName');
+            $lastNameMinLength  = StringValidatorHelper::getMinLengthByModelAndAttributeName($model, 'lastName');
             if (strlen($lastName) > $lastNameMaxLength)
             {
                 throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too long.'));
+            }
+            if (strlen($lastName) < $lastNameMinLength)
+            {
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too short.'));
             }
             if ($firstName != null && strlen($firstName) > $firstNameMaxLength)
             {

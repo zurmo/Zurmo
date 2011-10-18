@@ -57,7 +57,7 @@
                 {
                     try
                     {
-                       $state       = ContactState::getById($mappingRuleData['defaultStateId']);
+                       $state       = ContactState::getById((int)$mappingRuleData['defaultStateId']);
                     }
                     catch (NotFoundException $e)
                     {

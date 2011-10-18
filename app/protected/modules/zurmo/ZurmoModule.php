@@ -104,6 +104,13 @@
                         'route' => 'zurmo/default/logout',
                     ),
                 ),
+                'tabMenuItemsModuleOrdering' => array(
+                    'home',
+                    'accounts',
+                    'leads',
+                    'contacts',
+                    'opportunities'
+                ),
             );
             return $metadata;
         }

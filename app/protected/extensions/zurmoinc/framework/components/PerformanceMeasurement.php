@@ -35,6 +35,12 @@
          */
         protected $timings = array();
 
+        /**
+         * Instance of Zurmo_RedBean_Plugin_QueryLogger.
+         * @var Zurmo_RedBean_Plugin_QueryLogger
+         */
+        protected $redBeanQueryLogger;
+
         public function startClock()
         {
             $this->startTime = microtime(true);
@@ -70,6 +76,21 @@
         public function getTimings()
         {
             return $this->timings;
+        }
+
+        /**
+         * Set the query logger during the RedBeanDatabase setup.  This can then be used after the page is rendered
+         * to gather information about query counts, duplicate queries, and other query information.
+         * @param Zurmo_RedBean_Plugin_QueryLogger $queryLogger
+         */
+        public function setRedBeanQueryLogger(ZurmoRedBeanPluginQueryLogger $redBeanQueryLogger)
+        {
+            $this->redBeanQueryLogger = $redBeanQueryLogger;
+        }
+
+        public function getRedBeanQueryLogger()
+        {
+            return $this->redBeanQueryLogger;
         }
     }
 ?>

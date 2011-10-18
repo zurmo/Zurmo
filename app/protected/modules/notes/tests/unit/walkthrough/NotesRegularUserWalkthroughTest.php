@@ -195,7 +195,7 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/delete');
 
             //give nobody access to both details and edit view
-            Yii::app()->user->userModel = $super;            
+            Yii::app()->user->userModel = $super;
             $note->addPermissions($nobody, Permission::READ_WRITE_CHANGE_PERMISSIONS);
             $this->assertTrue($note->save());
 
@@ -231,7 +231,7 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('notes/default/delete');
 
             //give nobody access to details, edit and delete view
-            Yii::app()->user->userModel = $super;            
+            Yii::app()->user->userModel = $super;
             $note->addPermissions($nobody, Permission::READ_WRITE_DELETE);
             $this->assertTrue($note->save());
 
@@ -597,9 +597,11 @@
             $userInParentGroup->forget();
             $userInChildGroup->forget();
             $childGroup->forget();
+            $parentGroup->forget();
             $userInParentGroup          = User::getByUsername('nobody');
             $userInChildGroup           = User::getByUsername('confused');
             $childGroup                 = Group::getByName('BBB');
+            $parentGroup                = Group::getByName('AAA');
 
             $parentGroup->users->remove($userInParentGroup);
             $parentGroup->groups->remove($childGroup);

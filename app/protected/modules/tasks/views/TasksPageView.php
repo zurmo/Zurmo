@@ -33,7 +33,7 @@
 
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Tasks');
+            return Yii::t('Default', 'TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>
