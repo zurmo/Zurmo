@@ -181,16 +181,16 @@
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
         }
-        
+
         /**
          * @depends testSearchFormAnyAttributes
          */
         public function testSearchFormAnyOptOutEmail() {
-            
+
             //get the super user here
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            
+
             //test the anyOptOut value '' for search.
             $fakePostData = array(
                 'anyOptOutEmail' => array('value' => ''),
@@ -198,11 +198,11 @@
             $metadataAdapter = new SearchDataProviderMetadataAdapter(new AccountsSearchForm(new Account(false)),
                                     $super->id, $fakePostData);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
-            
-            $compareStructure = '(1 or 2)';           
-            
-            $this->assertEquals(array(),   $searchAttributeData['clauses']);
-            $this->assertEquals(array(), $searchAttributeData['structure']);
+
+            $compareStructure = '(1 or 2)';
+
+            $this->assertEquals(array(), $searchAttributeData['clauses']);
+            $this->assertEquals(null,    $searchAttributeData['structure']);
 
             //test the anyOptOut value '0' for search.
             $fakePostData = array(
@@ -226,7 +226,7 @@
                 ),
             );
             $compareStructure = '(1 or 2)';
-                     
+
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
 
@@ -251,8 +251,8 @@
                     'value'                => (bool)1,
                 ),
             );
-            $compareStructure = '(1 or 2)';         
-            
+            $compareStructure = '(1 or 2)';
+
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
         }
