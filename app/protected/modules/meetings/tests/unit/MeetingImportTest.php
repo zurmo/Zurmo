@@ -40,7 +40,7 @@
             $meetings                              = Meeting::getAll();
             $this->assertEquals(0, count($meetings));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Meeting';
+            $serializedData['importRulesType']     = 'Meetings';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());

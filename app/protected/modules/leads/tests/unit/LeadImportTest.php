@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactImportTest extends ImportBaseTest
+    class LeadImportTest extends ImportBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -44,25 +44,17 @@
         public function testSimpleUserImportWhereAllRowsSucceed()
         {
             Yii::app()->user->userModel            = User::getByUsername('super');
-            $account                               = AccountTestHelper::
-                                                     createAccountByNameForOwner('Account',
-                                                                                 Yii::app()->user->userModel);
-            $accountId = $account->id;
             $contacts                              = Contact::getAll();
             $this->assertEquals(0, count($contacts));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Contacts';
+            $serializedData['importRulesType']     = 'Leads';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());
 
             ImportTestHelper::
             createTempTableByFileNameAndTableName('importTest.csv', $import->getTempTableName(),
-                                                  Yii::getPathOfAlias('application.modules.contacts.tests.unit.files'));
-
-            //update the ids of the account column to match the parent account.
-            R::exec("update " . $import->getTempTableName() . " set column_17 = " .
-                    $account->id . " where id != 1 limit 4");
+                                                  Yii::getPathOfAlias('application.modules.leads.tests.unit.files'));
 
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
@@ -86,13 +78,13 @@
                 'column_14' => ImportTestHelper::makeEmailColumnMappingData        ('primaryEmail__emailAddress'),
                 'column_15' => ImportTestHelper::makeBooleanColumnMappingData      ('primaryEmail__isInvalid'),
                 'column_16' => ImportTestHelper::makeBooleanColumnMappingData      ('primaryEmail__optOut'),
-                'column_17' => ImportTestHelper::makeHasOneColumnMappingData       ('account'),
-                'column_18' => ImportTestHelper::makeDropDownColumnMappingData     ('source'),
-                'column_19' => ContactImportTestHelper::makeStateColumnMappingData (),
-                'column_20' => ImportTestHelper::makeDropDownColumnMappingData     ('industry'),
+                'column_17' => ImportTestHelper::makeDropDownColumnMappingData     ('source'),
+                'column_18' => LeadImportTestHelper::makeStateColumnMappingData    (),
+                'column_19' => ImportTestHelper::makeDropDownColumnMappingData     ('industry'),
+                'column_20' => ImportTestHelper::makeStringColumnMappingData       ('companyName'),
             );
 
-            $importRules  = ImportRulesUtil::makeImportRulesByType('Contacts');
+            $importRules  = ImportRulesUtil::makeImportRulesByType('Leads');
             $page         = 0;
             $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
@@ -128,19 +120,19 @@
             $this->assertEquals('a@a.com',                 $contacts[0]->primaryEmail->emailAddress);
             $this->assertEquals(null,                      $contacts[0]->primaryEmail->isInvalid);
             $this->assertEquals(null,                      $contacts[0]->primaryEmail->optOut);
-            $this->assertTrue($contacts[0]->account->isSame($account));
             $this->assertEquals('Self-Generated',          $contacts[0]->source->value);
-            $this->assertEquals('Qualified',               $contacts[0]->state->name);
+            $this->assertEquals('New',                     $contacts[0]->state->name);
             $this->assertEquals('Automotive',              $contacts[0]->industry->value);
+            $this->assertEquals('company1',                $contacts[0]->companyName);
 
             $contacts = Contact::getByName('contact2 contact2son');
             $this->assertEquals(1,                         count($contacts[0]));
             $this->assertEquals('contact2',                $contacts[0]->firstName);
             $this->assertEquals('contact2son',             $contacts[0]->lastName);
-            $this->assertEquals('president2',               $contacts[0]->jobTitle);
+            $this->assertEquals('president2',              $contacts[0]->jobTitle);
             $this->assertEquals(223456,                    $contacts[0]->officePhone);
             $this->assertEquals(655,                       $contacts[0]->officeFax);
-            $this->assertEquals('executive2',               $contacts[0]->department);
+            $this->assertEquals('executive2',              $contacts[0]->department);
             $this->assertEquals('http://www.contact2.com', $contacts[0]->website);
             $this->assertEquals('desc2',                   $contacts[0]->description);
             $this->assertEquals('city2',                   $contacts[0]->primaryAddress->city);
@@ -152,10 +144,10 @@
             $this->assertEquals('b@b.com',                 $contacts[0]->primaryEmail->emailAddress);
             $this->assertEquals(null,                      $contacts[0]->primaryEmail->isInvalid);
             $this->assertEquals(null,                      $contacts[0]->primaryEmail->optOut);
-            $this->assertTrue($contacts[0]->account->isSame($account));
             $this->assertEquals('Tradeshow',               $contacts[0]->source->value);
-            $this->assertEquals('Customer',                $contacts[0]->state->name);
+            $this->assertEquals('Recycled',                $contacts[0]->state->name);
             $this->assertEquals('Banking',                 $contacts[0]->industry->value);
+            $this->assertEquals('company2',                $contacts[0]->companyName);
 
             $contacts = Contact::getByName('contact3 contact3son');
             $this->assertEquals(1,                         count($contacts[0]));
@@ -176,10 +168,10 @@
             $this->assertEquals('c@c.com',                 $contacts[0]->primaryEmail->emailAddress);
             $this->assertEquals('1',                       $contacts[0]->primaryEmail->isInvalid);
             $this->assertEquals('1',                       $contacts[0]->primaryEmail->optOut);
-            $this->assertTrue($contacts[0]->account->isSame($account));
             $this->assertEquals('Inbound Call',            $contacts[0]->source->value);
-            $this->assertEquals('Qualified',               $contacts[0]->state->name);
+            $this->assertEquals('New',                     $contacts[0]->state->name);
             $this->assertEquals('Energy',                  $contacts[0]->industry->value);
+            $this->assertEquals('company3',                $contacts[0]->companyName);
 
             //Confirm 3 rows were processed as 'created'.
             $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
@@ -189,18 +181,13 @@
             $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
                                                                  . ImportRowDataResultsUtil::UPDATED));
 
-            //Confirm 2 rows were processed as 'errors'.
+            //Confirm 0 rows were processed as 'errors'.
             $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
                                                                  . ImportRowDataResultsUtil::ERROR));
 
             $beansWithErrors = ImportDatabaseUtil::getSubset($import->getTempTableName(),     "status = "
                                                                  . ImportRowDataResultsUtil::ERROR);
             $this->assertEquals(0, count($beansWithErrors));
-
-            //test the account has 3 contacts
-            $account->forget();
-            $account = Account::getById($accountId);
-            $this->assertEquals(3, $account->contacts->count());
         }
     }
 ?>

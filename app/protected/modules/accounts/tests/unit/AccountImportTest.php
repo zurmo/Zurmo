@@ -63,7 +63,7 @@
             $accounts                              = Account::getAll();
             $this->assertEquals(1, count($accounts));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Account';
+            $serializedData['importRulesType']     = 'Accounts';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());
