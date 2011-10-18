@@ -91,6 +91,14 @@
         }
 
         /**
+         * Override to implement.
+         */
+        public function actionCreateFromRelation($relationAttributeName, $relationModelId, $relationModuleId, $redirectUrl)
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
          * @see actionCreateFromRelation. When a new model is instantiated, this method attaches a relation based
          * on the relation information specified.
          * @return $model;
