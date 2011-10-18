@@ -150,6 +150,27 @@
                          'type'                        => 'importColumn');
         }
 
+        public static function makeCurrencyColumnMappingData($attributeName, $currency, $defaultValue = null, $rateToBase = 1)
+        {
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn',
+                         'mappingRulesData'            => array(
+                             'DefaultValueModelAttributeMappingRuleForm' =>
+                             array('defaultValue' => $defaultValue),
+                             'CurrencyRateToBaseModelAttributeMappingRuleForm' =>
+                                 array('rateToBase' => $rateToBase, 'id' => $currency->id)));
+        }
+
+        public static function makeDateColumnMappingData($attributeName, $defaultValue = null,
+                                                             $format = 'MM-dd-yyyy')
+        {
+            return array('attributeIndexOrDerivedType'               => $attributeName,
+                         'type'                                      => 'importColumn',
+                         'mappingRulesData'                          => array(
+                         'DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => $defaultValue),
+                          'ValueFormatMappingRuleForm'               => array('format' => $format)));
+        }
+
         public static function makeDateTimeColumnMappingData($attributeName, $defaultValue = null,
                                                              $format = 'MM-dd-yyyy hh:mm')
         {
