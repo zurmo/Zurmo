@@ -47,6 +47,8 @@
               if (!is_dir($cachePath))
               {
                   mkdir($cachePath, 0777, true);
+                  chmod(Yii::app() -> runtimePath . '/minScript' , 0777);
+                  chmod(Yii::app() -> runtimePath . '/minScript/cache' , 0777);
               }
               elseif (!is_writable($cachePath))
               {

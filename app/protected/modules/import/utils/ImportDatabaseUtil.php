@@ -53,28 +53,34 @@
             R::exec("drop table if exists $tableName");
 
             $importArray = array();
-            $data = fgetcsv($fileHandle, 0, $delimiter, $enclosure);
-            if (count($data) > 0)
-            {
-                $newBean = R::dispense($tableName);
-                foreach ($data as $columnId => $value)
-                {
-                    $columnName = 'column_' . $columnId;
-                    $newBean->{$columnName} = str_repeat(' ', 256);
-                    $columns[] = $columnName;
-                }
-                R::store($newBean);
-                R::trash($newBean);
-                R::wipe($tableName);
-                $importArray[] = $data;
-            }
-
+            $maxValues = array();
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
                 if (count($data) > 0)
                 {
                     $importArray[] = $data;
+                    foreach ($data as $k => $v)
+                    {
+                        if (!isset($maxValues[$k]) || strlen($maxValues[$k]) < strlen($v))
+                        {
+                            $maxValues[$k] = $v;
+                        }
+                    }
                 }
+            }
+
+            if (count($maxValues) > 0)
+            {
+                $newBean = R::dispense($tableName);
+                foreach ($maxValues as $columnId => $value)
+                {
+                    $columnName = 'column_' . $columnId;
+                    $newBean->{$columnName} = str_repeat(' ', strlen($value));
+                    $columns[] = $columnName;
+                }
+                R::store($newBean);
+                R::trash($newBean);
+                R::wipe($tableName);
             }
 
             if (count($importArray > 0))
