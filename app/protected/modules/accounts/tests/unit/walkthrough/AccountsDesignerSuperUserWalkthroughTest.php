@@ -252,40 +252,100 @@
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
             //Create a new account based on the custom fields.
-            $this->resetGetArray();           
+            $this->resetGetArray();
             $this->setPostArray(array('Account' => array(
-                                            'name'      =>  'myNewAccount',
-                                            'checkbox'  =>  '1',
-                                            'currency'  =>  array('value'   => 45,
-                                                                  'currency'=> array('id' => 1)),
-                                            'date'      =>  $date,
-                                            'datetime'  =>  $datetime,
-                                            'decimal'   =>  '123',
-                                            'picklist'  =>  array('value'=>'a'),
-                                            'integer'   =>  '12',
-                                            'phone'     =>  '456765421',
-                                            'radio'     =>  array('value'=>'d'),
-                                            'text'      =>  'This is a test Text',
-                                            'textarea'  =>  'This is a test TextArea',
-                                            'url'       =>  'http://wwww.abc.com')));
+                                            'name'                              =>  'myNewAccount',
+                                            'officePhone'                       =>  '259-784-2169',
+                                            'industry'                          =>  array('value'=>'Automotive'),
+                                            'officeFax'                         =>  '299-845-7863',
+                                            'employees'                         =>  '930',
+                                            'annualRevenue'                     =>  '474000000',
+                                            'type'                              =>  array('value'=>'Prospect'),
+                                            'website'                           =>  'http://www.Unnamed.com',
+                                            'primaryEmail'                      =>  array('emailAddress'=>'info@myNewAccount.com',
+                                                                                          'optOut'=>'1',
+                                                                                          'isInvalid'=>'0'),
+                                            'secondaryEmail'                    =>  array('emailAddress'=>'',
+                                                                                          'optOut'=>'0',
+                                                                                          'isInvalid'=>'0'),
+                                            'billingAddress'                    =>  array('street1'=>'27054 West Michigan Lane',
+                                                                                          'street2'=>'',
+                                                                                          'city'=>'Austin',
+                                                                                          'state'=>'TX',
+                                                                                          'postalCode'=>'78759',
+                                                                                          'country'=>'USA'),
+                                            'shippingAddress'                    => array('street1'=>'27054 West Michigan Lane',
+                                                                                          'street2'=>'',
+                                                                                          'city'=>'Austin',
+                                                                                          'state'=>'TX',
+                                                                                          'postalCode'=>'78759',
+                                                                                          'country'=>'USA'),
+                                            'description'                       =>  'This is a Description',
+                                            'explicitReadWriteModelPermissions' =>  array('type'=>null),
+                                            'checkbox'                          =>  '1',
+                                            'currency'                          =>  array('value'   => 45,
+                                                                                          'currency'=> array('id' => 1)),
+                                            'date'                              =>  $date,
+                                            'datetime'                          =>  $datetime,
+                                            'decimal'                           =>  '123',
+                                            'picklist'                          =>  array('value'=>'a'),
+                                            'integer'                           =>  '12',
+                                            'phone'                             =>  '259-784-2169',
+                                            'radio'                             =>  array('value'=>'d'),
+                                            'text'                              =>  'This is a test Text',
+                                            'textarea'                          =>  'This is a test TextArea',
+                                            'url'                               =>  'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
 
             //check the details if they are saved properly for the custom fields
             $account = Account::getByName('myNewAccount');
+            //retrive the permission of the account
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
             $this->assertEquals(1, count($account));
-            $this->assertEquals($account[0]->name               , 'myNewAccount');
-            $this->assertEquals($account[0]->checkbox           , '1');
-            $this->assertEquals($account[0]->currency->value    , 45);
-            $this->assertEquals($account[0]->date               , $dateAssert);
-            $this->assertEquals($account[0]->datetime           , $datetimeAssert);
-            $this->assertEquals($account[0]->decimal            , '123');
-            $this->assertEquals($account[0]->picklist->value    , 'a');
-            $this->assertEquals($account[0]->integer            , 12);
-            $this->assertEquals($account[0]->phone              , '456765421');
-            $this->assertEquals($account[0]->radio->value       , 'd');
-            $this->assertEquals($account[0]->text               , 'This is a test Text');
-            $this->assertEquals($account[0]->textarea           , 'This is a test TextArea');
-            $this->assertEquals($account[0]->url                , 'http://wwww.abc.com');
+            $this->assertEquals($account[0]->name                           , 'myNewAccount');
+            $this->assertEquals($account[0]->officePhone                    , '259-784-2169');
+            $this->assertEquals($account[0]->industry->value                , 'Automotive');
+            $this->assertEquals($account[0]->officeFax                      , '299-845-7863');
+            $this->assertEquals($account[0]->employees                      , '930');
+            $this->assertEquals($account[0]->annualRevenue                  , '474000000');
+            $this->assertEquals($account[0]->type->value                    , 'Prospect');
+            $this->assertEquals($account[0]->website                        , 'http://www.Unnamed.com');
+            $this->assertEquals($account[0]->primaryEmail->emailAddress     , 'info@myNewAccount.com');
+            $this->assertEquals($account[0]->primaryEmail->optOut           , '1');
+            $this->assertEquals($account[0]->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($account[0]->secondaryEmail->emailAddress   , '');
+            $this->assertEquals($account[0]->secondaryEmail->optOut         , '0');
+            $this->assertEquals($account[0]->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($account[0]->billingAddress->street1        , '27054 West Michigan Lane');
+            $this->assertEquals($account[0]->billingAddress->street2        , '');
+            $this->assertEquals($account[0]->billingAddress->city           , 'Austin');
+            $this->assertEquals($account[0]->billingAddress->state          , 'TX');
+            $this->assertEquals($account[0]->billingAddress->postalCode     , '78759');
+            $this->assertEquals($account[0]->billingAddress->country        , 'USA');
+            $this->assertEquals($account[0]->shippingAddress->street1       , '27054 West Michigan Lane');
+            $this->assertEquals($account[0]->shippingAddress->street2       , '');
+            $this->assertEquals($account[0]->shippingAddress->city          , 'Austin');
+            $this->assertEquals($account[0]->shippingAddress->state         , 'TX');
+            $this->assertEquals($account[0]->shippingAddress->postalCode    , '78759');
+            $this->assertEquals($account[0]->shippingAddress->country       , 'USA');
+            $this->assertEquals($account[0]->description                    , 'This is a Description');
+            $this->assertEquals(0                                           , count($readWritePermitables));
+            $this->assertEquals(0                                           , count($readOnlyPermitables));
+            $this->assertEquals($account[0]->checkbox                       , '1');
+            $this->assertEquals($account[0]->currency->value                , 45);
+            $this->assertEquals($account[0]->date                           , $dateAssert);
+            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
+            $this->assertEquals($account[0]->decimal                        , '123');
+            $this->assertEquals($account[0]->picklist->value                , 'a');
+            $this->assertEquals($account[0]->integer                        , 12);
+            $this->assertEquals($account[0]->phone                          , '259-784-2169');
+            $this->assertEquals($account[0]->radio->value                   , 'd');
+            $this->assertEquals($account[0]->text                           , 'This is a test Text');
+            $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
+            $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
         }
 
         /**
@@ -293,21 +353,38 @@
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterCreatingTheAccountUser()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //search a created account using the customfield.
+            $this->resetPostArray();
             $this->setGetArray(array('AccountsSearchForm' => array( 
-                                                                    'decimal'   =>  '123',
-                                                                    'integer'   =>  '12',
-                                                                    'phone'     =>  '456765421',
-                                                                    'text'      =>  'This is a test Text',
-                                                                    'textarea'  =>  'This is a test TextArea',
-                                                                    'url'       =>  'http://wwww.abc.com',
-                                                                    'checkbox'  =>  '1',
-                                                                    'currency'  =>  array('value'  =>  45),
-                                                                    'picklist'  =>  array('value'  =>  'a'),
-                                                                    'radio'     =>  array('value'  =>  'd')),
+                                                                    'name'              =>  'myNewAccount',
+                                                                    'officePhone'       =>  '259-784-2169',
+                                                                    'type'              =>   array('value'  =>  'Prospect'),
+                                                                    'officeFax'         =>  '299-845-7863',
+                                                                    'employees'         =>  '930',
+                                                                    'website'           =>  'http://www.Unnamed.com',
+                                                                    'annualRevenue'     =>  '474000000',
+                                                                    'anyCity'           =>  'Austin',
+                                                                    'anyState'          =>  'TX',
+                                                                    'anyStreet'         =>  '',
+                                                                    'anyPostalCode'     =>  '78759',
+                                                                    'anyCountry'        =>  'USA',
+                                                                    'anyEmail'          =>  'info@myNewAccount.com',
+                                                                    'anyOptOutEmail'    =>  array('value'=>'1'),
+                                                                    'anyInvalidEmail' =>  array('value'=>''),
+                                                                    'ownedItemsOnly'    =>  '1',
+                                                                    'industry'          =>  array('value'=>'Automotive'),
+                                                                    'decimal'           =>  '123',
+                                                                    'integer'           =>  '12',
+                                                                    'phone'             =>  '259-784-2169',
+                                                                    'text'              =>  'This is a test Text',
+                                                                    'textarea'          =>  'This is a test TextArea',
+                                                                    'url'               =>  'http://wwww.abc.com',
+                                                                    'checkbox'          =>  '1',
+                                                                    'currency'          =>  array('value'  =>  45),
+                                                                    'picklist'          =>  array('value'  =>  'a'),
+                                                                    'radio'             =>  array('value'  =>  'd')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
@@ -322,7 +399,6 @@
          */
         public function testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //get the account id from the recently craeted account
@@ -331,35 +407,95 @@
             //edit and save the account
             $this->setGetArray(array('id' => $accountId));
             $this->setPostArray(array('Account' => array(
-                                                            'name'      =>  'myEditAccount',
-                                                            'checkbox'  =>  '0',
-                                                            'currency'  =>  array('value'   => 40,
-                                                                                  'currency'=> array('id' => 1)),
-                                                            'decimal'   =>  '12',
-                                                            'picklist'  =>  array('value'=>'b'),
-                                                            'integer'   =>  '11',
-                                                            'phone'     =>  '123456',
-                                                            'radio'     =>  array('value'=>'e'),
-                                                            'text'      =>  'This is a test Edit Text',
-                                                            'textarea'  =>  'This is a test Edit TextArea',
-                                                            'url'       =>  'http://wwww.abc-edit.com'),
+                                                        'name'      =>  'myEditAccount',
+                                                        'officePhone'                       =>  '259-734-2169',
+                                                        'industry'                          =>  array('value'=>'Energy'),
+                                                        'officeFax'                         =>  '299-825-7863',
+                                                        'employees'                         =>  '630',
+                                                        'annualRevenue'                     =>  '472000000',
+                                                        'type'                              =>  array('value'=>'Customer'),
+                                                        'website'                           =>  'http://www.UnnamedEdit.com',
+                                                        'primaryEmail'                      =>  array('emailAddress'=>'info@myEditAccount.com',
+                                                                                                      'optOut'=>'0',
+                                                                                                      'isInvalid'=>'0'),
+                                                        'secondaryEmail'                    =>  array('emailAddress'=>'',
+                                                                                                      'optOut'=>'0',
+                                                                                                      'isInvalid'=>'0'),
+                                                        'billingAddress'                    =>  array('street1'=>'26378 South Arlington Ave',
+                                                                                                      'street2'=>'',
+                                                                                                      'city'=>'San Jose',
+                                                                                                      'state'=>'CA',
+                                                                                                      'postalCode'=>'95131',
+                                                                                                      'country'=>'USA'),
+                                                        'shippingAddress'                    => array('street1'=>'26378 South Arlington Ave',
+                                                                                                      'street2'=>'',
+                                                                                                      'city'=>'San Jose',
+                                                                                                      'state'=>'CA',
+                                                                                                      'postalCode'=>'95131',
+                                                                                                      'country'=>'USA'),
+                                                        'description'                       =>  'This is a Edit Description',
+                                                        'explicitReadWriteModelPermissions' =>  array('type'=>ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP),
+                                                        'checkbox'                          =>  '0',
+                                                        'currency'                          =>  array('value'   => 40,
+                                                                                                      'currency'=> array('id' => 1)),
+                                                        'decimal'                           =>  '12',
+                                                        'picklist'                          =>  array('value'=>'b'),
+                                                        'integer'                           =>  '11',
+                                                        'phone'                             =>  '259-784-2069',
+                                                        'radio'                             =>  array('value'=>'e'),
+                                                        'text'                              =>  'This is a test Edit Text',
+                                                        'textarea'                          =>  'This is a test Edit TextArea',
+                                                        'url'                               =>  'http://wwww.abc-edit.com'),
                                       'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
 
             //check the details if they are save properly for the custom fields after the edit
             $account = Account::getByName('myEditAccount');
+            //retrive the permission of the account
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
             $this->assertEquals(1, count($account));
-            $this->assertEquals($account[0]->name               , 'myEditAccount');
-            $this->assertEquals($account[0]->checkbox           , '0');
-            $this->assertEquals($account[0]->currency->value    ,  40);
-            $this->assertEquals($account[0]->decimal            , '12');
-            $this->assertEquals($account[0]->picklist->value    , 'b');
-            $this->assertEquals($account[0]->integer            ,  11);
-            $this->assertEquals($account[0]->phone              , '123456');
-            $this->assertEquals($account[0]->radio->value       , 'e');
-            $this->assertEquals($account[0]->text               , 'This is a test Edit Text');
-            $this->assertEquals($account[0]->textarea           , 'This is a test Edit TextArea');
-            $this->assertEquals($account[0]->url                , 'http://wwww.abc-edit.com');
+            $this->assertEquals($account[0]->name                           , 'myEditAccount');
+            $this->assertEquals($account[0]->officePhone                    , '259-734-2169');
+            $this->assertEquals($account[0]->industry->value                , 'Energy');
+            $this->assertEquals($account[0]->officeFax                      , '299-825-7863');
+            $this->assertEquals($account[0]->employees                      , '630');
+            $this->assertEquals($account[0]->annualRevenue                  , '472000000');
+            $this->assertEquals($account[0]->type->value                    , 'Customer');
+            $this->assertEquals($account[0]->website                        , 'http://www.UnnamedEdit.com');
+            $this->assertEquals($account[0]->primaryEmail->emailAddress     , 'info@myEditAccount.com');
+            $this->assertEquals($account[0]->primaryEmail->optOut           , '0');
+            $this->assertEquals($account[0]->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($account[0]->secondaryEmail->emailAddress   , '');
+            $this->assertEquals($account[0]->secondaryEmail->optOut         , '0');
+            $this->assertEquals($account[0]->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($account[0]->billingAddress->street1        , '26378 South Arlington Ave');
+            $this->assertEquals($account[0]->billingAddress->street2        , '');
+            $this->assertEquals($account[0]->billingAddress->city           , 'San Jose');
+            $this->assertEquals($account[0]->billingAddress->state          , 'CA');
+            $this->assertEquals($account[0]->billingAddress->postalCode     , '95131');
+            $this->assertEquals($account[0]->billingAddress->country        , 'USA');
+            $this->assertEquals($account[0]->shippingAddress->street1       , '26378 South Arlington Ave');
+            $this->assertEquals($account[0]->shippingAddress->street2       , '');
+            $this->assertEquals($account[0]->shippingAddress->city          , 'San Jose');
+            $this->assertEquals($account[0]->shippingAddress->state         , 'CA');
+            $this->assertEquals($account[0]->shippingAddress->postalCode    , '95131');
+            $this->assertEquals($account[0]->shippingAddress->country       , 'USA');
+            $this->assertEquals($account[0]->description                    , 'This is a Edit Description');
+            $this->assertEquals(1                                           , count($readWritePermitables));
+            $this->assertEquals(0                                           , count($readOnlyPermitables));
+            $this->assertEquals($account[0]->checkbox                       , '0');
+            $this->assertEquals($account[0]->currency->value                ,  40);
+            $this->assertEquals($account[0]->decimal                        , '12');
+            $this->assertEquals($account[0]->picklist->value                , 'b');
+            $this->assertEquals($account[0]->integer                        ,  11);
+            $this->assertEquals($account[0]->phone                          , '259-784-2069');
+            $this->assertEquals($account[0]->radio->value                   , 'e');
+            $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
+            $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
+            $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
         }
 
         /**
@@ -367,15 +503,31 @@
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterEditingTheAccountUser()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //search a created account using the customfield.
-            $this->resetGetArray();          
+            $this->resetPostArray();
             $this->setGetArray(array('AccountsSearchForm' => array(
+                                                                    'name'              =>  'myEditAccount',
+                                                                    'officePhone'       =>  '259-734-2169',
+                                                                    'type'              =>   array('value'  =>  'Customer'),
+                                                                    'officeFax'         =>  '299-825-7863',
+                                                                    'employees'         =>  '630',
+                                                                    'website'           =>  'http://www.UnnamedEdit.com',
+                                                                    'annualRevenue'     =>  '472000000',
+                                                                    'anyCity'           =>  'San Jose',
+                                                                    'anyState'          =>  'CA',
+                                                                    'anyStreet'         =>  '',
+                                                                    'anyPostalCode'     =>  '95131',
+                                                                    'anyCountry'        =>  'USA',
+                                                                    'anyEmail'          =>  'info@myEditAccount.com',
+                                                                    'anyOptOutEmail'    =>  array('value'=> null),
+                                                                    'anyInvalidEmail' =>  array('value'=>''),
+                                                                    'ownedItemsOnly'    =>  '1',
+                                                                    'industry'          =>  array('value'=>'Energy'),
                                                                     'decimal'   =>  '12',
                                                                     'integer'   =>  '11',
-                                                                    'phone'     =>  '123456',
+                                                                    'phone'     =>  '259-784-2069',
                                                                     'text'      =>  'This is a test Edit Text',
                                                                     'textarea'  =>  'This is a test Edit TextArea',
                                                                     'url'       =>  'http://wwww.abc-edit.com',
@@ -388,7 +540,7 @@
 
             //assert that the edit account exits after the edit and is diaplayed on the search page
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
-            $this->assertTrue(strpos($content, "myEditAccount") > 0);
+            $this->assertTrue(strpos($content, "myEditAccount") > 0);            
         }
 
         /**
@@ -396,7 +548,6 @@
          */
         public function testDeleteOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //get the account id from the recently edited account
@@ -410,17 +561,33 @@
         /**
          * @depends testDeleteOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule
          */
-        public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterDeletingTheAccountUser()
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterDeletingTheAccount()
         {
-
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //search a created account using the customfield.
             $this->resetGetArray();
             $this->setGetArray(array('AccountsSearchForm' => array( 
+                                                                    'name'              =>  'myEditAccount',
+                                                                    'officePhone'       =>  '259-734-2169',
+                                                                    'type'              =>   array('value'  =>  'Customer'),
+                                                                    'officeFax'         =>  '299-825-7863',
+                                                                    'employees'         =>  '630',
+                                                                    'website'           =>  'http://www.UnnamedEdit.com',
+                                                                    'annualRevenue'     =>  '472000000',
+                                                                    'anyCity'           =>  'San Jose',
+                                                                    'anyState'          =>  'CA',
+                                                                    'anyStreet'         =>  '',
+                                                                    'anyPostalCode'     =>  '95131',
+                                                                    'anyCountry'        =>  'USA',
+                                                                    'anyEmail'          =>  'info@myEditAccount.com',
+                                                                    'anyOptOutEmail'    =>  array('value'=>'0'),
+                                                                    'anyInvalidEmail' =>  array('value'=>''),
+                                                                    'ownedItemsOnly'    =>  '1',
+                                                                    'industry'          =>  array('value'=>'Energy'),
                                                                     'decimal'   =>  '12',
                                                                     'integer'   =>  '11',
-                                                                    'phone'     =>  '123456',
+                                                                    'phone'     =>  '259-784-2069',
                                                                     'text'      =>  'This is a test Edit Text',
                                                                     'textarea'  =>  'This is a test Edit TextArea',
                                                                     'url'       =>  'http://wwww.abc-edit.com',
@@ -433,7 +600,7 @@
 
             //assert that the edit account exits after the search
             $this->assertTrue(strpos($content, "No results found.") > 0);
-            $this->assertFalse(strpos($content, "myEditAccount") > 0);
+            $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
         }
     }
 ?>
