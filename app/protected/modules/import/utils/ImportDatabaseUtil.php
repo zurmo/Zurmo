@@ -75,7 +75,7 @@
                 foreach ($maxValues as $columnId => $value)
                 {
                     $columnName = 'column_' . $columnId;
-                    $newBean->{$columnName} = $value;
+                    $newBean->{$columnName} = str_repeat(' ', strlen($value));
                     $columns[] = $columnName;
                 }
                 R::store($newBean);
