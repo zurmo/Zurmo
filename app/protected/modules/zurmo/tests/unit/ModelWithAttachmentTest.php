@@ -117,6 +117,18 @@
             $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);
         }
 
+        /**
+        * @expectedException FailedFileUploadException
+        */
+        public function testMakeFileViaUploadWhereFileNotExist()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $pathToFiles = Yii::getPathOfAlias('application.modules.zurmo.tests.unit.files');
+            $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . 'testMissingFile.txt';
+            $uploadedFile = CUploadedFile::getInstanceByName('test');
+            $fileModel     = FileModelUtil::makeByUploadedFile($uploadedFile);
+        }
+
         public function testModelWithAttachmentTestItem()
         {
             if (!RedBeanDatabase::isFrozen())
