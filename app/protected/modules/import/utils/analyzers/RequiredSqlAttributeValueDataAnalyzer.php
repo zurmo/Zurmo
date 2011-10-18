@@ -48,7 +48,7 @@
             }
             $mappingRuleFormClassName  = $mappingRuleType . 'MappingRuleForm';
             $defaultValueAttributeName = $mappingRuleFormClassName::getAttributeName();
-            if ($mappingRuleData[$defaultValueAttributeName] == null)
+            if ($mappingRuleData[$defaultValueAttributeName] != null)
             {
                 return;
             }
