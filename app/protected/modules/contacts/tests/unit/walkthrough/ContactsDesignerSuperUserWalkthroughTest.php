@@ -238,55 +238,58 @@
             $datetime = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
+            //retrive the Contact State (Status) Id based on the name
+            $contactState = ContactState::getByName('Qualified');
+            $contactStateID = $contactState[0]->id;
+
             //Create a new contact based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Contact' => array(
-                                                        'title'                             =>  array('value' => 'Mr.'),
-                                                        'firstName'                         =>  'Sarah',
-                                                        'lastName'                          =>  'Williams',
-                                                        'state'                             =>  array('id' => '6'),
-                                                        'jobTitle'                          =>  'Sales Director',
-                                                        'account'                           =>  array('id' => $accountId),
-                                                        'department'                        =>  'Sales',
-                                                        'officePhone'                       =>  '739-741-3005',
-                                                        'source'                            =>  array('value' => 'Self-Generated'),
-                                                        'mobilePhone'                       =>  '285-301-8232',
-                                                        'officeFax'                         =>  '255-455-1914',
-                                                        'primaryEmail'                      =>  array('emailAddress'=>'info@myNewContact.com',
-                                                                                                  'optOut'=>'1',
-                                                                                                  'isInvalid'=>'0'),
-                                                        'secondaryEmail'                    =>  array('emailAddress'=>'',
-                                                                                                  'optOut'=>'0',
-                                                                                                  'isInvalid'=>'0'),
-                                                        'primaryAddress'                    =>  array('street1'=>'26217 West Third Lane',
-                                                                                                  'street2'=>'',
-                                                                                                  'city'=>'New York',
-                                                                                                  'state'=>'NY',
-                                                                                                  'postalCode'=>'10169',
-                                                                                                  'country'=>'USA'),
-                                                        'secondaryAddress'                  =>  array('street1'=>'26217 West Third Lane',
-                                                                                                  'street2'=>'',
-                                                                                                  'city'=>'New York',
-                                                                                                  'state'=>'NY',
-                                                                                                  'postalCode'=>'10169',
-                                                                                                  'country'=>'USA'),
-                                                        'owner'                             =>  array('id' => $superUserId),
-                                                        'explicitReadWriteModelPermissions' =>  array('type' => null),
-                                                        'description'                       =>  'This is a Description',
-                                                        'checkbox'                          =>  '1',
-                                                        'currency'                          =>  array('value'   => 45,
-                                                                                                      'currency'=> array('id' => 1)),
-                                                        'date'                              =>  $date,
-                                                        'datetime'                          =>  $datetime,
-                                                        'decimal'                           =>  '123',
-                                                        'picklist'                          =>  array('value'=>'a'),
-                                                        'integer'                           =>  '12',
-                                                        'phone'                             =>  '259-784-2169',
-                                                        'radio'                             =>  array('value'=>'d'),
-                                                        'text'                              =>  'This is a test Text',
-                                                        'textarea'                          =>  'This is a test TextArea',
-                                                        'url'                               =>  'http://wwww.abc.com'
-                                                        )));
+                                                'title'                             =>  array('value' => 'Mr.'),
+                                                'firstName'                         =>  'Sarah',
+                                                'lastName'                          =>  'Williams',
+                                                'state'                             =>  array('id' => $contactStateID),
+                                                'jobTitle'                          =>  'Sales Director',
+                                                'account'                           =>  array('id' => $accountId),
+                                                'department'                        =>  'Sales',
+                                                'officePhone'                       =>  '739-741-3005',
+                                                'source'                            =>  array('value' => 'Self-Generated'),
+                                                'mobilePhone'                       =>  '285-301-8232',
+                                                'officeFax'                         =>  '255-455-1914',
+                                                'primaryEmail'                      =>  array('emailAddress'=>'info@myNewContact.com',
+                                                                                              'optOut'=>'1',
+                                                                                              'isInvalid'=>'0'),
+                                                'secondaryEmail'                    =>  array('emailAddress'=>'',
+                                                                                              'optOut'=>'0',
+                                                                                              'isInvalid'=>'0'),
+                                                'primaryAddress'                    =>  array('street1'=>'26217 West Third Lane',
+                                                                                              'street2'=>'',
+                                                                                              'city'=>'New York',
+                                                                                              'state'=>'NY',
+                                                                                              'postalCode'=>'10169',
+                                                                                              'country'=>'USA'),
+                                                'secondaryAddress'                  =>  array('street1'=>'26217 West Third Lane',
+                                                                                              'street2'=>'',
+                                                                                              'city'=>'New York',
+                                                                                              'state'=>'NY',
+                                                                                              'postalCode'=>'10169',
+                                                                                              'country'=>'USA'),
+                                                'owner'                             =>  array('id' => $superUserId),
+                                                'explicitReadWriteModelPermissions' =>  array('type' => null),
+                                                'description'                       =>  'This is a Description',
+                                                'checkbox'                          =>  '1',
+                                                'currency'                          =>  array('value'   => 45,
+                                                                                              'currency'=> array('id' => 1)),
+                                                'date'                              =>  $date,
+                                                'datetime'                          =>  $datetime,
+                                                'decimal'                           =>  '123',
+                                                'picklist'                          =>  array('value'=>'a'),
+                                                'integer'                           =>  '12',
+                                                'phone'                             =>  '259-784-2169',
+                                                'radio'                             =>  array('value'=>'d'),
+                                                'text'                              =>  'This is a test Text',
+                                                'textarea'                          =>  'This is a test TextArea',
+                                                'url'                               =>  'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/create');
 
             //check the details if they are saved properly for the custom fields
@@ -301,7 +304,7 @@
             $this->assertEquals($contact->title->value                   , 'Mr.');
             $this->assertEquals($contact->firstName                      , 'Sarah');
             $this->assertEquals($contact->lastName                       , 'Williams');
-            $this->assertEquals($contact->state->id                      , '6');
+            $this->assertEquals($contact->state->id                      , $contactStateID);
             $this->assertEquals($contact->jobTitle                       , 'Sales Director');
             $this->assertEquals($contact->account->id                    , $accountId);
             $this->assertEquals($contact->department                     , 'Sales');
@@ -338,10 +341,10 @@
             $this->assertEquals($contact->decimal                        , '123');
             $this->assertEquals($contact->picklist->value                , 'a');
             $this->assertEquals($contact->integer                        , 12);
-            $this->assertEquals($contact->phone                         , '259-784-2169');
+            $this->assertEquals($contact->phone                          , '259-784-2169');
             $this->assertEquals($contact->radio->value                   , 'd');
             $this->assertEquals($contact->text                           , 'This is a test Text');
-            $this->assertEquals($contact->textarea                      , 'This is a test TextArea');
+            $this->assertEquals($contact->textarea                       , 'This is a test TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc.com');
         }
 
@@ -355,6 +358,10 @@
             //retrive the account id and the super account id
             $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superUserId = $super->id;
+
+            //retrive the Contact State (Status) Id based on the name
+            $contactState = ContactState::getByName('Qualified');
+            $contactStateID = $contactState[0]->id;
 
             //search a created contact using the customfield.
             $this->resetPostArray();
@@ -370,7 +377,7 @@
                                                                     'anyStreet'         => '26217 West Third Lane',
                                                                     'anyCity'           => 'New York',
                                                                     'anyState'          => 'NY',
-                                                                    'state'             => array('id' => '6'),
+                                                                    'state'             => array('id' => $contactStateID),
                                                                     'owner'             => array('id' => $superUserId),
                                                                     'firstName'         => 'Sarah',
                                                                     'lastName'          => 'Williams',
@@ -379,16 +386,16 @@
                                                                     'title'             => array('value'=>'Mr.'),
                                                                     'source'            => array('value'=>'Self-Generated'),
                                                                     'account'           => array('id'=>$accountId),
-                                                                    'decimal'           =>  '123',
-                                                                    'integer'           =>  '12',
-                                                                    'phone'             =>  '259-784-2169',
-                                                                    'text'              =>  'This is a test Text',
-                                                                    'textarea'          =>  'This is a test TextArea',
-                                                                    'url'               =>  'http://wwww.abc.com',
-                                                                    'checkbox'          =>  '1',
-                                                                    'currency'          =>  array('value'  =>  45),
-                                                                    'picklist'          =>  array('value'  =>  'a'),
-                                                                    'radio'             =>  array('value'  =>  'd')),
+                                                                    'decimal'           => '123',
+                                                                    'integer'           => '12',
+                                                                    'phone'             => '259-784-2169',
+                                                                    'text'              => 'This is a test Text',
+                                                                    'textarea'          => 'This is a test TextArea',
+                                                                    'url'               => 'http://wwww.abc.com',
+                                                                    'checkbox'          => '1',
+                                                                    'currency'          => array('value'  =>  45),
+                                                                    'picklist'          => array('value'  =>  'a'),
+                                                                    'radio'             => array('value'  =>  'd')),
                                     'ajax' =>  'list-view'));
                                     
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
@@ -413,52 +420,56 @@
             //retrive the contact id 
             $contactId     = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
 
+            //retrive the Contact State (Status) Id based on the name
+            $contactState = ContactState::getByName('Customer');
+            $contactStateID = $contactState[0]->id;
+
             //edit and save the contact
             $this->setGetArray(array('id' => $contactId));            
             $this->setPostArray(array('Contact' => array(
-                                                        'title'                             =>  array('value' => 'Mrs.'),
-                                                        'firstName'                         =>  'Sarah',
-                                                        'lastName'                          =>  'Williams Edit',
-                                                        'jobTitle'                          =>  'Sales Director Edit',
-                                                        'department'                        =>  'Sales Edit',
-                                                        'officePhone'                       =>  '739-742-3005',
-                                                        'source'                            =>  array('value' => 'Inbound Call'),
-                                                        'mobilePhone'                       =>  '285-300-8232',
-                                                        'officeFax'                         =>  '255-454-1914',
-                                                        'state'                             =>  array('id' => '7'),
-                                                        'owner'                             =>  array('id' => $superUserId),
-                                                        'account'                           =>  array('id' => $accountId),
-                                                        'primaryEmail'                      =>  array('emailAddress'=>'info@myNewContact.com',
+                                                    'title'                             =>  array('value' => 'Mrs.'),
+                                                    'firstName'                         =>  'Sarah',
+                                                    'lastName'                          =>  'Williams Edit',
+                                                    'jobTitle'                          =>  'Sales Director Edit',
+                                                    'department'                        =>  'Sales Edit',
+                                                    'officePhone'                       =>  '739-742-3005',
+                                                    'source'                            =>  array('value' => 'Inbound Call'),
+                                                    'mobilePhone'                       =>  '285-300-8232',
+                                                    'officeFax'                         =>  '255-454-1914',
+                                                    'state'                             =>  array('id' => $contactStateID),
+                                                    'owner'                             =>  array('id' => $superUserId),
+                                                    'account'                           =>  array('id' => $accountId),
+                                                    'primaryEmail'                      =>  array('emailAddress'=>'info@myNewContact.com',
                                                                                                   'optOut'=>'0',
                                                                                                   'isInvalid'=>'0'),
-                                                        'secondaryEmail'                    =>  array('emailAddress'=>'info@myNewContactEdit.com',
+                                                    'secondaryEmail'                    =>  array('emailAddress'=>'info@myNewContactEdit.com',
                                                                                                   'optOut'=>'0',
                                                                                                   'isInvalid'=>'0'),
-                                                        'primaryAddress'                    =>  array('street1'=>'26378 South Arlington Ave',
+                                                    'primaryAddress'                    =>  array('street1'=>'26378 South Arlington Ave',
                                                                                                   'street2'=>'',
                                                                                                   'city'=>'San Jose',
                                                                                                   'state'=>'CA',
                                                                                                   'postalCode'=>'95131',
                                                                                                   'country'=>'USA'),
-                                                        'secondaryAddress'                  =>  array('street1'=>'26378 South Arlington Ave',
+                                                    'secondaryAddress'                  =>  array('street1'=>'26378 South Arlington Ave',
                                                                                                   'street2'=>'',
                                                                                                   'city'=>'San Jose',
                                                                                                   'state'=>'CA',
                                                                                                   'postalCode'=>'95131',
                                                                                                   'country'=>'USA'),
-                                                        'explicitReadWriteModelPermissions' =>  array('type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP),
-                                                        'description'                       =>  'This is a Edit Description',
-                                                        'checkbox'                          =>  '0',
-                                                        'currency'                          =>  array('value'   => 40,
-                                                                                                      'currency'=> array('id' => 1)),
-                                                        'decimal'                           =>  '12',
-                                                        'picklist'                          =>  array('value'=>'b'),
-                                                        'integer'                           =>  '11',
-                                                        'phone'                             =>  '259-784-2069',
-                                                        'radio'                             =>  array('value'=>'e'),
-                                                        'text'                              =>  'This is a test Edit Text',
-                                                        'textarea'                          =>  'This is a test Edit TextArea',
-                                                        'url'                               =>  'http://wwww.abc-edit.com'),
+                                                    'explicitReadWriteModelPermissions' =>  array('type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP),
+                                                    'description'                       =>  'This is a Edit Description',
+                                                    'checkbox'                          =>  '0',
+                                                    'currency'                          =>  array('value'   => 40,
+                                                                                                  'currency'=> array('id' => 1)),
+                                                    'decimal'                           =>  '12',
+                                                    'picklist'                          =>  array('value'=>'b'),
+                                                    'integer'                           =>  '11',
+                                                    'phone'                             =>  '259-784-2069',
+                                                    'radio'                             =>  array('value'=>'e'),
+                                                    'text'                              =>  'This is a test Edit Text',
+                                                    'textarea'                          =>  'This is a test Edit TextArea',
+                                                    'url'                               =>  'http://wwww.abc-edit.com'),
                                 'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/edit');
 
@@ -473,7 +484,7 @@
             $this->assertEquals($contact->title->value                   , 'Mrs.');
             $this->assertEquals($contact->firstName                      , 'Sarah');
             $this->assertEquals($contact->lastName                       , 'Williams Edit');
-            $this->assertEquals($contact->state->id                      , '7');
+            $this->assertEquals($contact->state->id                      , $contactStateID);
             $this->assertEquals($contact->jobTitle                       , 'Sales Director Edit');
             $this->assertEquals($contact->department                     , 'Sales Edit');
             $this->assertEquals($contact->officePhone                    , '739-742-3005');
@@ -524,6 +535,10 @@
             $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superUserId = $super->id;
 
+            //retrive the Contact State (Status) Id based on the name
+            $contactState = ContactState::getByName('Customer');
+            $contactStateID = $contactState[0]->id;
+
             //search a created contact using the customfield.
             $this->resetPostArray();
             $this->setGetArray(array('ContactsSearchForm' => array(
@@ -538,7 +553,7 @@
                                                                     'anyStreet'         => '26378 South Arlington Ave',
                                                                     'anyCity'           => 'San Jose',
                                                                     'anyState'          => 'CA',
-                                                                    'state'             => array('id' => '7'),
+                                                                    'state'             => array('id' => $contactStateID),
                                                                     'owner'             => array('id' => $superUserId),
                                                                     'firstName'         => 'Sarah',
                                                                     'lastName'          => 'Williams Edit',
@@ -593,6 +608,10 @@
             $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superUserId = $super->id;
 
+            //retrive the Contact State (Status) Id based on the name
+            $contactState = ContactState::getByName('Customer');
+            $contactStateID = $contactState[0]->id;
+
             //search a created contact using the customfield.
             $this->resetPostArray();
             $this->setGetArray(array('ContactsSearchForm' => array(
@@ -607,7 +626,7 @@
                                                                     'anyStreet'         => '26378 South Arlington Ave',
                                                                     'anyCity'           => 'San Jose',
                                                                     'anyState'          => 'CA',
-                                                                    'state'             => array('id' => '7'),
+                                                                    'state'             => array('id' => $contactStateID),
                                                                     'owner'             => array('id' => $superUserId),
                                                                     'firstName'         => 'Sarah',
                                                                     'lastName'          => 'Williams Edit',
