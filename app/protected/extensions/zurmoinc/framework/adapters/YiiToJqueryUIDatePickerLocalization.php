@@ -57,12 +57,8 @@
                     return 'dd.mm.y';
                 case 'M/d/yy':      //en format
                     return 'm/d/y';
-                case 'dd/MM/yy':    //es format
-                    return 'dd.mm.y';
-                case 'dd/MM/yy':    //fr format
-                    return 'dd.mm.y';
-                case 'dd/MM/yy':    //it format
-                    return 'dd.mm.y';
+                case 'dd/MM/yy':    //es,fr,it format
+                    return 'dd/mm/y';
                 default :
                     throw new NotImplementedException();
             }
@@ -77,16 +73,10 @@
         {
             switch($timeFormat)
             {
-                case 'HH:mm':       //de format
+                case 'HH:mm':       //de,es,fr,it format
                     return 'hh:mm';
                 case 'h:mm a':      //en format
                     return 'h:mm TT';
-                case 'HH:mm':       //es format
-                    return 'hh:mm';
-                case 'HH:mm':       //fr format
-                    return 'hh:mm';
-                case 'HH:mm':       //it format
-                    return 'hh:mm';
                 default :
                     throw new NotImplementedException();
             }
