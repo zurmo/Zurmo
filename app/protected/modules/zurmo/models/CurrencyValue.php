@@ -67,7 +67,8 @@
                 ),
                 'rules' => array(
                     array('value',       'required'),
-                    array('value',       'type', 'type' => 'float'),
+                    array('value',       'type',    'type' => 'float'),
+                    array('value',       'default', 'value' => 0),
                     array('rateToBase',  'required'),
                     array('rateToBase',  'type', 'type' => 'float'),
                     array('currency',    'required'),

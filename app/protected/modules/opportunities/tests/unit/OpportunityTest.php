@@ -47,6 +47,55 @@
         /**
          * @depends testCreateStageValues
          */
+        public function testVariousCurrencyValues()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $currencies                 = Currency::getAll();
+            $currencyValue              = new CurrencyValue();
+            $currencyValue->value       = 100;
+            $currencyValue->currency    = $currencies[0];
+            $this->assertEquals('USD', $currencyValue->currency->code);
+            $opportunity = new Opportunity();
+            $opportunity->owner          = $super;
+            $opportunity->name           = 'test';
+            $opportunity->amount         = $currencyValue;
+            $opportunity->closeDate      = '2011-01-01';
+            $opportunity->stage->value   = 'Verbal';
+            $saved                       = $opportunity->save();
+            $this->assertTrue($saved);
+            $opportunity1Id              = $opportunity->id;
+            $opportunity->forget();
+
+            $currencyValue              = new CurrencyValue();
+            $currencyValue->value       = 800;
+            $currencyValue->currency    = $currencies[0];
+            $this->assertEquals('USD', $currencyValue->currency->code);
+            $opportunity = new Opportunity();
+            $opportunity->owner          = $super;
+            $opportunity->name           = 'test';
+            $opportunity->amount         = $currencyValue;
+            $opportunity->closeDate      = '2011-01-01';
+            $opportunity->stage->value   = 'Verbal';
+            $saved                       = $opportunity->save();
+            $this->assertTrue($saved);
+            $opportunity2Id              = $opportunity->id;
+            $opportunity->forget();
+            $currencyValue->forget(); //need to forget this to pull the accurate value from the database
+
+            $opportunity1 = Opportunity::getById($opportunity1Id);
+            $this->assertEquals(100, $opportunity1->amount->value);
+
+            $opportunity2 = Opportunity::getById($opportunity2Id);
+            $this->assertEquals(800, $opportunity2->amount->value);
+
+            $opportunity1->delete();
+            $opportunity2->delete();
+        }
+
+        /**
+         * @depends testVariousCurrencyValues
+         */
         public function testCreateAndGetOpportunityById()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
