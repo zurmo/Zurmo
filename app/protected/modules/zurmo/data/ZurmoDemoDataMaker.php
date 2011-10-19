@@ -48,9 +48,6 @@
             $currency->rateToBase = .75;
             $saved = $currency->save();
             assert('$saved');
-
-            $currencies = Currency::getAll('id');
-            $demoDataHelper->setRangeByModelName('Currency', $currencies[0]->id, $currencies[count($currencies)-1]->id);
         }
 
         public function populateModel(& $model)
