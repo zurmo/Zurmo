@@ -57,6 +57,27 @@
             return $this->_baseCode;
         }
 
+        public function getActiveCurrencyForCurrentUser()
+        {
+            if(Yii::app()->user->userModel->currency->id > 0)
+            {
+                return Yii::app()->user->userModel->currency;
+            }
+            try
+            {
+                $currency = Currency::getByCode($this->getBaseCode());
+            }
+            catch (NotFoundException $e)
+            {
+                $currency = Currency::makeBaseCurrency();
+            }
+            if($currency->id <= 0)
+            {
+                throw new NotSupportedException();
+            }
+            return $currency;
+        }
+
         public function getCodeForCurrentUserForDisplay()
         {
             $code = Yii::app()->user->userModel->currency->code;

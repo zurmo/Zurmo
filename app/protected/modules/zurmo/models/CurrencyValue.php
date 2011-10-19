@@ -41,7 +41,7 @@
                 {
                     throw new NoCurrentUserSecurityException();
                 }
-                $this->currency = Yii::app()->user->userModel->currency;
+                $this->currency = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
             }
         }
 
