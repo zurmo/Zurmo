@@ -37,7 +37,7 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();            
+            SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             //Create a account for testing.
@@ -117,7 +117,7 @@
             $this->setGetArray(array('moduleClassName' => 'AccountsModule',
                                      'viewClassName'   => 'AccountsSearchView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            
+
         }
 
         /**
@@ -147,7 +147,7 @@
             $this->createTextAreaCustomFieldByModule            ('AccountsModule', 'textarea');
             $this->createUrlCustomFieldByModule                 ('AccountsModule', 'url');
         }
-        
+
         /**
          * @depends testSuperUserCustomFieldsWalkthroughForAccountsModule
          */
@@ -212,8 +212,8 @@
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
         }
-        
-        
+
+
         /**
          * @depends testSuperUserAddCustomFieldsToLayoutsForAccountsModule
          */
@@ -357,7 +357,7 @@
 
             //search a created account using the customfield.
             $this->resetPostArray();
-            $this->setGetArray(array('AccountsSearchForm' => array( 
+            $this->setGetArray(array('AccountsSearchForm' => array(
                                                                     'name'              =>  'myNewAccount',
                                                                     'officePhone'       =>  '259-784-2169',
                                                                     'type'              =>   array('value'  =>  'Prospect'),
@@ -540,7 +540,7 @@
 
             //assert that the edit account exits after the edit and is diaplayed on the search page
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
-            $this->assertTrue(strpos($content, "myEditAccount") > 0);            
+            $this->assertTrue(strpos($content, "myEditAccount") > 0);
         }
 
         /**
@@ -567,7 +567,7 @@
 
             //search a created account using the customfield.
             $this->resetGetArray();
-            $this->setGetArray(array('AccountsSearchForm' => array( 
+            $this->setGetArray(array('AccountsSearchForm' => array(
                                                                     'name'              =>  'myEditAccount',
                                                                     'officePhone'       =>  '259-734-2169',
                                                                     'type'              =>   array('value'  =>  'Customer'),

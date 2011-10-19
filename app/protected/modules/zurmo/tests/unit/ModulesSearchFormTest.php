@@ -52,7 +52,8 @@
             $this->assertTrue(property_exists('AccountsSearchForm', 'anyState'));
             $this->assertFalse(property_exists('AccountsSearchForm', 'name'));
             $fakePostData = array(
-                'anyState' => 'Illinois',
+                'anyState'  => 'Illinois',
+                'anyStreet' => 'Thompson',
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(new AccountsSearchForm(new Account(false)),
                                     $super->id, $fakePostData);
@@ -70,8 +71,20 @@
                     'operatorType'         => 'startsWith',
                     'value'                => 'Illinois',
                 ),
+                3 => array(
+                    'attributeName'        => 'billingAddress',
+                    'relatedAttributeName' => 'street1',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Thompson',
+                ),
+                4 => array(
+                    'attributeName'        => 'shippingAddress',
+                    'relatedAttributeName' => 'street1',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Thompson',
+                ),
             );
-            $compareStructure = '(1 or 2)';
+            $compareStructure = '(1 or 2) and (3 or 4)';
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
 
