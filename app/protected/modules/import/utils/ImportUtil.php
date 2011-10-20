@@ -64,7 +64,7 @@
                                                     $mappingData,
                                                     ImportResultsUtil $importResultsUtil,
                                                     ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions,
-                                                    ImportMessageLogger & $messageLogger)
+                                                    ImportMessageLogger $messageLogger)
         {
             $data = $dataProvider->getData();
             foreach ($data as $rowBean)

@@ -311,7 +311,7 @@
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions(),
+                                             $explicitReadWriteModelPermissions,
                                              $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
@@ -338,7 +338,7 @@
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions(),
+                                             $explicitReadWriteModelPermissions,
                                              $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 

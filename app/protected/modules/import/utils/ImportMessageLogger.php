@@ -36,15 +36,19 @@
         public function countAfterRowImported()
         {
             $this->rowCount ++;
-            if($this->rowCount != 2)
+            $this->pagingCount ++;
+            if($this->pagingCount > 10)
             {
-                $this->add(array(MessageLogger::INFO, 'processed through:' . $this->rowCount));
+                $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Processed through: {rowsCompleted}',
+                           array('{rowsCompleted}', $this->rowCount))));
+                $this->pagingCount = 0;
             }
         }
 
         public function countDataProviderGetDataImportCompleted()
         {
-            $this->add(array(MessageLogger::INFO, 'completed at:' . $this->rowCount));
+            $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Import complete.  Rows completed: {rowsCompleted}',
+                       array('{rowsCompleted}', $this->rowCount))));
         }
     }
 ?>
