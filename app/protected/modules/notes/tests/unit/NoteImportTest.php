@@ -39,7 +39,7 @@
             $notes                              = Note::getAll();
             $this->assertEquals(0, count($notes));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Note';
+            $serializedData['importRulesType']     = 'Notes';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());

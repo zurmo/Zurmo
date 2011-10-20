@@ -48,6 +48,8 @@
 
         public function testRegularUserAllControllerActions()
         {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
             //Now test all portlet controller actions
             //Now test peon with elevated rights to tabs /other available rights
             //such as convert lead

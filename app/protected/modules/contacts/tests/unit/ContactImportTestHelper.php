@@ -24,35 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Class that builds zurmo demo data models.
-     */
-    class ZurmoDemoDataMaker extends DemoDataMaker
+    class ContactImportTestHelper
     {
-        public function makeAll(& $demoDataHelper)
+        public static function makeStateColumnMappingData($defaultValue = null)
         {
-            assert('$demoDataHelper instanceof DemoDataHelper');
-
-            $currency = new Currency();
-            $currency->code       = 'EUR';
-            $currency->rateToBase = 1.5;
-            $saved = $currency->save();
-            assert('$saved');
-            $currency = new Currency();
-            $currency->code       = 'CAD';
-            $currency->rateToBase = 1.1;
-            $saved = $currency->save();
-            assert('$saved');
-            $currency = new Currency();
-            $currency->code       = 'JPY';
-            $currency->rateToBase = .75;
-            $saved = $currency->save();
-            assert('$saved');
-        }
-
-        public function populateModel(& $model)
-        {
-            throw notImplementedException();
+            assert('$defaultValue == null || is_int($defaultValue)');
+            return array('attributeIndexOrDerivedType' => 'ContactState',
+                         'type'                        => 'importColumn',
+                         'mappingRulesData'            => array(
+                             'DefaultContactStateIdMappingRuleForm' =>
+                             array('defaultStateId' => $defaultValue)));
         }
     }
 ?>

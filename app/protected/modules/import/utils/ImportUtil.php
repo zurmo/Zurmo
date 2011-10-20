@@ -208,14 +208,22 @@
                         {
                             try
                             {
-                                ExplicitReadWriteModelPermissionsUtil::
-                                resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
-                                $importRowDataResultsUtil->setStatusToCreated();
+                                $resolved = ExplicitReadWriteModelPermissionsUtil::
+                                            resolveExplicitReadWriteModelPermissions(
+                                                $model,
+                                                $explicitReadWriteModelPermissions);
+                                                $importRowDataResultsUtil->setStatusToCreated();
+                                if(!$resolved)
+                                {
+                                    $importRowDataResultsUtil->addMessage('The record saved, but there was a problem '.
+                                    'setting the security permissions. It will at least be viewable by the owner.');
+                                    $importRowDataResultsUtil->setStatusToError();
+                                }
                             }
                             catch (AccessDeniedSecurityException $e)
                             {
                                 $importRowDataResultsUtil->addMessage('The record saved, but you do not have permissions '.
-                                'to set the security the way you did. As a result this record has been removed.');
+                                'to set the security the way you did. The record will only be viewable by the owner.');
                                 $importRowDataResultsUtil->setStatusToError();
                             }
                         }

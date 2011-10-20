@@ -50,7 +50,7 @@
             $opportunities                         = Opportunity::getAll();
             $this->assertEquals(0, count($opportunities));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Opportunity';
+            $serializedData['importRulesType']     = 'Opportunities';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());

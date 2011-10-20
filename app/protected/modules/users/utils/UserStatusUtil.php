@@ -164,5 +164,24 @@
             $statusData = array(self::ACTIVE, self::INACTIVE);
             return array_combine($statusData, $statusData);
         }
+
+        public static function canUserEditStatusOnAnotherUser(User $user, User $anotherUser)
+        {
+            assert('$user->id > 0');
+            assert('$anotherUser->id > 0');
+            if($user->isSame($anotherUser))
+            {
+                return false;
+            }
+            if (Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME)->contains($anotherUser))
+            {
+                return false;
+            }
+            if(!RightsUtil::canUserAccessModule('UsersModule', $user))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 ?>

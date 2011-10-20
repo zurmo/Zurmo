@@ -28,49 +28,17 @@
     {
         public static function getDefaultMetadata()
         {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type' => 'SaveButton'),
-                        ),
-                    ),
-                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
-                    'panels' => array(
+            $metadata = parent::getDefaultMetadata();
+            $metadata['global']['panels'][0]['rows'][] =
+                array('cells' =>
+                    array(
                         array(
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'SingularModuleLabel'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'PluralModuleLabel'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'convertToAccountSetting', 'type' => 'LeadsConvertToAccountRadio'),
-                                            ),
-                                        ),
-                                    )
-                                ),
+                            'elements' => array(
+                                array('attributeName' => 'convertToAccountSetting', 'type' => 'LeadsConvertToAccountRadio'),
                             ),
                         ),
                     ),
-                ),
-            );
+                );
             return $metadata;
         }
     }

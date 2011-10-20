@@ -25,34 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Class that builds zurmo demo data models.
+     * This element is used if you only want to show the status field as read-only.
      */
-    class ZurmoDemoDataMaker extends DemoDataMaker
+    class ReadOnlyDerivedUserStatusElement extends DerivedUserStatusElement
     {
-        public function makeAll(& $demoDataHelper)
+        public static function isReadOnly()
         {
-            assert('$demoDataHelper instanceof DemoDataHelper');
-
-            $currency = new Currency();
-            $currency->code       = 'EUR';
-            $currency->rateToBase = 1.5;
-            $saved = $currency->save();
-            assert('$saved');
-            $currency = new Currency();
-            $currency->code       = 'CAD';
-            $currency->rateToBase = 1.1;
-            $saved = $currency->save();
-            assert('$saved');
-            $currency = new Currency();
-            $currency->code       = 'JPY';
-            $currency->rateToBase = .75;
-            $saved = $currency->save();
-            assert('$saved');
-        }
-
-        public function populateModel(& $model)
-        {
-            throw notImplementedException();
+            return true;
         }
     }
 ?>

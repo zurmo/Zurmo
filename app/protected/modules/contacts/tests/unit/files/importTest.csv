@@ -1,0 +1,4 @@
+firstName,lastName,jobTitle,officePhone,officeFax,department,website,description,paCity,paCountry,paPostalCode,paState,paStreet1,paStreet2,peEmailAddress,peIsInvalid,peOptOut,account,source,state,industry
+contact1,contact1son,president,123456,555,executive,http://www.contact1.com,desc1,city1,country1,postal1,state1,street11,street21,a@a.com,,,toUpdate,Self-Generated,Qualified,Automotive
+contact2,contact2son,president2,223456,655,executive2,http://www.contact2.com,desc2,city2,country2,postal2,state2,street12,street22,b@b.com,,,toUpdate,Tradeshow,Customer,Banking
+contact3,contact3son,president3,323456,755,executive3,http://www.contact3.com,desc3,city3,country3,postal3,state3,street13,street23,c@c.com,1,1,toUpdate,Inbound Call,Qualified,Energy

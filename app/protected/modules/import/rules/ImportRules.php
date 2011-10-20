@@ -190,6 +190,7 @@
             {
                 return $attributeImportRulesData[$attributeIndexOrDerivedType];
             }
+            echo 'wangL'.$attributeIndexOrDerivedType."\n";
             throw new NotSupportedException();
         }
 

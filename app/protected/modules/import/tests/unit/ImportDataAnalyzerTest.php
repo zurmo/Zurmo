@@ -277,6 +277,8 @@
                           'sanitizerUtilType' => 'MinimumLength', 'moreAvailable' => false),
                     array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.', // Not Coding Standard
                           'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
+                    array('message'=> '1 value(s) are missing and are required. These rows will be skipped on import.', // Not Coding Standard
+                          'sanitizerUtilType' => 'Required', 'moreAvailable' => false),
                 ),
                 'column_1' => array(
                     array('message'=> '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.', // Not Coding Standard
@@ -313,7 +315,9 @@
                 'column_9' => array(
                     array('message'=> '2 external system user id(s) specified were not found. These values will not be used during the import.', // Not Coding Standard
                            'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
-                ),
+                    array('message'=> '1 value(s) are missing and are required. These rows will be skipped on import.', // Not Coding Standard
+                           'sanitizerUtilType' => 'ModelIdRequired', 'moreAvailable' => false),
+                    ),
                 'column_10' => array(
                     array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',                              // Not Coding Standard
                            'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),

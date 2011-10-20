@@ -59,12 +59,21 @@
             {
                 return $currencies;
             }
-            $currency = new Currency();
+
+            return array(self::makeBaseCurrency());
+        }
+
+        public static function makeBaseCurrency()
+        {
+            $currency             = new Currency();
             $currency->code       = Yii::app()->currencyHelper->getBaseCode();
             $currency->rateToBase = 1;
-            $saved = $currency->save(); // TODO - handle this better
-            assert('$saved');
-            return array($currency);
+            $saved                = $currency->save();
+            if(!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            return $currency;
         }
 
         public function __toString()

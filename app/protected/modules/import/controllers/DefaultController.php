@@ -331,7 +331,7 @@
             $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step6';
             if ($sequentialProcess->isComplete())
             {
-                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm);
+                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm, true);
                 $sequenceView       = new ContainedViewCompleteSequentialProcessView($importCompleteView);
             }
             else
@@ -354,10 +354,14 @@
             echo $view->render();
         }
 
-        protected function makeImportCompleteView(Import $import, ImportWizardForm $importWizardForm)
+        protected function makeImportCompleteView(Import $import, ImportWizardForm $importWizardForm, $setCurrentPageToFirst = false)
         {
             $pageSize                 = Yii::app()->pagination->resolveActiveForCurrentUserByType('listPageSize');
             $config                   = array('pagination' => array('pageSize' => $pageSize));
+            if($setCurrentPageToFirst)
+            {
+                $config['pagination']['currentPage'] = 0;
+            }
             $importErrorsDataProvider = new ImportDataProvider($import->getTempTableName(),
                                                                (bool)$importWizardForm->firstRowIsHeaderRow,
                                                                $config,

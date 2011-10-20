@@ -130,7 +130,8 @@
         }
 
         /**
-         * Step 4 is where the import mapping is done along with any mapping rules.
+         * Step 4 is where the import mapping is done along with any mapping rules.  Also clears out
+         * dataAnalyzerMessagesData in case it was populated from a previous run.
          * @param object $importWizardForm
          * @param array $postData
          */
@@ -138,7 +139,8 @@
         {
             assert('$importWizardForm instanceof ImportWizardForm');
             assert('is_array($postData)');
-            $importWizardForm->mappingData = $postData;
+            $importWizardForm->dataAnalyzerMessagesData = null;
+            $importWizardForm->mappingData              = $postData;
         }
 
         /**

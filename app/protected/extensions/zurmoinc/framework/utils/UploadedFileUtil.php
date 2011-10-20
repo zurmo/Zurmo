@@ -43,7 +43,7 @@
             }
             elseif ($uploadedFile->getHasError())
             {
-                $error = $file->getError();
+                $error = $uploadedFile->getError();
                 $messageParams = array('{file}' => $uploadedFile->getName(), '{limit}' => self::getSizeLimit());
                 if ($error == UPLOAD_ERR_NO_FILE)
                 {
@@ -97,7 +97,7 @@
          *
          * @return integer the size limit for uploaded files.
          */
-        private function getSizeLimit()
+        private static function getSizeLimit()
         {
             $limit = ini_get('upload_max_filesize');
             $limit = self::sizeToBytes($limit);
