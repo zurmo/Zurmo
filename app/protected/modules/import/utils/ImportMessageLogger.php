@@ -33,6 +33,10 @@
 
         private $pagingCount = 0;
 
+        /**
+         *
+         * Enter description here ...
+         */
         public function countAfterRowImported()
         {
             $this->rowCount ++;
@@ -40,15 +44,19 @@
             if($this->pagingCount > 10)
             {
                 $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Processed through: {rowsCompleted}',
-                           array('{rowsCompleted}', $this->rowCount))));
+                           array('{rowsCompleted}' =>  $this->rowCount))));
                 $this->pagingCount = 0;
             }
         }
 
+        /**
+         *
+         * Enter description here ...
+         */
         public function countDataProviderGetDataImportCompleted()
         {
             $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Import complete.  Rows completed: {rowsCompleted}',
-                       array('{rowsCompleted}', $this->rowCount))));
+                       array('{rowsCompleted}' => $this->rowCount))));
         }
     }
 ?>

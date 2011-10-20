@@ -57,5 +57,18 @@
         public function resolveIsCustomDataLoaded()
         {
         }
+
+        /**
+         * Called from ImportCommand.  Override and add calls to any import routines you would like to run.
+         * @see ImportCommand
+         * @param MessageLogger $messageLogger
+         * @param string $importName - Optional array of specific import process to run, otherwise if empty,
+         * 							    run all available import processes.
+         */
+        public function runImportsForImportCommand(MessageLogger $messageLogger, $importName = null)
+        {
+            $messageLogger->addErrorMessage(Yii::t('Default', 'No import processes found.'));
+            $messageLogger->addErrorMessage(Yii::t('Default', 'CustomManagement class needs to be extended.'));
+        }
     }
 ?>
