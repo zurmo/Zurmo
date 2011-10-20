@@ -34,8 +34,8 @@
         private $pagingCount = 0;
 
         /**
-         *
-         * Enter description here ...
+         * During import, add a count after a row has been imported.  This can be used to provide paging information
+         * regarding how far an import is.
          */
         public function countAfterRowImported()
         {
@@ -50,8 +50,8 @@
         }
 
         /**
-         *
-         * Enter description here ...
+         * Once the import is complete when using getData in ImportUtil::importByDataProvider, this can be called
+         * to provide the final count.
          */
         public function countDataProviderGetDataImportCompleted()
         {
