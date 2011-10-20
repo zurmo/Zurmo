@@ -123,7 +123,7 @@
             //todo: refactor into a 'rules' pattern.
             elseif (!$this->model->isRelation($attributeName))
             {
-                if (isset($value['value']))
+                if (isset($value['value']) && $value['value'] != '')
                 {
                     if ($operatorType == null)
                     {
@@ -153,6 +153,17 @@
                 //todo!!! if we move the search form fork , here we can eliminate some things.
                 foreach ($value as $relatedAttributeName => $relatedValue)
                 {
+                    if(is_array($relatedValue))
+                    {
+                        if(isset($relatedValue['value']) && $relatedValue['value'] != '')
+                        {
+                            $relatedValue = $relatedValue['value'];
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     if ($relatedValue !== null)
                     {
                         if ($this->model->isRelation($attributeName))
@@ -163,7 +174,8 @@
                                                 $this->model->$attributeName, $relatedAttributeName);
                             }
                             $relatedValue = ModelAttributeToCastTypeUtil::resolveValueForCast(
-                                                $this->model->$attributeName, $relatedAttributeName, $relatedValue);
+                                            $this->model->$attributeName, $relatedAttributeName, $relatedValue);
+
                             $adaptedMetadataClauses[($clauseCount)] = array(
                                 'attributeName'        => $attributeName,
                                 'relatedAttributeName' => $relatedAttributeName,
