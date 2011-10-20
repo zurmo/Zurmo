@@ -79,8 +79,8 @@
             $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0'  => ImportTestHelper::makeStringColumnMappingData      ('lastName'),
-                'column_1'  => ImportTestHelper::makeStringColumnMappingData      ('string')
+                'column_0'  => ImportMappingUtil::makeStringColumnMappingData      ('lastName'),
+                'column_1'  => ImportMappingUtil::makeStringColumnMappingData      ('string')
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');

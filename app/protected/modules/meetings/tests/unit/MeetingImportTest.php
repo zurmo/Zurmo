@@ -52,15 +52,15 @@
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => ImportTestHelper::makeStringColumnMappingData       ('name'),
-                'column_1' => ImportTestHelper::makeStringColumnMappingData       ('location'),
-                'column_2' => ImportTestHelper::makeDateTimeColumnMappingData     ('startDateTime'),
-                'column_3' => ImportTestHelper::makeDateTimeColumnMappingData     ('endDateTime'),
-                'column_4' => ImportTestHelper::makeDropDownColumnMappingData     ('category'),
-                'column_5' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
-                'column_6' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
-                'column_7' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
-                'column_8' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
+                'column_0' => ImportMappingUtil::makeStringColumnMappingData       ('name'),
+                'column_1' => ImportMappingUtil::makeStringColumnMappingData       ('location'),
+                'column_2' => ImportMappingUtil::makeDateTimeColumnMappingData     ('startDateTime'),
+                'column_3' => ImportMappingUtil::makeDateTimeColumnMappingData     ('endDateTime'),
+                'column_4' => ImportMappingUtil::makeDropDownColumnMappingData     ('category'),
+                'column_5' => ImportMappingUtil::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_6' => ImportMappingUtil::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_7' => ImportMappingUtil::makeModelDerivedColumnMappingData ('OpportunityDerived'),
+                'column_8' => ImportMappingUtil::makeTextAreaColumnMappingData     ('description'),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Meetings');

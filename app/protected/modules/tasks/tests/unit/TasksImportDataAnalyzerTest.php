@@ -85,15 +85,15 @@
                     $opportunity3->id . " where id != 1 limit 5");
 
             $mappingData = array(
-                'column_0'  => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived',
+                'column_0'  => ImportMappingUtil::makeModelDerivedColumnMappingData ('AccountDerived',
                                IdValueTypeMappingRuleForm::ZURMO_MODEL_ID),
-                'column_1'  => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
-                'column_2'  => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived',
+                'column_1'  => ImportMappingUtil::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_2'  => ImportMappingUtil::makeModelDerivedColumnMappingData ('ContactDerived',
                                IdValueTypeMappingRuleForm::ZURMO_MODEL_ID),
-                'column_3'  => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
-                'column_4'  => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived',
+                'column_3'  => ImportMappingUtil::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_4'  => ImportMappingUtil::makeModelDerivedColumnMappingData ('OpportunityDerived',
                                IdValueTypeMappingRuleForm::ZURMO_MODEL_ID),
-                'column_5'  => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
+                'column_5'  => ImportMappingUtil::makeModelDerivedColumnMappingData ('OpportunityDerived'),
             );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;

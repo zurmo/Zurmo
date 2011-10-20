@@ -65,8 +65,8 @@
                                       'mappingRulesData' => array(
                                           'UserStatusDefaultValueMappingRuleForm' =>
                                           array('defaultValue' => UserStatusUtil::ACTIVE))),
-                'column_3'  => ImportTestHelper::makeStringColumnMappingData      ('firstName'),
-                'column_4'  => ImportTestHelper::makeStringColumnMappingData      ('lastName')
+                'column_3'  => ImportMappingUtil::makeStringColumnMappingData      ('firstName'),
+                'column_4'  => ImportMappingUtil::makeStringColumnMappingData      ('lastName')
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Users');
