@@ -28,7 +28,7 @@
     {
         public function __toString()
         {
-            return yii::t('Default', '(Unnamed)');
+            return Yii::t('Default', '(Unnamed)');
         }
 
         public static function getModuleClassName()

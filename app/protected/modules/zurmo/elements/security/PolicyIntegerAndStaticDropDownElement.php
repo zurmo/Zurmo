@@ -146,7 +146,7 @@
             $inheritedAttributeName = $this->attribute . '__inherited';
             if ($this->model->{$inheritedAttributeName} != null)
             {
-                return yii::t('Default', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
+                return Yii::t('Default', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
             }
             return null;
         }

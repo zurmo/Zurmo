@@ -40,6 +40,11 @@
             Yii::app()->user->userModel = $super;
             $aUser = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB);
+            $saved = $aUser->save();
+            if(!$saved)
+            {
+                throw new NotSupportedException();
+            }
             $bUser = UserTestHelper::createBasicUser('bUser');
             $cUser = UserTestHelper::createBasicUser('cUser');
             $dUser = UserTestHelper::createBasicUser('dUser');
@@ -55,6 +60,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('users/default/index');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/create');
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
 
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
@@ -292,6 +298,41 @@
         /**
          * @depends testSuperUserAllDefaultControllerActions
          */
+        public function testSuperUserUserStatusActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $user       = UserTestHelper::createBasicUser('statusCheck');
+            $userId     = $user->id;
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
+
+            //Change the user's status to inactive and confirm the changes in rights.
+            $this->setGetArray(array('id' => $user->id));
+            $this->setPostArray(array('User' => array('userStatus'  => UserStatusUtil::INACTIVE)));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
+
+            $userId     = $user->id;
+            $user       = User::getById($userId);
+            $this->assertTrue(Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertTrue(Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE));
+            $this->assertTrue(Right::DENY == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
+
+            //Now change the user's status back to active.
+            $this->setGetArray(array('id' => $user->id));
+            $this->setPostArray(array('User' => array('userStatus'  => UserStatusUtil::ACTIVE)));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
+
+            $userId     = $user->id;
+            $user       = User::getById($userId);
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE));
+            $this->assertTrue(Right::NONE == $user->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
+        }
+
+        /**
+         * @depends testSuperUserUserStatusActions
+         */
         public function testSuperUserDefaultPortletControllerActions()
         {
             //Nothing currently to test.
@@ -309,6 +350,20 @@
          */
         public function testSuperUserCreateAction()
         {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $this->setPostArray(array('UserPasswordForm' =>
+                                array('firstName'          => 'Some',
+                                      'lastName'           => 'Body',
+                                      'username'           => 'somenewuser',
+                                      'newPassword'        => 'myPassword123',
+                                      'newPassword_repeat' => 'myPassword123',
+                                      'officePhone'        => '456765421',
+                                      'userStatus'         => 'Active')));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/create');
+
+            $user = User::getByUsername('somenewuser');
+            $this->assertEquals('Some', $user->firstName);
+            $this->assertEquals('Body', $user->lastName);
         }
     }
 ?>

@@ -18,6 +18,41 @@
 </tr>
 <tr>
 	<td>open</td>
+	<td>index.php?r=accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
 	<td>index.php?r=opportunities/default/create</td>
 	<td></td>
 </tr>
@@ -29,11 +64,11 @@
 <tr>
 	<td>type</td>
 	<td>Opportunity_name</td>
-	<td>Test Opportunity</td>
+	<td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>Opportunity_amount</td>
+	<td>Opportunity_amount_value</td>
 	<td>500.34</td>
 </tr>
 <tr>
@@ -47,24 +82,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Foodland</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Foodland</td>
+	<td>link=my account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Opportunity_account_name</td>
-	<td>Foodland</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -107,24 +152,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Jim Smith</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Jim Smith</td>
+	<td>link=Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Opportunity_owner_name</td>
-	<td>Jim Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -138,12 +198,12 @@
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Opportunities: Test Opportunity</td>
+	<td>Opportunities: Test Opportunity ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Test Opportunity</td>
+	<td>Test Opportunity ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,8 +228,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Foodland</td>
-	<td>Foodland</td>
+	<td>link=my account ${randomSuffix}</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -188,7 +248,7 @@
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Opportunities: Test Opportunity</td>
+	<td>Opportunities: Test Opportunity ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>

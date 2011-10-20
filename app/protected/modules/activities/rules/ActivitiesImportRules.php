@@ -45,11 +45,7 @@
          */
         public static function getDerivedAttributeTypes()
         {
-            $activityItemsDerivedAttributeTypes = static::getActivityItemsDerivedAttributeTypesAndResolveAccessByCurrentUser();
-            return array_merge($activityItemsDerivedAttributeTypes, array('CreatedByUser',
-                         'ModifiedByUser',
-                         'CreatedDateTime',
-                         'ModifiedDateTime'));
+            return static::getActivityItemsDerivedAttributeTypesAndResolveAccessByCurrentUser();
         }
 
         protected static function getActivityItemsDerivedAttributeTypesAndResolveAccessByCurrentUser()

@@ -26,6 +26,21 @@
 
     class ContactsDefaultController extends ZurmoModuleController
     {
+        public function filters()
+        {
+            $modelClassName   = $this->getModule()->getPrimaryModelName();
+            $viewClassName    = $modelClassName . 'EditAndDetailsView';
+            return array_merge(parent::filters(),
+                array(
+                    array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, createFromRelation, edit',
+                        'moduleClassName' => get_class($this->getModule()),
+                        'viewClassName'   => $viewClassName,
+                   ),
+               )
+            );
+        }
+
         public function actionList()
         {
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
@@ -179,7 +194,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                 Yii::t('Default', 'ContactsModuleSingularLabel Search',
                                                 LabelUtil::getTranslationParamsForAllModules()),
                                                 'ContactsStateMetadataAdapter');
@@ -188,6 +203,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($contact);
             $contact->delete();
             $this->redirect(array($this->getId() . '/index'));
         }

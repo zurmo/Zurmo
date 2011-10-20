@@ -30,14 +30,26 @@
     class DatabaseMaxAllowedPacketSizeServiceHelper extends ServiceHelper
     {
         protected $required = false;
+        protected $form;
 
         protected $minimumUploadRequireBytes = 20000000;
+
+        public function __construct($form)
+        {
+            assert('$form instanceof InstallSettingsForm');
+            $this->form = $form;
+        }
 
         protected function checkService()
         {
             $passed = true;
             $actualBytes = null;
-            if (!InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', $this->minimumUploadRequireBytes, $actualBytes))
+            if (!InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql',
+                                                               $this->form->databaseHostname,
+                                                               $this->form->databaseUsername,
+                                                               $this->form->databasePassword,
+                                                               $this->minimumUploadRequireBytes,
+                                                               $actualBytes))
             {
                 if ($actualBytes == null)
                 {

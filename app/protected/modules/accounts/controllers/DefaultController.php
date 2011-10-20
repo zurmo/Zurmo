@@ -26,6 +26,21 @@
 
     class AccountsDefaultController extends ZurmoModuleController
     {
+        public function filters()
+        {
+            $modelClassName   = $this->getModule()->getPrimaryModelName();
+            $viewClassName    = $modelClassName . 'EditAndDetailsView';
+            return array_merge(parent::filters(),
+                array(
+                    array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, createFromRelation, edit',
+                        'moduleClassName' => get_class($this->getModule()),
+                        'viewClassName'   => $viewClassName,
+                   ),
+               )
+            );
+        }
+
         public function actionList()
         {
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
@@ -161,14 +176,16 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
-                                                Yii::t('Default', 'AccountsModuleSingularLabel Search',
-                                                LabelUtil::getTranslationParamsForAllModules()));
+            echo ModalSearchListControllerUtil::
+                 setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
+                                                     Yii::t('Default', 'AccountsModuleSingularLabel Search',
+                                                     LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public function actionDelete($id)
         {
             $account = Account::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($account);
             $account->delete();
             $this->redirect(array($this->getId() . '/index'));
         }

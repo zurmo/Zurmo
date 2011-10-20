@@ -57,6 +57,27 @@
             return $this->_baseCode;
         }
 
+        public function getActiveCurrencyForCurrentUser()
+        {
+            if(Yii::app()->user->userModel->currency->id > 0)
+            {
+                return Yii::app()->user->userModel->currency;
+            }
+            try
+            {
+                $currency = Currency::getByCode($this->getBaseCode());
+            }
+            catch (NotFoundException $e)
+            {
+                $currency = Currency::makeBaseCurrency();
+            }
+            if($currency->id <= 0)
+            {
+                throw new NotSupportedException();
+            }
+            return $currency;
+        }
+
         public function getCodeForCurrentUserForDisplay()
         {
             $code = Yii::app()->user->userModel->currency->code;
@@ -196,7 +217,7 @@
             $data       = array();
             foreach ($currencies as $currency)
             {
-                if($currency->active || ($selectedCurrencyId != null && $currency->id == $selectedCurrencyId))
+                if ($currency->active || ($selectedCurrencyId != null && $currency->id == $selectedCurrencyId))
                 {
                     $data[$currency->id] = $currency->code;
                 }
@@ -207,7 +228,7 @@
         public function getLastAttemptedRateUpdateDateTime()
         {
             $metadata = Currency::getMetadata();
-            if($metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null)
+            if ($metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null)
             {
                 return null;
             }

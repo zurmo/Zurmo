@@ -30,6 +30,21 @@
      */
     abstract class ActivityModelsDefaultController extends ActivitiesModuleController
     {
+        public function filters()
+        {
+            $modelClassName   = $this->getModule()->getPrimaryModelName();
+            $viewClassName    = $modelClassName . 'EditAndDetailsView';
+            return array_merge(parent::filters(),
+                array(
+                    array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, createFromRelation, edit',
+                        'moduleClassName' => get_class($this->getModule()),
+                        'viewClassName'   => $viewClassName,
+                   ),
+               )
+            );
+        }
+
         protected function getPageViewClassName()
         {
             return $this->getModule()->getPluralCamelCasedName() . 'PageView';
@@ -62,8 +77,7 @@
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($activity), $activity);
             $pageViewClassName = $this->getPageViewClassName();
             $view = new $pageViewClassName($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Details'));
+                $this->makeTitleBarAndEditAndDetailsView($activity, 'Details'));
             echo $view->render();
         }
 
@@ -87,6 +101,7 @@
             }
             $modelClassName    = $this->getModule()->getPrimaryModelName();
             $activity          = $modelClassName::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($activity);
             $activity->delete();
             $this->redirect($redirectUrl);
         }

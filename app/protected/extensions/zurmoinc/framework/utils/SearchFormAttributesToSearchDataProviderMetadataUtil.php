@@ -46,35 +46,44 @@
                     $attributesAndRelationsValue = $value;
                     assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 6');
                     $adaptedMetadataClause = array();
-                    if(isset($attributesAndRelations[3]))
+                    if (isset($attributesAndRelations['concatedAttributeNames']))
                     {
-                        if($attributesAndRelations[3] == 'resolveValueByRules')
-                        {
-                            $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
-                                                               $attributeName);
-                            $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
-                            $attributesAndRelationsValue     = $className::resolveValueDataIntoUsableValue(
-                                                               $attributesAndRelationsValue);
-                        }
-                        elseif($attributesAndRelations[3] != null)
-                        {
-                            $attributesAndRelationsValue = $attributesAndRelations[3];
-                        }
-                    }
-                    if (isset($attributesAndRelations[1]) && $attributesAndRelations[1] != null)
-                    {
-                        $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' =>
-                                                                             array($attributesAndRelations[1] =>
-                                                                                   $attributesAndRelationsValue));
+                        assert('count($attributesAndRelations["concatedAttributeNames"]) == 2');
+                        $adaptedMetadataClause['concatedAttributeNames'] = array($attributesAndRelations['concatedAttributeNames'],
+                                                                                 'value' => $attributesAndRelationsValue);
                     }
                     else
                     {
-                        $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' => $attributesAndRelationsValue);
+                        if (isset($attributesAndRelations[3]))
+                        {
+                            if ($attributesAndRelations[3] == 'resolveValueByRules')
+                            {
+                                $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                                   $attributeName);
+                                $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
+                                $attributesAndRelationsValue     = $className::resolveValueDataIntoUsableValue(
+                                                                   $attributesAndRelationsValue);
+                            }
+                            elseif ($attributesAndRelations[3] != null)
+                            {
+                                $attributesAndRelationsValue = $attributesAndRelations[3];
+                            }
+                        }
+                        if (isset($attributesAndRelations[1]) && $attributesAndRelations[1] != null)
+                        {
+                            $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' =>
+                                                                                 array($attributesAndRelations[1] =>
+                                                                                       $attributesAndRelationsValue));
+                        }
+                        else
+                        {
+                            $adaptedMetadataClause[$attributesAndRelations[0]] = array('value' => $attributesAndRelationsValue);
+                        }
+                        $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
+                        static::resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations));
+                        $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
+                        static::resolveAppendTypeDataFromAttributesAndRelations($attributesAndRelations));
                     }
-                    $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
-                    static::resolveOperatorTypeDataFromAttributesAndRelations($attributesAndRelations));
-                    $adaptedMetadataClause[$attributesAndRelations[0]] = array_merge($adaptedMetadataClause[$attributesAndRelations[0]],
-                    static::resolveAppendTypeDataFromAttributesAndRelations($attributesAndRelations));
                     $adaptedMetadata[] = $adaptedMetadataClause;
                 }
                 return $adaptedMetadata;
@@ -91,16 +100,15 @@
             assert('$model instanceof SearchForm');
             assert('is_array($metadata)');
             assert('is_string($attributeName)');
-            if(!is_array($metadata[$attributeName]))
+            if (!is_array($metadata[$attributeName]))
             {
-                if($metadata[$attributeName] == 'resolveEntireMappingByRules')
+                if ($metadata[$attributeName] == 'resolveEntireMappingByRules')
                 {
                     $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
                                                        $attributeName);
                     $className                       = $searchFormAttributeMappingRules .
                                                        'SearchFormAttributeMappingRules';
                     $className::resolveAttributesAndRelations($attributeName, $metadata[$attributeName], $value);
-
                 }
                 else
                 {

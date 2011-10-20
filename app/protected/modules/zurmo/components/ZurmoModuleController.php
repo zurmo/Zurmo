@@ -71,11 +71,9 @@
                                             (int)$portlet->id,
                                             $this->getModule()->getId()
             );
-            Yii::app()->getClientScript()->setToAjaxMode();
-            echo ModalSearchListControllerUtil::renderModalSearchList($this,
-                                                                      $modalListLinkProvider,
-                                                                      $pageTitle,
-                                                                      $stateMetadataAdapterClassName);
+            echo ModalSearchListControllerUtil::
+                 setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider, $pageTitle,
+                                                     $stateMetadataAdapterClassName);
         }
 
         public function actionAutoComplete($term)
@@ -90,6 +88,14 @@
                             'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ModelAutoCompleteUtil::getByPartialName($modelClassName, $term, $pageSize);
             return CJSON::encode($autoCompleteResults);
+        }
+
+        /**
+         * Override to implement.
+         */
+        public function actionCreateFromRelation($relationAttributeName, $relationModelId, $relationModuleId, $redirectUrl)
+        {
+            throw new NotImplementedException();
         }
 
         /**

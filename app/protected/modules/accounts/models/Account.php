@@ -32,11 +32,20 @@
             return self::getSubset(null, null, null, "name = '$name'");
         }
 
+        protected function untranslatedAttributeLabels()
+        {
+            return array_merge(parent::untranslatedAttributeLabels(),
+                array(
+                    'account' => 'Parent ' . AccountsModule::getModuleLabelByTypeAndLanguage('Singular'),
+                )
+            );
+        }
+
         public function __toString()
         {
             if (trim($this->name) == '')
             {
-                return yii::t('Default', '(Unnamed)');
+                return Yii::t('Default', '(Unnamed)');
             }
             return $this->name;
         }
@@ -115,6 +124,7 @@
                     'secondaryEmail'  => 'EmailAddressInformation',
                     'billingAddress'  => 'Address',
                     'shippingAddress' => 'Address',
+                    'account'         => 'Account',
                 ),
                 'customFields' => array(
                     'industry' => 'Industries',

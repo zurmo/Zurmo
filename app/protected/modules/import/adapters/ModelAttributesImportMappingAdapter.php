@@ -118,7 +118,8 @@
         {
             assert('is_string($attributeName)');
             if ($this->model->isRelation($attributeName) &&
-                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
+                       ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
+                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO )  &&
                        !$this->model->isOwnedRelation($attributeName))
             {
                 return true;
@@ -197,6 +198,10 @@
             if ($attributeName =='modifiedDateTime')
             {
                 return 'ModifiedDateTime';
+            }
+            if ($attributeName =='username')
+            {
+                return 'Username';
             }
             return $type;
         }

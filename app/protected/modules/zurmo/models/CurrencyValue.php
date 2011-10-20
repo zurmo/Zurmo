@@ -41,7 +41,7 @@
                 {
                     throw new NoCurrentUserSecurityException();
                 }
-                $this->currency = Yii::app()->user->userModel->currency;
+                $this->currency = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
             }
         }
 
@@ -49,7 +49,7 @@
         {
             if (trim($this->value) == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $this->value;
         }
@@ -67,7 +67,8 @@
                 ),
                 'rules' => array(
                     array('value',       'required'),
-                    array('value',       'type', 'type' => 'float'),
+                    array('value',       'type',    'type' => 'float'),
+                    array('value',       'default', 'value' => 0),
                     array('rateToBase',  'required'),
                     array('rateToBase',  'type', 'type' => 'float'),
                     array('currency',    'required'),

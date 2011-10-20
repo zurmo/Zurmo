@@ -225,9 +225,23 @@
             return array();
         }
 
+        /**
+         * If the import rules model is not a SecurableItem, then the previous step should go to step 2 otherwise
+         * go to step 3.
+         * @see ImportWizardView::renderPreviousPageLinkContent()
+         */
         protected function renderPreviousPageLinkContent()
         {
-            return $this->getPreviousPageLinkContentByControllerAction('step3');
+            $importRulesClassName  = $this->model->importRulesType . 'ImportRules';
+            if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+            {
+                $previousStep = 'step2';
+            }
+            else
+            {
+                $previousStep = 'step3';
+            }
+            return $this->getPreviousPageLinkContentByControllerAction($previousStep);
         }
     }
 ?>

@@ -101,9 +101,13 @@
             $modelTableName = RedBeanModel::getTableName($modelClassName);
             foreach ($metadata['clauses'] as $key => $clauseInformation)
             {
-                if (!isset($clauseInformation['relatedAttributeName']))
+                if (isset($clauseInformation['concatedAttributeNames']))
                 {
-                    //example is owner, i think this would appear here.
+                    self::buildJoinAndWhereForNonRelatedConcatedAttributes( $model, $clauseInformation,
+                                                                            $key, $joinTablesAdapter, $where);
+                }
+                elseif (!isset($clauseInformation['relatedAttributeName']))
+                {
                     self::buildJoinAndWhereForNonRelatedAttribute( $model, $clauseInformation,
                                                                     $key, $joinTablesAdapter, $where);
                 }
@@ -155,6 +159,43 @@
             self::addWherePartByClauseInformation( $clauseInformation['operatorType'],
                                                     $clauseInformation['value'],
                                                     $where, $whereKey, $tableAliasName, $columnName);
+        }
+
+        /**
+         * Given a non-related array of attributes on a model, build the join and where sql string information. These
+         * attributes will be concated together.
+         * @see RedBeanModelDataProvider::makeWhere
+         * @see addWherePartByClauseInformation
+         */
+        protected static function buildJoinAndWhereForNonRelatedConcatedAttributes( $model,
+                                                                    $clauseInformation,
+                                                                    $whereKey,
+                                                                    &$joinTablesAdapter,
+                                                                    &$where)
+        {
+            assert('$model instanceof RedBeanModel');
+            assert('is_array($clauseInformation)');
+            assert('!isset($clauseInformation["relatedAttributeName"])');
+            assert('is_array($clauseInformation["concatedAttributeNames"]) && count($clauseInformation["concatedAttributeNames"]) == 2');
+            assert('is_int($whereKey)');
+            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
+            assert('is_array($where)');
+            $tableAliasAndColumnNames = array();
+            foreach ($clauseInformation['concatedAttributeNames'] as $attributeName)
+            {
+                $attributeModelClassName = self::resolveAttributeModelClassName($model, $attributeName);
+                $attributeTableName      = RedBeanModel::getTableName($attributeModelClassName);
+                $columnName              = static::getColumnNameByAttribute($model, $attributeName);
+                $tableAliasName          = self::resolveShouldAddFromTableAndGetAliasName($attributeTableName,
+                                                                                          $attributeModelClassName,
+                                                                                          get_class($model),
+                                                                                          $joinTablesAdapter);
+                $tableAliasAndColumnNames[] = array($tableAliasName, $columnName);
+            }
+
+            self::addWherePartByClauseInformationForConcatedAttributes( $clauseInformation['operatorType'],
+                                                    $clauseInformation['value'],
+                                                    $where, $whereKey, $tableAliasAndColumnNames);
         }
 
         /**
@@ -460,6 +501,34 @@
                 $where[$whereKey] = "($quote$tableAliasName$quote.$quote$columnName$quote " . // Not Coding Standard
                                 DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType,
                                 $value) . ")";
+            }
+        }
+
+        /**
+         * Add a sql string to the where array base on the $operatorType, $value and $tableAliasAndColumnNames concated
+         * together.  How the sql string is built depends on if the value is a string or not.
+         * @see RedBeanModelDataProvider::makeWhere
+         * @see buildJoinAndWhereForNonRelatedAttribute
+         * @see buildJoinAndWhereForRelatedAttribute
+         */
+        protected static function addWherePartByClauseInformationForConcatedAttributes(  $operatorType, $value, &$where,
+                                                                    $whereKey, $tableAliasAndColumnNames)
+        {
+            assert('is_string($operatorType)');
+            assert('is_array($where)');
+            assert('is_int($whereKey)');
+            assert('is_array($tableAliasAndColumnNames) && count($tableAliasAndColumnNames) == 2');
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            if (is_string($value) || (is_array($value) && count($value) > 0) || $value !== null)
+            {
+                $first  = $quote . $tableAliasAndColumnNames[0][0] . $quote . '.' . $quote .
+                          $tableAliasAndColumnNames[0][1] . $quote;
+                $second = $quote . $tableAliasAndColumnNames[1][0] . $quote . '.' . $quote .
+                          $tableAliasAndColumnNames[1][1] . $quote;
+                $concatedSqlPart = DatabaseCompatibilityUtil::concat(array($first, '\' \'', $second));
+
+                $where[$whereKey] = "($concatedSqlPart " . // Not Coding Standard
+                                    DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType, $value) . ")";
             }
         }
 

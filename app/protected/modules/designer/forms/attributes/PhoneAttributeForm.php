@@ -41,12 +41,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Phone');
+            return Yii::t('Default', 'Phone');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A phone field');
+            return Yii::t('Default', 'A phone field');
         }
 
         public function getModelAttributePartialRule()

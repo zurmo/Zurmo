@@ -33,7 +33,7 @@
         protected function renderContent()
         {
             $content  = $this->renderViewToolBar(false);
-            $content .= $this->renderTreeMenu('group', 'groups', yii::t('Default', 'Group'));
+            $content .= $this->renderTreeMenu('group', 'groups', Yii::t('Default', 'Group'));
             return $content;
         }
     }

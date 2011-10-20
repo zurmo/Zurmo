@@ -848,6 +848,7 @@
             unset($user);
 
             RedBeanModelsCache::forgetAll(true); // Forget it at the php level.
+            RedBeansCache::forgetAll();
 
             if (MEMCACHE_ON)
             {
@@ -868,7 +869,7 @@
         public function testGetModelClassNames()
         {
             $modelClassNames = UsersModule::getModelClassNames();
-            $this->assertEquals(2, count($modelClassNames));
+            $this->assertEquals(3, count($modelClassNames));
             $this->assertEquals('User', $modelClassNames[0]);
             $this->assertEquals('UserModelSearch', $modelClassNames[1]);
         }

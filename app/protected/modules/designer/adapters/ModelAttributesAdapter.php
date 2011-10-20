@@ -164,6 +164,10 @@
             $isAudited       = (boolean)$attributeForm->isAudited;
             if (!$attributeForm instanceof DropDownAttributeForm)
             {
+                if ($defaultValue === '')
+                {
+                    $defaultValue = null;
+                }
                 if ($attributeForm instanceof MaxLengthAttributeForm)
                 {
                     $maxLength = (int)$attributeForm->maxLength;

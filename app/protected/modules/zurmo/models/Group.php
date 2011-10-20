@@ -428,5 +428,12 @@
             parent::beforeDelete();
             ReadPermissionsOptimizationUtil::groupBeingDeleted($this);
         }
+
+        protected function afterDelete()
+        {
+            PermissionsCache::forgetAll();
+            RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
+        }
     }
 ?>

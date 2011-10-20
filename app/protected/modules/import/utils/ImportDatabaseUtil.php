@@ -51,22 +51,43 @@
                 $freezeWhenComplete = true;
             }
             R::exec("drop table if exists $tableName");
+
+            $importArray = array();
+            $maxValues = array();
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
                 if (count($data) > 0)
                 {
-                    $newBean = R::dispense($tableName);
-                    foreach ($data as $columnId => $value)
+                    $importArray[] = $data;
+                    foreach ($data as $k => $v)
                     {
-                        $columnName = 'column_' . $columnId;
-                        $newBean->{$columnName} = $value;
+                        if (!isset($maxValues[$k]) || strlen($maxValues[$k]) < strlen($v))
+                        {
+                            $maxValues[$k] = $v;
+                        }
                     }
-                    $newBean->status             = null;
-                    $newBean->serializedmessages = null;
-                    R::store($newBean);
-                    unset($newBean);
                 }
             }
+
+            if (count($maxValues) > 0)
+            {
+                $newBean = R::dispense($tableName);
+                foreach ($maxValues as $columnId => $value)
+                {
+                    $columnName = 'column_' . $columnId;
+                    $newBean->{$columnName} = str_repeat(' ', strlen($value));
+                    $columns[] = $columnName;
+                }
+                R::store($newBean);
+                R::trash($newBean);
+                R::wipe($tableName);
+            }
+
+            if (count($importArray > 0))
+            {
+                DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns);
+            }
+
             self::optimizeTable($tableName);
             if ($freezeWhenComplete)
             {

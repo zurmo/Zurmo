@@ -32,6 +32,8 @@
             ZurmoDatabaseCompatibilityUtil::createActualPermissionsCacheTable();
             ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
             PermissionsCache::forgetAll();
+            RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
         }
 
         public static function tearDownAfterClass()

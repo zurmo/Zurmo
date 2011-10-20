@@ -1,0 +1,4 @@
+description,occurredOnDateTime,relatedAccount,relatedContact,relatedOpportunity
+note1,12-22-2011 05:03,ACC,,
+note2,12-22-2011 05:03,,CON,
+note3,12-22-2011 06:03,,,OPP

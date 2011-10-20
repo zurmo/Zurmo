@@ -101,10 +101,11 @@
         {
             assert('$rowBean instanceof RedBean_OODBBean');
             assert('is_array($mappingData)');
-            $makeNewModel     = true;
-            $modelClassName   = $importRules->getModelClassName();
-            $externalSystemId = null;
+            $makeNewModel              = true;
+            $modelClassName            = $importRules->getModelClassName();
+            $externalSystemId          = null;
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $afterSaveActionsData      = array();
 
             //Process the 'id' column first if available.
             if (false !== $idColumnName = static::getIdColumnNameByMappingData($mappingData))
@@ -160,7 +161,7 @@
                                                                                               $columnMappingData,
                                                                                               $importSanitizeResultsUtil);
                     }
-                    elseif ($attributeImportRules instanceof DerivedAttributeSupportedImportRules)
+                    elseif ($attributeImportRules instanceof ModelDerivedAttributeImportRules)
                     {
                         static::resolveModelForModelDerivedAttribute(                      $model,
                                                                                            $importRules::getType(),
@@ -168,6 +169,14 @@
                                                                                            $valueReadyToSanitize,
                                                                                            $columnMappingData,
                                                                                            $importSanitizeResultsUtil);
+                    }
+                    elseif ($attributeImportRules instanceof AfterSaveActionDerivedAttributeImportRules)
+                    {
+                        static::resolveAfterSaveActionDerivedAttributeImportRules(  $afterSaveActionsData,
+                                                                                    $attributeImportRules,
+                                                                                    $valueReadyToSanitize,
+                                                                                    $columnMappingData,
+                                                                                    $importSanitizeResultsUtil);
                     }
                     else
                     {
@@ -187,6 +196,7 @@
                 $saved = $model->save();
                 if ($saved)
                 {
+                    static::processAfterSaveActions($afterSaveActionsData, $model);
                     if ($externalSystemId!= null)
                     {
                         ExternalSystemIdUtil::updateByModel($model, $externalSystemId);
@@ -194,17 +204,32 @@
                     $importRowDataResultsUtil->addMessage(Yii::t('Default', 'Record saved correctly.'));
                     if ($makeNewModel)
                     {
-                        try
+                        if ($model instanceof SecurableItem)
                         {
-                            ExplicitReadWriteModelPermissionsUtil::
-                            resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
-                            $importRowDataResultsUtil->setStatusToCreated();
+                            try
+                            {
+                                $resolved = ExplicitReadWriteModelPermissionsUtil::
+                                            resolveExplicitReadWriteModelPermissions(
+                                                $model,
+                                                $explicitReadWriteModelPermissions);
+                                                $importRowDataResultsUtil->setStatusToCreated();
+                                if(!$resolved)
+                                {
+                                    $importRowDataResultsUtil->addMessage('The record saved, but there was a problem '.
+                                    'setting the security permissions. It will at least be viewable by the owner.');
+                                    $importRowDataResultsUtil->setStatusToError();
+                                }
+                            }
+                            catch (AccessDeniedSecurityException $e)
+                            {
+                                $importRowDataResultsUtil->addMessage('The record saved, but you do not have permissions '.
+                                'to set the security the way you did. The record will only be viewable by the owner.');
+                                $importRowDataResultsUtil->setStatusToError();
+                            }
                         }
-                        catch (AccessDeniedSecurityException $e)
+                        else
                         {
-                            $importRowDataResultsUtil->addMessage('The record saved, but you do not have permissions '.
-                            'to set the security the way you did. As a result this record has been removed.');
-                            $importRowDataResultsUtil->setStatusToError();
+                            $importRowDataResultsUtil->setStatusToCreated();
                         }
                     }
                     else
@@ -225,8 +250,23 @@
                     $importRowDataResultsUtil->addMessages($importSanitizeResultsUtil->getMessages());
                 }
                 $messages = RedBeanModelErrorsToMessagesUtil::makeMessagesByModel($model);
-                $importRowDataResultsUtil->addMessages($messages);
+                if (count($messages) > 0)
+                {
+                    $importRowDataResultsUtil->addMessages($messages);
+                }
                 $importRowDataResultsUtil->setStatusToError();
+            }
+        }
+
+        protected static function processAfterSaveActions($afterSaveActionsData, RedBeanModel $model)
+        {
+            assert('is_array($afterSaveActionsData)');
+            foreach ($afterSaveActionsData as $attributeImportRuleClassNameAndAttributeValueData)
+            {
+                assert('count($attributeImportRuleClassNameAndAttributeValueData) == 2');
+                $attributeImportRulesClassName = $attributeImportRuleClassNameAndAttributeValueData[0];
+                $attributeValueData            = $attributeImportRuleClassNameAndAttributeValueData[1];
+                $attributeImportRulesClassName::processAfterSaveAction($model, $attributeValueData);
             }
         }
 
@@ -295,7 +335,6 @@
                                   $columnMappingData,
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
-            assert('!$attributeImportRules instanceof DerivedAttributeSupportedImportRules');
             assert('is_array($columnMappingData)');
             $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
                                                                                  $columnMappingData,
@@ -304,6 +343,37 @@
             {
                 assert('$model->isAttribute($attributeName)');
                 static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
+            }
+        }
+
+        /**
+         * Some attributeImportRules require the sanitized values to be processed after the model is saved. An example
+         * is the user status which is a derived attribute requiring processing after the user has been saved. This
+         * method gets the sanitized value and adds it along with the attributeImportRules class name to an array
+         * by reference.  After the model is saved, this array is referenced and each attribute import rule is processed.
+         * @see AfterSaveActionDerivedAttributeImportRules
+         * @param array $afterSaveActionsData
+         * @param AttributeImportRules $attributeImportRules
+         * @param mixed $valueReadyToSanitize
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         */
+        protected static function resolveAfterSaveActionDerivedAttributeImportRules(
+                                  & $afterSaveActionsData,
+                                  AttributeImportRules $attributeImportRules,
+                                  $valueReadyToSanitize,
+                                  $columnMappingData,
+                                  ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        {
+            assert('is_array($afterSaveActionsData)');
+            assert('$attributeImportRules instanceof AfterSaveActionDerivedAttributeImportRules');
+            assert('is_array($columnMappingData)');
+            $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
+                                                                                 $columnMappingData,
+                                                                                 $importSanitizeResultsUtil);
+            if ($attributeValueData != null)
+            {
+                $afterSaveActionsData[] = array(get_class($attributeImportRules), $attributeValueData);
             }
         }
 
@@ -316,17 +386,19 @@
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_string($importRulesType)');
-            assert('$attributeImportRules instanceof DerivedAttributeSupportedImportRules');
+            assert('$attributeImportRules instanceof ModelDerivedAttributeImportRules');
             assert('is_array($columnMappingData)');
             $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
                                                                                  $columnMappingData,
                                                                                  $importSanitizeResultsUtil);
             assert('count($attributeValueData) == 1');
-            assert('isset($attributeValueData["getDerivedAttributeName()"])');
-            if ($attributeValueData[$attributeImportRules::getDerivedAttributeName()] != null)
+            assert('$attributeImportRules::getDerivedAttributeName() != null');
+            $derivedAttributeName = $attributeImportRules::getDerivedAttributeName();
+            if ($attributeValueData[$derivedAttributeName] != null)
             {
-                $actualAttributeName = $importRulesType::getActualModelAttributeNameForDerivedAttribute();
-                $actualModel         = $attributeValueData[$attributeImportRules::getDerivedAttributeName()];
+                $importRulesClassName = ImportRulesUtil::getImportRulesClassNameByType($importRulesType);
+                $actualAttributeName  = $importRulesClassName::getActualModelAttributeNameForDerivedAttribute();
+                $actualModel          = $attributeValueData[$derivedAttributeName];
                 if (!$model->$actualAttributeName->contains($actualModel))
                 {
                     $model->$actualAttributeName->add($actualModel);

@@ -45,32 +45,32 @@
 
         public static function resolveValueDataIntoUsableValue($value)
         {
-            if(isset($value['type']) && $value['type'] != null)
+            if (isset($value['type']) && $value['type'] != null)
             {
                 $validValueTypesAndLabels = static::getValidValueTypesAndLabels();
-                if(!isset($validValueTypesAndLabels[$value['type']]))
+                if (!isset($validValueTypesAndLabels[$value['type']]))
                 {
                     throw new NotSupportedException();
                 }
-                if($value['type'] == self::TYPE_TODAY)
+                if ($value['type'] == self::TYPE_TODAY)
                 {
                     return   DateTimeCalculatorUtil::
                              calculateNew(DateTimeCalculatorUtil::TODAY,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
-                elseif($value['type'] == self::TYPE_TOMORROW)
+                elseif ($value['type'] == self::TYPE_TOMORROW)
                 {
                     return   DateTimeCalculatorUtil::
                              calculateNew(DateTimeCalculatorUtil::TOMORROW,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
-                elseif($value['type'] == self::TYPE_YESTERDAY)
+                elseif ($value['type'] == self::TYPE_YESTERDAY)
                 {
                     return   DateTimeCalculatorUtil::
                              calculateNew(DateTimeCalculatorUtil::YESTERDAY,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
-                elseif($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER)
+                elseif ($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER)
                 {
                     assert('$value["firstDate"] != null && is_string($value["firstDate"])');
                     return $value['firstDate'];
@@ -113,35 +113,35 @@
             assert('empty($value) || $value == null || is_array($value)');
             $delimiter                      = FormModelUtil::DELIMITER;
             $parts = explode($delimiter, $attributeName);
-            if(count($parts) != 2)
+            if (count($parts) != 2)
             {
                 throw new NotSupportedException();
             }
             list($realAttributeName, $type) = $parts;
-            if(isset($value['type']) && $value['type'] != null)
+            if (isset($value['type']) && $value['type'] != null)
             {
-                if($value['type'] == self::TYPE_YESTERDAY ||
+                if ($value['type'] == self::TYPE_YESTERDAY ||
                    $value['type'] == self::TYPE_TODAY ||
                    $value['type'] == self::TYPE_TOMORROW)
                 {
                     $attributeAndRelations = array(array($realAttributeName, null, 'equals', 'resolveValueByRules'));
                 }
-                elseif($value['type'] == self::TYPE_AFTER)
+                elseif ($value['type'] == self::TYPE_AFTER)
                 {
                     $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', 'resolveValueByRules'));
                 }
-                elseif($value['type'] == self::TYPE_BEFORE)
+                elseif ($value['type'] == self::TYPE_BEFORE)
                 {
                     $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', 'resolveValueByRules'));
                 }
-                elseif($value['type'] == self::TYPE_NEXT_7_DAYS)
+                elseif ($value['type'] == self::TYPE_NEXT_7_DAYS)
                 {
                     $today                 = static::calculateNewDateByDaysFromNow(0);
                     $todayPlusSevenDays    = static::calculateNewDateByDaysFromNow(7);
                     $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $today, true),
                                                    array($realAttributeName, null, 'lessThanOrEqualTo',    $todayPlusSevenDays, true));
                 }
-                elseif($value['type'] == self::TYPE_LAST_7_DAYS)
+                elseif ($value['type'] == self::TYPE_LAST_7_DAYS)
                 {
                     $today                 = static::calculateNewDateByDaysFromNow(0);
                     $todayMinusSevenDays   = static::calculateNewDateByDaysFromNow(-7);

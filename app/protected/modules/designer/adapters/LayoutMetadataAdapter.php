@@ -102,12 +102,12 @@
             }
             else
             {
-                $this->message = yii::t('Default', 'You must have at least one panel in order to save a layout.');
+                $this->message = Yii::t('Default', 'You must have at least one panel in order to save a layout.');
                 return false;
             }
             if ($this->designerRules->requireAllRequiredFieldsInLayout() && !$this->areAllRequiredAttributesPlaced())
             {
-                $this->message = yii::t('Default', 'All required fields must be placed in this layout.');
+                $this->message = Yii::t('Default', 'All required fields must be placed in this layout.');
                 return false;
             }
             $viewsToSetMetadataFor = $this->designerRules->getMetadataViewClassNames($this->viewClassName, $this->moduleClassName);
@@ -115,7 +115,7 @@
             {
                 $viewClassName::setMetadata($this->makeMergedSaveableMetadata($viewClassName, $savableMetadata));
             }
-            $this->message = yii::t('Default', 'Layout saved successfully.');
+            $this->message = Yii::t('Default', 'Layout saved successfully.');
             return true;
         }
 

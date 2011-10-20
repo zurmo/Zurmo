@@ -240,68 +240,21 @@
             assert('$orderBy === null || is_string ($orderBy) && $orderBy != ""');
             assert('is_bool($selectCount)');
             assert('is_bool($selectDistinct)');
-            $quote = DatabaseCompatibilityUtil::getQuote();
-            if ($selectDistinct)
-            {
-                $distinctPart = 'distinct ';
-            }
-            else
-            {
-                $distinctPart = null;
-            }
+            $selectQueryAdapter = new RedBeanModelSelectQueryAdapter($selectDistinct);
             if ($selectCount)
             {
-                $sql = "select count({$distinctPart}{$quote}$tableName{$quote}.{$quote}id{$quote}) ";
+                $selectQueryAdapter->addCountClause($tableName);
             }
             else
             {
-                $sql = "select {$distinctPart}{$quote}$tableName{$quote}.{$quote}id{$quote} id ";
+                $selectQueryAdapter->addClause($tableName, 'id', 'id');
             }
             foreach ($quotedExtraSelectColumnNameAndAliases as $columnName => $columnAlias)
             {
-                $sql .= ", $columnName $columnAlias ";
+                $selectQueryAdapter->addClauseWithColumnNameOnlyAndNoEnclosure($columnName, $columnAlias);
             }
-            $sql .= "from ";
-            //Added ( ) around from tables to ensure precedence over joins.
-            $joinFromPart   = $joinTablesAdapter->getJoinFromQueryPart();
-            if ($joinFromPart !== null)
-            {
-                $sql .= "(";
-                $sql .= "{$quote}$tableName{$quote}";
-                $sql .= ", $joinFromPart) ";
-            }
-            else
-            {
-                $sql .= "{$quote}$tableName{$quote}";
-                $sql .= ' ';
-            }
-            $sql           .= $joinTablesAdapter->getJoinQueryPart();
-            $joinWherePart  = $joinTablesAdapter->getJoinWhereQueryPart();
-            if ($where !== null)
-            {
-                $sql .= "where $where";
-                if ($joinWherePart != null)
-                {
-                    $sql .= " and $joinWherePart";
-                }
-            }
-            elseif ($joinWherePart != null)
-            {
-                $sql .= " where $joinWherePart";
-            }
-            if ($orderBy !== null)
-            {
-                $sql .= " order by $orderBy";
-            }
-            if ($count !== null)
-            {
-                $sql .= " limit $count";
-            }
-            if ($offset !== null)
-            {
-                $sql .= " offset $offset";
-            }
-            return $sql;
+            return SQLQueryUtil::
+                   makeQuery($tableName, $selectQueryAdapter, $joinTablesAdapter, $offset, $count, $where, $orderBy);
         }
 
         /**
@@ -1118,11 +1071,25 @@
                                 }
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
                                 {
-                                    $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
-                                    if ($relatedBean !== null && $relatedBean->id > 0)
+                                    $linkFieldName = R::$linkManager->getLinkField($relatedTableName, $linkName);
+                                    if((int)$bean->$linkFieldName > 0)
                                     {
-                                        $relatedModel = self::makeModel($relatedBean, $relatedModelClassName, true);
+                                        $beanIdentifier = $relatedTableName .(int)$bean->$linkFieldName;
+                                        try
+                                        {
+                                            $relatedBean = RedBeansCache::getBean($beanIdentifier);
+                                        }
+                                        catch (NotFoundException $e)
+                                        {
+                                            $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
+                                            RedBeansCache::cacheBean($relatedBean, $beanIdentifier);
+                                        }
+                                        if ($relatedBean !== null && $relatedBean->id > 0)
+                                        {
+                                            $relatedModel = self::makeModel($relatedBean, $relatedModelClassName);
+                                        }
                                     }
+
                                 }
                                 if (!isset($relatedModel))
                                 {
@@ -1483,9 +1450,9 @@
                     }
                     foreach ($this->getValidators() as $validator)
                     {
-                        if($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
+                        if ($validator instanceof RedBeanModelRequiredValidator && $validator->applyTo($this->scenarioName))
                         {
-                            if(!$ignoreRequiredValidator)
+                            if (!$ignoreRequiredValidator)
                             {
                                 $validator->validate($this, $attributeNames);
                             }
@@ -1720,7 +1687,7 @@
                                                                self::HAS_MANY_BELONGS_TO)))
                             {
                                 if ($relatedModel->isModified() ||
-                                    $this->isAttributeRequired($relationName))
+                                    ($this->isAttributeRequired($relationName) && $relatedModel->id <= 0))
                                 {
                                     // Validation of this model has already done.
                                     if (!$relatedModel->save(false))
@@ -1994,6 +1961,7 @@
         public static function forgetAll()
         {
             RedBeanModelsCache::forgetAll();
+            RedBeansCache::forgetAll();
         }
 
         /**
@@ -2003,6 +1971,7 @@
         public function forget()
         {
             RedBeanModelsCache::forgetModel($this);
+            RedBeansCache::forgetBean(self::getTableName(get_called_class()) . $this->id);
         }
 
         /**

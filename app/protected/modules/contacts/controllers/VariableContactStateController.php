@@ -104,7 +104,7 @@
                 echo $view->render();
                 Yii::app()->end(0, false);
             }
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                 Yii::t('Default', 'ContactsModuleSingularLabel Search',
                                                 LabelUtil::getTranslationParamsForAllModules()),
                                                 $adapterName);

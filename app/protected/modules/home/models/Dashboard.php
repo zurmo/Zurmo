@@ -89,7 +89,7 @@
         {
             if (trim($this->name) == '')
             {
-                return yii::t('Default', '(Unnamed)');
+                return Yii::t('Default', '(Unnamed)');
             }
             return $this->name;
         }
@@ -129,7 +129,7 @@
         {
             assert('$user instanceof User && $user->id > 0');
             $dashboard             = new Dashboard();
-            $dashboard->name       = yii::t('Default', 'Dashboard');
+            $dashboard->name       = Yii::t('Default', 'Dashboard');
             $dashboard->layoutId   = Dashboard::DEFAULT_USER_LAYOUT_ID;
             $dashboard->owner      = $user;
             $dashboard->layoutType = '50,50'; // Not Coding Standard

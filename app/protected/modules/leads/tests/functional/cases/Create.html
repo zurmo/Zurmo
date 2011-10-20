@@ -18,6 +18,41 @@
 </tr>
 <tr>
 	<td>open</td>
+	<td>index.php?r=accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
 	<td>index.php?r=leads/default</td>
 	<td></td>
 </tr>
@@ -39,7 +74,7 @@
 <tr>
 	<td>type</td>
 	<td>Contact_lastName</td>
-	<td>Sally</td>
+	<td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -63,12 +98,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>Contact_phoneOffice</td>
+	<td>Contact_officePhone</td>
 	<td>456-777-6655</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>Contact_phoneMobile</td>
+	<td>Contact_mobilePhone</td>
 	<td>888999888</td>
 </tr>
 <tr>
@@ -82,24 +117,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>User[firstName]</td>
+	<td>Sam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>User[lastName]</td>
+	<td>Smith</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>link=2</td>
+	<td>search</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Sally Smith</td>
+	<td>Displaying 1-1 of 1 result(s).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Sally Smith</td>
+	<td>link=Sam Smith</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Contact_owner_name</td>
-	<td>Sally Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertNotValue</td>
@@ -169,7 +219,7 @@
 <tr>
 	<td>select</td>
 	<td>Contact_industry_value</td>
-	<td>label=Adult Entertainment</td>
+	<td>label=Financial Services</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -188,7 +238,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>Contact_phoneFax</td>
+	<td>Contact_officeFax</td>
 	<td>5679076543</td>
 </tr>
 <tr>
@@ -204,12 +254,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Silly Sally</td>
+	<td>exact:Leads: Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mrs. Silly Sally</td>
+	<td>Mrs. Silly Sally ${randomSuffix}</td>	
 </tr>
 <tr>
 	<td>assertText</td>
@@ -249,7 +299,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[8]/td[1]</td>
-	<td>Adult Entertainment</td>
+	<td>Financial Services</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -263,8 +313,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Sally Smith</td>
-	<td>Sally Smith</td>
+	<td>link=Sam Smith</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -273,7 +323,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[10]/td</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[9]/td</td>
 	<td>test</td>
 </tr>
 </tbody></table>

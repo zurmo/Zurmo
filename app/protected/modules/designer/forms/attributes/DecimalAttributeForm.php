@@ -67,12 +67,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'Decimal');
+            return Yii::t('Default', 'Decimal');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A decimal field');
+            return Yii::t('Default', 'A decimal field');
         }
 
         public function getAttributeTypeName()

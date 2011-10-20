@@ -87,7 +87,6 @@
             $this->assertTrue  ($searchForm->isAttribute('date__Date'));
             $this->assertFalse ($searchForm->isAttributeRequired('date__Date'));
 
-
             //Test attributeRules and attributeLabels
             $attributeLabels = $searchForm->attributeLabels();
             $this->assertEquals('Date',   $attributeLabels['date__Date']);
@@ -128,7 +127,6 @@
             $this->assertFalse ($searchForm->isRelation('dateTime__DateTime'));
             $this->assertTrue  ($searchForm->isAttribute('dateTime__DateTime'));
             $this->assertFalse ($searchForm->isAttributeRequired('dateTime__DateTime'));
-
 
             //Test attributeRules and attributeLabels
             $attributeLabels = $searchForm->attributeLabels();

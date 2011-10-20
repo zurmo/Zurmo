@@ -68,9 +68,13 @@
                 'Call',
                 'Event',
             );
-            $typeFieldData = CustomFieldData::getByName('MeetingCategories');
+            $typeFieldData                 = CustomFieldData::getByName('MeetingCategories');
             $typeFieldData->serializedData = serialize($values);
-            assert('$typeFieldData->save()');
+            $saved                         = $typeFieldData->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 ?>

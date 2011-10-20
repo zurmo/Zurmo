@@ -209,7 +209,7 @@
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', '02-20-2005',
                                          $columnMappingData, $importSanitizeResultsUtil);
-            $this->assertEquals('02-20-2005 00:00:00', date('m-d-Y H:i:s', $sanitizedValue));
+            $this->assertEquals('2005-02-20', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));
@@ -296,7 +296,7 @@
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dateTime', '02-20-2005 04:22:00',
                                          $columnMappingData, $importSanitizeResultsUtil);
-            $this->assertEquals('02-20-2005 04:22:00', date('m-d-Y H:i:s', $sanitizedValue));
+            $this->assertEquals('2005-02-20 04:22:00', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));
@@ -332,6 +332,40 @@
                                          $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $this->assertEquals(0, count($messages));
+
+            //Test the createdDateTime with a value and a default value.  The default value will be ignored.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
+                                               'DefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => '2010-05-04 00:00'),
+                                               'ValueFormatMappingRuleForm'                =>
+                                               array('format' => 'MM-dd-yyyy hh:mm:ss')));
+            $sanitizerUtilTypes        = DateTimeAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'createdDateTime', '02-20-2005 04:22:00',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('2005-02-20 04:22:00', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test the modifiedDateTime with a value and a default value.  The default value will be ignored.
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
+                                               'DefaultValueModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => '2010-05-04 00:00'),
+                                               'ValueFormatMappingRuleForm'                =>
+                                               array('format' => 'MM-dd-yyyy hh:mm:ss')));
+            $sanitizerUtilTypes        = DateTimeAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'modifiedDateTime', '02-20-2005 04:22:00',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('2005-02-20 04:22:00', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));
         }
 

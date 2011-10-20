@@ -62,7 +62,7 @@
                         $elements[] = $element;
                     }
                 }
-                if (count($elements) > 1)
+                if (count($elements) > 0)
                 {
                     $metadata['global']['panels'][$panelCount]['title']      =
                         $moduleClassName::getModuleLabelByTypeAndLanguage('Plural');

@@ -37,7 +37,7 @@
             $description  = trim($this->description);
             if ($description == '')
             {
-                $description = yii::t('Default', '(Empty)');
+                $description = Yii::t('Default', '(Empty)');
             }
             return $description;
         }

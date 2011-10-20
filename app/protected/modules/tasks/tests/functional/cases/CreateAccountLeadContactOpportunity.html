@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccountLeadContactOpportunity</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account Lead Contact Opportunity</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<!--- Create Account Starts Here --->
+<tr>
+	<td>open</td>
+	<td>index.php?r=accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--- Create Account Completes Here --->
+
+<!--- Create Lead Starts Here --->
+<tr>
+	<td>open</td>
+	<td>index.php?r=leads/default/create</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_firstName</td>
+	<td>Silly</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_lastName</td>
+	<td>Sally ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_state_id</td>
+	<td>label=In Progress</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_title_value</td>
+	<td>label=Mrs.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr><tr>
+	<td>waitForText</td>
+	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
+	<td>exact:Leads: Silly Sally ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+	<td>Mrs. Silly Sally ${randomSuffix}</td>	
+</tr>
+<!--- Create Lead Completes Here --->
+
+<!--- Create Contact Starts Here --->
+<tr>
+	<td>open</td>
+	<td>index.php?r=contacts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_firstName</td>
+	<td>Jinny</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Contact_lastName</td>
+	<td>Jane ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_title_value</td>
+	<td>label=Mrs.</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Contact_state_id</td>
+	<td>label=Customer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Contacts: Jinny Jane ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Mrs. Jinny Jane ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--- Create Contact Completes Here --->
+
+<!--- Create Opportunity Starts Here --->
+<tr>
+	<td>open</td>
+	<td>index.php?r=opportunities/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Opportunity_name</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Opportunity_amount_value</td>
+	<td>500.34</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Opportunity_closeDate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='ui-datepicker-div']/div/a[2]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Opportunities: Test Opportunity ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--- Create Opportunity Completes Here --->
+</tbody></table>
+</body>
+</html>

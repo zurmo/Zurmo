@@ -39,7 +39,7 @@
             $filters = array();
             $filters[] = array(
                     ZurmoBaseController::RIGHTS_FILTER_PATH .
-                    ' - modalList, autoComplete, details, edit, changePassword, configurationEdit, securityDetails',
+                    ' - modalList, autoComplete, details, profile, edit, changePassword, configurationEdit, securityDetails',
                     'moduleClassName' => 'UsersModule',
                     'rightName' => UsersModule::getAccessRight(),
             );
@@ -155,6 +155,50 @@
         }
 
         /**
+         * Override to handle UserStatus processing.
+         * @see ZurmoBaseController::attemptToSaveModelFromPost()
+         */
+        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
+        {
+            assert('$model instanceof User || $model instanceof UserPasswordForm');
+            assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
+            $postVariableName   = get_class($model);
+            if (isset($_POST[$postVariableName]))
+            {
+                $postData = $_POST[$postVariableName];
+                if (isset($_POST[$postVariableName]['userStatus']))
+                {
+                    $userStatus        = UserStatusUtil::makeByPostData($_POST[$postVariableName]);
+                    $sanitizedPostdata = UserStatusUtil::removeIfExistsFromPostData($postData);
+                }
+                else
+                {
+                    $userStatus        = null;
+                    $sanitizedPostdata = $postData;
+                }
+                $savedSucessfully   = false;
+                $modelToStringValue = null;
+                $model            = $this->saveModelFromPost($sanitizedPostdata, $model, $savedSucessfully, $modelToStringValue);
+                if ($savedSucessfully)
+                {
+                    if ($userStatus != null)
+                    {
+                        if ($model instanceof UserPasswordForm)
+                        {
+                            UserStatusUtil::resolveUserStatus($model->getModel(), $userStatus);
+                        }
+                        else
+                        {
+                            UserStatusUtil::resolveUserStatus($model, $userStatus);
+                        }
+                    }
+                    $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
+                }
+            }
+            return $model;
+        }
+
+        /**
          * Action for displaying a mass edit form and also action when that form is first submitted.
          * When the form is submitted, in the event that the quantity of models to update is greater
          * than the pageSize, then once the pageSize quantity has been reached, the user will be
@@ -236,7 +280,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                                       Yii::t('Default', 'User Search'));
         }
 
@@ -298,7 +342,7 @@
                         UserConfigurationFormAdapter::setConfigurationFromFormForCurrentUser($configurationForm);
                     }
                     Yii::app()->user->setFlash('notification',
-                        yii::t('Default', 'User configuration saved successfully.')
+                        Yii::t('Default', 'User configuration saved successfully.')
                     );
                     $this->redirect(array($this->getId() . '/index'));
                 }

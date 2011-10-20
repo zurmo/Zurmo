@@ -51,6 +51,108 @@
             $this->assertEquals(array('d' => 'e', 'k' => 'j'), $unserializedData['dataAnalyzerMessagesData']);
         }
 
+        /**
+         * @depends testSetDataAnalyzerMessagesDataToImport
+         */
+        public function testImportWithoutCurrencyValues()
+        {
+                    Yii::app()->user->userModel = User::getByUsername('super');
+
+            //Unfreeze since the test model is not part of the standard schema.
+            $freezeWhenComplete = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freezeWhenComplete = true;
+            }
+
+            $testModels                        = ImportModelTestItem::getAll();
+            $this->assertEquals(0, count($testModels));
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'ImportModelTestItem';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::createTempTableByFileNameAndTableName('importEmptyCurrencyTest.csv', $import->getTempTableName());
+
+            $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $mappingData = array(
+                'column_0'  => ImportTestHelper::makeStringColumnMappingData      ('lastName'),
+                'column_1'  => ImportTestHelper::makeStringColumnMappingData      ('string')
+            );
+
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
+            $importResultsUtil = new ImportResultsUtil($import);
+            ImportUtil::importByDataProvider($dataProvider,
+                                             $importRules,
+                                             $mappingData,
+                                             $importResultsUtil,
+                                             new ExplicitReadWriteModelPermissions());
+            $importResultsUtil->processStatusAndMessagesForEachRow();
+
+            //Confirm that 2 models where created.
+            $testModels = ImportModelTestItem::getAll();
+            $this->assertEquals(2, count($testModels));
+            $jim = User::getByUsername('jim');
+            foreach ($testModels as $model)
+            {
+                $this->assertEquals(array(Permission::NONE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
+            }
+
+            //Confirm 10 rows were processed as 'created'.
+            $this->assertEquals(2, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
+                                                                 . ImportRowDataResultsUtil::CREATED));
+
+            //Confirm that 0 rows were processed as 'updated'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::UPDATED));
+
+            //Confirm 2 rows were processed as 'errors'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR));
+
+            $beansWithErrors = ImportDatabaseUtil::getSubset($import->getTempTableName(),     "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR);
+            $this->assertEquals(0, count($beansWithErrors));
+
+            //Confirm the base code is USD
+            $this->assertEquals('USD', Yii::app()->currencyHelper->getBaseCode());
+
+            //Creating an object produces the correct currency code.
+            $testItem           = new ImportModelTestItem();
+            $this->assertEquals('USD', $testItem->currencyValue->currency->code);
+            $testItem->string   = 'test';
+            $testItem->lastName = 'testAlso';
+            $this->assertTrue($testItem->save());
+            $testItemId         = $testItem->id;
+            $testItem->forget();
+
+            //The currency code, even though not set, shows up correctly based on the base code.
+            $testItem = ImportModelTestItem::getById($testItemId);
+            $this->assertEquals('USD', $testItem->currencyValue->currency->code);
+
+            //Test that the related currency information is not empty for the imported objects.
+            $this->assertEquals('USD', $testModels[0]->currencyValue->currency->code);
+
+            //Clear out data in table
+            R::exec("delete from " . ImportModelTestItem::getTableName('ImportModelTestItem'));
+
+            //Re-freeze if needed.
+            if ($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
+            }
+        }
+
+        /**
+         * @depends testImportWithoutCurrencyValues
+         */
         public function testSimpleImportWithStringAndFullNameWhichAreRequiredAttributeOnImportTestModelItem()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -238,7 +340,7 @@
             $jim = User::getByUsername('jim');
             foreach ($testModels as $model)
             {
-                $this->assertEquals(array(Permission::READ_WRITE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
+                $this->assertEquals(array(Permission::READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER, Permission::NONE), $model->getExplicitActualPermissions ($jim));
             }
 
             //Re-freeze if needed.

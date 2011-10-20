@@ -77,7 +77,7 @@
             => 'Error',
         'Fahrenheit'
             => 'Fahrenheit',
-        'Filtered List'
+        'Filtered Lists'
             => 'Lista filtrada',
         'firstDateTime must occur after secondDateTime'
             => 'firstDateTime debe ocurrir después secondDateTime',

@@ -37,7 +37,7 @@
         )
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView(yii::t('Default', 'Field'), $attributeForm), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', 'Field'), $attributeForm), 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
             $attributeTypeDetailsViewClassName = $attributeTypeName. 'AttributeDetailsView';
             $this->setView(new $attributeTypeDetailsViewClassName(

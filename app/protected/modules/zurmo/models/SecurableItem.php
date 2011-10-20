@@ -339,14 +339,7 @@
                 // Anyone can get the id and owner, createdByUser, and modifiedByUser anytime.
                 !in_array($attributeName, array('id', 'owner', 'createByUser', 'modifiedByUser')))
             {
-                if ($attributeName == 'permissions')
-                {
-                    self::checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
-                }
-                else
-                {
-                    self::checkPermissionsHasAnyOf(Permission::READ);
-                }
+                self::checkPermissionsHasAnyOf(Permission::READ);
             }
             return parent::__get($attributeName);
         }
@@ -356,6 +349,10 @@
             if ($attributeName == 'owner')
             {
                 self::checkPermissionsHasAnyOf(Permission::CHANGE_OWNER);
+            }
+            elseif ($attributeName == 'permissions')
+            {
+                self::checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
             }
             else
             {

@@ -40,7 +40,13 @@
                         );
     $adminEmail       = 'info@zurmo.com';
     $installed        = false; // Set to true by the installation process.
+    $instanceConfig   = array(); //Set any parameters you want to have merged into configuration array.
+                                 //@see CustomManagement
 
+    if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
+    {
+        require_once INSTANCE_ROOT . '/protected/config/perInstanceConfig.php';
+    }
     // REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.
     // This configuration is for development and testing.
     // Do not remove it from source control!

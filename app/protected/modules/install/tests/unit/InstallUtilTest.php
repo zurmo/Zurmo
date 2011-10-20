@@ -151,12 +151,12 @@
 
         public function testCheckDatabase_mysql()
         {
-            InstallUtil::checkDatabase('mysql', '10.5.5', $expectedVersion);
-            $this->assertFalse (InstallUtil::checkDatabase('mysql', '7.0.0  ',        $actualVersion));
+            InstallUtil::checkDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, '10.5.5', $expectedVersion);
+            $this->assertFalse (InstallUtil::checkDatabase('mysql',  $this->hostname, $this->rootUsername, $this->rootPassword, '7.0.0  ',$actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue  (InstallUtil::checkDatabase('mysql', $expectedVersion, $actualVersion));
+            $this->assertTrue  (InstallUtil::checkDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $expectedVersion, $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue  (InstallUtil::checkDatabase('mysql', '5.0.0',          $actualVersion));
+            $this->assertTrue  (InstallUtil::checkDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, '5.0.0', $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
         }
 
@@ -247,7 +247,23 @@
         {
             $minimumRequireBytes = 1;
             $actualBytes         = null;
-            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualBytes));
+            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql',
+                                                                               $this->hostname,
+                                                                               $this->rootUsername,
+                                                                               $this->rootPassword,
+                                                                               1,
+                                                                               $actualBytes));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testIsDatabaseStrictMode()
+        {
+            $this->assertNotNull(InstallUtil::isDatabaseStrictMode('mysql',
+                                                                   $this->hostname,
+                                                                   $this->rootUsername,
+                                                                   $this->rootPassword));
         }
 
         public function testCheckMemcacheConnection()
@@ -259,7 +275,8 @@
                                 10060 == $results[0]);
             $results = InstallUtil::checkMemcacheConnection('localhost', 12345);
             $this->assertTrue(  111 == $results[0] ||
-                                10061 == $results[0]);
+                                10061 == $results[0] ||
+                                10060 == $results[0]);
         }
 
         public function testDatabaseConnection_mysql()
@@ -420,7 +437,7 @@
             {
                 InstallUtil::writeConfiguration($instanceRoot,
                                                 'mysql', 'databases.r-us.com', 'wacky', 'wacko', 'wacked',
-                                                'memcache.jason.com', 5432,
+                                                'memcache.jason.com', 5432, false,
                                                 'es',
                                                 'perInstanceTest.php', 'debugTest.php');
                 $debugConfiguration       = file_get_contents($debugConfigFile);
@@ -512,7 +529,7 @@
             $this->assertTrue(!is_file($perInstanceConfigFile));
             $this->assertTrue(!is_file($debugConfigFile));
 
-            InstallUtil::runInstallation($form, $messageStreamer, 'perInstanceTest.php', 'debugTest.php');
+            InstallUtil::runInstallation($form, $messageStreamer);
             $perInstanceConfiguration = file_get_contents($perInstanceConfigFile);
             $debugConfiguration = file_get_contents($debugConfigFile);
             //Check if super user is created.

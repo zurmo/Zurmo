@@ -42,6 +42,10 @@
         public function onEvent($type, $info)
         {
             assert('$type == "after_update"');
+            if (RedBeanDatabase::isFrozen())
+            {
+                return;
+            }
             $hints = $info->getMeta("hint");
             if ($hints !== null)
             {

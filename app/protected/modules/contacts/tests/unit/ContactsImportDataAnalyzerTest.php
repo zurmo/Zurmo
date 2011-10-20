@@ -71,7 +71,7 @@
             $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
-                    array('message'=> '3 pick list value(s) are not valid. Rows that have these values will be skipped upon import.', // Not Coding Standard
+                    array('message'=> '3 value(s) are not valid. Rows that have these values will be skipped upon import.', // Not Coding Standard
                           'sanitizerUtilType' => 'ContactState', 'moreAvailable' => false),
                 ),
             );
@@ -104,7 +104,7 @@
             $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_0');
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = '3 pick list value(s) are not valid. Rows that have these values will be skipped upon import.';
+            $compareMessage = '3 value(s) are not valid. Rows that have these values will be skipped upon import.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
     }

@@ -196,9 +196,9 @@
         protected function getPermissionTypes()
         {
             return array(
-                null                                                                 => yii::t('Default', 'Owner'),
-                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP  => yii::t('Default', 'Owner and users in'),
-                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP     => yii::t('Default', 'Everyone'));
+                null                                                                 => Yii::t('Default', 'Owner'),
+                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP  => Yii::t('Default', 'Owner and users in'),
+                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP     => Yii::t('Default', 'Everyone'));
         }
 
         protected function renderSelectableGroupsContent()

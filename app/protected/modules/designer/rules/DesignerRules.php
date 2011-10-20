@@ -104,7 +104,7 @@
                             {
                                 foreach ($rules as $rule)
                                 {
-                                    if(static::doesRuleApplyToElement($rule, $elementInformation, $viewClassName))
+                                    if (static::doesRuleApplyToElement($rule, $elementInformation, $viewClassName))
                                     {
                                         $ruleClassName = $rule . 'ViewMetadataRules';
                                         $ruleClassName::resolveElementMetadata(

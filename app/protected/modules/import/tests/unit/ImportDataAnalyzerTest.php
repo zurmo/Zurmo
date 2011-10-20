@@ -273,8 +273,12 @@
             $messagesData = $importDataAnalyzer->getMessagesData();
             $compareData = array(
                 'column_0' => array(
+                    array('message'=> '1 value(s) are too short for this field. These rows will be skipped upon import.', // Not Coding Standard
+                          'sanitizerUtilType' => 'MinimumLength', 'moreAvailable' => false),
                     array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.', // Not Coding Standard
                           'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
+                    array('message'=> '1 value(s) are missing and are required. These rows will be skipped on import.', // Not Coding Standard
+                          'sanitizerUtilType' => 'Required', 'moreAvailable' => false),
                 ),
                 'column_1' => array(
                     array('message'=> '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.', // Not Coding Standard
@@ -311,7 +315,9 @@
                 'column_9' => array(
                     array('message'=> '2 external system user id(s) specified were not found. These values will not be used during the import.', // Not Coding Standard
                            'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
-                ),
+                    array('message'=> '1 value(s) are missing and are required. These rows will be skipped on import.', // Not Coding Standard
+                           'sanitizerUtilType' => 'ModelIdRequired', 'moreAvailable' => false),
+                    ),
                 'column_10' => array(
                     array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',                              // Not Coding Standard
                            'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
@@ -468,6 +474,37 @@
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
+            $this->assertEquals($compareMessage, $messages[0]);
+        }
+
+        /**
+         * @depends testImportDataAnalysisUsingBatchAnalyzers
+         */
+        public function testMinimumLengthsUsingBatchAnalyzers()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $import                            = new Import();
+            $serializedData['importRulesType'] = 'ImportModelTestItem';
+            $import->serializedData            = serialize($serializedData);
+            $this->assertTrue($import->save());
+            ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerMinLengthsTest.csv', $import->getTempTableName());
+            $config       = array('pagination' => array('pageSize' => 2));
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+
+            //test that strings have minimum lengths (string min 3)
+            $dataAnalyzer = new MinimumLengthBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'string');
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_0');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = '2 value(s) are too short for this field. These rows will be skipped upon import.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //test that a full name has the minimum required last name length. (min 2)
+            $dataAnalyzer = new FullNameBatchAttributeValueDataAnalyzer('ImportModelTestItem', null);
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_1');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = '2 value(s) are too short for this field. These rows will be skipped during import.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
     }

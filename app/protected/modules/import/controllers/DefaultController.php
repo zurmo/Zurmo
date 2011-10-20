@@ -102,7 +102,16 @@
                 }
                 else
                 {
-                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step3');
+                    $importRulesClassName  = $importWizardForm->importRulesType . 'ImportRules';
+                    if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+                    {
+                        $nextStep = 'step4';
+                    }
+                    else
+                    {
+                        $nextStep = 'step3';
+                    }
+                    $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, $nextStep);
                 }
             }
             $importView = new GridView(2, 1);
@@ -119,9 +128,8 @@
          */
         public function actionStep3($id)
         {
-            $import           = Import::getById((int)$_GET['id']);
-            $importWizardForm = ImportWizardUtil::makeFormByImport($import);
-
+            $import                = Import::getById((int)$_GET['id']);
+            $importWizardForm      = ImportWizardUtil::makeFormByImport($import);
             if (isset($_POST[get_class($importWizardForm)]))
             {
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
@@ -154,7 +162,7 @@
                 $sanitizedPostData                          = ImportWizardFormPostUtil::
                                                               sanitizePostByTypeForSavingMappingData(
                                                               $importWizardForm->importRulesType, $reIndexedPostData);
-                                                              ImportWizardUtil::setFormByPostForStep4($importWizardForm, $sanitizedPostData);
+                ImportWizardUtil::setFormByPostForStep4($importWizardForm, $sanitizedPostData);
 
                 $mappingDataMappingRuleFormsAndElementTypes = MappingRuleFormAndElementTypeUtil::
                                                               makeFormsAndElementTypesByMappingDataAndImportRulesType(
@@ -300,9 +308,17 @@
             }
             assert('$step == null || is_string($step)');
             assert('$nextParams == null || is_array($nextParams)');
-
             $import               = Import::getById((int)$id);
             $importWizardForm     = ImportWizardUtil::makeFormByImport($import);
+            $cs                   = Yii::app()->getClientScript();
+            $cs->registerCoreScript('bbq');
+            if (isset($_GET['ajax']) && $_GET['ajax'] == 'list-view')
+            {
+                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm);
+                $view               = new AjaxPageView($importCompleteView);
+                echo $view->render();
+                Yii::app()->end(0, false);
+            }
             $unserializedData     = unserialize($import->serializedData);
             $pageSize             = Yii::app()->pagination->resolveActiveForCurrentUserByType('importPageSize');
             $config               = array('pagination' => array('pageSize' => $pageSize));
@@ -315,14 +331,8 @@
             $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step6';
             if ($sequentialProcess->isComplete())
             {
-                $dataAnalysisCompleteView = new ImportWizardCreateUpdateModelsCompleteView($this->getId(),
-                                                $this->getModule()->getId(),
-                                                $importWizardForm,
-                                                (int)ImportRowDataResultsUtil::getCreatedCount($import->getTempTableName()),
-                                                (int)ImportRowDataResultsUtil::getUpdatedCount($import->getTempTableName()),
-                                                (int)ImportRowDataResultsUtil::getErrorCount($import->getTempTableName()));
-
-                $sequenceView = new ContainedViewCompleteSequentialProcessView($dataAnalysisCompleteView);
+                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm, true);
+                $sequenceView       = new ContainedViewCompleteSequentialProcessView($importCompleteView);
             }
             else
             {
@@ -342,6 +352,34 @@
                 $view        = new AjaxPageView($sequenceView);
             }
             echo $view->render();
+        }
+
+        protected function makeImportCompleteView(Import $import, ImportWizardForm $importWizardForm, $setCurrentPageToFirst = false)
+        {
+            $pageSize                 = Yii::app()->pagination->resolveActiveForCurrentUserByType('listPageSize');
+            $config                   = array('pagination' => array('pageSize' => $pageSize));
+            if($setCurrentPageToFirst)
+            {
+                $config['pagination']['currentPage'] = 0;
+            }
+            $importErrorsDataProvider = new ImportDataProvider($import->getTempTableName(),
+                                                               (bool)$importWizardForm->firstRowIsHeaderRow,
+                                                               $config,
+                                                               ImportRowDataResultsUtil::ERROR);
+            $errorListView            = new ImportErrorsListView(
+                                            $this->getId(),
+                                            $this->getModule()->getId(),
+                                            'NotUsed',
+                                            $importErrorsDataProvider
+                                            );
+            $importCompleteView       = new ImportWizardCreateUpdateModelsCompleteView($this->getId(),
+                                            $this->getModule()->getId(),
+                                            $importWizardForm,
+                                            (int)ImportRowDataResultsUtil::getCreatedCount($import->getTempTableName()),
+                                            (int)ImportRowDataResultsUtil::getUpdatedCount($import->getTempTableName()),
+                                            (int)ImportRowDataResultsUtil::getErrorCount($import->getTempTableName()),
+                                            $errorListView);
+            return $importCompleteView;
         }
 
         /**
@@ -443,7 +481,7 @@
             }
             elseif (!$importWizardForm->validate(array('rowColumnDelimiter')))
             {
-                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid enclosure'));
+                $fileUploadData = array('error' => Yii::t('Default', 'Error: Invalid qualifier'));
             }
             else
             {

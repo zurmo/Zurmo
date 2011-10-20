@@ -118,7 +118,7 @@
                 {
                     ZurmoConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
                     Yii::app()->user->setFlash('notification',
-                        yii::t('Default', 'Global configuration saved successfully.')
+                        Yii::t('Default', 'Global configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('configuration/default/index'));
                 }
@@ -139,7 +139,6 @@
         {
             echo AuditEventsRecentlyViewedUtil::getRecentlyViewedAjaxContentByUser(Yii::app()->user->userModel, 10);
         }
-
 
         public function actionGlobalSearchAutoComplete($term)
         {

@@ -29,7 +29,7 @@
         public function __construct($controllerId, $moduleId, $moduleClassName, $moduleDisplayName, $modelClassName, $breadcrumbLinks)
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView(yii::t('Default', $moduleDisplayName), yii::t('Default', 'Create Field')), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Create Field')), 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
             $this->setView(new AttributeCreateView(
                 $controllerId,

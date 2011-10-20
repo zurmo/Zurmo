@@ -36,7 +36,7 @@
 
         public static function getSanitizerUtilTypesInProcessingOrder()
         {
-            return array('Truncate', 'Required');
+            return array('MinimumLength', 'Truncate', 'Required');
         }
     }
 ?>

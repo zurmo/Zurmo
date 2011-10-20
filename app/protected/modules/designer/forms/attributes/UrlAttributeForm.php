@@ -28,7 +28,7 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return yii::t('Default', 'URL');
+            return Yii::t('Default', 'URL');
         }
 
         public function getAttributeTypeName()
@@ -38,7 +38,7 @@
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return yii::t('Default', 'A field that contains a URL');
+            return Yii::t('Default', 'A field that contains a URL');
         }
 
         public function getModelAttributePartialRule()

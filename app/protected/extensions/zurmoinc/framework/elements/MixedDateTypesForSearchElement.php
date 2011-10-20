@@ -45,7 +45,7 @@
                 $('#{$valueTypeid}').change( function()
                     {
                         arr = " . CJSON::encode($valueTypesRequiringFirstDateInput) . ";
-                        if($.inArray($(this).val(), arr) != -1)
+                        if ($.inArray($(this).val(), arr) != -1)
                         {
                                $('#{$firstDateSpanAreaId}').show();
                             $('#{$valueFirstDateId}').prop('disabled', false);
@@ -55,8 +55,6 @@
                             $('#{$firstDateSpanAreaId}').hide();
                             $('#{$valueFirstDateId}').prop('disabled', true);
                         }
-
-
                     }
                 );
             ");
@@ -135,7 +133,12 @@
 
         protected function renderLabel()
         {
-            return $this->getFormattedAttributeLabel();
+            $label = $this->getFormattedAttributeLabel();
+            if ($this->form === null)
+            {
+                return $label;
+            }
+            return CHtml::label($label, false);
         }
     }
 ?>

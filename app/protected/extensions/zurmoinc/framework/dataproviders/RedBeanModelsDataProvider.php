@@ -109,7 +109,7 @@
             $sqlStatementsToUnion = array();
             foreach ($modelClassNamesAndSearchAttributeData as $identifier => $modelClassNameAndSearchAttributeData)
             {
-                foreach($modelClassNameAndSearchAttributeData as $modelClassName => $searchAttributeData)
+                foreach ($modelClassNameAndSearchAttributeData as $modelClassName => $searchAttributeData)
                 {
                     $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
                     $where             = ModelDataProviderUtil::makeWhere(  $modelClassName, $searchAttributeData,
@@ -227,7 +227,7 @@
             $totalCount = 0;
             foreach ($this->modelClassNamesAndSearchAttributeData as $identifier => $modelClassNameAndSearchAttributeData)
             {
-                foreach($modelClassNameAndSearchAttributeData as $modelClassName => $searchAttributeData)
+                foreach ($modelClassNameAndSearchAttributeData as $modelClassName => $searchAttributeData)
                 {
                     $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
                     $where = ModelDataProviderUtil::makeWhere($modelClassName, $searchAttributeData, $joinTablesAdapter);

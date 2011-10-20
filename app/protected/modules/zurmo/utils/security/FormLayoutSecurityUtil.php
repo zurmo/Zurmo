@@ -101,7 +101,15 @@
                 }
                 elseif (!$userCanAccess && $userCanReadItem)
                 {
-                    $elementInformation['noLink'] = true;
+                    if ($model->$attributeName->id < 0)
+                    {
+                        $elementInformation['attributeName'] = null;
+                        $elementInformation['type']          = 'Null'; // Not Coding Standard
+                    }
+                    else
+                    {
+                        $elementInformation['noLink'] = true;
+                    }
                 }
                 else
                 {

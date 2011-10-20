@@ -45,7 +45,7 @@
                 $moduleId,
                 $menuItems
             );
-            $this->setView(new TitleBarView (yii::t('Default', 'Mass Update'), $title, 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new TitleBarView (Yii::t('Default', 'Mass Update'), $title, 1, $shortcutsMenu->render()), 0, 0);
             $massEditViewClassName = $moduleName . 'MassEditView';
             $this->setView(new $massEditViewClassName($controllerId, $moduleId, $model, $activeAttributes, $selectedRecordCount, $alertMessage), 1, 0);
         }

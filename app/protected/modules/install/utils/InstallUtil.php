@@ -162,7 +162,12 @@
         /**
          * @returns true, or the MySQL version if less than required, or false if not installed.
          */
-        public static function checkDatabase($databaseType, $minimumRequiredVersion, /* out */ &$actualVersion)
+        public static function checkDatabase($databaseType,
+                                            $databaseHostname,
+                                            $databaseUsername,
+                                            $databasePassword,
+                                            $minimumRequiredVersion,
+                                            /* out */ &$actualVersion)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             switch ($databaseType)
@@ -171,15 +176,17 @@
                         $PhpDriverVersion = phpversion('mysql');
                         if ($PhpDriverVersion !== null)
                         {
-                            $output = shell_exec('mysql -V 2>&1');
-                            preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $matches); // Not Coding Standard
-                            if ($matches != null)
+                            $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                            $result = @mysql_query("SELECT VERSION()");
+                            $row    = @mysql_fetch_row($result);
+                            if (is_resource($connection))
                             {
-                                $actualVersion =  $matches[0];
-                                if ($actualVersion !== null)
-                                {
-                                    return self::checkVersion($minimumRequiredVersion, $actualVersion);
-                                }
+                                mysql_close($connection);
+                            }
+                            if (isset($row[0]))
+                            {
+                                $actualVersion = $row[0];
+                                return self::checkVersion($minimumRequiredVersion, $actualVersion);
                             }
                         }
                         return false;
@@ -298,18 +305,61 @@
             return array($errorNumber, $errorString);
         }
 
-        public static function getDatabaseMaxAllowedPacketsSize($databaseType, $minimumRequireBytes, /* out */ & $actualBytes)
+        public static function getDatabaseMaxAllowedPacketsSize($databaseType,
+                                                                $databaseHostname,
+                                                                $databaseUsername,
+                                                                $databasePassword,
+                                                                $minimumRequireBytes,
+                                                                /* out */ & $actualBytes)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             switch ($databaseType)
             {
                 case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
                     $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
                     if (isset($row[1]))
                     {
                         $actualBytes = $row[1];
                         return $minimumRequireBytes <= $actualBytes;
+                    }
+                    return false;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        public static function isDatabaseStrictMode($databaseType,
+                                                    $databaseHostname,
+                                                    $databaseUsername,
+                                                    $databasePassword)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SELECT @@sql_mode;");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[0]))
+                    {
+                        if ($row[0] == '' || strstr($row[0], 'STRICT_TRANS_TABLES') !== false)
+                        {
+                            $isStrict = true;
+                        }
+                        else {
+                            $isStrict = false;
+                        }
+                        return $isStrict;
                     }
                     return false;
                 default:
@@ -595,7 +645,7 @@
          */
         public static function writeConfiguration($instanceRoot,
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
-                                                  $memcacheHost = null, $memcachePort = null,
+                                                  $memcacheHost = null, $memcachePort = null, $minifyScripts = true,
                                                   $language,
                                                   $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
         {
@@ -619,7 +669,6 @@
             copy($debugConfigFileDist, $debugConfigFile);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
-
             $contents = file_get_contents($debugConfigFile);
             $contents = preg_replace('/\$debugOn\s*=\s*true;/',
                                      '$debugOn = false;',
@@ -627,6 +676,12 @@
             $contents = preg_replace('/\$forceNoFreeze\s*=\s*true;/',
                                      '$forceNoFreeze = false;',
                                      $contents);
+            if ($minifyScripts)
+            {
+                $contents = preg_replace('/\$minifyScripts\s*=\s*false;/',
+                                         '$minifyScripts = true;',
+                                         $contents);
+            }
             if ($memcacheHost == null && $memcachePort == null)
             {
                 $contents = preg_replace('/\$memcacheLevelCaching\s*=\s*true;/',
@@ -663,20 +718,38 @@
         public static function isDebugConfigWritable($instanceRoot)
         {
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
-            $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+
+            if (defined('IS_TEST'))
+            {
+                $debugConfigFile     = "$instanceRoot/protected/config/debugTest.php";
+            }
+            else
+            {
+                $debugConfigFile     = "$instanceRoot/protected/config/debug.php";
+            }
             copy($debugConfigFileDist, $debugConfigFile);
             $isWritable = is_writable($debugConfigFile);
             unlink($debugConfigFile);
+
             return $isWritable;
         }
 
         public static function isPerInstanceConfigWritable($instanceRoot)
         {
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            if (defined('IS_TEST'))
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
+            }
+            else
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            }
+
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             $isWritable = is_writable($perInstanceConfigFile);
             unlink($perInstanceConfigFile);
+
             return $isWritable;
         }
 
@@ -686,7 +759,14 @@
         public static function writeInstallComplete($instanceRoot)
         {
             assert('is_dir($instanceRoot)');
-            $perInstanceConfigFile = "$instanceRoot/protected/config/perInstance.php";
+            if (defined('IS_TEST'))
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstanceTest.php";
+            }
+            else
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/perInstance.php";
+            };
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
             $contents = file_get_contents($perInstanceConfigFile);
             $contents = preg_replace('/\$installed\s*=\s*false;/',
@@ -730,13 +810,22 @@
          * @param object $form
          * @param object $messageStreamer
          */
-        public static function runInstallation($form, & $messageStreamer,
-                                               $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
+        public static function runInstallation($form, & $messageStreamer)
         {
             assert('$form instanceof InstallSettingsForm');
             assert('$messageStreamer instanceof MessageStreamer');
-            assert('is_string($perInstanceFilename)');
-            assert('is_string($debugFilename)');
+
+            if (defined('IS_TEST'))
+            {
+                $perInstanceFilename     = "perInstanceTest.php";
+                $debugFilename     = "debugTest.php";
+            }
+            else
+            {
+                $perInstanceFilename     = "perInstance.php";
+                $debugFilename     = "debug.php";
+            }
+
             $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,
@@ -750,6 +839,7 @@
             InstallUtil::createSuperUser(   'super',
                                             $form->superUserPassword);
             $messageLogger = new MessageLogger($messageStreamer);
+            Yii::app()->custom->runBeforeInstallationAutoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Starting database schema creation.'));
             InstallUtil::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Database schema creation complete.'));
@@ -767,11 +857,13 @@
                                             $form->databasePassword,
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
+                                            true,
                                             Yii::app()->language,
                                             $perInstanceFilename,
                                             $debugFilename);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
+            Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 
@@ -786,8 +878,7 @@
             InstallUtil::checkPhpPostSizeSetting(1, $actualPostLimitBytes);
             $actualUploadLimitBytes = null;
             InstallUtil::checkPhpUploadSizeSetting(1, $actualUploadLimitBytes);
-            $actualMaxAllowedBytes  = null;
-            InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql', 1, $actualMaxAllowedBytes);
+            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize();
             return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
     }

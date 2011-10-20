@@ -43,7 +43,7 @@
         public function attributeLabels()
         {
             return array(
-                'title' => Yii::t('Default', 'The Title'),
+                'title' => Yii::t('Default', 'Title'),
                 'type'  => Yii::t('Default', 'Chart Type'),
             );
         }

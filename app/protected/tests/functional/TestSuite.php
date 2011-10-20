@@ -50,27 +50,28 @@
         {
             global $argv, $argc;
 
-            $usage = "\n"                                                                                             .
-                     "  Usage: php [options] TestSuite.php <All|Misc|moduleName|TestClassName> [options]\n"           .
-                     "\n"                                                                                             .
-                     "    All           Run all tests.\n"                                                             .
-                     "    Framework     Run all tests in framework/tests/functional.\n"                               .
-                     "    Misc          Run the test suites in app/protected/tests/functional.\n"                     .
-                     "    moduleName    Run the test suites in app/protected/modules/moduleName/tests/functional.\n"  .
-                     "    TestClassName Run the tests in TestClassName.html, wherever that happens to be.\n"          .
-                     "    options\n"                                                                                  .
-                     "    -p            port Example: -p4044\n"                                                       .
-                     "    -h            host Example: -hhttp://www.sitetotest/app/\n"                                 .
-                     "    -b            browser <*firefox|*iexplore> if not specified, will run all in browsers \n"   ;
-                     "                  Example: -b*firefox \n"                                                       ;
-                     "\n"                                                                                             .
-                     "  Examples:\n"                                                                                  .
-                     "\n"                                                                                             .
-                     "    php TestSuiteSelenium.php accounts (Run the tests in the Accounts module.)\n"               .
-                     "    php TestSuiteSelenium.php RedBeanModelTest   (Run the test suite RedBeanModelTest.html.)\n" .
-                     "\n"                                                                                             .
-                     "  Note:\n"                                                                                      .
-                     "\n"                                                                                             ;
+            $usage = "\n"                                                                                                   .
+                     "  Usage: php [options] TestSuite.php <All|Misc|moduleName|TestClassName> [options]\n"                 .
+                     "\n"                                                                                                   .
+                     "    All               Run all tests.\n"                                                               .
+                     "    Framework         Run all tests in framework/tests/functional.\n"                                 .
+                     "    Misc              Run the test suites in app/protected/tests/functional.\n"                       .
+                     "    moduleName        Run the test suites in app/protected/modules/moduleName/tests/functional.\n"    .
+                     "    TestClassName     Run the tests in TestClassName.html, wherever that happens to be.\n"            .
+                     "    options\n"                                                                                        .
+                     "    -p                port Example: -p4044\n"                                                         .
+                     "    -h                host Example: -hhttp://www.sitetotest/app/\n"                                   .
+                     "    -b                browser <*firefox|*iexplore> if not specified, will run all in browsers \n"     ;
+                     "                      Example: -b*firefox \n"                                                         ;
+                     "    -userExtensions   Example: -userExtensions pathToTheUserExtensionJS \n"                           .
+                     "\n"                                                                                                   .
+                     "  Examples:\n"                                                                                        .
+                     "\n"                                                                                                   .
+                     "    php TestSuiteSelenium.php accounts (Run the tests in the Accounts module.)\n"                     .
+                     "    php TestSuiteSelenium.php RedBeanModelTest   (Run the test suite RedBeanModelTest.html.)\n"       .
+                     "\n"                                                                                                   .
+                     "  Note:\n"                                                                                            .
+                     "\n"                                                                                                   ;
 
             if ($argv[0] != 'TestSuite.php')
             {

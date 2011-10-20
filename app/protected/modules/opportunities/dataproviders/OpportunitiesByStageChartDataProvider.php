@@ -48,16 +48,8 @@
 
         public function getChartData()
         {
-            $quote = DatabaseCompatibilityUtil::getQuote();
-            $sql  = "select {$quote}customfield{$quote}.{$quote}value{$quote} stage, ";
-            $sql .= "sum({$quote}currencyvalue{$quote}.{$quote}value{$quote} * {$quote}currencyvalue{$quote}.{$quote}ratetobase{$quote}) amount ";
-            $sql .= "from {$quote}opportunity{$quote}, {$quote}customfield{$quote}, {$quote}currencyvalue{$quote} ";
-            $sql .= "where {$quote}opportunity{$quote}.{$quote}stage_ownedcustomfield_id{$quote} = ";
-            $sql .= "{$quote}customfield{$quote}.{$quote}id{$quote} ";
-            $sql .= "and {$quote}opportunity{$quote}.{$quote}amount_currencyvalue_id{$quote} = ";
-            $sql .= "{$quote}currencyvalue{$quote}.{$quote}id{$quote} ";
-            $sql .= "group by {$quote}customfield{$quote}.{$quote}value{$quote}";
-            $rows = R::getAll($sql);
+            $sql       = static::makeChartSqlQuery();
+            $rows      = R::getAll($sql);
             $chartData = array();
             foreach ($rows as $row)
             {
@@ -67,6 +59,29 @@
                 );
             }
             return $chartData;
+        }
+
+        protected static function makeChartSqlQuery()
+        {
+            $quote                     = DatabaseCompatibilityUtil::getQuote();
+            $where                     = null;
+            $selectDistinct            = false;
+            $joinTablesAdapter         = new RedBeanModelJoinTablesQueryAdapter('Opportunity');
+            Opportunity::resolveReadPermissionsOptimizationToSqlQuery(Yii::app()->user->userModel,
+                                                                      $joinTablesAdapter,
+                                                                      $where,
+                                                                      $selectDistinct);
+            $selectQueryAdapter        = new RedBeanModelSelectQueryAdapter($selectDistinct);
+            $sumPart                   = "{$quote}currencyvalue{$quote}.{$quote}value{$quote} ";
+            $sumPart                  .= "* {$quote}currencyvalue{$quote}.{$quote}ratetobase{$quote}";
+            $selectQueryAdapter->addClause('customfield', 'value', 'stage');
+            $selectQueryAdapter->addSummationClause($sumPart, 'amount');
+            $joinTablesAdapter->addFromTableAndGetAliasName('customfield', 'stage_ownedcustomfield_id', 'opportunity');
+            $joinTablesAdapter->addFromTableAndGetAliasName('currencyvalue', 'amount_currencyvalue_id', 'opportunity');
+            $groupBy                   = "{$quote}customfield{$quote}.{$quote}value{$quote}";
+            $sql                       = SQLQueryUtil::makeQuery('opportunity', $selectQueryAdapter,
+                                                                 $joinTablesAdapter, null, null, $where, null, $groupBy);
+            return $sql;
         }
     }
 ?>

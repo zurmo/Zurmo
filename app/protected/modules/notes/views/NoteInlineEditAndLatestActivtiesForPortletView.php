@@ -82,13 +82,22 @@
 
         protected function renderNoteInlineEditContent()
         {
+            if (null != $messageContent = RequiredAttributesValidViewUtil::
+                                         resolveValidView('NotesModule', $this->getInlineEditViewClassName()))
+            {
+                $message = Yii::t('Default', 'The NotesModulePluralLabel form cannot be displayed.',
+                           LabelUtil::getTranslationParamsForAllModules());
+                $message .= '<br/>' . $messageContent . '<br/><br/>';
+                return $message;
+            }
             $note         = new Note();
             $note->activityItems->add($this->params["relationModel"]);
             $inlineViewClassName = $this->getInlineEditViewClassName();
 
             $urlParameters = array('redirectUrl' => $this->getPortletDetailsUrl()); //After save, the url to go to.
             $uniquePageId  = get_called_class();
-            $inlineView    = new $inlineViewClassName( $note, 'default', 'notes', $urlParameters, $uniquePageId);
+            $inlineView    = new $inlineViewClassName($note, 'default', 'notes', 'inlineCreateSave',
+                                                      $urlParameters, $uniquePageId);
             $content  = Yii::t('Default', 'Add a NotesModuleSingularLabel about',
                                             LabelUtil::getTranslationParamsForAllModules());
             $content .= ' ' . strval($this->params['relationModel']);

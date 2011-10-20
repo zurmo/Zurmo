@@ -35,7 +35,7 @@
         )
         {
             parent::__construct(3, 1);
-            $tileBarView = new TitleBarView($module::getModuleLabelByTypeAndLanguage('Plural'), yii::t('Default', 'General Edit'));
+            $tileBarView = new TitleBarView($module::getModuleLabelByTypeAndLanguage('Plural'), Yii::t('Default', 'General Edit'));
             $this->setView($tileBarView, 0, 0);
             $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
             $moduleEditViewClassName = get_class($module) . 'EditView';

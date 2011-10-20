@@ -164,7 +164,7 @@
             }
             $content .= '<tbody class="filtered-list-panel" ' . $style . '>';
             $content .= '<tr><th style="width:20%">';
-            $content .= '' . yii::t('Default', 'Filtered Lists') . ':&#160;';
+            $content .= '' . Yii::t('Default', 'Filtered Lists') . ':&#160;';
             $content .= '</th><td>';
             if (!empty($this->filteredList))
             {

@@ -30,6 +30,12 @@
     abstract class InlineEditView extends EditView
     {
         /**
+         * Action id to use by ajax for validating and saving the note.
+         * @var string
+         */
+        protected $saveActionId;
+
+        /**
          * Parameters to pass in the url for validation any actions called.
          * @var array
          */
@@ -41,16 +47,18 @@
          */
         protected $uniquePageId;
 
-        public function __construct(RedBeanModel $model, $controllerId, $moduleId, $urlParameters, $uniquePageId)
+        public function __construct(RedBeanModel $model, $controllerId, $moduleId, $saveActionId, $urlParameters, $uniquePageId)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
+            assert('is_string($saveActionId)');
             assert('is_array($urlParameters)');
             assert('is_string($uniquePageId)');
             $this->model              = $model;
             $this->modelClassName     = get_class($model);
             $this->controllerId       = $controllerId;
             $this->moduleId           = $moduleId;
+            $this->saveActionId       = $saveActionId;
             $this->urlParameters      = $urlParameters;
             $this->uniquePageId       = $uniquePageId;
         }
@@ -113,7 +121,7 @@
 
         protected function getValidateAndSaveUrl()
         {
-            return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/inlineEditSave', $this->urlParameters);
+            return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $this->saveActionId, $this->urlParameters);
         }
 
         public function isUniqueToAPage()

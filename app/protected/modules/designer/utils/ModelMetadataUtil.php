@@ -46,6 +46,7 @@
             assert('is_string($modelClassName) && $modelClassName != ""');
             assert('is_string($memberName)     && $memberName != ""');
             assert('is_array($attributeLabels)');
+            assert('$defaultValue === null || $defaultValue !== ""');
             assert('$maxLength === null || is_int($maxLength)');
             assert('$precision === null || is_int($precision)');
             assert('is_bool($isRequired)');
@@ -187,6 +188,10 @@
                                 if ($defaultValue !== null)
                                 {
                                     $metadata[$modelClassName]['rules'][$i]['value'] = $defaultValue;
+                                }
+                                else
+                                {
+                                    unset($metadata[$modelClassName]['rules'][$i]);
                                 }
                                 $defaultFound = true;
                                 break;
@@ -367,7 +372,7 @@
             assert('is_array($metadata)');
             assert('is_string($modelClassName)');
             assert('is_string($labelsAttributeName)');
-            if(!isset($metadata[$modelClassName]['labels'][$labelsAttributeName]))
+            if (!isset($metadata[$modelClassName]['labels'][$labelsAttributeName]))
             {
                 $metadata[$modelClassName]['labels'][$labelsAttributeName] = array();
             }

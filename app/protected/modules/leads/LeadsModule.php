@@ -74,10 +74,10 @@
                     ),
                 ),
                 'designerMenuItems' => array(
-                    'showFieldsLink' => false,
+                    'showFieldsLink'  => true,
                     'showGeneralLink' => true,
                     'showLayoutsLink' => true,
-                    'showMenusLink' => true,
+                    'showMenusLink'   => true,
                 ),
                 'convertToAccountSetting' => LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED,
                 'convertToAccountAttributesMapping' => array(

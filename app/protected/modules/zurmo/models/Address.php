@@ -31,7 +31,7 @@
             $address = $this->makeAddress();
             if ($address == '')
             {
-                return yii::t('Default', '(None)');
+                return Yii::t('Default', '(None)');
             }
             return $address;
         }
@@ -96,7 +96,7 @@
                     array('country',    'type', 'type' => 'string'),
                     array('country',    'length', 'max' => 32),
                     array('postalCode', 'type', 'type' => 'string'),
-                    array('postalCode', 'length', 'max' => 10),
+                    array('postalCode', 'length', 'max' => 16),
                 ),
             );
             return $metadata;

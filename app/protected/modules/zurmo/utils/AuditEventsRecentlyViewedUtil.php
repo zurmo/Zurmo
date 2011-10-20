@@ -39,15 +39,15 @@
             assert('is_int($count)');
             $content     = null;
             $auditEvents = self::getRecentlyViewedAuditEventsByUser($user, $count);
-            if(count($auditEvents) > 0)
+            if (count($auditEvents) > 0)
             {
-                foreach($auditEvents as $auditEvent)
+                foreach ($auditEvents as $auditEvent)
                 {
                     assert('is_string($auditEvent->modelClassName)');
                     assert('$auditEvent->serializedData != null');
                     $modelClassName   = $auditEvent->modelClassName;
                     $unserializedData = unserialize($auditEvent->serializedData);
-                    if($unserializedData)
+                    if ($unserializedData)
                     {
                         $model           = $modelClassName::getById((int)$auditEvent->modelId);
                         $moduleClassName = ModelStateUtil::resolveModuleClassNameByStateOfModel($model);
@@ -55,7 +55,7 @@
                         $content .= CHtml::link($unserializedData,
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName), $linkHtmlOptions);
                         $content .= '&#160;-&#160;<span style="font-size:75%">';
-                        $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span></br>';
+                        $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span><br/>';
                     }
                 }
             }

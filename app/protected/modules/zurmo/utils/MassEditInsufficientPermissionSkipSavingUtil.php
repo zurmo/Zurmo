@@ -79,7 +79,7 @@
             {
                 return $skipCount . ' ' .
                     LabelUtil::getUncapitalizedModelLabelByCountAndModelClassName($skipCount, $modelClassName) .
-                    ' ' . yii::t('Default', 'skipped because you do not have sufficient permissions.');
+                    ' ' . Yii::t('Default', 'skipped because you do not have sufficient permissions.');
             }
             throw new NotSupportedException();
         }

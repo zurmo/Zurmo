@@ -94,6 +94,10 @@
             }
             if (SHOW_PERFORMANCE)
             {
+                if(SHOW_QUERY_DATA)
+                {
+                    $performanceMessage .= self::makeShowQueryDataContent();
+                }
                 foreach (Yii::app()->performance->getTimings() as $id => $time)
                 {
                     $performanceMessage .= 'Timing: ' . $id . ' total time: ' . number_format(($time), 3) . "</br>";
@@ -222,21 +226,36 @@
             $theme        = 'themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/screen.css', 'screen, projection');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/print.css', 'print');
-            if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
+
+            if (MINIFY_SCRIPTS)
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/ie.css', 'screen, projection');
-            }
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/theme.css', 'screen, projection');
-            foreach ($this->getStyles() as $style)
-            {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $defaultTheme . '/css' . '/' . $style. '.css'); // Not Coding Standard
-                if ($theme != $defaultTheme && file_exists("$theme/css/$style.css"))
+                Yii::app()->minScript->generateScriptMap('css');
+                if (!YII_DEBUG)
                 {
-                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/' . $style. '.css'); // Not Coding Standard
+                    Yii::app()->minScript->generateScriptMap('js');
                 }
             }
+
+            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/theme.css');
+
+            if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
+            {
+                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
+            }
+
+            foreach ($this->getStyles() as $style)
+            {
+                if ($style != 'ie')
+                {
+                    if (file_exists("$theme/css/$style.css"))
+                    {
+                        $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
+                    }
+                }
+            }
+
             if (file_exists("$theme/ico/favicon.ico"))
             {
                 $cs->registerLinkTag('shortcut icon', null, $theme . '/ico/favicon.ico');
@@ -299,6 +318,22 @@
         protected function renderXHtmlEnd()
         {
             return '</html>';
+        }
+
+        public static function makeShowQueryDataContent()
+        {
+            $performanceMessage  = 'Total/Duplicate Queries: ' . Yii::app()->performance->getRedBeanQueryLogger()->getQueriesCount();
+            $performanceMessage .= '/'   . Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesCount();
+            $duplicateData = Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesData();
+            if(count($duplicateData) > 0)
+            {
+                $performanceMessage .= '</br></br>Duplicate Queries:</br>';
+            }
+            foreach ($duplicateData as $query => $count)
+            {
+                $performanceMessage .= 'Count: ' . $count . '&#160;&#160;&#160;Query: ' . $query . "</br>";
+            }
+            return $performanceMessage;
         }
     }
 ?>

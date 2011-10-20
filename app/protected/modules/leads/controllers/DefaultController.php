@@ -35,6 +35,11 @@
                         'moduleClassName' => 'LeadsModule',
                         'rightName' => LeadsModule::RIGHT_CONVERT_LEADS,
                    ),
+                    array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, edit',
+                        'moduleClassName' => get_class($this->getModule()),
+                        'viewClassName'   => 'LeadEditAndDetailsView',
+                   ),
                )
             );
         }
@@ -68,6 +73,7 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/details', 'id' => $contact->id);
@@ -75,7 +81,6 @@
             }
             else
             {
-                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
                 AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($contact), $contact);
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
@@ -98,6 +103,7 @@
         public function actionEdit($id, $redirectUrl = null)
         {
             $contact = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/edit', 'id' => $contact->id);
@@ -105,7 +111,6 @@
             }
             else
             {
-                ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
                 $view = new LeadsPageView($this,
                     $this->makeTitleBarAndEditAndDetailsView(
                         $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
@@ -154,7 +159,7 @@
                 $dataProvider
             );
             $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
-                new Contact(false),
+                $contact,
                 $activeAttributes,
                 $selectedRecordCount,
                 Yii::t('Default', 'Leads')
@@ -204,6 +209,13 @@
             $selectAccountForm       = new AccountSelectForm();
             $account                 = new Account();
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
+
+            $userCanAccessContacts = RightsUtil::canUserAccessModule('ContactsModule', Yii::app()->user->userModel);
+            $userCanAccessAccounts = RightsUtil::canUserAccessModule('AccountsModule', Yii::app()->user->userModel);
+            $userCanCreateAccount  = RightsUtil::doesUserHaveAllowByRightName('AccountsModule',
+                                     AccountsModule::RIGHT_CREATE_ACCOUNTS, Yii::app()->user->userModel);
+            LeadsControllerSecurityUtil::
+            resolveCanUserProperlyConvertLead($userCanAccessContacts, $userCanAccessAccounts, $convertToAccountSetting);
             if (isset($_POST['AccountSelectForm']))
             {
                 $selectAccountForm->setAttributes($_POST['AccountSelectForm']);
@@ -223,7 +235,9 @@
                 }
             }
             elseif (isset($_POST['AccountSkip']) ||
-                $convertToAccountSetting == LeadsModule::CONVERT_NO_ACCOUNT)
+                $convertToAccountSetting == LeadsModule::CONVERT_NO_ACCOUNT ||
+                ($convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED && !$userCanAccessAccounts)
+                )
             {
                 $this->actionSaveConvertedContact($contact);
             }
@@ -238,7 +252,8 @@
                 strval($contact),
                 $selectAccountForm,
                 $account,
-                $convertToAccountSetting
+                $convertToAccountSetting,
+                $userCanCreateAccount
             );
             $view = new LeadsPageView($this, $convertView);
             echo $view->render();
@@ -251,12 +266,12 @@
             if ($contact->save())
             {
                 Yii::app()->user->setFlash('notification',
-                    yii::t('Default', 'Lead successfully converted.')
+                    Yii::t('Default', 'Lead successfully converted.')
                 );
                 $this->redirect(array('/contacts/default/details', 'id' => $contact->id));
             }
             Yii::app()->user->setFlash('notification',
-                yii::t('Default', 'Lead was not converted. An error occured.')
+                Yii::t('Default', 'Lead was not converted. An error occured.')
             );
             $this->redirect(array('default/details', 'id' => $contact->id));
             Yii::app()->end(0, false);
@@ -268,7 +283,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::renderModalSearchList($this, $modalListLinkProvider,
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
                                                 Yii::t('Default', 'LeadsModuleSingularLabel Search',
                                                 LabelUtil::getTranslationParamsForAllModules()),
                                                 'LeadsStateMetadataAdapter');
@@ -277,6 +292,7 @@
         public function actionDelete($id)
         {
             $contact = Contact::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
                 $urlParams = array('/contacts/' . $this->getId() . '/delete', 'id' => $contact->id);

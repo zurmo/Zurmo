@@ -201,6 +201,8 @@
             unset($everyone);
 
             Right::removeAll();
+            //Clear the cache since the method above removeAll calls directly to the database.
+            RightsCache::forgetAll();
 
             $nerd       = User::getByUsername('billy');
             $salesman   = User::getByUsername('bobby');
@@ -282,6 +284,9 @@
             $this->assertEquals(Right::ALLOW, $userInChildChildRole->getEffectiveRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API));
 
             Right::removeAll();
+            //Clear the cache since the method above removeAll calls directly to the database.
+            RightsCache::forgetAll();
+
             $userInParentRoleId     = $userInParentRole    ->id;
             $userInChildRoleId      = $userInChildRole     ->id;
             $userInChildChildRoleId = $userInChildChildRole->id;

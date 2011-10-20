@@ -83,6 +83,20 @@
             echo $view->render();
         }
 
+        /**
+         * Override to ensure the permissions cache is forgotten since if it is not, other users logged in will not
+         * get the effective changes until the cache is cleared across the application.
+         * (non-PHPdoc)
+         * @see ZurmoBaseController::actionAfterSuccessfulModelSave()
+         */
+        protected function actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams = null)
+        {
+            PermissionsCache::forgetAll();
+            RightsCache::forgetAll();
+            PoliciesCache::forgetAll();
+            parent::actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
+        }
+
         //selecting
         public function actionModalParentList()
         {

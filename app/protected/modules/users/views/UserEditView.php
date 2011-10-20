@@ -40,6 +40,7 @@
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
                         'TitleFullName',
+                        'DerivedUserStatus',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'title',
@@ -174,6 +175,15 @@
                                         ),
                                     )
                                 ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DerivedUserStatus'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                             ),
                         ),
                     ),
@@ -196,6 +206,19 @@
         public static function getDesignerRulesType()
         {
             return 'UserEditAndDetailsView';
+        }
+
+        /**
+         * Override to handle special cases for the user status attribute.
+         * @see DetailsView::resolveElementInformationDuringFormLayoutRender()
+         */
+        protected function resolveElementInformationDuringFormLayoutRender(& $elementInformation)
+        {
+            if($elementInformation['type'] == 'DerivedUserStatus' &&
+               !UserStatusUtil::canUserEditStatusOnAnotherUser(Yii::app()->user->userModel, $this->model))
+            {
+                $elementInformation['type'] = 'ReadOnlyDerivedUserStatus';
+            }
         }
     }
 ?>
