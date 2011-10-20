@@ -40,6 +40,7 @@
     define('TEST_BASE_URL', $seleniumTestBaseUrl);
     define('TEST_RESULTS_URL', $seleniumTestResultUrl);
     define('TEST_RESULTS_PATH', $seleniumTestResultsPath);
+    define('USER_EXTENSIONS_JS_PATH', $seleniumUserExtensionsJSPath);
     define('SELENIUM_SERVER_PORT', $seleniumServerPort);
     define('BROWSERS_TO_RUN', $seleniumBrowsersToRun);
 
@@ -181,6 +182,7 @@
                     $finalCommand .= '-port ' . self::resolvePortFromParameterAndConstant();
                     $finalCommand .= ' -htmlSuite ' . $browserId . ' ';
                     $finalCommand .= $host . ' ' . realPath($pathToSuite) . ' ' . $finalTestResultsPath;
+                    $finalCommand .= ' -userExtensions ' . self::resolveUserExtensionsJsFromParameterAndConstant();
                     echo $finalCommand . "\n";
                     exec($finalCommand);
                 }
@@ -284,6 +286,20 @@
                 }
             }
             return TEST_BASE_URL;
+        }
+
+        protected static function resolveUserExtensionsJsFromParameterAndConstant()
+        {
+            global $argv, $argc;
+
+            for ($i = 0; $i < ($argc); $i++)
+            {
+                if (substr($argv[$i], 0, 16) == '-userExtensions ')
+                {
+                    return substr($argv[$i], 16);
+                }
+            }
+            return USER_EXTENSIONS_JS_PATH;
         }
 
         protected static function resolveBrowserFromParameter()

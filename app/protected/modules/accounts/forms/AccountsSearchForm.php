@@ -71,8 +71,8 @@
                     array('shippingAddress', 'city'),
                 ),
                 'anyStreet' => array(
-                    array('billingAddress',  'street'),
-                    array('shippingAddress', 'street'),
+                    array('billingAddress',  'street1'),
+                    array('shippingAddress', 'street1'),
                 ),
                 'anyState' => array(
                     array('billingAddress',  'state'),
