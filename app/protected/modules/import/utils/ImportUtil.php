@@ -86,7 +86,7 @@
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
                 $messageLogger->countAfterRowImported();
             }
-            $messageLogger->countImportCompleted();
+            $messageLogger->countDataProviderGetDataImportCompleted();
         }
 
         /**
