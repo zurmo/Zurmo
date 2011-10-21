@@ -29,9 +29,8 @@
     * Walkthrough for the super user of all possible controller actions.
     * Since this is a super user, he should have access to all controller actions
     * without any exceptions being thrown.
-    * This also test the creation of the customfileds, addition of custom fields to all the layouts including the search
-    * views
-    * This also test creation, search and edit of the meetings based on the custom fields
+    * This also test the creation of the customfileds, addition of custom fields to all the layouts
+    * This also test creation, edit and delete of the meetings based on the custom fields
     */
     class MeetingsDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
@@ -215,14 +214,14 @@
             $dateAssert = date('Y-m-d');
             $datetime = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
-           
+
             //get the super user, account, opportunity and contact id
             $superUserId        = $super->id;
             $superAccount       = Account::getByName('superAccount');
             $superContactId1    = self::getModelIdByModelNameAndName('Contact', 'superContact1 superContact1son');
             $superContactId2    = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
             $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
-          
+
             //Create a new meeting based on the custom fields.
             $this->setGetArray(array(   'relationAttributeName'  => 'Account',
                                         'relationModelId'        => $superAccount[0]->id,

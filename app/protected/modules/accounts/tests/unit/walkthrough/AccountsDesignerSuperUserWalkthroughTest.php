@@ -610,7 +610,7 @@
                                      'ajax'               =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
-            //assert that the edit account exits after the search
+            //assert that the edit account does not exits after the search
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
         }

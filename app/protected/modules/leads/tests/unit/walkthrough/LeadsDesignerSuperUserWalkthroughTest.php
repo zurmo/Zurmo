@@ -50,104 +50,95 @@
     ********************************************************************************/
 
     /**
-    * Designer Module Walkthrough of contacts.
+    * Designer Module Walkthrough of leads.
     * Walkthrough for the super user of all possible controller actions.
     * Since this is a super user, he should have access to all controller actions
     * without any exceptions being thrown.
     * This also test the creation of the customfileds, addition of custom fields to all the layouts including the search
     * views
-    * This also test creation, search and edit of the contact based on the custom fields
+    * This also test creation, search and edit of the lead based on the custom fields
     */
-    class ContactsDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
-    {        
+    class LeadsDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
+    {
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            //Create a contact for testing.
-            $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
-            ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
+            
+            //create a lead here
+            LeadTestHelper::createLeadbyNameForOwner('superLead',    $super);
         }
 
-        public function testSuperUserContactDefaultControllerActions()
+        public function testSuperUserLeadDefaultControllerActions()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //Default Controller actions requiring some sort of parameter via POST or GET
-            //Load Conatct Modules Menu.
-            $this->resetPostArray();
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
+            //Load Lead Modules Menu.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/modulesMenu');
 
-            //Load AttributesList for Conatct module.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributesList');
-
-            //Load ModuleLayoutsList for Conatct module.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
+            //Load ModuleLayoutsList for Lead module.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/moduleLayoutsList');
 
             //Load ModuleEdit view for each applicable module.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/moduleEdit');
 
             //Now validate save with failed validation.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->setPostArray(array('ajax' => 'edit-form',
-                'ContactsModuleForm' => $this->createModuleEditBadValidationPostData()));
+                'LeadsModuleForm' => $this->createModuleEditBadValidationPostData()));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/moduleEdit');
             $this->assertTrue(strlen($content) > 50); //approximate, but should definetely be larger than 50.
 
             //Now validate save with successful validation.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->setPostArray(array('ajax' => 'edit-form',
-                'ContactsModuleForm' => $this->createModuleEditGoodValidationPostData('con new name')));
+                'LeadsModuleForm' => $this->createModuleEditGoodValidationPostData('lea new name')));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/moduleEdit');
             $this->assertEquals('[]', $content);
 
             //Now save successfully.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->setPostArray(array('save' => 'Save',
-                'ContactsModuleForm' => $this->createModuleEditGoodValidationPostData('con new name')));
+                'LeadsModuleForm' => $this->createModuleEditGoodValidationPostData('lea new name')));
             $this->runControllerWithRedirectExceptionAndGetContent('designer/default/moduleEdit');
 
             //Now confirm everything did in fact save correctly.
-            $this->assertEquals('Con New Name',  ContactsModule::getModuleLabelByTypeAndLanguage('Singular'));
-            $this->assertEquals('Con New Names', ContactsModule::getModuleLabelByTypeAndLanguage('Plural'));
-            $this->assertEquals('con new name',  ContactsModule::getModuleLabelByTypeAndLanguage('SingularLowerCase'));
-            $this->assertEquals('con new names', ContactsModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
+            $this->assertEquals('Lea New Name',  LeadsModule::getModuleLabelByTypeAndLanguage('Singular'));
+            $this->assertEquals('Lea New Names', LeadsModule::getModuleLabelByTypeAndLanguage('Plural'));
+            $this->assertEquals('lea new name',  LeadsModule::getModuleLabelByTypeAndLanguage('SingularLowerCase'));
+            $this->assertEquals('lea new names', LeadsModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
             //Load LayoutEdit for each applicable module and applicable layout
-            $this->resetPostArray();
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactEditAndDetailsView'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadEditAndDetailsView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsListView'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsListView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsModalListView'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsMassEditView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsModalSearchView'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsModalListView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsMassEditView'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsModalSearchView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsRelatedListView'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsSearchView'));
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsSearchView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
         }
 
         /**
-         * @depends testSuperUserContactDefaultControllerActions
+         * @depends testSuperUserLeadDefaultControllerActions
          */
-        public function testSuperUserCustomFieldsWalkthroughForContactsModule()
+        public function testSuperUserCustomFieldsWalkthroughForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -172,90 +163,89 @@
         }
 
         /**
-         * @depends testSuperUserCustomFieldsWalkthroughForContactsModule
+         * @depends testSuperUserCustomFieldsWalkthroughForLeadsModule
          */
-        public function testSuperUserAddCustomFieldsToLayoutsForContactsModule()
+        public function testSuperUserAddCustomFieldsToLayoutsForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //Add custom fields to ContactEditAndDetailsView.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactEditAndDetailsView'));
-            $layout = ContactsDesignerWalkthroughHelperUtil::getContactEditAndDetailsViewLayoutWithAllCustomFieldsPlaced();
+            //Add custom fields to LeadEditAndDetailsView.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadEditAndDetailsView'));
+            $layout = ContactsDesignerWalkthroughHelperUtil::getContactEditAndDetailsViewLayoutWithAllCustomFieldsPlaced(
+                        'LeadStateDropDown');
             $this->setPostArray(array('save'  => 'Save', 'layout' => $layout,
                                       'LayoutPanelsTypeForm' => array('type' => FormLayout::PANELS_DISPLAY_TYPE_ALL)));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
 
-            //Add all fields to ContactsSearchView.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsSearchView'));
-            $layout = ContactsDesignerWalkthroughHelperUtil::getContactsSearchViewLayoutWithAllCustomFieldsPlaced();
+            //Add all fields to LeadsSearchView.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsSearchView'));
+            $layout = ContactsDesignerWalkthroughHelperUtil::getContactsSearchViewLayoutWithAllCustomFieldsPlaced(
+                        'LeadStateDropDown');
             $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
 
-            //Add all fields to ContactsListView.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsListView'));
+            //Add all fields to LeadsListView.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsListView'));
             $layout = ContactsDesignerWalkthroughHelperUtil::getContactsListViewLayoutWithAllStandardAndCustomFieldsPlaced();
             $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
 
-            //Add all fields to ContactsRelatedListView.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsRelatedListView'));
-            $layout = ContactsDesignerWalkthroughHelperUtil::getContactsListViewLayoutWithAllStandardAndCustomFieldsPlaced();
+            //Add all fields to LeadsMassEditView.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsMassEditView'));
+            $layout = ContactsDesignerWalkthroughHelperUtil::getContactsMassEditViewLayoutWithAllStandardAndCustomFieldsPlaced(
+                        'LeadStateDropDown');
             $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
 
-            //Add all fields to ContactsMassEditView.
-            $this->setGetArray(array('moduleClassName' => 'ContactsModule',
-                                     'viewClassName'   => 'ContactsMassEditView'));
-            $layout = ContactsDesignerWalkthroughHelperUtil::getContactsMassEditViewLayoutWithAllStandardAndCustomFieldsPlaced();
+            //Add all fields to LeadsModalListView.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule',
+                                     'viewClassName'   => 'LeadsModalListView'));
+            $layout = ContactsDesignerWalkthroughHelperUtil::getContactsListViewLayoutWithAllStandardAndCustomFieldsPlaced();
             $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
         }
 
         /**
-         * @depends testSuperUserAddCustomFieldsToLayoutsForContactsModule
+         * @depends testSuperUserAddCustomFieldsToLayoutsForLeadsModule
          */
-        public function testLayoutsLoadOkAfterCustomFieldsPlacedForContactsModule()
+        public function testLayoutsLoadOkAfterCustomFieldsPlacedForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
-            $superContactId = self::getModelIdByModelNameAndName ('Contact', 'superContact superContactson');
+            $superLeadId  = self::getModelIdByModelNameAndName('Contact', 'superLead superLeadson');
             //Load create, edit, and details views.
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/create');
-            $this->setGetArray(array('id' => $superContactId));
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/create');
+            $this->setGetArray(array('id' => $superLeadId));
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/details');
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
             $this->setGetArray(array(
                 'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
             ));
             $this->resetPostArray();
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/modalList');
-            $this->setGetArray(array('id' => $superAccountId));
-            $this->resetPostArray();
-            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/modalList');
             $this->setGetArray(array('selectAll' => '1'));
             $this->resetPostArray();
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massEdit');
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/massEdit');
+            //todo: test related list once the related list is available in a sub view.
         }
 
         /**
-         * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForContactsModule
+         * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForLeadsModule
          */
-        public function testCreateAnContactUserAfterTheCustomFieldsArePlacedForContactsModule()
+        public function testCreateAnLeadUserAfterTheCustomFieldsArePlacedForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id and the super account id
-            $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            //retrive the the super user id
             $superUserId = $super->id;
 
             //set the date and datetime variable values here
@@ -264,25 +254,27 @@
             $datetime = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
-            //retrive the Contact State (Status) Id based on the name
-            $contactState = ContactState::getByName('Qualified');
-            $contactStateID = $contactState[0]->id;
+            //retrive the Lead State (Status) Id based on the name
+            $leadState = ContactState::getByName('New');
+            $leadStateID = $leadState[0]->id;
 
-            //Create a new contact based on the custom fields.
+            //Create a new Lead based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Contact' => array(
                                     'title'                             =>  array('value' => 'Mr.'),
                                     'firstName'                         =>  'Sarah',
                                     'lastName'                          =>  'Williams',
-                                    'state'                             =>  array('id' => $contactStateID),
+                                    'state'                             =>  array('id' => $leadStateID),
                                     'jobTitle'                          =>  'Sales Director',
-                                    'account'                           =>  array('id' => $accountId),
+                                    'companyName'                       =>  'ABC Telecom',
+                                    'industry'                          =>  array('value' => 'Automotive'),
+                                    'website'                           =>  'http://www.company.com',
                                     'department'                        =>  'Sales',
                                     'officePhone'                       =>  '739-741-3005',
                                     'source'                            =>  array('value' => 'Self-Generated'),
                                     'mobilePhone'                       =>  '285-301-8232',
                                     'officeFax'                         =>  '255-455-1914',
-                                    'primaryEmail'                      =>  array('emailAddress'=>'info@myNewContact.com',
+                                    'primaryEmail'                      =>  array('emailAddress'=>'info@myNewLead.com',
                                                                                   'optOut'=>'1',
                                                                                   'isInvalid'=>'0'),
                                     'secondaryEmail'                    =>  array('emailAddress'=>'',
@@ -316,95 +308,100 @@
                                     'text'                              =>  'This is a test Text',
                                     'textarea'                          =>  'This is a test TextArea',
                                     'url'                               =>  'http://wwww.abc.com')));
-            $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/create');
+            $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/create');
 
             //check the details if they are saved properly for the custom fields
-            $contactId     = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
-            $contact       = Contact::getById($contactId);
-            //retrive the permission of the contact
+            $leadId     = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
+            $lead       = Contact::getById($leadId);
+
+            //retrive the permission of the lead
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                 makeBySecurableItem($contact);
+                                                 makeBySecurableItem($lead);
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
             $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
 
-            $this->assertEquals($contact->title->value                   , 'Mr.');
-            $this->assertEquals($contact->firstName                      , 'Sarah');
-            $this->assertEquals($contact->lastName                       , 'Williams');
-            $this->assertEquals($contact->state->id                      , $contactStateID);
-            $this->assertEquals($contact->jobTitle                       , 'Sales Director');
-            $this->assertEquals($contact->account->id                    , $accountId);
-            $this->assertEquals($contact->department                     , 'Sales');
-            $this->assertEquals($contact->officePhone                    , '739-741-3005');
-            $this->assertEquals($contact->source->value                  , 'Self-Generated');
-            $this->assertEquals($contact->mobilePhone                    , '285-301-8232');
-            $this->assertEquals($contact->officeFax                      , '255-455-1914');
-            $this->assertEquals($contact->primaryEmail->emailAddress     , 'info@myNewContact.com');
-            $this->assertEquals($contact->primaryEmail->optOut           , '1');
-            $this->assertEquals($contact->primaryEmail->isInvalid        , '0');
-            $this->assertEquals($contact->secondaryEmail->emailAddress   , '');
-            $this->assertEquals($contact->secondaryEmail->optOut         , '0');
-            $this->assertEquals($contact->secondaryEmail->isInvalid      , '0');
-            $this->assertEquals($contact->primaryAddress->street1        , '26217 West Third Lane');
-            $this->assertEquals($contact->primaryAddress->street2        , '');
-            $this->assertEquals($contact->primaryAddress->city           , 'New York');
-            $this->assertEquals($contact->primaryAddress->state          , 'NY');
-            $this->assertEquals($contact->primaryAddress->postalCode     , '10169');
-            $this->assertEquals($contact->primaryAddress->country        , 'USA');
-            $this->assertEquals($contact->secondaryAddress->street1      , '26217 West Third Lane');
-            $this->assertEquals($contact->secondaryAddress->street2      , '');
-            $this->assertEquals($contact->secondaryAddress->city         , 'New York');
-            $this->assertEquals($contact->secondaryAddress->state        , 'NY');
-            $this->assertEquals($contact->secondaryAddress->postalCode   , '10169');
-            $this->assertEquals($contact->secondaryAddress->country      , 'USA');
-            $this->assertEquals($contact->owner->id                      , $superUserId);
+            $this->assertEquals($lead->title->value                   , 'Mr.');
+            $this->assertEquals($lead->firstName                      , 'Sarah');
+            $this->assertEquals($lead->lastName                       , 'Williams');
+            $this->assertEquals($lead->state->id                      , $leadStateID);
+            $this->assertEquals($lead->jobTitle                       , 'Sales Director');
+            $this->assertEquals($lead->companyName                    , 'ABC Telecom');
+            $this->assertEquals($lead->industry->value                , 'Automotive');
+            $this->assertEquals($lead->website                        , 'http://www.company.com');
+            $this->assertEquals($lead->department                     , 'Sales');
+            $this->assertEquals($lead->officePhone                    , '739-741-3005');
+            $this->assertEquals($lead->source->value                  , 'Self-Generated');
+            $this->assertEquals($lead->mobilePhone                    , '285-301-8232');
+            $this->assertEquals($lead->officeFax                      , '255-455-1914');
+            $this->assertEquals($lead->primaryEmail->emailAddress     , 'info@myNewLead.com');
+            $this->assertEquals($lead->primaryEmail->optOut           , '1');
+            $this->assertEquals($lead->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($lead->secondaryEmail->emailAddress   , '');
+            $this->assertEquals($lead->secondaryEmail->optOut         , '0');
+            $this->assertEquals($lead->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($lead->primaryAddress->street1        , '26217 West Third Lane');
+            $this->assertEquals($lead->primaryAddress->street2        , '');
+            $this->assertEquals($lead->primaryAddress->city           , 'New York');
+            $this->assertEquals($lead->primaryAddress->state          , 'NY');
+            $this->assertEquals($lead->primaryAddress->postalCode     , '10169');
+            $this->assertEquals($lead->primaryAddress->country        , 'USA');
+            $this->assertEquals($lead->secondaryAddress->street1      , '26217 West Third Lane');
+            $this->assertEquals($lead->secondaryAddress->street2      , '');
+            $this->assertEquals($lead->secondaryAddress->city         , 'New York');
+            $this->assertEquals($lead->secondaryAddress->state        , 'NY');
+            $this->assertEquals($lead->secondaryAddress->postalCode   , '10169');
+            $this->assertEquals($lead->secondaryAddress->country      , 'USA');
+            $this->assertEquals($lead->owner->id                      , $superUserId);
             $this->assertEquals(0                                        , count($readWritePermitables));
             $this->assertEquals(0                                        , count($readOnlyPermitables));
-            $this->assertEquals($contact->description                    , 'This is a Description');
-            $this->assertEquals($contact->checkbox                       , '1');
-            $this->assertEquals($contact->currency->value                , 45);
-            $this->assertEquals($contact->date                           , $dateAssert);
-            $this->assertEquals($contact->datetime                       , $datetimeAssert);
-            $this->assertEquals($contact->decimal                        , '123');
-            $this->assertEquals($contact->picklist->value                , 'a');
-            $this->assertEquals($contact->integer                        , 12);
-            $this->assertEquals($contact->phone                          , '259-784-2169');
-            $this->assertEquals($contact->radio->value                   , 'd');
-            $this->assertEquals($contact->text                           , 'This is a test Text');
-            $this->assertEquals($contact->textarea                       , 'This is a test TextArea');
-            $this->assertEquals($contact->url                            , 'http://wwww.abc.com');
+            $this->assertEquals($lead->description                    , 'This is a Description');
+            $this->assertEquals($lead->checkbox                       , '1');
+            $this->assertEquals($lead->currency->value                , 45);
+            $this->assertEquals($lead->date                           , $dateAssert);
+            $this->assertEquals($lead->datetime                       , $datetimeAssert);
+            $this->assertEquals($lead->decimal                        , '123');
+            $this->assertEquals($lead->picklist->value                , 'a');
+            $this->assertEquals($lead->integer                        , 12);
+            $this->assertEquals($lead->phone                          , '259-784-2169');
+            $this->assertEquals($lead->radio->value                   , 'd');
+            $this->assertEquals($lead->text                           , 'This is a test Text');
+            $this->assertEquals($lead->textarea                       , 'This is a test TextArea');
+            $this->assertEquals($lead->url                            , 'http://wwww.abc.com');
         }
 
         /**
-         * @depends testCreateAnContactUserAfterTheCustomFieldsArePlacedForContactsModule
+         * @depends testCreateAnLeadUserAfterTheCustomFieldsArePlacedForLeadsModule
          */
-        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContactUser()
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterCreatingTheLeadUser()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id and the super account id
-            $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            //retrive the super user id
             $superUserId = $super->id;
 
-            //retrive the Contact State (Status) Id based on the name
-            $contactState = ContactState::getByName('Qualified');
-            $contactStateID = $contactState[0]->id;
+            //retrive the Lead State (Status) Id based on the name
+            $leadState = ContactState::getByName('New');
+            $leadStateID = $leadState[0]->id;
 
-            //search a created contact using the customfield.
+            //search a created lead using the customfield.
             $this->resetPostArray();
-            $this->setGetArray(array('ContactsSearchForm' => array(
+            $this->setGetArray(array('LeadsSearchForm' => array(
                                                                 'fullName'          => 'Sarah Williams',
                                                                 'officePhone'       => '739-741-3005',
                                                                 'anyPostalCode'     => '10169',
-                                                                'anyCountry'        => 'USA',
+                                                                'companyName'       => 'ABC Telecom',
                                                                 'department'        => 'Sales',
+                                                                'industry'          => array('value' => 'Automotive'),
+                                                                'website'           => 'http://www.company.com',
+                                                                'anyCountry'        => 'USA',
                                                                 'anyInvalidEmail'   => array('value'=>'0'),
-                                                                'anyEmail'          => 'info@myNewContact.com',
+                                                                'anyEmail'          => 'info@myNewLead.com',
                                                                 'anyOptOutEmail'    => array('value'=>'1'),
                                                                 'ownedItemsOnly'    => '1',
                                                                 'anyStreet'         => '26217 West Third Lane',
                                                                 'anyCity'           => 'New York',
                                                                 'anyState'          => 'NY',
-                                                                'state'             => array('id' => $contactStateID),
+                                                                'state'             => array('id' => $leadStateID),
                                                                 'owner'             => array('id' => $superUserId),
                                                                 'firstName'         => 'Sarah',
                                                                 'lastName'          => 'Williams',
@@ -412,7 +409,6 @@
                                                                 'officeFax'         => '255-455-1914',
                                                                 'title'             => array('value'=>'Mr.'),
                                                                 'source'            => array('value'=>'Self-Generated'),
-                                                                'account'           => array('id'=>$accountId),
                                                                 'decimal'           => '123',
                                                                 'integer'           => '12',
                                                                 'phone'             => '259-784-2169',
@@ -423,54 +419,54 @@
                                                                 'currency'          => array('value'  =>  45),
                                                                 'picklist'          => array('value'  =>  'a'),
                                                                 'radio'             => array('value'  =>  'd')),
-                                    'ajax' =>  'list-view'));
-                                    
-            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
+                                    'ajax' =>  'list-view'));                                    
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
-            //check if the contact name exits after the search is performed on the basis of the
-            //custom fields added to the contacts module
+            //check if the lead name exits after the search is performed on the basis of the
+            //custom fields added to the leads module
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
-            $this->assertTrue(strpos($content, "Sarah Williams") > 0);  
+            $this->assertTrue(strpos($content, "Sarah Williams") > 0);
         }
 
         /**
-         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContactUser
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterCreatingTheLeadUser
          */
-        public function testEditOfTheContactUserForTheCustomFieldsPlacedForContactsModule()
+        public function testEditOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id and the super account id
-            $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            //retrive the the super user id
             $superUserId = $super->id;
 
-            //retrive the contact id 
-            $contactId     = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
+            //retrive the lead id 
+            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams');
 
-            //retrive the Contact State (Status) Id based on the name
-            $contactState = ContactState::getByName('Customer');
-            $contactStateID = $contactState[0]->id;
+            //retrive the Lead State (Status) Id based on the name
+            $leadState = ContactState::getByName('In Progress');
+            $leadStateID = $leadState[0]->id;
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
 
-            //edit and save the contact
-            $this->setGetArray(array('id' => $contactId));
+            //edit and save the lead
+            $this->setGetArray(array('id' => $leadId));
             $this->setPostArray(array('Contact' => array(
                                 'title'                             =>  array('value' => 'Mrs.'),
                                 'firstName'                         =>  'Sarah',
                                 'lastName'                          =>  'Williams Edit',
                                 'jobTitle'                          =>  'Sales Director Edit',
+                                'companyName'                       =>  'ABC Telecom Edit',
+                                'industry'                          =>  array('value' => 'Banking'),
+                                'website'                           =>  'http://www.companyedit.com',
                                 'department'                        =>  'Sales Edit',
                                 'officePhone'                       =>  '739-742-3005',
                                 'source'                            =>  array('value' => 'Inbound Call'),
                                 'mobilePhone'                       =>  '285-300-8232',
                                 'officeFax'                         =>  '255-454-1914',
-                                'state'                             =>  array('id' => $contactStateID),
+                                'state'                             =>  array('id' => $leadStateID),
                                 'owner'                             =>  array('id' => $superUserId),
-                                'account'                           =>  array('id' => $accountId),
-                                'primaryEmail'                      =>  array('emailAddress'=>'info@myNewContact.com',
+                                'primaryEmail'                      =>  array('emailAddress'=>'info@myNewLead.com',
                                                                               'optOut'=>'0',
                                                                               'isInvalid'=>'0'),
-                                'secondaryEmail'                    =>  array('emailAddress'=>'info@myNewContactEdit.com',
+                                'secondaryEmail'                    =>  array('emailAddress'=>'info@myNewLeadEdit.com',
                                                                               'optOut'=>'0',
                                                                               'isInvalid'=>'0'),
                                 'primaryAddress'                    =>  array('street1'=>'26378 South Arlington Ave',
@@ -499,79 +495,85 @@
                                 'textarea'                          =>  'This is a test Edit TextArea',
                                 'url'                               =>  'http://wwww.abc-edit.com'),
                                 'save' => 'Save'));
-            $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/edit');
+            $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/edit');
 
             //check the details if they are save properly for the custom fields after the edit
-            $contact  = Contact::getById($contactId);
-            //retrive the permission of the contact
+            $lead  = Contact::getById($leadId);
+            //retrive the permission of the lead
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                 makeBySecurableItem($contact);
+                                                 makeBySecurableItem($lead);
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
             $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
 
-            $this->assertEquals($contact->title->value                   , 'Mrs.');
-            $this->assertEquals($contact->firstName                      , 'Sarah');
-            $this->assertEquals($contact->lastName                       , 'Williams Edit');
-            $this->assertEquals($contact->state->id                      , $contactStateID);
-            $this->assertEquals($contact->jobTitle                       , 'Sales Director Edit');
-            $this->assertEquals($contact->department                     , 'Sales Edit');
-            $this->assertEquals($contact->officePhone                    , '739-742-3005');
-            $this->assertEquals($contact->source->value                  , 'Inbound Call');
-            $this->assertEquals($contact->mobilePhone                    , '285-300-8232');
-            $this->assertEquals($contact->officeFax                      , '255-454-1914');
-            $this->assertEquals($contact->primaryEmail->emailAddress     , 'info@myNewContact.com');
-            $this->assertEquals($contact->primaryEmail->optOut           , '0');
-            $this->assertEquals($contact->primaryEmail->isInvalid        , '0');
-            $this->assertEquals($contact->secondaryEmail->emailAddress   , 'info@myNewContactEdit.com');
-            $this->assertEquals($contact->secondaryEmail->optOut         , '0');
-            $this->assertEquals($contact->secondaryEmail->isInvalid      , '0');
-            $this->assertEquals($contact->primaryAddress->street1        , '26378 South Arlington Ave');
-            $this->assertEquals($contact->primaryAddress->street2        , '');
-            $this->assertEquals($contact->primaryAddress->city           , 'San Jose');
-            $this->assertEquals($contact->primaryAddress->state          , 'CA');
-            $this->assertEquals($contact->primaryAddress->postalCode     , '95131');
-            $this->assertEquals($contact->primaryAddress->country        , 'USA');
-            $this->assertEquals($contact->secondaryAddress->street1      , '26378 South Arlington Ave');
-            $this->assertEquals($contact->secondaryAddress->street2      , '');
-            $this->assertEquals($contact->secondaryAddress->city         , 'San Jose');
-            $this->assertEquals($contact->secondaryAddress->state        , 'CA');
-            $this->assertEquals($contact->secondaryAddress->postalCode   , '95131');
-            $this->assertEquals($contact->secondaryAddress->country      , 'USA');            
-            $this->assertEquals(1                                        , count($readWritePermitables));
-            $this->assertEquals(0                                        , count($readOnlyPermitables));
-            $this->assertEquals($contact->description                    , 'This is a Edit Description');
-            $this->assertEquals($contact->checkbox                       , '0');
-            $this->assertEquals($contact->currency->value                ,  40);
-            $this->assertEquals($contact->decimal                        , '12');
-            $this->assertEquals($contact->picklist->value                , 'b');
-            $this->assertEquals($contact->integer                        ,  11);
-            $this->assertEquals($contact->phone                          , '259-784-2069');
-            $this->assertEquals($contact->radio->value                   , 'e');
-            $this->assertEquals($contact->text                           , 'This is a test Edit Text');
-            $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
-            $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($lead->title->value                   , 'Mrs.');
+            $this->assertEquals($lead->firstName                      , 'Sarah');
+            $this->assertEquals($lead->lastName                       , 'Williams Edit');
+            $this->assertEquals($lead->state->id                      , $leadStateID);
+            $this->assertEquals($lead->jobTitle                       , 'Sales Director Edit');
+            $this->assertEquals($lead->companyName                    , 'ABC Telecom Edit');
+            $this->assertEquals($lead->industry->value                , 'Banking');
+            $this->assertEquals($lead->website                        , 'http://www.companyedit.com');
+            $this->assertEquals($lead->department                     , 'Sales Edit');
+            $this->assertEquals($lead->officePhone                    , '739-742-3005');
+            $this->assertEquals($lead->source->value                  , 'Inbound Call');
+            $this->assertEquals($lead->mobilePhone                    , '285-300-8232');
+            $this->assertEquals($lead->officeFax                      , '255-454-1914');
+            $this->assertEquals($lead->primaryEmail->emailAddress     , 'info@myNewLead.com');
+            $this->assertEquals($lead->primaryEmail->optOut           , '0');
+            $this->assertEquals($lead->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($lead->secondaryEmail->emailAddress   , 'info@myNewLeadEdit.com');
+            $this->assertEquals($lead->secondaryEmail->optOut         , '0');
+            $this->assertEquals($lead->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($lead->primaryAddress->street1        , '26378 South Arlington Ave');
+            $this->assertEquals($lead->primaryAddress->street2        , '');
+            $this->assertEquals($lead->primaryAddress->city           , 'San Jose');
+            $this->assertEquals($lead->primaryAddress->state          , 'CA');
+            $this->assertEquals($lead->primaryAddress->postalCode     , '95131');
+            $this->assertEquals($lead->primaryAddress->country        , 'USA');
+            $this->assertEquals($lead->secondaryAddress->street1      , '26378 South Arlington Ave');
+            $this->assertEquals($lead->secondaryAddress->street2      , '');
+            $this->assertEquals($lead->secondaryAddress->city         , 'San Jose');
+            $this->assertEquals($lead->secondaryAddress->state        , 'CA');
+            $this->assertEquals($lead->secondaryAddress->postalCode   , '95131');
+            $this->assertEquals($lead->secondaryAddress->country      , 'USA');            
+            $this->assertEquals(1                                     , count($readWritePermitables));
+            $this->assertEquals(0                                     , count($readOnlyPermitables));
+            $this->assertEquals($lead->description                    , 'This is a Edit Description');
+            $this->assertEquals($lead->checkbox                       , '0');
+            $this->assertEquals($lead->currency->value                ,  40);
+            $this->assertEquals($lead->decimal                        , '12');
+            $this->assertEquals($lead->picklist->value                , 'b');
+            $this->assertEquals($lead->integer                        ,  11);
+            $this->assertEquals($lead->phone                          , '259-784-2069');
+            $this->assertEquals($lead->radio->value                   , 'e');
+            $this->assertEquals($lead->text                           , 'This is a test Edit Text');
+            $this->assertEquals($lead->textarea                       , 'This is a test Edit TextArea');
+            $this->assertEquals($lead->url                            , 'http://wwww.abc-edit.com');
         }
 
         /**
-         * This function returns the necessary get parameters for the contact search form
-         * based on the contact edited data
+         * This function returns the necessary get parameters for the lead search form
+         * based on the lead edited data
          */
-        public function fetchContactsSearchFormGetData($contactStateID, $superUserId, $accountId) {
-
+        public function fetchLeadsSearchFormGetData($leadStateID, $superUserId)
+        {
             return  array(
                             'fullName'          => 'Sarah Williams Edit',
                             'officePhone'       => '739-742-3005',
                             'anyPostalCode'     => '95131',
                             'department'        => 'Sales Edit',
+                            'companyName'       => 'ABC Telecom Edit',                            
+                            'industry'          => array('value' => 'Banking'),
+                            'website'           => 'http://www.companyedit.com',
                             'anyCountry'        => 'USA',
                             'anyInvalidEmail'   => array('value'=>'0'),
-                            'anyEmail'          => 'info@myNewContactEdit.com',
+                            'anyEmail'          => 'info@myNewLeadEdit.com',
                             'anyOptOutEmail'    => array('value'=>'0'),
                             'ownedItemsOnly'    => '1',
                             'anyStreet'         => '26378 South Arlington Ave',
                             'anyCity'           => 'San Jose',
                             'anyState'          => 'CA',
-                            'state'             => array('id' => $contactStateID),
+                            'state'             => array('id' => $leadStateID),
                             'owner'             => array('id' => $superUserId),
                             'firstName'         => 'Sarah',
                             'lastName'          => 'Williams Edit',
@@ -579,7 +581,6 @@
                             'officeFax'         => '255-454-1914',
                             'title'             => array('value'=>'Mrs.'),
                             'source'            => array('value'=>'Inbound Call'),
-                            'account'           => array('id'=>$accountId),
                             'decimal'           =>  '12',
                             'integer'           =>  '11',
                             'phone'             =>  '259-784-2069',
@@ -593,77 +594,75 @@
         }
 
         /**
-         * @depends testEditOfTheContactUserForTheCustomFieldsPlacedForContactsModule
+         * @depends testEditOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule
          */
-        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterEditingTheContactUser()
-        {        
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterEditingTheLeadUser()
+        {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id and the super account id
-            $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            //retrive the super user id
             $superUserId = $super->id;
 
-            //retrive the Contact State (Status) Id based on the name
-            $contactState = ContactState::getByName('Customer');
-            $contactStateID = $contactState[0]->id;
+            //retrive the Lead State (Status) Id based on the name
+            $leadState = ContactState::getByName('In Progress');
+            $leadStateID = $leadState[0]->id;
 
-            //search a created contact using the customfield.
+            //search a created lead using the customfield.
             $this->resetPostArray();
-            $this->setGetArray(array('ContactsSearchForm' => $this->fetchContactsSearchFormGetData($contactStateID,
-                                                                    $superUserId, $accountId),
+            $this->setGetArray(array('LeadsSearchForm' => $this->fetchLeadsSearchFormGetData($leadStateID,
+                                                                    $superUserId),
                                      'ajax'               => 'list-view'));
 
-            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
-            //check if the contact name exiits after the search is performed on the basis of the
-            //custom fields added to the contacts module
+            //check if the lead name exiits after the search is performed on the basis of the
+            //custom fields added to the leads module
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
             $this->assertTrue(strpos($content, "Sarah Williams Edit") > 0);
         }
 
         /**
-         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterEditingTheContactUser
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterEditingTheLeadUser
          */
-        public function testDeleteOfTheContactUserForTheCustomFieldsPlacedForContactsModule()
+        public function testDeleteOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the contact id from the recently edited contact
-            $contactId     = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams Edit');
+            //retrive the lead id 
+            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams Edit');
 
-            //set the contact id so as to delete the contact
-            $this->setGetArray(array('id' => $contactId));
-            $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/delete');
+            //set the lead id so as to delete the lead
+            $this->setGetArray(array('id' => $leadId));
+            $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/delete');
 
-            //check wether the contact is deleted
-            $contact     = Contact::getByName('Sarah Williams Edit');
-            $this->assertEquals(0, count($contact));
+            //check wether the lead is deleted
+            $lead     = Contact::getByName('Sarah Williams Edit');
+            $this->assertEquals(0, count($lead));
         }
 
         /**
-         * @depends testDeleteOfTheContactUserForTheCustomFieldsPlacedForContactsModule
+         * @depends testDeleteOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule
          */
-        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterDeletingTheContact()
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterDeletingTheLead()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id and the super account id
-            $accountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            //retrive the super user id
             $superUserId = $super->id;
 
-            //retrive the Contact State (Status) Id based on the name
-            $contactState = ContactState::getByName('Customer');
-            $contactStateID = $contactState[0]->id;
+            //retrive the Lead State (Status) Id based on the name
+            $leadState = ContactState::getByName('In Progress');
+            $leadStateID = $leadState[0]->id;
 
-            //search a created contact using the customfield.
+            //search a created lead using the customfield.
             $this->resetPostArray();
-            $this->setGetArray(array('ContactsSearchForm' => $this->fetchContactsSearchFormGetData($contactStateID,
-                                                                    $superUserId, $accountId),
+            $this->setGetArray(array('LeadsSearchForm' => $this->fetchLeadsSearchFormGetData($leadStateID,
+                                                                    $superUserId),
                                      'ajax'               => 'list-view'));
 
-            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
-            //assert that the edit contact does not exits after the search
+            //assert that the edit lead does not exits after the search
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
         }
