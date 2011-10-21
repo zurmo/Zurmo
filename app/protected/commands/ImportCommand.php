@@ -33,15 +33,18 @@
         {
             return <<<EOD
     USAGE
-      zurmoc import [importName]
+      zurmoc import <username> [importName] [messageInterval]
 
     DESCRIPTION
       This command runs any import processes, specifically doing only the specified process if supplied. In a custom
       application, you can overwrite the CustomManagement class and add calls to various imports you would like.
 
     PARAMETERS
+     * username: username to log in as and run the import processes. Typically 'super'.
+
      Optional Parameters:
      * importName: Name of import process to run
+     * messageInterval: how many rows before a message output is displayed showing the progress.
 
 EOD;
     }
@@ -53,7 +56,20 @@ EOD;
     public function run($args)
     {
         set_time_limit('7200');
-        if (isset($args[0]) && !is_string($args[0]))
+        if (!isset($args[0]))
+        {
+            $this->usageError('A username must be specified.');
+        }
+        try
+        {
+            Yii::app()->user->userModel = User::getByUsername($args[0]);
+        }
+        catch(NotFoundException $e)
+        {
+            $this->usageError('The specified username does not exist.');
+        }
+
+        if (isset($args[1]) && !is_string($args[1]))
         {
             $this->usageError('The specified process to run is invalid.');
         }
@@ -75,7 +91,12 @@ EOD;
             $importName = null;
             $messageStreamer->add(Yii::t('Default', 'Starting import. Looking for processes.'));
         }
-        $messageLogger = new MessageLogger($messageStreamer);
+
+        $messageLogger = new ImportMessageLogger($messageStreamer);
+        if(isset($args[2]))
+        {
+            $messageLogger->setMessageOutputInterval((int)$args[2]);
+        }
         Yii::app()->custom->runImportsForImportCommand($messageLogger, null);
         $messageStreamer->add(Yii::t('Default', 'Ending import.'));
     }

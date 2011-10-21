@@ -33,6 +33,8 @@
 
         private $pagingCount = 0;
 
+        private $messageOutputInterval = 100;
+
         /**
          * During import, add a count after a row has been imported.  This can be used to provide paging information
          * regarding how far an import is.
@@ -41,10 +43,9 @@
         {
             $this->rowCount ++;
             $this->pagingCount ++;
-            if($this->pagingCount > 10)
+            if($this->pagingCount > $this->messageOutputInterval)
             {
-                $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Processed through: {rowsCompleted}',
-                           array('{rowsCompleted}' =>  $this->rowCount))));
+                $this->messageStreamer->addIgnoringTemplate('.');
                 $this->pagingCount = 0;
             }
         }
@@ -55,8 +56,15 @@
          */
         public function countDataProviderGetDataImportCompleted()
         {
-            $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Import complete.  Rows completed: {rowsCompleted}',
-                       array('{rowsCompleted}' => $this->rowCount))));
+            $this->messageStreamer->addIgnoringTemplate("\n");
+            $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Import complete.  Rows processed: {rowsProcessed}',
+                       array('{rowsProcessed}' => $this->rowCount))));
+        }
+
+        public function setMessageOutputInterval($interval)
+        {
+            assert('is_int($interval)');
+            $this->messageOutputInterval = $interval;
         }
     }
 ?>

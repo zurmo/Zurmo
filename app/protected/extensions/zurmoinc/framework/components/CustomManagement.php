@@ -65,7 +65,7 @@
          * @param string $importName - Optional array of specific import process to run, otherwise if empty,
          * 							    run all available import processes.
          */
-        public function runImportsForImportCommand(MessageLogger $messageLogger, $importName = null)
+        public function runImportsForImportCommand(ImportMessageLogger $messageLogger, $importName = null)
         {
             $messageLogger->addErrorMessage(Yii::t('Default', 'No import processes found.'));
             $messageLogger->addErrorMessage(Yii::t('Default', 'CustomManagement class needs to be extended.'));
