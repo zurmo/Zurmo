@@ -57,6 +57,11 @@
             return $this->_baseCode;
         }
 
+        /**
+         * Resolve the active currency for the current user.  If the user does not have a currency, it will fall back
+         * to the base system currency.  If the base system currency does not exist, it will attempt to make it.
+         * @throws NotSupportedException
+         */
         public function getActiveCurrencyForCurrentUser()
         {
             if(Yii::app()->user->userModel->currency->id > 0)
@@ -225,6 +230,9 @@
             return $data;
         }
 
+        /**
+         * @return Date/Time of the last attempted rate update.
+         */
         public function getLastAttemptedRateUpdateDateTime()
         {
             $metadata = Currency::getMetadata();

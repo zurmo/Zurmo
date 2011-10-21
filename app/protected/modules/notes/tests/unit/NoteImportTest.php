@@ -51,11 +51,11 @@
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
-                'column_1' => ImportTestHelper::makeDateTimeColumnMappingData     ('occurredOnDateTime'),
-                'column_2' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
-                'column_3' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
-                'column_4' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
+                'column_0' => ImportMappingUtil::makeTextAreaColumnMappingData     ('description'),
+                'column_1' => ImportMappingUtil::makeDateTimeColumnMappingData     ('occurredOnDateTime'),
+                'column_2' => ImportMappingUtil::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_3' => ImportMappingUtil::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_4' => ImportMappingUtil::makeModelDerivedColumnMappingData ('OpportunityDerived'),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Notes');
@@ -64,11 +64,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.

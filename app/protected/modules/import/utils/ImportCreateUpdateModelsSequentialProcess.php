@@ -88,11 +88,13 @@
             }
             $this->dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($this->import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($this->dataProvider,
                                              $this->importRules,
                                              $this->mappingData,
                                              $importResultsUtil,
-                                             $this->explicitReadWriteModelPermissions);
+                                             $this->explicitReadWriteModelPermissions,
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             $pageCount                             = $this->dataProvider->getPagination()->getPageCount();

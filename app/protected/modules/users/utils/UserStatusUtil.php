@@ -165,6 +165,13 @@
             return array_combine($statusData, $statusData);
         }
 
+        /**
+         * Given two users, can the first $user edit the status on the $anotherUser.  This is important to check to keep
+         * user's from deactivating themselves and deactivating administrators.
+         * @param User $user
+         * @param User $anotherUser
+         * @return true/false
+         */
         public static function canUserEditStatusOnAnotherUser(User $user, User $anotherUser)
         {
             assert('$user->id > 0');

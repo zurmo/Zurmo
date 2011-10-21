@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Test class to test out the GeneralCache
+     */
     class GeneralCacheTest extends BaseTest
     {
         public function tearDown()

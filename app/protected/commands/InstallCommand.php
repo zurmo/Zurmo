@@ -25,9 +25,7 @@
      ********************************************************************************/
 
     /**
-     * MessageCommand extracts messages to be translated from source files.
-     * The extracted messages are saved as PHP message source files
-     * under the specified directory.
+     * InstallCommand allows the installation to be run via the command line instead of the user interface.
      */
     class InstallCommand extends CConsoleCommand
     {
@@ -92,8 +90,6 @@ EOD;
         $form->databasePassword  = $args[3];
         $form->superUserPassword = $args[4];
 
-        $messageStreamer = new MessageStreamer($template);
-        $messageStreamer->setExtraRenderBytes(0);
         InstallUtil::runInstallation($form, $messageStreamer);
         if (isset($args[5]))
         {
