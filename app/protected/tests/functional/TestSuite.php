@@ -40,7 +40,8 @@
     define('TEST_BASE_URL', $seleniumTestBaseUrl);
     define('TEST_RESULTS_URL', $seleniumTestResultUrl);
     define('TEST_RESULTS_PATH', $seleniumTestResultsPath);
-    define('USER_EXTENSIONS_JS_PATH', $seleniumUserExtensionsJSPath);
+    //following is path to the user-extension.js, so as to enable the use of global variables
+    define('USER_EXTENSIONS_JS_PATH', './assets/extensions/user-extensions.js');
     define('SELENIUM_SERVER_PORT', $seleniumServerPort);
     define('BROWSERS_TO_RUN', $seleniumBrowsersToRun);
 
