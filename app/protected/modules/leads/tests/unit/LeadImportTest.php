@@ -79,7 +79,7 @@
                 'column_15' => ImportMappingUtil::makeBooleanColumnMappingData      ('primaryEmail__isInvalid'),
                 'column_16' => ImportMappingUtil::makeBooleanColumnMappingData      ('primaryEmail__optOut'),
                 'column_17' => ImportMappingUtil::makeDropDownColumnMappingData     ('source'),
-                'column_18' => LeadImportMappingUtil::makeStateColumnMappingData    (),
+                'column_18' => LeadImportTestHelper::makeStateColumnMappingData        (),
                 'column_19' => ImportMappingUtil::makeDropDownColumnMappingData     ('industry'),
                 'column_20' => ImportMappingUtil::makeStringColumnMappingData       ('companyName'),
             );

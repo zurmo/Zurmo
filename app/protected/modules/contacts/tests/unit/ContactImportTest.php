@@ -88,7 +88,7 @@
                 'column_16' => ImportMappingUtil::makeBooleanColumnMappingData      ('primaryEmail__optOut'),
                 'column_17' => ImportMappingUtil::makeHasOneColumnMappingData       ('account'),
                 'column_18' => ImportMappingUtil::makeDropDownColumnMappingData     ('source'),
-                'column_19' => ContactImportMappingUtil::makeStateColumnMappingData (),
+                'column_19' => ContactImportTestHelper::makeStateColumnMappingData  (),
                 'column_20' => ImportMappingUtil::makeDropDownColumnMappingData     ('industry'),
             );
 
