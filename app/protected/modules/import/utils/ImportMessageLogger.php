@@ -45,7 +45,15 @@
             $this->pagingCount ++;
             if($this->pagingCount > $this->messageOutputInterval)
             {
-                $this->messageStreamer->addIgnoringTemplate('.');
+                if($this->messageStreamer != null)
+                {
+                    $this->messageStreamer->addIgnoringTemplate('.');
+                }
+                else
+                {
+                    $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Rows processed: {rowsProcessed}',
+                               array('{rowsProcessed}' => $this->rowCount))));
+                }
                 $this->pagingCount = 0;
             }
         }
@@ -56,7 +64,10 @@
          */
         public function countDataProviderGetDataImportCompleted()
         {
-            $this->messageStreamer->addIgnoringTemplate("\n");
+            if($this->messageStreamer != null)
+            {
+                $this->messageStreamer->addIgnoringTemplate("\n");
+            }
             $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Import complete.  Rows processed: {rowsProcessed}',
                        array('{rowsProcessed}' => $this->rowCount))));
         }
