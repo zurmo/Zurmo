@@ -39,7 +39,6 @@
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
-            assert('$demoDataHelper->isSetRange("Currency")');
             assert('$demoDataHelper->isSetRange("User")');
             assert('$demoDataHelper->isSetRange("Account")');
             assert('$demoDataHelper->isSetRange("Contact")');
