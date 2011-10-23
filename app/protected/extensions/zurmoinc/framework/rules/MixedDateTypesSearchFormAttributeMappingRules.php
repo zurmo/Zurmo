@@ -43,6 +43,13 @@
 
         const TYPE_LAST_7_DAYS    = 'Last 7 Days';
 
+        /**
+         * In the event that the type is BEFORE or AFTER, and the firstDate value is not populated, it will be treated
+         * as null, and the search on this attribute will be ignored.  At some point in the future the search form
+         * could have validation added, so that the empty firstDate combined with a type of BEFORE or AFTER would not
+         * get this far, but for now this is the easiest approach to ensuring a valid BEFORE or AFTER value.
+         * @param mixed $value
+         */
         public static function resolveValueDataIntoUsableValue($value)
         {
             if (isset($value['type']) && $value['type'] != null)
@@ -72,7 +79,10 @@
                 }
                 elseif ($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER)
                 {
-                    assert('$value["firstDate"] != null && is_string($value["firstDate"])');
+                    if($value["firstDate"] == null)
+                    {
+                        return null;
+                    }
                     return $value['firstDate'];
                 }
                 else
