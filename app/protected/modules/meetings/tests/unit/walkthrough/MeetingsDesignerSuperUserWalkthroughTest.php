@@ -29,8 +29,8 @@
     * Walkthrough for the super user of all possible controller actions.
     * Since this is a super user, he should have access to all controller actions
     * without any exceptions being thrown.
-    * This also test the creation of the customfileds, addition of custom fields to all the layouts
-    * This also test creation, edit and delete of the meetings based on the custom fields
+    * This also tests the creation of the customfileds, addition of custom fields to all the layouts.
+    * This also tests creation, edit and delete of the meetings based on the custom fields.
     */
     class MeetingsDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
@@ -40,7 +40,7 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-
+            Currency::makeBaseCurrency();
             //Create a account for testing.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
 
@@ -209,18 +209,19 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //set the date and datetime variable values here
-            $date = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
-            $dateAssert = date('Y-m-d');
-            $datetime = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
-            //get the super user, account, opportunity and contact id
+            //Get the super user, account, opportunity and contact id.
             $superUserId        = $super->id;
             $superAccount       = Account::getByName('superAccount');
             $superContactId1    = self::getModelIdByModelNameAndName('Contact', 'superContact1 superContact1son');
             $superContactId2    = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
             $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
+            $baseCurrency       = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
             //Create a new meeting based on the custom fields.
             $this->setGetArray(array(   'relationAttributeName'  => 'Account',
@@ -235,33 +236,34 @@
                                             'description'                       => 'This is Meeting Description',
                                             'owner'                             => array('id' => $superUserId),
                                             'explicitReadWriteModelPermissions' => array('type'=>null),
-                                            'checkbox'                          =>  '1',
-                                            'currency'                          =>  array('value'   => 45,
-                                                                                          'currency'=> array('id' => 1)),
-                                            'date'                              =>  $date,
-                                            'datetime'                          =>  $datetime,
-                                            'decimal'                           =>  '123',
-                                            'picklist'                          =>  array('value'=>'a'),
-                                            'integer'                           =>  '12',
-                                            'phone'                             =>  '259-784-2169',
-                                            'radio'                             =>  array('value'=>'d'),
-                                            'text'                              =>  'This is a test Text',
-                                            'textarea'                          =>  'This is a test TextArea',
-                                            'url'                               =>  'http://wwww.abc.com'),
+                                            'checkbox'                          => '1',
+                                            'currency'                          => array('value'   => 45,
+                                                                                         'currency'=> array(
+                                                                                         'id' => $baseCurrency->id)),
+                                            'date'                              => $date,
+                                            'datetime'                          => $datetime,
+                                            'decimal'                           => '123',
+                                            'picklist'                          => array('value'=>'a'),
+                                            'integer'                           => '12',
+                                            'phone'                             => '259-784-2169',
+                                            'radio'                             => array('value'=>'d'),
+                                            'text'                              => 'This is a test Text',
+                                            'textarea'                          => 'This is a test TextArea',
+                                            'url'                               => 'http://wwww.abc.com'),
                                       'ActivityItemForm' => array(
-                                            'Account'     => array('id' => $superAccount[0]->id),
+                                            'Account'     => array('id'  => $superAccount[0]->id),
                                             'contact'     => array('ids' => $superContactId1.','.$superContactId2),
-                                            'Opportunity' => array('id' => $superOpportunityId))));
+                                            'Opportunity' => array('id'  => $superOpportunityId))));
             $this->runControllerWithRedirectExceptionAndGetUrl('meetings/default/createFromRelation');
 
-            //check the details if they are saved properly for the custom fields
+            //Check the details if they are saved properly for the custom fields.
             $meeting = Meeting::getByName('myNewMeeting');
 
-            //retrive the permission of the account
+            //Retrieve the permission of the meeting.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem(Meeting::getById($meeting[0]->id));
-            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
-            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
 
             $this->assertEquals($meeting[0]->name                             , 'myNewMeeting');
             $this->assertEquals($meeting[0]->location                         , 'Telephone');
@@ -274,6 +276,7 @@
             $this->assertEquals(0                                             , count($readOnlyPermitables));
             $this->assertEquals($meeting[0]->checkbox                         , '1');
             $this->assertEquals($meeting[0]->currency->value                  , 45);
+            $this->assertEquals($meeting[0]->currency->currency->id           , $baseCurrency->id);
             $this->assertEquals($meeting[0]->date                             , $dateAssert);
             $this->assertEquals($meeting[0]->datetime                         , $datetimeAssert);
             $this->assertEquals($meeting[0]->decimal                          , '123');
@@ -293,24 +296,25 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the meeting Id
+            //Retrieve the meeting Id.
             $meeting = Meeting::getByName('myNewMeeting');
 
-            //set the date and datetime variable values here
-            $date = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
-            $dateAssert = date('Y-m-d');
-            $datetime = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
-            //get the super user, account, opportunity and contact id
+            //Get the super user, account, opportunity and contact id.
             $superUserId        = $super->id;
             $superAccount       = Account::getByName('superAccount');
             $superContactId1    = self::getModelIdByModelNameAndName('Contact', 'superContact1 superContact1son');
             $superContactId2    = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
             $superContactId3    = self::getModelIdByModelNameAndName('Contact', 'superContact3 superContact3son');
             $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
+            $baseCurrency       = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
-            $activityItemFormContacts = $superContactId1.','.$superContactId2.','.$superContactId3;
+            $activityItemFormContacts         = $superContactId1.','.$superContactId2.','.$superContactId3;
 
             //Create a new meeting based on the custom fields.
             $this->setGetArray (array('id' => $meeting[0]->id));
@@ -323,31 +327,34 @@
                                 'description'                       => 'This is Edit Meeting Description',
                                 'owner'                             => array('id' => $superUserId),
                                 'explicitReadWriteModelPermissions' => array('type'=> $explicitReadWriteModelPermission),
-                                'checkbox'                          =>  '0',
-                                'currency'                          =>  array('value'   => 40,
-                                                                              'currency'=> array('id' => 1)),
-                                'decimal'                           =>  '12',
-                                'picklist'                          =>  array('value'=>'b'),
-                                'integer'                           =>  '11',
-                                'phone'                             =>  '259-784-2069',
-                                'radio'                             =>  array('value'=>'e'),
-                                'text'                              =>  'This is a test Edit Text',
-                                'textarea'                          =>  'This is a test Edit TextArea',
-                                'url'                               =>  'http://wwww.abc-edit.com'),
+                                'checkbox'                          => '0',
+                                'currency'                          => array('value'   => 40,
+                                                                             'currency'=> array(
+                                                                             'id' => $baseCurrency->id)),
+                                'date'                              => $date,
+                                'datetime'                          => $datetime,
+                                'decimal'                           => '12',
+                                'picklist'                          => array('value'=>'b'),
+                                'integer'                           => '11',
+                                'phone'                             => '259-784-2069',
+                                'radio'                             => array('value'=>'e'),
+                                'text'                              => 'This is a test Edit Text',
+                                'textarea'                          => 'This is a test Edit TextArea',
+                                'url'                               => 'http://wwww.abc-edit.com'),
                                 'ActivityItemForm' => array(
-                                'Account'     => array('id' => $superAccount[0]->id),
+                                'Account'     => array('id'  => $superAccount[0]->id),
                                 'contact'     => array('ids' => $activityItemFormContacts),
-                                'Opportunity' => array('id' => $superOpportunityId))));
+                                'Opportunity' => array('id'  => $superOpportunityId))));
             $this->runControllerWithRedirectExceptionAndGetUrl('meetings/default/edit');
 
-            //check the details if they are saved properly for the custom fields
+            //Check the details if they are saved properly for the custom fields.
             $meeting = Meeting::getByName('myEditMeeting');
 
-            //retrive the permission of the account
+            //Retrieve the permission of the meeting.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem(Meeting::getById($meeting[0]->id));
-            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
-            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
 
             $this->assertEquals($meeting[0]->name                             , 'myEditMeeting');
             $this->assertEquals($meeting[0]->location                         , 'LandLine');
@@ -360,10 +367,13 @@
             $this->assertEquals(1                                             , count($readWritePermitables));
             $this->assertEquals(0                                             , count($readOnlyPermitables));
             $this->assertEquals($meeting[0]->checkbox                         , '0');
-            $this->assertEquals($meeting[0]->currency->value                  ,  40);
+            $this->assertEquals($meeting[0]->currency->value                  , 40);
+            $this->assertEquals($meeting[0]->currency->currency->id           , $baseCurrency->id);
+            $this->assertEquals($meeting[0]->date                             , $dateAssert);
+            $this->assertEquals($meeting[0]->datetime                         , $datetimeAssert);
             $this->assertEquals($meeting[0]->decimal                          , '12');
             $this->assertEquals($meeting[0]->picklist->value                  , 'b');
-            $this->assertEquals($meeting[0]->integer                          ,  11);
+            $this->assertEquals($meeting[0]->integer                          , 11);
             $this->assertEquals($meeting[0]->phone                            , '259-784-2069');
             $this->assertEquals($meeting[0]->radio->value                     , 'e');
             $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
@@ -378,14 +388,14 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the meeting Id
+            //Retrieve the meeting Id.
             $meeting = Meeting::getByName('myEditMeeting');
 
-            //set the meeting id so as to delete the meeting
+            //Set the meeting id so as to delete the meeting.
             $this->setGetArray(array('id' => $meeting[0]->id));
             $this->runControllerWithRedirectExceptionAndGetUrl('meetings/default/delete');
 
-            //check to confirm that the meeting is deleted
+            //Check to confirm that the meeting is deleted.
             $meeting = Meeting::getByName('myEditMeeting');
             $this->assertEquals(0, count($meeting));
         }
