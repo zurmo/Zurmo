@@ -55,8 +55,8 @@
     * Since this is a super user, he should have access to all controller actions
     * without any exceptions being thrown.
     * This also test the creation of the customfileds, addition of custom fields to all the layouts including the search
-    * views
-    * This also test creation, search and edit of the lead based on the custom fields
+    * views.
+    * This also test creation, search, edit and delete of the lead based on the custom fields.
     */
     class LeadsDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
@@ -66,7 +66,7 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            
+            Currency::makeBaseCurrency();
             //create a lead here
             LeadTestHelper::createLeadbyNameForOwner('superLead',    $super);
         }
@@ -245,17 +245,18 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the the super user id
+            //Retrieve the the super user id.
             $superUserId = $super->id;
 
-            //set the date and datetime variable values here
-            $date = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
-            $dateAssert = date('Y-m-d');
-            $datetime = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
-            //retrive the Lead State (Status) Id based on the name
-            $leadState = ContactState::getByName('New');
+            //Retrieve the Lead State (Status) Id based on the name.
+            $leadState   = ContactState::getByName('New');
             $leadStateID = $leadState[0]->id;
 
             //Create a new Lead based on the custom fields.
@@ -280,11 +281,11 @@
                                     'secondaryEmail'                    =>  array('emailAddress'=>'',
                                                                                   'optOut'=>'0',
                                                                                   'isInvalid'=>'0'),
-                                    'primaryAddress'                    =>  array('street1'=>'26217 West Third Lane',
+                                    'primaryAddress'                    =>  array('street1'=>'16139 North Michigan Road',
                                                                                   'street2'=>'',
-                                                                                  'city'=>'New York',
-                                                                                  'state'=>'NY',
-                                                                                  'postalCode'=>'10169',
+                                                                                  'city'=>'Boston',
+                                                                                  'state'=>'MA',
+                                                                                  'postalCode'=>'02119',
                                                                                   'country'=>'USA'),
                                     'secondaryAddress'                  =>  array('street1'=>'26217 West Third Lane',
                                                                                   'street2'=>'',
@@ -297,7 +298,8 @@
                                     'description'                       =>  'This is a Description',
                                     'checkbox'                          =>  '1',
                                     'currency'                          =>  array('value'   => 45,
-                                                                                  'currency'=> array('id' => 1)),
+                                                                                  'currency'=> array(
+                                                                                  'id' => $baseCurrency->id)),
                                     'date'                              =>  $date,
                                     'datetime'                          =>  $datetime,
                                     'decimal'                           =>  '123',
@@ -310,11 +312,11 @@
                                     'url'                               =>  'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/create');
 
-            //check the details if they are saved properly for the custom fields
+            //Check the details if they are saved properly for the custom fields.
             $leadId     = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
             $lead       = Contact::getById($leadId);
 
-            //retrive the permission of the lead
+            //Retrieve the permission of the lead.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem($lead);
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
@@ -339,11 +341,11 @@
             $this->assertEquals($lead->secondaryEmail->emailAddress   , '');
             $this->assertEquals($lead->secondaryEmail->optOut         , '0');
             $this->assertEquals($lead->secondaryEmail->isInvalid      , '0');
-            $this->assertEquals($lead->primaryAddress->street1        , '26217 West Third Lane');
+            $this->assertEquals($lead->primaryAddress->street1        , '16139 North Michigan Road');
             $this->assertEquals($lead->primaryAddress->street2        , '');
-            $this->assertEquals($lead->primaryAddress->city           , 'New York');
-            $this->assertEquals($lead->primaryAddress->state          , 'NY');
-            $this->assertEquals($lead->primaryAddress->postalCode     , '10169');
+            $this->assertEquals($lead->primaryAddress->city           , 'Boston');
+            $this->assertEquals($lead->primaryAddress->state          , 'MA');
+            $this->assertEquals($lead->primaryAddress->postalCode     , '02119');
             $this->assertEquals($lead->primaryAddress->country        , 'USA');
             $this->assertEquals($lead->secondaryAddress->street1      , '26217 West Third Lane');
             $this->assertEquals($lead->secondaryAddress->street2      , '');
@@ -352,11 +354,12 @@
             $this->assertEquals($lead->secondaryAddress->postalCode   , '10169');
             $this->assertEquals($lead->secondaryAddress->country      , 'USA');
             $this->assertEquals($lead->owner->id                      , $superUserId);
-            $this->assertEquals(0                                        , count($readWritePermitables));
-            $this->assertEquals(0                                        , count($readOnlyPermitables));
+            $this->assertEquals(0                                     , count($readWritePermitables));
+            $this->assertEquals(0                                     , count($readOnlyPermitables));
             $this->assertEquals($lead->description                    , 'This is a Description');
             $this->assertEquals($lead->checkbox                       , '1');
             $this->assertEquals($lead->currency->value                , 45);
+            $this->assertEquals($lead->currency->currency->id         , $baseCurrency->id);
             $this->assertEquals($lead->date                           , $dateAssert);
             $this->assertEquals($lead->datetime                       , $datetimeAssert);
             $this->assertEquals($lead->decimal                        , '123');
@@ -376,54 +379,56 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the super user id
+            //Retrieve the super user id.
             $superUserId = $super->id;
 
-            //retrive the Lead State (Status) Id based on the name
-            $leadState = ContactState::getByName('New');
+            //Retrieve the Lead State (Status) Id based on the name.
+            $leadState   = ContactState::getByName('New');
             $leadStateID = $leadState[0]->id;
 
-            //search a created lead using the customfield.
+            //Search a created lead using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('LeadsSearchForm' => array(
-                                                                'fullName'          => 'Sarah Williams',
-                                                                'officePhone'       => '739-741-3005',
-                                                                'anyPostalCode'     => '10169',
-                                                                'companyName'       => 'ABC Telecom',
-                                                                'department'        => 'Sales',
-                                                                'industry'          => array('value' => 'Automotive'),
-                                                                'website'           => 'http://www.company.com',
-                                                                'anyCountry'        => 'USA',
-                                                                'anyInvalidEmail'   => array('value'=>'0'),
-                                                                'anyEmail'          => 'info@myNewLead.com',
-                                                                'anyOptOutEmail'    => array('value'=>'1'),
-                                                                'ownedItemsOnly'    => '1',
-                                                                'anyStreet'         => '26217 West Third Lane',
-                                                                'anyCity'           => 'New York',
-                                                                'anyState'          => 'NY',
-                                                                'state'             => array('id' => $leadStateID),
-                                                                'owner'             => array('id' => $superUserId),
-                                                                'firstName'         => 'Sarah',
-                                                                'lastName'          => 'Williams',
-                                                                'jobTitle'          => 'Sales Director',
-                                                                'officeFax'         => '255-455-1914',
-                                                                'title'             => array('value'=>'Mr.'),
-                                                                'source'            => array('value'=>'Self-Generated'),
-                                                                'decimal'           => '123',
-                                                                'integer'           => '12',
-                                                                'phone'             => '259-784-2169',
-                                                                'text'              => 'This is a test Text',
-                                                                'textarea'          => 'This is a test TextArea',
-                                                                'url'               => 'http://wwww.abc.com',
-                                                                'checkbox'          => '1',
-                                                                'currency'          => array('value'  =>  45),
-                                                                'picklist'          => array('value'  =>  'a'),
-                                                                'radio'             => array('value'  =>  'd')),
-                                    'ajax' =>  'list-view'));
+                                                            'fullName'          => 'Sarah Williams',
+                                                            'officePhone'       => '739-741-3005',
+                                                            'anyPostalCode'     => '10169',
+                                                            'companyName'       => 'ABC Telecom',
+                                                            'department'        => 'Sales',
+                                                            'industry'          => array('value' => 'Automotive'),
+                                                            'website'           => 'http://www.company.com',
+                                                            'anyCountry'        => 'USA',
+                                                            'anyInvalidEmail'   => array('value'=>'0'),
+                                                            'anyEmail'          => 'info@myNewLead.com',
+                                                            'anyOptOutEmail'    => array('value'=>'1'),
+                                                            'ownedItemsOnly'    => '1',
+                                                            'anyStreet'         => '26217 West Third Lane',
+                                                            'anyCity'           => 'New York',
+                                                            'anyState'          => 'NY',
+                                                            'state'             => array('id' => $leadStateID),
+                                                            'owner'             => array('id' => $superUserId),
+                                                            'firstName'         => 'Sarah',
+                                                            'lastName'          => 'Williams',
+                                                            'jobTitle'          => 'Sales Director',
+                                                            'officeFax'         => '255-455-1914',
+                                                            'title'             => array('value'=>'Mr.'),
+                                                            'source'            => array('value'=>'Self-Generated'),
+                                                            'decimal'           => '123',
+                                                            'integer'           => '12',
+                                                            'phone'             => '259-784-2169',
+                                                            'text'              => 'This is a test Text',
+                                                            'textarea'          => 'This is a test TextArea',
+                                                            'url'               => 'http://wwww.abc.com',
+                                                            'checkbox'          => '1',
+                                                            'currency'          => array('value'  =>  45),
+                                                            'picklist'          => array('value'  =>  'a'),
+                                                            'radio'             => array('value'  =>  'd'),
+                                                            'date__Date'        => array('type' => 'Today'),
+                                                            'datetime__DateTime'=> array('type' => 'Today')),
+                                                            'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
-            //check if the lead name exits after the search is performed on the basis of the
-            //custom fields added to the leads module
+            //Check if the lead name exits after the search is performed on the basis of the
+            //custom fields added to the leads module.
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
             $this->assertTrue(strpos($content, "Sarah Williams") > 0);
         }
@@ -435,18 +440,25 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the the super user id
+            //Retrieve the the super user id.
             $superUserId = $super->id;
 
-            //retrive the lead id 
+            //Retrieve the lead id.
             $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams');
 
-            //retrive the Lead State (Status) Id based on the name
-            $leadState = ContactState::getByName('In Progress');
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Retrieve the Lead State (Status) Id based on the name.
+            $leadState   = ContactState::getByName('In Progress');
             $leadStateID = $leadState[0]->id;
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
 
-            //edit and save the lead
+            //Edit and save the lead.
             $this->setGetArray(array('id' => $leadId));
             $this->setPostArray(array('Contact' => array(
                             'title'                             =>  array('value' => 'Mrs.'),
@@ -475,17 +487,20 @@
                                                                           'state'=>'CA',
                                                                           'postalCode'=>'95131',
                                                                           'country'=>'USA'),
-                            'secondaryAddress'                  =>  array('street1'=>'26378 South Arlington Ave',
+                            'secondaryAddress'                  =>  array('street1'=>'1652 North Cedar Court',
                                                                           'street2'=>'',
-                                                                          'city'=>'San Jose',
-                                                                          'state'=>'CA',
-                                                                          'postalCode'=>'95131',
+                                                                          'city'=>'Phoenix',
+                                                                          'state'=>'AZ',
+                                                                          'postalCode'=>'85003',
                                                                           'country'=>'USA'),
                             'explicitReadWriteModelPermissions' =>  array('type' => $explicitReadWriteModelPermission),
                             'description'                       =>  'This is a Edit Description',
                             'checkbox'                          =>  '0',
                             'currency'                          =>  array('value'   => 40,
-                                                                          'currency'=> array('id' => 1)),
+                                                                          'currency'=> array(
+                                                                          'id' => $baseCurrency->id)),
+                            'date'                              =>  $date,
+                            'datetime'                          =>  $datetime,
                             'decimal'                           =>  '12',
                             'picklist'                          =>  array('value'=>'b'),
                             'integer'                           =>  '11',
@@ -497,9 +512,9 @@
                                 'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/edit');
 
-            //check the details if they are save properly for the custom fields after the edit
+            //Check the details if they are saved properly for the custom fields after the edit.
             $lead  = Contact::getById($leadId);
-            //retrive the permission of the lead
+            //Retrieve the permission of the lead.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem($lead);
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
@@ -530,17 +545,20 @@
             $this->assertEquals($lead->primaryAddress->state          , 'CA');
             $this->assertEquals($lead->primaryAddress->postalCode     , '95131');
             $this->assertEquals($lead->primaryAddress->country        , 'USA');
-            $this->assertEquals($lead->secondaryAddress->street1      , '26378 South Arlington Ave');
+            $this->assertEquals($lead->secondaryAddress->street1      , '1652 North Cedar Court');
             $this->assertEquals($lead->secondaryAddress->street2      , '');
-            $this->assertEquals($lead->secondaryAddress->city         , 'San Jose');
-            $this->assertEquals($lead->secondaryAddress->state        , 'CA');
-            $this->assertEquals($lead->secondaryAddress->postalCode   , '95131');
+            $this->assertEquals($lead->secondaryAddress->city         , 'Phoenix');
+            $this->assertEquals($lead->secondaryAddress->state        , 'AZ');
+            $this->assertEquals($lead->secondaryAddress->postalCode   , '85003');
             $this->assertEquals($lead->secondaryAddress->country      , 'USA');
             $this->assertEquals(1                                     , count($readWritePermitables));
             $this->assertEquals(0                                     , count($readOnlyPermitables));
             $this->assertEquals($lead->description                    , 'This is a Edit Description');
             $this->assertEquals($lead->checkbox                       , '0');
             $this->assertEquals($lead->currency->value                ,  40);
+            $this->assertEquals($lead->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($lead->date                           , $dateAssert);
+            $this->assertEquals($lead->datetime                       , $datetimeAssert);
             $this->assertEquals($lead->decimal                        , '12');
             $this->assertEquals($lead->picklist->value                , 'b');
             $this->assertEquals($lead->integer                        ,  11);
@@ -553,7 +571,7 @@
 
         /**
          * This function returns the necessary get parameters for the lead search form
-         * based on the lead edited data
+         * based on the lead edited data.
          */
         public function fetchLeadsSearchFormGetData($leadStateID, $superUserId)
         {
@@ -581,16 +599,18 @@
                             'officeFax'         => '255-454-1914',
                             'title'             => array('value'=>'Mrs.'),
                             'source'            => array('value'=>'Inbound Call'),
-                            'decimal'           =>  '12',
-                            'integer'           =>  '11',
-                            'phone'             =>  '259-784-2069',
-                            'text'              =>  'This is a test Edit Text',
-                            'textarea'          =>  'This is a test Edit TextArea',
-                            'url'               =>  'http://wwww.abc-edit.com',
-                            'checkbox'          =>  '0',
-                            'currency'          =>  array('value'  =>  40),
-                            'picklist'          =>  array('value'  =>  'b'),
-                            'radio'             =>  array('value'  =>  'e'));
+                            'decimal'           => '12',
+                            'integer'           => '11',
+                            'phone'             => '259-784-2069',
+                            'text'              => 'This is a test Edit Text',
+                            'textarea'          => 'This is a test Edit TextArea',
+                            'url'               => 'http://wwww.abc-edit.com',
+                            'checkbox'          => '0',
+                            'currency'          => array('value'  => 40),
+                            'picklist'          => array('value'  => 'b'),
+                            'radio'             => array('value'  => 'e'),
+                            'date__Date'        => array('type'   => 'Today'),
+                            'datetime__DateTime'=> array('type'   => 'Today'));
         }
 
         /**
@@ -600,23 +620,22 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the super user id
+            //Retrieve the super user id.
             $superUserId = $super->id;
 
-            //retrive the Lead State (Status) Id based on the name
-            $leadState = ContactState::getByName('In Progress');
+            //Retrieve the Lead State (Status) Id based on the name.
+            $leadState   = ContactState::getByName('In Progress');
             $leadStateID = $leadState[0]->id;
 
-            //search a created lead using the customfield.
+            //Search a created lead using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('LeadsSearchForm' => $this->fetchLeadsSearchFormGetData($leadStateID,
                                                                     $superUserId),
                                      'ajax'               => 'list-view'));
-
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
-            //check if the lead name exiits after the search is performed on the basis of the
-            //custom fields added to the leads module
+            //Check if the lead name exits after the search is performed on the basis of the
+            //custom fields added to the leads module.
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
             $this->assertTrue(strpos($content, "Sarah Williams Edit") > 0);
         }
@@ -628,14 +647,14 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the lead id 
-            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams Edit');
+            //Retrieve the lead id.
+            $leadId = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams Edit');
 
-            //set the lead id so as to delete the lead
+            //Set the lead id so as to delete the lead.
             $this->setGetArray(array('id' => $leadId));
             $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/delete');
 
-            //check wether the lead is deleted
+            //Check whether the lead is deleted.
             $lead     = Contact::getByName('Sarah Williams Edit');
             $this->assertEquals(0, count($lead));
         }
@@ -647,22 +666,21 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the super user id
+            //Retrieve the super user id.
             $superUserId = $super->id;
 
-            //retrive the Lead State (Status) Id based on the name
-            $leadState = ContactState::getByName('In Progress');
+            //Retrieve the Lead State (Status) Id based on the name.
+            $leadState   = ContactState::getByName('In Progress');
             $leadStateID = $leadState[0]->id;
 
-            //search a created lead using the customfield.
+            //Search a created lead using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('LeadsSearchForm' => $this->fetchLeadsSearchFormGetData($leadStateID,
                                                                     $superUserId),
                                      'ajax'               => 'list-view'));
-
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
-            //assert that the edit lead does not exits after the search
+            //Assert that the edit lead does not exits after the search.
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
         }
