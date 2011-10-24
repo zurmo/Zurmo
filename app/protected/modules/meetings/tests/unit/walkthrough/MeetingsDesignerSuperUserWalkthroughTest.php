@@ -47,7 +47,7 @@
             //Create a opportunity for testing.
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp', $super, $account);
 
-            //Create a two contacts for testing.
+            //Create a three contacts for testing.
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact1', $super, $account);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact2', $super, $account);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact3', $super, $account);
@@ -316,7 +316,7 @@
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
             $activityItemFormContacts         = $superContactId1.','.$superContactId2.','.$superContactId3;
 
-            //Create a new meeting based on the custom fields.
+            //Edit the meeting based on the custom fields and the meeting Id.
             $this->setGetArray (array('id' => $meeting[0]->id));
             $this->setPostArray(array('Meeting' => array(
                                 'name'                              => 'myEditMeeting',
