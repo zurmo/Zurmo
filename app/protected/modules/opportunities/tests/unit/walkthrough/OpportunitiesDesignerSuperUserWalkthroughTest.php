@@ -55,8 +55,8 @@
     * Since this is a super user, he should have access to all controller actions
     * without any exceptions being thrown.
     * This also test the creation of the customfileds, addition of custom fields to all the layouts including the search
-    * views
-    * This also test creation, search and edit of the Opportunity based on the custom fields
+    * views.
+    * This also test creation search, edit and delete of the Opportunity based on the custom fields.
     */
     class OpportunitiesDesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
@@ -66,6 +66,7 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
+            Currency::makeBaseCurrency();
             //Create a account for testing.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
             //Create a Opportunity for testing.
@@ -253,62 +254,59 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //set the date and datetime variable values here
+            //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
             $dateAssert     = date('Y-m-d');
             $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
-            //retrive the account id and the super account id
+            //Retrieve the account id and the super account id.
             $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superUserId = $super->id;
-
-            //retrive the currency id
-            $currencies = Currency::getAll();
-            $currencyID = $currencies[0]->id;
 
             //Create a new Opportunity based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Opportunity' => array(
-                                'name'                              => 'myNewOpportunity',
-                                'amount'                            => array('value' => 298000,
-                                                                             'currency' => array('id' => $currencyID)),
-                                'account'                           => array('id' => $accountId),
-                                'probability'                       => '1',
-                                'closeDate'                         => $date,
-                                'stage'                             => array('value' => 'Prospecting'),
-                                'source'                            => array('value' => 'Self-Generated'),
-                                'description'                       => 'This is the Description',
-                                'owner'                             => array('id' => $superUserId),
-                                'explicitReadWriteModelPermissions' =>  array('type' => null),
-                                'checkbox'                          =>  '1',
-                                'currency'                          =>  array('value'   => 45,
-                                                                              'currency'=> array('id' => $currencyID)),
-                                'date'                              =>  $date,
-                                'datetime'                          =>  $datetime,
-                                'decimal'                           =>  '123',
-                                'picklist'                          =>  array('value'=>'a'),
-                                'integer'                           =>  '12',
-                                'phone'                             =>  '259-784-2169',
-                                'radio'                             =>  array('value'=>'d'),
-                                'text'                              =>  'This is a test Text',
-                                'textarea'                          =>  'This is a test TextArea',
-                                'url'                               =>  'http://wwww.abc.com')));
+                            'name'                              => 'myNewOpportunity',
+                            'amount'                            => array('value' => 298000,
+                                                                         'currency' => array('id' => $baseCurrency->id)),
+                            'account'                           => array('id' => $accountId),
+                            'probability'                       => '1',
+                            'closeDate'                         => $date,
+                            'stage'                             => array('value' => 'Prospecting'),
+                            'source'                            => array('value' => 'Self-Generated'),
+                            'description'                       => 'This is the Description',
+                            'owner'                             => array('id' => $superUserId),
+                            'explicitReadWriteModelPermissions' => array('type' => null),
+                            'checkbox'                          => '1',
+                            'currency'                          => array('value'   => 45,
+                                                                         'currency'=> array('id' => $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '123',
+                            'picklist'                          => array('value'=>'a'),
+                            'integer'                           => '12',
+                            'phone'                             => '259-784-2169',
+                            'radio'                             => array('value'=>'d'),
+                            'text'                              => 'This is a test Text',
+                            'textarea'                          => 'This is a test TextArea',
+                            'url'                               => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('opportunities/default/create');
 
-            //check the details if they are saved properly for the custom fields
+            //Check the details if they are saved properly for the custom fields.
             $opportunityId = self::getModelIdByModelNameAndName('Opportunity', 'myNewOpportunity');
             $opportunity   = Opportunity::getById($opportunityId);
 
-            //retrive the permission of the opportunity
+            //Retrieve the permission of the opportunity.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem($opportunity);
-            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
-            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
 
             $this->assertEquals($opportunity->name                       , 'myNewOpportunity');
             $this->assertEquals($opportunity->amount->value              , '298000');
-            $this->assertEquals($opportunity->amount->currency->id       , $currencyID);
+            $this->assertEquals($opportunity->amount->currency->id       , $baseCurrency->id);
             $this->assertEquals($opportunity->account->id                , $accountId);
             $this->assertEquals($opportunity->probability                , '1');
             $this->assertEquals($opportunity->stage->value               , 'Prospecting');
@@ -319,7 +317,7 @@
             $this->assertEquals(0                                        , count($readOnlyPermitables));
             $this->assertEquals($opportunity->checkbox                   , '1');
             $this->assertEquals($opportunity->currency->value            , 45);
-            $this->assertEquals($opportunity->currency->currency->id     , $currencyID);
+            $this->assertEquals($opportunity->currency->currency->id     , $baseCurrency->id);
             $this->assertEquals($opportunity->date                       , $dateAssert);
             $this->assertEquals($opportunity->datetime                   , $datetimeAssert);
             $this->assertEquals($opportunity->decimal                    , '123');
@@ -339,42 +337,42 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id and the super user id
-            $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
-            $superUserId = $super->id;
+            //Retrieve the account id and the super user id.
+            $accountId      = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            $superUserId    = $super->id;
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
-            //retrive the currency id
-            $currencies = Currency::getAll();
-            $currencyID = $currencies[0]->id;
-
-            //search a created opportunity using the customfield.
+            //Search a created opportunity using the customfield.
             $this->resetPostArray();
             $this->setGetArray(array('OpportunitiesSearchForm' => array(
-                                                'name'              =>  'myNewOpportunity',
-                                                'owner'             =>  array('id' => $superUserId),
-                                                'ownedItemsOnly'    =>  '1',
-                                                'account'           =>  array('id' => $accountId),
-                                                'amount'            =>  array('value' => '298000',
-                                                                              'currency'=> array('id' => $currencyID)),
-                                                'closeDate__Date'   =>  array('value' => 'Today'),
-                                                'stage'             =>  array('value' => 'Prospecting'),
-                                                'source'            =>  array('value' => 'Self-Generated'),
-                                                'probability'       =>  '1',
-                                                'decimal'           =>  '123',
-                                                'integer'           =>  '12',
-                                                'phone'             =>  '259-784-2169',
-                                                'text'              =>  'This is a test Text',
-                                                'textarea'          =>  'This is a test TextArea',
-                                                'url'               =>  'http://wwww.abc.com',
-                                                'checkbox'          =>  '1',
-                                                'currency'          =>  array('value'  =>  45),
-                                                'picklist'          =>  array('value'  =>  'a'),
-                                                'radio'             =>  array('value'  =>  'd')),
+                                                'name'              => 'myNewOpportunity',
+                                                'owner'             => array('id' => $superUserId),
+                                                'ownedItemsOnly'    => '1',
+                                                'account'           => array('id' => $accountId),
+                                                'amount'            => array('value' => '298000',
+                                                                             'currency'=> array(
+                                                                             'id' => $baseCurrency->id)),
+                                                'closeDate__Date'   => array('value' => 'Today'),
+                                                'stage'             => array('value' => 'Prospecting'),
+                                                'source'            => array('value' => 'Self-Generated'),
+                                                'probability'       => '1',
+                                                'decimal'           => '123',
+                                                'integer'           => '12',
+                                                'phone'             => '259-784-2169',
+                                                'text'              => 'This is a test Text',
+                                                'textarea'          => 'This is a test TextArea',
+                                                'url'               => 'http://wwww.abc.com',
+                                                'checkbox'          => '1',
+                                                'currency'          => array('value'  =>  45),
+                                                'picklist'          => array('value'  =>  'a'),
+                                                'radio'             => array('value'  =>  'd'),
+                                                'date__Date'        => array('type'   => 'Today'),
+                                                'datetime__DateTime'=> array('type'   => 'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
-            //check if the opportunity name exiits after the search is performed on the basis of the
-            //custom fields added to the opportunities module
+            //Check if the opportunity name exits after the search is performed on the basis of the
+            //custom fields added to the opportunities module.
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
             $this->assertTrue(strpos($content, "myNewOpportunity") > 0);
         }
@@ -386,64 +384,63 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //set the date and datetime variable values here
+            //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
             $dateAssert     = date('Y-m-d');
             $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
-            //retrive the account id, the super user id and opportunity Id
-            $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
-            $superUserId = $super->id;
+            //Retrieve the account id, the super user id and opportunity Id.
+            $accountId                        = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            $superUserId                      = $super->id;
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
-            $opportunityId = self::getModelIdByModelNameAndName('Opportunity', 'myNewOpportunity');
-
-            //retrive the currency id
-            $currencies = Currency::getAll();
-            $currencyID = $currencies[0]->id;
+            $opportunityId                    = self::getModelIdByModelNameAndName('Opportunity', 'myNewOpportunity');
 
             //Edit a new Opportunity based on the custom fields.
             $this->setGetArray(array('id' => $opportunityId));
             $this->setPostArray(array('Opportunity' => array(
-                                        'name'                              => 'myEditOpportunity',
-                                        'amount'                            => array('value' => 288000,
-                                                                                     'currency' => array('id' => $currencyID)),
-                                        'account'                           => array('id' => $accountId),
-                                        'probability'                       => '2',
-                                        'closeDate'                         => $date,
-                                        'stage'                             => array('value' => 'Qualification'),
-                                        'source'                            => array('value' => 'Inbound Call'),
-                                        'description'                       => 'This is the Edit Description',
-                                        'owner'                             => array('id' => $superUserId),
-                                        'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
-                                        'checkbox'                          =>  '0',
-                                        'currency'                          =>  array('value'   => 40,
-                                                                                      'currency'=> array('id' => $currencyID)),
-                                        'decimal'                           =>  '12',
-                                        'date'                              =>  $date,
-                                        'datetime'                          =>  $datetime,
-                                        'picklist'                          =>  array('value'=>'b'),
-                                        'integer'                           =>  '11',
-                                        'phone'                             =>  '259-784-2069',
-                                        'radio'                             =>  array('value'=>'e'),
-                                        'text'                              =>  'This is a test Edit Text',
-                                        'textarea'                          =>  'This is a test Edit TextArea',
-                                        'url'                               =>  'http://wwww.abc-edit.com')));
+                            'name'                              => 'myEditOpportunity',
+                            'amount'                            => array('value' => 288000,
+                                                                         'currency' => array(
+                                                                         'id' => $baseCurrency->id)),
+                            'account'                           => array('id' => $accountId),
+                            'probability'                       => '2',
+                            'closeDate'                         => $date,
+                            'stage'                             => array('value' => 'Qualification'),
+                            'source'                            => array('value' => 'Inbound Call'),
+                            'description'                       => 'This is the Edit Description',
+                            'owner'                             => array('id' => $superUserId),
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'   => 40,
+                                                                         'currency'=> array(
+                                                                         'id' => $baseCurrency->id)),
+                            'decimal'                           => '12',
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'picklist'                          => array('value'=>'b'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value'=>'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('opportunities/default/edit');
 
-            //check the details if they are saved properly for the custom fields
+            //Check the details if they are saved properly for the custom fields.
             $opportunityId = self::getModelIdByModelNameAndName('Opportunity', 'myEditOpportunity');
             $opportunity   = Opportunity::getById($opportunityId);
 
-            //retrive the permission of the opportunity
+            //Retrieve the permission of the opportunity.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem($opportunity);
-            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
-            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
 
             $this->assertEquals($opportunity->name                       , 'myEditOpportunity');
             $this->assertEquals($opportunity->amount->value              , '288000');
-            $this->assertEquals($opportunity->amount->currency->id       , $currencyID);
+            $this->assertEquals($opportunity->amount->currency->id       , $baseCurrency->id);
             $this->assertEquals($opportunity->account->id                , $accountId);
             $this->assertEquals($opportunity->probability                , '2');
             $this->assertEquals($opportunity->stage->value               , 'Qualification');
@@ -453,11 +450,13 @@
             $this->assertEquals(1                                        , count($readWritePermitables));
             $this->assertEquals(0                                        , count($readOnlyPermitables));
             $this->assertEquals($opportunity->checkbox                   , '0');
-            $this->assertEquals($opportunity->currency->value            ,  40);
-            $this->assertEquals($opportunity->currency->currency->id     , $currencyID);
+            $this->assertEquals($opportunity->currency->value            , 40);
+            $this->assertEquals($opportunity->currency->currency->id     , $baseCurrency->id);
+            $this->assertEquals($opportunity->date                       , $dateAssert);
+            $this->assertEquals($opportunity->datetime                   , $datetimeAssert);
             $this->assertEquals($opportunity->decimal                    , '12');
             $this->assertEquals($opportunity->picklist->value            , 'b');
-            $this->assertEquals($opportunity->integer                    ,  11);
+            $this->assertEquals($opportunity->integer                    , 11);
             $this->assertEquals($opportunity->phone                      , '259-784-2069');
             $this->assertEquals($opportunity->radio->value               , 'e');
             $this->assertEquals($opportunity->text                       , 'This is a test Edit Text');
@@ -469,7 +468,7 @@
 
         /**
          * This function returns the necessary get parameters for the opportunity search form
-         * based on the opportunity edited data
+         * based on the opportunity edited data.
          */
         public function fetchOpportunitiesSearchFormGetData($accountId, $superUserId, $currencyID) {
 
@@ -478,7 +477,7 @@
                             'owner'             =>  array('id' => $superUserId),
                             'ownedItemsOnly'    =>  '1',
                             'account'           =>  array('id' => $accountId),
-                            'amount'            =>  array('value' => 288000,
+                            'amount'            =>  array('value'    => 288000,
                                                           'currency' => array('id' => $currencyID)),
                             'closeDate__Date'   =>  array('value' => 'Today'),
                             'stage'             =>  array('value' => 'Qualification'),
@@ -493,7 +492,9 @@
                             'checkbox'          =>  '0',
                             'currency'          =>  array('value'  =>  40),
                             'picklist'          =>  array('value'  =>  'b'),
-                            'radio'             =>  array('value'  =>  'e'));
+                            'radio'             =>  array('value'  =>  'e'),
+                            'date__Date'        =>  array('type'   => 'Today'),
+                            'datetime__DateTime'=>  array('type'   => 'Today'));
         }
 
         /**
@@ -503,22 +504,19 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id, the super user id and opportunity Id
-            $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
-            $superUserId = $super->id;
+            //Retrieve the account id, the super user id and opportunity Id.
+            $accountId      = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            $superUserId    = $super->id;
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
-            //retrive the currency id
-            $currencies = Currency::getAll();
-            $currencyID = $currencies[0]->id;
-
-            //search a created Opportunity using the customfield.
+            //Search a created Opportunity using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('OpportunitiesSearchForm' => $this->fetchOpportunitiesSearchFormGetData($accountId,
-                                                                            $superUserId, $currencyID),
-                                     'ajax'               =>  'list-view'));
+                                                                            $superUserId, $baseCurrency->id),
+                                     'ajax'                    =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
-            //assert that the edit Opportunity exits after the edit and is diaplayed on the search page
+            //Assert that the edit Opportunity exits after the edit and is diaplayed on the search page.
             $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
             $this->assertTrue(strpos($content, "myEditOpportunity") > 0);
         }
@@ -530,14 +528,14 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //get the opportunity id from the recently edited opportunity
+            //Get the opportunity id from the recently edited opportunity.
             $opportunityId = self::getModelIdByModelNameAndName('Opportunity', 'myEditOpportunity');
 
-            //set the opportunity id so as to delete the opportunity
+            //Set the opportunity id so as to delete the opportunity.
             $this->setGetArray(array('id' => $opportunityId));
             $this->runControllerWithRedirectExceptionAndGetUrl('opportunities/default/delete');
 
-            //check wether the opportunity is deleted
+            //Check wether the opportunity is deleted.
             $opportunity = Opportunity::getByName('myEditOpportunity');
             $this->assertEquals(0, count($opportunity));
         }
@@ -549,22 +547,19 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //retrive the account id, the super user id and opportunity Id
-            $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
-            $superUserId = $super->id;
-           
-            //retrive the currency id
-            $currencies = Currency::getAll();
-            $currencyID = $currencies[0]->id;
+            //Retrieve the account id, the super user id and opportunity Id.
+            $accountId      = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            $superUserId    = $super->id;
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
-            //search a created Opportunity using the customfield.
+            //Search a created Opportunity using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('OpportunitiesSearchForm' => $this->fetchOpportunitiesSearchFormGetData($accountId,
-                                                                            $superUserId, $currencyID),
-                                     'ajax'               =>  'list-view'));
+                                                                            $superUserId, $baseCurrency->id),
+                                     'ajax'                    =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
-            //assert that the edit Opportunity does not exits after the search
+            //Assert that the edit Opportunity does not exits after the search.
             $this->assertTrue(strpos($content, "No results found.") > 0);
         }
     }
