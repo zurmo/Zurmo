@@ -557,6 +557,8 @@
             $this->assertEquals($contact->checkbox                       , '0');
             $this->assertEquals($contact->currency->value                ,  40);
             $this->assertEquals($contact->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($contact->date                           , $dateAssert);
+            $this->assertEquals($contact->datetime                       , $datetimeAssert);
             $this->assertEquals($contact->decimal                        , '12');
             $this->assertEquals($contact->picklist->value                , 'b');
             $this->assertEquals($contact->integer                        ,  11);
