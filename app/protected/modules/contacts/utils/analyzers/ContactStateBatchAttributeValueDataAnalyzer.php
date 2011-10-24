@@ -36,8 +36,8 @@
         {
             parent:: __construct($modelClassName, $attributeName);
             assert('$attributeName == null');
-            $this->states = $this->resolveStates();
-            $this->states = ArrayUtil::resolveArrayToLowerCase($this->states);
+            $states       = $this->resolveStates();
+            $this->states = ArrayUtil::resolveArrayToLowerCase($states);
         }
 
         public function runAndMakeMessages(AnalyzerSupportedDataProvider $dataProvider, $columnName)
