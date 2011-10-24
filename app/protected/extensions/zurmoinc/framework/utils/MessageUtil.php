@@ -336,6 +336,21 @@
                            {
                                 $attributeLabel = $model->getAttributeLabel($attributeName);
                                 $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                               //Find attributes that are a CustomField relation. This means there is drop down values
+                               //that will need to be translated.
+                               if ($model->isRelation($attributeName) &&
+                                   ($model->getRelationModelClassName($attributeName) == 'OwnedCustomField' ||
+                                   $model->getRelationModelClassName($attributeName) == 'CustomField'))
+                                {
+                                    $customFieldData = CustomFieldDataModelUtil::
+                                                       getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
+                                    $customFieldDataNames = unserialize($customFieldData->serializedData);
+                                    foreach($customFieldDataNames as $dataName)
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $dataName;
+                                    }
+
+                                }
                            }
                         }
                     }
