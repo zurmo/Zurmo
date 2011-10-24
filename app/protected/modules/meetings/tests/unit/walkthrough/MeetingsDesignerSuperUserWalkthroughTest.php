@@ -205,7 +205,7 @@
         /**
          * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule
          */
-        public function testCreateAnMeetingUserAfterTheCustomFieldsArePlacedForMeetingsModule()
+        public function testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -290,9 +290,9 @@
         }
 
         /**
-         * @depends testCreateAnMeetingUserAfterTheCustomFieldsArePlacedForMeetingsModule
+         * @depends testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule
          */
-        public function testEditOfTheMeetingUserForTheCustomFieldsPlacedForMeetingsModule()
+        public function testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -382,9 +382,9 @@
         }
 
         /**
-         * @depends testEditOfTheMeetingUserForTheCustomFieldsPlacedForMeetingsModule
+         * @depends testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule
          */
-        public function testDeleteOfTheMeetingUserForTheCustomFieldsPlacedForMeetingsModule()
+        public function testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
