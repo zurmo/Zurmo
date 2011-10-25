@@ -31,16 +31,40 @@
     return array(
         'Change Password'
             => 'Changer le mot de passe',
+        'Change User Passwords'
+            => 'Changer le mot de passe des utilisateurs',
         'Confirm Password'
             => 'Confirmation du mot de passe',
         'Create User'
             => 'Nouvel Utilisateur',
+        'Create Users'
+            => 'Créer des Utilisateurs',
+        'Enforce Strong Passwords'
+            => 'Exiger mot de pass fort',
         'Hash'
             => 'Hash',
+        'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
+            => 'Les utilisateurs inactifs ne peuvent pas connecter par le web, module, or API.  La connexion des utilisateurs est contrôlée par les d roits de sécurité des groupes.',
+        'Inherited Value:'
+            => 'Valeur héritée',
+        'Login Via Mobile'
+            => 'Connexion mobile',
+        'Login Via Web'
+            => 'Connexion par le Web',
+        'Login Via Web API'
+            => 'Connexion API',
         'Manage Users'
             => 'Gestion des utilisateurs',
         'Manager'
             => 'Rend compte à',
+        'Minimum Password Length'
+            => 'Longueur minimale du mot de passe',
+        'Minimum Username Length'
+            => 'Longueur minimale du nom d\'utilisateur',
+        'Password Expires'
+            => 'Expiration du mot de passe',
+        'Password Expiry Days'
+            => 'Durée de vie minimale des mots de passe',
         'Profile'
             => 'Profil',
         'The password is too short. Minimum length is {minimumLength}.'
@@ -59,6 +83,8 @@
             => 'Fuseau Horaire',
         'User'
             => 'Utilisateur',
+        'User configuration saved successfully.'
+            => 'Configuration utilisateur sauvegardée.',
         'User Search'
             => 'Recherche d\'utilisateurs',
         'Users'

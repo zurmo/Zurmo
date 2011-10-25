@@ -31,15 +31,39 @@
     return array(
         'Change Password'
             => '??',
+        'Change User Passwords'
+            => '??',
         'Confirm Password'
             => 'Confirmar Contraseña',
         'Create User'
             => 'Crear Usario',
+        'Create Users'
+            => '??',
+        'Enforce Strong Passwords'
+            => '??',
         'Hash'
+            => '??',
+        'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
+            => '??',
+        'Inherited Value:'
+            => '??',
+        'Login Via Mobile'
+            => '??',
+        'Login Via Web'
+            => '??',
+        'Login Via Web API'
             => '??',
         'Manage Users'
             => 'Administrar Usarios',
         'Manager'
+            => '??',
+        'Minimum Password Length'
+            => '??',
+        'Minimum Username Length'
+            => '??',
+        'Password Expires'
+            => '??',
+        'Password Expiry Days'
             => '??',
         'Profile'
             => 'Perfil',
@@ -59,6 +83,8 @@
             => '??',
         'User'
             => 'Usario',
+        'User configuration saved successfully.'
+            => '??',
         'User Search'
             => 'Busqueda de Usuarios',
         'Users'

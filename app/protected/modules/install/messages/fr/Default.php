@@ -66,6 +66,10 @@
             => 'Nom d\'utilisateur administrateur',
         'Database host'
             => 'L\'hôte de la base de données',
+        'Database is in strict mode.'
+            => 'La base de données est au mode strict',
+        'Database is not in strict mode.'
+            => 'La base de données n\'est pas au mode strict',
         'Database max_allowed_packet size is:'
             => 'Le max_allowed_packet de la base de données est:',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -192,9 +196,9 @@
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
             => 'Vous avez spécifiez une base de données existante, cochez la boite pour continuer. ' .
                'LES DONNÉES EXISTANTES SERONT SUPPRIMÉES.',
-        'Soap is installed.'
+        'SOAP is installed.'
             => 'SOAP est installé',
-        'Soap is not installed.'
+        'SOAP is not installed.'
             => 'SOAP n\'est pas installé',
         'Starting database schema creation.'
             => 'Création de schémas de base de données',

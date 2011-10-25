@@ -29,15 +29,59 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A check box'
+            => 'Un champ case à cocher',
+        'A currency field'
+            => 'Un champ devise',
+        'A date field'
+            => 'Un champ date',
+        'A date/time field'
+            => 'Un champ date et heure',
+        'A decimal field'
+            => 'Un champ décimal',
+        'A description box'
+            => 'Un champ zone de texte',
+        'A field that contains a URL'
+            => 'Un champ qui contien un URL',
         'A field with this name is already used.'
             => 'Un champ avec ce nom est déjà utilisé.',
+        'A phone field'
+            => 'Un champ téléphone',
+        'A pick list that can have multiple selections'
+            => 'Une liste déroulante à choix multiples',
+        'A pick list with specific values to select from'
+            => 'Une liste déroulante à une option',
+        'A radio button pick list'
+            => 'Un champ bouton radio',
+        'A text field'
+            => 'Un champ texte',
+        'A user field'
+            => 'Un champ d\'utilisateur',
+        'Access Designer Tool'
+            => 'Accès au Designer',
+        'Address fields'
+            => 'Champs d\'adresse',
         'All panels visible'
             => 'Tous visibles',
+        'All required fields must be placed in this layout.'
+            => 'Tous les champs obligatoires doivent être  placés dans la vue',
+        'An integer field'
+            => 'Un champ nombre entier',
+        'Check Box'
+            => 'Case à cocher',
         'Create Field'
             => 'Ajouter un champ',
+        'Custom Fields'
+            => 'Champs personnalisés',
+        'Decimal'
+            => 'Décimal',
         'Designer'
             => 'Designer',
-        'Detail And Edit View'
+        'Designer Home'
+            => 'Designer',
+        'Designer Tool'
+            => 'Designer',
+        'Detail and Edit View'
             => 'Vue des formulaires',
         'Details View'
             => 'Vue détaillée',
@@ -45,20 +89,36 @@
             => 'Étiquette du champ',
         'Each item must be uniquely named'
             => 'Merci d\'ajouter une valeur qui n\'est pas dans la liste.',
+        'Edit Field'
+            => 'Modification de champ',
+        'Edit Layout'
+            => 'Modification de page',
         'Edit View'
             => 'Formulaire de saisie',
+        'Email address fields'
+            => 'Champ adresse e-mail',
+        'Email Address Information'
+            => 'Information adresse e-mail',
+        'Field'
+            => 'Champ',
         'Field Name'
             => 'Nom du champ',
         'Field Type'
             => 'Type de champ',
         'Fields'
             => 'Champs',
+        'First character must be a lower case letter'
+            => 'Le premier caractère doit être une lettre minuscule',
         'First panel visible, then `show more` link'
             => 'Premier panneau visible, ensuite un lien "plus de détails"',
         'General'
             => 'Général',
+        'General Edit'
+            => 'Modification Général',
         'Invalid panel configuration type'
             => 'La configuration des panneaux choisie est invalide',
+        'Layout saved successfully.'
+            => 'Présentations de page sauvegardées',
         'Layouts'
             => 'Présentations de page',
         'List View'
@@ -71,6 +131,8 @@
             => 'Longueur maximale',
         'Maximum Value'
             => 'Valeur maximale',
+        'Maximum Value must be larger than the minimum value'
+            => 'La valeur maximale doit être plus grande que la valeur minimale',
         'Menu'
             => 'Menu',
         'Menus'
@@ -79,10 +141,20 @@
             => 'Valeur minimale',
         'Module'
             => 'Module',
+        'Modules'
+            => 'Modules',
+        'Multi-Select Pick List'
+            => 'Liste déroulante à choix multiple',
+        'Name must not contain spaces or special characters'
+            => 'Le nom ne doit pas contenir d\'espace ni de caractères spéciaux',
         'Panels are tabbed'
             => 'Onglets',
         'Panels Configuration'
             => 'Configuration des panneaux',
+        'Phone'
+            => 'Téléphone',
+        'Pick List'
+            => 'Liste déroulante',
         'Pick List Values'
             => 'Éléments de la liste déroulante',
         'Popup List View'
@@ -91,6 +163,8 @@
             => 'Vue recherche pop-up',
         'Precision'
             => 'Précision',
+        'Radio Pick List'
+            => 'Bouton radio',
         'Related List View'
             => 'Vue liste associée',
         'Required Field'
@@ -99,9 +173,19 @@
             => 'Publier',
         'Search View'
             => 'Vue recherche',
+        'Standard Fields'
+            => 'Champs Standard',
+        'Text'
+            => 'Texte',
+        'Text Area'
+            => 'Zone de texte',
         'There was an error processing your request.'
             => 'Il y a une erreur',
         'Track Audit Log'
             => 'Auditer ce champ',
+        'URL'
+            => 'URL',
+        'You must have at least one panel in order to save a layout.'
+            => 'Vous devez avoir au moins un panneau pour publier la présentation de page.',
     );
 ?>

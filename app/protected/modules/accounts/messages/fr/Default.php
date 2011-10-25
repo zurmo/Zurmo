@@ -45,6 +45,8 @@
             => 'Nom du AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Search'
             => 'Recherche du AccountsModuleSingularLabel',
+        'An account field'
+            => 'Un champ compte',
         'Annual Revenue'
             => 'Chiffres d\'affaires annuel',
         'Billing Address'

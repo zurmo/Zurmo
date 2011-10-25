@@ -29,13 +29,57 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A check box'
+            => '??',
+        'A currency field'
+            => '??',
+        'A date field'
+            => '??',
+        'A date/time field'
+            => '??',
+        'A decimal field'
+            => '??',
+        'A description box'
+            => '??',
+        'A field that contains a URL'
+            => '??',
         'A field with this name is already used.'
+            => '??',
+        'A phone field'
+            => '??',
+        'A pick list that can have multiple selections'
+            => '??',
+        'A pick list with specific values to select from'
+            => '??',
+        'A radio button pick list'
+            => '??',
+        'A text field'
+            => '??',
+        'A user field'
+            => '??',
+        'Access Designer Tool'
+            => '??',
+        'Address fields'
             => '??',
         'All panels visible'
             => '??',
+        'All required fields must be placed in this layout.'
+            => '??',
+        'An integer field'
+            => '??',
+        'Check Box'
+            => '??',
         'Create Field'
             => '??',
+        'Custom Fields'
+            => '??',
+        'Decimal'
+            => '??',
         'Designer'
+            => '??',
+        'Designer Home'
+            => '??',
+        'Designer Tool'
             => '??',
         'Detail And Edit View'
             => '??',
@@ -45,7 +89,17 @@
             => '??',
         'Each item must be uniquely named'
             => '??',
+        'Edit Field'
+            => '??',
+        'Edit Layout'
+            => '??',
         'Edit View'
+            => '??',
+        'Email address fields'
+            => '??',
+        'Email Address Information'
+            => '??',
+        'Field'
             => '??',
         'Field Name'
             => '??',
@@ -53,11 +107,19 @@
             => '??',
         'Fields'
             => '??',
+        'Fields'
+            => '??',
+        'First character must be a lower case letter'
+            => '??',
         'First panel visible, then `show more` link'
             => '??',
         'General'
             => '??',
+        'General Edit'
+            => '??',
         'Invalid panel configuration type'
+            => '??',
+        'Layout saved successfully.'
             => '??',
         'Layouts'
             => '??',
@@ -71,6 +133,8 @@
             => '??',
         'Maximum Value'
             => '??',
+        'Maximum Value must be larger than the minimum value'
+            => '??',
         'Menu'
             => '??',
         'Menus'
@@ -79,9 +143,19 @@
             => '??',
         'Module'
             => '??',
+        'Modules'
+            => '??',
+        'Multi-Select Pick List'
+            => '??',
+        'Name must not contain spaces or special characters'
+            => '??',
         'Panels are tabbed'
             => '??',
         'Panels Configuration'
+            => '??',
+        'Phone'
+            => '??',
+        'Pick List'
             => '??',
         'Pick List Values'
             => '??',
@@ -91,6 +165,8 @@
             => '??',
         'Precision'
             => '??',
+        'Radio Pick List'
+            => '??',
         'Related List View'
             => '??',
         'Required Field'
@@ -99,9 +175,19 @@
             => '??',
         'Search View'
             => '??',
+        'Standard Fields'
+            => '??',
+        'Text'
+            => '??',
+        'Text Area'
+            => '??',
         'There was an error processing your request.'
             => '??',
         'Track Audit Log'
+            => '??',
+        'URL'
+            => '??',
+        'You must have at least one panel in order to save a layout.'
             => '??',
     );
 ?>

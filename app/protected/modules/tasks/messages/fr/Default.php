@@ -39,13 +39,19 @@
             => 'Mes TasksModulePluralLabel Ouvertes',
         'Open TasksModulePluralLabel'
             => 'TasksModulePluralLabel Ouvertes',
+        'Task'
+            => 'Tâche',
         'Tasks'
             => 'Tâches',
+        'TasksModulePluralLabel'
+            => 'TasksModulePluralLabel',
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
             => 'TasksModulePluralLabel pour AccountsModuleSingularLabel',
         'TasksModulePluralLabel For ContactsModuleSingularLabel'
             => 'TasksModulePluralLabel pour ContactsModuleSingularLabel',
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'TasksModulePluralLabel pour OpportunitiesModuleSingularLabel',
+        'TasksModuleSingularLabel'
+            => 'TasksModuleSingularLabel',
     );
 ?>

@@ -35,6 +35,8 @@
             => 'Le fichier doit contenir au moins une ligne pour importer',
         'A full name value is required but missing.'
             => 'Le nom complet est un champ requis',
+        'Access Import Tool'
+            => 'Accès à l\'outil d\'importation',
         'Add Field'
             => 'Ajouter un champ',
         'All required attributes must be mapped or added.'
@@ -91,6 +93,8 @@
             => 'Assistant d\'importation: Étape 6 sur 6',
         'Importing data...'
             => 'Importation en progrès',
+        'Information about the rows with errors'
+            => 'Information sur les enregistrements avec erreurs',
         'Invalid check box format.'
             => 'La valeur du checkbox n\'est pas valide.',
         'Invalid date format.'
@@ -107,14 +111,20 @@
             => 'URL invalide.',
         'Last name specified is too long.'
             => 'Le Nom contient trop de caractères',
+        'Last name specified is too short.'
+            => 'Le nom de famille est trop court.',
         'Mapping Data'
             => 'Mappage des données',
+        'Messages'
+            => 'Messages',
         'Model Permissions'
             => 'Modèle d\'autorisations',
         'Module To Import To'
             => 'Module à importer',
         'Next'
             => 'Suivant',
+        'Other Id'
+            => 'Autre ID',
         'Pick list is missing corresponding custom field data.'
             => 'La liste déroulante manque les données correspondantes personnalisés',
         'Pick list value required, but missing.'
@@ -143,6 +153,8 @@
             => 'Supprimer',
         'Required Fields'
             => 'Champs Requis',
+        'Row Id'
+            => 'Ligne',
         'Rows with errors: {errors}'
             => 'Enregistrements avec erreurs: {errors}',
         'Rules'
@@ -173,6 +185,8 @@
             => 'Type de données',
         'URL was too long.'
             => 'L\'URL contient trop de caractères',
+        'Value is too short.'
+            => 'La valeure est trop courte',
         'Who can read and write the new {importRulesLabel}'
             => 'Permissions {importRulesLabel}',
         'You can only map each field once.'
@@ -183,6 +197,10 @@
             => 'Vous devez mapper au moins un champ',
         'Zurmo Field'
             => 'Champs Zurmo',
+        'Zurmo Id'
+            => 'ID Zurmo',
+        'Zurmo Username'
+            => 'Nom d\'utilisateur Zurmo',
         '{firstDate} or {secondDate}'
             => '{firstDate} ou {secondDate}',
         '{modelLabel} id specified did not match any existing records.'

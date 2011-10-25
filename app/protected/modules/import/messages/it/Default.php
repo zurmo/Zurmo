@@ -35,6 +35,8 @@
             => '??',
         'A full name value is required but missing.'
             => '??',
+        'Access Import Tool'
+            => '??',
         'Add Field'
             => '??',
         'All required attributes must be mapped or added.'
@@ -91,6 +93,8 @@
             => '??',
         'Importing data...'
             => '??',
+        'Information about the rows with errors'
+            => '??',
         'Invalid check box format.'
             => '??',
         'Invalid date format.'
@@ -107,13 +111,19 @@
             => '??',
         'Last name specified is too long.'
             => '??',
+        'Last name specified is too short.'
+            => '??',
         'Mapping Data'
+            => '??',
+        'Messages'
             => '??',
         'Model Permissions'
             => '??',
         'Module To Import To'
             => '??',
         'Next'
+            => '??',
+        'Other Id'
             => '??',
         'Pick list is missing corresponding custom field data.'
             => '??',
@@ -142,6 +152,8 @@
         'Remove Field'
             => '??',
         'Required Fields'
+            => '??',
+        'Row Id'
             => '??',
         'Rows with errors: {errors}'
             => '??',
@@ -173,6 +185,8 @@
             => '??',
         'URL was too long.'
             => '??',
+        'Value is too short.'
+            => '??',
         'Who can read and write the new {importRulesLabel}'
             => '??',
         'You can only map each field once.'
@@ -182,6 +196,10 @@
         'You must map at least one of your import columns.'
             => '??',
         'Zurmo Field'
+            => '??',
+        'Zurmo Id'
+            => '??',
+        'Zurmo Username'
             => '??',
         '{firstDate} or {secondDate}'
             => '??',

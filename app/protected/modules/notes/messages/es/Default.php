@@ -31,9 +31,17 @@
     return array(
         'Add a NotesModuleSingularLabel about'
             => '??',
+        'Note'
+            => '??',
         'Notes'
             => '??',
+        'NotesModulePluralLabel'
+            => 'NotesModulePluralLabel',
+        'NotesModuleSingularLabel'
+            => 'NotesModuleSingularLabel',
         'Occurred On'
+            => '??',
+        'The NotesModulePluralLabel form cannot be displayed.'
             => '??',
     );
 ?>
