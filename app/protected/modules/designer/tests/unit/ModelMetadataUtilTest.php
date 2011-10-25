@@ -149,7 +149,8 @@
             $originalMetadata = A::getMetadata();
             $attributeLabels  = array('en' => 'newRelation');
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'newRelation', $attributeLabels,
-                null, false, false, 'DropDown', 'Things', array('thing 1', 'thing 2'));
+                null, false, false, 'DropDown', 'Things', array('thing 1', 'thing 2'),
+                                                          array('fr' => array('thing 1 fr', 'thing 2 fr')));
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
 
@@ -480,6 +481,9 @@
             ModelMetadataUtil::removeAttribute('A', 'fruit');
         }
 
+        /**
+         * @depends testUsingRequiredCustomFieldRelationWithDefaultValue
+         */
         public function testAttributeLabelsMergeCorrectlyWithExistingData()
         {
             //Testing addOrUpdateMember merges correctly.
@@ -509,6 +513,35 @@
             $metadata = A::getMetadata();
             $this->assertEquals($metadata['A']['labels']['fruit'],
                                 array('en' => 'fruit', 'fr' => 'somethingDifferent2'));
+        }
+
+        /**
+         * @depends testAttributeLabelsMergeCorrectlyWithExistingData
+         */
+        public function testSavingCustomFieldDataLabels()
+        {
+            $a = new A();
+            $this->assertTrue($a->isAttribute('fruit'));
+            unset($a);
+
+            $appleCustomField = new CustomField();
+            $appleCustomField->value = 'apple';
+            $appleCustomField->data = CustomFieldData::getByName('Fruit');
+            $this->assertTrue($appleCustomField->save());
+            $attributeLabels  = array('en' => 'fruit');
+            ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
+                $appleCustomField, true, false, 'DropDown', 'Fruit', array('apple', 'grape', 'orange'),
+                array('fr' => array('appleFr', 'grapeFr', 'orangeFr'), 'de' => array('', 'grape', '')));
+
+            $a = new A();
+            $a->a = 1;
+            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->validate());
+            $this->assertEquals('apple', $a->fruit->value);
+            $compareData = array('fr' => array('appleFr', 'grapeFr', 'orangeFr'), 'de' => array('', 'grape', ''));
+            $this->assertEquals($compareData, unserialize($a->fruit->data->serializedLabels));
+            unset($a);
+            ModelMetadataUtil::removeAttribute('A', 'fruit');
         }
     }
 ?>

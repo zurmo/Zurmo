@@ -86,6 +86,28 @@
         }
 
         /**
+         * Get an array of order/ label translation array pairings of the existing contact states ordered by order.
+         * @return array
+         */
+        public static function getContactStateLabelsKeyedByLanguageAndOrder()
+        {
+            $contactStatesLabels = array();
+            $states = ContactState::getAll('order');
+            foreach ($states as $state)
+            {
+                if($state->serializedLabels !== null)
+                {
+                    $labelsByLanguage = unserialize($state->serializedLabels);
+                    foreach($labelsByLanguage as $language => $label)
+                    {
+                        $contactStatesLabels[$language][$state->order] = $label;
+                    }
+                }
+            }
+            return $contactStatesLabels;
+        }
+
+        /**
          * Get an array of order/name pairings of the existing contact states ordered by order.
          * @return array
          */
@@ -120,6 +142,32 @@
                         $includeState = true;
                     }
                     $contactStatesData[$state->id] = $state->name;
+                }
+            }
+            return $contactStatesData;
+        }
+
+        /**
+         * Get an array of only the states from the starting state onwards, id/translated label pairings of the
+         * existing contact states ordered by order.
+         * @return array
+         */
+        public static function getContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage($language)
+        {
+            assert('is_string($language)');
+            $contactStatesData = array();
+            $states            = ContactState::getAll('order');
+            $startingState     = self::getStartingStateId();
+            $includeState      = false;
+            foreach ($states as $state)
+            {
+                if ($startingState == $state->id || $includeState)
+                {
+                    if ($startingState == $state->id)
+                    {
+                        $includeState = true;
+                    }
+                    $contactStatesData[$state->id] = static::resolveStateLabelByLanguage($state, $language);
                 }
             }
             return $contactStatesData;
@@ -183,6 +231,26 @@
             {
                 return false;
             }
+        }
+
+        /**
+         * Given a CustomFieldData object, return an array of data and translated labels indexed by the data name.
+         * @param CustomFieldData $customFieldData
+         * $param string $language
+         */
+        public static function resolveStateLabelByLanguage(ContactState $state, $language)
+        {
+            assert('$state->id > 0');
+            assert('is_string($language)');
+            if($state->serializedLabels !== null)
+            {
+                $unserializedLabels = unserialize($state->serializedLabels);
+                if(isset($unserializedLabels[$language]))
+                {
+                    return $unserializedLabels[$language];
+                }
+            }
+            return Yii::t('Default', $state->name, array(), null, $language);
         }
     }
 ?>

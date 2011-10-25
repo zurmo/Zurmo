@@ -376,6 +376,17 @@
                                 }
                             }
                         }
+                        //attempt to detect any 'state' adapters and look for state labels.
+                        $stateAdapterClassName = $moduleClassName::getStateMetadataAdapterClassName();
+                        if($stateAdapterClassName != null && $stateAdapterClassName)
+                        {
+                            $stateModelClassName = $stateAdapterClassName::getStateModelClassName();
+                            $states              = $stateModelClassName::getAll();
+                            foreach($states as $state)
+                            {
+                                $fileNamesToCategoriesToMessages[$entry]['Default'][] = $state->name;
+                            }
+                        }
                     }
                     //Avoid picking up any models or anything in the test folders
                     if ( strpos($path, '/tests') === false)

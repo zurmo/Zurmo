@@ -26,9 +26,9 @@
 
     class LeadStateDropDownElement extends ContactStateDropDownElement
     {
-        protected function shouldIncludeState($stateOrder, $startingStateOrder)
+        protected function getDropDownArray()
         {
-            return $stateOrder < $startingStateOrder;
+            return LeadsUtil::getLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage(Yii::app()->language);
         }
     }
 ?>

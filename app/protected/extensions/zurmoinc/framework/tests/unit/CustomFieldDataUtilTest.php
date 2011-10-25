@@ -41,9 +41,9 @@
                 'Item 3',
             );
             $labels = array(
-                'fr' => array('Item 1' => 'Item 1 fr',
-                              'Item 2' => 'Item 2 fr',
-                              'Item 3' => 'Item 3 fr'),
+                'fr' => array('Item 1 fr',
+                              'Item 2 fr',
+                              'Item 3 fr'),
             );
             $customFieldData = CustomFieldData::getByName('Items');
             $customFieldData->serializedData   = serialize($values);
@@ -67,6 +67,39 @@
             $dataAndLabels    = CustomFieldDataUtil::
                                 getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, 'de');
             $compareData      = array('Item 1' => 'Item 1', 'Item 2' => 'Item 2', 'Item 3' => 'Item 3');
+            $this->assertEquals($compareData, $dataAndLabels);
+        }
+
+        public function testSetAndGetEmptyValueWhichShouldUtilizeFallBack()
+        {
+            $this->assertEquals('en', Yii::app()->language);
+            $values = array(
+                'Item 1',
+                'Item 2',
+                'Item 3',
+            );
+            $labels = array(
+                'fr' => array('Item 1 fr',
+                              '',
+                              'Item 3 fr'),
+            );
+            $customFieldData = CustomFieldData::getByName('Items2');
+            $customFieldData->serializedData   = serialize($values);
+            $customFieldData->serializedLabels = serialize($labels);
+            $this->assertTrue($customFieldData->save());
+            $id = $customFieldData->id;
+            $customFieldData->forget();
+            unset($customFieldData);
+
+            $customFieldData = CustomFieldData::getById($id);
+            $dataAndLabels    = CustomFieldDataUtil::
+                                getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, 'en');
+            $compareData      = array('Item 1' => 'Item 1', 'Item 2' => 'Item 2', 'Item 3' => 'Item 3');
+            $this->assertEquals($compareData, $dataAndLabels);
+
+            $dataAndLabels    = CustomFieldDataUtil::
+                                getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, 'fr');
+            $compareData      = array('Item 1' => 'Item 1 fr', 'Item 2' => 'Item 2', 'Item 3' => 'Item 3 fr');
             $this->assertEquals($compareData, $dataAndLabels);
         }
     }

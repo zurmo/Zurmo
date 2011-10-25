@@ -46,8 +46,9 @@
             {
                 $customFieldDataName = ucfirst(strtolower($attributeForm->attributeName)); //should we do something else instead?
             }
-            $customFieldDataData = $attributeForm->customFieldDataData;
-            $defaultValue        = DropDownDefaultValueOrderUtil::getDefaultValueFromDefaultValueOrder(
+            $customFieldDataData   = $attributeForm->customFieldDataData;
+            $customFieldDataLabels = $attributeForm->customFieldDataLabels;
+            $defaultValue          = DropDownDefaultValueOrderUtil::getDefaultValueFromDefaultValueOrder(
                                             $defaultValueOrder, $customFieldDataData);
             ModelMetadataUtil::addOrUpdateCustomFieldRelation($modelClassName,
                                                               $attributeName,
@@ -57,7 +58,8 @@
                                                               $isAudited,
                                                               $elementType,
                                                               $customFieldDataName,
-                                                              $customFieldDataData);
+                                                              $customFieldDataData,
+                                                              $customFieldDataLabels);
             if ($attributeForm->getCustomFieldDataId() != null)
             {
                 foreach ($attributeForm->customFieldDataData as $order => $newValue)

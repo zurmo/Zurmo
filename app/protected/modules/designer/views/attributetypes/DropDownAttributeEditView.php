@@ -65,7 +65,7 @@
                                             ),
                                         ),
                                     )
-                                ),                                
+                                ),
                                 array('cells' =>
                                     array(
                                         array(
@@ -112,7 +112,10 @@
             $content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";
             $element  = new EditableDropDownCollectionElement($this->model, 'customFieldDataData', $form,
-                                array('specificValueFromDropDownAttributeName' => 'defaultValueOrder'));
+                                array('specificValueFromDropDownAttributeName' => 'defaultValueOrder',
+                                      'baseLanguage'           => Yii::app()->languageHelper->getBaseLanguage(),
+                                      'activeLanguagesData'    => Yii::app()->languageHelper->getActiveLanguagesData(),
+                                      'labelsAttributeName'    => 'customFieldDataLabels'));
             $content .= $element->render();
             $content .= '</div>' . "\n";
             return $content;

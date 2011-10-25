@@ -110,7 +110,10 @@
             $content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";
             $element  = new EditableDropDownCollectionElement($this->model, 'contactStatesData', $form,
-                                array('specificValueFromDropDownAttributeName' => 'startingStateOrder'));
+                                array('specificValueFromDropDownAttributeName' => 'startingStateOrder',
+                                      'baseLanguage'           => Yii::app()->languageHelper->getBaseLanguage(),
+                                      'activeLanguagesData'    => Yii::app()->languageHelper->getActiveLanguagesData(),
+                                      'labelsAttributeName'    => 'contactStatesLabels'));
             $content .= $element->render();
             $content .= '</div>' . "\n";
             return $content;

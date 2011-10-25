@@ -127,9 +127,6 @@
             $dropDownModel = $this->model->{$this->attribute};
             $dataAndLabels    = CustomFieldDataUtil::
                                 getDataIndexedByDataAndTranslatedLabelsByLanguage($dropDownModel->data, Yii::app()->language);
-           // echo "<pre>";
-           // print_r($dataAndLabels);
-            //echo "</pre>";
             return $dataAndLabels;
         }
     }

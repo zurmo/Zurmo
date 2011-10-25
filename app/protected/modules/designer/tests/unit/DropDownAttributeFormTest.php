@@ -36,7 +36,8 @@
         {
             //First test a clean array with no errors.
             $form = new DropDownAttributeForm();
-            $form->customFieldDataData = array('a', 'b', 'c');
+            $form->customFieldDataData   = array('a', 'b', 'c');
+            $form->customFieldDataLabels = array('fr' => array('Afr', 'Bfr', 'Cfr'), 'de' => array('Afr', 'Bfr', 'Cfr'));
             $form->validateCustomFieldDataData('customFieldDataData', null);
             $errors = $form->getErrors();
             $this->assertEquals(0, count($errors));

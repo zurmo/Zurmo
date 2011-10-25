@@ -36,7 +36,6 @@
          */
         public static function getDataIndexedByDataAndTranslatedLabelsByLanguage(CustomFieldData $customFieldData, $language)
         {
-            assert('$customFieldData->id > 0');
             assert('is_string($language)');
             $dropDownArray       = unserialize($customFieldData->serializedData);
             $customLabels        = unserialize($customFieldData->serializedLabels);
@@ -63,11 +62,13 @@
             assert('is_string($language)');
             assert('$customLabels == null || is_array($customLabels)');
             $labels = array();
-            foreach($data as $dataName)
+            foreach($data as $order => $dataName)
             {
-                if(isset($customLabels[$language]) && isset($customLabels[$language][$dataName]))
+                if(isset($customLabels[$language]) &&
+                   isset($customLabels[$language][$order]) &&
+                   $customLabels[$language][$order] != null)
                 {
-                    $labels[] = $customLabels[$language][$dataName];
+                    $labels[] = $customLabels[$language][$order];
                 }
                 else
                 {
