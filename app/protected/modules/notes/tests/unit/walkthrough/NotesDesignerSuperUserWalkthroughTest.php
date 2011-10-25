@@ -225,13 +225,12 @@
                                       'ActivityItemForm' => array(
                                             'Account'    => array('id'  => $superAccount[0]->id),
                                             'Contact'    => array('id'  => $superContactId),
-                                            'Opportunity'=> array('id'  => $superOpportunityId)),
-                                      'ajax' => 'inline-edit-form'));
-            $this->runControllerWithExitExceptionAndGetContent('notes/default/inlineCreateSave');
+                                            'Opportunity'=> array('id'  => $superOpportunityId))));
+            $this->runControllerWithRedirectExceptionAndGetUrl('notes/default/inlineCreateSave');
 
             //Check the details if they are saved properly for the custom fields.
             $note = Note::getByName('Note Description');
-           
+
             //Retrieve the permission of the note.
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem(Note::getById($note[0]->id));
@@ -284,11 +283,12 @@
             $note = Note::getByName('Note Description');
 
             //Edit a note based on the custom fields.
-            $this->resetGetArray(array('id' => $note[0]->id));
+            $this->setGetArray(array('id' => $note[0]->id));
             $this->setPostArray(array('Note' => array(
                                 'occurredOnDateTime'                => $datetime,
                                 'description'                       => 'Note Edit Description',
                                 'explicitReadWriteModelPermissions' => array('type'=>$explicitReadWriteModelPermission),
+                                'owner'                             => array('id' => $superUserId),
                                 'checkbox'                          => '0',
                                 'currency'                          => array('value'   => 40,
                                                                              'currency'=> array(
@@ -350,7 +350,7 @@
             $note = Note::getByName('Note Edit Description');
 
             //Set the note id so as to delete the note.
-            $this->resetGetArray(array('id' => $note[0]->id));
+            $this->setGetArray(array('id' => $note[0]->id));
             $this->runControllerWithRedirectExceptionAndGetUrl('notes/default/delete');
 
             //Check to confirm that the note is deleted.
