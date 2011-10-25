@@ -334,6 +334,35 @@
             }
         }
 
+        public static function getDatabaseMaxSpRecursionDepth($databaseType,
+                                                              $databaseHostname,
+                                                              $databaseUsername,
+                                                              $databasePassword,
+                                                              $minimumRequiredMaxSpRecursionDepth,
+                                                              /* out */ & $maxSpRecursionDepth)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'max_sp_recursion_depth'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        $maxSpRecursionDepth = $row[1];
+                        return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
+                    }
+                    return false;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
         public static function isDatabaseStrictMode($databaseType,
                                                     $databaseHostname,
                                                     $databaseUsername,

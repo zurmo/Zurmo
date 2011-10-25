@@ -95,6 +95,7 @@
                                                                            $serviceCheckResultsDataForDisplay);
                 $view = new InstallPageView($this, $checkServicesView);
                 echo $view->render();
+                Yii::app()->end(0, false);
             }
             $this->actionRunInstallation($form);
             Yii::app()->end(0, false);
