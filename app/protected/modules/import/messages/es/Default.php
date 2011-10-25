@@ -30,111 +30,111 @@
     // DON'T MAKE A MESS!
     return array(
         'A file must be uploaded in order to continue the import process.'
-            => '??',
+            => 'Un archivo se debe cargar para continuar con el proceso de importación',
         'A file must be uploaded with at least one row to import.'
-            => '??',
+            => 'Un archivo debe ser cargado con al menos una fila a la importación',
         'A full name value is required but missing.'
-            => '??',
+            => 'El campo de nombre completo es necesario',
         'Add Field'
-            => '??',
+            => 'Agregar campo',
         'All required attributes must be mapped or added.'
-            => '??',
+            => 'Todos los atributos obligatorios deben ser asignados o añadidos',
         'Analyzing the import data...'
-            => '??',
+            => 'Analizando los datos de importación',
         'Congratulations! Your import is complete.  Below is a summary of the results.'
-            => '??',
+            => 'Felicitaciones! Tu importación está completa. A continuación hay un resumen de los resultados',
         'Default Name'
-            => '??',
+            => 'Nombre predeterminado',
         'Delimiter'
-            => '??',
+            => 'Delimitador',
         'Do not map this field'
-            => '??',
+            => 'No asigne este campo',
         'Email was too long.'
-            => '??',
+            => 'Email era demaciado largo',
         'Qualifier'
-            => '??',
+            => 'Delimitador de texto',
         'Error: Invalid delimiter'
-            => '??',
+            => 'Error: Delimitador inválido',
         'Error: Invalid qualifier'
-            => '??',
+            => 'Error: clasificación inválida',
         'Failed to create temporary database table from CSV.'
-            => '??',
+            => 'No se puede crear una tabla temporal desde un archivo CSV',
         'Failed to open the uploaded file.'
-            => '??',
+            => 'No se pudo abrir el archivo subido',
         'File Upload Data'
-            => '??',
+            => 'Datos del archivo subido',
         'First name specified is too long.'
-            => '??',
+            => 'Primer nombre especificado demasiado largo',
         'First Row is Header Row'
-            => '??',
+            => 'La primera fila es la fila de cabecera',
         'Format'
-            => '??',
+            => 'Format',
         'Header'
-            => '??',
+            => 'Cabecera',
         'Id'
-            => '??',
+            => 'ID',
         'Import'
-            => '??',
+            => 'Importar',
         'Import file has no rows to use.'
-            => '??',
+            => 'El archivo no contiene datos',
         'Import model failed to save.'
-            => '??',
+            => 'Impossible de guardar el modelo de import',
         'Import Wizard: Step 1 of 6'
-            => '??',
+            => 'Asistente de importación: Paso 1 de 6',
         'Import Wizard: Step 2 of 6'
-            => '??',
+            => 'Asistente de importación: Paso 2 de 6',
         'Import Wizard: Step 3 of 6'
-            => '??',
+            => 'Asistente de importación: Paso 3 de 6',
         'Import Wizard: Step 4 of 6'
-            => '??',
+            => 'Asistente de importación: Paso 4 de 6',
         'Import Wizard: Step 5 of 6'
-            => '??',
+            => 'Asistente de importación: Paso 5 de 6',
         'Import Wizard: Step 6 of 6'
-            => '??',
+            => 'Asistente de importación: Paso 6 de 6',
         'Importing data...'
-            => '??',
+            => 'Importando datos...',
         'Invalid check box format.'
-            => '??',
+            => 'Formato de check box inválido',
         'Invalid date format.'
-            => '??',
+            => 'Formato de fecha inválido',
         'Invalid datetime format.'
-            => '??',
+            => 'Formato de fecha hora inválido',
         'Invalid email format.'
-            => '??',
+            => 'Formato de email inválido',
         'Invalid integer format.'
-            => '??',
+            => 'Formato de numero entero inválido',
         'Invalid number format.'
-            => '??',
+            => 'Formato de numero inválido',
         'Invalid url format.'
-            => '??',
+            => 'Formato de url inválido',
         'Last name specified is too long.'
-            => '??',
+            => 'Apellido especificado demaciado largo',
         'Mapping Data'
-            => '??',
+            => 'Asignando datos',
         'Model Permissions'
-            => '??',
+            => 'Modelo de autorizacón',
         'Module To Import To'
-            => '??',
+            => 'Módulo para importar a',
         'Next'
-            => '??',
+            => 'Próximo',
         'Pick list is missing corresponding custom field data.'
-            => '??',
+            => 'falta la lista desplegable de datos del campo personalizado',
         'Pick list value required, but missing.'
-            => '??',
+            => 'El valor de la lista desplegable es obligatorio pero falta ',
         'Please map the fields you would like to import.'
-            => '??',
+            => 'Por favor asignar el campo que le gustaría importar',
         'Please select the CSV to upload'
-            => '??',
+            => 'Por favor seleccione el archivo CSV para subirlo',
         'Please select the module you would like to import to:'
-            => '??',
+            => 'Por favor seleccione el módulo que le gustaría para importar a',
         'Previous'
-            => '??',
+            => 'anterior',
         'Processing'
-            => '??',
+            => 'Procesando',
         'Record saved correctly.'
-            => '??',
+            => 'Archivo guardado correctamente',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'
-            => '??',
+            => 'Archivo(s){startItemCount} - {endItemCount} de {totalItemCount}',
         'Records created: {created}'
             => '??',
         'Records updated: {updated}'
