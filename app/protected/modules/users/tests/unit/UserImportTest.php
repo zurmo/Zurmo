@@ -65,8 +65,8 @@
                                       'mappingRulesData' => array(
                                           'UserStatusDefaultValueMappingRuleForm' =>
                                           array('defaultValue' => UserStatusUtil::ACTIVE))),
-                'column_3'  => ImportTestHelper::makeStringColumnMappingData      ('firstName'),
-                'column_4'  => ImportTestHelper::makeStringColumnMappingData      ('lastName')
+                'column_3'  => ImportMappingUtil::makeStringColumnMappingData      ('firstName'),
+                'column_4'  => ImportMappingUtil::makeStringColumnMappingData      ('lastName')
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Users');
@@ -75,11 +75,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 10 models where created.

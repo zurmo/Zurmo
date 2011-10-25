@@ -51,16 +51,18 @@
                 'members' => array(
                     'name',
                     'order',
+                    'serializedLabels',
                 ),
                 'relations' => array(
                 ),
                 'rules' => array(
-                    array('name',   'required'),
-                    array('name',   'type',   'type' => 'string'),
-                    array('name',   'length', 'min'  => 3, 'max' => 64),
-                    array('order',  'required'),
-                    array('order',  'type',    'type' => 'integer'),
-                    array('order',  'numerical', 'min' => 0),
+                    array('name',   		  'required'),
+                    array('name',             'type',   'type' => 'string'),
+                    array('name',   		  'length', 'min'  => 3, 'max' => 64),
+                    array('order',  		  'required'),
+                    array('order',  	      'type',    'type' => 'integer'),
+                    array('order',  		  'numerical', 'min' => 0),
+                    array('serializedLabels', 'type', 'type' => 'string'),
                 ),
                 'defaultSortAttribute' => 'name',
             );

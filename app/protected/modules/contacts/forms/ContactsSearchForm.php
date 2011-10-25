@@ -74,8 +74,8 @@
                     array('secondaryAddress', 'city'),
                 ),
                 'anyStreet' => array(
-                    array('primaryAddress',  'street'),
-                    array('secondaryAddress', 'street'),
+                    array('primaryAddress',  'street1'),
+                    array('secondaryAddress', 'street1'),
                 ),
                 'anyState' => array(
                     array('primaryAddress',  'state'),

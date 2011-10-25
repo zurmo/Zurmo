@@ -47,20 +47,30 @@
             => 'Histogramme 3D',
         'About'
             => 'À propos de zurmo',
+        'Access Administration Tab'
+            => 'Accès Administration',
+        'Access Currency Configuration'
+            => 'Accès aux Devises',
         'Access Failure'
             => 'Échec de l\'accès',
+        'Access Global Configuration'
+            => 'Accès a la Configuration globale',
+        'Access Groups Tab'
+            => 'Accès aux Groupes',
+        'Access Roles Tab'
+            => 'Accès aux Rôles',
         'Active'
             => 'Active',
         'Active currencies can be used when creating new records and as a default currency for a user.'
             => 'Les devises actives sont disponibles pour créer de nouveaux enregistrements et comme devise de défault pour un utilisateur.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
             => 'Les langues actives sont disponibles aux utilisateurs. Impossible de désactiver la langue système ou unelangue actuellement utilisé par un utilisateur',
-        'Add File'
-            => 'Ajouter un Fichier',
-        'Add Files'
-            => 'Ajouter des Fichiers',
+        'Address'
+            => 'Adresse',
+        'Ad-hoc / Owner'
+            => 'De circonstance / Resp. du compte',
         'Admin'
-            => 'Configuration',
+            => 'Administration',
         'Alert'
             => 'Alerte',
         'Allow'
@@ -121,8 +131,12 @@
             => 'Pays',
         'Create Group'
             => 'Nouveau Groupe',
+        'Create Groups'
+            => 'Créer Groupes',
         'Create New'
             => 'Crée',
+        'Create Roles'
+            => 'Créer Rôles',
         'Currencies: Create'
             => 'Devises: Créer',
         'Currencies: List'
@@ -141,8 +155,12 @@
             => 'jours',
         'Delete Group'
             => 'Supprimer le Groupe',
+        'Delete Groups'
+            => 'Supprimer Groupes',
         'Delete Role'
             => 'Supprimer le Rôle',
+        'Delete Roles'
+            => 'Supprimer Rôles',
         'Deny'
             => 'Interdit',
         'Department'
@@ -171,6 +189,8 @@
             => 'Prénom',
         'Global Configuration'
             => 'Configuration globale',
+        'Global configuration saved successfully.'
+            => 'Configuration globale sauvegardée',
         'Go to Search'
             => 'à la Recherche',
         'Group'
@@ -191,12 +211,20 @@
             => 'Le nom d\'utilisateur ou le mot de passe est incorrect.',
         'Industry'
             => 'Secteur',
-        'Info'
-            => 'Info',
         'Inherited - All'
-            => 'Hériter-Tous',
+            => 'Hériter - Tous',
         'Inherited - Allow'
-            => 'Hériter-Permettre',
+            => 'Hériter - Permettre',
+        'Inherited - Deny'
+            => 'Hériter - Refuser',
+        'Inherited - No'
+            => 'Hériter - Non',
+        'Inherited - Owner Only'
+            => 'Hériter - Resp. du compte',
+        'Inherited - Yes'
+            => 'Hériter - Oui',
+        'Inherited Value:'
+            => 'Valeur héritée',
         'Invalid currency code'
             => 'Le code de devise est invalide.',
         'Is Invalid'
@@ -233,8 +261,6 @@
             => 'Gestion des groupes de sécurité',
         'Manage Roles'
             => 'Gestion des rôles et hiérarchies',
-        'Max upload size: {maxSize}'
-            => 'Taille max de téléchargement: {maxSize}',
         'Member'
             => 'Filiale',
         'Member Of'
@@ -253,18 +279,20 @@
             => 'Nom du module - au singulier (miniscule)',
         'Module Permissions'
             => 'Permissions',
-        'Munge rebuild complete.'
-            => 'La permission de sécurité de vue liste a été reconstruite.',
+        'Module Permissions Saved Successfully.'
+            => 'Permissions sauvegardées.',
         'My List Configuration View'
             => 'Ma Vue Liste Configuration',
         'Never'
             => 'Jamais',
         'No Results Found'
             => 'Aucun résultat trouvé',
+        'Non Members'
+            => 'Non Membres',
         'Not Set'
             => 'Défaut',
         'Not Set - Ad-hoc / Owner'
-            => 'Défaut - de circonstance / propriétaire',
+            => 'Défaut - de circonstance / resp. du compte',
         'Office Fax'
             => 'Fax de Bureau',
         'Office Phone'
@@ -277,8 +305,10 @@
             => 'Opt-Out',
         'Owner'
             => 'Resp. du compte',
+        'Owner and users in'
+            => 'Resp. du compte et utilisateurs en',
         'Owner Only'
-            => 'Propriétaire',
+            => 'Resp. du compte',
         'Parent Group'
             => 'Groupe mère',
         'Parent Role'
@@ -293,6 +323,8 @@
             => 'Veuillez utiliser FireFox, Chrome, ou Internet Explorer.',
         'Policies'
             => 'Règles',
+        'Policies Saved Successfully.'
+            => 'Règles sauvegardées.',
         'Popup list page size'
             => 'Nb. d\'éléments de la liste pop-up',
         'Postal Code'
@@ -315,6 +347,8 @@
             => 'Retour au menu administrateur',
         'Rights'
             => 'Droits',
+        'Rights Saved Successfully.'
+            => 'Droits sauvegardés',
         'Role'
             => 'Rôle',
         'Roles'
@@ -341,14 +375,14 @@
             => 'Adresse de livraison',
         'Size'
             => 'Taille',
+        'skipped because you do not have sufficient permissions.'
+            => 'omit par ce que vous n\'avez pas les permissions suffisantes.',
         'Sorry! Your browser is not supported.'
             => 'Désolé! Votre navigateur n\'est pas supporté',
         'Source'
             => 'Origine',
         'Stage'
             => 'Étape',
-        'Start'
-            => 'Commencer',
         'State'
             => 'Province/Région',
         'Street 1'
@@ -361,14 +395,16 @@
             => 'Mise à jour réussie',
         'Super Administrators'
             => 'Super Administrateur',
-        'The currency code is invalid'
-            => 'Le code de devise est invalide.',
-        'The file did not exist'
-            => 'Le fichier n\'existe pas.',
+        'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
+            => 'Le service de taux de change indique que le code de devise est invalide, bien que zurmo indique que le code est valide.  Le taux n\'a pas pu être mis à jour automatiquement.',
+        'The currency rate web service was unavailable. The rate could not be automatically updated.'
+            => 'Le service de taux de change n\'est pas disponible.  Le taux n\'a pas pu être mis à jour automatiquement.',
+        'The currency was not removed because it is in use.'
+            => 'Impossible de supprimer la devise car elle est actuellement utilisée.',
         'There are no recently viewed items.'
             => 'Aucun éléments récents.',
-        'There was an error uploading the file.'
-            => 'Erreur de téléchargement de fichier.',
+        'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
+            => 'Il manque le(s) champ(s) obligatoire(s) suivant dans le fichier: {view}.  Veuillez contacter votre administrateur système.',
         'There was an error with the web service.'
             => 'Il y avait une erreur avec le service web.',
         'This action is only available in debug mode.'
@@ -378,11 +414,15 @@
         'Time zone'
             => 'Fuseau horaire',
         'Title'
-            => 'Fonction',
+            => 'Titre',
         'to continue to the home page. If the error persists please contact your administrator.'
             => 'pour continuer à l\'accueil. Veuillez contacter votre administrateur système si l\'erreur continue',
+        'Type a currency code or name to search.'
+            => 'Entrez le code ou nom de devise.',
         'User Membership'
             => 'Membres du groupe',
+        'User Membership Saved Successfully.'
+            => 'Membres du groupe sauvegardé.',
         'Username'
             => 'Nom d\'utilisateur',
         'Value'
@@ -395,6 +435,8 @@
             => 'Aide',
         'Who can read and write'
             => 'Autorisation lecture/écriture',
+        'You have tried to access a page you do not have access to.'
+            => 'Vous avez tenté d\'accéder à une page dont vous n\'avez pas accès.',
         'You must have at least one active currency.'
             => 'Vous devez avoir au moins une devise active.',
         'Your Profile'

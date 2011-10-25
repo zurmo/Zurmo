@@ -86,5 +86,14 @@
          * for the Module
          */
         abstract protected function getStateIds();
+
+        /**
+         * Override method in extended class to implement.
+         * @return string of state model class name.
+         */
+        public static function getStateModelClassName()
+        {
+            throw new NotImplementedException();
+        }
     }
 ?>

@@ -47,7 +47,8 @@
          */
         protected function renderControlNonEditable()
         {
-            return Yii::app()->format->text($this->model->{$this->attribute});
+            $label = ContactsUtil::resolveStateLabelByLanguage($this->model->{$this->attribute}, Yii::app()->language);
+            return Yii::app()->format->text($label);
         }
 
         /**
@@ -63,22 +64,7 @@
 
         protected function getDropDownArray()
         {
-            $states = ContactState::getAll('order');
-            $startingStateOrder = ContactsUtil::getStartingStateOrder($states);
-            $dropDownArray = array();
-            foreach ($states as $state)
-            {
-                if ($this->shouldIncludeState($state->order, $startingStateOrder))
-                {
-                    $dropDownArray[$state->id] = Yii::app()->format->text($state->name);
-                }
-            }
-            return $dropDownArray;
-        }
-
-        protected function shouldIncludeState($stateOrder, $startingStateOrder)
-        {
-            return $stateOrder >= $startingStateOrder;
+            return ContactsUtil::getContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage(Yii::app()->language);
         }
 
         public static function getDisplayName()

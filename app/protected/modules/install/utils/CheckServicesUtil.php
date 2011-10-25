@@ -66,6 +66,7 @@
             return array('Database',
                          'DatabaseCheckSafeMode',
                          'DatabaseMaxAllowedPacketSize',
+                         'DatabaseMaxSpRecursionDepth',
             );
         }
         /**

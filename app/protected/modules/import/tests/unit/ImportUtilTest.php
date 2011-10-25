@@ -79,8 +79,8 @@
             $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0'  => ImportTestHelper::makeStringColumnMappingData      ('lastName'),
-                'column_1'  => ImportTestHelper::makeStringColumnMappingData      ('string')
+                'column_0'  => ImportMappingUtil::makeStringColumnMappingData      ('lastName'),
+                'column_1'  => ImportMappingUtil::makeStringColumnMappingData      ('string')
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
@@ -89,11 +89,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 2 models where created.
@@ -194,11 +196,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 10 models where created.
@@ -302,11 +306,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             $explicitReadWriteModelPermissions);
+                                             $explicitReadWriteModelPermissions,
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.
@@ -327,11 +333,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             $explicitReadWriteModelPermissions);
+                                             $explicitReadWriteModelPermissions,
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.

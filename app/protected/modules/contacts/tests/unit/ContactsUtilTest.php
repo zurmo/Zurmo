@@ -65,12 +65,60 @@
             $this->assertNull($adapterName);
         }
 
+        /**
+         * @depends testResolveContactStateAdapterByModulesUserHasAccessTo
+         */
         public function testGetContactStateDataFromStartingStateOnAndKeyedById()
         {
             $this->assertTrue(ContactsModule::loadStartingData());
             $this->assertEquals(6, count(ContactState::GetAll()));
             $contactStates = ContactsUtil::GetContactStateDataFromStartingStateOnAndKeyedById();
             $this->assertEquals(2, count($contactStates));
+        }
+
+        /**
+         * @depends testGetContactStateDataFromStartingStateOnAndKeyedById
+         */
+        public function testGetContactStateLabelsKeyedByLanguageAndOrder()
+        {
+            $data                        = ContactsUtil::getContactStateLabelsKeyedByLanguageAndOrder();
+            $compareData                 = null;
+            $this->assertEquals($compareData, $data);
+            $states                      = ContactState::getByName('Qualified');
+            $states[0]->serializedLabels = serialize(array('fr' => 'QualifiedFr', 'de' => 'QualifiedDe'));
+            $this->assertTrue($states[0]->save());
+            $data                        = ContactsUtil::getContactStateLabelsKeyedByLanguageAndOrder();
+            $compareData                 = array('fr' => array($states[0]->order => 'QualifiedFr'),
+                                                 'de' => array($states[0]->order => 'QualifiedDe'));
+            $this->assertEquals($compareData, $data);
+        }
+
+        /**
+         * @depends testGetContactStateLabelsKeyedByLanguageAndOrder
+         */
+        public function testResolveStateLabelByLanguage()
+        {
+            $states = ContactState::getByName('Qualified');
+            $this->assertEquals('Qualified',   ContactsUtil::resolveStateLabelByLanguage($states[0], 'en'));
+            $this->assertEquals('QualifiedFr', ContactsUtil::resolveStateLabelByLanguage($states[0], 'fr'));
+            $this->assertEquals('QualifiedDe', ContactsUtil::resolveStateLabelByLanguage($states[0], 'de'));
+        }
+
+        /**
+         * @depends testResolveStateLabelByLanguage
+         */
+        public function testGetContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage()
+        {
+            $qualifiedStates = ContactState::getByName('Qualified');
+            $customerStates = ContactState::getByName('Customer');
+            $data = ContactsUtil::getContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage('en');
+            $compareData =array($qualifiedStates[0]->id => 'Qualified',
+                                $customerStates[0]->id  => 'Customer');
+            $this->assertEquals($compareData, $data);
+            $data = ContactsUtil::getContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage('fr');
+            $compareData =array($qualifiedStates[0]->id => 'QualifiedFr',
+                                $customerStates[0]->id  => 'Customer');
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

@@ -51,14 +51,14 @@
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => ImportTestHelper::makeStringColumnMappingData       ('name'),
-                'column_1' => ImportTestHelper::makeDateTimeColumnMappingData     ('dueDateTime'),
-                'column_2' => ImportTestHelper::makeDateTimeColumnMappingData     ('completedDateTime'),
-                'column_3' => ImportTestHelper::makeBooleanColumnMappingData      ('completed'),
-                'column_4' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
-                'column_5' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
-                'column_6' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
-                'column_7' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
+                'column_0' => ImportMappingUtil::makeStringColumnMappingData       ('name'),
+                'column_1' => ImportMappingUtil::makeDateTimeColumnMappingData     ('dueDateTime'),
+                'column_2' => ImportMappingUtil::makeDateTimeColumnMappingData     ('completedDateTime'),
+                'column_3' => ImportMappingUtil::makeBooleanColumnMappingData      ('completed'),
+                'column_4' => ImportMappingUtil::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_5' => ImportMappingUtil::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_6' => ImportMappingUtil::makeModelDerivedColumnMappingData ('OpportunityDerived'),
+                'column_7' => ImportMappingUtil::makeTextAreaColumnMappingData     ('description'),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Tasks');
@@ -68,11 +68,13 @@
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
             $actionDateTime    = substr(DateTimeUtil::convertTimestampToDbFormatDateTime(time()), 0, -3);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.

@@ -31,6 +31,12 @@
     return array(
         '(None)'
             => '??',
+        'Add File'
+            => '??',
+        'Add Files'
+            => '??',
+        'Add Item'
+            => '??',
         'Advanced Search'
             => '??',
         'All'
@@ -48,6 +54,8 @@
         'Changed'
             => '??',
         'Clear Search'
+            => '??',
+        'Create'
             => '??',
         'Created By User'
             => '??',
@@ -68,6 +76,8 @@
         'Detail View Only'
             => '??',
         'Details'
+            => '??',
+        'Done'
             => '??',
         'Edit'
             => '??',
@@ -91,6 +101,10 @@
             => '??',
         'Go to Details'
             => '??',
+        'Hour'
+            => '??',
+        'Info'
+            => '??',
         'Inline Edit View'
             => '??',
         'Integer'
@@ -104,6 +118,12 @@
         'List'
             => '??',
         'Loading'
+            => '??',
+        'Mass Update'
+            => '??',
+        'Max upload size: {maxSize}'
+            => '??',
+        'Minute'
             => '??',
         'Model Class Name'
             => '??',
@@ -155,6 +175,8 @@
             => '??',
         'Search'
             => '??',
+        'Second'
+            => '??',
         'Select'
             => '??',
         'selected for updating.'
@@ -164,7 +186,13 @@
         'Some values cannot be removed because they are currently in use. ' .
         'Try changing the records that use them first.'
             => '??',
+        'Start'
+            => '??',
         'Tab'
+            => '??',
+        'The file did not exist'
+            => '??',
+        'There was an error uploading the file.'
             => '??',
         'This module doesn\'t have anything to configure.'
             => '??',
@@ -182,10 +210,15 @@
             => '??',
         'Tomorrow'
             => '??',
-
+        'total'
+            => '??',
         'Unknown'
             => '??',
         'Update Selected'
+            => '??',
+        'updated successfully.'
+            => '??',
+        'Updating'
             => '??',
         'User'
             => '??',
@@ -196,6 +229,10 @@
         'Yesterday'
             => '??',
         'You must enter a value'
+            => '??',
+        'You must select at least one field to modify.'
+            => '??',
+        'You must select at least one record'
             => '??',
         'You must specify a value.'
             => '??',

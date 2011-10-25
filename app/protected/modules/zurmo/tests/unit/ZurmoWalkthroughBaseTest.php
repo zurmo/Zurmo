@@ -261,7 +261,7 @@
 
         protected function createCurrencyValueCustomFieldByModule($moduleClassName, $name)
         {
-            $extraPostData = array( 'defaultValue' => '45', 'isAudited' => '1', 'isRequired' => '1');
+            $extraPostData = array( 'isAudited' => '1', 'isRequired' => '1');
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CurrencyValue', $extraPostData);
         }
 
@@ -325,7 +325,12 @@
                                     'isRequired'          => '1',
                                     'customFieldDataData' => array(
                                                 'a', 'b', 'c'
-                                    ));
+                                    ),
+                                    'customFieldDataLabels' => array(
+                                        'fr' => array('aFr', 'bFr', 'cFr'),
+                                        'de' => array('aDe', 'bDe', 'cDe'),
+                                    )
+                                    );
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
         }
 
@@ -348,7 +353,7 @@
                                     'customFieldDataData' => array(
                                                 'gg', 'hh', 'rr'
                                     ));
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'MultiSelectDropDown', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
         }
 
         protected function createModuleEditBadValidationPostData()

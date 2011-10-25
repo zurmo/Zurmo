@@ -31,6 +31,13 @@
         public $customFieldDataData;
 
         /**
+         * Array contains translated labels for the drop down names, but does not include the base language translation as
+         * this is considered to be the drop down name itself and has no translation.
+         * @var array
+         */
+        public $customFieldDataLabels;
+
+        /**
          * Used when changing the value of an existing data item.  Coming in from a post, this array will have the
          * old values that can be used to compare against and update the new values accordingly based on any changes.
          */
@@ -58,6 +65,10 @@
                 $this->customFieldDataName = $model->$attributeName->data->name;
                 $this->customFieldDataId   = $model->$attributeName->data->id;
                 $this->customFieldDataData = unserialize($model->$attributeName->data->serializedData);
+                if($model->$attributeName->data->serializedLabels !== null)
+                {
+                    $this->customFieldDataLabels = unserialize($model->$attributeName->data->serializedLabels);
+                }
                 $this->defaultValueOrder   = DropDownDefaultValueOrderUtil::getDefaultValueOrderFromDefaultValue(
                                                 $this->defaultValue, $this->customFieldDataData);
             }
@@ -92,14 +103,16 @@
                 array('customFieldDataData',                'validateCustomFieldDataData'),
                 array('defaultValueOrder',                  'safe'),
                 array('attributeName',                      'length', 'min'  => 3, 'max' => 64),
+                array('customFieldDataLabels',              'safe'),
                 ));
         }
 
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'customFieldDataData' => Yii::t('Default', 'Pick List Values'),
-                'defaultValueOrder'   => Yii::t('Default', 'Default Value'),
+                'customFieldDataData'   => Yii::t('Default', 'Pick List Values'),
+                'customFieldDataLabels' => Yii::t('Default', 'Pick List Value Translations'),
+                'defaultValueOrder'     => Yii::t('Default', 'Default Value'),
             ));
         }
 

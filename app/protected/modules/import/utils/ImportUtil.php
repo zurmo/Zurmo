@@ -63,7 +63,8 @@
                                                     ImportRules $importRules,
                                                     $mappingData,
                                                     ImportResultsUtil $importResultsUtil,
-                                                    ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
+                                                    ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions,
+                                                    ImportMessageLogger $messageLogger)
         {
             $data = $dataProvider->getData();
             foreach ($data as $rowBean)
@@ -83,7 +84,9 @@
                     $importRowDataResultsUtil->setStatusToError();
                 }
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
+                $messageLogger->countAfterRowImported();
             }
+            $messageLogger->countDataProviderGetDataImportCompleted();
         }
 
         /**

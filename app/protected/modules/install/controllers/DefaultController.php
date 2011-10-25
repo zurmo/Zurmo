@@ -75,8 +75,8 @@
                 if (isset($_POST['InstallSettingsForm']))
                 {
                     $form->setAttributes($_POST['InstallSettingsForm']);
-                    //in case if additionalCheckSystem t will render its own screen
-                    $this->additionalCheckSystem($form);
+                    //in case if additionalSystemCheck it will render its own screen
+                    $this->additionalSystemCheck($form);
                     Yii::app()->end(0, false);
                 }
             }
@@ -85,7 +85,7 @@
             echo $view->render();
         }
 
-        protected function additionalCheckSystem($form)
+        protected function additionalSystemCheck($form)
         {
             $serviceCheckResultsDataForDisplay = CheckServicesUtil::checkServicesAndGetResultsDataForDisplay(true, $form);
 
@@ -95,6 +95,7 @@
                                                                            $serviceCheckResultsDataForDisplay);
                 $view = new InstallPageView($this, $checkServicesView);
                 echo $view->render();
+                Yii::app()->end(0, false);
             }
             $this->actionRunInstallation($form);
             Yii::app()->end(0, false);

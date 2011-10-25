@@ -66,7 +66,9 @@
             $content .= $this->renderMultipleAttributesUsingCollectionContent();
             $content .= $this->renderRemovalNoticeContent();
             $content .= '<br/>';
+            $content .= '<div id="sortable-editable-dropdown-collection">';
             $content .= $cClipWidget->getController()->clips['EditableDropDownSortable'];
+            $content .= '</div>';
             $content .= $this->renderAddInputAndAddButton();
 
             return $content;
@@ -86,7 +88,26 @@
                 {
                     $removalContent = $this->renderRemoveLink();
                 }
-                $items[$order] = array('content' => $name, 'removalContent' => $removalContent);
+                $items[$order] = array('{content}'           => $name,
+                                       '{removalContent}'    => $removalContent,
+                                       '{dataLengthPlusOne}' => $order + 1);
+
+                $activeLanguagesData   = $this->getActiveLanguagesData();
+                $labelsAttributeName   = $this->getLabelsAttributeName();
+                $labelsData            = $this->model->$labelsAttributeName;
+                foreach($activeLanguagesData as $language => $notUsed)
+                {
+                    if($labelsAttributeName !== null &&
+                       isset($labelsData[$language]) &&
+                       isset($labelsData[$language][$order]))
+                    {
+                        $items[$order]['{' . $language . 'Label}'] = $labelsData[$language][$order];
+                    }
+                    else
+                    {
+                        $items[$order]['{' . $language . 'Label}'] = null;
+                    }
+                }
             }
             return $items;
         }
@@ -115,13 +136,19 @@
 
         protected function renderItemTemplate()
         {
+            $activeLanguagesData   = $this->getActiveLanguagesData();
+            $baseLanguage           = $this->getBaseLanguage();
             return '<li class="ui-state-default" id="editableDropDown_{id}">
                         <span class="ui-icon ui-icon-arrowthick-2-n-s">&#160;</span>
                         <input name = "' . $this->getNameForInputField() .
                         '" id = "' . $this->getIdForInputField('{id}') .
                         '" type = "text" value = "{content}" size="50"/>
                         <input name = "' . $this->getNameForExistingValueHiddenField() . '" type = "hidden" value = "{content}"/>
-                        &#160;&#160;{removalContent}</li>';
+
+                        ' . static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]) .
+                        '&#160;{removalContent}' .
+                        $this->renderSortableLanguageLabelInputsForAddingNewValuesJuiSortableContent() .
+                        '</li>';
         }
 
         protected function renderRemoveLink()
@@ -131,6 +158,8 @@
 
         protected function renderAddInputAndAddButton()
         {
+            $activeLanguagesData = $this->getActiveLanguagesData();
+            $baseLanguage           = $this->getBaseLanguage();
             $content  = '<table>';
             $content .= '<colgroup><col style="width:50%" />';
             $content .= '</colgroup>';
@@ -138,6 +167,7 @@
             $content .= '<tr>';
             $content .= '<td>';
             $content .= CHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
+            $content .= static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]);
             $content .= '&#160;&#160;';
             $content .= CHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
             $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
@@ -145,19 +175,20 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-
             return $content;
         }
 
         protected function registerScripts()
         {
+            $supportedLanguagesData = $this->getActiveLanguagesData();
+            $baseLanguage           = $this->getBaseLanguage();
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/SelectInputUtils.js'
                     ),
                 CClientScript::POS_END
             );
-            $inputIdPrefix = $this->resolveInputIdPrefix() . '_' . $this->attribute . '_';
+            $inputIdPrefix = $this->getInputIdPrefix();
             Yii::app()->clientScript->registerScript('editableDropDown', "
                 " . $this->renderItemsOnChangeScript() . "
                 $('.remove-sortable-item-link').live('click', function()
@@ -186,8 +217,11 @@
                         '<input name=\"" . $this->getNameForInputField() . "\" id=\"" . $inputIdPrefix .
                         "' + ($('input[name=\"" . $this->getNameForInputField() . "\"]').length + 1) +'\" type=\"text\" value=\"' +
                         $('#" . $this->attribute . "_AddInput').val()
-                         + '\" size=\"50\"/><input name=\"" . $this->getNameForExistingValueHiddenField() . "\" type=\"hidden\" value=\"' +
-                        $('#" . $this->attribute . "_AddInput').val() + '\" />&#160;&#160;&#160;" . $this->renderRemoveLink() . " </li>').appendTo($('#" . $this->attribute . "_ul'));
+                         + '\" size=\"50\"/>" . static::renderLanguageLabelHtmlContent($supportedLanguagesData[$baseLanguage]) . "' +
+                        '<input name=\"" . $this->getNameForExistingValueHiddenField() . "\" type=\"hidden\" value=\"' +
+                        $('#" . $this->attribute . "_AddInput').val() + '\" />&#160;&#160;&#160;" . $this->renderRemoveLink() . "' +
+                        '" . $this->renderSortableLanguageLabelInputsForAddingNewValuesJavaScriptContent(). "' +
+                        '</li>').appendTo($('#" . $this->attribute . "_ul'));
                         $('#" . $this->attribute . "_AddInput').val('');
                         $('#" . $inputIdPrefix . "' + (currenInputCollectionLength + 1)).change(function()
                         {
@@ -199,6 +233,42 @@
                     }
                 );
             ");
+        }
+
+        protected function renderSortableLanguageLabelInputsForAddingNewValuesJavaScriptContent()
+        {
+            $activeLanguagesData = $this->getActiveLanguagesData();
+            $baseLanguage           = $this->getBaseLanguage();
+            $content                = null;
+            foreach($activeLanguagesData as $language => $label)
+            {
+                if($language != $baseLanguage)
+                {
+                    $content .= "<br/><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
+                                "' + ($('input[name=\"" . $this->getNameForLabelInputField($language) . "\"]').length + 1) +'\"" .
+                                " type=\"text\" value=\"' + $('#" . $this->attribute . "_AddInput').val() + '\" size=\"50\"/>";
+                    $content .= static::renderLanguageLabelHtmlContent($label);
+                }
+            }
+            return $content;
+        }
+
+        protected function renderSortableLanguageLabelInputsForAddingNewValuesJuiSortableContent()
+        {
+            $activeLanguagesData = $this->getActiveLanguagesData();
+            $baseLanguage           = $this->getBaseLanguage();
+            $content                = null;
+            foreach($activeLanguagesData as $language => $label)
+            {
+                if($language != $baseLanguage)
+                {
+                    $content .= "<br/><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
+                                "{dataLengthPlusOne}\"" .
+                                " type=\"text\" value=\"{" . $language . "Label}\" size=\"50\"/>";
+                    $content .= static::renderLanguageLabelHtmlContent($label);
+                }
+            }
+            return $content;
         }
 
         protected function renderScriptCallToRebuildSelectInputFromInputs()
@@ -238,6 +308,46 @@
             return null;
         }
 
+        /**
+         * The base language must be specified.
+         */
+        protected function getBaseLanguage()
+        {
+            if (isset($this->params['baseLanguage']))
+            {
+                return $this->params['baseLanguage'];
+            }
+            throw new NotSupportedException();
+        }
+
+        /**
+         * There must be at least one active language.
+         */
+        protected function getActiveLanguagesData()
+        {
+            if (isset($this->params['activeLanguagesData']))
+            {
+                if(count($this->params['activeLanguagesData']) == 0)
+                {
+                    throw new NotSupportedException();
+                }
+                return $this->params['activeLanguagesData'];
+            }
+            throw new NotSupportedException();
+        }
+
+        /**
+         * The labels attribute name must be specified
+         */
+        protected function getLabelsAttributeName()
+        {
+            if (isset($this->params['labelsAttributeName']))
+            {
+                return $this->params['labelsAttributeName'];
+            }
+            throw new NotSupportedException();
+        }
+
         protected function getIdForInputField($suffix)
         {
             return $this->resolveInputIdPrefix() . '_' . $this->attribute . '_'. $suffix;
@@ -248,9 +358,26 @@
             return $this->resolveInputNamePrefix() . '[' . $this->attribute . '][]';
         }
 
+        protected function getNameForLabelInputField($language)
+        {
+            assert('is_string($language)');
+            return $this->resolveInputNamePrefix() . '[' . $this->getLabelsAttributeName() . '][' . $language . '][]';
+        }
+
         protected function getNameForExistingValueHiddenField()
         {
             return $this->resolveInputNamePrefix() . '[' . $this->attribute . 'ExistingValues][]';
+        }
+
+        protected function getInputIdPrefix()
+        {
+            return $this->resolveInputIdPrefix() . '_' . $this->attribute . '_';
+        }
+
+        protected function getLabelInputIdPrefix($language)
+        {
+            assert('is_string($language)');
+            return $this->resolveInputIdPrefix() . '_' . $this->getLabelsAttributeName() . '_' . $language . '_';
         }
 
         protected function getDropDownArray()
@@ -288,6 +415,11 @@
             $message = Yii::t('Default', 'Some values cannot be removed because they are currently in use. Try changing the records that use them first.');
             $content  = HtmlNotifyUtil::renderHighlightBoxByMessage($message);
             return $content;
+        }
+
+        protected static function renderLanguageLabelHtmlContent($label)
+        {
+            return '&#160;&#40;' . $label . '&#41;';
         }
     }
 ?>

@@ -31,6 +31,12 @@
     return array(
         '(None)'
             => '??',
+        'Add File'
+            => '??',
+        'Add Files'
+            => '??',
+        'Add Item'
+            => '??',
         'Advanced Search'
             => 'Búsqueda avanzada',
         'All'
@@ -49,6 +55,8 @@
             => 'Cambiado',
         'Clear Search'
             => 'Restablecer búsqueda',
+        'Create'
+            => '??',
         'Created By User'
             => 'Creado por',
         'Created Date and User'
@@ -69,6 +77,8 @@
             => 'Solo vista de detalles',
         'Details'
             => 'Detalles',
+        'Done'
+            => '??',
         'Edit'
             => 'Editar',
         'Edit Portlet'
@@ -91,6 +101,10 @@
             => 'Nombre completo',
         'Go to Details'
             => 'Ir a detalles',
+        'Hour'
+            => '??',
+        'Info'
+            => '??',
         'Inline Edit View'
             => '??',
         'Integer'
@@ -104,6 +118,12 @@
         'List'
             => '??',
         'Loading'
+            => '??',
+        'Mass Update'
+            => '??',
+        'Max upload size: {maxSize}'
+            => '??',
+        'Minute'
             => '??',
         'Model Class Name'
             => 'Nombre de la clase de modelo',
@@ -155,6 +175,8 @@
             => 'Guardar',
         'Search'
             => 'Buscar',
+        'Second'
+            => 'Seconde',
         'Select'
             => 'Seleccionar',
         'selected for updating.'
@@ -163,8 +185,14 @@
             => 'Datos serializados',
         'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
             => 'Algunos valores no se pueden eliminar, ya que están actualmente en uso. Trate de cambiar los registros que usó primero',
+        'Start'
+            => '??',
         'Tab'
             => 'Tab',
+        'The file did not exist'
+            => '??',
+        'There was an error uploading the file.'
+            => '??',
         'This module doesn\'t have anything to configure.'
             => 'Este module no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
@@ -181,10 +209,16 @@
             => 'Hoy',
         'Tomorrow'
             => 'Mañana',
+        'total'
+            => '??',
         'Unknown'
             => 'Desconocido',
         'Update Selected'
             => 'Actualización Seleccionada',
+        'updated successfully.'
+            => '??',
+        'Updating'
+            => '??',
         'User'
             => 'Usuario',
         'Users'
@@ -195,6 +229,10 @@
             => 'Ayer',
         'You must enter a value'
             => 'Debe introducir un valor',
+        'You must select at least one field to modify.'
+            => '??',
+        'You must select at least one record'
+            => '??',
         'You must specify a value.'
             => 'Debe especificar un valor',
         '{attribute} is too precise (maximum decimal places is {precision}).'

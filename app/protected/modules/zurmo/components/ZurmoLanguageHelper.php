@@ -68,6 +68,11 @@
             Yii::app()->language = $language;
         }
 
+        public function getBaseLanguage()
+        {
+            return $this->baseLanguage;
+        }
+
         /**
          * For the current user, get the language setting.
          * The current user is specified here: Yii::app()->user->userModel

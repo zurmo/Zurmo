@@ -52,7 +52,8 @@
             $this->assertTrue(property_exists('AccountsSearchForm', 'anyState'));
             $this->assertFalse(property_exists('AccountsSearchForm', 'name'));
             $fakePostData = array(
-                'anyState' => 'Illinois',
+                'anyState'  => 'Illinois',
+                'anyStreet' => 'Thompson',
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(new AccountsSearchForm(new Account(false)),
                                     $super->id, $fakePostData);
@@ -70,8 +71,20 @@
                     'operatorType'         => 'startsWith',
                     'value'                => 'Illinois',
                 ),
+                3 => array(
+                    'attributeName'        => 'billingAddress',
+                    'relatedAttributeName' => 'street1',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Thompson',
+                ),
+                4 => array(
+                    'attributeName'        => 'shippingAddress',
+                    'relatedAttributeName' => 'street1',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'Thompson',
+                ),
             );
-            $compareStructure = '(1 or 2)';
+            $compareStructure = '(1 or 2) and (3 or 4)';
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
 
@@ -178,6 +191,81 @@
                 ),
             );
             $compareStructure = '(1 or 2) or (3 or 4) or 5';
+            $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
+            $this->assertEquals($compareStructure, $searchAttributeData['structure']);
+        }
+
+        /**
+         * @depends testSearchFormAnyAttributes
+         */
+        public function testSearchFormAnyOptOutEmail() {
+
+            //get the super user here
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //test the anyOptOut value '' for search.
+            $fakePostData = array(
+                'anyOptOutEmail' => array('value' => ''),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(new AccountsSearchForm(new Account(false)),
+                                    $super->id, $fakePostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+
+            $compareStructure = '(1 or 2)';
+
+            $this->assertEquals(array(), $searchAttributeData['clauses']);
+            $this->assertEquals(null,    $searchAttributeData['structure']);
+
+            //test the anyOptOut value '0' for search.
+            $fakePostData = array(
+                'anyOptOutEmail' => array('value' => '0'),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(new AccountsSearchForm(new Account(false)),
+                                    $super->id, $fakePostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'primaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)0,
+                ),
+                2 => array(
+                    'attributeName'        => 'secondaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)0,
+                ),
+            );
+            $compareStructure = '(1 or 2)';
+
+            $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
+            $this->assertEquals($compareStructure, $searchAttributeData['structure']);
+
+            //test the anyOptOut value '1' for search.
+            $fakePostData = array(
+                'anyOptOutEmail' => array('value' => '1'),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(new AccountsSearchForm(new Account(false)),
+                                    $super->id, $fakePostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'primaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)1,
+                ),
+                2 => array(
+                    'attributeName'        => 'secondaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)1,
+                ),
+            );
+            $compareStructure = '(1 or 2)';
+
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
         }

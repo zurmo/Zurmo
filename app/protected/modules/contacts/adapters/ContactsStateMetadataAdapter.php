@@ -48,5 +48,10 @@
         {
             return $stateOrder >= $startingStateOrder;
         }
+
+        public static function getStateModelClassName()
+        {
+            return 'ContactState';
+        }
     }
 ?>

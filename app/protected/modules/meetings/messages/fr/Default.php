@@ -37,14 +37,20 @@
             => 'Échéance',
         'Location'
             => 'Localisation',
+        'Meeting'
+            => 'Rendez-vous',
         'Meetings'
             => 'Rendez-vous',
+        'MeetingsModulePluralLabel'
+            => 'MeetingsModulePluralLabel',
         'MeetingsModulePluralLabel For AccountsModuleSingularLabel'
             => 'MeetingsModulePluralLabel pour AccountsModuleSingularLabel',
         'MeetingsModulePluralLabel For ContactsModuleSingularLabel'
             => 'MeetingsModulePluralLabel pour ContactsModuleSingularLabel',
         'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'MeetingsModulePluralLabel pour OpportunitiesModuleSingularLabel',
+        'MeetingsModuleSingularLabel'
+            => 'MeetingsModuleSingularLabel',
         'My Upcoming MeetingsModulePluralLabel'
             => 'Mes Prochains MeetingsModulePluralLabel',
         'Related ContactsModulePluralLabel and LeadsModulePluralLabel'

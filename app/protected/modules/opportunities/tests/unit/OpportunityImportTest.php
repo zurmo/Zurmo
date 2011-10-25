@@ -68,14 +68,14 @@
             $currency = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
             $mappingData = array(
-                'column_0' => ImportTestHelper::makeStringColumnMappingData    ('name'),
-                'column_1' => ImportTestHelper::makeDateColumnMappingData      ('closeDate'),
-                'column_2' => ImportTestHelper::makeIntegerColumnMappingData   ('probability'),
-                'column_3' => ImportTestHelper::makeIntegerColumnMappingData   ('description'),
-                'column_4' => ImportTestHelper::makeHasOneColumnMappingData    ('account'),
-                'column_5' => ImportTestHelper::makeDropDownColumnMappingData  ('stage'),
-                'column_6' => ImportTestHelper::makeDropDownColumnMappingData  ('source'),
-                'column_7' => ImportTestHelper::makeCurrencyColumnMappingData  ('amount', $currency),
+                'column_0' => ImportMappingUtil::makeStringColumnMappingData    ('name'),
+                'column_1' => ImportMappingUtil::makeDateColumnMappingData      ('closeDate'),
+                'column_2' => ImportMappingUtil::makeIntegerColumnMappingData   ('probability'),
+                'column_3' => ImportMappingUtil::makeIntegerColumnMappingData   ('description'),
+                'column_4' => ImportMappingUtil::makeHasOneColumnMappingData    ('account'),
+                'column_5' => ImportMappingUtil::makeDropDownColumnMappingData  ('stage'),
+                'column_6' => ImportMappingUtil::makeDropDownColumnMappingData  ('source'),
+                'column_7' => ImportMappingUtil::makeCurrencyColumnMappingData  ('amount', $currency),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Opportunities');
@@ -84,11 +84,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.

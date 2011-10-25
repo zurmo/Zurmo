@@ -49,6 +49,8 @@
                      "\n"                                                                                                    .
                      "    --only-walkthroughs    For the specified test, only includes tests under a walkthroughs directory.\n" .
                      "    --exclude-walkthroughs For the specified test, exclude tests under a walkthroughs directory.\n"       .
+                     "    --only-benchmarks      For the specified test, only includes tests under a benchmarks directory.\n" .
+                     "    --exclude-benchmarks   For the specified test, exclude tests under a benchmarks directory.\n"      .
                      "    --reuse-schema         Reload a previously auto build database. (Will auto build if there is no\n" .
                      "                           previous one. The auto built schema is dumped to the system temp dir in\n"  .
                      "                           autobuild.sql.)\n"                                                          .
@@ -68,6 +70,8 @@
 
             $onlyWalkthroughs    =  self::customOptionSet('--only-walkthroughs',    $argv);
             $excludeWalkthroughs =  self::customOptionSet('--exclude-walkthroughs', $argv);
+            $onlyBenchmarks      =  self::customOptionSet('--only-benchmarks',      $argv);
+            $excludeBenchmarks   =  self::customOptionSet('--exclude-benchmarks',   $argv);
             $reuse               =  self::customOptionSet('--reuse-schema',         $argv);
             $freeze              = !self::customOptionSet('--no-freeze',            $argv);
 
@@ -77,9 +81,17 @@
                 exit;
             }
 
+            if ($onlyWalkthroughs && $onlyBenchmarks)
+            {
+                echo $usage;
+                echo "It doesn't have sense to select both \"--only-walkthroughs\" and \"--only-benchmarks\" options. \n\n";
+                exit;
+            }
+
             $whatToTest          = $argv[count($argv) - 1];
-            $includeUnitTests    = !$onlyWalkthroughs;
-            $includeWalkthroughs = !$excludeWalkthroughs;
+            $includeUnitTests    = !$onlyWalkthroughs && !$onlyBenchmarks;
+            $includeWalkthroughs = !$excludeWalkthroughs && !$onlyBenchmarks;
+            $includeBenchmarks   = !$excludeBenchmarks && !$onlyWalkthroughs;
 
             echo "Testing with database: '"  . Yii::app()->db->connectionString . '\', ' .
                               'username: \'' . Yii::app()->db->username         . "'.\n";
@@ -117,7 +129,7 @@
             $suite->setName("$whatToTest Tests");
             if (!$freeze)
             {
-                self::buildAndAddSuiteFromDirectory($suite, 'Framework', COMMON_ROOT . '/protected/extensions/zurmoinc/framework/tests/unit', $whatToTest, true, false);
+                self::buildAndAddSuiteFromDirectory($suite, 'Framework', COMMON_ROOT . '/protected/extensions/zurmoinc/framework/tests/unit', $whatToTest, true, false, $includeBenchmarks);
             }
             $moduleDirectoryName = COMMON_ROOT . '/protected/modules';
             if (is_dir($moduleDirectoryName))
@@ -129,16 +141,16 @@
                         $moduleName != '..')
                     {
                         $moduleUnitTestDirectoryName = "$moduleDirectoryName/$moduleName/tests/unit";
-                        self::buildAndAddSuiteFromDirectory($suite, $moduleName, $moduleUnitTestDirectoryName, $whatToTest, $includeUnitTests, $includeWalkthroughs);
+                        self::buildAndAddSuiteFromDirectory($suite, $moduleName, $moduleUnitTestDirectoryName, $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
                     }
                 }
             }
             if (!$freeze)
             {
-                self::buildAndAddSuiteFromDirectory($suite, 'Misc',            COMMON_ROOT . '/protected/tests/unit',                     $whatToTest, $includeUnitTests, $includeWalkthroughs);
+                self::buildAndAddSuiteFromDirectory($suite, 'Misc',            COMMON_ROOT . '/protected/tests/unit',                     $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
 ////////////////////////////////////////////////////////////////////////////////
 // Temporary - See Readme.txt in the notSupposedToBeHere directory.
-                self::buildAndAddSuiteFromDirectory($suite, 'BadDependencies', COMMON_ROOT . '/protected/tests/unit/notSupposedToBeHere', $whatToTest, $includeUnitTests, $includeWalkthroughs);
+                self::buildAndAddSuiteFromDirectory($suite, 'BadDependencies', COMMON_ROOT . '/protected/tests/unit/notSupposedToBeHere', $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
 ////////////////////////////////////////////////////////////////////////////////
             }
             if ($suite->count() == 0)
@@ -157,7 +169,7 @@
             return $set;
         }
 
-        public static function buildAndAddSuiteFromDirectory($parentSuite, $name, $directoryName, $whatToTest, $includeUnitTests, $includeWalkthroughs)
+        public static function buildAndAddSuiteFromDirectory($parentSuite, $name, $directoryName, $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks)
         {
             if ($includeUnitTests)
             {
@@ -166,6 +178,10 @@
             if ($includeWalkthroughs)
             {
                 self::buildAndAddSuiteFromDirectory2($parentSuite, $name, $directoryName . '/walkthrough', $whatToTest);
+            }
+            if($includeBenchmarks)
+            {
+                self::buildAndAddSuiteFromDirectory2($parentSuite, $name, $directoryName . '/benchmark', $whatToTest);
             }
         }
 

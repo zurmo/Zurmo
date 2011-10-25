@@ -38,6 +38,7 @@
             $isRequired          = (boolean)$attributeForm->isRequired;
             $isAudited           = (boolean)$attributeForm->isAudited;
             $contactStatesData   = $attributeForm->contactStatesData;
+            $contactStatesLabels = $attributeForm->contactStatesLabels;
             $startingStateOrder  = (int)$attributeForm->startingStateOrder;
 
             if ($attributeForm instanceof ContactStateAttributeForm)
@@ -52,6 +53,8 @@
                     if (in_array($state->name, $contactStatesData))
                     {
                         $state->order = array_search($state->name, $contactStatesData);
+                        $state->serializedLabels = $this->makeSerializedLabelsByLabelsAndOrder($contactStatesLabels,
+                                                                                               (int)$state->order);
                         $saved        = $state->save();
                         assert('$saved');
                     }
@@ -65,10 +68,12 @@
                 {
                     if (!in_array($name, $stateNames))
                     {
-                        $state = new ContactState();
-                        $state->name  = $name;
-                        $state->order = $order;
-                        $saved        = $state->save();
+                        $state                   = new ContactState();
+                        $state->name             = $name;
+                        $state->order            = $order;
+                        $state->serializedLabels = $this->makeSerializedLabelsByLabelsAndOrder($contactStatesLabels,
+                                                                                               (int)$order);
+                        $saved                   = $state->save();
                         assert('$saved');
                     }
                 }
@@ -86,6 +91,29 @@
             {
                 throw new NotSupportedException();
             }
+        }
+
+        protected function makeSerializedLabelsByLabelsAndOrder($contactStatesLabels, $order)
+        {
+            assert('is_array($contactStatesLabels) || $contactStatesLabels == null');
+            assert('is_int($order)');
+            if($contactStatesLabels == null)
+            {
+                return null;
+            }
+            $unserializedLabels = array();
+            foreach($contactStatesLabels as $language => $languageLabelsByOrder)
+            {
+                if(isset($languageLabelsByOrder[$order]))
+                {
+                    $unserializedLabels[$language] = $languageLabelsByOrder[$order];
+                }
+            }
+            if(count($unserializedLabels) == 0)
+            {
+                return null;
+            }
+            return serialize($unserializedLabels);
         }
     }
 ?>
