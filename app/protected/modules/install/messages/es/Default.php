@@ -157,9 +157,9 @@
             => '??',
         'PHP Memory setting meets minimum requirement.'
             => '??',
-        'PHP post max size meets minimum requirement.'
+        'PHP post_max_size meets minimum requirement.'
             => '??',
-        'PHP post max size setting is:'
+        'PHP post_max_size setting is:'
             => '??',
         'PHP Timezone is not set.'
             => '??',
