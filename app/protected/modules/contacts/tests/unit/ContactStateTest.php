@@ -62,6 +62,7 @@
                 5 => 'Customer',
             );
             $this->assertEquals($compareData, $attributeForm->contactStatesData);
+            $this->assertEquals(null, $attributeForm->contactStatesLabels);
             $this->assertEquals(4, $attributeForm->startingStateOrder);
 
             //Now add new values.
@@ -75,7 +76,11 @@
                 6 => 'AAA',
                 7 => 'BBB',
             );
-            $attributeForm->startingStateOrder = 5;
+            $contactStatesLabels = array(
+                'fr' => array('New', 'In ProgressFr', 'RecycledFr', 'DeadFr', 'QualifiedFr', 'CustomerFr', 'AAAFr', 'BBBFr')
+            );
+            $attributeForm->contactStatesLabels = $contactStatesLabels;
+            $attributeForm->startingStateOrder  = 5;
             $adapter = new ContactStateModelAttributesAdapter(new Contact());
             $adapter->setAttributeMetadataFromForm($attributeForm);
             $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Contact(), 'state');
@@ -90,6 +95,7 @@
                 7 => 'BBB',
             );
             $this->assertEquals($compareData, $attributeForm->contactStatesData);
+            $this->assertEquals($contactStatesLabels, $attributeForm->contactStatesLabels);
             $contactState = ContactState::getByName('Customer');
             $this->assertEquals(5, $contactState[0]->order);
             $this->assertEquals(5, $attributeForm->startingStateOrder);

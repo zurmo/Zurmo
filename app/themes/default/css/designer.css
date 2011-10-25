@@ -163,3 +163,9 @@ clear:none;
     width: 640px;
     min-height: 60px;
 }
+
+#sortable-editable-dropdown-collection li
+{
+   height: auto;
+   font-size: 1em;
+}

@@ -39,8 +39,6 @@
             => 'Droite',
         'Add Portlet'
             => 'Ajouter un portlet',
-        'Add Widget'
-            => 'Ajouter un portlet',
         'Are you sure want to delete this dashboard?'
             => 'Êtes-vous sûr de vouloir supprimer ce tableau de bord?',
         'Create Dashboard'

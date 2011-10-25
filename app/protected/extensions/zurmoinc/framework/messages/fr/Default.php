@@ -30,7 +30,13 @@
     // DON'T MAKE A MESS!
     return array(
         '(None)'
-            => '--Aucun--',
+            => '(Aucun)',
+        'Add File'
+            => 'Ajouter un Fichier',
+        'Add Files'
+            => 'Ajouter des Fichiers',
+        'Add Item'
+            => 'Ajouter',
         'Advanced Search'
             => 'Recherche avancée',
         'All'
@@ -49,6 +55,8 @@
             => 'Modifié',
         'Clear Search'
             => 'Effacer',
+        'Create'
+            => 'Créer',
         'Created By User'
             => 'Crée par',
         'Created Date and User'
@@ -61,14 +69,16 @@
             => 'Date',
         'Date Time'
             => 'Date/Heure',
-        'Delete'
-            => 'Supprimer',
         'Default Value'
             => 'Valeur par défault',
+        'Delete'
+            => 'Supprimer',
         'Detail View Only'
             => 'Vue détaillée uniquement',
         'Details'
             => 'Détails',
+        'Done'
+            => 'Fini',
         'Edit'
             => 'Modifier',
         'Edit Portlet'
@@ -91,6 +101,10 @@
             => 'Nom',
         'Go to Details'
             => 'Au détails',
+        'Hour'
+            => 'Heure',
+        'Info'
+            => 'Information',
         'Inline Edit View'
             => 'Formulaire de saisie Inline',
         'Integer'
@@ -105,6 +119,12 @@
             => 'Liste',
         'Loading'
             => 'Chargement en cours',
+        'Mass Update'
+            => 'Mise à jour globale',
+        'Max upload size: {maxSize}'
+            => 'Taille max de téléchargement: {maxSize}',
+        'Minute'
+            => 'Minute',
         'Model Class Name'
             => 'Nom de la classe du modèle',
         'Model Id'
@@ -132,11 +152,11 @@
         'Opted Out'
             => 'Opt out',
         'Panel'
-            => 'Panel',
+            => 'Panneau',
         'Panel Settings'
-            => 'Paramètres du panel',
+            => 'Paramètres du panneau',
         'Panel Title'
-            => 'Titre du panel',
+            => 'Titre du panneau',
         'Perform Action'
             => 'Sélectionner',
         'Radio Drop Down'
@@ -155,6 +175,8 @@
             => 'Sauvegarder',
         'Search'
             => 'Rechercher',
+        'Second'
+            => 'Seconde',
         'Select'
             => 'Sélectionner',
         'selected for updating.'
@@ -165,8 +187,14 @@
         'Try changing the records that use them first.'
             => 'Certain éléments ne peuvent être supprimés car ils sont actuellement utilisés. ' .
                'Veuillez modifier la valeur des champs contenant ces éléments avant de supprimer.',
+        'Start'
+            => 'Commencer',
         'Tab'
             => 'Onglet',
+        'The file did not exist'
+            => 'Le fichier n\'existe pas.',
+        'There was an error uploading the file.'
+            => 'Erreur de téléchargement de fichier.',
         'This module doesn\'t have anything to configure.'
             => 'Il n\'y a rien a configurer',
         'This pick-list is used by more than one module.'
@@ -183,10 +211,16 @@
             => 'Aujourd\'hui',
         'Tomorrow'
             => 'Demain',
+        'total'
+            => 'total',
         'Unknown'
             => 'Inconnu',
         'Update Selected'
             => 'Actualiser les données',
+        'updated successfully.'
+            => 'mise à jour complète',
+        'Updating'
+            => 'Actualisation en progrès',
         'User'
             => 'Utilisateur',
         'Users'
@@ -197,8 +231,12 @@
             => 'Hier',
         'You must enter a value'
             => 'Ce champ est obligatoire',
+        'You must select at least one field to modify.'
+            => 'Vous devez choisir au moins un champ à modifier.',
+        'You must select at least one record'
+            => 'Vous devez choisir au moins une donnée',
         'You must specify a value.'
-            => 'Vous devez spécifier une valeur',
+            => 'Vous devez spécifier une valeur.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} est trop précis(e) (la précision maximale est {precision})',
     );

@@ -125,12 +125,9 @@
         protected function getDropDownArray()
         {
             $dropDownModel = $this->model->{$this->attribute};
-            $dropDownArray = unserialize($dropDownModel->data->serializedData);
-            if (empty($dropDownArray))
-            {
-                return array();
-            }
-            return array_combine($dropDownArray, $dropDownArray);
+            $dataAndLabels    = CustomFieldDataUtil::
+                                getDataIndexedByDataAndTranslatedLabelsByLanguage($dropDownModel->data, Yii::app()->language);
+            return $dataAndLabels;
         }
     }
 ?>

@@ -115,7 +115,8 @@
                                                               $isAudited,
                                                               $elementType,
                                                               $customFieldDataName,
-                                                              $customFieldDataData = null)
+                                                              $customFieldDataData = null,
+                                                              $customFieldDataLabels = null)
         {
             assert('is_string($modelClassName)      && $modelClassName != ""');
             assert('is_string($relationName)        && $relationName != ""');
@@ -123,6 +124,7 @@
             assert('is_bool($isRequired)');
             assert('is_bool($isAudited)');
             assert('is_string($customFieldDataName) && $customFieldDataName != ""');
+            assert('is_array($customFieldDataLabels) || $customFieldDataLabels == null');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
             if (!isset           (               $metadata[$modelClassName]['relations']) ||
@@ -140,10 +142,18 @@
             static::resolveAddOrRemoveNoAuditInformation($isAudited, $metadata[$modelClassName], $relationName);
             if ($customFieldDataData !== null)
             {
-                $customFieldData = CustomFieldData::getByName($customFieldDataName);
-                $customFieldData->serializedData = serialize($customFieldDataData);
+                $customFieldData                   = CustomFieldData::getByName($customFieldDataName);
+                $customFieldData->serializedData   = serialize($customFieldDataData);
+                if ($customFieldDataLabels !== null)
+                {
+                    $customFieldData->serializedLabels = serialize($customFieldDataLabels);
+                }
                 $saved = $customFieldData->save();
                 assert('$saved');
+            }
+            elseif($customFieldDataLabels !== null)
+            {
+                throw new NotSupportedException();
             }
             self::addOrUpdateRules($modelClassName, $relationName, $defaultValue, null, null,
                                    null, null, $isRequired, array(), $metadata);

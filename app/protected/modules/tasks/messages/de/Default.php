@@ -39,7 +39,11 @@
             => '??',
         'Open TasksModulePluralLabel'
             => '??',
+        'Task'
+            => '??',
         'Tasks'
+            => '??',
+        'TasksModulePluralLabel'
             => '??',
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
             => '??',
@@ -47,5 +51,7 @@
             => '??',
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
             => '??',
+        'TasksModuleSingularLabel'
+            => 'TasksModuleSingularLabel',
     );
 ?>

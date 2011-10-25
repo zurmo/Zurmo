@@ -48,14 +48,18 @@
 
         public function getChartData()
         {
-            $sql       = static::makeChartSqlQuery();
-            $rows      = R::getAll($sql);
-            $chartData = array();
+            $customFieldData = CustomFieldDataModelUtil::
+                               getDataByModelClassNameAndAttributeName('Opportunity', 'stage');
+            $labels          = CustomFieldDataUtil::
+                               getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, Yii::app()->language);
+            $sql             = static::makeChartSqlQuery();
+            $rows            = R::getAll($sql);
+            $chartData       = array();
             foreach ($rows as $row)
             {
                 $chartData[] = array(
                     'value'        => $this->resolveCurrencyValueConversionRateForCurrentUserForDisplay($row['amount']),
-                    'displayLabel' => $row['stage'], //todo: at some point translate to locale language once defined.
+                    'displayLabel' => static::resolveLabelByValueAndLabels($row['stage'], $labels),
                 );
             }
             return $chartData;

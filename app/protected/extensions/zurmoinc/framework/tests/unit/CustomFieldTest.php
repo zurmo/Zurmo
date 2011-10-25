@@ -33,17 +33,25 @@
                 'Item 2',
                 'Item 3',
             );
+            $labels = array(
+                'fr' => 'Item 1 fr',
+                'fr' => 'Item 2 fr',
+                'fr' => 'Item 3 fr',
+            );
             $customFieldData = CustomFieldData::getByName('Items');
-            $customFieldData->serializedData = serialize($values);
+            $customFieldData->serializedData   = serialize($values);
+            $customFieldData->serializedLabels = serialize($labels);
             $this->assertTrue($customFieldData->save());
             $id = $customFieldData->id;
             unset($customFieldData);
 
             $customFieldData = CustomFieldData::getById($id);
             $loadedValues = unserialize($customFieldData->serializedData);
+            $loadedLabels = unserialize($customFieldData->serializedLabels);
             $this->assertEquals('Items', $customFieldData->name);
             $this->assertNull  (         $customFieldData->defaultValue);
             $this->assertEquals($values, $loadedValues);
+            $this->assertEquals($labels, $loadedLabels);
 
             $customFieldData->defaultValue = $values[2];
             $this->assertTrue($customFieldData->save());

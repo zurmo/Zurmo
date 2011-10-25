@@ -33,7 +33,7 @@
             => 'Apache',
         'APC'
             => 'APC',
-        'Below you will find the results of the system check.  If any required ' .
+        'Below you will find the results of the system check. If any required ' .
         'services are not setup correctly, you will need to make sure they are ' .
         'installed correctly before you can continue.'
             => 'Voici les résultats du scan. Si un des éléments requis n\'est ' .
@@ -66,6 +66,10 @@
             => 'Nom d\'utilisateur administrateur',
         'Database host'
             => 'L\'hôte de la base de données',
+        'Database is in strict mode.'
+            => 'La base de données est au mode strict',
+        'Database is not in strict mode.'
+            => 'La base de données n\'est pas au mode strict',
         'Database max_allowed_packet size is:'
             => 'Le max_allowed_packet de la base de données est:',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -162,9 +166,9 @@
             => 'PHP limite de mémoire:',
         'PHP Memory setting meets minimum requirement.'
             => 'Le parametre PHP limite de mémoire répond aux exigences minimales.',
-        'PHP post max size meets minimum requirement répond aux exigences minimales.'
-            => 'La taille PHP post_max_size',
-        'PHP post max size setting is:'
+        'PHP post max_size_meets minimum requirement.'
+            => 'PHP post_max_size répond aux exigences minimales.',
+        'PHP post_max_size setting is:'
             => 'La taille PHP post_max_size est:',
         'PHP Timezone is not set.'
             => 'Le fuseau horaire PHP n\'est pas configuré',
@@ -192,9 +196,9 @@
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
             => 'Vous avez spécifiez une base de données existante, cochez la boite pour continuer. ' .
                'LES DONNÉES EXISTANTES SERONT SUPPRIMÉES.',
-        'Soap is installed.'
+        'SOAP is installed.'
             => 'SOAP est installé',
-        'Soap is not installed.'
+        'SOAP is not installed.'
             => 'SOAP n\'est pas installé',
         'Starting database schema creation.'
             => 'Création de schémas de base de données',

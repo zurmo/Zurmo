@@ -65,6 +65,10 @@
             => '??',
         'Database host'
             => '??',
+        'Database is in strict mode.'
+            => '??',
+        'Database is not in strict mode.'
+            => '??',
         'Database max_allowed_packet size is:'
             => '??',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -157,9 +161,9 @@
             => '??',
         'PHP Memory setting meets minimum requirement.'
             => '??',
-        'PHP post max size meets minimum requirement.'
+        'PHP post_max_size meets minimum requirement.'
             => '??',
-        'PHP post max size setting is:'
+        'PHP post_max_size setting is:'
             => '??',
         'PHP Timezone is not set.'
             => '??',
@@ -185,6 +189,8 @@
             => '??',
         'Since you specified an existing database you must check this box in order ' .
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
+            => '??',
+        'SOAP is installed.'
             => '??',
         'SOAP is not installed.'
             => '??',

@@ -28,6 +28,7 @@
     {
         public $contactStatesData;
         public $startingStateOrder;
+        public $contactStatesLabels;
 
         public function __construct(Contact $model = null, $attributeName = null)
         {
@@ -35,6 +36,7 @@
             assert('$attributeName != null && is_string($attributeName)');
             parent::__construct($model, $attributeName);
             $this->contactStatesData   = ContactsUtil::getContactStateDataKeyedByOrder();
+            $this->contactStatesLabels = ContactsUtil::getContactStateLabelsKeyedByLanguageAndOrder();
             $startingState             = ContactsUtil::getStartingState();
             $this->startingStateOrder  = $startingState->order;
         }
@@ -46,6 +48,7 @@
                 array('contactStatesData',    'safe'),
                 array('contactStatesData',    'required', 'message' => 'You must have at least one status.'),
                 array('contactStatesData',    'validateContactStatesData'),
+                array('contactStatesLabels',  'safe'),
             ));
         }
 
@@ -54,6 +57,7 @@
             return array_merge(parent::attributeLabels(), array(
                 'contactStatesData'      => Yii::t('Default', 'Contact Statuses'),
                 'startingStateOrder'     => Yii::t('Default', 'Starting Status'),
+                'contactStatesLablsa'    => Yii::t('Default', 'Contact Status Translated Labels'),
             ));
         }
 

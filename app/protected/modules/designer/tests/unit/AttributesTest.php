@@ -439,6 +439,9 @@
                 'Seaplane',
                 'Dive Bomber',
             );
+            $labels = array('fr' => array('747 fr', 'A380 fr', 'Seaplane fr', 'Dive Bomber fr'),
+                            'de' => array('747 de', 'A380 de', 'Seaplane de', 'Dive Bomber de'),
+            );
             $airplanesFieldData = CustomFieldData::getByName('Airplanes');
             $airplanesFieldData->serializedData = serialize($values);
             $this->assertTrue($airplanesFieldData->save());
@@ -452,11 +455,12 @@
                 'fr' => 'Test Airplane 2 fr',
                 'it' => 'Test Airplane 2 it',
             );
-            $attributeForm->isAudited           = true;
-            $attributeForm->isRequired          = true;
-            $attributeForm->defaultValueOrder   = 1;
-            $attributeForm->customFieldDataData = $values;
-            $attributeForm->customFieldDataName = 'Airplanes';
+            $attributeForm->isAudited             = true;
+            $attributeForm->isRequired            = true;
+            $attributeForm->defaultValueOrder     = 1;
+            $attributeForm->customFieldDataData   = $values;
+            $attributeForm->customFieldDataName   = 'Airplanes';
+            $attributeForm->customFieldDataLabels = $labels;
 
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
@@ -488,6 +492,7 @@
             $this->assertEquals(1,                $attributeForm->defaultValueOrder);
             $this->assertEquals('Airplanes',      $attributeForm->customFieldDataName);
             $this->assertEquals($values,          $attributeForm->customFieldDataData);
+            $this->assertEquals($labels,          $attributeForm->customFieldDataLabels);
 
             //Test that validation on completely new picklists works correctly and is inline with the rules from
             //the CustomFieldData model.

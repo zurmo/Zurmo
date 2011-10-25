@@ -868,7 +868,7 @@
         }
 
         /**
-         * Looks at the post max size, upload max size, and database max_allowed_packets
+         * Looks at the post_max_size, upload max size, and database max_allowed_packets
          * @return integer of max allowed file size for uploads.
          */
         public static function getMaxAllowedFileSize()

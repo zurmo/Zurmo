@@ -37,14 +37,20 @@
             => '??',
         'Location'
             => '??',
+        'Meeting'
+            => '??',
         'Meetings'
             => '??',
+        'MeetingsModulePluralLabel'
+            => 'MeetingsModulePluralLabel',
         'MeetingsModulePluralLabel For AccountsModuleSingularLabel'
             => '??',
         'MeetingsModulePluralLabel For ContactsModuleSingularLabel'
             => '??',
         'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
             => '??',
+        'MeetingsModuleSingularLabel'
+            => 'MeetingsModuleSingularLabel',
         'My Upcoming MeetingsModulePluralLabel'
             => '??',
         'Related ContactsModulePluralLabel and LeadsModulePluralLabel'

@@ -325,7 +325,12 @@
                                     'isRequired'          => '1',
                                     'customFieldDataData' => array(
                                                 'a', 'b', 'c'
-                                    ));
+                                    ),
+                                    'customFieldDataLabels' => array(
+                                        'fr' => array('aFr', 'bFr', 'cFr'),
+                                        'de' => array('aDe', 'bDe', 'cDe'),
+                                    )
+                                    );
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
         }
 
