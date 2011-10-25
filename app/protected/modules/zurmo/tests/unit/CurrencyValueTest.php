@@ -77,6 +77,7 @@
             $this->assertEquals(1, R::getCell('select count(*) from currency'));
             $currency = Currency::getByCode('BTC');
             $currency->delete();
+            $currency->forget();
             $this->assertEquals(0, R::getCell('select count(*) from currency'));
         }
 

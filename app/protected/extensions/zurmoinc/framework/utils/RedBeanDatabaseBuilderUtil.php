@@ -243,12 +243,13 @@
 
         protected static function setMadeUpMemberValue($model, $memberName)
         {
-            $memberSet = false;
-            $minValue  = null;
-            $maxValue  = null;
-            $minLength = 1;
-            $maxLength = null;
-            $unique    = false;
+            $memberSet          = false;
+            $minValue           = null;
+            $maxValue           = null;
+            $minLength          = 1;
+            $maxLength          = null;
+            $unique             = false;
+            $ignoreDefaultValue = false;
             foreach ($model->getValidators($memberName) as $validator)
             {
                 switch (get_class($validator))
@@ -314,9 +315,17 @@
                     case 'CUnsafeValidator':
                     case 'RedBeanModelCompareDateTimeValidator':
                     case 'RedBeanModelRequiredValidator':
-                    case 'RedBeanModelTypeValidator':
                     case 'UsernameLengthValidator':
+                        break;
+
+                    case 'RedBeanModelTypeValidator':
                     case 'TypeValidator':
+                        if($validator->type == 'float' || $validator->type == 'integer')
+                        {
+                            //A number default value could be set in the rules, but we should ignore this and try
+                            //to make the largest sized number possible for this column.
+                            $ignoreDefaultValue = true;
+                        }
                         break;
 
                     case 'CCaptchaValidator':
@@ -340,7 +349,7 @@
                 {
                 }
             }
-            if (!$memberSet)
+            if (!$memberSet || $ignoreDefaultValue)
             {
                 foreach ($model->getValidators($memberName) as $validator)
                 {

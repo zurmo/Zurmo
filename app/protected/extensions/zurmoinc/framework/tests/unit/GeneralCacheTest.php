@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Test class to test out the GeneralCache
+     */
     class GeneralCacheTest extends BaseTest
     {
         public function tearDown()
@@ -33,9 +36,13 @@
 
         public function testCanSetNullValueToCache()
         {
-            GeneralCache::cacheEntry('somethingForTesting', null);
-            $value = GeneralCache::getEntry('somethingForTesting');
-            $this->assertNull($value);
+            //if memcache is off this test will fail because memcache will not cache null values.
+            if(MEMCACHE_ON)
+            {
+                GeneralCache::cacheEntry('somethingForTesting', null);
+                $value = GeneralCache::getEntry('somethingForTesting');
+                $this->assertNull($value);
+            }
         }
     }
 ?>

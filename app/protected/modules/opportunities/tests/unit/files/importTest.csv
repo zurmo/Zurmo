@@ -1,0 +1,4 @@
+name,closeDate,probability,description,account,stage,source,amount
+opp1,06-03-1980,10,desc1,toUpdate,Prospecting,Self-Generated,500
+opp2,06-04-1980,20,desc2,toUpdate,Qualification,Inbound Call,501
+opp3,06-05-1980,30,desc3,toUpdate,Negotiating,Tradeshow,502

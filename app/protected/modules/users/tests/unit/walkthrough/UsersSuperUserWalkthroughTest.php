@@ -60,6 +60,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('users/default/index');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/create');
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
 
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views

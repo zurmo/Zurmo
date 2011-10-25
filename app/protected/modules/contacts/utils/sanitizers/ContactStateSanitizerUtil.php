@@ -68,9 +68,21 @@
             {
                 if ((int)$value <= 0)
                 {
-                    throw new NotFoundException();
+                    $states = ContactState::getByName($value);
+                    if(count($states) > 1)
+                    {
+                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is not unique and is invalid.'));
+                    }
+                    elseif(count($states) == 0)
+                    {
+                        throw new NotFoundException();
+                    }
+                    $state = $states[0];
                 }
-                $state = ContactState::getById($value);
+                else
+                {
+                    $state = ContactState::getById($value);
+                }
                 $startingState = ContactsUtil::getStartingState();
                 if (!static::resolvesValidStateByOrder($state->order, $startingState->order))
                 {

@@ -30,7 +30,7 @@
     class MixedDateTimeTypesSearchFormAttributeMappingRules extends MixedDateTypesSearchFormAttributeMappingRules
     {
         /**
-         * The value['type'] deterimines how the attributeAndRelations is structured.
+         * The value['type'] determines how the attributeAndRelations is structured.
          * @param string $attributeName
          * @param array $attributeAndRelations
          * @param mixed $value

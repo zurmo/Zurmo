@@ -69,6 +69,19 @@
             flush();
         }
 
+        /**
+         * Given a message, output the message to the message stream ignoring the template. Used to output a . for example
+         * if you want a stream of dots to indicate progress.
+         * @param string $message
+         */
+        public function addIgnoringTemplate($message)
+        {
+            assert('is_string($message) && $message !=""');
+            echo $message;
+            echo str_repeat(' ', $this->extraRenderBytes);
+            flush();
+        }
+
         public function setEmptyTemplate()
         {
             $this->template = "";

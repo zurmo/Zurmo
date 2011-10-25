@@ -143,9 +143,18 @@
         {
             $dbValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('6/3/80 12:00 AM');
             $this->assertEquals('1980-06-03 00:00:00', $dbValue);
+
             //other locales
             Yii::app()->setLanguage('de');
             $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03.06.80 00:00');
+            $this->assertEquals('1980-06-03 00:00:00', $displayValue);
+
+            Yii::app()->setLanguage('it');
+            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03/06/80 00:00');
+            $this->assertEquals('1980-06-03 00:00:00', $displayValue);
+
+            Yii::app()->setLanguage('fr');
+            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03/06/80 00:00');
             $this->assertEquals('1980-06-03 00:00:00', $displayValue);
 
             //test null value returns null.

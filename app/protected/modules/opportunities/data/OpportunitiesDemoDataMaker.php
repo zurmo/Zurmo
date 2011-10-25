@@ -39,25 +39,24 @@
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
-            assert('$demoDataHelper->isSetRange("Currency")');
             assert('$demoDataHelper->isSetRange("User")');
             assert('$demoDataHelper->isSetRange("Account")');
             assert('$demoDataHelper->isSetRange("Contact")');
-
+            $currencies = Currency::getAll('id');
             $opportunities = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $opportunity = new Opportunity();
                 $opportunity->contacts->add($demoDataHelper->getRandomByModelName('Contact'));
-                $opportunity->account = $opportunity->contacts[0]->account;
-                $opportunity->owner   = $opportunity->contacts[0]->owner;
-                $currencyValue = new CurrencyValue();
-                $currencyValue->currency   = $demoDataHelper->getRandomByModelName('Currency');
-                $opportunity->amount = $currencyValue;
+                $opportunity->account      = $opportunity->contacts[0]->account;
+                $opportunity->owner        = $opportunity->contacts[0]->owner;
+                $currencyValue             = new CurrencyValue();
+                $currencyValue->currency   = $currencies[array_rand($currencies)];
+                $opportunity->amount       = $currencyValue;
                 $this->populateModel($opportunity);
                 $saved = $opportunity->save();
                 assert('$saved');
-                $opportunities[] = $opportunity->id;
+                $opportunities[]           = $opportunity->id;
             }
             $demoDataHelper->setRangeByModelName('Opportunity', $opportunities[0], $opportunities[count($opportunities)-1]);
         }

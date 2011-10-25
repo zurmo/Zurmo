@@ -51,10 +51,10 @@
                                                             $value, $columnMappingData, $importSanitizeResultsUtil);
             $currencyValue             = new CurrencyValue();
             $currencyValue->value      = $sanitizedValue;
-            $currencyValue->rateToBase = $columnMappingData['CurrencyRateToBaseModelAttributeMappingRuleForm']
+            $currencyValue->rateToBase = $columnMappingData['mappingRulesData']['CurrencyRateToBaseModelAttributeMappingRuleForm']
                                          ['rateToBase'];
             $currencyValue->currency   = Currency::
-                                         getById($columnMappingData['CurrencyRateToBaseModelAttributeMappingRuleForm']['id']);
+                                         getById($columnMappingData['mappingRulesData']['CurrencyRateToBaseModelAttributeMappingRuleForm']['id']);
             return array($this->getModelAttributeName() => $currencyValue);
         }
     }

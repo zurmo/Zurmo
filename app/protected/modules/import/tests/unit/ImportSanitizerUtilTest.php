@@ -209,7 +209,7 @@
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', '02-20-2005',
                                          $columnMappingData, $importSanitizeResultsUtil);
-            $this->assertEquals('02-20-2005 00:00:00', date('m-d-Y H:i:s', $sanitizedValue));
+            $this->assertEquals('2005-02-20', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));

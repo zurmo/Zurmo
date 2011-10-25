@@ -75,7 +75,6 @@
             assert('is_int($this->demoData[$modelName]["startId"])');
             assert('is_int($this->demoData[$modelName]["endId"])');
             assert('$this->demoData[$modelName]["endId"] > $this->demoData[$modelName]["startId"]');
-
             $randomId = mt_rand($this->demoData[$modelName]["startId"], $this->demoData[$modelName]["endId"]);
             $model = $modelName::getById($randomId);
             assert('$model instanceof $modelName');

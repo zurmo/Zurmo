@@ -77,8 +77,7 @@
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($activity), $activity);
             $pageViewClassName = $this->getPageViewClassName();
             $view = new $pageViewClassName($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Details'));
+                $this->makeTitleBarAndEditAndDetailsView($activity, 'Details'));
             echo $view->render();
         }
 
@@ -102,7 +101,7 @@
             }
             $modelClassName    = $this->getModule()->getPrimaryModelName();
             $activity          = $modelClassName::getById(intval($id));
-			ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($activity);
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($activity);
             $activity->delete();
             $this->redirect($redirectUrl);
         }

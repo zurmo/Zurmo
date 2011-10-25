@@ -40,7 +40,7 @@
             $meetings                              = Meeting::getAll();
             $this->assertEquals(0, count($meetings));
             $import                                = new Import();
-            $serializedData['importRulesType']     = 'Meeting';
+            $serializedData['importRulesType']     = 'Meetings';
             $serializedData['firstRowIsHeaderRow'] = true;
             $import->serializedData                = serialize($serializedData);
             $this->assertTrue($import->save());
@@ -52,15 +52,15 @@
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
             $mappingData = array(
-                'column_0' => ImportTestHelper::makeStringColumnMappingData       ('name'),
-                'column_1' => ImportTestHelper::makeStringColumnMappingData       ('location'),
-                'column_2' => ImportTestHelper::makeDateTimeColumnMappingData     ('startDateTime'),
-                'column_3' => ImportTestHelper::makeDateTimeColumnMappingData     ('endDateTime'),
-                'column_4' => ImportTestHelper::makeDropDownColumnMappingData     ('category'),
-                'column_5' => ImportTestHelper::makeModelDerivedColumnMappingData ('AccountDerived'),
-                'column_6' => ImportTestHelper::makeModelDerivedColumnMappingData ('ContactDerived'),
-                'column_7' => ImportTestHelper::makeModelDerivedColumnMappingData ('OpportunityDerived'),
-                'column_8' => ImportTestHelper::makeTextAreaColumnMappingData     ('description'),
+                'column_0' => ImportMappingUtil::makeStringColumnMappingData       ('name'),
+                'column_1' => ImportMappingUtil::makeStringColumnMappingData       ('location'),
+                'column_2' => ImportMappingUtil::makeDateTimeColumnMappingData     ('startDateTime'),
+                'column_3' => ImportMappingUtil::makeDateTimeColumnMappingData     ('endDateTime'),
+                'column_4' => ImportMappingUtil::makeDropDownColumnMappingData     ('category'),
+                'column_5' => ImportMappingUtil::makeModelDerivedColumnMappingData ('AccountDerived'),
+                'column_6' => ImportMappingUtil::makeModelDerivedColumnMappingData ('ContactDerived'),
+                'column_7' => ImportMappingUtil::makeModelDerivedColumnMappingData ('OpportunityDerived'),
+                'column_8' => ImportMappingUtil::makeTextAreaColumnMappingData     ('description'),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Meetings');
@@ -69,11 +69,13 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
             $dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
             ImportUtil::importByDataProvider($dataProvider,
                                              $importRules,
                                              $mappingData,
                                              $importResultsUtil,
-                                             new ExplicitReadWriteModelPermissions());
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
             //Confirm that 3 models where created.
