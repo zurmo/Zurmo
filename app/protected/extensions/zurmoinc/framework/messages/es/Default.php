@@ -31,6 +31,12 @@
     return array(
         '(None)'
             => '??',
+        'Add File'
+            => '??',
+        'Add Files'
+            => '??',
+        'Add Item'
+            => '??',
         'Advanced Search'
             => 'Búsqueda Avanzada',
         'All'
@@ -49,6 +55,8 @@
             => 'Cambiado',
         'Clear Search'
             => 'Restablecer Busqueda',
+        'Create'
+            => '??',
         'Created By User'
             => '??',
         'Created Date and User'
@@ -69,6 +77,8 @@
             => 'Solo Vista de Detalles',
         'Details'
             => 'Detalles',
+        'Done'
+            => '??',
         'Edit'
             => 'Editar',
         'Edit Portlet'
@@ -91,6 +101,10 @@
             => '??',
         'Go to Details'
             => '??',
+        'Hour'
+            => '??',
+        'Info'
+            => '??',
         'Inline Edit View'
             => '??',
         'Integer'
@@ -104,6 +118,12 @@
         'List'
             => '??',
         'Loading'
+            => '??',
+        'Mass Update'
+            => '??',
+        'Max upload size: {maxSize}'
+            => '??',
+        'Minute'
             => '??',
         'Model Class Name'
             => '??',
@@ -155,6 +175,8 @@
             => 'Guardar',
         'Search'
             => 'Buscar',
+        'Second'
+            => 'Seconde',
         'Select'
             => 'Seleccionar',
         'selected for updating.'
@@ -164,7 +186,13 @@
         'Some values cannot be removed because they are currently in use. ' .
         'Try changing the records that use them first.'
             => '??',
+        'Start'
+            => '??',
         'Tab'
+            => '??',
+        'The file did not exist'
+            => '??',
+        'There was an error uploading the file.'
             => '??',
         'This module doesn\'t have anything to configure.'
             => 'Este módulo no tiene nada para configurar.',
@@ -182,10 +210,16 @@
             => 'Hoy',
         'Tomorrow'
             => 'Mañana',
+        'total'
+            => '??',
         'Unknown'
             => '??',
         'Update Selected'
             => 'Actualización Seleccionada',
+        'updated successfully.'
+            => '??',
+        'Updating'
+            => '??',
         'User'
             => '??',
         'Users'
@@ -195,6 +229,10 @@
         'Yesterday'
             => 'Ayer',
         'You must enter a value'
+            => '??',
+        'You must select at least one field to modify.'
+            => '??',
+        'You must select at least one record'
             => '??',
         'You must specify a value.'
             => '??',

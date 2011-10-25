@@ -39,13 +39,19 @@
             => '??',
         'Open TasksModulePluralLabel'
             => '??',
+        'Task'
+            => '??',
         'Tasks'
             => '??',
+        'TasksModulePluralLabel'
+            => 'TasksModulePluralLabel',
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
             => '??',
         'TasksModulePluralLabel For ContactsModuleSingularLabel'
             => '??',
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
             => '??',
+        'TasksModuleSingularLabel'
+            => 'TasksModuleSingularLabel',
     );
 ?>

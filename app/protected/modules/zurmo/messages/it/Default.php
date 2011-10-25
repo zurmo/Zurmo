@@ -47,7 +47,17 @@
             => '??',
         'About'
             => '??',
+        'Access Administration Tab'
+            => '??',
+        'Access Currency Configuration'
+            => '??',
         'Access Failure'
+            => '??',
+        'Access Global Configuration'
+            => '??',
+        'Access Groups Tab'
+            => '??',
+        'Access Roles Tab'
             => '??',
         'Active'
             => '??',
@@ -55,9 +65,9 @@
             => '??',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
             => '??',
-        'Add File'
+        'Address'
             => '??',
-        'Add Files'
+        'Ad-hoc / Owner'
             => '??',
         'Admin'
             => '??',
@@ -121,7 +131,11 @@
             => '??',
         'Create Group'
             => '??',
+        'Create Groups'
+            => '??',
         'Create New'
+            => '??',
+        'Create Roles'
             => '??',
         'Currencies: Create'
             => '??',
@@ -141,7 +155,11 @@
             => '??',
         'Delete Group'
             => '??',
+        'Delete Groups'
+            => '??',
         'Delete Role'
+            => '??',
+        'Delete Roles'
             => '??',
         'Deny'
             => '??',
@@ -154,7 +172,7 @@
         'every'
             => '??',
         'Everyone'
-            => '???',
+            => '??',
         'Fields with'
             => '??',
         'File Content'
@@ -170,6 +188,8 @@
         'First Name'
             => '??',
         'Global Configuration'
+            => '??',
+        'Global configuration saved successfully.'
             => '??',
         'Go to Search'
             => '??',
@@ -191,11 +211,19 @@
             => '??',
         'Industry'
             => '??',
-        'Info'
-            => '??',
         'Inherited - All'
             => '??',
         'Inherited - Allow'
+            => '??',
+        'Inherited - Deny'
+            => '??',
+        'Inherited - No'
+            => '??',
+        'Inherited - Owner Only'
+            => '??',
+        'Inherited - Yes'
+            => '??',
+        'Inherited Value:'
             => '??',
         'Invalid currency code'
             => '??',
@@ -233,8 +261,6 @@
             => '??',
         'Manage Roles'
             => '??',
-        'Max upload size: {maxSize}'
-            => '??',
         'Member'
             => '??',
         'Member Of'
@@ -253,13 +279,15 @@
             => '??',
         'Module Permissions'
             => '??',
-        'Munge rebuild complete.'
+        'Module Permissions Saved Successfully.'
             => '??',
         'My List Configuration View'
             => '??',
         'Never'
             => '??',
         'No Results Found'
+            => '??',
+        'Non Members'
             => '??',
         'Not Set'
             => '??',
@@ -277,6 +305,8 @@
             => '??',
         'Owner'
             => '??',
+        'Owner and users in'
+            => '??',
         'Owner Only'
             => '??',
         'Parent Group'
@@ -292,6 +322,8 @@
         'Please use FireFox, Chrome, or Internet Explorer.'
             => '??',
         'Policies'
+            => '??',
+        'Policies Saved Successfully.'
             => '??',
         'Popup list page size'
             => '??',
@@ -314,6 +346,8 @@
         'Return to Admin Menu'
             => '??',
         'Rights'
+            => '??',
+        'Rights Saved Successfully.'
             => '??',
         'Role'
             => '??',
@@ -341,13 +375,13 @@
             => '??',
         'Size'
             => '??',
+        'skipped because you do not have sufficient permissions.'
+            => '??',
         'Sorry! Your browser is not supported.'
             => '??',
         'Source'
             => '??',
         'Stage'
-            => '??',
-        'Start'
             => '??',
         'State'
             => '??',
@@ -360,14 +394,16 @@
         'Successfully updated'
             => '??',
         'Super Administrators'
-            => '???',
-        'The currency code is invalid'
             => '??',
-        'The file did not exist'
+        'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
+            => '??',
+        'The currency rate web service was unavailable. The rate could not be automatically updated.'
+            => '??',
+        'The currency was not removed because it is in use.'
             => '??',
         'There are no recently viewed items.'
             => '??',
-        'There was an error uploading the file.'
+        'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
             => '??',
         'There was an error with the web service.'
             => '??',
@@ -381,7 +417,11 @@
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
             => '??',
+        'Type a currency code or name to search.'
+            => '??',
         'User Membership'
+            => '??',
+        'User Membership Saved Successfully.'
             => '??',
         'Username'
             => '??',
@@ -394,6 +434,8 @@
         'What is this?'
             => '??',
         'Who can read and write'
+            => '??',
+        'You have tried to access a page you do not have access to.'
             => '??',
         'You must have at least one active currency.'
             => '??',

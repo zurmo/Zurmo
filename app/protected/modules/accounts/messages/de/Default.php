@@ -45,6 +45,8 @@
             => 'AccountsModuleSingularLabel ??',
         'AccountsModuleSingularLabel Search'
             => 'AccountsModuleSingularLabel ??',
+        'An account field'
+            => '??',
         'Annual Revenue'
             => '??',
         'Billing Address'

@@ -65,6 +65,10 @@
             => '??',
         'Database host'
             => '??',
+        'Database is in strict mode.'
+            => '??',
+        'Database is not in strict mode.'
+            => '??',
         'Database max_allowed_packet size is:'
             => '??',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -185,6 +189,8 @@
             => '??',
         'Since you specified an existing database you must check this box in order ' .
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
+            => '??',
+        'SOAP is installed.'
             => '??',
         'SOAP is not installed.'
             => '??',

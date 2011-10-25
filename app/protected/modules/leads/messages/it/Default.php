@@ -29,16 +29,39 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Account Optional'
+            => '??',
+        'Account Required'
+            => '??',
+        'Complete Conversion'
+            => '??',
+        'Complete lead conversion without selecting or creating an account.'
+            => '??',
+        'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
+            => '??',
+        'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
+            => '??',
         'Create AccountsModuleSingularLabel'
             => '?? AccountsModuleSingularLabel',
         'Create LeadsModuleSingularLabel'
             => '?? LeadsModuleSingularLabel',
+        'Do not show Account'
+            => '??',
         'Lead'
+            => '??',
+        'Lead successfully converted.'
+            => '??',
+        'Lead was not converted. An error occured.'
             => '??',
         'Leads'
             => '??',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
+        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
+        ' just in a different statuses. To create a LeadsModuleSingularLowerCaseLabel' .
+        ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
+        ' will be placable in the LeadsModulePluralLowerCaseLabel layouts.'
+            => '??',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'
