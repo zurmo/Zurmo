@@ -251,6 +251,135 @@
         /**
          * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForContactsModule
          */
+        public function testSuperUserModifyContactStatesDefaultValueItemsInDropDown()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //test existing ContactState changes to labels.
+            $extraPostData = array( 'startingStateOrder'  => '4',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array(
+                                                'New', 'In ProgressD', 'RecycledC', 'QualifiedA', 'CustomerF', 'YRE'
+                                    ),
+                                    'contactStatesDataExistingValues' => array(
+                                                'New', 'In Progress', 'Recycled', 'Qualified', 'Customer', 'YRE'
+                                    )
+                                    );
+            $this->createCustomAttributeWalkthroughSequence('ContactsModule', 'state', 'ContactState',
+                $extraPostData, 'state');
+            $compareData = array(
+                'New',
+                'In ProgressD',
+                'RecycledC',
+                'QualifiedA',
+                'CustomerF',
+                'YRE'
+            );
+            $this->assertEquals($compareData, ContactsUtil::getContactStateDataKeyedByOrder());
+
+            //todo: test that the changed labels, updated the existing data if any existed.
+
+            //Removing ContactStates items
+            $extraPostData = array( 'startingStateOrder'  => '2',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array(
+                                                'New', 'RecycledC', 'QualifiedA'
+                                    ));
+            $this->createCustomAttributeWalkthroughSequence('ContactsModule', 'state', 'ContactState',
+                $extraPostData, 'state');
+            $compareData = array(
+                'New',
+                'RecycledC',
+                'QualifiedA',
+            );
+            $this->assertEquals($compareData, ContactsUtil::getContactStateDataKeyedByOrder());
+
+            //Adding ContactStates items
+            $extraPostData = array( 'startingStateOrder'  => '2',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array(
+                                                'New', 'RecycledC', 'QualifiedA', 'NewItem', 'NewItem2'
+                                    ));
+            $this->createCustomAttributeWalkthroughSequence('ContactsModule', 'state', 'ContactState',
+                $extraPostData, 'state');
+            $compareData = array(
+                'New',
+                'RecycledC',
+                'QualifiedA',
+                'NewItem',
+                'NewItem2'
+            );
+            $this->assertEquals($compareData, ContactsUtil::getContactStateDataKeyedByOrder());
+
+            //Changing order of ContactStates items
+            $extraPostData = array( 'startingStateOrder'  => '2',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array(
+                                                'New', 'NewItem2', 'RecycledC', 'QualifiedA', 'NewItem'
+                                    ));
+            $this->createCustomAttributeWalkthroughSequence('ContactsModule', 'state', 'ContactState',
+                $extraPostData, 'state');
+            $compareData = array(
+                'New',
+                'NewItem2',
+                'RecycledC',
+                'QualifiedA',
+                'NewItem',
+            );
+            $this->assertEquals($compareData, ContactsUtil::getContactStateDataKeyedByOrder());
+
+            //test trying to save 2 ContactStates with the same name (QualifiedA is twice)
+            $extraPostData = array( 'startingStateOrder'  => '2',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array(
+                                                'New', 'NewItem2', 'QualifiedA', 'QualifiedA', 'NewItem'
+                                    ));
+            $this->setGetArray(array(   'moduleClassName'       => 'ContactsModule',
+                                        'attributeTypeName'     => 'ContactState',
+                                        'attributeName'         => 'state'));
+            $this->setPostArray(array(   'ajax'                     => 'edit-form',
+                                        'ContactStateAttributeForm' => array_merge(array(
+                                            'attributeLabels'       => $this->createAttributeLabelGoodValidationPostData('state'),
+                                            'attributeName'         => 'state',
+                                        ), $extraPostData)));
+            $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/attributeEdit');
+            $this->assertTrue(strlen($content) > 50); //approximate, but should definetely be larger than 50.
+
+            //test trying to save 0 ContactStates
+            $extraPostData = array( 'startingStateOrder'  => '2',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array());
+            $this->setPostArray(array(   'ajax'                 => 'edit-form',
+                                        'ContactStateAttributeForm' => array_merge(array(
+                                            'attributeLabels' => $this->createAttributeLabelGoodValidationPostData('state'),
+                                            'attributeName'     => 'state',
+                                        ), $extraPostData)));
+            $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/attributeEdit');
+            $this->assertTrue(strlen($content) > 50); //approximate, but should definetely be larger than 50.
+
+            //test trying to save contact states that are shorter than the minimum length.
+            $extraPostData = array( 'startingStateOrder'  => '2',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'contactStatesData' => array('NA', ' NB', 'NC'));
+            $this->setPostArray(array(   'ajax'                 => 'edit-form',
+                                        'ContactStateAttributeForm' => array_merge(array(
+                                            'attributeLabels' => $this->createAttributeLabelGoodValidationPostData('state'),
+                                            'attributeName'     => 'state',
+                                        ), $extraPostData)));
+            $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/attributeEdit');
+            $this->assertTrue(strlen($content) > 50); //approximate, but should definetely be larger than 50.
+        }
+
+        /**
+         * @depends testSuperUserModifyContactStatesDefaultValueItemsInDropDown
+         */
         public function testCreateAnContactUserAfterTheCustomFieldsArePlacedForContactsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -267,7 +396,7 @@
             $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 
             //Retrieve the Contact State (Status) Id based on the name.
-            $contactState   = ContactState::getByName('Qualified');
+            $contactState   = ContactState::getByName('QualifiedA');
             $contactStateID = $contactState[0]->id;
 
             //Create a new contact based on the custom fields.
@@ -390,7 +519,7 @@
             $superUserId = $super->id;
 
             //Retrieve the Contact State (Status) Id based on the name.
-            $contactState   = ContactState::getByName('Qualified');
+            $contactState   = ContactState::getByName('QualifiedA');
             $contactStateID = $contactState[0]->id;
 
             //Search a created contact using the customfields.
@@ -422,12 +551,12 @@
                                         'text'              => 'This is a test Text',
                                         'textarea'          => 'This is a test TextArea',
                                         'url'               => 'http://wwww.abc.com',
-                                        'checkbox'          => '1',
+                                        'checkbox'          => array('value'  =>  '0'),
                                         'currency'          => array('value'  =>  45),
                                         'picklist'          => array('value'  =>  'a'),
                                         'radio'             => array('value'  =>  'd'),
-                                        'date__Date'        => array('type' => 'Today'),
-                                        'datetime__DateTime'=> array('type' => 'Today')),
+                                        'date__Date'        => array('type'   =>  'Today'),
+                                        'datetime__DateTime'=> array('type'   =>  'Today')),
                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
@@ -460,7 +589,7 @@
             $contactId   = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
 
             //Retrieve the Contact State (Status) Id based on the name.
-            $contactState   = ContactState::getByName('Customer');
+            $contactState   = ContactState::getByName('RecycledC');
             $contactStateID = $contactState[0]->id;
 
             //Edit and save the contact.
@@ -602,12 +731,12 @@
                             'text'              =>  'This is a test Edit Text',
                             'textarea'          =>  'This is a test Edit TextArea',
                             'url'               =>  'http://wwww.abc-edit.com',
-                            'checkbox'          =>  '0',
+                            'checkbox'          =>  array('value'  =>  '0'),
                             'currency'          =>  array('value'  =>  40),
                             'picklist'          =>  array('value'  =>  'b'),
                             'radio'             =>  array('value'  =>  'e'),
-                            'date__Date'        =>  array('type' => 'Today'),
-                            'datetime__DateTime'=>  array('type' => 'Today'));
+                            'date__Date'        =>  array('type'   =>  'Today'),
+                            'datetime__DateTime'=>  array('type'   =>  'Today'));
         }
 
         /**
@@ -622,7 +751,7 @@
             $superUserId = $super->id;
 
             //Retrieve the Contact State (Status) Id based on the name.
-            $contactState   = ContactState::getByName('Customer');
+            $contactState   = ContactState::getByName('RecycledC');
             $contactStateID = $contactState[0]->id;
 
             //Search a created contact using the customfields.
@@ -669,7 +798,7 @@
             $superUserId = $super->id;
 
             //Retrieve the Contact State (Status) Id based on the name.
-            $contactState   = ContactState::getByName('Customer');
+            $contactState   = ContactState::getByName('RecycledC');
             $contactStateID = $contactState[0]->id;
 
             //Search a created contact using the customfields.

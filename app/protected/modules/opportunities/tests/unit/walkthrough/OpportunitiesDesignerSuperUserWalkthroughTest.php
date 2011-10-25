@@ -362,12 +362,12 @@
                                                 'text'              => 'This is a test Text',
                                                 'textarea'          => 'This is a test TextArea',
                                                 'url'               => 'http://wwww.abc.com',
-                                                'checkbox'          => '1',
+                                                'checkbox'          => array('value'  =>  '0'),
                                                 'currency'          => array('value'  =>  45),
                                                 'picklist'          => array('value'  =>  'a'),
                                                 'radio'             => array('value'  =>  'd'),
-                                                'date__Date'        => array('type'   => 'Today'),
-                                                'datetime__DateTime'=> array('type'   => 'Today')),
+                                                'date__Date'        => array('type'   =>  'Today'),
+                                                'datetime__DateTime'=> array('type'   =>  'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
@@ -489,12 +489,12 @@
                             'text'              =>  'This is a test Edit Text',
                             'textarea'          =>  'This is a test Edit TextArea',
                             'url'               =>  'http://wwww.abc-edit.com',
-                            'checkbox'          =>  '0',
+                            'checkbox'          =>  array('value'  =>  '0'),
                             'currency'          =>  array('value'  =>  40),
                             'picklist'          =>  array('value'  =>  'b'),
                             'radio'             =>  array('value'  =>  'e'),
-                            'date__Date'        =>  array('type'   => 'Today'),
-                            'datetime__DateTime'=>  array('type'   => 'Today'));
+                            'date__Date'        =>  array('type'   =>  'Today'),
+                            'datetime__DateTime'=>  array('type'   =>  'Today'));
         }
 
         /**
