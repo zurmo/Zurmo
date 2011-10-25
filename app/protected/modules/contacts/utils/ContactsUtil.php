@@ -91,7 +91,7 @@
          */
         public static function getContactStateLabelsKeyedByLanguageAndOrder()
         {
-            $contactStatesLabels = array();
+            $contactStatesLabels = null;
             $states = ContactState::getAll('order');
             foreach ($states as $state)
             {
