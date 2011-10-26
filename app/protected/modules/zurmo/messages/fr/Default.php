@@ -64,7 +64,7 @@
         'Active currencies can be used when creating new records and as a default currency for a user.'
             => 'Les devises actives sont disponibles pour créer de nouveaux enregistrements et comme devise de défault pour un utilisateur.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => 'Les langues actives sont disponibles aux utilisateurs. Impossible de désactiver la langue système ou unelangue actuellement utilisé par un utilisateur',
+            => 'Les langues actives sont disponibles aux utilisateurs. Impossible de désactiver la langue système ou une langue actuellement utilisée par un utilisateur',
         'Ad-hoc / Owner'
             => 'De circonstance / Resp. du compte',
         'Address'
