@@ -35,6 +35,13 @@
          */
         const ADD_MISSING_VALUE = 'Add missing value';
 
+        /**
+         * Variable used to indicate a drop down value is missing from zurmo and will need to map to an existing value
+         * based on what is provided.
+         * @var string
+         */
+        const MAP_MISSING_VALUES = 'Map missing values';
+
         public static function getSqlAttributeValueDataAnalyzerType()
         {
             return 'DropDown';
@@ -84,6 +91,7 @@
                                                    $modelClassName, $attributeName);
             $dropDownValues                      = unserialize($customFieldData->serializedData);
             $lowerCaseDropDownValues             = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
+            $generateMissingPickListError        = false;
             //does the value already exist in the custom field data
             if (in_array(mb_strtolower($value), $lowerCaseDropDownValues))
             {
@@ -107,7 +115,36 @@
                     $saved                           = $customFieldData->save();
                     assert('$saved');
                 }
+                elseif(isset($importInstructionsData['DropDown'][DropDownSanitizerUtil::MAP_MISSING_VALUES]))
+                {
+                    $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
+                                                       $importInstructionsData['DropDown']
+                                                       [DropDownSanitizerUtil::MAP_MISSING_VALUES]);
+                    if(isset($lowerCaseMissingValuesToMap[mb_strtolower($value)]))
+                    {
+                        $keyToUse           = array_search($lowerCaseMissingValuesToMap[mb_strtolower($value)],
+                                                           $lowerCaseDropDownValues);
+                        if($keyToUse === false)
+                        {
+                            $message = 'Pick list value specified is missing from existing pick list, has a specified mapping value' .
+                               ', but the mapping value is not a valid value.';
+                            throw new InvalidValueToSanitizeException(Yii::t('Default', $message));
+                        }
+                        else
+                        {
+                            $resolvedValueToUse = $dropDownValues[$keyToUse];
+                        }
+                    }
+                    else
+                    {
+                        $generateMissingPickListError = true;
+                    }
+                }
                 else
+                {
+                     $generateMissingPickListError = true;
+                }
+                if($generateMissingPickListError)
                 {
                     $message = 'Pick list value specified is missing from existing pick list and no valid instructions' .
                                ' were provided on how to resolve this.';
