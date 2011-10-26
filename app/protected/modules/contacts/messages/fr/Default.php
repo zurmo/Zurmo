@@ -33,6 +33,8 @@
             => 'Nom du compte',
         'Contact'
             => 'Contact',
+        'Contact Stage'
+            => 'Statut du Contact',
         'Contact Statuses'
             => 'Liste déroulante',
         'Contacts'

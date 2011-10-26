@@ -45,8 +45,6 @@
             => 'Crear un Panel de Widgets',
         'Dashboard'
             => 'Panel de Widgets',
-        'Dashboard portlet list page size'
-            => '??',
         'Delete Dashboard'
             => 'Eliminar Panel de Widgets',
         'Edit Dashboard'

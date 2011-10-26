@@ -57,6 +57,8 @@
             => '??',
         'My AccountsModulePluralLabel'
             => '??',
+        'Parent Account'
+            => '??',
         'Related AccountsModulePluralLabel'
             => '?? AccountsModulePluralLabel',
         'Type'
