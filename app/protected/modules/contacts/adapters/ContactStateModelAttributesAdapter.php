@@ -31,15 +31,20 @@
     {
         public function setAttributeMetadataFromForm(AttributeForm $attributeForm)
         {
-            $modelClassName      = get_class($this->model);
-            $attributeName       = $attributeForm->attributeName;
-            $attributeLabels     = $attributeForm->attributeLabels;
-            $elementType         = $attributeForm->getAttributeTypeName();
-            $isRequired          = (boolean)$attributeForm->isRequired;
-            $isAudited           = (boolean)$attributeForm->isAudited;
-            $contactStatesData   = $attributeForm->contactStatesData;
-            $contactStatesLabels = $attributeForm->contactStatesLabels;
-            $startingStateOrder  = (int)$attributeForm->startingStateOrder;
+            $modelClassName                  = get_class($this->model);
+            $attributeName                   = $attributeForm->attributeName;
+            $attributeLabels                 = $attributeForm->attributeLabels;
+            $elementType                     = $attributeForm->getAttributeTypeName();
+            $isRequired                      = (boolean)$attributeForm->isRequired;
+            $isAudited                       = (boolean)$attributeForm->isAudited;
+            $contactStatesData               = $attributeForm->contactStatesData;
+            $contactStatesLabels             = $attributeForm->contactStatesLabels;
+            $startingStateOrder              = (int)$attributeForm->startingStateOrder;
+            $contactStatesDataExistingValues = $attributeForm->contactStatesDataExistingValues;
+            if($contactStatesDataExistingValues == null)
+            {
+                $contactStatesDataExistingValues = array();
+            }
 
             if ($attributeForm instanceof ContactStateAttributeForm)
             {
@@ -56,6 +61,16 @@
                         $state->serializedLabels = $this->makeSerializedLabelsByLabelsAndOrder($contactStatesLabels,
                                                                                                (int)$state->order);
                         $saved        = $state->save();
+                        assert('$saved');
+                    }
+                    elseif (in_array($state->name, $contactStatesDataExistingValues))
+                    {
+                        $order                   = array_search($state->name, $contactStatesDataExistingValues);
+                        $state->name             = $contactStatesData[$order];
+                        $state->order            = $order;
+                        $state->serializedLabels = $this->makeSerializedLabelsByLabelsAndOrder($contactStatesLabels,
+                                                                                               (int)$state->order);
+                        $saved                   = $state->save();
                         assert('$saved');
                     }
                     else
