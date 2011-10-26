@@ -48,7 +48,6 @@
         public function testCreateAndGetAccountById()
         {
             $user = UserTestHelper::createBasicUser('Steven');
-
             $account = new Account();
             $account->owner       = $user;
             $account->name        = 'Test Account';
@@ -564,6 +563,64 @@
             $this->assertEquals(2, count($modelClassNames));
             $this->assertEquals('Account', $modelClassNames[0]);
             $this->assertEquals('AccountsFilteredList', $modelClassNames[1]);
+        }
+
+        public function testCreatingACustomDropDownAfterAnAccountExists()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $account = AccountTestHelper::createAccountByNameForOwner('intermediate', $super);
+            $accountId = $account->id;
+            $account->forget();
+
+            //Create custom dropdown.
+            $values = array(
+                '747',
+                'A380',
+                'Seaplane',
+                'Dive Bomber',
+            );
+            $labels = array('fr' => array('747 fr', 'A380 fr', 'Seaplane fr', 'Dive Bomber fr'),
+                            'de' => array('747 de', 'A380 de', 'Seaplane de', 'Dive Bomber de'),
+            );
+            $airplanesFieldData = CustomFieldData::getByName('Airplanes');
+            $airplanesFieldData->serializedData = serialize($values);
+            $this->assertTrue($airplanesFieldData->save());
+
+            $attributeForm = new DropDownAttributeForm();
+            $attributeForm->attributeName       = 'testAirPlane';
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Airplane 2 de',
+                'en' => 'Test Airplane 2 en',
+                'es' => 'Test Airplane 2 es',
+                'fr' => 'Test Airplane 2 fr',
+                'it' => 'Test Airplane 2 it',
+            );
+            $attributeForm->isAudited             = true;
+            $attributeForm->isRequired            = true;
+            $attributeForm->defaultValueOrder     = 1;
+            $attributeForm->customFieldDataData   = $values;
+            $attributeForm->customFieldDataName   = 'Airplanes';
+            $attributeForm->customFieldDataLabels = $labels;
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            $adapter->setAttributeMetadataFromForm($attributeForm);
+
+
+            $compareData = array(
+                '747',
+                'A380',
+                'Seaplane',
+                'Dive Bomber',
+            );
+            //A new account will show the values fine.
+            $accountNew = new Account();
+            $this->assertEquals($compareData, unserialize($accountNew->testAirPlane->data->serializedData));
+
+            //Now retrieve account again and make sure you can access the values in the dropdown.
+            $account     = Account::getById($accountId);
+            $this->assertEquals($compareData, unserialize($account->testAirPlane->data->serializedData));
         }
     }
 ?>

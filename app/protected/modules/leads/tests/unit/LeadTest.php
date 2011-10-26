@@ -279,5 +279,25 @@
                 $this->assertEquals($isStateALead, $isStateALeadCorrect);
             }
         }
+
+        public function testGetLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage()
+        {
+            $newStates        = ContactState::getByName('New');
+            $inProgressStates = ContactState::getByName('In Progress');
+            $recycledStates   = ContactState::getByName('Recycled');
+            $deadStates       = ContactState::getByName('Dead');
+            $data             = LeadsUtil::getLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage('en');
+            $compareData = array($newStates[0]->id         => 'New',
+                                 $inProgressStates[0]->id  => 'In Progress',
+                                 $recycledStates[0]->id    => 'Recycled',
+                                 $deadStates[0]->id        => 'Dead');
+            $this->assertEquals($compareData, $data);
+            $data             = LeadsUtil::getLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage('fr');
+            $compareData = array($newStates[0]->id         => 'New',
+                                 $inProgressStates[0]->id  => 'In Progress',
+                                 $recycledStates[0]->id    => 'Recycled',
+                                 $deadStates[0]->id        => 'Dead');
+            $this->assertEquals($compareData, $data);
+        }
     }
 ?>

@@ -29,9 +29,9 @@
      */
     class DefaultLeadStateIdMappingRuleForm extends DefaultContactStateIdMappingRuleForm
     {
-        protected static function makeStateData()
+        protected static function makeStatesDataAndLabels()
         {
-            return LeadsUtil::getLeadStateDataFromStartingStateOnAndKeyedById();
+            return LeadsUtil::getLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage(Yii::app()->language);
         }
     }
 ?>

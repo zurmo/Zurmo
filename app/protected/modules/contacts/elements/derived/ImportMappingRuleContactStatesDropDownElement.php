@@ -46,7 +46,8 @@
 
         protected function getDropDownArray()
         {
-            $dropDownArray = $this->model->statesData;
+            $dropDownArray = $this->model->statesDataAndLabels;
+            $language      = Yii::app()->language;
             if (empty($dropDownArray))
             {
                 return array();

@@ -27,29 +27,45 @@
     /**
      * Makes sure the upload file size is large enough.
      */
-    class PhpPostSizeServiceHelper extends ServiceHelper
+    class DatabaseMaxSpRecursionDepthServiceHelper extends ServiceHelper
     {
-        protected $required = false;
+        protected $required = true;
+        protected $form;
 
-        protected $minimumUploadRequireBytes = 20000000;
+        protected $minimumRequiredMaxSpRecursionDepth = 100;
+
+        public function __construct($form)
+        {
+            assert('$form instanceof InstallSettingsForm');
+            $this->form = $form;
+        }
 
         protected function checkService()
         {
             $passed = true;
-            $actualPostSizeBytes = null;
-            $postSizeBytesPassed = InstallUtil::checkPhpPostSizeSetting($this->minimumUploadRequireBytes,
-                                                                            $actualPostSizeBytes);
-            if ($postSizeBytesPassed)
+            $maxSpRecursionDepth = null;
+            if (!InstallUtil::getDatabaseMaxSpRecursionDepth('mysql',
+                                                               $this->form->databaseHostname,
+                                                               $this->form->databaseUsername,
+                                                               $this->form->databasePassword,
+                                                               $this->minimumRequiredMaxSpRecursionDepth,
+                                                               $maxSpRecursionDepth))
             {
-                $this->message  = Yii::t('Default', 'PHP post_max_size meets minimum requirement.');
+                if ($maxSpRecursionDepth == null)
+                {
+                }
+                else
+                {
+                    $this->message  = Yii::t('Default', 'Database max_sp_recursion_depth size is:') . ' ';
+                    $this->message .= $maxSpRecursionDepth . ' ';
+                    $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
+                    $this->message .= $this->minimumRequiredMaxSpRecursionDepth;
+                }
+                $passed = false;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'PHP post_max_size setting is:') . ' ';
-                $this->message .= round($actualPostSizeBytes / 1024000) . 'M ';
-                $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
-                $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
-                $passed = false;
+                $this->message = Yii::t('Default', 'Database max_sp_recursion_depth size meets minimum requirement.');
             }
             return $passed;
         }

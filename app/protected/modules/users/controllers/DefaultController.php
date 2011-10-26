@@ -91,7 +91,9 @@
 
         public function actionCreate()
         {
-            $user = new User();
+            $user             = new User();
+            $user->language   = Yii::app()->language;
+            $user->currency   = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
             $user->setScenario('createUser');
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('createUser');

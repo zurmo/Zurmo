@@ -31,23 +31,23 @@
             assert('$bean === null || $bean instanceof RedBean_OODBBean');
             assert('is_bool($setDefaults)');
             parent::constructDerived($bean, $setDefaults);
-            if ($bean === null)
+            $metadata = $this->getMetadata();
+            foreach ($metadata as $unused => $classMetadata)
             {
-                $metadata = $this->getMetadata();
-                foreach ($metadata as $unused => $classMetadata)
+                if (isset($classMetadata['customFields']))
                 {
-                    if (isset($classMetadata['customFields']))
+                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
                     {
-                        foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
+                        $customField     = $this->unrestrictedGet($customFieldName);
+                        $customFieldData = CustomFieldData::getByName($customFieldDataName);
+                        if ($bean === null)
                         {
-                            $customField = $this->unrestrictedGet($customFieldName);
-                            $customFieldData = CustomFieldData::getByName($customFieldDataName);
                             if (($customField->value === null || $customField->value === '') && $setDefaults)
                             {
                                 $customField->value = $customFieldData->defaultValue;
                             }
-                            $customField->data = $customFieldData;
                         }
+                        $customField->data = $customFieldData;
                     }
                 }
             }

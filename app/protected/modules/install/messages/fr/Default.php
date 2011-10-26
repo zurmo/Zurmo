@@ -166,9 +166,9 @@
             => 'PHP limite de mémoire:',
         'PHP Memory setting meets minimum requirement.'
             => 'Le parametre PHP limite de mémoire répond aux exigences minimales.',
-        'PHP post max size meets minimum requirement.'
-            => 'La taille PHP post_max_size',
-        'PHP post max size setting is:'
+        'PHP post max_size_meets minimum requirement.'
+            => 'PHP post_max_size répond aux exigences minimales.',
+        'PHP post_max_size setting is:'
             => 'La taille PHP post_max_size est:',
         'PHP Timezone is not set.'
             => 'Le fuseau horaire PHP n\'est pas configuré',

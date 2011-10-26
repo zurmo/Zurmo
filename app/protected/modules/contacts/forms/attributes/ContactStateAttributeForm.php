@@ -27,7 +27,15 @@
     class ContactStateAttributeForm extends AttributeForm implements CollectionAttributeFormInterface
     {
         public $contactStatesData;
+
         public $startingStateOrder;
+
+        public $contactStatesLabels;
+        /**
+         * Used when changing the value of an existing data item.  Coming in from a post, this array will have the
+         * old values that can be used to compare against and update the new values accordingly based on any changes.
+         */
+        public $contactStatesDataExistingValues;
 
         public function __construct(Contact $model = null, $attributeName = null)
         {
@@ -35,6 +43,7 @@
             assert('$attributeName != null && is_string($attributeName)');
             parent::__construct($model, $attributeName);
             $this->contactStatesData   = ContactsUtil::getContactStateDataKeyedByOrder();
+            $this->contactStatesLabels = ContactsUtil::getContactStateLabelsKeyedByLanguageAndOrder();
             $startingState             = ContactsUtil::getStartingState();
             $this->startingStateOrder  = $startingState->order;
         }
@@ -46,6 +55,8 @@
                 array('contactStatesData',    'safe'),
                 array('contactStatesData',    'required', 'message' => 'You must have at least one status.'),
                 array('contactStatesData',    'validateContactStatesData'),
+                array('contactStatesLabels',  'safe'),
+                array('contactStatesDataExistingValues',  'safe'),
             ));
         }
 
@@ -54,6 +65,7 @@
             return array_merge(parent::attributeLabels(), array(
                 'contactStatesData'      => Yii::t('Default', 'Contact Statuses'),
                 'startingStateOrder'     => Yii::t('Default', 'Starting Status'),
+                'contactStatesLablsa'    => Yii::t('Default', 'Contact Status Translated Labels'),
             ));
         }
 

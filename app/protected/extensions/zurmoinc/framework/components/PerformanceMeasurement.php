@@ -85,7 +85,7 @@
          */
         public function setRedBeanQueryLogger(ZurmoRedBeanPluginQueryLogger $redBeanQueryLogger)
         {
-            $this->redBeanQueryLogger = $redBeanQueryLogger;
+            $this->redBeanQueryLogger =  $redBeanQueryLogger;
         }
 
         public function getRedBeanQueryLogger()

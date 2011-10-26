@@ -82,7 +82,7 @@
             {
                 echo strtr(
                     $this->itemTemplate,
-                    array('{id}' => $id, '{content}' => $data['content'], '{removalContent}' => $data['removalContent'])
+                    array_merge(array('{id}' => $id), $data)
                 ) . "\n";
             }
             echo CHtml::closeTag($this->tagName);

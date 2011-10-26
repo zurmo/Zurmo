@@ -27,7 +27,7 @@
     /**
      * Application loaded component at run time. @see BeginBehavior - calls load() method.
      */
-    class ZurmoCurrencyHelper extends CApplicationComponent
+    abstract class ZurmoCurrencyHelper extends CApplicationComponent
     {
         const ERROR_INVALID_CODE = 1;
 
@@ -115,53 +115,7 @@
          * @param $error - string by reference to attach error to if needed.
          * @return rate as a float, otherwise null if there is some sort of error
          */
-        protected function getConversionRateViaWebService($fromCode, $toCode)
-        {
-            $url  = 'http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate?FromCurrency=';
-            $url .= $fromCode . '&ToCurrency=' . $toCode;
-            $ch = curl_init();
-            $timeout = 2;
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            $file_contents = curl_exec($ch);
-            if ($file_contents === false || empty($file_contents))
-            {
-                $this->webServiceErrorMessage = curl_error($ch);
-                $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_WEB_SERVICE;
-                return null;
-            }
-            curl_close($ch);
-            if (!empty($file_contents) &&
-                false !== $xml = @simplexml_load_string($file_contents))
-            {
-                if (is_object($xml) && $xml instanceof SimpleXMLElement)
-                {
-                    $xmlAsArray = (array)$xml;
-                    return $xmlAsArray[0];
-                }
-                elseif (is_array($xml))
-                {
-                    return $xml[0];
-                }
-                else
-                {
-                    return null; //todo: throw exception
-                }
-            }
-            if (stripos($file_contents, 'error') === false)
-            {
-                $this->webServiceErrorMessage = Yii::t('Default', 'Invalid currency code');
-                $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_INVALID_CODE;
-            }
-            else
-            {
-                $this->webServiceErrorMessage = Yii::t('Default', 'There was an error with the web service.');
-                $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_WEB_SERVICE;
-            }
-            return null;
-        }
+        abstract protected function getConversionRateViaWebService($fromCode, $toCode);
 
         public function getWebServiceErrorMessage()
         {

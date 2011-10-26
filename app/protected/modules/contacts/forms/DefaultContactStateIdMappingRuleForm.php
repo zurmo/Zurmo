@@ -31,12 +31,14 @@
     {
         public $defaultStateId;
 
-        protected $statesData;
+        protected $statesDataAndLabels;
+
+        protected $statesLabelsByLanguageAndId;
 
         public function __construct($modelClassName, $modelAttributeName)
         {
             parent::__construct($modelClassName, $modelAttributeName);
-            $this->statesData   = static::makeStateData();
+            $this->statesDataAndLabels         = static::makeStatesDataAndLabels();
         }
 
         public function rules()
@@ -58,9 +60,14 @@
             return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
 
-        public function getStatesData()
+        public function getStatesDataAndLabels()
         {
-            return $this->statesData;
+            return $this->statesDataAndLabels;
+        }
+
+        public function getStatesLabelsByLanguageAndId()
+        {
+            return $this->statesLabelsByLanguageAndId;
         }
 
         public function attributeLabels()
@@ -73,9 +80,9 @@
             return 'defaultStateId';
         }
 
-        protected static function makeStateData()
+        protected static function makeStatesDataAndLabels()
         {
-            return ContactsUtil::getContactStateDataFromStartingStateOnAndKeyedById();
+            return ContactsUtil::getContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage(Yii::app()->language);
         }
     }
 ?>

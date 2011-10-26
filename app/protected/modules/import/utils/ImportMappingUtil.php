@@ -245,15 +245,19 @@
                           'ValueFormatMappingRuleForm'               => array('format' => $format)));
         }
 
-        public static function makeDropDownColumnMappingData($attributeName, $defaultValue = null)
+        public static function makeDropDownColumnMappingData($attributeName, $defaultValue = null,
+                                                             $importInstructionsData = null)
         {
+            if($importInstructionsData == null)
+            {
+                $importInstructionsData = array('DropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array()));
+            }
             return array('attributeIndexOrDerivedType' => $attributeName,
                          'type'                        => 'importColumn',
                          'mappingRulesData'            => array(
                              'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                              array('defaultValue'      => $defaultValue)),
-                         'importInstructionsData'      => array('DropDown' =>
-                             array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array())));
+                         'importInstructionsData'      => $importInstructionsData);
         }
 
         public static function makeEmailColumnMappingData($attributeName, $defaultValue = null)
