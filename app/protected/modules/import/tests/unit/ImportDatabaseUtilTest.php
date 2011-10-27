@@ -349,21 +349,21 @@
                 array
                 (
                     'id' => 2,
-                    'column_0'           => 'didée BBB',
+                    'column_0'           => 'didÃ©e BBB',
                     'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
                 (
                     'id' => 3,
-                    'column_0'           => 'Angêline Jone',
+                    'column_0'           => 'AngÃªline Jone',
                     'status'             => null,
                     'serializedmessages' => null,
                 ),
                 array
                 (
                     'id' => 4,
-                    'column_0'           => 'Laura o’brien',
+                    'column_0'           => 'Laura oâ€™brien',
                     'status'             => null,
                     'serializedmessages' => null,
                 ),
