@@ -27,7 +27,7 @@
     /**
      * Application loaded component at run time. @see BeginBehavior - calls load() method.
      */
-    abstract class ZurmoCurrencyHelper extends CApplicationComponent
+    class ZurmoCurrencyHelper extends CApplicationComponent
     {
         const ERROR_INVALID_CODE = 1;
 
@@ -39,9 +39,18 @@
          */
         protected $_baseCode;
 
-        protected $webServiceErrorMessage;
+        /**
+         * Which service type to use: GrandTotal(default) or WebServiceX
+         * It can be changed in config
+         * @var string
+         */
+        protected $_serviceType;
 
-        protected $webServiceErrorCode;
+        /**
+         * Currency service utility class, based on $_serviceType
+         * @var CurrencyServiceUtil
+         */
+        protected $currencyService;
 
         /**
          * This is set from the value in the application common config file.
@@ -55,6 +64,28 @@
         public function getBaseCode()
         {
             return $this->_baseCode;
+        }
+
+        /**
+        * This is set from the value in the application common config file.
+        */
+        public function setServiceType($value)
+        {
+            assert('is_string($value)');
+            $this->_serviceType = $value;
+            $this->setCurrencyService();
+        }
+
+        public function getServiceType()
+        {
+            return $this->_serviceType;
+        }
+
+        protected function setCurrencyService()
+        {
+            $className = $this->getServiceType() . 'CurrencyServiceUtil';
+            assert('class_exists($className)');
+            $this->currencyService = new $className;
         }
 
         /**
@@ -103,7 +134,7 @@
             {
                 return 1;
             }
-            $rate = $this->getConversionRateViaWebService($fromCode, $this->getBaseCode());
+            $rate = $this->currencyService->getConversionRateViaWebService($fromCode, $this->getBaseCode());
             if ($rate == null)
             {
                 return 1;
@@ -111,30 +142,14 @@
             return $rate;
         }
 
-        /**
-         * @param $error - string by reference to attach error to if needed.
-         * @return rate as a float, otherwise null if there is some sort of error
-         */
-        abstract protected function getConversionRateViaWebService($fromCode, $toCode);
-
         public function getWebServiceErrorMessage()
         {
-            return $this->webServiceErrorMessage;
+            return $this->currencyService->getWebServiceErrorMessage();
         }
 
         public function getWebServiceErrorCode()
         {
-            return $this->webServiceErrorCode;
-        }
-
-        /**
-         * After you make a call to a method that envokes a webService, reset the errors.
-         * @see getConversionRateViaWebService
-         */
-        public function resetErrors()
-        {
-            $this->webServiceErrorMessage  = null;
-            $this->webServiceErrorCode     = null;
+            return $this->currencyService->getWebServiceErrorCode();
         }
 
         /**

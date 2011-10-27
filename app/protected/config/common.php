@@ -54,8 +54,9 @@
                 'servers' => $memcacheServers,
             ),
             'currencyHelper' => array(
-                'class' => 'application.modules.zurmo.components.ZurmoGrandTrunkCurrencyHelper',
+                'class' => 'application.modules.zurmo.components.ZurmoCurrencyHelper',
                 'baseCode' => 'USD',
+                'serviceType' => 'GrandTrunk',
             ),
             'custom' => array(
                 'class' => 'application.extensions.zurmoinc.framework.components.CustomManagement',

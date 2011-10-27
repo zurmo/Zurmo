@@ -41,7 +41,6 @@
             $this->assertNull($currency->getWebServiceErrorMessage());
             $this->assertNull($currency->getWebServiceErrorCode());
             $this->assertWithinTolerance($rate, 1, 2);
-            $currency->resetErrors();
 
             //Now test with an invalid currency
             $this->assertEquals('USD', $currency->getBaseCode());
@@ -49,11 +48,6 @@
             $this->assertNotNull($currency->getWebServiceErrorMessage());
             $this->assertEquals($currency::ERROR_INVALID_CODE, $currency->getWebServiceErrorCode());
             $this->assertEquals(1, 1);
-
-            //Now test resetting errors.
-            $currency->resetErrors();
-            $this->assertNull($currency->getWebServiceErrorMessage());
-            $this->assertNull($currency->getWebServiceErrorCode());
         }
 
         /**
