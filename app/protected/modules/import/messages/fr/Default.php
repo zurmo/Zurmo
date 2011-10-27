@@ -39,7 +39,7 @@
             => 'Accès à l\'outil d\'importation',
         'Add Field'
             => 'Ajouter un champ',
-        'All required attributes must be mapped or added.'
+        'All required fields must be mapped or added: {attributesLabelContent}'
             => 'Les champs obligatoires doivent êtres définis.',
         'Analyzing the import data...'
             => 'Veuillez patienter pendant l\'analyse de vos données',

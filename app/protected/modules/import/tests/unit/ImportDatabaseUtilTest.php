@@ -327,5 +327,48 @@
             );
             $this->assertEquals($compareData, $tempTableData);
         }
+
+            /**
+        *
+        * Test that various accents work correctly going into the database.
+        */
+        public function testMakeDatabaseTableWithColumnsThatHaveValuesWithAccents()
+        {
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importAccentsTest.csv', $testTableName));
+            $sql = 'select * from ' . $testTableName;
+            $tempTableData = R::getAll($sql);
+            $compareData   = array(
+                array
+                (
+                    'id' => 1,
+                    'column_0'           => 'name',
+                    'status'             => null,
+                    'serializedmessages' => null,
+                ),
+                array
+                (
+                    'id' => 2,
+                    'column_0'           => 'didée BBB',
+                    'status'             => null,
+                    'serializedmessages' => null,
+                ),
+                array
+                (
+                    'id' => 3,
+                    'column_0'           => 'Angêline Jone',
+                    'status'             => null,
+                    'serializedmessages' => null,
+                ),
+                array
+                (
+                    'id' => 4,
+                    'column_0'           => 'Laura o’brien',
+                    'status'             => null,
+                    'serializedmessages' => null,
+                ),
+            );
+            $this->assertEquals($compareData, $tempTableData);
+        }
     }
 ?>

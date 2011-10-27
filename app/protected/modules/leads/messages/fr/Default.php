@@ -29,38 +29,36 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        'Account Optional'
+        'AccountsModuleSingularLabel Optional'
             => 'Compte Optionnel',
-        'Account Required'
+        'AccountsModuleSingularLabel Required'
             => 'Compte Requis',
         'Complete Conversion'
             => 'Convertir',
-        'Complete lead conversion without selecting or creating an account.'
+        'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Convertir la piste sans sélectionner ou créer un compte.',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
             => 'Vous avez chosi de convertir un AccountsModuleSingularLowerCaseLabel, mais vous n\'avez pas accès au module de AccountsModuleSingularLowerCaseLabel.  Veuillez contacter votre administrateur système.',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
             => 'Vous devez avoir accès au module de ContactsModulePluralLowerCaseLabel pour continuer.  Veuillez contacter votre administrateur système.',
-        'Create AccountsModuleSingularLabel'
-            => 'Nouveau AccountsModuleSingularLabel',
         'Create LeadsModuleSingularLabel'
             => 'Nouvelle LeadsModuleSingularLabel',
-        'Do not show Account'
+        'Do not show AccountsModuleSingularLabel'
             => 'Ne pas montrer le compte',
         'Lead'
             => 'Piste',
-        'Lead successfully converted.'
+        'LeadsModuleSingularLabel successfully converted.'
             => 'Piste convertie.',
-        'Lead was not converted. An error occured.'
-            => 'La piste n\'a pas été convertie.  Il y a eu un erreur.',
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
+            => 'La LeadsModuleSingularLabel n\'a pas été convertie.  Il y a eu un erreur.',
         'Leads'
             => 'Pistes',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different statuses. To create a LeadsModuleSingularLowerCaseLabel' .
+        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
         ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placable in the LeadsModulePluralLowerCaseLabel layouts.'
+        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => 'LeadsModulePluralLabel et ContactsModulePluralLabel sont les mêmes données,' .
                ' ils ont juste un statut différent. Pour créer un champ LeadsModuleSingularLowerCaseLabel,' .
                ' veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ' .

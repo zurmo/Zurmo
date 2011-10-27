@@ -87,10 +87,12 @@
                                                                 $mappedAttributeImportRulesCollection);
             $this->assertTrue($passed);
             //Should pass because 2 of the attributes are mapped as non-derived, and lastName is mapped via derived
-            $this->assertEquals(3, count($requiredAttributeCollection));
+            $this->assertEquals(0, count($requiredAttributeCollection));
             $mappedAttributeImportRulesCollection = AttributeImportRulesFactory::
                                                     makeCollection( 'ImportModelTestItem',
                                                     array('owner', 'boolean', 'string', 'FullName'));
+            $requiredAttributeCollection = ImportModelTestItemImportRules::
+                                           getRequiredAttributesCollectionNotIncludingReadOnly();
             $passed = ImportRulesUtil::
                       areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
                                                                 $mappedAttributeImportRulesCollection);
@@ -124,7 +126,8 @@
          */
         public function testInvalidDataPassedToAreAllRequiredAttributesMappedOrHaveRules()
         {
-            ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules(array('a', 'b'), array('d', 'e'));
+            $requiredAttributeCollection = array('a', 'b');
+            ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection, array('d', 'e'));
         }
 
         /**

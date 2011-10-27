@@ -39,7 +39,7 @@
             => '??',
         'Add Field'
             => '??',
-        'All required attributes must be mapped or added.'
+        'All required fields must be mapped or added: {attributesLabelContent}'
             => '??',
         'Analyzing the import data...'
             => '??',

@@ -29,38 +29,36 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        'Account Optional'
+        'AccountsModuleSingularLabel Optional'
             => '??',
-        'Account Required'
+        'AccountsModuleSingularLabel Required'
             => '??',
         'Complete Conversion'
             => '??',
-        'Complete lead conversion without selecting or creating an account.'
+        'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => '??',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
             => '??',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
             => '??',
-        'Create AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
         'Create LeadsModuleSingularLabel'
             => 'Crear una LeadsModuleSingularLabel',
-        'Do not show Account'
+        'Do not show AccountsModuleSingularLabel'
             => '??',
         'Lead'
             => '??',
-        'Lead successfully converted.'
+        'LeadsModuleSingularLabel successfully converted.'
             => '??',
-        'Lead was not converted. An error occured.'
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
             => '??',
         'Leads'
             => '??',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel Relacionadas',
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different statuses. To create a LeadsModuleSingularLowerCaseLabel' .
+        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
         ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placable in the LeadsModulePluralLowerCaseLabel layouts.'
+        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => '??',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
