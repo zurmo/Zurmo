@@ -30,16 +30,16 @@
     // DON'T MAKE A MESS!
     return array(
         'Create RssReaderModuleSingularLabel'
-            => '?? RssReaderModuleSingularLabel',
+            => 'Crear un RssReaderModuleSingularLabel',
         'RSS Reader'
-            => '??',
+            => 'Lector de RSS',
         'RSS URL'
-            => '??',
+            => 'RSS URL',
         'RssReaderModulePluralLabel'
             => 'RssReaderModulePluralLabel',
         'RssReaderModuleSingularLabel'
             => 'RssReaderModuleSingularLabel',
         'Zurmo News'
-            => '??',
+            => 'Noticias sobre Zurmo',
     );
 ?>

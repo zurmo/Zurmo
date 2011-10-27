@@ -29,15 +29,6 @@
      */
     class OwnedSecurableItem extends SecurableItem
     {
-        public function __toString()
-        {
-            if (trim($this->member) == '')
-            {
-                return Yii::t('Default', '(Unnamed)');
-            }
-            return $this->member;
-        }
-
         protected function constructDerived($bean, $setDefaults)
         {
             assert('$bean === null || $bean instanceof RedBean_OODBBean');

@@ -36,32 +36,28 @@
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
         'AccountsModulePluralLabel For AccountsModuleSingularLabel'
-            => 'AccountsModulePluralLabel ?? AccountsModuleSingularLabel',
+            => 'AccountsModulePluralLabel para AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
-            => 'AccountsModuleSingularLabel ??',
+            => 'AccountsModuleSingularLabel ID',
         'AccountsModuleSingularLabel Name'
-            => 'AccountsModuleSingularLabel ??',
+            => 'AccountsModuleSingularLabel nombre',
         'AccountsModuleSingularLabel Search'
-            => 'AccountsModuleSingularLabel ??',
-        'An account field'
-            => '??',
+            => 'AccountsModuleSingularLabel búsqueda',
         'Annual Revenue'
-            => '??',
+            => 'Ingresos anuales',
         'Billing Address'
-            => 'DirecciÃ³n de facturaciÃ³n',
+            => 'Dirección de facturación',
         'Create AccountsModuleSingularLabel'
             => 'Crear una AccountsModuleSingularLabel',
         'Employees'
-            => '??',
+            => 'Empleados',
         'My AccountsModulePluralLabel'
-            => '??',
-        'Parent Account'
-            => '??',
+            => 'Mi AccountsModulePluralLabel',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel Relacionadas',
         'Type'
-            => '??',
+            => 'Tipo',
     );
 ?>

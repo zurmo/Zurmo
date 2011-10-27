@@ -34,83 +34,85 @@
         '(Unnamed)'
             => '(Sin Nombre)',
         '2D Donut Chart'
-            => '??',
+            => 'Anillo',
         '2D Horizontal Bar Graph'
-            => '??',
+            => 'Bares',
         '2D Pie Chart'
-            => '??',
+            => 'Gráfico circular 2D',
         '2D Vertical Bar Graph'
-            => '??',
+            => 'Histograma 2D',
         '3D Pie Chart'
-            => '??',
+            => 'Gráfico circular 3D',
         '3D Vertical Bar Graph'
-            => '??',
+            => 'Histograma 3D',
         'About'
             => 'Sobre',
         'Access Administration Tab'
-            => '??',
+            => 'Acceso a Administración',
         'Access Currency Configuration'
-            => '??',
+            => 'Acceso a Divisas',
         'Access Failure'
-            => '??',
+            => 'Falta de acceso',
         'Access Global Configuration'
-            => '??',
+            => 'Acceso a la configuración global',
         'Access Groups Tab'
-            => '??',
+            => 'Acceso a grupos',
         'Access Roles Tab'
-            => '??',
+            => 'Acceso a Roles',
         'Active'
-            => '??',
+            => 'Activo',
         'Active currencies can be used when creating new records and as a default currency for a user.'
-            => '??',
+            => 'Divisas activos se pueden utilizar al crear nuevos registros, y como una divisa predeterminada para un usuario.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => '??',
+            => 'Idiomas activos pueden ser utilizados por los usuarios. El idioma del sistema y de cualquier idioma utilizado por un usuario no puede ser desactivado.',
         'Ad-hoc / Owner'
             => '??',
         'Address'
-            => '??',
+            => 'Dirección',
+        'Ad-hoc / Owner'
+            => 'Ad-hoc / Propietario',
         'Admin'
             => 'Admin',
         'Alert'
-            => '??',
+            => 'Alerta',
         'Allow'
             => 'Permitir',
         'Amount'
-            => '??',
+            => 'Suma',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
         'Any City'
-            => '??',
+            => 'cCiudad',
         'Any Country'
-            => '??',
+            => 'País',
         'Any Email Address'
-            => '??',
+            => 'Dirección de email',
         'Any Invalid Email'
-            => '??',
+            => 'Email inválida',
         'Any Opted Out Email'
-            => '??',
+            => 'Email opt-out',
         'Any Postal Code'
-            => '??',
+            => 'Código postal',
         'Any State'
-            => '??',
+            => 'Estado',
         'Any Street'
-            => '??',
+            => 'Calle',
         'are required.'
-            => 'son obligatorios.',
+            => 'Son obligatorios.',
         'Are you sure you want to remove this group?'
-            => '??',
+            => '¿Está seguro que desea eliminar este grupo?',
         'Are you sure you want to remove this role?'
-            => '??',
+            => '¿Está seguro que desea eliminar este role?',
         'Attachment'
-            => '??',
+            => 'Adjunto',
         'Attachments'
-            => '??',
+            => 'Adjuntos',
         'Audit Event'
-            => '??',
+            => 'Lista de modificaciones',
         'Audit Trail'
-            => '??',
+            => 'Log de modificaciones',
         'Cancel'
-            => '??',
+            => 'Cancelar',
         'Changes to active currencies changed successfully.'
             => '??',
         'Changes to active languages changed successfully.'
@@ -206,7 +208,7 @@
         'Groups'
             => '??',
         'here'
-            => 'aquí',
+            => 'aquÃ­',
         'Home'
             => '??',
         'Incorrect username or password.'
@@ -300,7 +302,7 @@
         'Office Fax'
             => 'Fax de la Oficina',
         'Office Phone'
-            => 'Teléfono de la Oficina',
+            => 'TelÃ©fono de la Oficina',
         'Oh no!'
             => 'Oh no!',
         'Only Items I Own'
@@ -318,7 +320,7 @@
         'Parent Role'
             => '??',
         'Password'
-            => 'Contraseña',
+            => 'ContraseÃ±a',
         'Permissions'
             => '??',
         'Permitable'
@@ -422,7 +424,7 @@
         'Title'
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
-            => 'para continuar a la página de inicio. Si el error persiste, por favor haga una cosa u otra.',
+            => 'para continuar a la pÃ¡gina de inicio. Si el error persiste, por favor haga una cosa u otra.',
         'Type a currency code or name to search.'
             => '??',
         'User Membership'
