@@ -157,9 +157,9 @@
             => '??',
         'Row Id'
             => '??',
-        'Rows with errors: {errors}'
-            => '??',
         'Rows processed: {rowsProcessed}'
+            => '??',
+        'Rows with errors: {errors}'
             => '??',
         'Rules'
             => '??',

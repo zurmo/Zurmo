@@ -166,7 +166,7 @@
             => 'PHP limite de mémoire:',
         'PHP Memory setting meets minimum requirement.'
             => 'Le parametre PHP limite de mémoire répond aux exigences minimales.',
-        'PHP post max_size_meets minimum requirement.'
+        'PHP post_max_size_meets minimum requirement.'
             => 'PHP post_max_size répond aux exigences minimales.',
         'PHP post_max_size setting is:'
             => 'La taille PHP post_max_size est:',

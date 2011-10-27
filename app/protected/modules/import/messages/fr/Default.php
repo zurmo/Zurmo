@@ -157,10 +157,10 @@
             => 'Champs Requis',
         'Row Id'
             => 'Ligne',
-        'Rows with errors: {errors}'
-            => 'Enregistrements avec erreurs: {errors}',
         'Rows processed: {rowsProcessed}'
             => 'Lignes traités: {rowsProcessed}',
+        'Rows with errors: {errors}'
+            => 'Enregistrements avec erreurs: {errors}',
         'Rules'
             => 'Règles',
         'Sample Row'
