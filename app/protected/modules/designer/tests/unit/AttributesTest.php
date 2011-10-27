@@ -1092,5 +1092,21 @@
             $this->assertEquals('http://www.zurmo.org',       $account->testUrl2);
             $this->assertEquals('song3',                      $account->playMyFavoriteSong->value);
         }
+
+        /**
+         * @depends testPopulateCustomAttributes
+         */
+        public function testPopulateCustomAttributesWithAValueTooLarge()
+        {
+            $this->setAndGetTextAttribute('testTextSpecial', true);
+            $account = new Account();
+            $account->testTextSpecial = 'asdasdasdasdasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsadas' .
+                                        'asdasdasdasdasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsadas' .
+                                        'asdasdasdasdasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsadas';
+            $saved  = $account->save();
+            $this->assertFalse($saved);
+            $errors = $account->getErrors();
+            $this->assertEquals('Test Text 2 en is too long (maximum is 50 characters).', $errors['testTextSpecial'][0]);
+        }
     }
 ?>

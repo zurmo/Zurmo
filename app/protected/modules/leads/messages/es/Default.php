@@ -29,13 +29,13 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        'Account Optional'
+        'AccountsModuleSingularLabel Optional'
             => 'Cuenta opcional',
-        'Account Required'
+        'AccountsModuleSingularLabel Required'
             => 'Cuenta es requerida',
         'Complete Conversion'
             => 'Completar la conversión',
-        'Complete lead conversion without selecting or creating an account.'
+        'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Completar conversión de prospecto sin seleccionar o crear una cuenta',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
             => 'Conversión se fija para requerir un AccountsModuleSingularLowerCaseLabel',
@@ -45,22 +45,22 @@
             => 'Crear una AccountsModuleSingularLabel',
         'Create LeadsModuleSingularLabel'
             => 'Crear una LeadsModuleSingularLabel',
-        'Do not show Account'
+        'Do not show AccountsModuleSingularLabel'
             => 'No mostrar la cuenta',
         'Lead'
             => 'Prospecto',
-        'Lead successfully converted.'
+        'LeadsModuleSingularLabel successfully converted.'
             => 'Prospecto convertido con éxito',
-        'Lead was not converted. An error occured.'
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
             => 'El prospecto no se convirtió. Ha ocurrido un error.',
         'Leads'
             => 'Prospectos',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel Relacionadas',
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different statuses. To create a LeadsModuleSingularLowerCaseLabel' .
+        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
         ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placable in the LeadsModulePluralLowerCaseLabel layouts.'
+        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => 'LeadsModulePluralLabel y ContactsModulePluralLabel son los mismos registros,' .
                'sólo tienen un estatus diferente. Para crear un campo de LeadsModuleSingularLowerCaseLabel' .
                'crear un campo de ContactsModuleSingularLowerCaseLabel, y luego' .

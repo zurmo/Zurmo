@@ -66,13 +66,13 @@
             $content .= '<tbody>'      . "\n";
             $content .= '<tr><td><h3>' . "\n";
             $content .= Yii::t('Default', 'Congratulations! Your import is complete.  Below is a summary of the results.');
-            $content .= '</h3></br>'   . "\n";
+            $content .= '</h3><br/>'   . "\n";
             $content .= Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated))
-                         . '</br>' . "\n";
+                         . '<br/>' . "\n";
             $content .= Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated))
-                         . '</br>' . "\n";
+                         . '<br/>' . "\n";
             $content .= Yii::t('Default', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors))
-                         . '</br>' . "\n";
+                         . '<br/>' . "\n";
             $content .= '</td></tr>'   . "\n";
             $content .= '</tbody>'     . "\n";
             $content .= '</table>'     . "\n";

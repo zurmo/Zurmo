@@ -97,7 +97,12 @@ EOD;
         {
             $messageLogger->setMessageOutputInterval((int)$args[2]);
         }
-        Yii::app()->custom->runImportsForImportCommand($messageLogger, null);
+        $importName = null;
+        if(isset($args[1]))
+        {
+            $importName = $args[1];
+        }
+        Yii::app()->custom->runImportsForImportCommand($messageLogger, $importName);
         $messageStreamer->add(Yii::t('Default', 'Ending import.'));
     }
 }

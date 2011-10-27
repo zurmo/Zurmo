@@ -39,7 +39,7 @@
             => 'Accès à l\'outil d\'importation',
         'Add Field'
             => 'Ajouter un champ',
-        'All required attributes must be mapped or added.'
+        'All required fields must be mapped or added: {attributesLabelContent}'
             => 'Les champs obligatoires doivent êtres définis.',
         'Analyzing the import data...'
             => 'Veuillez patienter pendant l\'analyse de vos données',
@@ -75,6 +75,8 @@
             => 'Id',
         'Import'
             => 'Importer',
+        'Import complete.  Rows processed: {rowsProcessed}'
+            => 'L\'importation est terminée. Lignes traités: {rowsProcessed}',
         'Import file has no rows to use.'
             => 'Le fichier ne contient pas de données',
         'Import model failed to save.'
@@ -155,6 +157,8 @@
             => 'Champs Requis',
         'Row Id'
             => 'Ligne',
+        'Rows processed: {rowsProcessed}'
+            => 'Lignes traités: {rowsProcessed}',
         'Rows with errors: {errors}'
             => 'Enregistrements avec erreurs: {errors}',
         'Rules'
@@ -191,7 +195,7 @@
             => 'Permissions {importRulesLabel}',
         'You can only map each field once.'
             => 'Chaque champ ne peut être mappé à un autre champ déjà mappé.',
-        'You do not have permission to update this record and/or its related record.'
+        'You do not have permission to create/update this record and/or its related record.'
             => 'Vous n\'avez pas l\'autorisation requise pour mettre à jour cet objet',
         'You must map at least one of your import columns.'
             => 'Vous devez mapper au moins un champ',

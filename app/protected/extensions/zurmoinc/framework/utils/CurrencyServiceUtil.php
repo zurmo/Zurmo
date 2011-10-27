@@ -24,40 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        '1 Column'
-            => '??',
-        '2 Columns'
-            => '??',
-        '2 Columns Left Strong'
-            => '??',
-        '2 Columns Right Strong'
-            => '??',
-        'Add Portlet'
-            => '??',
-        'Are you sure want to delete this dashboard?'
-            => '??',
-        'Create Dashboard'
-            => '??',
-        'Dashboard'
-            => '??',
-        'Delete Dashboard'
-            => '??',
-        'Edit Dashboard'
-            => '??',
-        'Home'
-            => '??',
-        'Is Default'
-            => '??',
-        'Layout Id'
-            => '??',
-        'Layout Type'
-            => '??',
-        'Return to Home'
-            => '??',
-    );
+    /**
+     *
+     * Abstract class to be extended for particular service providers
+     * Used to get current currency conversion rates from remote web services
+     *
+     */
+    abstract class CurrencyServiceUtil
+    {
+        protected $webServiceErrorMessage;
+
+        protected $webServiceErrorCode;
+
+        public function getWebServiceErrorMessage()
+        {
+            return $this->webServiceErrorMessage;
+        }
+
+        public function getWebServiceErrorCode()
+        {
+            return $this->webServiceErrorCode;
+        }
+
+        /**
+        * Before you make a call to a method that envokes a webService, reset the errors.
+        */
+        public function resetErrors()
+        {
+            $this->webServiceErrorMessage  = null;
+            $this->webServiceErrorCode     = null;
+        }
+
+        /**
+         * @param string $fromCode
+         * @param string $toCode
+         * @return float
+         */
+        abstract public function getConversionRateViaWebService($fromCode, $toCode);
+    }
 ?>

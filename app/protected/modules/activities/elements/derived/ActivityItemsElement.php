@@ -155,7 +155,7 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Related to');
+            return CHtml::label(Yii::t('Default', 'Related to'), false);
         }
 
         public static function getDisplayName()

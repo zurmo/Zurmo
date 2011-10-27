@@ -88,7 +88,7 @@
                 }
                 else
                 {
-                    $message = Yii::t('yii', '{attribute} "{value}" has already been taken.');
+                    $message = Yii::t('Default', '{attribute} "{value}" is already in use.');
                 }
                 $this->addError($model, $attributeName, $message, array('{value}' => $value));
             }

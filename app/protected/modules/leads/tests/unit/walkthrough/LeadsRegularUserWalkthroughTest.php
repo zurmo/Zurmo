@@ -583,7 +583,7 @@
             //At this point because the account is required, the view will not come up properly.
             $this->setGetArray (array('id' => $lead->id));
             $content = $this->runControllerWithExitExceptionAndGetContent('leads/default/convert');
-            $this->assertFalse(strpos($content, 'Conversion is set to require an account. Currently you do not have access to the accounts module.') === false);
+            $this->assertFalse(strpos($content, 'Conversion is set to require an account.  Currently you do not have access to the accounts module.') === false);
         }
     }
 ?>

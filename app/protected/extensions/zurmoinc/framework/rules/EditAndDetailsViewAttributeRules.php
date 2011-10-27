@@ -24,40 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        '1 Column'
-            => '??',
-        '2 Columns'
-            => '??',
-        '2 Columns Left Strong'
-            => '??',
-        '2 Columns Right Strong'
-            => '??',
-        'Add Portlet'
-            => '??',
-        'Are you sure want to delete this dashboard?'
-            => '??',
-        'Create Dashboard'
-            => '??',
-        'Dashboard'
-            => '??',
-        'Delete Dashboard'
-            => '??',
-        'Edit Dashboard'
-            => '??',
-        'Home'
-            => '??',
-        'Is Default'
-            => '??',
-        'Layout Id'
-            => '??',
-        'Layout Type'
-            => '??',
-        'Return to Home'
-            => '??',
-    );
+    /**
+     * Base class for defining rules for attributes on the EditAndDetailsView view. Some attributes require special
+     * handling while being placed in this view.
+     */
+    abstract class EditAndDetailsViewAttributeRules
+    {
+        /**
+         * Override if any rules need to be ignored for attributes using this rule.
+         * @param mixed $value
+         */
+        public static function getIgnoredSavableMetadataRules()
+        {
+            return array();
+        }
+    }
 ?>

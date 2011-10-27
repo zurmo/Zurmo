@@ -266,12 +266,12 @@
             if ($contact->save())
             {
                 Yii::app()->user->setFlash('notification',
-                    Yii::t('Default', 'Lead successfully converted.')
+                    Yii::t('Default', 'LeadsModuleSingularLabel successfully converted.')
                 );
                 $this->redirect(array('/contacts/default/details', 'id' => $contact->id));
             }
             Yii::app()->user->setFlash('notification',
-                Yii::t('Default', 'Lead was not converted. An error occured.')
+                Yii::t('Default', 'LeadsModuleSingularLabel was not converted. An error occurred.')
             );
             $this->redirect(array('default/details', 'id' => $contact->id));
             Yii::app()->end(0, false);

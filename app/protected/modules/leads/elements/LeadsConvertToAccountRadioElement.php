@@ -77,9 +77,9 @@
         protected function getArray()
         {
             return array(
-                LeadsModule::CONVERT_NO_ACCOUNT           => Yii::t('Default', 'Do not show Account'),
-                LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED => Yii::t('Default', 'Account Optional'),
-                LeadsModule::CONVERT_ACCOUNT_REQUIRED     => Yii::t('Default', 'Account Required'));
+                LeadsModule::CONVERT_NO_ACCOUNT           => Yii::t('Default', 'Do not show AccountsModuleSingularLabel'),
+                LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED => Yii::t('Default', 'AccountsModuleSingularLabel Optional'),
+                LeadsModule::CONVERT_ACCOUNT_REQUIRED     => Yii::t('Default', 'AccountsModuleSingularLabel Required'));
         }
     }
 ?>

@@ -38,23 +38,23 @@
         '2D Horizontal Bar Graph'
             => 'Bares',
         '2D Pie Chart'
-            => 'Gr�fico circular 2D',
+            => 'Gráfico circular 2D',
         '2D Vertical Bar Graph'
             => 'Histograma 2D',
         '3D Pie Chart'
-            => 'Gr�fico circular 3D',
+            => 'Gráfico circular 3D',
         '3D Vertical Bar Graph'
             => 'Histograma 3D',
         'About'
             => 'Sobre',
         'Access Administration Tab'
-            => 'Acceso a Administraci�n',
+            => 'Acceso a Administración',
         'Access Currency Configuration'
             => 'Acceso a Divisas',
         'Access Failure'
             => 'Falta de acceso',
         'Access Global Configuration'
-            => 'Acceso a la configuraci�n global',
+            => 'Acceso a la configuración global',
         'Access Groups Tab'
             => 'Acceso a grupos',
         'Access Roles Tab'
@@ -65,8 +65,10 @@
             => 'Divisas activos se pueden utilizar al crear nuevos registros, y como una divisa predeterminada para un usuario.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
             => 'Idiomas activos pueden ser utilizados por los usuarios. El idioma del sistema y de cualquier idioma utilizado por un usuario no puede ser desactivado.',
+        'Ad-hoc / Owner'
+            => '??',
         'Address'
-            => 'Direcci�n',
+            => 'Dirección',
         'Ad-hoc / Owner'
             => 'Ad-hoc / Propietario',
         'Admin'
@@ -82,15 +84,15 @@
         'Any City'
             => 'cCiudad',
         'Any Country'
-            => 'Pa�s',
+            => 'País',
         'Any Email Address'
-            => 'Direcci�n de email',
+            => 'Dirección de email',
         'Any Invalid Email'
-            => 'Email inv�lida',
+            => 'Email inválida',
         'Any Opted Out Email'
             => 'Email opt-out',
         'Any Postal Code'
-            => 'C�digo postal',
+            => 'Código postal',
         'Any State'
             => 'Estado',
         'Any Street'
@@ -98,9 +100,9 @@
         'are required.'
             => 'Son obligatorios.',
         'Are you sure you want to remove this group?'
-            => '�Est� seguro que desea eliminar este grupo?',
+            => '¿Está seguro que desea eliminar este grupo?',
         'Are you sure you want to remove this role?'
-            => '�Est� seguro que desea eliminar este role?',
+            => '¿Está seguro que desea eliminar este role?',
         'Attachment'
             => 'Adjunto',
         'Attachments'
@@ -148,6 +150,8 @@
         'Currency in use.'
             => '??',
         'Currency Value'
+            => '??',
+        'Dashboard portlet list page size'
             => '??',
         'Data'
             => '??',
@@ -204,7 +208,7 @@
         'Groups'
             => '??',
         'here'
-            => 'aquí',
+            => 'aquÃ­',
         'Home'
             => '??',
         'Incorrect username or password.'
@@ -267,6 +271,8 @@
             => '??',
         'Members'
             => '??',
+        'Missing Required Attributes'
+            => 'Les champs obligatoires doivent être placés dans la vue',
         'Mobile Phone'
             => '??',
         'Module Name - Plural'
@@ -296,7 +302,7 @@
         'Office Fax'
             => 'Fax de la Oficina',
         'Office Phone'
-            => 'Teléfono de la Oficina',
+            => 'TelÃ©fono de la Oficina',
         'Oh no!'
             => 'Oh no!',
         'Only Items I Own'
@@ -314,7 +320,7 @@
         'Parent Role'
             => '??',
         'Password'
-            => 'Contraseña',
+            => 'ContraseÃ±a',
         'Permissions'
             => '??',
         'Permitable'
@@ -352,6 +358,8 @@
         'Role'
             => '??',
         'Roles'
+            => '??',
+        'Save Changes'
             => '??',
         'Search'
             => 'Buscar',
@@ -416,7 +424,7 @@
         'Title'
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
-            => 'para continuar a la página de inicio. Si el error persiste, por favor haga una cosa u otra.',
+            => 'para continuar a la pÃ¡gina de inicio. Si el error persiste, por favor haga una cosa u otra.',
         'Type a currency code or name to search.'
             => '??',
         'User Membership'

@@ -320,9 +320,9 @@
 
                     case 'RedBeanModelTypeValidator':
                     case 'TypeValidator':
-                        if($validator->type == 'float' || $validator->type == 'integer')
+                        if($validator->type == 'float' || $validator->type == 'integer' || $validator->type == 'string')
                         {
-                            //A number default value could be set in the rules, but we should ignore this and try
+                            //A number or string default value could be set in the rules, but we should ignore this and try
                             //to make the largest sized number possible for this column.
                             $ignoreDefaultValue = true;
                         }

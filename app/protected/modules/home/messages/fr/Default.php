@@ -45,8 +45,6 @@
             => 'Ajouter un tableau de bord',
         'Dashboard'
             => 'Tableaux de bord',
-        'Dashboard portlet list page size'
-            => 'Nb. d\'éléments par page dans les listes portlets',
         'Delete Dashboard'
             => 'Supprimer le tableau de bord',
         'Edit Dashboard'

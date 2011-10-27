@@ -24,40 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        '1 Column'
-            => '??',
-        '2 Columns'
-            => '??',
-        '2 Columns Left Strong'
-            => '??',
-        '2 Columns Right Strong'
-            => '??',
-        'Add Portlet'
-            => '??',
-        'Are you sure want to delete this dashboard?'
-            => '??',
-        'Create Dashboard'
-            => '??',
-        'Dashboard'
-            => '??',
-        'Delete Dashboard'
-            => '??',
-        'Edit Dashboard'
-            => '??',
-        'Home'
-            => '??',
-        'Is Default'
-            => '??',
-        'Layout Id'
-            => '??',
-        'Layout Type'
-            => '??',
-        'Return to Home'
-            => '??',
-    );
+    /**
+     * Specific rules for handling the contact state attribute on the EditAndDetailsView.
+     */
+    class LeadStateDropDownEditAndDetailsViewAttributeRules extends EditAndDetailsViewAttributeRules
+    {
+        /**
+         * Contact state, since required, should not have a blank value for the drop down.
+         * @param mixed $value
+         */
+        public static function getIgnoredSavableMetadataRules()
+        {
+            return array('AddBlankForDropDown');
+        }
+    }
 ?>

@@ -57,9 +57,11 @@
             => 'Employés',
         'My AccountsModulePluralLabel'
             => 'Mes AccountsModulePluralLabel',
+        'Parent Account'
+            => 'Compte Parent',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel principal',
         'Type'
-            => 'Type',
+            => 'Type fr',
     );
 ?>

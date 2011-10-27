@@ -30,14 +30,28 @@
     // DON'T MAKE A MESS!
     return array(
         'A field with this name is already used.'
-            => 'Un campo con este nombre ya se utiliza',
+            => '??',
+        'A phone field'
+            => '??',
+        'A pick list that can have multiple selections'
+            => '??',
+        'A pick list with specific values to select from'
+            => '??',
+        'A radio button pick list'
+            => '??',
+        'A text field'
+            => '??',
+        'Access Designer Tool'
+            => '??',
+        'Address fields'
+            => '??',
         'All panels visible'
             => 'Todos los paneles visibles',
         'Create Field'
             => 'Crear campo',
         'Designer'
-            => 'Diseñador',
-        'Detail And Edit View'
+            => 'DiseÃ±ador',
+        'Detail and Edit View'
             => 'Vista de formularios',
         'Details View'
             => 'Vista de detalles',
@@ -46,7 +60,7 @@
         'Each item must be uniquely named'
             => 'Cada elemento debe tener un nombre exclusivo',
         'Edit View'
-            => 'Formulario de inscripción',
+            => 'Formulario de inscripciÃ³n',
         'Field Name'
             => 'Nombre de campo',
         'Field Type'
@@ -54,43 +68,43 @@
         'Fields'
             => 'Campos',
         'First panel visible, then `show more` link'
-            => 'Primer panel visible, después `mostrar más` link',
+            => 'Primer panel visible, despuÃ©s `mostrar mÃ¡s` link',
         'General'
             => 'General',
         'Invalid panel configuration type'
-            => 'Tipo de configuración de panel inválido',
+            => 'Tipo de configuraciÃ³n de panel invÃ¡lido',
         'Layouts'
-            => 'Presentaciones de página',
+            => 'Presentaciones de pÃ¡gina',
         'List View'
             => 'Vista de lista',
         'Manage module fields, layouts, and labels.'
-            => 'Administrar campos de módulo, diseños y etiquetas',
+            => 'Administrar campos de mÃ³dulo, diseÃ±os y etiquetas',
         'Mass Edit View'
-            => 'Vista de modificación de masa',
+            => 'Vista de modificaciÃ³n de masa',
         'Maximum Length'
-            => 'Longitud máxima',
+            => 'Longitud mÃ¡xima',
         'Maximum Value'
-            => 'Valor máximo',
+            => 'Valor mÃ¡ximo',
         'Menu'
-            => 'menú',
+            => 'menÃº',
         'Menus'
-            => 'menús',
+            => 'menÃºs',
         'Minimum Value'
-            => 'valor mínimo',
+            => 'valor mÃ­nimo',
         'Module'
-            => 'Módulo',
+            => 'MÃ³dulo',
         'Panels are tabbed'
-            => 'Los paneles son pestañas',
+            => 'Los paneles son pestaÃ±as',
         'Panels Configuration'
-            => 'Configuración de paneles',
+            => 'ConfiguraciÃ³n de paneles',
         'Pick List Values'
             => 'Valores de pick list',
         'Popup List View'
             => 'Vista de lista popup',
         'Popup Search View'
-            => 'Búsquada de lista popup',
+            => 'BÃºsquada de lista popup',
         'Precision'
-            => 'precisión',
+            => 'precisiÃ³n',
         'Related List View'
             => 'Vista de lista relacionada',
         'Required Field'
@@ -98,7 +112,7 @@
         'Save Layout'
             => 'Publicar',
         'Search View'
-            => 'Vista de búsqueda',
+            => 'Vista de bÃºsqueda',
         'There was an error processing your request.'
             => 'Hubo un error al procesar su pedido',
         'Track Audit Log'
