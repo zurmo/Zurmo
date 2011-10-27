@@ -121,7 +121,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type'  => 'SaveButton',
-                                  'label' => "eval:Yii::t('Default', 'Save Changes')",
+                                  'label' => "eval:Yii::t('Default', 'Update')",
                                   'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
                         ),
                      ),

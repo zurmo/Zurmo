@@ -36,7 +36,6 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'ConfigurationLink'),
-                            array('type' => 'SaveButton'),
                         ),
                     ),
                     'nonPlaceableAttributeNames' => array(
@@ -61,6 +60,20 @@
                 ),
             );
             return $metadata;
+        }
+
+        protected function renderAfterFormLayout($form)
+        {
+            $elementInformation = array('type' => 'SaveButton', 'label' => "eval:Yii::t('Default', 'Add Currency')");
+            $content = '<div>';
+            $elementclassname = $elementInformation['type'] . 'ActionElement';
+            $params = array_slice($elementInformation, 1);
+            array_walk($params, array($this, 'resolveEvaluateSubString'));
+            $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
+            $renderedContent = $element->render();
+            $content .= $renderedContent;
+            $content .= '</div><br/>';
+            return $content;
         }
     }
 ?>

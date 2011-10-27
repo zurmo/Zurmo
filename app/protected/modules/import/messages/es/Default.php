@@ -195,7 +195,7 @@
             => '??',
         'You can only map each field once.'
             => '??',
-        'You do not have permission to update this record and/or its related record.'
+        'You do not have permission to create/update this record and/or its related record.'
             => '??',
         'You must map at least one of your import columns.'
             => '??',

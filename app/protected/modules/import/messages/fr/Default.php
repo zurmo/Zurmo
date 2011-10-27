@@ -195,7 +195,7 @@
             => 'Permissions {importRulesLabel}',
         'You can only map each field once.'
             => 'Chaque champ ne peut être mappé à un autre champ déjà mappé.',
-        'You do not have permission to update this record and/or its related record.'
+        'You do not have permission to create/update this record and/or its related record.'
             => 'Vous n\'avez pas l\'autorisation requise pour mettre à jour cet objet',
         'You must map at least one of your import columns.'
             => 'Vous devez mapper au moins un champ',

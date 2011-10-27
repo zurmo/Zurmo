@@ -80,7 +80,7 @@
                 }
                 catch (AccessDeniedSecurityException $e)
                 {
-                    $importRowDataResultsUtil->addMessage(Yii::t('Default', 'You do not have permission to update this record and/or its related record.'));
+                    $importRowDataResultsUtil->addMessage(Yii::t('Default', 'You do not have permission to create/update this record and/or its related record.'));
                     $importRowDataResultsUtil->setStatusToError();
                 }
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
