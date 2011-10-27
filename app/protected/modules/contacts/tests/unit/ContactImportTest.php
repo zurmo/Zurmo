@@ -39,8 +39,103 @@
             $defaultDataMaker->make();
             Currency::getAll(); //forces base currency to be created.
             ContactsModule::loadStartingData();
+            $jim = UserTestHelper::createBasicUser('jim');
         }
 
+        /**
+         * Test when a normal user who can only view records he owns, tries to import records assigned to another user.
+         */
+        public function testImportSwitchingOwnerButShouldStillCreate()
+        {
+            $super = User::getByUsername('super');
+            $jim   = User::getByUsername('jim');
+            Yii::app()->user->userModel = $jim;
+
+            //Confirm Jim can can only view ImportModelTestItems he owns.
+            $item       = NamedSecurableItem::getByName('ContactsModule');
+            $this->assertEquals(Permission::NONE, $item->getEffectivePermissions($jim));
+
+            $testModels                        = ImportModelTestItem::getAll();
+            $this->assertEquals(0, count($testModels));
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'Contacts';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::createTempTableByFileNameAndTableName('importTest.csv', $import->getTempTableName(),
+                              Yii::getPathOfAlias('application.modules.contacts.tests.unit.files'));
+
+            $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $ownerColumnMappingData         = array('attributeIndexOrDerivedType' => 'owner',
+                                               'type'                        => 'extraColumn',
+                                               'mappingRulesData'            => array(
+                                                   'DefaultModelNameIdMappingRuleForm' =>
+                                                   array('defaultModelId' => $super->id),
+                                                   'UserValueTypeModelAttributeMappingRuleForm' =>
+                                                   array('type' =>
+                                                   UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)));
+
+            $startingStateId = ContactsUtil::getStartingState()->id;
+            $mappingData = array(
+                'column_0'  => ImportMappingUtil::makeStringColumnMappingData      ('firstName'),
+                'column_1'  => ImportMappingUtil::makeStringColumnMappingData      ('lastName'),
+                'column_2'  => $ownerColumnMappingData,
+                'column_3'  => ContactImportTestHelper::makeStateColumnMappingData ($startingStateId, 'extraColumn'),
+            );
+
+            $importRules  = ImportRulesUtil::makeImportRulesByType('Contacts');
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
+            $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
+            ImportUtil::importByDataProvider($dataProvider,
+                                             $importRules,
+                                             $mappingData,
+                                             $importResultsUtil,
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
+            $importResultsUtil->processStatusAndMessagesForEachRow();
+
+            //3 models are created, but Jim can't see them since they are assigned to someone else.
+            $testModels = Contact::getAll();
+            $this->assertEquals(0, count($testModels));
+
+            //Using super, should see all 3 models created.
+            Yii::app()->user->userModel = $super;
+            $testModels = Contact::getAll();
+            $this->assertEquals(3, count($testModels));
+
+            foreach ($testModels as $model)
+            {
+                $this->assertEquals(array(Permission::NONE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
+            }
+            //Confirm 4 rows were processed as 'created'.
+            $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
+                                                                 . ImportRowDataResultsUtil::CREATED));
+
+            //Confirm that 0 rows were processed as 'updated'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::UPDATED));
+
+            //Confirm 0 rows were processed as 'errors'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR));
+
+            $beansWithErrors = ImportDatabaseUtil::getSubset($import->getTempTableName(),     "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR);
+            $this->assertEquals(0, count($beansWithErrors));
+
+            //Clear out data in table
+            R::exec("delete from " . Contact::getTableName('Contact'));
+        }
+
+        /**
+         * @depends testImportSwitchingOwnerButShouldStillCreate
+         */
         public function testSimpleUserImportWhereAllRowsSucceed()
         {
             Yii::app()->user->userModel            = User::getByUsername('super');

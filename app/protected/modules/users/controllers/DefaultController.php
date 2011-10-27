@@ -180,7 +180,8 @@
                 }
                 $savedSucessfully   = false;
                 $modelToStringValue = null;
-                $model            = $this->saveModelFromPost($sanitizedPostdata, $model, $savedSucessfully, $modelToStringValue);
+                $model            = ZurmoControllerUtil::saveModelFromPost($sanitizedPostdata, $model,
+                                                                           $savedSucessfully, $modelToStringValue);
                 if ($savedSucessfully)
                 {
                     if ($userStatus != null)
