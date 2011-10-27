@@ -288,7 +288,7 @@
                 $designerRules,
                 $editableMetadata
             );
-            if (isset($_POST['layout']))
+            if (isset($_POST['save']))
             {
                 $layoutMetadataAdapter = new LayoutMetadataAdapter(
                     $viewClassName,
