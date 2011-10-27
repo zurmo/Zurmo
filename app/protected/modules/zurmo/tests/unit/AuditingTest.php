@@ -388,13 +388,6 @@
                 $this->assertEquals($beforeCount + 11, AuditEvent::getCount());
 
                 $auditEvents = AuditEvent::getTailEvents(5);
-/*
-                $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
-                                    'James Boondog, Item Modified, '                .
-                                    'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard
-                                    'Changed Date Time from [0-9]+ to [0-9]+/',        // Not Coding Standard
-                                    ZurmoModule::stringifyAuditEvent($auditEvents[0]));
-*/
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, ' . // Not Coding Standard
                                     'James Boondog, Item Modified, '                .
                                     'AuditTestItem\([0-9]+\), \(None\), '           . // Not Coding Standard

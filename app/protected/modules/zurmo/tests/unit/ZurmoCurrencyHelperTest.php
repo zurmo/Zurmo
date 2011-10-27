@@ -104,5 +104,28 @@
             $activeCurrencies = Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData($currency->id);
             $this->assertEquals(2, count($activeCurrencies));
         }
+
+        /**
+         * @depends testGetActiveCurrenciesOrSelectedCurrenciesData
+         */
+        public function testGetActiveCurrencyForCurrentUser()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $activeCurrency             = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
+            $usdCurrency                = Currency::getByCode('USD');
+            $this->assertTrue($activeCurrency->isSame($usdCurrency));
+
+            $eurCurrency                = Currency::getByCode('EUR');
+            $super->currency            = $eurCurrency;
+            $this->assertTrue($super->save());
+            $activeCurrency             = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
+            $this->assertTrue($activeCurrency->isSame($eurCurrency));
+
+            $super->currency            = null;
+            $this->assertTrue($super->save());
+            $activeCurrency             = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
+            $this->assertTrue($activeCurrency->isSame($usdCurrency));
+        }
     }
 ?>

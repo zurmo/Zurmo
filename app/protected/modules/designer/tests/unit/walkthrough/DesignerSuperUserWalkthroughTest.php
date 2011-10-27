@@ -30,7 +30,7 @@
      * Since this is a super user, he should have access to all controller actions
      * without any exceptions being thrown.
      */
-    class DesignerSuperWalkthroughTest extends ZurmoWalkthroughBaseTest
+    class DesignerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -43,6 +43,17 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             $this->runControllerWithNoExceptionsAndGetContent('designer/default');
+        }
+
+        public function testCreatingRequiredAttributeWithAnEmptyStringPostedAsDefaultValue()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            //Confirm the attribute is created ok and does not cause an exception.
+            $extraPostData = array( 'defaultValue' => '', 'isAudited' => '1', 'isRequired' => '1',
+                                    'maxLength' => '255');
+            $this->createCustomAttributeWalkthroughSequence('AccountsModule', 'atestattribute', 'Text', $extraPostData);
+            $account = new Account();
+            $this->assertEquals('', $account->atestattribute);
         }
     }
 ?>
