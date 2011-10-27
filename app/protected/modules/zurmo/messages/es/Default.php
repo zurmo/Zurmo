@@ -302,7 +302,7 @@
         'Office Fax'
             => 'Fax de la Oficina',
         'Office Phone'
-            => 'TelÃ©fono de la Oficina',
+            => 'Teléfono de la Oficina',
         'Oh no!'
             => 'Oh no!',
         'Only Items I Own'
