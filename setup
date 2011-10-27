@@ -61,7 +61,7 @@ then
   cd redbean
   tar xzf ../RedBean*.tar.gz
   echo Patching RedBean.
-  sed -i -r "s/(\tpublic function __call.*)/\1\n\t\treturn null;/" rb.php
+  sed -i -e -r "s/(\tpublic function __call.*)/\1\n\t\treturn null;/" rb.php
   cd ..
   rm RedBean*.tar.gz
   echo Done.
