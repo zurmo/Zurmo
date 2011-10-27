@@ -844,12 +844,12 @@
             $this->assertEquals(0, count($errors));
             $errors = $a2->getErrors('uniqueRequiredEmail');
             $this->assertEquals(1, count($errors));
-            $this->assertEquals('Unique Required Email "ross@zurmoinc.com" has already been taken.', $errors[0]);
+            $this->assertEquals('Unique Required Email "ross@zurmoinc.com" is already in use.', $errors[0]);
             $errors = $a2->getErrors();
             $this->assertEquals(1, count($errors));
             $this->assertTrue(isset($errors['uniqueRequiredEmail']));
             $this->assertEquals(1, count($errors['uniqueRequiredEmail']));
-            $this->assertEquals('Unique Required Email "ross@zurmoinc.com" has already been taken.', $errors['uniqueRequiredEmail'][0]);
+            $this->assertEquals('Unique Required Email "ross@zurmoinc.com" is already in use.', $errors['uniqueRequiredEmail'][0]);
         }
 
         /**

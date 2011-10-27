@@ -65,9 +65,9 @@
             => '??',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
             => '??',
-        'Address'
-            => '??',
         'Ad-hoc / Owner'
+            => '??',
+        'Address'
             => '??',
         'Admin'
             => 'Admin',
@@ -148,6 +148,8 @@
         'Currency in use.'
             => '??',
         'Currency Value'
+            => '??',
+        'Dashboard portlet list page size'
             => '??',
         'Data'
             => '??',
@@ -267,6 +269,8 @@
             => '??',
         'Members'
             => '??',
+        'Missing Required Attributes'
+            => 'Les champs obligatoires doivent être placés dans la vue',
         'Mobile Phone'
             => '??',
         'Module Name - Plural'
@@ -352,6 +356,8 @@
         'Role'
             => '??',
         'Roles'
+            => '??',
+        'Save Changes'
             => '??',
         'Search'
             => 'Buscar',

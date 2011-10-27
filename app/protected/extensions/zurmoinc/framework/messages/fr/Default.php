@@ -65,6 +65,8 @@
             => 'Date Crée',
         'Created On'
             => 'Crée',
+        'CustomManagement class needs to be extended.'
+            => 'La classe CustomManagement doit être étendue.',
         'Date'
             => 'Date',
         'Date Time'
@@ -136,7 +138,7 @@
         'Module Name'
             => 'Nom du Module',
         'More Details'
-            => 'Plus de détails',
+            => 'Plus de dtails',
         'More Options'
             => 'Plus d\'options',
         'My List View'
@@ -145,10 +147,14 @@
             => 'Nom',
         'No'
             => 'Non',
+        'No import processes found.'
+            => 'Aucun traitement d\'importation trouvé',
         'None'
             => 'Aucun',
         'Now'
             => 'Maintenant',
+        'of'
+            => 'sur',
         'Opted Out'
             => 'Opt out',
         'Panel'

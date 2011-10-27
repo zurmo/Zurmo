@@ -55,8 +55,6 @@
             => '??',
         'A text field'
             => '??',
-        'A user field'
-            => '??',
         'Access Designer Tool'
             => '??',
         'Address fields'
@@ -81,7 +79,7 @@
             => '??',
         'Designer Tool'
             => '??',
-        'Detail And Edit View'
+        'Detail and Edit View'
             => '??',
         'Details View'
             => '??',

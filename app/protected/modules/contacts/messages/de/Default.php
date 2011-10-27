@@ -33,6 +33,8 @@
             => '??',
         'Contact'
             => '??',
+        'Contact Stage'
+            => '??',
         'Contact Statuses'
             => '??',
         'Contacts'

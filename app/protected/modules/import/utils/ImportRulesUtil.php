@@ -98,7 +98,7 @@
          * 								   any attribute rules that are not AttributeImportRules.
          * @return boolean true - all required are mapped, otherwise false.
          */
-        public static function areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
+        public static function areAllRequiredAttributesMappedOrHaveRules(& $requiredAttributeCollection,
                                                                          $mappedAttributeImportRulesCollection)
         {
             assert('is_array($requiredAttributeCollection)');

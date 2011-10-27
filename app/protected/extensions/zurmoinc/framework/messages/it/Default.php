@@ -65,6 +65,8 @@
             => '??',
         'Created On'
             => '??',
+        'CustomManagement class needs to be extended.'
+            => '??',
         'Date'
             => '??',
         'Date Time'
@@ -145,9 +147,13 @@
             => '??',
         'No'
             => '??',
+        'No import processes found.'
+            => '??',
         'None'
             => '??',
         'Now'
+            => '??',
+        'of'
             => '??',
         'Opted Out'
             => '??',

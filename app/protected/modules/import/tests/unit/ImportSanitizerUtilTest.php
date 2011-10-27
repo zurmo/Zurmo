@@ -466,6 +466,59 @@
             $values = unserialize($customFieldData->serializedData);
             $this->assertEquals(6, count($values));
             $this->assertEquals('NewValue', $values[5]);
+
+            //Now use a value that is missing, but there is valid instructions on how to map it. Use different casing
+            //to increase test coverage. (sample instead of Sample)
+            $importInstructionsData = array('DropDown' =>
+                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE  => array(),
+                                            DropDownSanitizerUtil::MAP_MISSING_VALUES => array('MappedValue' => 'sample')));
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $this->assertEquals(6, count(unserialize($customFieldData->serializedData)));
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test1')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'MappedValue',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('Sample', $sanitizedValue->value);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $values = unserialize($customFieldData->serializedData);
+            $this->assertEquals(6, count($values));
+
+            //Now use a value that is missing, there are instructions on how to map it, but the mapping is invalid.
+            $importInstructionsData = array('DropDown' =>
+                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE  => array(),
+                                            DropDownSanitizerUtil::MAP_MISSING_VALUES => array('MappedValue' => 'SampleX')));
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $this->assertEquals(6, count(unserialize($customFieldData->serializedData)));
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test1')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'MappedValue',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals(null, $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = 'ImportModelTestItem - Drop Down Pick list value specified is missing from existing pick list, ' .
+                              'has a specified mapping value, but the mapping value is not a valid value.';
+            $this->assertEquals($compareMessage, $messages[0]);
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $values = unserialize($customFieldData->serializedData);
+            $this->assertEquals(6, count($values));
+
         }
 
         public function testSanitizeValueBySanitizerTypesForEmailTypeThatIsNotRequired()

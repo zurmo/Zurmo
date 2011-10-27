@@ -39,7 +39,7 @@
             => '??',
         'Add Field'
             => '??',
-        'All required attributes must be mapped or added.'
+        'All required fields must be mapped or added: {attributesLabelContent}'
             => '??',
         'Analyzing the import data...'
             => '??',
@@ -74,6 +74,8 @@
         'Id'
             => '??',
         'Import'
+            => '??',
+        'Import complete.  Rows processed: {rowsProcessed}'
             => '??',
         'Import file has no rows to use.'
             => '??',
@@ -155,6 +157,8 @@
             => '??',
         'Row Id'
             => '??',
+        'Rows processed: {rowsProcessed}'
+            => '??',
         'Rows with errors: {errors}'
             => '??',
         'Rules'
@@ -191,7 +195,7 @@
             => '??',
         'You can only map each field once.'
             => '??',
-        'You do not have permission to update this record and/or its related record.'
+        'You do not have permission to create/update this record and/or its related record.'
             => '??',
         'You must map at least one of your import columns.'
             => '??',

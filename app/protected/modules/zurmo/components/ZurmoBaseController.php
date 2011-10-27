@@ -401,60 +401,12 @@
             if (isset($_POST[$postVariableName]))
             {
                 $postData = $_POST[$postVariableName];
-                $model            = $this->saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
+                $model            = ZurmoControllerUtil::
+                                    saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             }
             if ($savedSucessfully)
             {
                 $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
-            }
-            return $model;
-        }
-
-        protected function saveModelFromPost($postData, $model, & $savedSucessfully, & $modelToStringValue)
-        {
-            if ($model instanceof SecurableItem)
-            {
-                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                     resolveByPostDataAndModelThenMake($postData, $model);
-            }
-            else
-            {
-                $explicitReadWriteModelPermissions = null;
-            }
-            $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
-                                                 removeIfExistsFromPostData($postData);
-            $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
-                                                 $model, $readyToUsePostData);
-            $sanitizedOwnerPostData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
-                                                 $sanitizedPostData, 'owner');
-            $sanitizedPostDataWithoutOwner     = PostUtil::
-                                                 removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
-            $model->setAttributes($sanitizedPostDataWithoutOwner);
-            if ($model->validate())
-            {
-                $modelToStringValue = strval($model);
-                if ($sanitizedOwnerPostData != null)
-                {
-                    $model->setAttributes($sanitizedOwnerPostData);
-                }
-                if ($model instanceof OwnedSecurableItem)
-                {
-                    $passedOwnerValidation = $model->validate(array('owner'));
-                }
-                else
-                {
-                    $passedOwnerValidation = true;
-                }
-                if ($passedOwnerValidation && $model->save(false))
-                {
-                    if ($explicitReadWriteModelPermissions != null)
-                    {
-                        $success = ExplicitReadWriteModelPermissionsUtil::
-                        resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
-                        //todo: handle if success is false, means adding/removing permissions save failed.
-                    }
-                    $savedSucessfully = true;
-                }
             }
             return $model;
         }
