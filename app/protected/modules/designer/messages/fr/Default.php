@@ -42,7 +42,7 @@
         'A description box'
             => 'Un champ zone de texte',
         'A field that contains a URL'
-            => 'Un champ qui contien un URL',
+            => 'Un champ qui contient un URL',
         'A field with this name is already used.'
             => 'Un champ avec ce nom est déjà utilisé.',
         'A phone field'
@@ -55,8 +55,6 @@
             => 'Un champ bouton radio',
         'A text field'
             => 'Un champ texte',
-        'A user field'
-            => 'Un champ d\'utilisateur',
         'Access Designer Tool'
             => 'Accès au Designer',
         'Address fields'

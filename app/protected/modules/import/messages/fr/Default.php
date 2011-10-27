@@ -75,6 +75,8 @@
             => 'Id',
         'Import'
             => 'Importer',
+        'Import complete.  Rows processed: {rowsProcessed}'
+            => 'L\'importation est terminée. Lignes traités: {rowsProcessed}',
         'Import file has no rows to use.'
             => 'Le fichier ne contient pas de données',
         'Import model failed to save.'
@@ -155,6 +157,8 @@
             => 'Champs Requis',
         'Row Id'
             => 'Ligne',
+        'Rows processed: {rowsProcessed}'
+            => 'Lignes traités: {rowsProcessed}',
         'Rows with errors: {errors}'
             => 'Enregistrements avec erreurs: {errors}',
         'Rules'

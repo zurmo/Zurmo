@@ -75,6 +75,8 @@
             => '??',
         'Import'
             => '??',
+        'Import complete.  Rows processed: {rowsProcessed}'
+            => '??',
         'Import file has no rows to use.'
             => '??',
         'Import model failed to save.'
@@ -154,6 +156,8 @@
         'Required Fields'
             => '??',
         'Row Id'
+            => '??',
+        'Rows processed: {rowsProcessed}'
             => '??',
         'Rows with errors: {errors}'
             => '??',

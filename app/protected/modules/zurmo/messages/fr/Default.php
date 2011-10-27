@@ -64,11 +64,11 @@
         'Active currencies can be used when creating new records and as a default currency for a user.'
             => 'Les devises actives sont disponibles pour créer de nouveaux enregistrements et comme devise de défault pour un utilisateur.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => 'Les langues actives sont disponibles aux utilisateurs. Impossible de désactiver la langue système ou unelangue actuellement utilisé par un utilisateur',
-        'Address'
-            => 'Adresse',
+            => 'Les langues actives sont disponibles aux utilisateurs. Impossible de désactiver la langue système ou une langue actuellement utilisée par un utilisateur',
         'Ad-hoc / Owner'
             => 'De circonstance / Resp. du compte',
+        'Address'
+            => 'Adresse',
         'Admin'
             => 'Administration',
         'Alert'
@@ -149,6 +149,8 @@
             => 'Devise utiliséé',
         'Currency Value'
             => 'Valeur',
+        'Dashboard portlet list page size'
+            => 'Nb. d\'éléments par page dans les listes portlets',
         'Data'
             => 'Donées',
         'days'
@@ -267,6 +269,8 @@
             => 'Maison mère',
         'Members'
             => 'Filiales',
+        'Missing Required Attributes'
+            => '??',
         'Mobile Phone'
             => 'Téléphone portable',
         'Module Name - Plural'
@@ -353,6 +357,8 @@
             => 'Rôle',
         'Roles'
             => 'Rôles',
+        'Save Changes'
+            => 'Sauvegarder les changements',
         'Search'
             => 'Rechercher',
         'Search by name, phone, or e-mail'
