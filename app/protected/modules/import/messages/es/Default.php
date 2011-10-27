@@ -132,62 +132,62 @@
         'Processing'
             => 'Procesando',
         'Record saved correctly.'
-            => 'Archivo guardado correctamente',
+            => 'Registro guardado correctamente',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'
-            => 'Archivo(s){startItemCount} - {endItemCount} de {totalItemCount}',
+            => 'Registro(s){startItemCount} - {endItemCount} de {totalItemCount}',
         'Records created: {created}'
-            => '??',
+            => 'Registros {created} ',
         'Records updated: {updated}'
-            => '??',
+            => 'Registros actualizados {updated}',
         'Remove Field'
-            => '??',
+            => 'Eliminar campo',
         'Required Fields'
-            => '??',
+            => 'Campos obligatorios',
         'Rows with errors: {errors}'
-            => '??',
+            => 'Filas con errores: {errors}',
         'Rules'
-            => '??',
+            => 'Normas',
         'Sample Row'
-            => '??',
+            => 'Ejemplo de fila',
         'The file that has been uploaded only has a header row and no additional rows to import.'
-            => '??',
+            => 'El archivo que se ha subido sólo tiene una fila de cabecera y no hay filas adicionales para importar.',
         'The file that was uploaded was not a csv.'
-            => '??',
+            => 'El archivo que se ha subido no era un csv',
         'The full name must contain a last name, which is required.'
-            => '??',
+            => 'El nombre completo debe tener un apellido, como es requerido',
         'The id specified did not match any existing records.'
-            => '??',
+            => 'El ID especificado no coincide con ningún registro existente',
         'The other id specified did not match any existing records.'
-            => '??',
+            => 'El otro ID especificado no coincide con ningún registro existente',
         'The other user id specified did not match any existing records.'
-            => '??',
+            => 'El otro ID de usuario especificado no coincide con ningún registro existente',
         'The user id specified did not match any existing records.'
-            => '??',
+            => 'El ID de usuario especificado no coincide con ningún registro existente',
         'The username specified did not match any existing records.'
-            => '??',
+            => 'El nombre de usuario especificado no coincide con ningún registro existente',
         'There was an error processing this import.'
-            => '??',
+            => 'Hubo un eror en el proceso de la importación',
         'This id is required and was not specified.'
-            => '??',
+            => 'Esta ID es necesaria y no se ha especificado',
         'Type of Value'
-            => '??',
+            => 'Tipo de valor',
         'URL was too long.'
-            => '??',
+            => 'URL era demaciado larga',
         'Who can read and write the new {importRulesLabel}'
-            => '??',
+            => 'Quién está autorizado a leer y escribir el nuevo {importRulesLabel}',
         'You can only map each field once.'
-            => '??',
+            => 'Sólo se puede asignar cada campo una vez',
         'You do not have permission to update this record and/or its related record.'
-            => '??',
+            => 'No tiene permiso para actualizar este registro y / o su registro relacionado',
         'You must map at least one of your import columns.'
-            => '??',
+            => 'Debe asignar al menos una de las columnas',
         'Zurmo Field'
-            => '??',
+            => 'Campo Zurmo',
         '{firstDate} or {secondDate}'
-            => '??',
+            => '{firstDate} o {secondDate}',
         '{modelLabel} id specified did not match any existing records.'
-            => '??',
+            => '{modelLabel} ID especificado no coincide con ningún registro existente',
         '{modelLabel} other id specified did not match any existing records.'
-            => '??',
+            => '{modelLabel} otro ID especificado no coincide con ningún registro existente',
     );
 ?>

@@ -30,30 +30,30 @@
     // DON'T MAKE A MESS!
     return array(
         'Close Date'
-            => '??',
+            => 'fecha de cierre',
         'Create OpportunitiesModuleSingularLabel'
             => 'Crear una OpportunitiesModuleSingularLabel',
         'My OpportunitiesModulePluralLabel'
-            => '?? OpportunitiesModulePluralLabel',
+            => 'Mis OpportunitiesModulePluralLabel',
         'Opportunities'
-            => '??',
+            => 'oportunidades',
         'Opportunities By Lead Source'
-            => '??',
+            => 'oportunidades por fuente de prospecto',
         'Opportunities By Sales Stage'
-            => '??',
+            => 'Oportunidades por etapa de ventas',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
         'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel ?? AccountsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel para AccountsModuleSingularLabel',
         'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel ?? ContactsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel para ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
         'OpportunitiesModuleSingularLabel Search'
-            => 'OpportunitiesModuleSingularLabel ??',
+            => 'OpportunitiesModuleSingularLabel búsqueda',
         'Opportunity'
-            => '??',
+            => 'Oportunidad',
         'Probability'
-            => '??',
+            => 'Probabilidad',
     );
 ?>

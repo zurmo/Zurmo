@@ -30,64 +30,64 @@
     // DON'T MAKE A MESS!
     return array(
         'Change Password'
-            => '??',
+            => 'Cambiar contraseña',
         'Change User Passwords'
-            => '??',
+            => 'Cambiar las contraseñas de usuarios',
         'Confirm Password'
             => 'Confirmar ContraseÃ±a',
         'Create User'
-            => 'Crear Usario',
+            => 'Crear Usuario',
         'Create Users'
-            => '??',
+            => 'Crear Usuarios',
         'Enforce Strong Passwords'
-            => '??',
+            => 'Forzar contraseñas robustas',
         'Hash'
-            => '??',
+            => 'Almohadilla',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
-            => '??',
+            => 'Los usuarios inactivos no pueden iniciar sesión en el uso de la web, móvil o web API. Inicio de sesión de usuarios activos es controlado por los derechos de grupo',
         'Inherited Value:'
-            => '??',
+            => 'Valor heredado',
         'Login Via Mobile'
-            => '??',
+            => 'Conexión móvil',
         'Login Via Web'
-            => '??',
+            => 'Conexión web',
         'Login Via Web API'
-            => '??',
+            => 'Conexión web API',
         'Manage Users'
-            => 'Administrar Usarios',
+            => 'Administrar Usuarios',
         'Manager'
-            => '??',
+            => 'Administrador',
         'Minimum Password Length'
-            => '??',
+            => 'Largo mínimo de la contraseña',
         'Minimum Username Length'
-            => '??',
+            => 'Largo mínimo de nombre de usuario',
         'Password Expires'
-            => '??',
+            => 'Vencimiento de la contraseña',
         'Password Expiry Days'
-            => '??',
+            => 'Vida útil mínima de las contraseñas',
         'Profile'
             => 'Perfil',
         'The password is too short. Minimum length is {minimumLength}.'
-            => '??',
+            => 'La contraseña es demasiado corta. Largo mínimo es {minimumLength}',
         'The password must have at least one lowercase letter'
-            => '??',
+            => 'La contraseña debe tener al menos una letra minúscula',
         'The password must have at least one number and one letter'
-            => '??',
+            => 'La contraseña debe tener al menos un número y una letra',
         'The password must have at least one uppercase letter'
-            => '??',
+            => 'La contraseña debe tener al menos una letra mayúscula',
         'The time zone is invalid.'
-            => '??',
+            => 'La zona horaria es válido',
         'The username is too short. Minimum length is {minimumLength}.'
-            => '??',
+            => 'El nombre de usuario es demasiado corto. Longitud mínima es de {minimumLength}.',
         'Time Zone'
-            => '??',
+            => 'Zona horaria',
         'User'
-            => 'Usario',
+            => 'Usuario',
         'User configuration saved successfully.'
-            => '??',
+            => 'Configuración de usuario guardado con éxito.',
         'User Search'
             => 'Busqueda de Usuarios',
         'Users'
-            => 'Usarios',
+            => 'Usuarios',
     );
 ?>
