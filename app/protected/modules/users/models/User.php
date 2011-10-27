@@ -98,10 +98,10 @@
          */
         protected static function resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName)
         {
-            //if($baseModelClassName != 'Person')
-            //{
+            if($baseModelClassName != 'Person')
+            {
                 parent::resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName);
-           // }
+            }
         }
 
         protected function linkBeans()
