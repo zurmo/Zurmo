@@ -148,7 +148,8 @@
                     $columnMappingData['attributeIndexOrDerivedType'] != 'owner')
                 {
                     static::sanitizeValueAndPopulateModel($rowBean, $importRules, $model, $columnName, $modelClassName,
-                                                          $columnMappingData, $importSanitizeResultsUtil);
+                                                          $columnMappingData, $importSanitizeResultsUtil,
+                                                          $afterSaveActionsData);
                 }
             }
 
@@ -159,7 +160,8 @@
                     $columnMappingData['attributeIndexOrDerivedType'] == 'owner')
                 {
                     static::sanitizeValueAndPopulateModel($rowBean, $importRules, $model, $columnName, $modelClassName,
-                                                          $columnMappingData, $importSanitizeResultsUtil);
+                                                          $columnMappingData, $importSanitizeResultsUtil,
+                                                          $afterSaveActionsData);
                 }
             }
 
@@ -237,8 +239,10 @@
                                                                 $columnName,
                                                                 $modelClassName,
                                                                 $columnMappingData,
-                                                                ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+                                                                ImportSanitizeResultsUtil $importSanitizeResultsUtil,
+                                                                & $afterSaveActionsData)
         {
+            assert('is_array($afterSaveActionsData)');
             assert('is_string($columnName)');
             assert('is_string($modelClassName)');
             assert('$columnMappingData["type"] == "importColumn" ||

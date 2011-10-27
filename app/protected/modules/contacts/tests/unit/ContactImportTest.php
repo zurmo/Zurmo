@@ -55,7 +55,7 @@
             $item       = NamedSecurableItem::getByName('ContactsModule');
             $this->assertEquals(Permission::NONE, $item->getEffectivePermissions($jim));
 
-            $testModels                        = ImportModelTestItem::getAll();
+            $testModels                        = Contact::getAll();
             $this->assertEquals(0, count($testModels));
             $import                                = new Import();
             $serializedData['importRulesType']     = 'Contacts';
