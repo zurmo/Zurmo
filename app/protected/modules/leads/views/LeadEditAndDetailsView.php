@@ -71,7 +71,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'LeadStateDropDown', 'addBlank' => true),
+                                                array('attributeName' => 'null', 'type' => 'LeadStateDropDown'),
                                             ),
                                         ),
                                     )

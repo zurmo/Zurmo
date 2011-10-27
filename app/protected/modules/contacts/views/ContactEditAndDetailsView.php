@@ -69,7 +69,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'ContactStateDropDown', 'addBlank' => true),
+                                                array('attributeName' => 'null', 'type' => 'ContactStateDropDown'),
                                             ),
                                         ),
                                     )
