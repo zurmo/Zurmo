@@ -176,7 +176,7 @@
         }
 
         /**
-         * Given an attribute index or derived type, return the class name of the appropriate attribute rules type.
+         * Given an attribute index or derived type, return the appropriate attribute rules type.
          * @param string $attributeIndexOrDerivedType
          * @throws NotSupportedException
          * @return string - attribute rules type.
@@ -190,7 +190,6 @@
             {
                 return $attributeImportRulesData[$attributeIndexOrDerivedType];
             }
-            echo 'wangL'.$attributeIndexOrDerivedType."\n";
             throw new NotSupportedException();
         }
 
