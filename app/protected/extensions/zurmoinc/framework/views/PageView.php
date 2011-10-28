@@ -230,7 +230,7 @@
             if (MINIFY_SCRIPTS)
             {
                 Yii::app()->minScript->generateScriptMap('css');
-                if (!YII_DEBUG)
+                if (!YII_DEBUG && !defined('IS_TEST'))
                 {
                     Yii::app()->minScript->generateScriptMap('js');
                 }
