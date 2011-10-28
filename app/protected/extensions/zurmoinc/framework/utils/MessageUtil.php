@@ -354,7 +354,7 @@
                            }
                         }
                     }
-                    //Check for any rights, policies, or audit event names in the modules.
+                    //Check for any menu labels, rights, policies, or audit event names in the modules.
                     if ( strpos($fullEntryName, 'Module.php') !== false)
                     {
                         $moduleClassName = basename(substr($fullEntryName, 0, -4));
@@ -385,6 +385,21 @@
                             foreach($states as $state)
                             {
                                 $fileNamesToCategoriesToMessages[$entry]['Default'][] = $state->name;
+                            }
+                        }
+                        //check for menu labels
+                        if (!$moduleReflectionClass->isAbstract())
+                        {
+                            if(isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                            {
+                                $fileNamesToCategoriesToMessages[$entry]['Default'] =
+                                array_merge($fileNamesToCategoriesToMessages[$entry]['Default'],
+                                            getModuleMenuLabelNamesByModuleName($moduleClassName));
+                            }
+                            else
+                            {
+                                $fileNamesToCategoriesToMessages[$entry]['Default'] =
+                                    getModuleMenuLabelNamesByModuleName($moduleClassName);
                             }
                         }
                     }
@@ -427,6 +442,77 @@
         $auditEventNames = $moduleClassName::getAuditEventNames();
         $labelsData      = array_merge($rightsNames, $policiesNames);
         return             array_merge($labelsData, $auditEventNames);
+    }
+
+    function getModuleMenuLabelNamesByModuleName($moduleClassName)
+    {
+        $labels   = array();
+        $metadata = $moduleClassName::getMetadata();
+        if(isset($metadata['global']['tabMenuItems']))
+        {
+            foreach($metadata['global']['tabMenuItems'] as $menuItem)
+            {
+                if(isset($menuItem['items']))
+                {
+                    foreach($menuItem['items'] as $subMenuItem)
+                    {
+                        if(!in_array($subMenuItem['label'], $labels))
+                        {
+                            $labels[] = $subMenuItem['label'];
+                        }
+                    }
+                }
+                if(!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if(isset($metadata['global']['shortcutsMenuItems']))
+        {
+            foreach($metadata['global']['shortcutsMenuItems'] as $menuItem)
+            {
+                if(isset($menuItem['items']))
+                {
+                    foreach($menuItem['items'] as $subMenuItem)
+                    {
+                        if(!in_array($subMenuItem['label'], $labels))
+                        {
+                            $labels[] = $subMenuItem['label'];
+                        }
+                    }
+                }
+                if(!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if(isset($metadata['global']['headerMenuItems']))
+        {
+            foreach($metadata['global']['headerMenuItems'] as $menuItem)
+            {
+                if(!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if(isset($metadata['global']['configureMenuItems']))
+        {
+            foreach($metadata['global']['configureMenuItems'] as $menuItem)
+            {
+                if(!in_array($menuItem['titleLabel'], $labels))
+                {
+                    $labels[] = $menuItem['titleLabel'];
+                }
+                if(!in_array($menuItem['descriptionLabel'], $labels))
+                {
+                    $labels[] = $menuItem['descriptionLabel'];
+                }
+            }
+        }
+        return $labels;
     }
 
     function findFileNameToUnexpectedlyFormattedYiiT($path)
