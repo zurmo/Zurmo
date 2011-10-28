@@ -38,35 +38,44 @@
             {
                 $redBeanVersion = '&lt; 1.2.9.1';
             }
-            // TODO - put the strings in Yii::t().
-            return <<<END
-    <div id="LoginLogo" class="zurmo-logo"></div>
-    <p>
-        This is <b>version $zurmoVersion</b>, of <b>Zurmo</b>.
-    </p>
-    <p>
-        <b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>
-    </p>
-    <p>
-        Visit the <b>Zurmo Open Source Project</b> at
-        <a href="http://www.zurmo.org">http://www.zurmo.org</a>.<br />
-    </p>
-    <p>
-        Visit <b>Zurmo Inc.</b> at
-        <a href="http://www.zurmo.com">http://www.zurmo.com</a>.<br />
-    </p>
-    <p>
-        <b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>.
-    </p>
-    <p>
-        <b>Zurmo</b> uses the following great Open Source tools and frameworks:
-    </p>
-    <p>
-        <a href="http://www.yiiframework.com">Yii Framework</a> (version $yiiVersion is installed)<br />
-        <a href="http://www.redbeanphp.com">RedBeanPHP ORM</a>     (version $redBeanVersion is installed)<br />
-        <a href="http://www.jquery.com">jQuery JavaScript Framework</a> (installed with Yii)<br />
-    </p>
-END;
+            $content  = '<div id="LoginLogo" class="zurmo-logo"></div>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', 'This is <b>version {zurmoVersion}</b>, of <b>Zurmo</b>.',
+                        array('{zurmoVersion}' => $zurmoVersion));
+            $content .= '</p>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>');
+            $content .= '</p>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', 'Visit the <b>Zurmo Open Source Project</b> at {url}.',
+                           array('{url}' => '<a href="http://www.zurmo.org">http://www.zurmo.org</a>'));
+            $content .= '<br/>';
+            $content .= '</p>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', 'Visit <b>Zurmo Inc.</b> at {url}.',
+                        array('{url}' => '<a href="http://www.zurmo.com">http://www.zurmo.com</a>'));
+            $content .= '<br/>';
+            $content .= '</p>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>');
+            $content .= '</p>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', '<b>Zurmo</b> uses the following great Open Source tools and frameworks:');
+            $content .= '</p>';
+            $content .= '<p>';
+            $content .= Yii::t('Default', '{url} (version {version} is installed)',
+                           array('{url}'     => '<a href="http://www.yiiframework.com">Yii Framework</a>',
+                                 '{version}' => $yiiVersion));
+            $content .= '<br/>';
+            $content .= Yii::t('Default', '{url} (version {version} is installed)',
+                           array('{url}'     => '<a href="http://www.redbeanphp.com">RedBeanPHP ORM</a>',
+                                 '{version}' => $redBeanVersion));
+            $content .= '<br/>';
+            $content .= Yii::t('Default', '{url} (installed with Yii)',
+                           array('{url}'     => '<a href="http://www.jquery.com">jQuery JavaScript Framework</a>'));
+            $content .= '<br/>';
+            $content .= '</p>';
+            return $content;
         }
     }
 ?>
