@@ -222,7 +222,8 @@
             foreach ($this->viewMetadata['global']['panels'] as $panelNumber => $panel)
             {
                 $content .= '<li id="panel_' . $panelNumber . '" class="ui-state-default sortable-panel">';
-                $content .= '<span class="panel-title-display">' . ArrayUtil::getArrayValue($panel, 'title') . '&#160;</span>';
+                $content .= '<span class="panel-title-display">' .
+                            Yii::t('Default', ArrayUtil::getArrayValue($panel, 'title')) . '&#160;</span>';
                 if ($this->canMoveRows)
                 {
                     $content .= '<span class="panel-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
