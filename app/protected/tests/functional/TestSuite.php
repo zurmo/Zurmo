@@ -197,6 +197,8 @@
                     $finalCommand .= ' -userExtensions ' . self::resolveUserExtensionsJsFromParameterAndConstant();
                     echo $finalCommand . "\n";
                     exec($finalCommand);
+					echo 'Restoring test db';
+                    self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                 }
             }
             echo 'Functional Run Complete.' . "\n";
@@ -482,7 +484,7 @@
                 $url = $url . "?action=" . urlencode($params['action']);
             }elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
             {
-                $url = $url . "?clearCache=1";
+                $url = $url . "index.php?r=zurmo/default/login&clearCache=1";
 				echo $url;
 				//exit;
             }
