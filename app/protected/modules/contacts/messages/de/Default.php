@@ -33,6 +33,10 @@
             => '??',
         'Contact'
             => '??',
+        'Contact Stage'
+            => '??',
+        'Contact Status Translated Labels'
+            => '??',
         'Contact Statuses'
             => '??',
         'Contacts'
@@ -59,7 +63,7 @@
             => '??',
         'Starting Status'
             => '??',
-        'Status'
+        'The contact state field'
             => '??',
         'The default status specified does not exist.'
             => '??',
@@ -67,7 +71,7 @@
             => '??',
         'The status specified does not exist.'
             => '??',
-        'The status specified is invalid.'
+        'The status specified is not unique and is invalid.'
             => '??',
     );
 ?>

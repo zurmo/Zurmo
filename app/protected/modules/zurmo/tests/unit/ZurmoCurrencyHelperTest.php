@@ -41,7 +41,6 @@
             $this->assertNull($currency->getWebServiceErrorMessage());
             $this->assertNull($currency->getWebServiceErrorCode());
             $this->assertWithinTolerance($rate, 1, 2);
-            $currency->resetErrors();
 
             //Now test with an invalid currency
             $this->assertEquals('USD', $currency->getBaseCode());
@@ -49,11 +48,6 @@
             $this->assertNotNull($currency->getWebServiceErrorMessage());
             $this->assertEquals($currency::ERROR_INVALID_CODE, $currency->getWebServiceErrorCode());
             $this->assertEquals(1, 1);
-
-            //Now test resetting errors.
-            $currency->resetErrors();
-            $this->assertNull($currency->getWebServiceErrorMessage());
-            $this->assertNull($currency->getWebServiceErrorCode());
         }
 
         /**
@@ -109,6 +103,29 @@
             //Confirm that there are 2 active currencies when specifying an inactive one as the selected currency.
             $activeCurrencies = Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData($currency->id);
             $this->assertEquals(2, count($activeCurrencies));
+        }
+
+        /**
+         * @depends testGetActiveCurrenciesOrSelectedCurrenciesData
+         */
+        public function testGetActiveCurrencyForCurrentUser()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $activeCurrency             = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
+            $usdCurrency                = Currency::getByCode('USD');
+            $this->assertTrue($activeCurrency->isSame($usdCurrency));
+
+            $eurCurrency                = Currency::getByCode('EUR');
+            $super->currency            = $eurCurrency;
+            $this->assertTrue($super->save());
+            $activeCurrency             = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
+            $this->assertTrue($activeCurrency->isSame($eurCurrency));
+
+            $super->currency            = null;
+            $this->assertTrue($super->save());
+            $activeCurrency             = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
+            $this->assertTrue($activeCurrency->isSame($usdCurrency));
         }
     }
 ?>

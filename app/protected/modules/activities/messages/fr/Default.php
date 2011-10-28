@@ -40,7 +40,7 @@
         'Listview'
             => 'Vue liste',
         'No Activities found.'
-            => 'Aucune Activité trouvée',
+            => 'Aucune Activité trouvée.',
         'Related'
             => 'Associé',
         'Related to'

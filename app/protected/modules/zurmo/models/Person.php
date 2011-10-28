@@ -55,6 +55,7 @@
             return array_merge(parent::untranslatedAttributeLabels(),
                 array(
                     'fullName' => 'Name',
+                    'title'    => 'Salutation',
                 )
             );
         }

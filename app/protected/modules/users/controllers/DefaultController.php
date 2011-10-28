@@ -93,7 +93,7 @@
         {
             $user             = new User();
             $user->language   = Yii::app()->language;
-            $user->currency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $user->currency   = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
             $user->setScenario('createUser');
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('createUser');
@@ -180,7 +180,8 @@
                 }
                 $savedSucessfully   = false;
                 $modelToStringValue = null;
-                $model            = $this->saveModelFromPost($sanitizedPostdata, $model, $savedSucessfully, $modelToStringValue);
+                $model            = ZurmoControllerUtil::saveModelFromPost($sanitizedPostdata, $model,
+                                                                           $savedSucessfully, $modelToStringValue);
                 if ($savedSucessfully)
                 {
                     if ($userStatus != null)

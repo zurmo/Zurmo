@@ -53,13 +53,19 @@
             => 'Adresse de facturation',
         'Create AccountsModuleSingularLabel'
             => 'Nouveau AccountsModuleSingularLabel',
+        'Customer'
+            => 'Client',
         'Employees'
             => 'Employés',
         'My AccountsModulePluralLabel'
             => 'Mes AccountsModulePluralLabel',
+        'Parent Account'
+            => 'Compte Parent',
+        'Prospect'
+            => 'Prospect',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel principal',
-        'Type'
-            => 'Type',
+        'Vendor'
+            => 'Vendeur',
     );
 ?>

@@ -92,6 +92,18 @@
             parent::unrestrictedDelete();
         }
 
+        /**
+         * Override to handle Person mixin.  When the Person is the baseModelClassName, we should ignore trying to
+         * resolve the column.  Otherwise a phantom person_id is created on CustomFieldsModel.
+         */
+        protected static function resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName)
+        {
+            if($baseModelClassName != 'Person')
+            {
+                parent::resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName);
+            }
+        }
+
         protected function linkBeans()
         {
             // Link the beans up the inheritance hierarchy, skipping
@@ -566,9 +578,20 @@
 
         public function validateTimeZone($attribute, $params)
         {
-            if ($this->$attribute != null && new DateTimeZone($this->$attribute) === false)
+            if ($this->$attribute != null)
             {
-                $this->addError('timeZone', Yii::t('Default', 'The time zone is invalid.'));
+                try
+                {
+                    if(new DateTimeZone($this->$attribute) === false)
+                    {
+                        $this->addError('timeZone', Yii::t('Default', 'The time zone is invalid.'));
+                    }
+                }
+                catch(Exception $e)
+                {
+                    //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
+                    $this->$attribute == 'UTC';
+                }
             }
         }
     }

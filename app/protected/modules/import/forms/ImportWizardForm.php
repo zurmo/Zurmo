@@ -183,7 +183,17 @@
             if (!ImportRulesUtil::areAllRequiredAttributesMappedOrHaveRules($requiredAttributeCollection,
                                                                            $mappedAttributeImportRulesCollection))
             {
-                $this->addError('mappingData', Yii::t('Default', 'All required attributes must be mapped or added.'));
+                $attributesLabelContent = null;
+                foreach($requiredAttributeCollection as $noteUsed => $attributeData)
+                {
+                    if($attributesLabelContent != null)
+                    {
+                        $attributesLabelContent .= ', ';
+                    }
+                    $attributesLabelContent .= $attributeData['attributeLabel'];
+                }
+                $this->addError('mappingData', Yii::t('Default', 'All required fields must be mapped or added: {attributesLabelContent}',
+                                                      array('{attributesLabelContent}' => $attributesLabelContent)));
             }
             try
             {
@@ -191,8 +201,8 @@
             }
             catch (ImportAttributeMappedMoreThanOnceException $e)
             {
-                $this->addError('mappingData', Yii::t('Default',
-                'The following attribute is mapped more than once. {message}', array('{message}' => $e->getMessage())));
+                $this->addError('mappingData', Yii::t('Default', 'The following field is mapped more than once. {message}',
+                                               array('{message}' => $e->getMessage())));
             }
         }
     }

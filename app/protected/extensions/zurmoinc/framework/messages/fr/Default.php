@@ -31,6 +31,8 @@
     return array(
         '(None)'
             => '(Aucun)',
+        '{attribute} "{value}" is already in use.'
+            => '{attribute} "{value}"est déjà utilisé.',
         'Add File'
             => 'Ajouter un Fichier',
         'Add Files'
@@ -65,6 +67,8 @@
             => 'Date Crée',
         'Created On'
             => 'Crée',
+        'CustomManagement class needs to be extended.'
+            => 'La classe CustomManagement doit être étendue.',
         'Date'
             => 'Date',
         'Date Time'
@@ -98,7 +102,7 @@
         'from'
             => 'de',
         'Full Name'
-            => 'Nom',
+            => 'Nom complet',
         'Go to Details'
             => 'Au détails',
         'Hour'
@@ -111,6 +115,8 @@
             => 'Nombre entier',
         'Invalid'
             => 'Invalide',
+        'Invalid currency code'
+            => 'Code de devise invalide',
         'Last Modified'
             => 'Dernière modification',
         'Last Modified Date and User'
@@ -136,7 +142,7 @@
         'Module Name'
             => 'Nom du Module',
         'More Details'
-            => 'Plus de détails',
+            => 'Plus de dtails',
         'More Options'
             => 'Plus d\'options',
         'My List View'
@@ -145,12 +151,18 @@
             => 'Nom',
         'No'
             => 'Non',
+        'No import processes found.'
+            => 'Aucun traitement d\'importation trouvé.',
         'None'
             => 'Aucun',
         'Now'
             => 'Maintenant',
+        'of'
+            => 'sur',
         'Opted Out'
             => 'Opt out',
+        'or'
+            => 'ou',
         'Panel'
             => 'Panneau',
         'Panel Settings'
@@ -180,7 +192,7 @@
         'Select'
             => 'Sélectionner',
         'selected for updating.'
-            => 'sélectionnée(s)',
+            => 'sélectionnée(s).',
         'Serialized Data'
             => 'Serialized Data',
         'Some values cannot be removed because they are currently in use. ' .
@@ -195,8 +207,10 @@
             => 'Le fichier n\'existe pas.',
         'There was an error uploading the file.'
             => 'Erreur de téléchargement de fichier.',
+        'There was an error with the web service.'
+            => 'Il y avait une erreur avec le service web.',
         'This module doesn\'t have anything to configure.'
-            => 'Il n\'y a rien a configurer',
+            => 'Il n\'y a rien a configurer.',
         'This pick-list is used by more than one module.'
             => 'Cette liste déroulante est utilisée dans les modules suivants:',
         'This portlet will be removed, ok?'
@@ -213,12 +227,14 @@
             => 'Demain',
         'total'
             => 'total',
+        'Type'
+            => 'Type',
         'Unknown'
             => 'Inconnu',
         'Update Selected'
             => 'Actualiser les données',
         'updated successfully.'
-            => 'mise à jour complète',
+            => 'mise à jour complète.',
         'Updating'
             => 'Actualisation en progrès',
         'User'
@@ -238,6 +254,6 @@
         'You must specify a value.'
             => 'Vous devez spécifier une valeur.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '{attribute} est trop précis(e) (la précision maximale est {precision})',
+            => '{attribute} est trop précis(e) (la précision maximale est {precision}).',
     );
 ?>

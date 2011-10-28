@@ -43,6 +43,15 @@
             return array('Contact', 'ContactsFilteredList');
         }
 
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                              = array();
+            $labels[self::RIGHT_CREATE_CONTACTS] = 'Create ContactsModulePluralLabel';
+            $labels[self::RIGHT_DELETE_CONTACTS] = 'Delete ContactsModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_CONTACTS] = 'Access ContactsModulePluralLabel Tab';
+            return $labels;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();

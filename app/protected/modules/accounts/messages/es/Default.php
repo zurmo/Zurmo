@@ -53,13 +53,19 @@
             => 'Dirección de facturación',
         'Create AccountsModuleSingularLabel'
             => 'Crear una AccountsModuleSingularLabel',
+        'Customer'
+            => '??',
         'Employees'
             => '??',
         'My AccountsModulePluralLabel'
             => '??',
+        'Parent Account'
+            => '??',
+        'Prospect'
+            => '??',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel Relacionadas',
-        'Type'
+        'Vendor'
             => '??',
     );
 ?>

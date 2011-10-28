@@ -76,5 +76,33 @@
         {
             return true;
         }
+
+        /**
+         * This override is here because sometimes certain elements should not be modified based on the
+         * SavableMetadataRules.  An example is the contact status that should never show a blank entry for the edit
+         * view.
+         * @param string $rule
+         * @param array $elementInformation
+         * @param string $viewClassName
+         */
+        protected static function doesRuleApplyToElement($rule, $elementInformation, $viewClassName)
+        {
+            assert('is_string($rule)');
+            assert('is_array($elementInformation)');
+            assert('is_string($viewClassName)');
+            if ($elementInformation['type'] != null)
+            {
+                $editAndDetailsViewRulesClassName = $elementInformation['type'] . 'EditAndDetailsViewAttributeRules';
+                if(@class_exists($editAndDetailsViewRulesClassName))
+                {
+                    $ignoredRules              = $editAndDetailsViewRulesClassName::getIgnoredSavableMetadataRules();
+                    if (in_array($rule, $ignoredRules))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 ?>

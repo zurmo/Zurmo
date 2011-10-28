@@ -52,7 +52,106 @@
         }
 
         /**
+         * Test when a normal user who can only view records he owns, tries to import records assigned to another user.
          * @depends testSetDataAnalyzerMessagesDataToImport
+         */
+        public function testImportSwitchingOwnerButShouldStillCreate()
+        {
+            $super = User::getByUsername('super');
+            $jim   = User::getByUsername('jim');
+            Yii::app()->user->userModel = $jim;
+
+            //Confirm Jim can can only view ImportModelTestItems he owns.
+            $item       = NamedSecurableItem::getByName('ImportModule');
+            $this->assertEquals(Permission::NONE, $item->getEffectivePermissions($jim));
+
+            //Unfreeze since the test model is not part of the standard schema.
+            $freezeWhenComplete = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freezeWhenComplete = true;
+            }
+
+            $testModels                        = ImportModelTestItem::getAll();
+            $this->assertEquals(0, count($testModels));
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'ImportModelTestItem';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::createTempTableByFileNameAndTableName('importEmptyCurrencyTest.csv', $import->getTempTableName());
+
+            $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $columnMappingData         = array('attributeIndexOrDerivedType' => 'owner',
+                                               'type'                        => 'extraColumn',
+                                               'mappingRulesData'            => array(
+                                                   'DefaultModelNameIdMappingRuleForm' =>
+                                                   array('defaultModelId' => $super->id),
+                                                   'UserValueTypeModelAttributeMappingRuleForm' =>
+                                                   array('type' =>
+                                                   UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)));
+
+            $mappingData = array(
+                'column_0'  => ImportMappingUtil::makeStringColumnMappingData      ('lastName'),
+                'column_1'  => ImportMappingUtil::makeStringColumnMappingData      ('string'),
+                'column_2'  => $columnMappingData
+            );
+
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
+            $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
+            ImportUtil::importByDataProvider($dataProvider,
+                                             $importRules,
+                                             $mappingData,
+                                             $importResultsUtil,
+                                             new ExplicitReadWriteModelPermissions(),
+                                             $messageLogger);
+            $importResultsUtil->processStatusAndMessagesForEachRow();
+
+            //Confirm that 2 models where created.
+            $testModels = ImportModelTestItem::getAll();
+            $this->assertEquals(2, count($testModels));
+
+            foreach ($testModels as $model)
+            {
+                $this->assertEquals(array(Permission::NONE, Permission::NONE), $model->getExplicitActualPermissions ($jim));
+            }
+
+            //Confirm 10 rows were processed as 'created'.
+            $this->assertEquals(2, ImportDatabaseUtil::getCount($import->getTempTableName(), "status = "
+                                                                 . ImportRowDataResultsUtil::CREATED));
+
+            //Confirm that 0 rows were processed as 'updated'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::UPDATED));
+
+            //Confirm 2 rows were processed as 'errors'.
+            $this->assertEquals(0, ImportDatabaseUtil::getCount($import->getTempTableName(),  "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR));
+
+            $beansWithErrors = ImportDatabaseUtil::getSubset($import->getTempTableName(),     "status = "
+                                                                 . ImportRowDataResultsUtil::ERROR);
+            $this->assertEquals(0, count($beansWithErrors));
+
+            //Clear out data in table
+            R::exec("delete from " . ImportModelTestItem::getTableName('ImportModelTestItem'));
+
+            //Re-freeze if needed.
+            if ($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
+            }
+        }
+
+        /**
+         * @depends testImportSwitchingOwnerButShouldStillCreate
          */
         public function testImportWithoutCurrencyValues()
         {

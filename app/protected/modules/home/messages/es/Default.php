@@ -37,18 +37,22 @@
             => '??',
         '2 Columns Right Strong'
             => '??',
+        'Access Dashboards'
+            => '??',
         'Add Portlet'
             => '??',
         'Are you sure want to delete this dashboard?'
             => 'Está seguro que quiere eliminar está panel de widgets?',
         'Create Dashboard'
             => 'Crear un Panel de Widgets',
+        'Create Dashboards'
+            => '??',
         'Dashboard'
             => 'Panel de Widgets',
-        'Dashboard portlet list page size'
-            => '??',
         'Delete Dashboard'
             => 'Eliminar Panel de Widgets',
+        'Delete Dashboards'
+            => '??',
         'Edit Dashboard'
             => 'Editar el Panel de Widgets',
         'Home'

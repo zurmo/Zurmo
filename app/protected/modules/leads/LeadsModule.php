@@ -50,6 +50,16 @@
             return array('LeadsFilteredList');
         }
 
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                            = array();
+            $labels[self::RIGHT_CREATE_LEADS]  = 'Create LeadsModulePluralLabel';
+            $labels[self::RIGHT_DELETE_LEADS]  = 'Delete LeadsModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_LEADS]  = 'Access LeadsModulePluralLabel Tab';
+            $labels[self::RIGHT_CONVERT_LEADS] = 'Convert LeadsModulePluralLabel';
+            return $labels;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();

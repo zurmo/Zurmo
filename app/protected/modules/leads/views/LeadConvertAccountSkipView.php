@@ -62,7 +62,9 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr>';
-            $content .= '<th>' . Yii::t('Default', 'Complete lead conversion without selecting or creating an account.') . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Complete LeadsModuleSingularLowerCaseLabel conversion without ' .
+                                                   'selecting or creating an AccountsModuleSingularLowerCaseLabel.',
+                                                   LabelUtil::getTranslationParamsForAllModules()) . '</th>';
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';

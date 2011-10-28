@@ -34,14 +34,21 @@
         {
             return array(
                 'activities',
-                'contacts',
-                'leads',
             );
         }
 
         public function getRootModelNames()
         {
             return array('Meeting');
+        }
+
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                              = array();
+            $labels[self::RIGHT_CREATE_MEETINGS] = 'Create MeetingsModulePluralLabel';
+            $labels[self::RIGHT_DELETE_MEETINGS] = 'Delete MeetingsModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_MEETINGS] = 'Access MeetingsModulePluralLabel';
+            return $labels;
         }
 
         public static function getDefaultMetadata()

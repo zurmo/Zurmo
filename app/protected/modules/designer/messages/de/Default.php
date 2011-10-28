@@ -55,8 +55,6 @@
             => '??',
         'A text field'
             => '??',
-        'A user field'
-            => '??',
         'Access Designer Tool'
             => '??',
         'Address fields'
@@ -81,7 +79,7 @@
             => '??',
         'Designer Tool'
             => '??',
-        'Detail And Edit View'
+        'Detail and Edit View'
             => '??',
         'Details View'
             => '??',
@@ -133,8 +131,6 @@
             => '??',
         'Maximum Value must be larger than the minimum value'
             => '??',
-        'Menu'
-            => '??',
         'Menus'
             => '??',
         'Minimum Value'
@@ -155,6 +151,8 @@
             => '??',
         'Pick List'
             => '??',
+        'Pick List Value Translations'
+            => '??',
         'Pick List Values'
             => '??',
         'Popup List View'
@@ -172,8 +170,6 @@
         'Save Layout'
             => '??',
         'Search View'
-            => '??',
-        'Standard Fields'
             => '??',
         'Text'
             => '??',

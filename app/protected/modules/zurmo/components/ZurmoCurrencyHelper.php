@@ -39,9 +39,18 @@
          */
         protected $_baseCode;
 
-        protected $webServiceErrorMessage;
+        /**
+         * Which service type to use: GrandTotal(default) or WebServiceX
+         * It can be changed in config
+         * @var string
+         */
+        protected $_serviceType;
 
-        protected $webServiceErrorCode;
+        /**
+         * Currency service utility class, based on $_serviceType
+         * @var CurrencyServiceUtil
+         */
+        protected $currencyService;
 
         /**
          * This is set from the value in the application common config file.
@@ -55,6 +64,28 @@
         public function getBaseCode()
         {
             return $this->_baseCode;
+        }
+
+        /**
+        * This is set from the value in the application common config file.
+        */
+        public function setServiceType($value)
+        {
+            assert('is_string($value)');
+            $this->_serviceType = $value;
+            $this->setCurrencyService();
+        }
+
+        public function getServiceType()
+        {
+            return $this->_serviceType;
+        }
+
+        protected function setCurrencyService()
+        {
+            $className = $this->getServiceType() . 'CurrencyServiceUtil';
+            assert('class_exists($className)');
+            $this->currencyService = new $className;
         }
 
         /**
@@ -103,7 +134,7 @@
             {
                 return 1;
             }
-            $rate = $this->getConversionRateViaWebService($fromCode, $this->getBaseCode());
+            $rate = $this->currencyService->getConversionRateViaWebService($fromCode, $this->getBaseCode());
             if ($rate == null)
             {
                 return 1;
@@ -111,76 +142,14 @@
             return $rate;
         }
 
-        /**
-         * @param $error - string by reference to attach error to if needed.
-         * @return rate as a float, otherwise null if there is some sort of error
-         */
-        protected function getConversionRateViaWebService($fromCode, $toCode)
-        {
-            $url  = 'http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate?FromCurrency=';
-            $url .= $fromCode . '&ToCurrency=' . $toCode;
-            $ch = curl_init();
-            $timeout = 2;
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            $file_contents = curl_exec($ch);
-            if ($file_contents === false || empty($file_contents))
-            {
-                $this->webServiceErrorMessage = curl_error($ch);
-                $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_WEB_SERVICE;
-                return null;
-            }
-            curl_close($ch);
-            if (!empty($file_contents) &&
-                false !== $xml = @simplexml_load_string($file_contents))
-            {
-                if (is_object($xml) && $xml instanceof SimpleXMLElement)
-                {
-                    $xmlAsArray = (array)$xml;
-                    return $xmlAsArray[0];
-                }
-                elseif (is_array($xml))
-                {
-                    return $xml[0];
-                }
-                else
-                {
-                    return null; //todo: throw exception
-                }
-            }
-            if (stripos($file_contents, 'error') === false)
-            {
-                $this->webServiceErrorMessage = Yii::t('Default', 'Invalid currency code');
-                $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_INVALID_CODE;
-            }
-            else
-            {
-                $this->webServiceErrorMessage = Yii::t('Default', 'There was an error with the web service.');
-                $this->webServiceErrorCode    = ZurmoCurrencyHelper::ERROR_WEB_SERVICE;
-            }
-            return null;
-        }
-
         public function getWebServiceErrorMessage()
         {
-            return $this->webServiceErrorMessage;
+            return $this->currencyService->getWebServiceErrorMessage();
         }
 
         public function getWebServiceErrorCode()
         {
-            return $this->webServiceErrorCode;
-        }
-
-        /**
-         * After you make a call to a method that envokes a webService, reset the errors.
-         * @see getConversionRateViaWebService
-         */
-        public function resetErrors()
-        {
-            $this->webServiceErrorMessage  = null;
-            $this->webServiceErrorCode     = null;
+            return $this->currencyService->getWebServiceErrorCode();
         }
 
         /**

@@ -42,6 +42,15 @@
             return array('Task');
         }
 
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                           = array();
+            $labels[self::RIGHT_CREATE_TASKS] = 'Create TasksModulePluralLabel';
+            $labels[self::RIGHT_DELETE_TASKS] = 'Delete TasksModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_TASKS] = 'Access TasksModulePluralLabel';
+            return $labels;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();

@@ -65,9 +65,11 @@
             => '??',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
             => '??',
-        'Address'
-            => '??',
         'Ad-hoc / Owner'
+            => '??',
+        'Add Currency'
+            => '??',
+        'Address'
             => '??',
         'Admin'
             => 'Admin',
@@ -109,6 +111,12 @@
             => '??',
         'Audit Trail'
             => '??',
+        'Automotive'
+            => '??',
+        'Banking'
+            => '??',
+        'Business Services'
+            => '??',
         'Cancel'
             => '??',
         'Changes to active currencies changed successfully.'
@@ -149,6 +157,8 @@
             => '??',
         'Currency Value'
             => '??',
+        'Dashboard portlet list page size'
+            => '??',
         'Data'
             => '??',
         'days'
@@ -167,7 +177,13 @@
             => '??',
         'Description'
             => '??',
+        'Dr.'
+            => '??',
         'Email Address'
+            => '??',
+        'Energy'
+            => '??',
+        'Event Name'
             => '??',
         'every'
             => '??',
@@ -184,6 +200,8 @@
         'Filter By Created User'
             => '??',
         'Filtered Lists'
+            => '??',
+        'Financial Services'
             => '??',
         'First Name'
             => '??',
@@ -207,6 +225,8 @@
             => 'aquí',
         'Home'
             => '??',
+        'Inbound Call'
+            => '??',
         'Incorrect username or password.'
             => '??',
         'Industry'
@@ -224,6 +244,8 @@
         'Inherited - Yes'
             => '??',
         'Inherited Value:'
+            => '??',
+        'Insurance'
             => '??',
         'Invalid currency code'
             => '??',
@@ -261,12 +283,18 @@
             => '??',
         'Manage Roles'
             => '??',
+        'Manufacturing'
+            => '??',
         'Member'
             => '??',
         'Member Of'
             => '??',
         'Members'
             => '??',
+        'Menu'
+            => '??',
+        'Missing Required Fields'
+            => 'Les champs obligatoires doivent être placés dans la vue',
         'Mobile Phone'
             => '??',
         'Module Name - Plural'
@@ -280,6 +308,12 @@
         'Module Permissions'
             => '??',
         'Module Permissions Saved Successfully.'
+            => '??',
+        'Mr.'
+            => '??',
+        'Mrs.'
+            => '??',
+        'Ms.'
             => '??',
         'My List Configuration View'
             => '??',
@@ -343,6 +377,8 @@
             => '??',
         'Remember me next time'
             => '??',
+        'Retail'
+            => '??',
         'Return to Admin Menu'
             => '??',
         'Rights'
@@ -371,6 +407,8 @@
             => '??',
         'Select a Role'
             => '??',
+        'Self-Generated'
+            => '??',
         'Shipping Address'
             => '??',
         'Size'
@@ -383,7 +421,11 @@
             => '??',
         'Stage'
             => '??',
+        'Standard Fields'
+            => '??',
         'State'
+            => '??',
+        'Status'
             => '??',
         'Street 1'
             => '??',
@@ -395,17 +437,19 @@
             => '??',
         'Super Administrators'
             => 'Superadministradores',
+        'Technology'
+            => '??',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => '??',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
             => '??',
         'The currency was not removed because it is in use.'
             => '??',
+        'The status specified is invalid.'
+            => '??',
         'There are no recently viewed items.'
             => '??',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
-            => '??',
-        'There was an error with the web service.'
             => '??',
         'This action is only available in debug mode.'
             => '??',
@@ -417,7 +461,11 @@
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
             => 'para continuar a la página de inicio. Si el error persiste, por favor haga una cosa u otra.',
+        'Tradeshow'
+            => '??',
         'Type a currency code or name to search.'
+            => '??',
+        'Update'
             => '??',
         'User Membership'
             => '??',
@@ -434,6 +482,8 @@
         'What is this?'
             => '??',
         'Who can read and write'
+            => '??',
+        'Word of Mouth'
             => '??',
         'You have tried to access a page you do not have access to.'
             => '??',

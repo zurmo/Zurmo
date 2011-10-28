@@ -31,6 +31,8 @@
     return array(
         '(None)'
             => '??',
+        '{attribute} "{value}" is already in use.'
+            => '??',
         'Add File'
             => '??',
         'Add Files'
@@ -65,6 +67,8 @@
             => '??',
         'Created On'
             => 'Creado el',
+        'CustomManagement class needs to be extended.'
+            => '??',
         'Date'
             => '??',
         'Date Time'
@@ -111,6 +115,8 @@
             => '??',
         'Invalid'
             => 'Inválido',
+        'Invalid currency code'
+            => '??',
         'Last Modified'
             => 'Última Modificación',
         'Last Modified Date and User'
@@ -145,12 +151,18 @@
             => 'Nombre',
         'No'
             => '??',
+        'No import processes found.'
+            => '??',
         'None'
             => 'Ninguno',
         'Now'
             => '??',
+        'of'
+            => '??',
         'Opted Out'
             => 'Se Excluido',
+        'or'
+            => '??',
         'Panel'
             => '??',
         'Panel Settings'
@@ -194,6 +206,8 @@
             => '??',
         'There was an error uploading the file.'
             => '??',
+        'There was an error with the web service.'
+            => '??',
         'This module doesn\'t have anything to configure.'
             => 'Este módulo no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
@@ -211,6 +225,8 @@
         'Tomorrow'
             => 'Mañana',
         'total'
+            => '??',
+        'Type'
             => '??',
         'Unknown'
             => '??',

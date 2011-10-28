@@ -29,6 +29,10 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A user field'
+            => '??',
+        'Access Users Tab'
+            => '??',
         'Change Password'
             => '??',
         'Change User Passwords'
@@ -38,6 +42,8 @@
         'Create User'
             => '??',
         'Create Users'
+            => '??',
+        'day(s)'
             => '??',
         'Enforce Strong Passwords'
             => '??',

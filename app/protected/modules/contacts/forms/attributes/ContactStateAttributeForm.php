@@ -27,8 +27,15 @@
     class ContactStateAttributeForm extends AttributeForm implements CollectionAttributeFormInterface
     {
         public $contactStatesData;
+
         public $startingStateOrder;
+
         public $contactStatesLabels;
+        /**
+         * Used when changing the value of an existing data item.  Coming in from a post, this array will have the
+         * old values that can be used to compare against and update the new values accordingly based on any changes.
+         */
+        public $contactStatesDataExistingValues;
 
         public function __construct(Contact $model = null, $attributeName = null)
         {
@@ -49,6 +56,7 @@
                 array('contactStatesData',    'required', 'message' => 'You must have at least one status.'),
                 array('contactStatesData',    'validateContactStatesData'),
                 array('contactStatesLabels',  'safe'),
+                array('contactStatesDataExistingValues',  'safe'),
             ));
         }
 
@@ -68,7 +76,7 @@
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'The contact state field');
+            return Yii::t('Default', 'The contact stage field');
         }
 
         public function getAttributeTypeName()

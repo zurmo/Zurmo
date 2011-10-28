@@ -31,10 +31,16 @@
     return array(
         'Close Date'
             => '??',
+        'Closed Lost'
+            => '??',
+        'Closed Won'
+            => '??',
         'Create OpportunitiesModuleSingularLabel'
             => '?? OpportunitiesModuleSingularLabel',
         'My OpportunitiesModulePluralLabel'
             => '?? OpportunitiesModulePluralLabel',
+        'Negotiating'
+            => '??',
         'Opportunities'
             => '??',
         'Opportunities By Lead Source'
@@ -54,6 +60,12 @@
         'Opportunity'
             => '??',
         'Probability'
+            => '??',
+        'Prospecting'
+            => '??',
+        'Qualification'
+            => '??',
+        'Verbal'
             => '??',
     );
 ?>

@@ -37,17 +37,21 @@
             => '??',
         '2 Columns Right Strong'
             => '??',
+        'Access Dashboards'
+            => '??',
         'Add Portlet'
             => '??',
         'Are you sure want to delete this dashboard?'
             => '??',
         'Create Dashboard'
             => '??',
+        'Create Dashboards'
+            => '??',
         'Dashboard'
             => '??',
-        'Dashboard portlet list page size'
-            => '??',
         'Delete Dashboard'
+            => '??',
+        'Delete Dashboards'
             => '??',
         'Edit Dashboard'
             => '??',
