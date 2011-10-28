@@ -422,11 +422,11 @@
     function getSecurableModuleRightsPoliciesAndAuditEventLabels($moduleClassName)
     {
         assert('is_string($moduleClassName)');
-        $rightsNames     = $moduleClassName::getRightsNames();
-        $policiesNames   = $moduleClassName::getPolicyNames();
+        $rightsNames     = $moduleClassName::getUntranslatedRightsLabels();
+        $policiesNames   = $moduleClassName::getUntranslatedPolicyLabels();
         $auditEventNames = $moduleClassName::getAuditEventNames();
-        $labelsData = array_merge($rightsNames, $policiesNames);
-        return        array_merge($labelsData, $auditEventNames);
+        $labelsData      = array_merge($rightsNames, $policiesNames);
+        return             array_merge($labelsData, $auditEventNames);
     }
 
     function findFileNameToUnexpectedlyFormattedYiiT($path)
