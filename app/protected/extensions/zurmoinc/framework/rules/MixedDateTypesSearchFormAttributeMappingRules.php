@@ -95,13 +95,13 @@
 
         public static function getValidValueTypesAndLabels()
         {
-            return array(self::TYPE_YESTERDAY   => Yii::t('Default', self::TYPE_YESTERDAY),
-                         self::TYPE_TODAY       => Yii::t('Default', self::TYPE_TODAY),
-                         self::TYPE_TOMORROW    => Yii::t('Default', self::TYPE_TOMORROW),
-                         self::TYPE_BEFORE      => Yii::t('Default', self::TYPE_BEFORE),
-                         self::TYPE_AFTER       => Yii::t('Default', self::TYPE_AFTER),
-                         self::TYPE_NEXT_7_DAYS => Yii::t('Default', self::TYPE_NEXT_7_DAYS),
-                         self::TYPE_LAST_7_DAYS => Yii::t('Default', self::TYPE_LAST_7_DAYS),
+            return array(self::TYPE_YESTERDAY   => Yii::t('Default', 'Yesterday'),
+                         self::TYPE_TODAY       => Yii::t('Default', 'Today'),
+                         self::TYPE_TOMORROW    => Yii::t('Default', 'Tomorrow'),
+                         self::TYPE_BEFORE      => Yii::t('Default', 'Before'),
+                         self::TYPE_AFTER       => Yii::t('Default', 'After'),
+                         self::TYPE_NEXT_7_DAYS => Yii::t('Default', 'Next 7 Days'),
+                         self::TYPE_LAST_7_DAYS => Yii::t('Default', 'Last 7 Days'),
             );
         }
 

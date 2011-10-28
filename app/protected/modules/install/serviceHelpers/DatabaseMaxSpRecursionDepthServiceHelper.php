@@ -32,7 +32,7 @@
         protected $required = true;
         protected $form;
 
-        protected $minimumRequiredMaxSpRecursionDepth = 100;
+        protected $minimumRequiredMaxSpRecursionDepth = 20;
 
         public function __construct($form)
         {

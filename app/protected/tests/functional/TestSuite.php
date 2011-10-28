@@ -44,6 +44,7 @@
     define('USER_EXTENSIONS_JS_PATH', './assets/extensions/user-extensions.js');
     define('SELENIUM_SERVER_PORT', $seleniumServerPort);
     define('BROWSERS_TO_RUN', $seleniumBrowsersToRun);
+    define('TEST_BASE_DB_CONTROL_URL', $seleniumDbControlUrl);
 
     require_once('File/Iterator/Factory.php');
     class TestSuite
@@ -159,10 +160,20 @@
             }
             echo 'Running Test Suites using Selenium RC v2:' . "\n";
             $browsersToRun = self::resolveBrowserFromParameter();
+            echo "Backup test db";
+            self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'backup'));
+            echo "Backup done";
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
                 {
+                    echo 'Restoring test db';
+                    self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
+                    echo "Restored test db";
+                    echo 'Clear cache on remote server';
+                    self::remoteAction(TEST_BASE_URL, array('clearCache' => '1'));
+                    echo "Cache cleared";
+
                     echo 'Running test suite: ';
                     echo $pathToSuite . "\n";
 
@@ -186,6 +197,8 @@
                     $finalCommand .= ' -userExtensions ' . self::resolveUserExtensionsJsFromParameterAndConstant();
                     echo $finalCommand . "\n";
                     exec($finalCommand);
+					echo 'Restoring test db';
+                    self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                 }
             }
             echo 'Functional Run Complete.' . "\n";
@@ -452,6 +465,56 @@
             else
             {
                 echo "The file $fileName is not writable";
+            }
+        }
+
+        /**
+         * Backup and restore database
+         * @param string url
+         * @param string $action
+         */
+        protected static function remoteAction($url, $params){
+            if (!$url)
+            {
+                echo "Invalid db control url";
+                exit;
+            }
+            if (isset($params['action']) && in_array($params['action'], array('backup', 'restore')))
+            {
+                $url = $url . "?action=" . urlencode($params['action']);
+            }elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
+            {
+                $url = $url . "index.php?r=zurmo/default/login&clearCache=1";
+				echo $url;
+				//exit;
+            }
+            else {
+                echo "Invalid params";
+                exit;
+            }
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true );
+			curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
+            curl_exec($ch);
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $error_info = curl_error($ch);
+            curl_close($ch);
+
+            if($httpcode == 200 )
+            {
+                return true;
+            }
+            else
+            {
+                echo $error_info;
+                exit;
             }
         }
     }
