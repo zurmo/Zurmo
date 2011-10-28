@@ -30,36 +30,38 @@
     // DON'T MAKE A MESS!
     return array(
         'Attendees'
-            => 'Asistentes',
+            => '??',
+        'Call'
+            => '??',
         'Category'
-            => 'Categoría',
+            => '??',
         'End Time'
-            => 'Hora de finalización',
+            => '??',
         'Location'
-            => 'Lugar',
+            => '??',
         'Meeting'
-            => 'reunión',
+            => '??',
         'Meetings'
-            => 'Reuniones',
+            => '??',
         'MeetingsModulePluralLabel'
             => 'MeetingsModulePluralLabel',
         'MeetingsModulePluralLabel For AccountsModuleSingularLabel'
-            => 'MeetingsModulePluralLabel para AccountsModuleSingularLabel',
+            => '??',
         'MeetingsModulePluralLabel For ContactsModuleSingularLabel'
-            => 'MeetingsModulePluralLabel para ContactsModuleSingularLabel',
+            => '??',
         'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => 'MeetingsModulePluralLabel para OpportunitiesModuleSingularLabel',
+            => '??',
         'MeetingsModuleSingularLabel'
             => 'MeetingsModuleSingularLabel',
         'My Upcoming MeetingsModulePluralLabel'
-            => 'mis próximas MeetingsModulePluralLabel',
+            => '??',
         'Related ContactsModulePluralLabel and LeadsModulePluralLabel'
-            => 'Related ContactsModulePluralLabel y LeadsModulePluralLabel',
+            => '??',
         'Start Time'
-            => 'hora de inicio',
+            => '??',
         'Type a ContactsModuleSingularLowerCaseLabel or LeadsModuleSingularLowerCaseLabel: name or email address'
-            => 'Escribir un ContactsModuleSingularLowerCaseLabel o LeadsModuleSingularLowerCaseLabel: nombre o dirección de email',
+            => '??',
         'Upcoming MeetingsModulePluralLabel'
-            => 'próximos MeetingsModulePluralLabel',
+            => '??',
     );
 ?>

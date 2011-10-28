@@ -49,15 +49,15 @@
         'Congratulations! The demo data has been successfully loaded.'
             => 'Succès! Les données de démonstration sont installés.',
         'Congratulations! The installation of Zurmo is complete.'
-            => 'Succès! L\'installation de Zurmo est complèt ',
+            => 'Succès! L\'installation de Zurmo est complèt.',
         'Connecting to Database.'
-            => 'Connexion à la base de données',
+            => 'Connexion à la base de données.',
         'Continue'
             => 'Suivant',
         'Correctly Installed Services'
             => 'Services optionnels installés avec succès',
         'Creating super user.'
-            => 'Creation du super-utilisateur',
+            => 'Creation du super-utilisateur.',
         'Curl'
             => 'Curl',
         'Database admin password'
@@ -67,23 +67,27 @@
         'Database host'
             => 'L\'hôte de la base de données',
         'Database is in strict mode.'
-            => 'La base de données est au mode strict',
+            => 'La base de données est au mode strict.',
         'Database is not in strict mode.'
-            => 'La base de données n\'est pas au mode strict',
+            => 'La base de données n\'est pas au mode strict.',
         'Database max_allowed_packet size is:'
             => 'Le max_allowed_packet de la base de données est:',
         'Database max_allowed_packet size meets minimum requirement.'
-            => 'La taille max_allowed_packet de la base de données répond aux exigences minimales',
+            => 'La taille max_allowed_packet de la base de données répond aux exigences minimales.',
+        'Database max_sp_recursion_depth size is:'
+            => 'La taille max_sp_recursion_depth est:',
+        'Database max_sp_recursion_depth size meets minimum requirement.'
+            => 'La taille max_sp_recursion_depth répond aux exigences minimales.',
         'Database name'
             => 'Nom de la base de donées',
         'Database password'
             => 'Mot de passe de la base de données',
         'Database schema creation complete.'
-            => 'Schéma de la base de données crée',
+            => 'Schéma de la base de données crée.',
         'Database username'
             => 'Nom de l\'utilisateur de la base de données',
         'Dropping existing tables.'
-            => 'Suppression des tables existantes',
+            => 'Suppression des tables existantes.',
         'Error code:'
             => 'Code d\'Erreur',
         'FAIL'
@@ -107,13 +111,13 @@
         'Install demo data.'
             => 'Installer une base de données de démonstration.',
         'Installation Complete.'
-            => 'Installation terminée',
+            => 'Installation terminée.',
         'Installation in progress. Please wait.'
             => 'Installation en cours.  Veuillez patienter.',
         'Installation Output:'
             => 'Log d\'Installation',
         'is installed, but the version is unknown.'
-            => 'est installé, mais la version est inconnue',
+            => 'est installé, mais la version est inconnue.',
         'is not installed'
             => 'n\'est pas installé',
         'It is highly recommended that all optional services are installed and ' .
@@ -131,9 +135,9 @@
         'Login'
             => 'Connexion',
         'Mbstring is installed.'
-            => 'Mbstring est installé',
+            => 'Mbstring est installé.',
         'Mbstring is not installed.'
-            => 'Mbstring n\'est pas installé',
+            => 'Mbstring n\'est pas installé.',
         'Memcache'
             => 'Memcache',
         'Memcache host'
@@ -152,8 +156,6 @@
             => 'Mysql',
         'Oh no!'
             => 'Zut!',
-        'or'
-            => 'ou',
         'PASS'
             => 'RÉUSSI',
         'PHP'
@@ -166,58 +168,58 @@
             => 'PHP limite de mémoire:',
         'PHP Memory setting meets minimum requirement.'
             => 'Le parametre PHP limite de mémoire répond aux exigences minimales.',
-        'PHP post_max_size_meets minimum requirement.'
+        'PHP post_max_size meets minimum requirement.'
             => 'PHP post_max_size répond aux exigences minimales.',
         'PHP post_max_size setting is:'
             => 'La taille PHP post_max_size est:',
         'PHP Timezone is not set.'
-            => 'Le fuseau horaire PHP n\'est pas configuré',
+            => 'Le fuseau horaire PHP n\'est pas configuré.',
         'PHP Timezone is set.'
-            => 'Le fuseau horaire PHP est configuré',
+            => 'Le fuseau horaire PHP est configuré.',
         'PHP Upload size meets minimum requirement.'
             => 'PHP limite de téléchargement répond aux exigences minimales.',
         'PHP Upload size setting is:'
             => 'PHP limite de téléchargement:',
         'Rebuilding Permissions.'
-            => 'Reconstruction des permissions',
+            => 'Reconstruction des permissions.',
         'Recheck System'
             => 'Revérifie le système',
         'RedBean'
             => 'RedBean',
         'RedBean file is missing patch.'
-            => 'Le fichier RedBean manque le correctif',
+            => 'Le fichier RedBean manque le correctif.',
         'RedBean file is patched correctly'
             => 'Le fichier RedBean contient le correctif',
         'Service Status Partially Known'
             => 'Statut du service partiellement connue',
         'Setting up default data.'
-            => 'Installation des données du système',
+            => 'Installation des données du système.',
         'Since you specified an existing database you must check this box in order ' .
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
             => 'Vous avez spécifiez une base de données existante, cochez la boite pour continuer. ' .
                'LES DONNÉES EXISTANTES SERONT SUPPRIMÉES.',
         'SOAP is installed.'
-            => 'SOAP est installé',
+            => 'SOAP est installé.',
         'SOAP is not installed.'
-            => 'SOAP n\'est pas installé',
+            => 'SOAP n\'est pas installé.',
         'Starting database schema creation.'
-            => 'Création de schémas de base de données',
+            => 'Création de schémas de base de données.',
         'Starting to load demo data.'
-            => 'Création des données de démonstration',
+            => 'Création des données de démonstration.',
         'The database name specified does not exist or the user specified does not have access.'
             => 'La base de données n\'existe pas ou l\'utilisateur n\'est pas autorisé à accéder la source de données.',
         'The debug.php config file is not writable.'
-            => 'Le fichier de configuration debug.php n\'est pas inscriptible',
+            => 'Le fichier de configuration debug.php n\'est pas inscriptible.',
         'The debug.php config file is writable.'
-            => 'Le fichier de configuration debug.php est inscriptible',
+            => 'Le fichier de configuration debug.php est inscriptible.',
         'The name of the database you want to run Zurmo in.'
-            => 'Le nom de la base de données pour Zurmo',
+            => 'Le nom de la base de données pour Zurmo.',
         'The next step is to install the demo data.'
-            => 'La prochaine étape est d\'installer les données de démonstration',
+            => 'La prochaine étape est d\'installer les données de démonstration.',
         'The perInstance.php config file is not writable.'
-            => 'Le fichier de configuration perInstance.php n\'est pas inscriptible',
+            => 'Le fichier de configuration perInstance.php n\'est pas inscriptible.',
         'The perInstance.php config file is writable.'
-            => 'Le fichier de configuration perInstance.php est inscriptible',
+            => 'Le fichier de configuration perInstance.php est inscriptible.',
         'There was a problem creating the database Error code:'
             => 'Il y a eu un problème lors de la création de la base de données d\'erreurs',
         'There was a problem creating the user Error code:'
@@ -225,11 +227,11 @@
         'Tidy'
             => 'Tidys',
         'User who can connect to the database.'
-            => 'L\'utilisateur qui connecte à la base de données',
+            => 'L\'utilisateur qui connecte à la base de données.',
         'User`s password.'
-            => 'Mot de passe d\'utilisateur',
+            => 'Mot de passe d\'utilisateur.',
         'version installed:'
-            => 'version installée',
+            => 'version installée:',
         'WARNING'
             => 'AVERTISSEMENT',
         'WARNING! - If the database already exists the data will be completely removed. ' .
@@ -239,11 +241,11 @@
         'Welcome to Zurmo. Before getting started, we need some information on the database. You will need to know the following items before proceeding:'
             => 'Bienvenue à Zurmo. Avant de commencer, vous devez obtenir les informations suivantes sure votre base de donnéés:',
         'Writing Configuration File.'
-            => 'Création du fichier de configuration',
+            => 'Création du fichier de configuration.',
         'Yii'
             => 'Yii',
         'You cannot access the installation area because the application is already installed.'
-            => 'Vous ne pouvez pas accéder l\'installation parce que l\'application est déjà installée',
+            => 'Vous ne pouvez pas accéder l\'installation parce que l\'application est déjà installée.',
         'You have specified an existing database. If you would like to use this database, ' .
         'then do not specify the database admin username and password. Otherwise pick a database ' .
         'name that does not exist.'

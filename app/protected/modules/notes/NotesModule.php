@@ -32,7 +32,7 @@
 
         public function getDependencies()
         {
-            return array();
+            return array('activities');
         }
 
         public function getRootModelNames()

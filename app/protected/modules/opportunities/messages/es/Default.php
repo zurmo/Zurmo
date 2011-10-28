@@ -30,30 +30,42 @@
     // DON'T MAKE A MESS!
     return array(
         'Close Date'
-            => 'fecha de cierre',
+            => '??',
+        'Closed Lost'
+            => '??',
+        'Closed Won'
+            => '??',
         'Create OpportunitiesModuleSingularLabel'
             => 'Crear una OpportunitiesModuleSingularLabel',
         'My OpportunitiesModulePluralLabel'
-            => 'Mis OpportunitiesModulePluralLabel',
+            => '?? OpportunitiesModulePluralLabel',
+        'Negotiating'
+            => '??',
         'Opportunities'
-            => 'oportunidades',
+            => '??',
         'Opportunities By Lead Source'
-            => 'oportunidades por fuente de prospecto',
+            => '??',
         'Opportunities By Sales Stage'
-            => 'Oportunidades por etapa de ventas',
+            => '??',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
         'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel para AccountsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel ?? AccountsModuleSingularLabel',
         'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel para ContactsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel ?? ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
         'OpportunitiesModuleSingularLabel Search'
-            => 'OpportunitiesModuleSingularLabel búsqueda',
+            => 'OpportunitiesModuleSingularLabel ??',
         'Opportunity'
-            => 'Oportunidad',
+            => '??',
         'Probability'
-            => 'Probabilidad',
+            => '??',
+        'Prospecting'
+            => '??',
+        'Qualification'
+            => '??',
+        'Verbal'
+            => '??',
     );
 ?>

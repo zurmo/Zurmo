@@ -31,6 +31,8 @@
     return array(
         '(None)'
             => '??',
+        '{attribute} "{value}" is already in use.'
+            => '??',
         'Add File'
             => '??',
         'Add Files'
@@ -38,43 +40,45 @@
         'Add Item'
             => '??',
         'Advanced Search'
-            => 'Búsqueda avanzada',
+            => 'Búsqueda Avanzada',
         'All'
             => 'Todo',
         'by'
             => 'por',
         'Cancel'
-            => 'Cancelar',
+            => '??',
         'Cell Settings'
-            => 'Configuración de las células',
+            => '??',
         'Celsius'
             => 'Centígrado',
         'Change Log'
-            => 'Registro de cambios',
+            => 'Registro de Cambios',
         'Changed'
             => 'Cambiado',
         'Clear Search'
-            => 'Restablecer búsqueda',
+            => 'Restablecer Busqueda',
         'Create'
             => '??',
         'Created By User'
-            => 'Creado por',
+            => '??',
         'Created Date and User'
-            => 'Fecha de creación y de usuario',
+            => '??',
         'Created Date Time'
-            => 'Fecha y hora de creación',
+            => '??',
         'Created On'
             => 'Creado el',
+        'CustomManagement class needs to be extended.'
+            => '??',
         'Date'
-            => 'Fecha',
+            => '??',
         'Date Time'
             => '??',
         'Default Value'
             => '??',
         'Delete'
-            => 'Eliminar',
+            => '??',
         'Detail View Only'
-            => 'Solo vista de detalles',
+            => 'Solo Vista de Detalles',
         'Details'
             => 'Detalles',
         'Done'
@@ -82,25 +86,25 @@
         'Edit'
             => 'Editar',
         'Edit Portlet'
-            => 'Modificar portlet',
+            => '??',
         'Error'
-            => 'Error',
+            => '??',
         'Fahrenheit'
             => 'Fahrenheit',
         'Filtered Lists'
-            => 'Lista filtrada',
+            => '??',
         'firstDateTime must occur after secondDateTime'
-            => 'firstDateTime debe ocurrir después secondDateTime',
+            => '??',
         'firstDateTime must occur before secondDateTime'
-            => 'firstDateTime debe ocurrir antes secondDateTime',
+            => '??',
         'Float'
-            => 'Float',
+            => '??',
         'from'
             => 'de',
         'Full Name'
-            => 'Nombre completo',
+            => '??',
         'Go to Details'
-            => 'Ir a detalles',
+            => '??',
         'Hour'
             => '??',
         'Info'
@@ -108,13 +112,15 @@
         'Inline Edit View'
             => '??',
         'Integer'
-            => 'Número entero',
+            => '??',
         'Invalid'
             => 'Inválido',
+        'Invalid currency code'
+            => '??',
         'Last Modified'
-            => 'Última modificación',
+            => 'Última Modificación',
         'Last Modified Date and User'
-            => 'Última modificación fecha y usuario',
+            => '??',
         'List'
             => '??',
         'Loading'
@@ -126,17 +132,17 @@
         'Minute'
             => '??',
         'Model Class Name'
-            => 'Nombre de la clase de modelo',
+            => '??',
         'Model Id'
-            => 'ID de modelo',
+            => '??',
         'Modified By User'
-            => 'Modificado por',
+            => '??',
         'Modified Date Time'
-            => 'Modificado fecha y hora',
+            => '??',
         'Module Name'
-            => 'Nombre de Module',
+            => '??',
         'More Details'
-            => 'Más detalles',
+            => '??',
         'More Options'
             => '??',
         'My List View'
@@ -144,19 +150,25 @@
         'Name'
             => 'Nombre',
         'No'
-            => 'No',
+            => '??',
+        'No import processes found.'
+            => '??',
         'None'
             => 'Ninguno',
         'Now'
-            => 'Ahora',
+            => '??',
+        'of'
+            => '??',
         'Opted Out'
-            => 'Excluido',
+            => 'Se Excluido',
+        'or'
+            => '??',
         'Panel'
-            => 'Panel',
+            => '??',
         'Panel Settings'
-            => 'Configuración de panel',
+            => '??',
         'Panel Title'
-            => 'Título de panel',
+            => '??',
         'Perform Action'
             => '??',
         'Radio Drop Down'
@@ -166,11 +178,11 @@
         'records'
             => 'registros',
         'Remove'
-            => 'Eliminar',
+            => '??',
         'Return to List'
-            => 'Volver a la lista',
+            => 'Volver al la Lista',
         'Row'
-            => 'Fila',
+            => '??',
         'Save'
             => 'Guardar',
         'Search'
@@ -180,29 +192,32 @@
         'Select'
             => 'Seleccionar',
         'selected for updating.'
-            => 'Seleccionado por actualización',
+            => '??',
         'Serialized Data'
-            => 'Datos serializados',
-        'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
-            => 'Algunos valores no se pueden eliminar, ya que están actualmente en uso. Trate de cambiar los registros que usó primero',
+            => '??',
+        'Some values cannot be removed because they are currently in use. ' .
+        'Try changing the records that use them first.'
+            => '??',
         'Start'
             => '??',
         'Tab'
-            => 'Tab',
+            => '??',
         'The file did not exist'
             => '??',
         'There was an error uploading the file.'
             => '??',
+        'There was an error with the web service.'
+            => '??',
         'This module doesn\'t have anything to configure.'
-            => 'Este module no tiene nada para configurar.',
+            => 'Este módulo no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
             => '??',
         'This portlet will be removed, ok?'
             => '??',
         'Time'
-            => 'Tiempo',
+            => '??',
         'Title/First/LastName'
-            => 'Título/Nombre/Appellido',
+            => '??',
         'to'
             => 'a',
         'Today'
@@ -211,8 +226,10 @@
             => 'Mañana',
         'total'
             => '??',
+        'Type'
+            => '??',
         'Unknown'
-            => 'Desconocido',
+            => '??',
         'Update Selected'
             => 'Actualización Seleccionada',
         'updated successfully.'
@@ -220,22 +237,22 @@
         'Updating'
             => '??',
         'User'
-            => 'Usuario',
+            => '??',
         'Users'
-            => 'Usuarios',
+            => '??',
         'Yes'
-            => 'Si',
+            => 'Sí',
         'Yesterday'
             => 'Ayer',
         'You must enter a value'
-            => 'Debe introducir un valor',
+            => '??',
         'You must select at least one field to modify.'
             => '??',
         'You must select at least one record'
             => '??',
         'You must specify a value.'
-            => 'Debe especificar un valor',
+            => '??',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '{attribute} es demasiado preciso (máximo de decimales es {precision}).',
+            => '{attribute} es demasiado preciso (lugares decimals máximo es {precision}).',
     );
 ?>

@@ -30,44 +30,48 @@
     // DON'T MAKE A MESS!
     return array(
         'Company Name'
-            => 'Nombre de la empresa',
+            => '??',
         'Contact'
-            => 'Contacto',
+            => '??',
+        'Contact Stage'
+            => '??',
         'Contact Statuses'
-            => 'Estados de contacto',
+            => '??',
+        'Contact Status Translated Labels'
+            => '??',
         'Contacts'
-            => 'Contactos',
+            => '??',
         'ContactsModulePluralLabel'
             => 'ContactsModulePluralLabel',
         'ContactsModulePluralLabel For AccountsModuleSingularLabel'
-            => 'ContactsModulePluralLabel para AccountsModuleSingularLabel',
+            => 'ContactsModulePluralLabel ?? AccountsModuleSingularLabel',
         'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => 'ContactsModulePluralLabel para OpportunitiesModuleSingularLabel',
+            => 'ContactsModulePluralLabel ?? OpportunitiesModuleSingularLabel',
         'ContactsModuleSingularLabel'
             => 'ContactsModuleSingularLabel',
         'ContactsModuleSingularLabel or LeadsModuleSingularLabel'
-            => 'ContactsModuleSingularLabel o LeadsModuleSingularLabel',
+            => 'ContactsModuleSingularLabel ?? LeadsModuleSingularLabel',
         'ContactsModuleSingularLabel Search'
-            => 'ContactsModuleSingularLabel búsqueada',
+            => 'ContactsModuleSingularLabel Search',
         'Create ContactsModuleSingularLabel'
             => 'Crear una ContactsModuleSingularLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
-            => 'Cada ContactsModuleSingularLowerCaseLabel debe ser un nombre exclusivo',
+            => '?? ContactsModuleSingularLowerCaseLabel ??',
         'My ContactsModulePluralLabel'
-            => 'Mi ContactsModulePluralLabel',
+            => '??',
         'Order'
-            => 'Orden',
+            => '??',
         'Starting Status'
-            => 'Estado de partida',
-        'Status'
-            => 'Estado',
+            => '??',
+        'The contact state field'
+            => '??',
         'The default status specified does not exist.'
-            => 'El estado especificado predeterminado no existe',
+            => '??',
         'The status is required.  Neither a value nor a default was specified.'
-            => 'El estado es necesario. Ni un valor ni un predeterminado se ha especificado',
+            => '??',
         'The status specified does not exist.'
-            => 'El estado especificado no existe',
-        'The status specified is invalid.'
-            => 'El estado especificado es invalido',
+            => '??',
+        'The status specified is not unique and is invalid.'
+            => '??',
     );
 ?>

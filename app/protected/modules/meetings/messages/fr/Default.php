@@ -31,6 +31,8 @@
     return array(
         'Attendees'
             => 'Paticipants',
+        'Call'
+            => 'Appel',
         'Category'
             => 'Catégorie',
         'End Time'

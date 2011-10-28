@@ -36,7 +36,9 @@
         'Contact Stage'
             => 'Statut du Contact',
         'Contact Statuses'
-            => 'Liste déroulante',
+            => 'Statut des Contacts',
+        'Contact Status Translated Labels'
+            => 'Étiquettes traduites du statut Contact',
         'Contacts'
             => 'Contacts',
         'ContactsModulePluralLabel'
@@ -61,15 +63,15 @@
             => 'Ordre',
         'Starting Status'
             => 'Valeur par défaut',
-        'Status'
-            => 'Statut',
+        'The contact state field'
+            => 'Le champ',
         'The default status specified does not exist.'
-            => 'La valeur du statut par défault spécifié n\'existe pas',
+            => 'La valeur du statut par défault spécifié n\'existe pas.',
         'The status is required.  Neither a value nor a default was specified.'
-            => 'Le champs statut est requis.  Vous devez spécifiez soit une valeur par défault ',
+            => 'Le champ \'statut\' est obligatoire.  Vous devez spécifiez une valeur.',
         'The status specified does not exist.'
-            => 'La valeur du statut spécifié n\'existe pas',
-        'The status specified is invalid.'
-            => 'La valeur du statut spécifié n\'est pas valide',
+            => 'La valeur du statut spécifié n\'existe pas.',
+        'The status specified is not unique and is invalid.'
+            => 'La valeur du statut spécifié n\'est pas unique et n\'est pas valide.',
     );
 ?>

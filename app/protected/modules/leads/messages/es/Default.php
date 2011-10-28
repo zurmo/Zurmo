@@ -71,6 +71,10 @@
             => 'conversión de LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Search'
             => 'LeadsModuleSingularLabel búsqueda',
+        'LeadsModuleSingularLabel successfully converted.'
+            => '??',
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
+            => '??',
         'My LeadsModulePluralLabel'
             => 'Mi LeadsModulePluralLabel',
         'Select AccountsModuleSingularLabel'

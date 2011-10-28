@@ -73,6 +73,10 @@
             => '??',
         'Database max_allowed_packet size meets minimum requirement.'
             => '??',
+        'Database max_sp_recursion_depth size is:'
+            => '??',
+        'Database max_sp_recursion_depth size meets minimum requirement.'
+            => '??',
         'Database name'
             => '??',
         'Database password'
@@ -146,8 +150,6 @@
         'Mysql'
             => '??',
         'Oh no!'
-            => '??',
-        'or'
             => '??',
         'PASS'
             => '??',

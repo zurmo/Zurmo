@@ -201,8 +201,8 @@
             }
             catch (ImportAttributeMappedMoreThanOnceException $e)
             {
-                $this->addError('mappingData', Yii::t('Default',
-                'The following field is mapped more than once. {message}', array('{message}' => $e->getMessage())));
+                $this->addError('mappingData', Yii::t('Default', 'The following field is mapped more than once. {message}',
+                                               array('{message}' => $e->getMessage())));
             }
         }
     }

@@ -34,85 +34,91 @@
         '(Unnamed)'
             => '(Sin Nombre)',
         '2D Donut Chart'
-            => 'Anillo',
+            => '??',
         '2D Horizontal Bar Graph'
-            => 'Bares',
+            => '??',
         '2D Pie Chart'
-            => 'Gráfico circular 2D',
+            => '??',
         '2D Vertical Bar Graph'
-            => 'Histograma 2D',
+            => '??',
         '3D Pie Chart'
-            => 'Gráfico circular 3D',
+            => '??',
         '3D Vertical Bar Graph'
-            => 'Histograma 3D',
+            => '??',
         'About'
             => 'Sobre',
         'Access Administration Tab'
-            => 'Acceso a Administración',
+            => '??',
         'Access Currency Configuration'
-            => 'Acceso a Divisas',
+            => '??',
         'Access Failure'
-            => 'Falta de acceso',
+            => '??',
         'Access Global Configuration'
-            => 'Acceso a la configuración global',
+            => '??',
         'Access Groups Tab'
-            => 'Acceso a grupos',
+            => '??',
         'Access Roles Tab'
-            => 'Acceso a Roles',
+            => '??',
         'Active'
-            => 'Activo',
+            => '??',
         'Active currencies can be used when creating new records and as a default currency for a user.'
-            => 'Divisas activos se pueden utilizar al crear nuevos registros, y como una divisa predeterminada para un usuario.',
+            => '??',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => 'Idiomas activos pueden ser utilizados por los usuarios. El idioma del sistema y de cualquier idioma utilizado por un usuario no puede ser desactivado.',
+            => '??',
         'Ad-hoc / Owner'
             => '??',
+        'Add Currency'
+            => '??',
         'Address'
-            => 'Dirección',
-        'Ad-hoc / Owner'
-            => 'Ad-hoc / Propietario',
+            => '??',
         'Admin'
             => 'Admin',
         'Alert'
-            => 'Alerta',
+            => '??',
         'Allow'
             => 'Permitir',
         'Amount'
-            => 'Suma',
+            => '??',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
         'Any City'
-            => 'cCiudad',
+            => '??',
         'Any Country'
-            => 'País',
+            => '??',
         'Any Email Address'
-            => 'Dirección de email',
+            => '??',
         'Any Invalid Email'
-            => 'Email inválida',
+            => '??',
         'Any Opted Out Email'
-            => 'Email opt-out',
+            => '??',
         'Any Postal Code'
-            => 'Código postal',
+            => '??',
         'Any State'
-            => 'Estado',
+            => '??',
         'Any Street'
-            => 'Calle',
+            => '??',
         'are required.'
-            => 'Son obligatorios.',
+            => 'son obligatorios.',
         'Are you sure you want to remove this group?'
-            => '¿Está seguro que desea eliminar este grupo?',
+            => '??',
         'Are you sure you want to remove this role?'
-            => '¿Está seguro que desea eliminar este role?',
+            => '??',
         'Attachment'
-            => 'Adjunto',
+            => '??',
         'Attachments'
-            => 'Adjuntos',
+            => '??',
         'Audit Event'
-            => 'Lista de modificaciones',
+            => '??',
         'Audit Trail'
-            => 'Log de modificaciones',
+            => '??',
+        'Automotive'
+            => '??',
+        'Banking'
+            => '??',
+        'Business Services'
+            => '??',
         'Cancel'
-            => 'Cancelar',
+            => '??',
         'Changes to active currencies changed successfully.'
             => '??',
         'Changes to active languages changed successfully.'
@@ -171,7 +177,13 @@
             => '??',
         'Description'
             => '??',
+        'Dr.'
+            => '??',
         'Email Address'
+            => '??',
+        'Energy'
+            => '??',
+        'Event Name'
             => '??',
         'every'
             => '??',
@@ -188,6 +200,8 @@
         'Filter By Created User'
             => '??',
         'Filtered Lists'
+            => '??',
+        'Financial Services'
             => '??',
         'First Name'
             => '??',
@@ -208,8 +222,10 @@
         'Groups'
             => '??',
         'here'
-            => 'aquÃ­',
+            => 'aquí',
         'Home'
+            => '??',
+        'Inbound Call'
             => '??',
         'Incorrect username or password.'
             => '??',
@@ -228,6 +244,8 @@
         'Inherited - Yes'
             => '??',
         'Inherited Value:'
+            => '??',
+        'Insurance'
             => '??',
         'Invalid currency code'
             => '??',
@@ -265,13 +283,17 @@
             => '??',
         'Manage Roles'
             => '??',
+        'Manufacturing'
+            => '??',
         'Member'
             => '??',
         'Member Of'
             => '??',
         'Members'
             => '??',
-        'Missing Required Attributes'
+        'Menu'
+            => '??',
+        'Missing Required Fields'
             => 'Les champs obligatoires doivent être placés dans la vue',
         'Mobile Phone'
             => '??',
@@ -286,6 +308,12 @@
         'Module Permissions'
             => '??',
         'Module Permissions Saved Successfully.'
+            => '??',
+        'Mr.'
+            => '??',
+        'Mrs.'
+            => '??',
+        'Ms.'
             => '??',
         'My List Configuration View'
             => '??',
@@ -320,7 +348,7 @@
         'Parent Role'
             => '??',
         'Password'
-            => 'ContraseÃ±a',
+            => 'Contraseña',
         'Permissions'
             => '??',
         'Permitable'
@@ -349,6 +377,8 @@
             => '??',
         'Remember me next time'
             => '??',
+        'Retail'
+            => '??',
         'Return to Admin Menu'
             => '??',
         'Rights'
@@ -358,8 +388,6 @@
         'Role'
             => '??',
         'Roles'
-            => '??',
-        'Save Changes'
             => '??',
         'Search'
             => 'Buscar',
@@ -379,6 +407,8 @@
             => '??',
         'Select a Role'
             => '??',
+        'Self-Generated'
+            => '??',
         'Shipping Address'
             => '??',
         'Size'
@@ -391,7 +421,11 @@
             => '??',
         'Stage'
             => '??',
+        'Standard Fields'
+            => '??',
         'State'
+            => '??',
+        'Status'
             => '??',
         'Street 1'
             => '??',
@@ -403,17 +437,19 @@
             => '??',
         'Super Administrators'
             => 'Superadministradores',
+        'Technology'
+            => '??',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => '??',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
             => '??',
         'The currency was not removed because it is in use.'
             => '??',
+        'The status specified is invalid.'
+            => '??',
         'There are no recently viewed items.'
             => '??',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
-            => '??',
-        'There was an error with the web service.'
             => '??',
         'This action is only available in debug mode.'
             => '??',
@@ -424,8 +460,12 @@
         'Title'
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
-            => 'para continuar a la pÃ¡gina de inicio. Si el error persiste, por favor haga una cosa u otra.',
+            => 'para continuar a la página de inicio. Si el error persiste, por favor haga una cosa u otra.',
+        'Tradeshow'
+            => '??',
         'Type a currency code or name to search.'
+            => '??',
+        'Update'
             => '??',
         'User Membership'
             => '??',
@@ -442,6 +482,8 @@
         'What is this?'
             => '??',
         'Who can read and write'
+            => '??',
+        'Word of Mouth'
             => '??',
         'You have tried to access a page you do not have access to.'
             => '??',

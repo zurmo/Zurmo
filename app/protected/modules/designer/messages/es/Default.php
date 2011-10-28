@@ -97,6 +97,8 @@
             => 'Los paneles son pestañas',
         'Panels Configuration'
             => 'Configuración de paneles',
+        'Pick List Value Translations'
+            => '??',
         'Pick List Values'
             => 'Valores de pick list',
         'Popup List View'
@@ -112,7 +114,11 @@
         'Save Layout'
             => 'Publicar',
         'Search View'
-            => 'Vista de búsqueda',
+            => '??',
+        'Text'
+            => '??',
+        'Text Area'
+            => '??',
         'There was an error processing your request.'
             => 'Hubo un error al procesar su pedido',
         'Track Audit Log'
