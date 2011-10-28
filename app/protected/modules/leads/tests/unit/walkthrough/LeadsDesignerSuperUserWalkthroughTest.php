@@ -115,6 +115,7 @@
             $this->assertEquals('lea new names', LeadsModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
             //Load LayoutEdit for each applicable module and applicable layout
+            $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'LeadsModule',
                                      'viewClassName'   => 'LeadEditAndDetailsView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');

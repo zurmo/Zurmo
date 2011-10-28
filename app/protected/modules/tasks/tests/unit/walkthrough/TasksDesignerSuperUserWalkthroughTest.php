@@ -97,7 +97,8 @@
             $this->assertEquals('task new name',  TasksModule::getModuleLabelByTypeAndLanguage('SingularLowerCase'));
             $this->assertEquals('task new names', TasksModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
-            //Load LayoutEdit for each applicable module and applicable layout            
+            //Load LayoutEdit for each applicable module and applicable layout
+            $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'TasksModule',
                                      'viewClassName'   => 'OpenTasksForAccountRelatedListView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
@@ -338,7 +339,7 @@
                                 'url'                               => 'http://wwww.abc-edit.com'),
                                 'ActivityItemForm' => array(
                                 'Account'     => array('id'  => $superAccount[0]->id),
-                                'Contact'     => array('id ' => $superContactId),
+                                'Contact'     => array('id'  => $superContactId),
                                 'Opportunity' => array('id'  => $superOpportunityId)),
                                 'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('tasks/default/edit');

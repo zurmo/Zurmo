@@ -98,6 +98,7 @@
             $this->assertEquals('note new names', NotesModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
             //Load LayoutEdit for each applicable module and applicable layout
+            $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'NotesModule',
                                      'viewClassName'   => 'NoteEditAndDetailsView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');

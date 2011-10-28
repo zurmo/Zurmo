@@ -120,7 +120,8 @@
             $this->assertEquals('opp new name',  OpportunitiesModule::getModuleLabelByTypeAndLanguage('SingularLowerCase'));
             $this->assertEquals('opp new names', OpportunitiesModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
-            //Load LayoutEdit for each applicable module and applicable layout           
+            //Load LayoutEdit for each applicable module and applicable layout
+            $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'OpportunitiesModule',
                                      'viewClassName'   => 'OpportunitiesListView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');

@@ -99,6 +99,7 @@
             $this->assertEquals('meeting new names', MeetingsModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
             //Load LayoutEdit for each applicable module and applicable layout
+            $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
                                      'viewClassName'   => 'UpcomingMeetingsForAccountRelatedListView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
