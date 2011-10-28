@@ -44,11 +44,11 @@
         'AccountsModuleSingularLabel Name'
             => 'AccountsModuleSingularLabel nombre',
         'AccountsModuleSingularLabel Search'
-            => 'AccountsModuleSingularLabel búsqueda',
+            => 'AccountsModuleSingularLabel bï¿½squeda',
         'Annual Revenue'
             => 'Ingresos anuales',
         'Billing Address'
-            => 'Dirección de facturación',
+            => 'DirecciÃ³n de facturaciÃ³n',
         'Create AccountsModuleSingularLabel'
             => 'Crear una AccountsModuleSingularLabel',
         'Employees'
