@@ -161,17 +161,17 @@
             echo 'Running Test Suites using Selenium RC v2:' . "\n";
             $browsersToRun = self::resolveBrowserFromParameter();
             echo "Backup test db";
-            $this->remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'backup'));
+            self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'backup'));
             echo "Backup done";
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
                 {
                     echo 'Restoring test db';
-                    $this->remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
+                    self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                     echo "Restored test db";
                     echo 'Clear cache on remote server';
-                    $this->remoteAction(TEST_BASE_URL, array('clearCache' => '1'));
+                    self::remoteAction(TEST_BASE_URL, array('clearCache' => '1'));
                     echo "Cache cleared";
 
                     echo 'Running test suite: ';
@@ -471,7 +471,7 @@
          * @param string url
          * @param string $action
          */
-        protected function remoteAction($url, $params){
+        protected static function remoteAction($url, $params){
             if (!$url)
             {
                 echo "Invalid db control url";
@@ -479,10 +479,12 @@
             }
             if (isset($params['action']) && in_array($params['action'], array('backup', 'restore')))
             {
-                $url = $url . "?action=" . urlencode($action);
+                $url = $url . "?action=" . urlencode($params['action']);
             }elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
             {
                 $url = $url . "?clearCache=1";
+				echo $url;
+				//exit;
             }
             else {
                 echo "Invalid params";
@@ -496,6 +498,8 @@
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true );
+			curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
             curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $error_info = curl_error($ch);
