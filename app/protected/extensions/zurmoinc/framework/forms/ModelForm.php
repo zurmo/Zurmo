@@ -164,6 +164,18 @@
             }
         }
 
+        public function getAttributeLabel($attribute)
+        {
+            assert('is_string($attribute)');
+            assert('$attribute != ""');
+            $attributeLabels = $this->attributeLabels();
+            if (isset($attributeLabels[$attribute]))
+            {
+                return $attributeLabels[$attribute];
+            }
+            return $this->model->getAttributeLabel($attribute);
+        }
+
         /**
          * Override of setAttributes in CModel to support setting attributes into this form as well
          * as the related model.  Splits $values into two arrays. First array is name/value pairs of attributes
