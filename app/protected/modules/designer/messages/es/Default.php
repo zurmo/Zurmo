@@ -29,6 +29,20 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A check box'
+            => '??',
+        'A currency field'
+            => '??',
+        'A date field'
+            => '??',
+        'A date/time field'
+            => '??',
+        'A decimal field'
+            => '??',
+        'A description box'
+            => '??',
+        'A field that contains a URL'
+            => '??',
         'A field with this name is already used.'
             => '??',
         'A phone field'

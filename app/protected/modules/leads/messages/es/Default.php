@@ -34,25 +34,19 @@
         'AccountsModuleSingularLabel Required'
             => 'Cuenta es requerida',
         'Complete Conversion'
-            => 'Completar la conversión',
+            => 'Completar la conversiï¿½n',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
-            => 'Completar conversión de prospecto sin seleccionar o crear una cuenta',
+            => 'Completar conversiï¿½n de prospecto sin seleccionar o crear una cuenta',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
-            => 'Conversión se fija para requerir un AccountsModuleSingularLowerCaseLabel',
+            => 'Conversiï¿½n se fija para requerir un AccountsModuleSingularLowerCaseLabel',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
-            => 'La conversión exige el acceso al módulo de ContactsModulePluralLowerCaseLabel que usted no tiene. Por favor, contacte con su administrador con respecto a este',
-        'Create AccountsModuleSingularLabel'
-            => 'Crear una AccountsModuleSingularLabel',
+            => 'La conversiï¿½n exige el acceso al mï¿½dulo de ContactsModulePluralLowerCaseLabel que usted no tiene. Por favor, contacte con su administrador con respecto a este',
         'Create LeadsModuleSingularLabel'
             => 'Crear una LeadsModuleSingularLabel',
         'Do not show AccountsModuleSingularLabel'
             => 'No mostrar la cuenta',
         'Lead'
             => 'Prospecto',
-        'LeadsModuleSingularLabel successfully converted.'
-            => 'Prospecto convertido con éxito',
-        'LeadsModuleSingularLabel was not converted. An error occurred.'
-            => 'El prospecto no se convirtió. Ha ocurrido un error.',
         'Leads'
             => 'Prospectos',
         'LeadsModulePluralLabel'
@@ -62,19 +56,19 @@
         ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
         ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => 'LeadsModulePluralLabel y ContactsModulePluralLabel son los mismos registros,' .
-               'sólo tienen un estatus diferente. Para crear un campo de LeadsModuleSingularLowerCaseLabel' .
+               'sï¿½lo tienen un estatus diferente. Para crear un campo de LeadsModuleSingularLowerCaseLabel' .
                'crear un campo de ContactsModuleSingularLowerCaseLabel, y luego' .
-               'será aplacable en los diseños de LeadsModulePluralLowerCaseLabel',
+               'serï¿½ aplacable en los diseï¿½os de LeadsModulePluralLowerCaseLabel',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'
-            => 'conversión de LeadsModuleSingularLabel',
+            => 'conversiï¿½n de LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Search'
-            => 'LeadsModuleSingularLabel búsqueda',
+            => 'LeadsModuleSingularLabel bï¿½squeda',
         'LeadsModuleSingularLabel successfully converted.'
-            => '??',
+            => 'Prospecto convertido con ï¿½xito',
         'LeadsModuleSingularLabel was not converted. An error occurred.'
-            => '??',
+            => 'El prospecto no se convirtiï¿½. Ha ocurrido un error.',
         'My LeadsModulePluralLabel'
             => 'Mi LeadsModulePluralLabel',
         'Select AccountsModuleSingularLabel'

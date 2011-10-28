@@ -36,7 +36,9 @@
         'All Activities'
             => 'Todas las actividades',
         'Latest Date Time'
-            => 'Última fecha/hora',
+            => 'ï¿½ltima fecha/hora',
+        'Listview'
+            => 'Vista de lista',
         'No Activities found.'
             => 'Actividades no encontradas',
         'Related'
@@ -48,7 +50,7 @@
         'Roll Up On'
             => 'Roll up activado',
         'Show more'
-            => 'Mostrar más',
+            => 'Mostrar mï¿½s',
         'Summary'
             => 'Sumario',
     );

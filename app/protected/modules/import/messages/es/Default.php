@@ -30,19 +30,21 @@
     // DON'T MAKE A MESS!
     return array(
         'A file must be uploaded in order to continue the import process.'
-            => 'Un archivo se debe cargar para continuar con el proceso de importación',
+            => 'Un archivo se debe cargar para continuar con el proceso de importaciï¿½n',
         'A file must be uploaded with at least one row to import.'
-            => 'Un archivo debe ser cargado con al menos una fila a la importación',
+            => 'Un archivo debe ser cargado con al menos una fila a la importaciï¿½n',
         'A full name value is required but missing.'
             => 'El campo de nombre completo es necesario',
+        'Access Import Tool'
+            => '??',
         'Add Field'
             => 'Agregar campo',
         'All required attributes must be mapped or added.'
-            => 'Todos los atributos obligatorios deben ser asignados o añadidos',
+            => 'Todos los atributos obligatorios deben ser asignados o aï¿½adidos',
         'Analyzing the import data...'
-            => 'Analizando los datos de importación',
+            => 'Analizando los datos de importaciï¿½n',
         'Congratulations! Your import is complete.  Below is a summary of the results.'
-            => 'Felicitaciones! Tu importación está completa. A continuación hay un resumen de los resultados',
+            => 'Felicitaciones! Tu importaciï¿½n estï¿½ completa. A continuaciï¿½n hay un resumen de los resultados',
         'Default Name'
             => 'Nombre predeterminado',
         'Delimiter'
@@ -51,12 +53,10 @@
             => 'No asigne este campo',
         'Email was too long.'
             => 'Email era demaciado largo',
-        'Qualifier'
-            => 'Delimitador de texto',
         'Error: Invalid delimiter'
-            => 'Error: Delimitador inválido',
+            => 'Error: Delimitador invï¿½lido',
         'Error: Invalid qualifier'
-            => 'Error: clasificación inválida',
+            => 'Error: clasificaciï¿½n invï¿½lida',
         'Failed to create temporary database table from CSV.'
             => 'No se puede crear una tabla temporal desde un archivo CSV',
         'Failed to open the uploaded file.'
@@ -80,57 +80,59 @@
         'Import model failed to save.'
             => 'Impossible de guardar el modelo de import',
         'Import Wizard: Step 1 of 6'
-            => 'Asistente de importación: Paso 1 de 6',
+            => 'Asistente de importaciï¿½n: Paso 1 de 6',
         'Import Wizard: Step 2 of 6'
-            => 'Asistente de importación: Paso 2 de 6',
+            => 'Asistente de importaciï¿½n: Paso 2 de 6',
         'Import Wizard: Step 3 of 6'
-            => 'Asistente de importación: Paso 3 de 6',
+            => 'Asistente de importaciï¿½n: Paso 3 de 6',
         'Import Wizard: Step 4 of 6'
-            => 'Asistente de importación: Paso 4 de 6',
+            => 'Asistente de importaciï¿½n: Paso 4 de 6',
         'Import Wizard: Step 5 of 6'
-            => 'Asistente de importación: Paso 5 de 6',
+            => 'Asistente de importaciï¿½n: Paso 5 de 6',
         'Import Wizard: Step 6 of 6'
-            => 'Asistente de importación: Paso 6 de 6',
+            => 'Asistente de importaciï¿½n: Paso 6 de 6',
         'Importing data...'
             => 'Importando datos...',
         'Invalid check box format.'
-            => 'Formato de check box inválido',
+            => 'Formato de check box invï¿½lido',
         'Invalid date format.'
-            => 'Formato de fecha inválido',
+            => 'Formato de fecha invï¿½lido',
         'Invalid datetime format.'
-            => 'Formato de fecha hora inválido',
+            => 'Formato de fecha hora invï¿½lido',
         'Invalid email format.'
-            => 'Formato de email inválido',
+            => 'Formato de email invï¿½lido',
         'Invalid integer format.'
-            => 'Formato de numero entero inválido',
+            => 'Formato de numero entero invï¿½lido',
         'Invalid number format.'
-            => 'Formato de numero inválido',
+            => 'Formato de numero invï¿½lido',
         'Invalid url format.'
-            => 'Formato de url inválido',
+            => 'Formato de url invï¿½lido',
         'Last name specified is too long.'
             => 'Apellido especificado demaciado largo',
         'Mapping Data'
             => 'Asignando datos',
         'Model Permissions'
-            => 'Modelo de autorizacón',
+            => 'Modelo de autorizacï¿½n',
         'Module To Import To'
-            => 'Módulo para importar a',
+            => 'Mï¿½dulo para importar a',
         'Next'
-            => 'Próximo',
+            => 'Prï¿½ximo',
         'Pick list is missing corresponding custom field data.'
             => 'falta la lista desplegable de datos del campo personalizado',
         'Pick list value required, but missing.'
             => 'El valor de la lista desplegable es obligatorio pero falta ',
         'Please map the fields you would like to import.'
-            => 'Por favor asignar el campo que le gustaría importar',
+            => 'Por favor asignar el campo que le gustarï¿½a importar',
         'Please select the CSV to upload'
             => 'Por favor seleccione el archivo CSV para subirlo',
         'Please select the module you would like to import to:'
-            => 'Por favor seleccione el módulo que le gustaría para importar a',
+            => 'Por favor seleccione el mï¿½dulo que le gustarï¿½a para importar a',
         'Previous'
             => 'anterior',
         'Processing'
             => 'Procesando',
+        'Qualifier'
+            => 'Delimitador de texto',
         'Record saved correctly.'
             => 'Registro guardado correctamente',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'
@@ -150,23 +152,23 @@
         'Sample Row'
             => 'Ejemplo de fila',
         'The file that has been uploaded only has a header row and no additional rows to import.'
-            => 'El archivo que se ha subido sólo tiene una fila de cabecera y no hay filas adicionales para importar.',
+            => 'El archivo que se ha subido sï¿½lo tiene una fila de cabecera y no hay filas adicionales para importar.',
         'The file that was uploaded was not a csv.'
             => 'El archivo que se ha subido no era un csv',
         'The full name must contain a last name, which is required.'
             => 'El nombre completo debe tener un apellido, como es requerido',
         'The id specified did not match any existing records.'
-            => 'El ID especificado no coincide con ningún registro existente',
+            => 'El ID especificado no coincide con ningï¿½n registro existente',
         'The other id specified did not match any existing records.'
-            => 'El otro ID especificado no coincide con ningún registro existente',
+            => 'El otro ID especificado no coincide con ningï¿½n registro existente',
         'The other user id specified did not match any existing records.'
-            => 'El otro ID de usuario especificado no coincide con ningún registro existente',
+            => 'El otro ID de usuario especificado no coincide con ningï¿½n registro existente',
         'The user id specified did not match any existing records.'
-            => 'El ID de usuario especificado no coincide con ningún registro existente',
+            => 'El ID de usuario especificado no coincide con ningï¿½n registro existente',
         'The username specified did not match any existing records.'
-            => 'El nombre de usuario especificado no coincide con ningún registro existente',
+            => 'El nombre de usuario especificado no coincide con ningï¿½n registro existente',
         'There was an error processing this import.'
-            => 'Hubo un eror en el proceso de la importación',
+            => 'Hubo un eror en el proceso de la importaciï¿½n',
         'This id is required and was not specified.'
             => 'Esta ID es necesaria y no se ha especificado',
         'Type of Value'
@@ -174,9 +176,9 @@
         'URL was too long.'
             => 'URL era demaciado larga',
         'Who can read and write the new {importRulesLabel}'
-            => 'Quién está autorizado a leer y escribir el nuevo {importRulesLabel}',
+            => 'Quiï¿½n estï¿½ autorizado a leer y escribir el nuevo {importRulesLabel}',
         'You can only map each field once.'
-            => 'Sólo se puede asignar cada campo una vez',
+            => 'Sï¿½lo se puede asignar cada campo una vez',
         'You do not have permission to update this record and/or its related record.'
             => 'No tiene permiso para actualizar este registro y / o su registro relacionado',
         'You must map at least one of your import columns.'
@@ -186,8 +188,8 @@
         '{firstDate} or {secondDate}'
             => '{firstDate} o {secondDate}',
         '{modelLabel} id specified did not match any existing records.'
-            => '{modelLabel} ID especificado no coincide con ningún registro existente',
+            => '{modelLabel} ID especificado no coincide con ningï¿½n registro existente',
         '{modelLabel} other id specified did not match any existing records.'
-            => '{modelLabel} otro ID especificado no coincide con ningún registro existente',
+            => '{modelLabel} otro ID especificado no coincide con ningï¿½n registro existente',
     );
 ?>

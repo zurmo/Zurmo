@@ -35,9 +35,9 @@
             => '??',
         'Contact Stage'
             => '??',
-        'Contact Statuses'
-            => '??',
         'Contact Status Translated Labels'
+            => '??',
+        'Contact Statuses'
             => '??',
         'Contacts'
             => '??',

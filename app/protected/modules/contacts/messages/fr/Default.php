@@ -35,10 +35,10 @@
             => 'Contact',
         'Contact Stage'
             => 'Statut du Contact',
-        'Contact Statuses'
-            => 'Statut des Contacts',
         'Contact Status Translated Labels'
             => 'Étiquettes traduites du statut Contact',
+        'Contact Statuses'
+            => 'Statut des Contacts',
         'Contacts'
             => 'Contacts',
         'ContactsModulePluralLabel'
