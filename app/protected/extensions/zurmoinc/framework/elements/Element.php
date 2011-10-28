@@ -90,6 +90,15 @@
             return Yii::app()->format->text($this->model->getAttributeLabel($this->attribute));
         }
 
+        protected function resolveNonActiveFormFormattedLabel($label)
+        {
+            if ($this->form === null)
+            {
+                return $label;
+            }
+            return CHtml::label($label, false);
+        }
+
         /**
          * Generate the error content. Used by editable content
          * @return error content

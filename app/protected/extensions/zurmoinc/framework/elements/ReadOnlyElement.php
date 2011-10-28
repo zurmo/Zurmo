@@ -45,7 +45,7 @@
          */
         protected function renderLabel()
         {
-            return $this->getFormattedAttributeLabel();
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
         }
 
         public static function isReadOnly()

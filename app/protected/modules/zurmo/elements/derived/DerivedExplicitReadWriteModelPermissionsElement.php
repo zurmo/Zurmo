@@ -67,7 +67,8 @@
          */
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Who can read and write');
+            return $this->resolveNonActiveFormFormattedLabel(
+                   Yii::app()->format->text(Yii::t('Default', 'Who can read and write')));
         }
 
         /**

@@ -92,7 +92,7 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Status');
+            return $this->resolveNonActiveFormFormattedLabel(Yii::app()->format->text(Yii::t('Default', 'Status')));
         }
 
         /**
