@@ -26,6 +26,15 @@
 
     class OwnedSecurableTestItem extends OwnedSecurableItem
     {
+        public function __toString()
+        {
+            if (trim($this->member) == '')
+            {
+                return Yii::t('Default', '(Unnamed)');
+            }
+            return $this->member;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
