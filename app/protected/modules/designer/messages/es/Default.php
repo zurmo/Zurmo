@@ -44,21 +44,21 @@
         'A field that contains a URL'
             => '??',
         'A field with this name is already used.'
-            => '??',
+            => 'Un campo con este nombre ya está en uso.',
         'A phone field'
-            => '??',
+            => 'Un campo de teléfono',
         'A pick list that can have multiple selections'
-            => '??',
+            => 'Un pick list que puede tener varias selecciones',
         'A pick list with specific values to select from'
-            => '??',
+            => 'Un pick list con valores específicos para seleccionar ',
         'A radio button pick list'
-            => '??',
+            => 'Un botón de radio pick list',
         'A text field'
-            => '??',
+            => 'Un campo de texto',
         'Access Designer Tool'
-            => '??',
+            => 'Acceso a Designer',
         'Address fields'
-            => '??',
+            => 'Campos de dirección',
         'All panels visible'
             => 'Todos los paneles visibles',
         'Create Field'
