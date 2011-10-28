@@ -225,7 +225,10 @@
                        strpos($message, 'ModulePluralLowerCaseLabel') === false &&
                        strpos($message, 'ModuleSingularLowerCaseLabel') === false )
                     {
-                        $problems[] = "(This might be ok) '$message' in $firstLanguage/$category.php not in any source file in $moduleName.";
+                        //There is no current way to resolve this type of issue. It is possible a label has been pushed
+                        //back into framework for example, even though there is no mention of the label in framework.  This
+                        //is so it is not duplicated in various modules. This is turned off for now from the message checker.
+                        //$problems[] = "(This might be ok) '$message' in $firstLanguage/$category.php not in any source file in $moduleName.";
                     }
                 }
             }
