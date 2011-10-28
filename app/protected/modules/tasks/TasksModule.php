@@ -47,7 +47,7 @@
             $labels                           = array();
             $labels[self::RIGHT_CREATE_TASKS] = 'Create TasksModulePluralLabel';
             $labels[self::RIGHT_DELETE_TASKS] = 'Delete TasksModulePluralLabel';
-            $labels[self::RIGHT_ACCESS_TASKS] = 'Access TasksModulePluralLabel Tab';
+            $labels[self::RIGHT_ACCESS_TASKS] = 'Access TasksModulePluralLabel';
             return $labels;
         }
 

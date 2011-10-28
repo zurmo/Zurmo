@@ -49,7 +49,7 @@
             $labels                              = array();
             $labels[self::RIGHT_CREATE_MEETINGS] = 'Create MeetingsModulePluralLabel';
             $labels[self::RIGHT_DELETE_MEETINGS] = 'Delete MeetingsModulePluralLabel';
-            $labels[self::RIGHT_ACCESS_MEETINGS] = 'Access MeetingsModulePluralLabel Tab';
+            $labels[self::RIGHT_ACCESS_MEETINGS] = 'Access MeetingsModulePluralLabel';
             return $labels;
         }
 
