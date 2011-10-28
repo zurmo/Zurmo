@@ -293,8 +293,8 @@
             => 'Filiales',
         'Menu'
             => 'Menu',
-        'Missing Required Attributes'
-            => 'Attributs obligatoires manquant',
+        'Missing Required Fields'
+            => 'Les champs obligatoires doivent être placés dans la vue',
         'Mobile Phone'
             => 'Téléphone portable',
         'Module Name - Plural'
@@ -458,7 +458,7 @@
         'Time zone'
             => 'Fuseau horaire',
         'Title'
-            => 'Salutation',
+            => 'Titre',
         'to continue to the home page. If the error persists please contact your administrator.'
             => 'pour continuer à l\'accueil. Veuillez contacter votre administrateur système si l\'erreur continue.',
         'Tradeshow'

@@ -482,7 +482,7 @@ var designer = {
             {
                 buttons: [
                     {
-                        text: "Ok",
+                        text: "OK",
                         click: function() { $(this).dialog("close"); }
                     }
                 ],
@@ -507,7 +507,7 @@ var designer = {
             {
                 buttons: [
                     {
-                        text: "Ok",
+                        text: "OK",
                         click: function() { $(this).dialog("close"); }
                     }
                 ],

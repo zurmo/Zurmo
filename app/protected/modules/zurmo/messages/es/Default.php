@@ -293,7 +293,7 @@
             => '??',
         'Menu'
             => '??',
-        'Missing Required Attributes'
+        'Missing Required Fields'
             => 'Les champs obligatoires doivent être placés dans la vue',
         'Mobile Phone'
             => '??',
