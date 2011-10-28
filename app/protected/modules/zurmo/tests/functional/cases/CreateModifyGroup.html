@@ -21,6 +21,78 @@
 	<td>javascript{Math.floor(Math.random()*11000)}</td>
 	<td>randomSuffix</td>
 </tr>
+<!-- Create a User -->
+<tr>
+	<td>open</td>
+	<td>index.php?r=configuration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>UserPasswordForm_title_value</td>
+	<td>label=Mr.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UserPasswordForm_firstName</td>
+	<td>Jhon</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UserPasswordForm_lastName</td>
+	<td>Smith${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UserPasswordForm_username</td>
+	<td>jhon smith${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UserPasswordForm_newPassword</td>
+	<td>abc123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UserPasswordForm_newPassword_repeat</td>
+	<td>abc123</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
+	<td>Mr. Jhon Smith${randomSuffix}</td>
+</tr>
+<!-- Create of a User completes here-->
 <tr>
 	<td>open</td>
 	<td>index.php?r=zurmo/group</td>
@@ -74,7 +146,7 @@
 <tr>
 	<td>addSelection</td>
 	<td>edit-form_userNonMembershipData</td>
-	<td>label=John Smith</td>
+	<td>label=Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -118,13 +190,13 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>John Smith</td>
+	<td>Jhon Smith${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>removeSelection</td>
 	<td>edit-form_userMembershipData</td>
-	<td>label=John Smith</td>
+	<td>label=Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
 	<td>addSelection</td>
@@ -138,7 +210,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Go to Details</td>
+	<td>link=Cancel</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,7 +245,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>ModulePermissionsForm_LeadsModule__1_value</td>
+	<td>ModulePermissionsForm_ContactsModule__1_value</td>
 	<td>label=All</td>
 </tr>
 <tr>
@@ -218,22 +290,22 @@
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_LeadsModule__1_value</td>
+	<td>ModulePermissionsForm_ContactsModule__1_value</td>
 	<td>All</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_LeadsModule__2_value</td>
+	<td>ModulePermissionsForm_ContactsModule__2_value</td>
 	<td>Not Set - Ad-hoc / Owner</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_LeadsModule__4_value</td>
+	<td>ModulePermissionsForm_ContactsModule__4_value</td>
 	<td>Not Set - Ad-hoc / Owner</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Go to Details</td>
+	<td>link=Cancel</td>
 	<td></td>
 </tr>
 <tr>
@@ -254,17 +326,17 @@
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
-	<td>Not Set</td>
+	<td>Inherited - Allow</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
-	<td>Not Set</td>
+	<td>Inherited - Allow</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
-	<td>Not Set</td>
+	<td>Inherited - Allow</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -319,7 +391,7 @@
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>RightsForm_ContactsModule__RIGHT_CREATE_CONTACTS_value</td>
-	<td>Not Set</td>
+	<td>Inherited - Allow</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
@@ -328,7 +400,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Go to Details</td>
+	<td>link=Cancel</td>
 	<td></td>
 </tr>
 <tr>
@@ -423,7 +495,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRY_DAYS</td>
+	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES</td>
 	<td>30</td>
 </tr>
 <tr>
@@ -478,7 +550,7 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRY_DAYS</td>
+	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES</td>
 	<td>30</td>
 </tr>
 <tr>
@@ -502,15 +574,42 @@
 	<td></td>
 </tr>
 <tr>
+	<td>verifyTextPresent</td>
+	<td>Users: Home</td>
+	<td></td>
+</tr>
+<!-- Search for a user -->
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Advanced Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UsersSearchForm_username</td>
+	<td>jhon smith${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>link=John Smith</td>
-	<td>John Smith</td>
+	<td>link=Jhon Smith${randomSuffix}</td>
+	<td>Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=John Smith</td>
+	<td>link=Jhon Smith${randomSuffix}</td>
 	<td></td>
 </tr>
+<!-- Search for a user ends here-->
 <tr>
 	<td>waitForPageToLoad</td>
 	<td></td>
@@ -559,31 +658,21 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[2]/td</td>
-	<td>Deny</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
-	<td>Deny</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
-	<td>Deny</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[1]/td</td>
 	<td>Allow</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[2]/td</td>
-	<td>Deny</td>
+	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
+	<td>Allow</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[3]/td</td>
+	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
+	<td>Allow</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[1]/td</td>
 	<td>Deny</td>
 </tr>
 <tr>
@@ -668,7 +757,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>yt0</td>
+	<td>link=Delete Group</td>
 	<td></td>
 </tr>
 <tr>
@@ -691,16 +780,38 @@
 	<td></td>
 	<td></td>
 </tr>
+<!-- Search for a user -->
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Advanced Search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UsersSearchForm_username</td>
+	<td>jhon smith${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Displaying 1-1 of 1 result</td>
+	<td></td>
+</tr>
 <tr>
 	<td>assertText</td>
-	<td>link=John Smith</td>
-	<td>John Smith</td>
+	<td>link=Jhon Smith${randomSuffix}</td>
+	<td>Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=John Smith</td>
+	<td>link=Jhon Smith${randomSuffix}</td>
 	<td></td>
 </tr>
+<!-- Search for a user ends here-->
 <tr>
 	<td>waitForPageToLoad</td>
 	<td></td>
@@ -779,22 +890,22 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>Deny</td>
+	<td>Allow</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[2]/td</td>
-	<td>Deny</td>
+	<td>Allow</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
-	<td>Deny</td>
+	<td>Allow</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
-	<td>Deny</td>
+	<td>Allow</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -803,18 +914,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[2]/td</td>
-	<td>Deny</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[3]/td</td>
-	<td>Deny</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>//div[@id='RightsEditAndDetailsView']/table[8]/tbody/tr[2]/td</td>
-	<td>Deny</td>
+	<td>Allow</td>
 </tr>
 </tbody></table>
 </body>

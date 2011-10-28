@@ -19,8 +19,14 @@
 <tr>
 	<td>store</td>
 	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+	<td>parentrandomSuffix</td>
 </tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>childrandomSuffix</td>
+</tr>
+<!-- create a parent group -->
 <tr>
 	<td>open</td>
 	<td>index.php?r=zurmo/group</td>
@@ -44,7 +50,48 @@
 <tr>
 	<td>type</td>
 	<td>Group_name</td>
-	<td>TestGroup${randomSuffix}</td>
+	<td>TestGroup${parentrandomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='GroupEditAndDetailsView']/table/tbody/tr[1]/td</td>
+	<td>TestGroup${parentrandomSuffix}</td>
+</tr>
+<!-- create a parent group ends here -->
+<tr>
+	<td>open</td>
+	<td>index.php?r=zurmo/group</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Group_name</td>
+	<td>TestGroup${childrandomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -58,13 +105,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>link=Team California</td>
+	<td>link=TestGroup${parentrandomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForValue</td>
 	<td>Group_group_name</td>
-	<td>Team California</td>
+	<td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -78,13 +125,13 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Groups: TestGroup${randomSuffix}</td>
+	<td>Groups: TestGroup${childrandomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTable</td>
 	<td>//div[@id='GroupEditAndDetailsView']/table.1.1</td>
-	<td>Team California</td>
+	<td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -98,7 +145,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=TestGroup${randomSuffix}</td>
+	<td>link=TestGroup${childrandomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,15 +155,14 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Groups: TestGroup${randomSuffix}</td>
+	<td>Groups: TestGroup${childrandomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=Team California</td>
-	<td>Team California</td>
+	<td>link=TestGroup${parentrandomSuffix}</td>
+	<td>TestGroup${parentrandomSuffix}</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
