@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access LeadsModulePluralLabel Tab'
+            => 'Accès aux LeadsModulePluralLabel',
         'AccountsModuleSingularLabel Optional'
             => 'AccountsModuleSingularLabel Optionnel',
         'AccountsModuleSingularLabel Required'
@@ -41,8 +43,14 @@
             => 'Vous avez chosi de convertir un AccountsModuleSingularLowerCaseLabel, mais vous n\'avez pas accès au module de AccountsModuleSingularLowerCaseLabel.  Veuillez contacter votre administrateur système.',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
             => 'Vous devez avoir accès au module de ContactsModulePluralLowerCaseLabel pour continuer.  Veuillez contacter votre administrateur système.',
+        'Convert LeadsModulePluralLabel'
+            => 'Convertir LeadsModulePluralLabel',
+        'Create LeadsModulePluralLabel'
+            => 'Créer LeadsModulePluralLabel',
         'Create LeadsModuleSingularLabel'
             => 'Nouvelle LeadsModuleSingularLabel',
+        'Delete LeadsModulePluralLabel'
+            => 'Supprimer LeadsModulePluralLabel',
         'Do not show AccountsModuleSingularLabel'
             => 'Ne pas montrer le AccountsModuleSingularLabel',
         'Lead'

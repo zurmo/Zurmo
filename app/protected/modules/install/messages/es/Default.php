@@ -30,49 +30,50 @@
     // DON'T MAKE A MESS!
     return array(
         'Apache'
-            => '??',
+            => 'Apache',
         'APC'
-            => '??',
+            => 'APC',
         'Below you will find the results of the system check. If any required ' .
         'services are not setup correctly, you will need to make sure they are ' .
         'installed correctly before you can continue.'
-            => '??',
+            => 'Estos son los resultados del análisis. ' .
+               'Si alguno de los requeridos no está instalado correctamente, debe corregir los problemas antes de proceder.',
         'Can either be a domain name or an IP address.'
-            => '??',
+            => 'Puede ser un nombre de dominio o una dirección IP.',
         'Click below to go to the login page. The username is <b>super</b>'
-            => '??',
+            => 'Haga clic abajo para ir a la página de login. El usuario es <b>súper</ b>',
         'Click Here to install the demo data'
-            => '??',
+            => 'Haga clic aquí para instalar los datos demo',
         'Click to start'
-            => '??',
+            => 'Haga clic para iniciar',
         'Congratulations! The demo data has been successfully loaded.'
-            => '??',
+            => '¡Felicidades! Los datos demo se ha cargado correctamente.',
         'Congratulations! The installation of Zurmo is complete.'
-            => '??',
+            => '¡Felicitaciones! La instalación de Zurmo se ha completado.',
         'Connecting to Database.'
-            => '??',
+            => 'Realizar la conexión a la base de datos.',
         'Continue'
-            => '??',
+            => 'Continuar',
         'Correctly Installed Services'
-            => '??',
+            => 'Servicios correctamente instalado',
         'Creating super user.'
-            => '??',
+            => 'Creando super usuario.',
         'Curl'
-            => '??',
+            => 'Curl',
         'Database admin password'
-            => '??',
+            => 'Contraseña de administrador',
         'Database admin username'
-            => '??',
+            => 'Nombre de usuario de administrador',
         'Database host'
-            => '??',
+            => 'Host de base de datos',
         'Database is in strict mode.'
-            => '??',
+            => 'Base de datos está en modo estricto.',
         'Database is not in strict mode.'
-            => '??',
+            => 'Base de datos no está en modo estricto.',
         'Database max_allowed_packet size is:'
-            => '??',
+            => 'Base de datos max_allowed_packet tamaño es:',
         'Database max_allowed_packet size meets minimum requirement.'
-            => '??',
+            => 'Base de datos max_allowed_packet tamaño cumple con el requisito mínimo.',
         'Database max_sp_recursion_depth size is:'
             => '??',
         'Database max_sp_recursion_depth size meets minimum requirement.'

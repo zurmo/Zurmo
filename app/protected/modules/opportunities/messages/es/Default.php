@@ -29,38 +29,44 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        'Close Date'
+        'Access OpportunitiesModulePluralLabel Tab'
             => '??',
+        'Close Date'
+            => 'Fecha de cierre',
         'Closed Lost'
             => '??',
         'Closed Won'
             => '??',
+        'Create OpportunitiesModulePluralLabel'
+            => 'Crear OpportunitiesModulePluralLabel',
         'Create OpportunitiesModuleSingularLabel'
             => 'Crear una OpportunitiesModuleSingularLabel',
+        'Delete OpportunitiesModulePluralLabel'
+            => '??',
         'My OpportunitiesModulePluralLabel'
-            => '?? OpportunitiesModulePluralLabel',
+            => 'Mis? OpportunitiesModulePluralLabel',
         'Negotiating'
             => '??',
         'Opportunities'
-            => '??',
+            => 'Oportunidades',
         'Opportunities By Lead Source'
-            => '??',
+            => 'Oportunidades por Fuente de Prospecto',
         'Opportunities By Sales Stage'
-            => '??',
+            => 'Oportunidades por Etapa de Ventas',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
         'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel ?? AccountsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel para AccountsModuleSingularLabel',
         'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel ?? ContactsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel para ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
         'OpportunitiesModuleSingularLabel Search'
-            => 'OpportunitiesModuleSingularLabel ??',
+            => 'OpportunitiesModuleSingularLabel búsqueda',
         'Opportunity'
-            => '??',
+            => 'Oportunidad',
         'Probability'
-            => '??',
+            => 'Probabilidad',
         'Prospecting'
             => '??',
         'Qualification'

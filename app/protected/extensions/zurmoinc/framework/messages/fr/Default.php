@@ -31,8 +31,6 @@
     return array(
         '(None)'
             => '(Aucun)',
-        '{attribute} "{value}" is already in use.'
-            => '{attribute} "{value}"est déjà utilisé.',
         'Add File'
             => 'Ajouter un Fichier',
         'Add Files'
@@ -41,8 +39,12 @@
             => 'Ajouter',
         'Advanced Search'
             => 'Recherche avancée',
+        'After'
+            => 'Après',
         'All'
             => 'Tous',
+        'Before'
+            => 'Avant',
         'by'
             => 'par',
         'Cancel'
@@ -117,6 +119,8 @@
             => 'Invalide',
         'Invalid currency code'
             => 'Code de devise invalide',
+        'Last 7 Days'
+            => 'Derniers 7 jours',
         'Last Modified'
             => 'Dernière modification',
         'Last Modified Date and User'
@@ -149,6 +153,8 @@
             => 'Ma Vue Liste',
         'Name'
             => 'Nom',
+        'Next 7 Days'
+            => 'Prochains 7 jours',
         'No'
             => 'Non',
         'No import processes found.'
@@ -253,6 +259,8 @@
             => 'Vous devez choisir au moins une donnée',
         'You must specify a value.'
             => 'Vous devez spécifier une valeur.',
+        '{attribute} "{value}" is already in use.'
+            => '{attribute} "{value}" est déjà utilisé.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} est trop précis(e) (la précision maximale est {precision}).',
     );
