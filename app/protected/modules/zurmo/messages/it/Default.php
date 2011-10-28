@@ -67,6 +67,8 @@
             => '??',
         'Ad-hoc / Owner'
             => '??',
+        'Add Currency'
+            => '??',
         'Address'
             => '??',
         'Admin'
@@ -108,6 +110,12 @@
         'Audit Event'
             => '??',
         'Audit Trail'
+            => '??',
+        'Automotive'
+            => '??',
+        'Banking'
+            => '??',
+        'Business Services'
             => '??',
         'Cancel'
             => '??',
@@ -169,7 +177,13 @@
             => '??',
         'Description'
             => '??',
+        'Dr.'
+            => '??',
         'Email Address'
+            => '??',
+        'Energy'
+            => '??',
+        'Event Name'
             => '??',
         'every'
             => '??',
@@ -186,6 +200,8 @@
         'Filter By Created User'
             => '??',
         'Filtered Lists'
+            => '??',
+        'Financial Services'
             => '??',
         'First Name'
             => '??',
@@ -209,6 +225,8 @@
             => '??',
         'Home'
             => '??',
+        'Inbound Call'
+            => '??',
         'Incorrect username or password.'
             => '??',
         'Industry'
@@ -226,6 +244,8 @@
         'Inherited - Yes'
             => '??',
         'Inherited Value:'
+            => '??',
+        'Insurance'
             => '??',
         'Invalid currency code'
             => '??',
@@ -263,11 +283,15 @@
             => '??',
         'Manage Roles'
             => '??',
+        'Manufacturing'
+            => '??',
         'Member'
             => '??',
         'Member Of'
             => '??',
         'Members'
+            => '??',
+        'Menu'
             => '??',
         'Missing Required Attributes'
             => '??',
@@ -284,6 +308,12 @@
         'Module Permissions'
             => '??',
         'Module Permissions Saved Successfully.'
+            => '??',
+        'Mr.'
+            => '??',
+        'Mrs.'
+            => '??',
+        'Ms.'
             => '??',
         'My List Configuration View'
             => '??',
@@ -347,6 +377,8 @@
             => '??',
         'Remember me next time'
             => '??',
+        'Retail'
+            => '??',
         'Return to Admin Menu'
             => '??',
         'Rights'
@@ -356,8 +388,6 @@
         'Role'
             => '??',
         'Roles'
-            => '??',
-        'Save Changes'
             => '??',
         'Search'
             => '??',
@@ -377,6 +407,8 @@
             => '??',
         'Select a Role'
             => '??',
+        'Self-Generated'
+            => '??',
         'Shipping Address'
             => '??',
         'Size'
@@ -389,7 +421,11 @@
             => '??',
         'Stage'
             => '??',
+        'Standard Fields'
+            => '??',
         'State'
+            => '??',
+        'Status'
             => '??',
         'Street 1'
             => '??',
@@ -401,17 +437,19 @@
             => '??',
         'Super Administrators'
             => '??',
+        'Technology'
+            => '??',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => '??',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
             => '??',
         'The currency was not removed because it is in use.'
             => '??',
+        'The status specified is invalid.'
+            => '??',
         'There are no recently viewed items.'
             => '??',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
-            => '??',
-        'There was an error with the web service.'
             => '??',
         'This action is only available in debug mode.'
             => '??',
@@ -423,7 +461,11 @@
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
             => '??',
+        'Tradeshow'
+            => '??',
         'Type a currency code or name to search.'
+            => '??',
+        'Update'
             => '??',
         'User Membership'
             => '??',
@@ -440,6 +482,8 @@
         'What is this?'
             => '??',
         'Who can read and write'
+            => '??',
+        'Word of Mouth'
             => '??',
         'You have tried to access a page you do not have access to.'
             => '??',

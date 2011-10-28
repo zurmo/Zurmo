@@ -34,8 +34,6 @@
         {
             return array(
                 'activities',
-                'contacts',
-                'leads',
             );
         }
 

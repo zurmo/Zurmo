@@ -47,10 +47,6 @@
             => '??',
         'Lead'
             => '??',
-        'LeadsModuleSingularLabel successfully converted.'
-            => '??',
-        'LeadsModuleSingularLabel was not converted. An error occurred.'
-            => '??',
         'Leads'
             => '??',
         'LeadsModulePluralLabel'
@@ -66,6 +62,10 @@
             => 'LeadsModuleSingularLabel ??',
         'LeadsModuleSingularLabel Search'
             => 'LeadsModuleSingularLabel ??',
+        'LeadsModuleSingularLabel successfully converted.'
+            => '??',
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
+            => '??',
         'My LeadsModulePluralLabel'
             => '??',
         'Select AccountsModuleSingularLabel'

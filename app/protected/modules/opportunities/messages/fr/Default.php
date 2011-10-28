@@ -31,10 +31,16 @@
     return array(
         'Close Date'
             => 'Date de clôture',
+        'Closed Lost'
+            => 'Fermé - Perdu',
+        'Closed Won'
+            => 'Fermé - Gagné',
         'Create OpportunitiesModuleSingularLabel'
             => 'Nouvelle OpportunitiesModuleSingularLabel',
         'My OpportunitiesModulePluralLabel'
             => 'Mes OpportunitiesModulePluralLabel',
+        'Negotiating'
+            => 'Négociation',
         'Opportunities'
             => 'Opportunités',
         'Opportunities By Lead Source'
@@ -55,5 +61,11 @@
             => 'Opportunité',
         'Probability'
             => 'Probabilité',
+        'Prospecting'
+            => 'Prospection',
+        'Qualification'
+            => 'Qualification',
+        'Verbal'
+            => 'Verbal',
     );
 ?>

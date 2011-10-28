@@ -31,6 +31,8 @@
     return array(
         'A user field'
             => '??',
+        'Access Users Tab'
+            => '??',
         'Change Password'
             => '??',
         'Change User Passwords'

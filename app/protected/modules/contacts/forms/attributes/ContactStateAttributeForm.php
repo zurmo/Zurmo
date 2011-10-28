@@ -76,7 +76,7 @@
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'The contact state field');
+            return Yii::t('Default', 'The contact stage field');
         }
 
         public function getAttributeTypeName()

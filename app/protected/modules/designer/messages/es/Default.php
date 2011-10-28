@@ -131,8 +131,6 @@
             => '??',
         'Maximum Value must be larger than the minimum value'
             => '??',
-        'Menu'
-            => '??',
         'Menus'
             => '??',
         'Minimum Value'
@@ -153,6 +151,8 @@
             => '??',
         'Pick List'
             => '??',
+        'Pick List Value Translations'
+            => '??',
         'Pick List Values'
             => '??',
         'Popup List View'
@@ -170,8 +170,6 @@
         'Save Layout'
             => '??',
         'Search View'
-            => '??',
-        'Standard Fields'
             => '??',
         'Text'
             => '??',

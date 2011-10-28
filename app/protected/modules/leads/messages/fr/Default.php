@@ -30,13 +30,13 @@
     // DON'T MAKE A MESS!
     return array(
         'AccountsModuleSingularLabel Optional'
-            => 'Compte Optionnel',
+            => 'AccountsModuleSingularLabel Optionnel',
         'AccountsModuleSingularLabel Required'
-            => 'Compte Requis',
+            => 'AccountsModuleSingularLabel Requis',
         'Complete Conversion'
             => 'Convertir',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
-            => 'Convertir la piste sans sélectionner ou créer un compte.',
+            => 'Convertir la LeadsModuleSingularLowerCaseLabel sans sélectionner ou créer un AccountsModuleSingularLowerCaseLabel.',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
             => 'Vous avez chosi de convertir un AccountsModuleSingularLowerCaseLabel, mais vous n\'avez pas accès au module de AccountsModuleSingularLowerCaseLabel.  Veuillez contacter votre administrateur système.',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
@@ -44,13 +44,9 @@
         'Create LeadsModuleSingularLabel'
             => 'Nouvelle LeadsModuleSingularLabel',
         'Do not show AccountsModuleSingularLabel'
-            => 'Ne pas montrer le compte',
+            => 'Ne pas montrer le AccountsModuleSingularLabel',
         'Lead'
             => 'Piste',
-        'LeadsModuleSingularLabel successfully converted.'
-            => 'Piste convertie.',
-        'LeadsModuleSingularLabel was not converted. An error occurred.'
-            => 'La LeadsModuleSingularLabel n\'a pas été convertie.  Il y a eu un erreur.',
         'Leads'
             => 'Pistes',
         'LeadsModulePluralLabel'
@@ -69,6 +65,10 @@
             => 'Conversion de la LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Search'
             => 'Recherche LeadsModuleSingularLabel',
+        'LeadsModuleSingularLabel successfully converted.'
+            => 'LeadsModuleSingularLabel convertie.',
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
+            => 'La LeadsModuleSingularLabel n\'a pas été convertie.  Il y a eu une erreur.',
         'My LeadsModulePluralLabel'
             => 'Mes LeadsModulePluralLabel',
         'Select AccountsModuleSingularLabel'
