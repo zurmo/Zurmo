@@ -29,10 +29,16 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access TasksModulePluralLabel'
+            => 'Accès aux TasksModulePluralLabel',
         'Completed'
             => 'Réalisée',
         'Completed On'
             => 'Réalisé le',
+        'Create TasksModulePluralLabel'
+            => 'Créer TasksModulePluralLabel',
+        'Delete TasksModulePluralLabel'
+            => 'Supprimer TasksModulePluralLabel',
         'Due On'
             => 'Échéance',
         'My Open TasksModulePluralLabel'

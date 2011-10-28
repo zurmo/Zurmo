@@ -34,35 +34,35 @@
         '2 Columns'
             => '2 Columnas',
         '2 Columns Left Strong'
-            => '??',
+            => 'Izquierda',
         '2 Columns Right Strong'
-            => '??',
+            => 'Derecha',
         'Access Dashboards'
             => '??',
         'Add Portlet'
-            => '??',
+            => 'Agregar Portlet',
         'Are you sure want to delete this dashboard?'
-            => 'Está seguro que quiere eliminar está panel de widgets?',
+            => 'Está seguro que quiere eliminar está panel de portlets?',
         'Create Dashboard'
-            => 'Crear un Panel de Widgets',
+            => 'Crear un Panel de Portlets',
         'Create Dashboards'
-            => '??',
+            => 'Crear un Panel de Portlets',
         'Dashboard'
-            => 'Panel de Widgets',
+            => 'Panel de Portlets',
         'Delete Dashboard'
-            => 'Eliminar Panel de Widgets',
+            => 'Eliminar Panel de Portlets',
         'Delete Dashboards'
-            => '??',
+            => 'Eliminar Panel de Portlets',
         'Edit Dashboard'
-            => 'Editar el Panel de Widgets',
+            => 'Editar el Panel de Portlets',
         'Home'
             => 'Inicio',
         'Is Default'
-            => '??',
+            => 'Es predeterminado',
         'Layout Id'
-            => '??',
+            => 'Id de Diseño',
         'Layout Type'
-            => '??',
+            => 'Tipo de Diseño',
         'Return to Home'
             => 'Volver a Inicio',
     );
