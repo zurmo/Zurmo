@@ -132,6 +132,7 @@
             {
                 $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
                 InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+                ForgetAllCacheUtil::forgetAllCaches();
                 echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
             }
         }
@@ -154,6 +155,7 @@
             $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+            ForgetAllCacheUtil::forgetAllCaches();
             echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
         }
     }

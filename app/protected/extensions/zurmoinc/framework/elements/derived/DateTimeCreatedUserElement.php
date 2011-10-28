@@ -35,7 +35,7 @@
          */
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Created On');
+            return $this->resolveNonActiveFormFormattedLabel(Yii::app()->format->text(Yii::t('Default', 'Created On')));
         }
 
         protected function renderControlNonEditable()

@@ -71,7 +71,7 @@
 
         protected function renderLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Name'));
+            return $this->resolveNonActiveFormFormattedLabel(Yii::app()->format->text(Yii::t('Default', 'Name')));
         }
 
         public static function getDisplayName()

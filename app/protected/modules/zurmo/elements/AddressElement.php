@@ -116,7 +116,7 @@
 
         protected function renderLabel()
         {
-            return $this->getFormattedAttributeLabel();
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
         }
     }
 ?>
