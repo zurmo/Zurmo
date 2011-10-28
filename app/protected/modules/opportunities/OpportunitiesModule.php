@@ -43,6 +43,15 @@
             return array('Opportunity', 'OpportunitiesFilteredList');
         }
 
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                                   = array();
+            $labels[self::RIGHT_CREATE_OPPORTUNITIES] = 'Create OpportunitiesModulePluralLabel';
+            $labels[self::RIGHT_DELETE_OPPORTUNITIES] = 'Delete OpportunitiesModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_OPPORTUNITIES] = 'Access OpportunitiesModulePluralLabel Tab';
+            return $labels;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();

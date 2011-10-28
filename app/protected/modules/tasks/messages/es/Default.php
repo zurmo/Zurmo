@@ -30,27 +30,27 @@
     // DON'T MAKE A MESS!
     return array(
         'Completed'
-            => '??',
+            => 'Terminado',
         'Completed On'
-            => '??',
+            => 'Completó el',
         'Due On'
-            => '??',
+            => 'Fecha de vencimiento',
         'My Open TasksModulePluralLabel'
-            => '??',
+            => 'Mis Open TasksModulePluralLabel',
         'Open TasksModulePluralLabel'
-            => '??',
+            => 'TasksModulePluralLabel abiertas',
         'Task'
-            => '??',
+            => 'Tarea',
         'Tasks'
-            => '??',
+            => 'Tareas',
         'TasksModulePluralLabel'
-            => '??',
+            => 'TasksModulePluralLabel',
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
-            => '??',
+            => 'TasksModulePluralLabel para AccountsModuleSingularLabel',
         'TasksModulePluralLabel For ContactsModuleSingularLabel'
-            => '??',
+            => 'TasksModulePluralLabel para ContactsModuleSingularLabel',
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => '??',
+            => 'TasksModulePluralLabel para OpportunitiesModuleSingularLabel',
         'TasksModuleSingularLabel'
             => 'TasksModuleSingularLabel',
     );

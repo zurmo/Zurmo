@@ -30,18 +30,18 @@
     // DON'T MAKE A MESS!
     return array(
         'Add a NotesModuleSingularLabel about'
-            => '??',
+            => 'Añadir un NotesModuleSingularLabel sobre',
         'Note'
-            => '??',
+            => 'Nota',
         'Notes'
-            => '??',
+            => 'Notas',
         'NotesModulePluralLabel'
             => 'NotesModulePluralLabel',
         'NotesModuleSingularLabel'
             => 'NotesModuleSingularLabel',
         'Occurred On'
-            => '??',
+            => 'ocurrió el',
         'The NotesModulePluralLabel form cannot be displayed.'
-            => '??',
+            => 'El formulario de NotesModulePluralLabel no se puede mostrar',
     );
 ?>

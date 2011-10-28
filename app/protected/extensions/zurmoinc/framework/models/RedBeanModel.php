@@ -1701,16 +1701,13 @@
                         $baseModelClassName = null;
                         foreach ($this->modelClassNameToBean as $modelClassName => $bean)
                         {
+
                             R::store($bean);
                             assert('$bean->id > 0');
                             if (!RedBeanDatabase::isFrozen())
                             {
-                                if ($baseModelClassName !== null)
-                                {
-                                    $tableName  = self::getTableName($modelClassName);
-                                    $columnName = self::getTableName($baseModelClassName) . '_id';
-                                    RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
-                                }
+                                static::resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName,
+                                                                                                $modelClassName);
                                 $baseModelClassName = $modelClassName;
                             }
                         }
@@ -1728,6 +1725,23 @@
             {
                 $this->isSaving = false;
                 throw $e;
+            }
+        }
+
+        /**
+         * Resolve that the id columns are properly formed as integers.
+         * @param string or null $baseModelClassName
+         * @param string $modelClassName
+         */
+        protected static function resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName)
+        {
+            assert('$baseModelClassName == null || is_string($baseModelClassName)');
+            assert('is_string($modelClassName)');
+            if ($baseModelClassName !== null)
+            {
+                $tableName  = self::getTableName($modelClassName);
+                $columnName = self::getTableName($baseModelClassName) . '_id';
+                RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
             }
         }
 

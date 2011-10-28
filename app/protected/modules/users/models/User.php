@@ -92,6 +92,18 @@
             parent::unrestrictedDelete();
         }
 
+        /**
+         * Override to handle Person mixin.  When the Person is the baseModelClassName, we should ignore trying to
+         * resolve the column.  Otherwise a phantom person_id is created on CustomFieldsModel.
+         */
+        protected static function resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName)
+        {
+            if($baseModelClassName != 'Person')
+            {
+                parent::resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName);
+            }
+        }
+
         protected function linkBeans()
         {
             // Link the beans up the inheritance hierarchy, skipping
