@@ -403,6 +403,27 @@
                             }
                         }
                     }
+                    //Check for any panel titles that need translation
+                    if ( strpos($fullEntryName, 'View.php') !== false)
+                    {
+                        $viewClassName = basename(substr($fullEntryName, 0, -4));
+                        $moduleReflectionClass = new ReflectionClass($viewClassName);
+                        if ($moduleReflectionClass->isSubclassOf('MetadataView') &&
+                            !$moduleReflectionClass->isAbstract())
+                        {
+                            $metadata = $viewClassName::getDefaultMetadata();
+                            if(isset($metadata['global']) && isset($metadata['global']['panels']))
+                            {
+                                foreach($metadata['global']['panels'] as $panel)
+                                {
+                                    if(isset($panel['title']))
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $panel['title'];
+                                    }
+                                }
+                            }
+                        }
+                    }
                     //Avoid picking up any models or anything in the test folders
                     if ( strpos($path, '/tests') === false)
                     {
