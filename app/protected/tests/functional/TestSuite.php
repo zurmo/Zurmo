@@ -160,9 +160,6 @@
             }
             echo 'Running Test Suites using Selenium RC v2:' . "\n";
             $browsersToRun = self::resolveBrowserFromParameter();
-            echo "Backup test db";
-            self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'backup'));
-            echo "Backup done";
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
@@ -197,7 +194,7 @@
                     $finalCommand .= ' -userExtensions ' . self::resolveUserExtensionsJsFromParameterAndConstant();
                     echo $finalCommand . "\n";
                     exec($finalCommand);
-					echo 'Restoring test db';
+                    echo 'Restoring test db';
                     self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                 }
             }
@@ -485,8 +482,6 @@
             }elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
             {
                 $url = $url . "index.php?r=zurmo/default/login&clearCache=1";
-				echo $url;
-				//exit;
             }
             else {
                 echo "Invalid params";
@@ -500,8 +495,8 @@
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true );
-			curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true );
+            curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
             curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $error_info = curl_error($ch);
