@@ -43,6 +43,8 @@
             => '??',
         'All'
             => 'Todo',
+        'Basic Search'
+            => '??',
         'Before'
             => '??',
         'by'

@@ -133,6 +133,8 @@
             => 'Tipo de gráfico',
         'City'
             => 'Ciudad',
+        'Close'
+            => '??',
         'Code'
             => 'Código',
         'Configuration'
@@ -149,6 +151,8 @@
             => 'Crear grupos',
         'Create New'
             => 'Crear nuevo',
+        'Create Role'
+            => 'Crear role',
         'Create Roles'
             => 'Crear roles',
         'Currencies: Create'
@@ -273,20 +277,28 @@
             => 'La etiqueta no debe contener caracteres especiales.',
         'Language'
             => 'Lengua',
+        'Languages'
+            => '??',
         'Languages: List'
             => 'Idiomas: Lista',
         'Last Name'
             => 'Apellido',
         'Last Updated'
             => 'Última actualización',
+        'List Filters'
+            => '??',
         'List page size'
             => 'Número de elementos en la vista de lista',
+        'List View'
+            => 'Vista de lista',
         'Load'
             => 'Cargar',
         'Login'
             => 'Acceder',
         'Logout'
             => 'Salir',
+        'Manage Active Languages'
+            => '??',
         'Manage Currency Configuration'
             => 'Administrar la configuración de divisas',
         'Manage Global Configuration'
@@ -387,6 +399,8 @@
             => 'Tipo de cambio a',
         'Rate To Base'
             => 'Tipo de cambio base',
+        'Read'
+            => '??',
         'Read permissions rebuild complete.'
             => 'Reconstrucción de permisis lectura completo.',
         'Recently Viewed'
@@ -512,6 +526,8 @@
         'Who can read and write'
             => 'Permiso de lectura / escritura',
         'Word of Mouth'
+            => '??',
+        'Write'
             => '??',
         'You have tried to access a page you do not have access to.'
             => 'Ha intentado acceder a una página que no tienen acceso.',

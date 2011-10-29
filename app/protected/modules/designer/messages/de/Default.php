@@ -119,8 +119,6 @@
             => '??',
         'Layouts'
             => '??',
-        'List View'
-            => '??',
         'Manage module fields, layouts, and labels.'
             => '??',
         'Mass Edit View'
