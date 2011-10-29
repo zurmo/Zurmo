@@ -84,8 +84,13 @@
 
         protected function renderLabel()
         {
-            return $this->resolveNonActiveFormFormattedLabel(
-                   Yii::app()->format->text(Yii::t('Default', 'Attachments')));
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::t('Default', 'Attachments'));
         }
 
         public static function getDisplayName()

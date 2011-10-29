@@ -35,8 +35,12 @@
          */
         protected function renderLabel()
         {
-            return $this->resolveNonActiveFormFormattedLabel(
-                    Yii::app()->format->text(Yii::t('Default', 'Last Modified')));
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::t('Default', 'Last Modified'));
         }
 
         protected function renderControlNonEditable()
