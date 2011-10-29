@@ -34,83 +34,89 @@
         '(Unnamed)'
             => '(Sin Nombre)',
         '2D Donut Chart'
-            => '??',
+            => 'Anillo',
         '2D Horizontal Bar Graph'
-            => '??',
+            => 'Bares',
         '2D Pie Chart'
-            => '??',
+            => 'Gráfico circular 2D',
         '2D Vertical Bar Graph'
-            => '??',
+            => 'Histograma 2D',
         '3D Pie Chart'
-            => '??',
+            => 'Gráfico circular 3D',
         '3D Vertical Bar Graph'
+            => 'Histograma 3D',
+        '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
+            => '??',
+        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
+            => '??',
+        '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
             => '??',
         'About'
             => 'Sobre',
         'Access Administration Tab'
-            => '??',
+            => 'Acceso a Administración',
         'Access Currency Configuration'
-            => '??',
+            => 'Acceso a Divisas',
         'Access Failure'
-            => '??',
+            => 'Falta de acceso',
         'Access Global Configuration'
-            => '??',
+            => 'Acceso a la Configuración Global',
         'Access Groups Tab'
-            => '??',
+            => 'Acceso a Grupos',
         'Access Roles Tab'
-            => '??',
+            => 'Acceso a Roles',
         'Active'
-            => '??',
+            => 'Activo',
         'Active currencies can be used when creating new records and as a default currency for a user.'
-            => '??',
+            => 'Divisas activos se pueden utilizar al crear nuevos registros, y como una divisa predeterminada para un usuario.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => '??',
+            => 'Idiomas activos pueden ser utilizados por los usuarios. El idioma del sistema y de cualquier idioma utilizado por un usuario no puede ser desactivado.',
         'Ad-hoc / Owner'
-            => '??',
+            => 'Ad-hoc / Propietario',
         'Add Currency'
             => '??',
         'Address'
-            => '??',
+            => 'Dirección',
         'Admin'
             => 'Admin',
         'Alert'
-            => '??',
+            => 'Alerta',
         'Allow'
             => 'Permitir',
         'Amount'
-            => '??',
+            => 'Suma',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
         'Any City'
-            => '??',
+            => 'Ciudad',
         'Any Country'
-            => '??',
+            => 'País',
         'Any Email Address'
-            => '??',
+            => 'Dirección de email',
         'Any Invalid Email'
-            => '??',
+            => 'Email inválida',
         'Any Opted Out Email'
-            => '??',
+            => 'Email opt-out',
         'Any Postal Code'
-            => '??',
+            => 'Código postal',
         'Any State'
-            => '??',
+            => 'Estado',
         'Any Street'
-            => '??',
+            => 'Calle',
         'are required.'
             => 'son obligatorios.',
         'Are you sure you want to remove this group?'
-            => '??',
+            => '¿Está seguro que desea eliminar este grupo?',
         'Are you sure you want to remove this role?'
-            => '??',
+            => '¿Está seguro que desea eliminar este role?',
         'Attachment'
-            => '??',
+            => 'Adjunto',
         'Attachments'
-            => '??',
+            => 'Adjuntos',
         'Audit Event'
-            => '??',
+            => 'Lista de modificaciones',
         'Audit Trail'
-            => '??',
+            => 'Log de modificaciones',
         'Automotive'
             => '??',
         'Banking'
@@ -118,11 +124,11 @@
         'Business Services'
             => '??',
         'Cancel'
-            => '??',
+            => 'Cancelar',
         'Changes to active currencies changed successfully.'
-            => 'Divisas activas cambiado con éxito',
+            => 'Divisas activas cambiado con éxito.',
         'Changes to active languages changed successfully.'
-            => 'Idiomas activos cambiado con éxito',
+            => 'Idiomas activos cambiado con éxito.',
         'Chart Type'
             => 'Tipo de gráfico',
         'City'
@@ -157,12 +163,16 @@
             => 'Divisa en uso',
         'Currency Value'
             => 'Valor de divisa',
+        'Customer'
+            => '??',
         'Dashboard portlet list page size'
             => 'Cantidad de elementos que figuran en el portlet',
         'Data'
             => 'Datos',
         'days'
             => 'Días',
+        'Dead'
+            => '??',
         'Delete Group'
             => 'Eliminar grupo',
         'Delete Groups'
@@ -208,7 +218,7 @@
         'Global Configuration'
             => 'Configuración global',
         'Global configuration saved successfully.'
-            => 'Configuración global guardado con éxito',
+            => 'Configuración global guardado con éxito.',
         'Go to Search'
             => 'Ir a la búsqueda',
         'Group'
@@ -225,10 +235,12 @@
             => 'aquí',
         'Home'
             => 'Inicio',
+        'In Progress'
+            => '??',
         'Inbound Call'
             => '??',
         'Incorrect username or password.'
-            => 'Nombre de usuario o contraseña incorrecta',
+            => 'Nombre de usuario o contraseña incorrecta.',
         'Industry'
             => 'industria',
         'Inherited - All'
@@ -256,9 +268,9 @@
         'Label must be all lowercase.'
             => 'Etiqueta debe ser todo minúsculo.',
         'Label must not be empty.'
-            => 'Etiqueta no debe ser vacío',
+            => 'Etiqueta no debe ser vacío.',
         'Label must not contain any special characters.'
-            => 'La etiqueta no debe contener caracteres especiales',
+            => 'La etiqueta no debe contener caracteres especiales.',
         'Language'
             => 'Lengua',
         'Languages: List'
@@ -292,7 +304,7 @@
         'Members'
             => 'Miembros',
         'Menu'
-            => '??',
+            => 'Menú',
         'Missing Required Fields'
             => 'Los campos obligatorios se colocará en el punto de vista',
         'Mobile Phone'
@@ -308,7 +320,7 @@
         'Module Permissions'
             => 'Permisos de módulo',
         'Module Permissions Saved Successfully.'
-            => 'Permisos de módulo guardado correctamente',
+            => 'Permisos de módulo guardado correctamente.',
         'Mr.'
             => '??',
         'Mrs.'
@@ -319,6 +331,8 @@
             => 'Mi vista de lista configuración',
         'Never'
             => 'Nunca',
+        'New'
+            => '??',
         'No Results Found'
             => 'No se encontraron resultados',
         'Non Members'
@@ -358,7 +372,7 @@
         'Policies'
             => 'Reglas',
         'Policies Saved Successfully.'
-            => 'Reglas guardado correctamente',
+            => 'Reglas guardado correctamente.',
         'Popup list page size'
             => 'Número de elementos en la lista popup',
         'Postal Code'
@@ -367,14 +381,18 @@
             => 'Dirección principal',
         'Primary Email'
             => 'Email principal',
+        'Qualified'
+            => '??',
         'Rate to'
             => 'Tipo de cambio a',
         'Rate To Base'
             => 'Tipo de cambio base',
         'Read permissions rebuild complete.'
-            => 'Reconstrucción de permisis lectura completo',
+            => 'Reconstrucción de permisis lectura completo.',
         'Recently Viewed'
             => 'Visto recientemente',
+        'Recycled'
+            => '??',
         'Remember me next time'
             => 'Recordarme la próxima vez',
         'Retail'
@@ -384,13 +402,15 @@
         'Rights'
             => 'Derechos',
         'Rights Saved Successfully.'
-            => 'Derechos guardado correctamente',
+            => 'Derechos guardado correctamente.',
         'Role'
             => 'Role',
         'Roles'
             => 'Roles',
+        'Salutation'
+            => '??',
         'Save Changes'
-            => 'Guardar cambios',
+            => '??',
         'Search'
             => 'Buscar',
         'Search by name, phone, or e-mail'
@@ -416,9 +436,9 @@
         'Size'
             => 'Tamaño',
         'skipped because you do not have sufficient permissions.'
-            => 'Omitido porque no tiene los permisos necesarios',
+            => 'Omitido porque no tiene los permisos necesarios.',
         'Sorry! Your browser is not supported.'
-            => '¡Lo siento! Su navegador no es compatible',
+            => '¡Lo siento! Su navegador no es compatible.',
         'Source'
             => 'Fuente',
         'Stage'
@@ -453,10 +473,10 @@
             => 'No hay elementons recientemente vistos',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
             => 'Campos obligatorios faltan en la siguiente diseño: {vista}. Por favor, contacte con su administrador.',
-        'There was an error with the web service.'
-            => 'Hubo un error con el servicio web',
         'This action is only available in debug mode.'
-            => 'Esta acción sólo está disponible en modo debug',
+            => 'Esta acción sólo está disponible en modo debug.',
+        'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
+            => '??',
         'This name is reserved. Please pick a different name.'
             => 'Este nombre está reservado. Por favor, elija un nombre distinto.',
         'Time zone'
@@ -465,6 +485,8 @@
             => 'Título',
         'to continue to the home page. If the error persists please contact your administrator.'
             => 'para continuar a la página de inicio. Si el error persiste, por favor comuníquese con el administrador.',
+        'Tradeshow'
+            => '??',
         'Type a currency code or name to search.'
             => 'Escriba un código de divisa o nombre para buscar',
         'Update'
@@ -472,11 +494,15 @@
         'User Membership'
             => 'Miembros del grupo',
         'User Membership Saved Successfully.'
-            => 'Miembros del grupo guardado con éxito',
+            => 'Miembros del grupo guardado con éxito.',
         'Username'
             => 'Usuario',
         'Value'
             => 'Valor',
+        'Visit <b>Zurmo Inc.</b> at {url}.'
+            => '??',
+        'Visit the <b>Zurmo Open Source Project</b> at {url}.'
+            => '??',
         'Website'
             => 'Sitio web',
         'Welcome'
@@ -499,5 +525,9 @@
             => 'Su versión de Yii es currentVersion y debe ser acceptableVersion',
         'ZurmoCRM'
             => 'ZurmoCRM',
+        '{url} (installed with Yii)'
+            => '??',
+        '{url} (version {version} is installed)'
+            => '??',
     );
 ?>

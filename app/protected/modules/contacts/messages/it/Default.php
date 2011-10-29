@@ -29,15 +29,17 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access ContactsModulePluralLabel Tab'
+            => '?? ContactsModulePluralLabel',
         'Company Name'
             => '??',
         'Contact'
             => '??',
         'Contact Stage'
             => '??',
-        'Contact Statuses'
-            => '??',
         'Contact Status Translated Labels'
+            => '??',
+        'Contact Statuses'
             => '??',
         'Contacts'
             => '??',
@@ -53,17 +55,23 @@
             => 'ContactsModuleSingularLabel ?? LeadsModuleSingularLabel',
         'ContactsModuleSingularLabel Search'
             => 'ContactsModuleSingularLabel Search',
+        'Create ContactsModulePluralLabel'
+            => '?? ContactsModulePluralLabel',
         'Create ContactsModuleSingularLabel'
             => '?? ContactsModuleSingularLabel',
+        'Delete ContactsModulePluralLabel'
+            => '?? ContactsModulePluralLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => '?? ContactsModuleSingularLowerCaseLabel ??',
         'My ContactsModulePluralLabel'
             => '??',
         'Order'
             => '??',
+        'Serialized Labels'
+            => '??',
         'Starting Status'
             => '??',
-        'The contact state field'
+        'The contact stage field'
             => '??',
         'The default status specified does not exist.'
             => '??',

@@ -63,6 +63,14 @@
             );
         }
 
+        public function getPanelSettingsAttributes()
+        {
+            return array(
+                array('attributeName' => 'title', 'type' => 'Text'),
+            );
+        }
+
+
         public function getNonPlaceableLayoutAttributeTypes()
         {
             return array(

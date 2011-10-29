@@ -169,6 +169,8 @@
             => 'Fichier vide: le fichier ne contient que les en-têtes de colonne.',
         'The file that was uploaded was not a csv.'
             => 'Le fichier à télécharger doit être au format CSV.',
+        'The following field is mapped more than once. {message}'
+            => 'Ce champ est mappé plus qu\'une fois: {message}',
         'The full name must contain a last name, which is required.'
             => 'Le nom complet doit contenir un moins un nom de famille (requis).',
         'The id specified did not match any existing records.'

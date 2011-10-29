@@ -29,16 +29,18 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access ContactsModulePluralLabel Tab'
+            => 'Accès aux ContactsModulePluralLabel',
         'Company Name'
             => 'Nom du compte',
         'Contact'
             => 'Contact',
         'Contact Stage'
             => 'Statut du Contact',
-        'Contact Statuses'
-            => 'Statut des Contacts',
         'Contact Status Translated Labels'
             => 'Étiquettes traduites du statut Contact',
+        'Contact Statuses'
+            => 'Statut des Contacts',
         'Contacts'
             => 'Contacts',
         'ContactsModulePluralLabel'
@@ -53,18 +55,24 @@
             => 'ContactsModuleSingularLabel ou LeadsModuleSingularLabel',
         'ContactsModuleSingularLabel Search'
             => 'ContactsModuleSingularLabel Search',
+        'Create ContactsModulePluralLabel'
+            => 'Créer ContactsModulePluralLabel',
         'Create ContactsModuleSingularLabel'
             => 'Nouveau ContactsModuleSingularLabel',
+        'Delete ContactsModulePluralLabel'
+            => 'Supprimer ContactsModulePluralLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Chaque état du ContactsModuleSingularLowerCaseLabel doit avoir un nom unique',
         'My ContactsModulePluralLabel'
             => 'Mes ContactsModulePluralLabel',
         'Order'
             => 'Ordre',
+        'Serialized Labels'
+            => 'Étiquettes sérialisées',
         'Starting Status'
             => 'Valeur par défaut',
-        'The contact state field'
-            => 'Le champ',
+        'The contact stage field'
+            => 'Le champ statut du contact',
         'The default status specified does not exist.'
             => 'La valeur du statut par défault spécifié n\'existe pas.',
         'The status is required.  Neither a value nor a default was specified.'

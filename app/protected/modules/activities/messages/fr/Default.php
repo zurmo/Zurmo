@@ -37,8 +37,6 @@
             => 'Toutes les Activités',
         'Latest Date Time'
             => 'Dernière date/heure',
-        'Listview'
-            => 'Vue liste',
         'No Activities found.'
             => 'Aucune Activité trouvée.',
         'Related'

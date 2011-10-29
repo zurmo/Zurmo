@@ -169,6 +169,8 @@
             => '??',
         'The file that was uploaded was not a csv.'
             => '??',
+        'The following field is mapped more than once. {message}'
+            => '??',
         'The full name must contain a last name, which is required.'
             => '??',
         'The id specified did not match any existing records.'

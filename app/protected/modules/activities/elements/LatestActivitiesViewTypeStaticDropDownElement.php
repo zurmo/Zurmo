@@ -37,7 +37,7 @@
         protected function getDropDownArray()
         {
             return array(
-                LatestActivitiesView::VIEW_TYPE_LISTVIEW    => Yii::t('Default', 'Listview'),
+                LatestActivitiesView::VIEW_TYPE_LISTVIEW    => Yii::t('Default', 'List View'),
                 LatestActivitiesView::VIEW_TYPE_SUMMARY     => Yii::t('Default', 'Summary'),
             );
         }

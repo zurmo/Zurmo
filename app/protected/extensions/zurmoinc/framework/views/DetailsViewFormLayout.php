@@ -100,7 +100,7 @@
                 $content = '<div id="' . $tabId . '">';
                 if (!empty($panel['title']))
                 {
-                    $tabTitle = $panel['title'];
+                    $tabTitle = Yii::t('Default', $panel['title']); //Attempt a final translation if available.
                 }
                 else
                 {
@@ -113,7 +113,7 @@
             {
                 if (!empty($panel['title']))
                 {
-                    return '<div class="panelTitle">' . $panel['title'] . '</div>';
+                    return '<div class="panelTitle">' . Yii::t('Default', $panel['title']) . '</div>'; //Attempt a final translation if available.
                 }
             }
         }

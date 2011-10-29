@@ -29,8 +29,14 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access NotesModulePluralLabel'
+            => '??',
         'Add a NotesModuleSingularLabel about'
-            => 'Añadir un NotesModuleSingularLabel sobre',
+            => 'AÃ±adir un NotesModuleSingularLabel sobre',
+        'Create NotesModulePluralLabel'
+            => '??',
+        'Delete NotesModulePluralLabel'
+            => '??',
         'Note'
             => 'Nota',
         'Notes'
@@ -40,8 +46,8 @@
         'NotesModuleSingularLabel'
             => 'NotesModuleSingularLabel',
         'Occurred On'
-            => 'ocurrió el',
+            => 'OcurriÃ³ el',
         'The NotesModulePluralLabel form cannot be displayed.'
-            => 'El formulario de NotesModulePluralLabel no se puede mostrar',
+            => 'El formulario de NotesModulePluralLabel no se puede mostrar.',
     );
 ?>
