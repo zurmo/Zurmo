@@ -66,7 +66,7 @@
                                                     ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions,
                                                     ImportMessageLogger $messageLogger)
         {
-            $data = $dataProvider->getData();
+            $data = $dataProvider->getData(true);
             foreach ($data as $rowBean)
             {
                 assert('$rowBean->id != null');
@@ -86,7 +86,6 @@
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
                 $messageLogger->countAfterRowImported();
             }
-            $messageLogger->countDataProviderGetDataImportCompleted();
         }
 
         /**
