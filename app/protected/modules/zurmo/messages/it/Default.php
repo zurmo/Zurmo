@@ -133,6 +133,8 @@
             => '??',
         'City'
             => '??',
+        'Close'
+            => '??',
         'Code'
             => '??',
         'Configuration'
@@ -148,6 +150,8 @@
         'Create Groups'
             => '??',
         'Create New'
+            => '??',
+        'Create Role'
             => '??',
         'Create Roles'
             => '??',
@@ -273,19 +277,27 @@
             => '??',
         'Language'
             => '??',
+        'Languages'
+            => '??',
         'Languages: List'
             => '??',
         'Last Name'
             => '??',
         'Last Updated'
             => '??',
+        'List Filters'
+            => '??',
         'List page size'
+            => '??',
+        'List View'
             => '??',
         'Load'
             => '??',
         'Login'
             => '??',
         'Logout'
+            => '??',
+        'Manage Active Languages'
             => '??',
         'Manage Currency Configuration'
             => '??',
@@ -386,6 +398,8 @@
         'Rate to'
             => '??',
         'Rate To Base'
+            => '??',
+        'Read'
             => '??',
         'Read permissions rebuild complete.'
             => '??',
@@ -512,6 +526,8 @@
         'Who can read and write'
             => '??',
         'Word of Mouth'
+            => '??',
+        'Write'
             => '??',
         'You have tried to access a page you do not have access to.'
             => '??',

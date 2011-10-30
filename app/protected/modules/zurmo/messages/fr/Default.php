@@ -133,6 +133,8 @@
             => 'Type de graphique',
         'City'
             => 'Ville',
+        'Close'
+            => 'Fermer',
         'Code'
             => 'Code',
         'Configuration'
@@ -149,6 +151,8 @@
             => 'Créer Groupes',
         'Create New'
             => 'Crée',
+        'Create Role'
+            => 'Créer Rôle',
         'Create Roles'
             => 'Créer Rôles',
         'Currencies: Create'
@@ -273,20 +277,28 @@
             => 'L\'étiquette ne peut pas contenir de caractères spéciaux.',
         'Language'
             => 'Langue',
+        'Languages'
+            => 'Langues',
         'Languages: List'
             => 'Langues: Liste',
         'Last Name'
             => 'Nom',
         'Last Updated'
             => 'Dernière Modification',
+        'List Filters'
+            => 'Filtres',
         'List page size'
             => 'Nb. d\'éléments de la vue liste',
+        'List View'
+            => 'Vue liste',
         'Load'
             => 'Télécharger',
         'Login'
             => 'Connexion',
         'Logout'
             => 'Déconnexion',
+        'Manage Active Languages'
+            => 'Gestion des langues',
         'Manage Currency Configuration'
             => 'Gestion des devises',
         'Manage Global Configuration'
@@ -387,6 +399,8 @@
             => 'Taux de change à l\'',
         'Rate To Base'
             => 'Taux de base',
+        'Read'
+            => 'Lire',
         'Read permissions rebuild complete.'
             => 'Reconstruction des autorisations lecture effectuée.',
         'Recently Viewed'
@@ -513,6 +527,8 @@
             => 'Autorisation lecture/écriture',
         'Word of Mouth'
             => 'Bouche à oreille',
+        'Write'
+            => 'Écrire',
         'You have tried to access a page you do not have access to.'
             => 'Vous avez tenté d\'accéder à une page dont vous n\'avez pas accès.',
         'You must have at least one active currency.'

@@ -43,6 +43,8 @@
             => 'Après',
         'All'
             => 'Tous',
+         'Basic Search'
+            => 'Recherche simple',
         'Before'
             => 'Avant',
         'by'

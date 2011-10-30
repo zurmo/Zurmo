@@ -119,8 +119,6 @@
             => '??',
         'Layouts'
             => 'Presentaciones de página',
-        'List View'
-            => 'Vista de lista',
         'Manage module fields, layouts, and labels.'
             => 'Administrar campos de módulo, diseños y etiquetas',
         'Mass Edit View'

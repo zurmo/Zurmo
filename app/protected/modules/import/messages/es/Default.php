@@ -77,6 +77,8 @@
             => 'Importar',
         'Import complete.  Rows processed: {rowsProcessed}'
             => '??',
+        'Import data into Zurmo'
+            => '??',
         'Import file has no rows to use.'
             => 'El archivo no contiene datos.',
         'Import model failed to save.'
