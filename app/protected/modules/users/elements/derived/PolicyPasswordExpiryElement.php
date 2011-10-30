@@ -81,8 +81,12 @@
          */
         protected function renderLabel()
         {
-            return $this->resolveNonActiveFormFormattedLabel(
-                   Yii::app()->format->text(Yii::t('Default', UsersModule::POLICY_PASSWORD_EXPIRES)));
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::t('Default', UsersModule::POLICY_PASSWORD_EXPIRES));
         }
 
         /**
