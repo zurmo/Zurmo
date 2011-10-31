@@ -380,7 +380,7 @@
         /**
          * @depends testSuperUserModifyContactStatesDefaultValueItemsInDropDown
          */
-        public function testCreateAnContactUserAfterTheCustomFieldsArePlacedForContactsModule()
+        public function testCreateAContactUserAfterTheCustomFieldsArePlacedForContactsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -508,9 +508,9 @@
         }
 
         /**
-         * @depends testCreateAnContactUserAfterTheCustomFieldsArePlacedForContactsModule
+         * @depends testCreateAContactUserAfterTheCustomFieldsArePlacedForContactsModule
          */
-        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContactUser()
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContact()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -567,9 +567,9 @@
         }
 
         /**
-         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContactUser
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContact
          */
-        public function testEditOfTheContactUserForTheCustomFieldsPlacedForContactsModule()
+        public function testEditOfTheContactForTheCustomFieldsPlacedForContactsModule()
         {
             $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -699,50 +699,9 @@
         }
 
         /**
-         * This function returns the necessary get parameters for the contact search form
-         * based on the contact edited data.
+         * @depends testEditOfTheContactForTheCustomFieldsPlacedForContactsModule
          */
-        public function fetchContactsSearchFormGetData($contactStateID, $superUserId, $accountId) 
-        {
-            return  array(
-                            'fullName'          => 'Sarah Williams Edit',
-                            'officePhone'       => '739-742-3005',
-                            'anyPostalCode'     => '95131',
-                            'anyCountry'        => 'USA',
-                            'anyInvalidEmail'   => array('value'=>'0'),
-                            'anyEmail'          => 'info@myNewContactEdit.com',
-                            'anyOptOutEmail'    => array('value'=>'0'),
-                            'ownedItemsOnly'    => '1',
-                            'anyStreet'         => '26378 South Arlington Ave',
-                            'anyCity'           => 'San Jose',
-                            'anyState'          => 'CA',
-                            'state'             => array('id' => $contactStateID),
-                            'owner'             => array('id' => $superUserId),
-                            'firstName'         => 'Sarah',
-                            'lastName'          => 'Williams Edit',
-                            'jobTitle'          => 'Sales Director Edit',
-                            'officeFax'         => '255-454-1914',
-                            'title'             => array('value'=>'Mrs.'),
-                            'source'            => array('value'=>'Inbound Call'),
-                            'account'           => array('id'=>$accountId),
-                            'decimal'           =>  '12',
-                            'integer'           =>  '11',
-                            'phone'             =>  '259-784-2069',
-                            'text'              =>  'This is a test Edit Text',
-                            'textarea'          =>  'This is a test Edit TextArea',
-                            'url'               =>  'http://wwww.abc-edit.com',
-                            'checkbox'          =>  array('value'  =>  '0'),
-                            'currency'          =>  array('value'  =>  40),
-                            'picklist'          =>  array('value'  =>  'b'),
-                            'radio'             =>  array('value'  =>  'e'),
-                            'date__Date'        =>  array('type'   =>  'Today'),
-                            'datetime__DateTime'=>  array('type'   =>  'Today'));
-        }
-
-        /**
-         * @depends testEditOfTheContactUserForTheCustomFieldsPlacedForContactsModule
-         */
-        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterEditingTheContactUser()
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterEditingTheContact()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -768,9 +727,9 @@
         }
 
         /**
-         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterEditingTheContactUser
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterEditingTheContact
          */
-        public function testDeleteOfTheContactUserForTheCustomFieldsPlacedForContactsModule()
+        public function testDeleteOfTheContactForTheCustomFieldsPlacedForContactsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -787,7 +746,7 @@
         }
 
         /**
-         * @depends testDeleteOfTheContactUserForTheCustomFieldsPlacedForContactsModule
+         * @depends testDeleteOfTheContactForTheCustomFieldsPlacedForContactsModule
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterDeletingTheContact()
         {
@@ -799,11 +758,11 @@
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('RecycledC');
-            $contactStateID = $contactState[0]->id;
+            $contactStateId = $contactState[0]->id;
 
             //Search a created contact using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('ContactsSearchForm' => $this->fetchContactsSearchFormGetData($contactStateID,
+            $this->setGetArray(array('ContactsSearchForm' => $this->fetchContactsSearchFormGetData($contactStateId,
                                                                     $superUserId, $accountId),
                                      'ajax'               => 'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
@@ -811,6 +770,47 @@
             //Assert that the edit contact does not exits after the search.
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
+        }
+
+        /**
+         * This function returns the necessary get parameters for the contact search form
+         * based on the contact edited data.
+         */
+        public function fetchContactsSearchFormGetData($contactStateId, $superUserId, $accountId)
+        {
+            return  array(
+                            'fullName'          => 'Sarah Williams Edit',
+                            'officePhone'       => '739-742-3005',
+                            'anyPostalCode'     => '95131',
+                            'anyCountry'        => 'USA',
+                            'anyInvalidEmail'   => array('value'=>'0'),
+                            'anyEmail'          => 'info@myNewContactEdit.com',
+                            'anyOptOutEmail'    => array('value'=>'0'),
+                            'ownedItemsOnly'    => '1',
+                            'anyStreet'         => '26378 South Arlington Ave',
+                            'anyCity'           => 'San Jose',
+                            'anyState'          => 'CA',
+                            'state'             => array('id' => $contactStateId),
+                            'owner'             => array('id' => $superUserId),
+                            'firstName'         => 'Sarah',
+                            'lastName'          => 'Williams Edit',
+                            'jobTitle'          => 'Sales Director Edit',
+                            'officeFax'         => '255-454-1914',
+                            'title'             => array('value'=>'Mrs.'),
+                            'source'            => array('value'=>'Inbound Call'),
+                            'account'           => array('id'=>$accountId),
+                            'decimal'           =>  '12',
+                            'integer'           =>  '11',
+                            'phone'             =>  '259-784-2069',
+                            'text'              =>  'This is a test Edit Text',
+                            'textarea'          =>  'This is a test Edit TextArea',
+                            'url'               =>  'http://wwww.abc-edit.com',
+                            'checkbox'          =>  array('value'  =>  '0'),
+                            'currency'          =>  array('value'  =>  40),
+                            'picklist'          =>  array('value'  =>  'b'),
+                            'radio'             =>  array('value'  =>  'e'),
+                            'date__Date'        =>  array('type'   =>  'Today'),
+                            'datetime__DateTime'=>  array('type'   =>  'Today'));
         }
     }
 ?>
