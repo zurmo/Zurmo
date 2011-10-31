@@ -54,7 +54,7 @@
         'Email was too long.'
             => 'Email era demaciado largo.',
         'Ending import.'
-            => '??',
+            => 'Finalizando la importación.',
         'Error: Invalid delimiter'
             => 'Error: Delimitador inválido',
         'Error: Invalid qualifier'
@@ -170,11 +170,11 @@
         'Sample Row'
             => 'Ejemplo de fila',
         'Script will run at most for {seconds} seconds.'
-            => '??',
+            => 'La duración máxima del script es {seconds} segundos',
         'Starting import for process: {processName}'
-            => '??',
+            => 'Comenzando el proceso de importación: {processName}',
         'Starting import. Looking for processes.'
-            => '??',
+            => 'Comenzando la importación. Buscando procesos.',
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => 'El archivo que se ha subido sólo tiene una fila de cabecera y no hay filas adicionales para importar.',
         'The file that was uploaded was not a csv.'
