@@ -466,7 +466,7 @@
         }
 
         /**
-         * Backup and restore database
+         * Restore database
          * @param string url
          * @param string $action
          */
@@ -476,7 +476,7 @@
                 echo "Invalid db control url";
                 exit;
             }
-            if (isset($params['action']) && in_array($params['action'], array('backup', 'restore')))
+            if (isset($params['action']) && in_array($params['action'], array('restore')))
             {
                 $url = $url . "?action=" . urlencode($params['action']);
             }elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
