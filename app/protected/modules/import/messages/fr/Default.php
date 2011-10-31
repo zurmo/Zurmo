@@ -53,6 +53,8 @@
             => 'Ne pas mapper ce champ',
         'Email was too long.'
             => 'Email trop long.',
+        'Ending import.'
+            => 'Terminer l\'importation.',
         'Error: Invalid delimiter'
             => 'Erreur: délimiteur invalide',
         'Error: Invalid qualifier'
@@ -167,6 +169,12 @@
             => 'Règles',
         'Sample Row'
             => 'Aperçu des colonnes',
+        'Script will run at most for {seconds} seconds.'
+            => 'L\'exécution du script dura au maximum {seconds} secondes.',
+        'Starting import for process: {processName}'
+            => 'Commencer l\'importation du processus: {processName}',
+        'Starting import. Looking for processes.'
+            => 'Commencer l\'importation.  Recherche des processus.',
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => 'Fichier vide: le fichier ne contient que les en-têtes de colonne.',
         'The file that was uploaded was not a csv.'

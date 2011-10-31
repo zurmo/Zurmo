@@ -35,8 +35,6 @@
             => 'Cuenta opcional',
         'AccountsModuleSingularLabel Required'
             => 'Cuenta es requerida',
-        'Complete Conversion'
-            => 'Completar la conversión',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Completar conversión de prospecto sin seleccionar o crear una cuenta.',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'

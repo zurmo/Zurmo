@@ -53,6 +53,8 @@
             => 'Chiffres d\'affaires annuel',
         'Billing Address'
             => 'Adresse de facturation',
+        'Complete Conversion'
+            => 'Convertir',
         'Create AccountsModulePluralLabel'
             => 'Créer AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
@@ -63,8 +65,8 @@
             => 'Employés',
         'My AccountsModulePluralLabel'
             => 'Mes AccountsModulePluralLabel',
-        'Parent Account'
-            => 'Compte Parent',
+        'Parent AccountsModuleSingularLabel'
+            => 'AccountsModuleSingularLabel Parent',
         'Prospect'
             => 'Prospect',
         'Related AccountsModulePluralLabel'
