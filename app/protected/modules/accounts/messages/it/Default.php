@@ -53,6 +53,8 @@
             => '??',
         'Billing Address'
             => 'Indirizzo di Fatturazione',
+        'Complete Conversion'
+            => '??',
         'Create AccountsModulePluralLabel'
             => '?? AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
@@ -63,7 +65,7 @@
             => '??',
         'My AccountsModulePluralLabel'
             => '??',
-        'Parent Account'
+        'Parent AccountsModuleSingularLabel'
             => '??',
         'Prospect'
             => '??',

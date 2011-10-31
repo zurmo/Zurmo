@@ -35,8 +35,6 @@
             => 'AccountsModuleSingularLabel Optionnel',
         'AccountsModuleSingularLabel Required'
             => 'AccountsModuleSingularLabel Requis',
-        'Complete Conversion'
-            => 'Convertir',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Convertir la LeadsModuleSingularLowerCaseLabel sans sélectionner ou créer un AccountsModuleSingularLowerCaseLabel.',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'

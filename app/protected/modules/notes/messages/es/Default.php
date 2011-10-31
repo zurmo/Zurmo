@@ -30,13 +30,13 @@
     // DON'T MAKE A MESS!
     return array(
         'Access NotesModulePluralLabel'
-            => '??',
+            => 'Acceso a NotesModulePluralLabel',
         'Add a NotesModuleSingularLabel about'
             => 'Añadir un NotesModuleSingularLabel sobre',
         'Create NotesModulePluralLabel'
-            => '??',
+            => 'Crear NotesModulePluralLabel',
         'Delete NotesModulePluralLabel'
-            => '??',
+            => 'Eliminar NotesModulePluralLabel',
         'Note'
             => 'Nota',
         'Notes'

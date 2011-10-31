@@ -53,6 +53,8 @@
             => '??',
         'Email was too long.'
             => '??',
+        'Ending import.'
+            => '??',
         'Error: Invalid delimiter'
             => '??',
         'Error: Invalid qualifier'
@@ -166,6 +168,12 @@
         'Rules'
             => '??',
         'Sample Row'
+            => '??',
+        'Script will run at most for {seconds} seconds.'
+            => '??',
+        'Starting import for process: {processName}'
+            => '??',
+        'Starting import. Looking for processes.'
             => '??',
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => '??',
