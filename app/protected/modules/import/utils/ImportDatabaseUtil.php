@@ -73,7 +73,7 @@
             $columns   = array();
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
-                if (count($data) > 0)
+                if (count($data) > 1 || (count($data) == 1 && trim($data['0']) != ''))
                 {
                     foreach ($data as $k => $v)
                     {
@@ -112,7 +112,7 @@
             $importArray     = array();
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
-                if (count($data) > 0)
+                if (count($data) > 1 || (count($data) == 1 && trim($data['0']) != ''))
                 {
                     foreach ($data as $k => $v)
                     {
