@@ -79,50 +79,7 @@ EOD;
         }
 
         echo "\n";
-        $template        = "{message}\n";
-        $messageStreamer = new MessageStreamer($template);
-        $messageStreamer->setExtraRenderBytes(0);
-
-        if (isset($args[3]) && !is_int($args[3]))
-        {
-            $this->usageError('The specified run time in seconds is invalid.');
-        }
-        elseif (isset($args[3]) && is_int($args[3]))
-        {
-            set_time_limit($args[3]);
-            $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
-                                  array('{seconds}' => $args[3])));
-        }
-        else
-        {
-            set_time_limit('1200');
-            $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
-                                  array('{seconds}' => '1200')));
-        }
-        if (isset($args[0]))
-        {
-            $importName = $args[0];
-            $messageStreamer->add(Yii::t('Default', 'Starting import for process: {processName}',
-                                  array('{processName}' => $importName)));
-        }
-        else
-        {
-            $importName = null;
-            $messageStreamer->add(Yii::t('Default', 'Starting import. Looking for processes.'));
-        }
-
-        $messageLogger = new ImportMessageLogger($messageStreamer);
-        if(isset($args[2]))
-        {
-            $messageLogger->setMessageOutputInterval((int)$args[2]);
-        }
-        $importName = null;
-        if(isset($args[1]))
-        {
-            $importName = $args[1];
-        }
-        Yii::app()->custom->runImportsForImportCommand($messageLogger, $importName);
-        $messageStreamer->add(Yii::t('Default', 'Ending import.'));
+        ImportUtil::runFromImportCommand($args);
     }
 }
 ?>

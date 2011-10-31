@@ -1418,6 +1418,14 @@
         }
 
         /**
+         * Public for message checker only.
+         */
+        public function getUntranslatedAttributeLabels()
+        {
+            return $this->untranslatedAttributeLabels();
+        }
+
+        /**
          * Performs validation using the validators specified in the 'rules'
          * meta data by the extending class's getMetadata() method.
          * Validation occurs on a new model or a modified model, but only
@@ -2073,7 +2081,8 @@
             }
             elseif (isset($labels[$attributeName]))
             {
-                return Yii::t('Default', $labels[$attributeName], array(), null, $language);
+                return Yii::t('Default', $labels[$attributeName],
+                              LabelUtil::getTranslationParamsForAllModules(), null, $language);
             }
             else
             {

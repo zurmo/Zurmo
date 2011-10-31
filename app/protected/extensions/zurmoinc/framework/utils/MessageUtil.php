@@ -333,12 +333,31 @@
                         if ($modelReflectionClass->isSubclassOf('RedBeanModel') &&
                             !$modelReflectionClass->isAbstract())
                         {
-                           $model = new $modelClassName(false);
-                           $modelAttributes = $model->attributeNames();
+                           $model              = new $modelClassName(false);
+                           $modelAttributes    = $model->attributeNames();
+                           $untranslatedLabels = $model->getUntranslatedAttributeLabels();
                            foreach ($modelAttributes as $attributeName)
                            {
                                 $attributeLabel = $model->getAttributeLabel($attributeName);
-                                $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                if(isset($untranslatedLabels[$attributeName]))
+                                {
+                                    $translatedLabel = Yii::t('Default', $untranslatedLabels[$attributeName],
+                                                                         LabelUtil::getTranslationParamsForAllModules());
+                                    if($untranslatedLabels[$attributeName] == $attributeLabel ||
+                                       $translatedLabel != $attributeLabel)
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                    }
+                                    else
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] =
+                                        $untranslatedLabels[$attributeName];
+                                    }
+                                }
+                                else
+                                {
+                                    $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                }
                                //Find attributes that are a CustomField relation. This means there is drop down values
                                //that will need to be translated.
                                if ($model->isRelation($attributeName) &&

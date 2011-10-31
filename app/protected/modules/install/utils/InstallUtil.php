@@ -910,5 +910,46 @@
             $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize();
             return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
+
+        /**
+         * Method to run installation from command line. Use @InstallCommand.
+         * @param array $args
+         */
+        public static function runFromInstallCommand($args)
+        {
+            assert('is_array($args)');
+            $form            = new InstallSettingsForm();
+            $template        = "{message}\n";
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
+
+            $form->databaseHostname  = $args[0];
+            $form->databaseName      = $args[1];
+            $form->databaseUsername  = $args[2];
+            $form->databasePassword  = $args[3];
+            $form->superUserPassword = $args[4];
+
+            InstallUtil::runInstallation($form, $messageStreamer);
+            if (isset($args[5]))
+            {
+                $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
+                $messageLogger = new MessageLogger($messageStreamer);
+
+                if (isset($args[6]))
+                {
+                    DemoDataUtil::load($messageLogger, intval($args[6]));
+                }
+                else
+                {
+                    DemoDataUtil::load($messageLogger, 3);
+                }
+
+                $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
+            }
+            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+            $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
+        }
     }
 ?>
