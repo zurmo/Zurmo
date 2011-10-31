@@ -36,12 +36,12 @@
         'Below you will find the results of the system check. If any required ' .
         'services are not setup correctly, you will need to make sure they are ' .
         'installed correctly before you can continue.'
-            => 'Estos son los resultados del análisis.' .
-            'Si alguno de los requeridos no está instalado correctamente, debe corregir los problemas antes de proceder.',
+            => 'Estos son los resultados del análisis. ' .
+               'Si alguno de los requeridos no está instalado correctamente, debe corregir los problemas antes de proceder.',
         'Can either be a domain name or an IP address.'
             => 'Puede ser un nombre de dominio o una dirección IP.',
         'Click below to go to the login page. The username is <b>super</b>'
-            => 'Haga clic abajo para ir a la página de login. El usuario es <b> súper </ b>',
+            => 'Haga clic abajo para ir a la página de login. El usuario es <b>súper</ b>',
         'Click Here to install the demo data'
             => 'Haga clic aquí para instalar los datos demo',
         'Click to start'
@@ -67,13 +67,17 @@
         'Database host'
             => 'Host de base de datos',
         'Database is in strict mode.'
-            => 'Base de datos está en modo estricto',
+            => 'Base de datos está en modo estricto.',
         'Database is not in strict mode.'
-            => 'Base de datos no está en modo estricto',
+            => 'Base de datos no está en modo estricto.',
         'Database max_allowed_packet size is:'
-            => 'Base de datos max_allowed_packet tamaño es',
+            => 'Base de datos max_allowed_packet tamaño es:',
         'Database max_allowed_packet size meets minimum requirement.'
-            => 'Base de datos max_allowed_packet tamaño cumple con el requisito mínimo ',
+            => 'Base de datos max_allowed_packet tamaño cumple con el requisito mínimo.',
+        'Database max_sp_recursion_depth size is:'
+            => '??',
+        'Database max_sp_recursion_depth size meets minimum requirement.'
+            => '??',
         'Database name'
             => '??',
         'Database password'
@@ -147,8 +151,6 @@
         'Mysql'
             => '??',
         'Oh no!'
-            => '??',
-        'or'
             => '??',
         'PASS'
             => '??',

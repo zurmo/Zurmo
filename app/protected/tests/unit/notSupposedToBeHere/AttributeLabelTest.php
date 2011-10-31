@@ -33,7 +33,7 @@
             $this->assertEquals('Office Phone', $account->getAttributeLabel('officePhone'));
             $this->assertEquals('Billing Address', $account->getAttributeLabel('billingAddress'));
             Yii::app()->language = 'fr';
-            $this->assertEquals('Téléphone de Bureau', $account->getAttributeLabel('officePhone'));
+            $this->assertEquals('Téléphone de bureau', $account->getAttributeLabel('officePhone'));
             $this->assertEquals('Adresse de facturation', $account->getAttributeLabel('billingAddress'));
             Yii::app()->language = 'it';
             $this->assertEquals('Telefono Ufficio', $account->getAttributeLabel('officePhone'));

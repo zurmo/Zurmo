@@ -95,10 +95,11 @@
                 $content .= '<tbody>';
                 $content .= '<tr>';
                 $content .= '<th>&#160;</th>';
-                $permissionNames = ModulePermissionsEditViewUtil::getPermissionNamesForView();
+                $permissionNames  = ModulePermissionsEditViewUtil::getPermissionNamesForView();
+                $permissionLabels = ModulePermissionsEditViewUtil::getPermissionLabelsForView();
                 foreach ($permissionNames as $permission)
                 {
-                    $content .= '<th>' . Yii::t('Default', $permission) . '</th>';
+                    $content .= '<th>' . $permissionLabels[$permission] . '</th>';
                 }
                 $content .= '</tr>';
                 foreach ($panel['rows'] as $row)

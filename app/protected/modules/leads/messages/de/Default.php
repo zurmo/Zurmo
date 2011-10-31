@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access LeadsModulePluralLabel Tab'
+            => '??',
         'AccountsModuleSingularLabel Optional'
             => '??',
         'AccountsModuleSingularLabel Required'
@@ -41,15 +43,17 @@
             => '??',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
             => '??',
+        'Convert LeadsModulePluralLabel'
+            => '??',
+        'Create LeadsModulePluralLabel'
+            => '??',
         'Create LeadsModuleSingularLabel'
             => '?? LeadsModuleSingularLabel',
+        'Delete LeadsModulePluralLabel'
+            => '??',
         'Do not show AccountsModuleSingularLabel'
             => '??',
         'Lead'
-            => '??',
-        'LeadsModuleSingularLabel successfully converted.'
-            => '??',
-        'LeadsModuleSingularLabel was not converted. An error occurred.'
             => '??',
         'Leads'
             => '??',
@@ -66,6 +70,10 @@
             => 'LeadsModuleSingularLabel ??',
         'LeadsModuleSingularLabel Search'
             => 'LeadsModuleSingularLabel ??',
+        'LeadsModuleSingularLabel successfully converted.'
+            => '??',
+        'LeadsModuleSingularLabel was not converted. An error occurred.'
+            => '??',
         'My LeadsModulePluralLabel'
             => '??',
         'Select AccountsModuleSingularLabel'

@@ -29,12 +29,24 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access OpportunitiesModulePluralLabel Tab'
+            => 'Accès aux OpportunitiesModulePluralLabel',
         'Close Date'
             => 'Date de clôture',
+        'Closed Lost'
+            => 'Fermé - Perdu',
+        'Closed Won'
+            => 'Fermé - Gagné',
+        'Create OpportunitiesModulePluralLabel'
+            => 'Créer OpportunitiesModulePluralLabel',
         'Create OpportunitiesModuleSingularLabel'
             => 'Nouvelle OpportunitiesModuleSingularLabel',
+        'Delete OpportunitiesModulePluralLabel'
+            => 'Suppriner OpportunitiesModulePluralLabel',
         'My OpportunitiesModulePluralLabel'
             => 'Mes OpportunitiesModulePluralLabel',
+        'Negotiating'
+            => 'Négociation',
         'Opportunities'
             => 'Opportunités',
         'Opportunities By Lead Source'
@@ -55,5 +67,11 @@
             => 'Opportunité',
         'Probability'
             => 'Probabilité',
+        'Prospecting'
+            => 'Prospection',
+        'Qualification'
+            => 'Qualification',
+        'Verbal'
+            => 'Verbal',
     );
 ?>

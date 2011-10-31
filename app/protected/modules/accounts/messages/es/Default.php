@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access AccountsModulePluralLabel Tab'
+            => '??',
         'Account'
             => 'Cuenta',
         'Accounts'
@@ -36,28 +38,38 @@
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
         'AccountsModulePluralLabel For AccountsModuleSingularLabel'
-            => 'AccountsModulePluralLabel para AccountsModuleSingularLabel',
+            => 'AccountsModulePluralLabel ?? AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
-            => 'AccountsModuleSingularLabel ID',
+            => 'AccountsModuleSingularLabel ??',
         'AccountsModuleSingularLabel Name'
-            => 'AccountsModuleSingularLabel nombre',
+            => 'AccountsModuleSingularLabel ??',
         'AccountsModuleSingularLabel Search'
-            => 'AccountsModuleSingularLabel búsqueda',
+            => 'AccountsModuleSingularLabel ??',
+        'An account field'
+            => '??',
         'Annual Revenue'
-            => 'Ingresos anuales',
+            => '??',
         'Billing Address'
-            => 'Dirección de facturación',
+            => 'DirecciÃ³n de facturaciÃ³n',
+        'Create AccountsModulePluralLabel'
+            => 'Crear AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
             => 'Crear una AccountsModuleSingularLabel',
+        'Delete AccountsModulePluralLabel'
+            => '?? AccountsModulePluralLabel',
         'Employees'
-            => 'Empleados',
+            => '??',
         'My AccountsModulePluralLabel'
-            => 'Mi AccountsModulePluralLabel',
+            => '??',
+        'Parent Account'
+            => '??',
+        'Prospect'
+            => '??',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel Relacionadas',
-        'Type'
-            => 'Tipo',
+        'Vendor'
+            => '??',
     );
 ?>

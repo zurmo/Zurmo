@@ -39,8 +39,14 @@
             => 'Ajouter',
         'Advanced Search'
             => 'Recherche avancée',
+        'After'
+            => 'Après',
         'All'
             => 'Tous',
+         'Basic Search'
+            => 'Recherche simple',
+        'Before'
+            => 'Avant',
         'by'
             => 'par',
         'Cancel'
@@ -100,7 +106,7 @@
         'from'
             => 'de',
         'Full Name'
-            => 'Nom',
+            => 'Nom complet',
         'Go to Details'
             => 'Au détails',
         'Hour'
@@ -113,6 +119,10 @@
             => 'Nombre entier',
         'Invalid'
             => 'Invalide',
+        'Invalid currency code'
+            => 'Code de devise invalide',
+        'Last 7 Days'
+            => 'Derniers 7 jours',
         'Last Modified'
             => 'Dernière modification',
         'Last Modified Date and User'
@@ -145,10 +155,12 @@
             => 'Ma Vue Liste',
         'Name'
             => 'Nom',
+        'Next 7 Days'
+            => 'Prochains 7 jours',
         'No'
             => 'Non',
         'No import processes found.'
-            => 'Aucun traitement d\'importation trouvé',
+            => 'Aucun traitement d\'importation trouvé.',
         'None'
             => 'Aucun',
         'Now'
@@ -157,6 +169,8 @@
             => 'sur',
         'Opted Out'
             => 'Opt out',
+        'or'
+            => 'ou',
         'Panel'
             => 'Panneau',
         'Panel Settings'
@@ -186,7 +200,7 @@
         'Select'
             => 'Sélectionner',
         'selected for updating.'
-            => 'sélectionnée(s)',
+            => 'sélectionnée(s).',
         'Serialized Data'
             => 'Serialized Data',
         'Some values cannot be removed because they are currently in use. ' .
@@ -201,8 +215,10 @@
             => 'Le fichier n\'existe pas.',
         'There was an error uploading the file.'
             => 'Erreur de téléchargement de fichier.',
+        'There was an error with the web service.'
+            => 'Il y avait une erreur avec le service web.',
         'This module doesn\'t have anything to configure.'
-            => 'Il n\'y a rien a configurer',
+            => 'Il n\'y a rien a configurer.',
         'This pick-list is used by more than one module.'
             => 'Cette liste déroulante est utilisée dans les modules suivants:',
         'This portlet will be removed, ok?'
@@ -219,12 +235,14 @@
             => 'Demain',
         'total'
             => 'total',
+        'Type'
+            => 'Type',
         'Unknown'
             => 'Inconnu',
         'Update Selected'
             => 'Actualiser les données',
         'updated successfully.'
-            => 'mise à jour complète',
+            => 'mise à jour complète.',
         'Updating'
             => 'Actualisation en progrès',
         'User'
@@ -243,7 +261,9 @@
             => 'Vous devez choisir au moins une donnée',
         'You must specify a value.'
             => 'Vous devez spécifier une valeur.',
+        '{attribute} "{value}" is already in use.'
+            => '{attribute} "{value}" est déjà utilisé.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
-            => '{attribute} est trop précis(e) (la précision maximale est {precision})',
+            => '{attribute} est trop précis(e) (la précision maximale est {precision}).',
     );
 ?>

@@ -117,7 +117,7 @@
             $this->assertEquals($compareData, $data);
             $data = ContactsUtil::getContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage('fr');
             $compareData =array($qualifiedStates[0]->id => 'QualifiedFr',
-                                $customerStates[0]->id  => 'Customer');
+                                $customerStates[0]->id  => 'Client');
             $this->assertEquals($compareData, $data);
         }
     }

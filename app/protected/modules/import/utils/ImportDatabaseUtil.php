@@ -51,14 +51,30 @@
                 $freezeWhenComplete = true;
             }
             R::exec("drop table if exists $tableName");
+            $columns = self::optimizeTableImportColumnsAndGetColumnNames($fileHandle, $tableName, $delimiter, $enclosure);
+            rewind($fileHandle);
+            self::convertCsvIntoRowsInTable($fileHandle, $tableName, $delimiter, $enclosure, $columns);
+            self::optimizeTableNonImportColumns($tableName);
+            if ($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
+            }
+            return true;
+        }
 
-            $importArray = array();
+        protected static function optimizeTableImportColumnsAndGetColumnNames($fileHandle, $tableName, $delimiter, $enclosure)
+        {
+            assert('gettype($fileHandle) == "resource"');
+            assert('is_string($tableName)');
+            assert('$tableName == strtolower($tableName)');
+            assert('$delimiter != null && is_string($delimiter)');
+            assert('$enclosure != null && is_string($enclosure)');
             $maxValues = array();
+            $columns   = array();
             while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
             {
                 if (count($data) > 0)
                 {
-                    $importArray[] = $data;
                     foreach ($data as $k => $v)
                     {
                         if (!isset($maxValues[$k]) || strlen($maxValues[$k]) < strlen($v))
@@ -68,7 +84,6 @@
                     }
                 }
             }
-
             if (count($maxValues) > 0)
             {
                 $newBean = R::dispense($tableName);
@@ -82,21 +97,42 @@
                 R::trash($newBean);
                 R::wipe($tableName);
             }
-
-            if (count($importArray > 0))
-            {
-                DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns);
-            }
-
-            self::optimizeTable($tableName);
-            if ($freezeWhenComplete)
-            {
-                RedBeanDatabase::freeze();
-            }
-            return true;
+            return $columns;
         }
 
-        protected static function optimizeTable($tableName)
+        protected static function convertCsvIntoRowsInTable($fileHandle, $tableName, $delimiter, $enclosure, $columns)
+        {
+            assert('gettype($fileHandle) == "resource"');
+            assert('is_string($tableName)');
+            assert('$tableName == strtolower($tableName)');
+            assert('$delimiter != null && is_string($delimiter)');
+            assert('$enclosure != null && is_string($enclosure)');
+            assert('is_array($columns)');
+            $bulkQuantity    = 500;
+            $importArray     = array();
+            while (($data = fgetcsv($fileHandle, 0, $delimiter, $enclosure)) !== false)
+            {
+                if (count($data) > 0)
+                {
+                    $importArray[] = $data;
+                }
+                if (count($importArray) > $bulkQuantity)
+                {
+                    DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns, $bulkQuantity);
+                    $importArray = array();
+                }
+            }
+            if (count($importArray) > $bulkQuantity)
+            {
+                throw new NotSupportedException();
+            }
+            if (count($importArray) > 0)
+            {
+                DatabaseCompatibilityUtil::bulkInsert($tableName, $importArray, $columns, $bulkQuantity);
+            }
+        }
+
+        protected static function optimizeTableNonImportColumns($tableName)
         {
             $bean         = R::dispense($tableName);
             $bean->status = '2147483647'; //Creates an integer todo: optimize to status SET

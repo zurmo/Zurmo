@@ -28,6 +28,8 @@
     {
         protected $startTime;
 
+        protected $memoryUsage;
+
         /**
          * Can be used during development to benchmark certain areas of code for how long they take to execute.  It is
          * recommeded to use something like xdebug, although this can be helpful as well.
@@ -91,6 +93,30 @@
         public function getRedBeanQueryLogger()
         {
             return $this->redBeanQueryLogger;
+        }
+
+        /**
+         * Start a capture of how much memory is being used.
+         */
+        public function startMemoryUsageMarker()
+        {
+            $this->memoryUsage = memory_get_usage();
+        }
+
+        /**
+         * @returns integer - the difference in memory used at the start part until now.  This is the differential amount.
+         */
+        public function getMemoryMarkerUsage()
+        {
+            return memory_get_usage() - $this->memoryUsage;
+        }
+
+        /**
+         * @return integer - Memory usage
+         */
+        public function getMemoryUsage()
+        {
+            return memory_get_usage();
         }
     }
 ?>

@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access AccountsModulePluralLabel Tab'
+            => 'Accès aux AccountsModulePluralLabel',
         'Account'
             => 'Compte',
         'Accounts'
@@ -51,17 +53,23 @@
             => 'Chiffres d\'affaires annuel',
         'Billing Address'
             => 'Adresse de facturation',
+        'Create AccountsModulePluralLabel'
+            => 'Créer AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
             => 'Nouveau AccountsModuleSingularLabel',
+        'Delete AccountsModulePluralLabel'
+            => 'Supprimer AccountsModulePluralLabel',
         'Employees'
             => 'Employés',
         'My AccountsModulePluralLabel'
             => 'Mes AccountsModulePluralLabel',
         'Parent Account'
             => 'Compte Parent',
+        'Prospect'
+            => 'Prospect',
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel principal',
-        'Type'
-            => 'Type fr',
+        'Vendor'
+            => 'Vendeur',
     );
 ?>

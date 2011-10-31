@@ -33,7 +33,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc import <username> [importName] [messageInterval]
+      zurmoc import <username> [importName] [messageInterval] [runTimeInSeconds]
 
     DESCRIPTION
       This command runs any import processes, specifically doing only the specified process if supplied. In a custom
@@ -45,17 +45,21 @@
      Optional Parameters:
      * importName: Name of import process to run
      * messageInterval: how many rows before a message output is displayed showing the progress.
+     * runTimeInSeconds: how many seconds to let this script run, if not specified will default to 20 minutes.
 
 EOD;
     }
 
     /**
-     * Execute the action.
+     * Execute the action.  Changes max run time to 20 minutes, pass the optional parameter
      * @param array command line parameters specific for this command
      */
     public function run($args)
     {
-        set_time_limit('7200');
+        if(SHOW_QUERY_DATA)
+        {
+            $this->usageError('The $queryDataOn parameter must be off to run command line imports.');
+        }
         if (!isset($args[0]))
         {
             $this->usageError('A username must be specified.');
@@ -73,6 +77,22 @@ EOD;
         {
             $this->usageError('The specified process to run is invalid.');
         }
+
+        if (isset($args[3]) && !is_int($args[3]))
+        {
+            $this->usageError('The specified run time in seconds is invalid.');
+        }
+        elseif (isset($args[3]) && is_int($args[3]))
+        {
+            set_time_limit($args[3]);
+            $this->usageError('Script will run at most for {seconds} seconds.', array('{seconds}' => $args[3]));
+        }
+        else
+        {
+            set_time_limit('1200');
+            $this->usageError('Script will run at most for {seconds} seconds.', array('{seconds}' => '1200'));
+        }
+
 
         echo "\n";
         $template        = "{message}\n";

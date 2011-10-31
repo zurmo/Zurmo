@@ -29,18 +29,30 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access OpportunitiesModulePluralLabel Tab'
+            => '??',
         'Close Date'
-            => 'fecha de cierre',
+            => 'Fecha de cierre',
+        'Closed Lost'
+            => '??',
+        'Closed Won'
+            => '??',
+        'Create OpportunitiesModulePluralLabel'
+            => 'Crear OpportunitiesModulePluralLabel',
         'Create OpportunitiesModuleSingularLabel'
             => 'Crear una OpportunitiesModuleSingularLabel',
+        'Delete OpportunitiesModulePluralLabel'
+            => '??',
         'My OpportunitiesModulePluralLabel'
-            => 'Mis OpportunitiesModulePluralLabel',
+            => 'Mis? OpportunitiesModulePluralLabel',
+        'Negotiating'
+            => '??',
         'Opportunities'
-            => 'oportunidades',
+            => 'Oportunidades',
         'Opportunities By Lead Source'
-            => 'oportunidades por fuente de prospecto',
+            => 'Oportunidades por Fuente de Prospecto',
         'Opportunities By Sales Stage'
-            => 'Oportunidades por etapa de ventas',
+            => 'Oportunidades por Etapa de Ventas',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
         'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
@@ -50,10 +62,16 @@
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
         'OpportunitiesModuleSingularLabel Search'
-            => 'OpportunitiesModuleSingularLabel búsqueda',
+            => 'OpportunitiesModuleSingularLabel bÃºsqueda',
         'Opportunity'
             => 'Oportunidad',
         'Probability'
             => 'Probabilidad',
+        'Prospecting'
+            => '??',
+        'Qualification'
+            => '??',
+        'Verbal'
+            => '??',
     );
 ?>

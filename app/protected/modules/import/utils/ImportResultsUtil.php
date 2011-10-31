@@ -41,7 +41,7 @@
          * Array of row results data which includes row results status  and any messages.
          * @var array
          */
-        protected $rowResultsData;
+        protected $rowResultsData = array();
 
         /**
          * @param object $import

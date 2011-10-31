@@ -35,7 +35,12 @@
          */
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Created On');
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::t('Default', 'Created On'));
         }
 
         protected function renderControlNonEditable()

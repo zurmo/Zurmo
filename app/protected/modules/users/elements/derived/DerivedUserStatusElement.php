@@ -92,8 +92,14 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Status');
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
         }
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::t('Default', 'Status'));
+        }
+
 
         /**
          * Method required by interface. Returns empty array since there are no real model

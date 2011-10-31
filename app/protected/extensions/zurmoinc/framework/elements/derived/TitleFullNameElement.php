@@ -71,7 +71,12 @@
 
         protected function renderLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Name'));
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::app()->format->text(Yii::t('Default', 'Name')));
         }
 
         public static function getDisplayName()

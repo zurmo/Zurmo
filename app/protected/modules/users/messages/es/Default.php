@@ -29,65 +29,71 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A user field'
+            => '??',
+        'Access Users Tab'
+            => '??',
         'Change Password'
-            => 'Cambiar contraseña',
+            => 'Cambiar ContraseÃ±a',
         'Change User Passwords'
-            => 'Cambiar las contraseñas de usuarios',
+            => 'Cambiar las contraseÃ±as de Usuarios',
         'Confirm Password'
             => 'Confirmar ContraseÃ±a',
         'Create User'
-            => 'Crear Usuario',
+            => 'Crear Usario',
         'Create Users'
-            => 'Crear Usuarios',
+            => 'Crear Usuario',
+        'day(s)'
+            => '??',
         'Enforce Strong Passwords'
-            => 'Forzar contraseñas robustas',
+            => 'Forzar contraseÃ±as robustas',
         'Hash'
             => 'Almohadilla',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
-            => 'Los usuarios inactivos no pueden iniciar sesión en el uso de la web, móvil o web API. Inicio de sesión de usuarios activos es controlado por los derechos de grupo',
+            => 'Los usuarios inactivos no pueden iniciar sesiÃ³n en el uso de la web, mÃ³vil o web API. Inicio de sesiÃ³n de usuarios activos es controlado por los derechos de grupo.',
         'Inherited Value:'
-            => 'Valor heredado',
+            => 'Valor heredado:',
         'Login Via Mobile'
-            => 'Conexión móvil',
+            => 'ConexiÃ³n mÃ³vil',
         'Login Via Web'
-            => 'Conexión web',
+            => 'ConexiÃ³n Web',
         'Login Via Web API'
-            => 'Conexión web API',
+            => 'ConexiÃ³n Web API',
         'Manage Users'
-            => 'Administrar Usuarios',
+            => 'Administrar Usarios',
         'Manager'
             => 'Administrador',
         'Minimum Password Length'
-            => 'Largo mínimo de la contraseña',
+            => 'Largo mÃ­nimo de la contraseÃ±a',
         'Minimum Username Length'
-            => 'Largo mínimo de nombre de usuario',
+            => 'Largo mÃ­nimo de nombre de usuario',
         'Password Expires'
-            => 'Vencimiento de la contraseña',
+            => 'Vencimiento de la contraseÃ±a',
         'Password Expiry Days'
-            => 'Vida útil mínima de las contraseñas',
+            => 'Vida Ãºtil mÃ­nima de las contraseÃ±as',
         'Profile'
             => 'Perfil',
         'The password is too short. Minimum length is {minimumLength}.'
-            => 'La contraseña es demasiado corta. Largo mínimo es {minimumLength}',
+            => 'La contraseÃ±a es demasiado corta. Largo mÃ­nimo es {minimumLength}.',
         'The password must have at least one lowercase letter'
-            => 'La contraseña debe tener al menos una letra minúscula',
+            => 'La contraseÃ±a debe tener al menos una letra minÃºscula.',
         'The password must have at least one number and one letter'
-            => 'La contraseña debe tener al menos un número y una letra',
+            => 'La contraseÃ±a debe tener al menos un nÃºmero y una letra.',
         'The password must have at least one uppercase letter'
-            => 'La contraseña debe tener al menos una letra mayúscula',
+            => 'La contraseÃ±a debe tener al menos una letra mayÃºscula.',
         'The time zone is invalid.'
-            => 'La zona horaria es válido',
+            => 'La zona horaria es invÃ¡lido',
         'The username is too short. Minimum length is {minimumLength}.'
-            => 'El nombre de usuario es demasiado corto. Longitud mínima es de {minimumLength}.',
+            => 'El nombre de usuario es demasiado corto. Longitud mÃ­nima es de {minimumLength}.',
         'Time Zone'
             => 'Zona horaria',
         'User'
-            => 'Usuario',
+            => 'Usario',
         'User configuration saved successfully.'
-            => 'Configuración de usuario guardado con éxito.',
+            => 'ConfiguraciÃ³n de usuario guardado con Ã©xito.',
         'User Search'
             => 'Busqueda de Usuarios',
         'Users'
-            => 'Usuarios',
+            => 'Usarios',
     );
 ?>

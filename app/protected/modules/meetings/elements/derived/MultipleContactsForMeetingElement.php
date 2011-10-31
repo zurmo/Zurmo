@@ -74,7 +74,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Attendees');
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function getFormattedAttributeLabel()
+        {
+            return Yii::app()->format->text(Yii::t('Default', 'Attendees'));
         }
 
          public static function getDisplayName()

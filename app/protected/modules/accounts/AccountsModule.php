@@ -43,6 +43,15 @@
             return array('Account', 'AccountsFilteredList');
         }
 
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                              = array();
+            $labels[self::RIGHT_CREATE_ACCOUNTS] = 'Create AccountsModulePluralLabel';
+            $labels[self::RIGHT_DELETE_ACCOUNTS] = 'Delete AccountsModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_ACCOUNTS] = 'Access AccountsModulePluralLabel Tab';
+            return $labels;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();

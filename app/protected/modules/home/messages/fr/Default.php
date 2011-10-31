@@ -37,16 +37,22 @@
             => 'Gauche',
         '2 Columns Right Strong'
             => 'Droite',
+        'Access Dashboards'
+            => 'Accès au Tableaux de bord',
         'Add Portlet'
             => 'Ajouter un portlet',
         'Are you sure want to delete this dashboard?'
             => 'Êtes-vous sûr de vouloir supprimer ce tableau de bord?',
         'Create Dashboard'
             => 'Ajouter un tableau de bord',
+        'Create Dashboards'
+            => 'Créer les Tableaux de bord',
         'Dashboard'
             => 'Tableaux de bord',
         'Delete Dashboard'
             => 'Supprimer le tableau de bord',
+        'Delete Dashboards'
+            => 'Supprimer les Tableaux de bord',
         'Edit Dashboard'
             => 'Modifier le tableau de bord',
         'Home'

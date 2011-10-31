@@ -43,13 +43,24 @@
             return $rightNames;
         }
 
-        public static function getTranslatedRightsLabels()
+        public static function getUntranslatedRightsLabels()
         {
             $labels = array();
             $rightsNames = self::getRightsNames();
             foreach($rightsNames as $name)
             {
-                $labels[$name] = Yii::t('Default', $name);
+                $labels[$name] = $name;
+            }
+            return $labels;
+        }
+
+        public static function getTranslatedRightsLabels()
+        {
+            $moduleTranslations = LabelUtil::getTranslationParamsForAllModules();
+            $labels             = array();
+            foreach(static::getUntranslatedRightsLabels() as $name => $label)
+            {
+                $labels[$name] = Yii::t('Default', $label, $moduleTranslations);
             }
             return $labels;
         }
@@ -71,13 +82,24 @@
             return $policyNames;
         }
 
-        public static function getTranslatedPolicyLabels()
+        public static function getUntranslatedPolicyLabels()
         {
             $labels = array();
             $policyNames = self::getPolicyNames();
             foreach($policyNames as $name)
             {
                 $labels[$name] = Yii::t('Default', $name);
+            }
+            return $labels;
+        }
+
+        public static function getTranslatedPolicyLabels()
+        {
+            $moduleTranslations = LabelUtil::getTranslationParamsForAllModules();
+            $labels             = array();
+            foreach(static::getUntranslatedPolicyLabels() as $name => $label)
+            {
+                $labels[$name] = Yii::t('Default', $label, $moduleTranslations);
             }
             return $labels;
         }

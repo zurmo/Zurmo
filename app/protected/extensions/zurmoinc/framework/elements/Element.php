@@ -78,6 +78,7 @@
          */
         protected function renderLabel()
         {
+
             if ($this->form === null)
             {
                 return $this->getFormattedAttributeLabel();
@@ -88,6 +89,15 @@
         protected function getFormattedAttributeLabel()
         {
             return Yii::app()->format->text($this->model->getAttributeLabel($this->attribute));
+        }
+
+        protected function resolveNonActiveFormFormattedLabel($label)
+        {
+            if ($this->form === null)
+            {
+                return $label;
+            }
+            return CHtml::label($label, false);
         }
 
         /**

@@ -45,6 +45,12 @@
             => '??',
         '3D Vertical Bar Graph'
             => '??',
+        '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
+            => '??',
+        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
+            => '??',
+        '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
+            => '??',
         'About'
             => '??',
         'Access Administration Tab'
@@ -66,6 +72,8 @@
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
             => '??',
         'Ad-hoc / Owner'
+            => '??',
+        'Add Currency'
             => '??',
         'Address'
             => '??',
@@ -109,6 +117,12 @@
             => '??',
         'Audit Trail'
             => '??',
+        'Automotive'
+            => '??',
+        'Banking'
+            => '??',
+        'Business Services'
+            => '??',
         'Cancel'
             => '??',
         'Changes to active currencies changed successfully.'
@@ -118,6 +132,8 @@
         'Chart Type'
             => '??',
         'City'
+            => '??',
+        'Close'
             => '??',
         'Code'
             => '??',
@@ -135,6 +151,8 @@
             => '??',
         'Create New'
             => '??',
+        'Create Role'
+            => '??',
         'Create Roles'
             => '??',
         'Currencies: Create'
@@ -149,11 +167,15 @@
             => '??',
         'Currency Value'
             => '??',
+        'Customer'
+            => '??',
         'Dashboard portlet list page size'
             => '??',
         'Data'
             => '??',
         'days'
+            => '??',
+        'Dead'
             => '??',
         'Delete Group'
             => '??',
@@ -169,7 +191,13 @@
             => '??',
         'Description'
             => '??',
+        'Dr.'
+            => '??',
         'Email Address'
+            => '??',
+        'Energy'
+            => '??',
+        'Event Name'
             => '??',
         'every'
             => '??',
@@ -186,6 +214,8 @@
         'Filter By Created User'
             => '??',
         'Filtered Lists'
+            => '??',
+        'Financial Services'
             => '??',
         'First Name'
             => '??',
@@ -209,6 +239,10 @@
             => '??',
         'Home'
             => '??',
+        'In Progress'
+            => '??',
+        'Inbound Call'
+            => '??',
         'Incorrect username or password.'
             => '??',
         'Industry'
@@ -227,6 +261,8 @@
             => '??',
         'Inherited Value:'
             => '??',
+        'Insurance'
+            => '??',
         'Invalid currency code'
             => '??',
         'Is Invalid'
@@ -241,19 +277,27 @@
             => '??',
         'Language'
             => '??',
+        'Languages'
+            => '??',
         'Languages: List'
             => '??',
         'Last Name'
             => '??',
         'Last Updated'
             => '??',
+        'List Filters'
+            => '??',
         'List page size'
+            => '??',
+        'List View'
             => '??',
         'Load'
             => '??',
         'Login'
             => '??',
         'Logout'
+            => '??',
+        'Manage Active Languages'
             => '??',
         'Manage Currency Configuration'
             => '??',
@@ -263,13 +307,17 @@
             => '??',
         'Manage Roles'
             => '??',
+        'Manufacturing'
+            => '??',
         'Member'
             => '??',
         'Member Of'
             => '??',
         'Members'
             => '??',
-        'Missing Required Attributes'
+        'Menu'
+            => '??',
+        'Missing Required Fields'
             => '??',
         'Mobile Phone'
             => '??',
@@ -285,9 +333,17 @@
             => '??',
         'Module Permissions Saved Successfully.'
             => '??',
+        'Mr.'
+            => '??',
+        'Mrs.'
+            => '??',
+        'Ms.'
+            => '??',
         'My List Configuration View'
             => '??',
         'Never'
+            => '??',
+        'New'
             => '??',
         'No Results Found'
             => '??',
@@ -337,15 +393,23 @@
             => '??',
         'Primary Email'
             => '??',
+        'Qualified'
+            => '??',
         'Rate to'
             => '??',
         'Rate To Base'
+            => '??',
+        'Read'
             => '??',
         'Read permissions rebuild complete.'
             => '??',
         'Recently Viewed'
             => '??',
+        'Recycled'
+            => '??',
         'Remember me next time'
+            => '??',
+        'Retail'
             => '??',
         'Return to Admin Menu'
             => '??',
@@ -356,6 +420,8 @@
         'Role'
             => '??',
         'Roles'
+            => '??',
+        'Salutation'
             => '??',
         'Save Changes'
             => '??',
@@ -377,6 +443,8 @@
             => '??',
         'Select a Role'
             => '??',
+        'Self-Generated'
+            => '??',
         'Shipping Address'
             => '??',
         'Size'
@@ -389,7 +457,11 @@
             => '??',
         'Stage'
             => '??',
+        'Standard Fields'
+            => '??',
         'State'
+            => '??',
+        'Status'
             => '??',
         'Street 1'
             => '??',
@@ -401,19 +473,23 @@
             => '??',
         'Super Administrators'
             => '??',
+        'Technology'
+            => '??',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => '??',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
             => '??',
         'The currency was not removed because it is in use.'
             => '??',
+        'The status specified is invalid.'
+            => '??',
         'There are no recently viewed items.'
             => '??',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
             => '??',
-        'There was an error with the web service.'
-            => '??',
         'This action is only available in debug mode.'
+            => '??',
+        'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
             => '??',
         'This name is reserved. Please pick a different name.'
             => '??',
@@ -423,7 +499,11 @@
             => '??',
         'to continue to the home page. If the error persists please contact your administrator.'
             => '??',
+        'Tradeshow'
+            => '??',
         'Type a currency code or name to search.'
+            => '??',
+        'Update'
             => '??',
         'User Membership'
             => '??',
@@ -433,6 +513,10 @@
             => '??',
         'Value'
             => '??',
+        'Visit <b>Zurmo Inc.</b> at {url}.'
+            => '??',
+        'Visit the <b>Zurmo Open Source Project</b> at {url}.'
+            => '??',
         'Website'
             => '??',
         'Welcome'
@@ -440,6 +524,10 @@
         'What is this?'
             => '??',
         'Who can read and write'
+            => '??',
+        'Word of Mouth'
+            => '??',
+        'Write'
             => '??',
         'You have tried to access a page you do not have access to.'
             => '??',
@@ -452,6 +540,10 @@
         'Your Yii version is currentVersion and it should be acceptableVersion.'
             => '??',
         'ZurmoCRM'
+            => '??',
+        '{url} (installed with Yii)'
+            => '??',
+        '{url} (version {version} is installed)'
             => '??',
     );
 ?>

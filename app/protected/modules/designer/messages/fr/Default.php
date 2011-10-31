@@ -62,7 +62,7 @@
         'All panels visible'
             => 'Tous visibles',
         'All required fields must be placed in this layout.'
-            => 'Tous les champs obligatoires doivent être  placés dans la vue',
+            => 'Tous les champs obligatoires doivent être placés dans la vue.',
         'An integer field'
             => 'Un champ nombre entier',
         'Check Box'
@@ -116,11 +116,9 @@
         'Invalid panel configuration type'
             => 'La configuration des panneaux choisie est invalide',
         'Layout saved successfully.'
-            => 'Présentations de page sauvegardées',
+            => 'Présentations de page sauvegardées.',
         'Layouts'
             => 'Présentations de page',
-        'List View'
-            => 'Vue liste',
         'Manage module fields, layouts, and labels.'
             => 'Personalisez vos champs, étiquettes, mises en pages etc.',
         'Mass Edit View'
@@ -131,8 +129,6 @@
             => 'Valeur maximale',
         'Maximum Value must be larger than the minimum value'
             => 'La valeur maximale doit être plus grande que la valeur minimale',
-        'Menu'
-            => 'Menu',
         'Menus'
             => 'Menus',
         'Minimum Value'
@@ -153,6 +149,8 @@
             => 'Téléphone',
         'Pick List'
             => 'Liste déroulante',
+        'Pick List Value Translations'
+            => 'Traductions des éléments de la liste déroulante',
         'Pick List Values'
             => 'Éléments de la liste déroulante',
         'Popup List View'
@@ -171,14 +169,12 @@
             => 'Publier',
         'Search View'
             => 'Vue recherche',
-        'Standard Fields'
-            => 'Champs Standard',
         'Text'
             => 'Texte',
         'Text Area'
             => 'Zone de texte',
         'There was an error processing your request.'
-            => 'Il y a une erreur',
+            => 'Il y a une erreur.',
         'Track Audit Log'
             => 'Auditer ce champ',
         'URL'

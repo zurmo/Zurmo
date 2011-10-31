@@ -32,12 +32,21 @@
 
         public function getDependencies()
         {
-            return array();
+            return array('activities');
         }
 
         public function getRootModelNames()
         {
             return array('Note');
+        }
+
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                           = array();
+            $labels[self::RIGHT_CREATE_NOTES] = 'Create NotesModulePluralLabel';
+            $labels[self::RIGHT_DELETE_NOTES] = 'Delete NotesModulePluralLabel';
+            $labels[self::RIGHT_ACCESS_NOTES] = 'Access NotesModulePluralLabel';
+            return $labels;
         }
 
         public static function getDefaultMetadata()

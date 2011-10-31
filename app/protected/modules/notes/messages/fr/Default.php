@@ -29,8 +29,14 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access NotesModulePluralLabel'
+            => 'Accès aux NotesModulePluralLabel',
         'Add a NotesModuleSingularLabel about'
             => 'Ajouter une NotesModuleSingularLabel sur',
+        'Create NotesModulePluralLabel'
+            => 'Créer NotesModulePluralLabel',
+        'Delete NotesModulePluralLabel'
+            => 'Supprimer NotesModulePluralLabel',
         'Note'
             => 'Note',
         'Notes'

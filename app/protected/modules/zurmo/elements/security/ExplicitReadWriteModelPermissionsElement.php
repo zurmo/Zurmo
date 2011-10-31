@@ -99,7 +99,7 @@
             {
                 throw new NotImplementedException();
             }
-            return Yii::t('Default', 'Who can read and write');
+            return CHtml::label(Yii::t('Default', 'Who can read and write'), false);
         }
 
         /**

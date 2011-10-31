@@ -31,6 +31,8 @@
     return array(
         'A user field'
             => 'Un champ d\'utilisateur',
+        'Access Users Tab'
+            => 'Accès aux Utilisateurs',
         'Change Password'
             => 'Changer le mot de passe',
         'Change User Passwords'
@@ -72,7 +74,7 @@
         'Profile'
             => 'Profil',
         'The password is too short. Minimum length is {minimumLength}.'
-            => 'Le mot de passe doit comprendre {minimumLength} charatères minimum',
+            => 'Le mot de passe doit comprendre {minimumLength} charatères minimum.',
         'The password must have at least one lowercase letter'
             => 'Le mot de passe doit comprendre au moins une lettre minuscule',
         'The password must have at least one number and one letter'
@@ -80,9 +82,9 @@
         'The password must have at least one uppercase letter'
             => 'Le mot de passe doit comprendre au moins une lettre majuscule',
         'The time zone is invalid.'
-            => 'Le fuseau horaire indiqué est invalide',
+            => 'Le fuseau horaire indiqué est invalide.',
         'The username is too short. Minimum length is {minimumLength}.'
-            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum {minimumLength} charactères ',
+            => 'Le nom d\'utilisateur est trop court, il doit comprendre au minimum {minimumLength} charactères.',
         'Time Zone'
             => 'Fuseau Horaire',
         'User'

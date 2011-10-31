@@ -29,16 +29,24 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access MeetingsModulePluralLabel'
+            => '??',
         'Attendees'
             => 'Asistentes',
+        'Call'
+            => '??',
         'Category'
-            => 'Categor韆',
+            => 'Categor铆a',
+        'Create MeetingsModulePluralLabel'
+            => '??',
+        'Delete MeetingsModulePluralLabel'
+            => '??',
         'End Time'
-            => 'Hora de finalizaci髇',
+            => 'Hora de finalizaci贸n',
         'Location'
             => 'Lugar',
         'Meeting'
-            => 'reuni髇',
+            => 'Reuni贸n',
         'Meetings'
             => 'Reuniones',
         'MeetingsModulePluralLabel'
@@ -52,14 +60,14 @@
         'MeetingsModuleSingularLabel'
             => 'MeetingsModuleSingularLabel',
         'My Upcoming MeetingsModulePluralLabel'
-            => 'mis pr髕imas MeetingsModulePluralLabel',
+            => 'Mis pr贸ximas MeetingsModulePluralLabel',
         'Related ContactsModulePluralLabel and LeadsModulePluralLabel'
             => 'Related ContactsModulePluralLabel y LeadsModulePluralLabel',
         'Start Time'
-            => 'hora de inicio',
+            => 'Hora de inicio',
         'Type a ContactsModuleSingularLowerCaseLabel or LeadsModuleSingularLowerCaseLabel: name or email address'
-            => 'Escribir un ContactsModuleSingularLowerCaseLabel o LeadsModuleSingularLowerCaseLabel: nombre o direcci髇 de email',
+            => 'Escribir un ContactsModuleSingularLowerCaseLabel o LeadsModuleSingularLowerCaseLabel: nombre o direcci贸n de email',
         'Upcoming MeetingsModulePluralLabel'
-            => 'pr髕imos MeetingsModulePluralLabel',
+            => 'Pr贸ximos MeetingsModulePluralLabel',
     );
 ?>

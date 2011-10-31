@@ -29,14 +29,28 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A check box'
+            => '??',
+        'A currency field'
+            => '??',
+        'A date field'
+            => '??',
+        'A date/time field'
+            => '??',
+        'A decimal field'
+            => '??',
+        'A description box'
+            => '??',
+        'A field that contains a URL'
+            => '??',
         'A field with this name is already used.'
-            => 'Un campo con este nombre ya está en uso.',
+            => 'Un campo con este nombre ya se utiliza.',
         'A phone field'
             => 'Un campo de teléfono',
         'A pick list that can have multiple selections'
             => 'Un pick list que puede tener varias selecciones',
         'A pick list with specific values to select from'
-            => 'Un pick list con valores específicos para seleccionar ',
+            => 'Un pick list con valores específicos para seleccionar',
         'A radio button pick list'
             => 'Un botón de radio pick list',
         'A text field'
@@ -47,10 +61,24 @@
             => 'Campos de dirección',
         'All panels visible'
             => 'Todos los paneles visibles',
+        'All required fields must be placed in this layout.'
+            => '??',
+        'An integer field'
+            => '??',
+        'Check Box'
+            => '??',
         'Create Field'
             => 'Crear campo',
+        'Custom Fields'
+            => '??',
+        'Decimal'
+            => 'Diseñador',
         'Designer'
             => 'Diseñador',
+        'Designer Home'
+            => '??',
+        'Designer Tool'
+            => '??',
         'Detail and Edit View'
             => 'Vista de formularios',
         'Details View'
@@ -59,24 +87,38 @@
             => 'Etiqueta del campo',
         'Each item must be uniquely named'
             => 'Cada elemento debe tener un nombre exclusivo',
+        'Edit Field'
+            => '??',
+        'Edit Layout'
+            => '??',
         'Edit View'
             => 'Formulario de inscripción',
+        'Email address fields'
+            => '??',
+        'Email Address Information'
+            => '??',
+        'Field'
+            => '??',
         'Field Name'
             => 'Nombre de campo',
         'Field Type'
             => 'Tipo de campo',
         'Fields'
             => 'Campos',
+        'First character must be a lower case letter'
+            => '??',
         'First panel visible, then `show more` link'
             => 'Primer panel visible, después `mostrar más` link',
         'General'
             => 'General',
+        'General Edit'
+            => '??',
         'Invalid panel configuration type'
             => 'Tipo de configuración de panel inválido',
+        'Layout saved successfully.'
+            => '??',
         'Layouts'
             => 'Presentaciones de página',
-        'List View'
-            => 'Vista de lista',
         'Manage module fields, layouts, and labels.'
             => 'Administrar campos de módulo, diseños y etiquetas',
         'Mass Edit View'
@@ -85,18 +127,30 @@
             => 'Longitud máxima',
         'Maximum Value'
             => 'Valor máximo',
-        'Menu'
-            => 'menú',
+        'Maximum Value must be larger than the minimum value'
+            => '??',
         'Menus'
             => 'menús',
         'Minimum Value'
             => 'valor mínimo',
         'Module'
             => 'Módulo',
+        'Modules'
+            => 'Módulos',
+        'Multi-Select Pick List'
+            => '??',
+        'Name must not contain spaces or special characters'
+            => '??',
         'Panels are tabbed'
             => 'Los paneles son pestañas',
         'Panels Configuration'
             => 'Configuración de paneles',
+        'Phone'
+            => '??',
+        'Pick List'
+            => '??',
+        'Pick List Value Translations'
+            => '??',
         'Pick List Values'
             => 'Valores de pick list',
         'Popup List View'
@@ -105,6 +159,8 @@
             => 'Búsquada de lista popup',
         'Precision'
             => 'precisión',
+        'Radio Pick List'
+            => '??',
         'Related List View'
             => 'Vista de lista relacionada',
         'Required Field'
@@ -112,10 +168,18 @@
         'Save Layout'
             => 'Publicar',
         'Search View'
-            => 'Vista de búsqueda',
+            => '??',
+        'Text'
+            => '??',
+        'Text Area'
+            => '??',
         'There was an error processing your request.'
-            => 'Hubo un error al procesar su pedido',
+            => 'Hubo un error al procesar su pedido.',
         'Track Audit Log'
             => 'Auditar este campo',
+        'URL'
+            => '??',
+        'You must have at least one panel in order to save a layout.'
+            => '??',
     );
 ?>

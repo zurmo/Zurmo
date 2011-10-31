@@ -29,10 +29,16 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access ContactsModulePluralLabel Tab'
+            => '?? ContactsModulePluralLabel',
         'Company Name'
             => 'Nombre de la empresa',
         'Contact'
             => 'Contacto',
+        'Contact Stage'
+            => 'Estados de contacto',
+        'Contact Status Translated Labels'
+            => '??',
         'Contact Statuses'
             => 'Estados de contacto',
         'Contacts'
@@ -48,26 +54,32 @@
         'ContactsModuleSingularLabel or LeadsModuleSingularLabel'
             => 'ContactsModuleSingularLabel o LeadsModuleSingularLabel',
         'ContactsModuleSingularLabel Search'
-            => 'ContactsModuleSingularLabel b�squeada',
+            => 'ContactsModuleSingularLabel búsqueada',
+        'Create ContactsModulePluralLabel'
+            => 'Crear ContactsModulePluralLabel',
         'Create ContactsModuleSingularLabel'
             => 'Crear una ContactsModuleSingularLabel',
+        'Delete ContactsModulePluralLabel'
+            => '?? ContactsModulePluralLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Cada ContactsModuleSingularLowerCaseLabel debe ser un nombre exclusivo',
         'My ContactsModulePluralLabel'
             => 'Mi ContactsModulePluralLabel',
         'Order'
             => 'Orden',
+        'Serialized Labels'
+            => '??',
         'Starting Status'
             => 'Estado de partida',
-        'Status'
-            => 'Estado',
+        'The contact stage field'
+            => '??',
         'The default status specified does not exist.'
-            => 'El estado especificado predeterminado no existe',
+            => 'El estado especificado predeterminado no existe.',
         'The status is required.  Neither a value nor a default was specified.'
-            => 'El estado es necesario. Ni un valor ni un predeterminado se ha especificado',
+            => 'El estado es necesario. Ni un valor ni un predeterminado se ha especificado.',
         'The status specified does not exist.'
-            => 'El estado especificado no existe',
-        'The status specified is invalid.'
-            => 'El estado especificado es invalido',
+            => 'El estado especificado no existe.',
+        'The status specified is not unique and is invalid.'
+            => 'El estado especificado no es único y es invalido.',
     );
 ?>

@@ -39,7 +39,13 @@
             => '??',
         'Advanced Search'
             => '??',
+        'After'
+            => '??',
         'All'
+            => '??',
+        'Basic Search'
+            => '??',
+        'Before'
             => '??',
         'by'
             => '??',
@@ -113,6 +119,10 @@
             => '??',
         'Invalid'
             => '??',
+        'Invalid currency code'
+            => '??',
+        'Last 7 Days'
+            => '??',
         'Last Modified'
             => '??',
         'Last Modified Date and User'
@@ -145,6 +155,8 @@
             => '??',
         'Name'
             => '??',
+        'Next 7 Days'
+            => '??',
         'No'
             => '??',
         'No import processes found.'
@@ -156,6 +168,8 @@
         'of'
             => '??',
         'Opted Out'
+            => '??',
+        'or'
             => '??',
         'Panel'
             => '??',
@@ -200,6 +214,8 @@
             => '??',
         'There was an error uploading the file.'
             => '??',
+        'There was an error with the web service.'
+            => '??',
         'This module doesn\'t have anything to configure.'
             => '??',
         'This pick-list is used by more than one module.'
@@ -217,6 +233,8 @@
         'Tomorrow'
             => '??',
         'total'
+            => '??',
+        'Type'
             => '??',
         'Unknown'
             => '??',
@@ -241,6 +259,8 @@
         'You must select at least one record'
             => '??',
         'You must specify a value.'
+            => '??',
+        '{attribute} "{value}" is already in use.'
             => '??',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '??',

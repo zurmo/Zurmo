@@ -47,8 +47,8 @@
             $params = array(
                 'content'  => array('text'    => CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')),
                                     'url'     => Yii::app()->createUrl('zurmo/default/recentlyViewed'),
-                                    'title'   => array('text'   => 'Recently Viewed',
-                                                       'button' => 'Close')),
+                                    'title'   => array('text'   => Yii::t('Default', 'Recently Viewed'),
+                                                       'button' => Yii::t('Default', 'Close'))),
                 'show'     => array('when'    => 'click'),
                 'hide'     => array('when'    => 'click'),
                 'position' => array('corner'  => array(

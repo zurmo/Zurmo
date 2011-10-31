@@ -38,9 +38,15 @@
         'Add Item'
             => '??',
         'Advanced Search'
-            => 'Búsqueda avanzada',
+            => 'Búsqueda Avanzada',
+        'After'
+            => '??',
         'All'
             => 'Todo',
+        'Basic Search'
+            => '??',
+        'Before'
+            => '??',
         'by'
             => 'por',
         'Cancel'
@@ -50,13 +56,13 @@
         'Celsius'
             => 'Centígrado',
         'Change Log'
-            => 'Registro de cambios',
+            => 'Registro de Cambios',
         'Changed'
             => 'Cambiado',
         'Clear Search'
-            => 'Restablecer búsqueda',
+            => 'Restablecer Búsqueda',
         'Create'
-            => '??',
+            => 'Crear',
         'Created By User'
             => 'Creado por',
         'Created Date and User'
@@ -65,10 +71,12 @@
             => 'Fecha y hora de creación',
         'Created On'
             => 'Creado el',
+        'CustomManagement class needs to be extended.'
+            => '??',
         'Date'
             => 'Fecha',
         'Date Time'
-            => '??',
+            => 'Fecha',
         'Default Value'
             => '??',
         'Delete'
@@ -111,12 +119,16 @@
             => 'Número entero',
         'Invalid'
             => 'Inválido',
+        'Invalid currency code'
+            => '??',
+        'Last 7 Days'
+            => '??',
         'Last Modified'
-            => 'Última modificación',
+            => 'Última Modificación',
         'Last Modified Date and User'
             => 'Última modificación fecha y usuario',
         'List'
-            => '??',
+            => 'Lista',
         'Loading'
             => '??',
         'Mass Update'
@@ -134,23 +146,31 @@
         'Modified Date Time'
             => 'Modificado fecha y hora',
         'Module Name'
-            => 'Nombre de Module',
+            => 'Nombre de Módulo',
         'More Details'
             => 'Más detalles',
         'More Options'
-            => '??',
+            => 'Más opciones',
         'My List View'
             => '??',
         'Name'
             => 'Nombre',
+        'Next 7 Days'
+            => '??',
         'No'
             => 'No',
+        'No import processes found.'
+            => '??',
         'None'
             => 'Ninguno',
         'Now'
             => 'Ahora',
+        'of'
+            => '??',
         'Opted Out'
             => 'Excluido',
+        'or'
+            => '??',
         'Panel'
             => 'Panel',
         'Panel Settings'
@@ -158,7 +178,7 @@
         'Panel Title'
             => 'Título de panel',
         'Perform Action'
-            => '??',
+            => 'Realizar accíon',
         'Radio Drop Down'
             => '??',
         'record'
@@ -168,7 +188,7 @@
         'Remove'
             => 'Eliminar',
         'Return to List'
-            => 'Volver a la lista',
+            => 'Volver al la lista',
         'Row'
             => 'Fila',
         'Save'
@@ -180,11 +200,13 @@
         'Select'
             => 'Seleccionar',
         'selected for updating.'
-            => 'Seleccionado por actualización',
+            => 'seleccionado por actualización',
         'Serialized Data'
             => 'Datos serializados',
-        'Some values cannot be removed because they are currently in use. Try changing the records that use them first.'
-            => 'Algunos valores no se pueden eliminar, ya que están actualmente en uso. Trate de cambiar los registros que usó primero',
+        'Some values cannot be removed because they are currently in use. ' .
+        'Try changing the records that use them first.'
+            => 'Algunos valores no se pueden eliminar, ya que están actualmente en uso ' .
+               'Trate de cambiar los registros que usó primero.',
         'Start'
             => '??',
         'Tab'
@@ -193,10 +215,12 @@
             => '??',
         'There was an error uploading the file.'
             => '??',
+        'There was an error with the web service.'
+            => 'Hubo un error con el servicio web.',
         'This module doesn\'t have anything to configure.'
-            => 'Este module no tiene nada para configurar.',
+            => 'Este módulo no tiene nada para configurar.',
         'This pick-list is used by more than one module.'
-            => '??',
+            => 'Esta lista de selección es utilizada por más de un module',
         'This portlet will be removed, ok?'
             => '??',
         'Time'
@@ -211,6 +235,8 @@
             => 'Mañana',
         'total'
             => '??',
+        'Type'
+            => '??',
         'Unknown'
             => 'Desconocido',
         'Update Selected'
@@ -224,7 +250,7 @@
         'Users'
             => 'Usuarios',
         'Yes'
-            => 'Si',
+            => 'Sí',
         'Yesterday'
             => 'Ayer',
         'You must enter a value'
@@ -234,7 +260,9 @@
         'You must select at least one record'
             => '??',
         'You must specify a value.'
-            => 'Debe especificar un valor',
+            => '??',
+        '{attribute} "{value}" is already in use.'
+            => '??',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} es demasiado preciso (máximo de decimales es {precision}).',
     );

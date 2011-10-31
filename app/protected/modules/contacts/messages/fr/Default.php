@@ -29,14 +29,18 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access ContactsModulePluralLabel Tab'
+            => 'Accès aux ContactsModulePluralLabel',
         'Company Name'
             => 'Nom du compte',
         'Contact'
             => 'Contact',
         'Contact Stage'
             => 'Statut du Contact',
+        'Contact Status Translated Labels'
+            => 'Étiquettes traduites du statut Contact',
         'Contact Statuses'
-            => 'Liste déroulante',
+            => 'Statut des Contacts',
         'Contacts'
             => 'Contacts',
         'ContactsModulePluralLabel'
@@ -51,25 +55,31 @@
             => 'ContactsModuleSingularLabel ou LeadsModuleSingularLabel',
         'ContactsModuleSingularLabel Search'
             => 'ContactsModuleSingularLabel Search',
+        'Create ContactsModulePluralLabel'
+            => 'Créer ContactsModulePluralLabel',
         'Create ContactsModuleSingularLabel'
             => 'Nouveau ContactsModuleSingularLabel',
+        'Delete ContactsModulePluralLabel'
+            => 'Supprimer ContactsModulePluralLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Chaque état du ContactsModuleSingularLowerCaseLabel doit avoir un nom unique',
         'My ContactsModulePluralLabel'
             => 'Mes ContactsModulePluralLabel',
         'Order'
             => 'Ordre',
+        'Serialized Labels'
+            => 'Étiquettes sérialisées',
         'Starting Status'
             => 'Valeur par défaut',
-        'Status'
-            => 'Statut',
+        'The contact stage field'
+            => 'Le champ statut du contact',
         'The default status specified does not exist.'
-            => 'La valeur du statut par défault spécifié n\'existe pas',
+            => 'La valeur du statut par défault spécifié n\'existe pas.',
         'The status is required.  Neither a value nor a default was specified.'
-            => 'Le champs statut est requis.  Vous devez spécifiez soit une valeur par défault ',
+            => 'Le champ \'statut\' est obligatoire.  Vous devez spécifiez une valeur.',
         'The status specified does not exist.'
-            => 'La valeur du statut spécifié n\'existe pas',
-        'The status specified is invalid.'
-            => 'La valeur du statut spécifié n\'est pas valide',
+            => 'La valeur du statut spécifié n\'existe pas.',
+        'The status specified is not unique and is invalid.'
+            => 'La valeur du statut spécifié n\'est pas unique et n\'est pas valide.',
     );
 ?>

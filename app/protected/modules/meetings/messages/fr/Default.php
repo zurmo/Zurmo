@@ -29,10 +29,18 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access MeetingsModulePluralLabel'
+            => 'Accès aux MeetingsModulePluralLabel',
         'Attendees'
             => 'Paticipants',
+        'Call'
+            => 'Appel',
         'Category'
             => 'Catégorie',
+        'Create MeetingsModulePluralLabel'
+            => 'Créer MeetingsModulePluralLabel',
+        'Delete MeetingsModulePluralLabel'
+            => 'Supprimer MeetingsModulePluralLabel',
         'End Time'
             => 'Échéance',
         'Location'

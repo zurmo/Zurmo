@@ -119,8 +119,6 @@
             => '??',
         'Layouts'
             => '??',
-        'List View'
-            => '??',
         'Manage module fields, layouts, and labels.'
             => '??',
         'Mass Edit View'
@@ -130,8 +128,6 @@
         'Maximum Value'
             => '??',
         'Maximum Value must be larger than the minimum value'
-            => '??',
-        'Menu'
             => '??',
         'Menus'
             => '??',
@@ -153,6 +149,8 @@
             => '??',
         'Pick List'
             => '??',
+        'Pick List Value Translations'
+            => '??',
         'Pick List Values'
             => '??',
         'Popup List View'
@@ -170,8 +168,6 @@
         'Save Layout'
             => '??',
         'Search View'
-            => '??',
-        'Standard Fields'
             => '??',
         'Text'
             => '??',
