@@ -30,23 +30,23 @@
     // DON'T MAKE A MESS!
     return array(
         'Access OpportunitiesModulePluralLabel Tab'
-            => '??',
+            => 'Acceso a OpportunitiesModulePluralLabel',
         'Close Date'
             => 'Fecha de cierre',
         'Closed Lost'
-            => '??',
+            => 'Cerrado perdido',
         'Closed Won'
-            => '??',
+            => 'Cerrado ganado',
         'Create OpportunitiesModulePluralLabel'
             => 'Crear OpportunitiesModulePluralLabel',
         'Create OpportunitiesModuleSingularLabel'
             => 'Crear una OpportunitiesModuleSingularLabel',
         'Delete OpportunitiesModulePluralLabel'
-            => '??',
+            => 'Eliminar OpportunitiesModulePluralLabel',
         'My OpportunitiesModulePluralLabel'
-            => 'Mis? OpportunitiesModulePluralLabel',
+            => 'Mis OpportunitiesModulePluralLabel',
         'Negotiating'
-            => '??',
+            => 'Negociando',
         'Opportunities'
             => 'Oportunidades',
         'Opportunities By Lead Source'
@@ -68,10 +68,10 @@
         'Probability'
             => 'Probabilidad',
         'Prospecting'
-            => '??',
+            => 'Prospectado',
         'Qualification'
-            => '??',
+            => 'Calificación',
         'Verbal'
-            => '??',
+            => 'Verbal',
     );
 ?>

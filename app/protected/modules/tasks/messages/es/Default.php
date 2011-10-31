@@ -30,15 +30,15 @@
     // DON'T MAKE A MESS!
     return array(
         'Access TasksModulePluralLabel'
-            => '??',
+            => 'Acceso a TasksModulePluralLabel',
         'Completed'
             => 'Terminado',
         'Completed On'
             => 'Completó el',
         'Create TasksModulePluralLabel'
-            => '??',
+            => 'Crear TasksModulePluralLabel',
         'Delete TasksModulePluralLabel'
-            => '??',
+            => 'Eliminar TasksModulePluralLabel',
         'Due On'
             => 'Fecha de vencimiento',
         'My Open TasksModulePluralLabel'
