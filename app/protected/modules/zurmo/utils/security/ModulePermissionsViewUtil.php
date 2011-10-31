@@ -127,9 +127,9 @@
         public static function getPermissionLabelsForView()
         {
             return array(
-                'READ'   => Yii::t('Default', 'READ'),
-                'WRITE'  => Yii::t('Default', 'WRITE'),
-                'DELETE' => Yii::t('Default', 'DELETE'),
+                'READ'   => Yii::t('Default', 'Read'),
+                'WRITE'  => Yii::t('Default', 'Write'),
+                'DELETE' => Yii::t('Default', 'Delete'),
             );
         }
     }
