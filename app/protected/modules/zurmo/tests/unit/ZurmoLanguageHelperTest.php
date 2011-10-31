@@ -164,11 +164,12 @@
         public function testLanguagesToLanguageCollectionViewUtil()
         {
             $data = LanguagesToLanguageCollectionViewUtil::getLanguagesData();
-            $compareData = array('de' => array(
+            $compareData = array(/* Enable once German is completed.
+                                    'de' => array(
                                     'label' => 'German',
                                     'active' => true,
                                     'canInactivate' => true,
-                                 ),
+                                 ),*/
                                  'en' => array(
                                     'label' => 'English',
                                     'active' => true,
@@ -184,11 +185,12 @@
                                     'active' => true,
                                     'canInactivate' => false,
                                  ),
+                                 /* Enable once Italian is completed.
                                  'it' => array(
                                     'label' => 'Italian',
                                     'active' => false,
                                     'canInactivate' => true,
-                                 ));
+                                 )*/);
             $this->assertEquals($compareData, $data);
         }
     }
