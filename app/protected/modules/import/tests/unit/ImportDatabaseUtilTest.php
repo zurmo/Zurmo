@@ -363,7 +363,7 @@
                 array
                 (
                     'id' => 4,
-                    'column_0'           => 'Laura o’brien',
+                    'column_0'           => 'Laura o\'brien',
                     'status'             => null,
                     'serializedmessages' => null,
                 ),
