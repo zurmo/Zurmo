@@ -78,6 +78,11 @@ EOD;
             $this->usageError('The specified process to run is invalid.');
         }
 
+        echo "\n";
+        $template        = "{message}\n";
+        $messageStreamer = new MessageStreamer($template);
+        $messageStreamer->setExtraRenderBytes(0);
+
         if (isset($args[3]) && !is_int($args[3]))
         {
             $this->usageError('The specified run time in seconds is invalid.');
@@ -85,21 +90,15 @@ EOD;
         elseif (isset($args[3]) && is_int($args[3]))
         {
             set_time_limit($args[3]);
-            $this->usageError('Script will run at most for {seconds} seconds.', array('{seconds}' => $args[3]));
+            $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
+                                  array('{seconds}' => $args[3])));
         }
         else
         {
             set_time_limit('1200');
-            $this->usageError('Script will run at most for {seconds} seconds.', array('{seconds}' => '1200'));
+            $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
+                                  array('{seconds}' => '1200')));
         }
-
-
-        echo "\n";
-        $template        = "{message}\n";
-        $messageStreamer = new MessageStreamer($template);
-        $messageStreamer->setExtraRenderBytes(0);
-
-
         if (isset($args[0]))
         {
             $importName = $args[0];
