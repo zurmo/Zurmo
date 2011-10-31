@@ -484,11 +484,7 @@
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(0);
 
-            if (isset($args[3]) && !is_int($args[3]))
-            {
-                $this->usageError('The specified run time in seconds is invalid.');
-            }
-            elseif (isset($args[3]) && is_int($args[3]))
+            if (isset($args[3]))
             {
                 set_time_limit($args[3]);
                 $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
