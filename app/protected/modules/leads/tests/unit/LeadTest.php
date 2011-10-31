@@ -293,10 +293,10 @@
                                  $deadStates[0]->id        => 'Dead');
             $this->assertEquals($compareData, $data);
             $data             = LeadsUtil::getLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage('fr');
-            $compareData = array($newStates[0]->id         => 'New',
-                                 $inProgressStates[0]->id  => 'In Progress',
-                                 $recycledStates[0]->id    => 'Recycled',
-                                 $deadStates[0]->id        => 'Dead');
+            $compareData = array($newStates[0]->id         => 'Nouveau',
+                                 $inProgressStates[0]->id  => 'En cours',
+                                 $recycledStates[0]->id    => 'Réactivé',
+                                 $deadStates[0]->id        => 'Mort');
             $this->assertEquals($compareData, $data);
         }
     }

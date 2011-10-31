@@ -35,8 +35,9 @@
         {
             return array_merge(parent::untranslatedAttributeLabels(),
                 array(
-                    'state' => 'Status',
-                    'account' => AccountsModule::getModuleLabelByTypeAndLanguage('Singular')
+                    'state'         => 'Status',
+                    'account'       => 'AccountsModuleSingularLabel',
+                    'opportunities' => 'OpportunitiesModulePluralLabel'
                 )
             );
         }

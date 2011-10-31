@@ -40,7 +40,7 @@
             }
             $content  = '<div id="LoginLogo" class="zurmo-logo"></div>';
             $content .= '<p>';
-            $content .= Yii::t('Default', 'This is <b>version {zurmoVersion}</b>, of <b>Zurmo</b>.',
+            $content .= Yii::t('Default', 'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.',
                         array('{zurmoVersion}' => $zurmoVersion));
             $content .= '</p>';
             $content .= '<p>';

@@ -225,7 +225,10 @@
                        strpos($message, 'ModulePluralLowerCaseLabel') === false &&
                        strpos($message, 'ModuleSingularLowerCaseLabel') === false )
                     {
-                        $problems[] = "(This might be ok) '$message' in $firstLanguage/$category.php not in any source file in $moduleName.";
+                        //There is no current way to resolve this type of issue. It is possible a label has been pushed
+                        //back into framework for example, even though there is no mention of the label in framework.  This
+                        //is so it is not duplicated in various modules. This is turned off for now from the message checker.
+                        //$problems[] = "(This might be ok) '$message' in $firstLanguage/$category.php not in any source file in $moduleName.";
                     }
                 }
             }
@@ -330,12 +333,31 @@
                         if ($modelReflectionClass->isSubclassOf('RedBeanModel') &&
                             !$modelReflectionClass->isAbstract())
                         {
-                           $model = new $modelClassName(false);
-                           $modelAttributes = $model->attributeNames();
+                           $model              = new $modelClassName(false);
+                           $modelAttributes    = $model->attributeNames();
+                           $untranslatedLabels = $model->getUntranslatedAttributeLabels();
                            foreach ($modelAttributes as $attributeName)
                            {
                                 $attributeLabel = $model->getAttributeLabel($attributeName);
-                                $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                if(isset($untranslatedLabels[$attributeName]))
+                                {
+                                    $translatedLabel = Yii::t('Default', $untranslatedLabels[$attributeName],
+                                                                         LabelUtil::getTranslationParamsForAllModules());
+                                    if($untranslatedLabels[$attributeName] == $attributeLabel ||
+                                       $translatedLabel != $attributeLabel)
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                    }
+                                    else
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] =
+                                        $untranslatedLabels[$attributeName];
+                                    }
+                                }
+                                else
+                                {
+                                    $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                }
                                //Find attributes that are a CustomField relation. This means there is drop down values
                                //that will need to be translated.
                                if ($model->isRelation($attributeName) &&
@@ -354,7 +376,7 @@
                            }
                         }
                     }
-                    //Check for any rights, policies, or audit event names in the modules.
+                    //Check for any menu labels, rights, policies, or audit event names in the modules.
                     if ( strpos($fullEntryName, 'Module.php') !== false)
                     {
                         $moduleClassName = basename(substr($fullEntryName, 0, -4));
@@ -385,6 +407,42 @@
                             foreach($states as $state)
                             {
                                 $fileNamesToCategoriesToMessages[$entry]['Default'][] = $state->name;
+                            }
+                        }
+                        //check for menu labels
+                        if (!$moduleReflectionClass->isAbstract())
+                        {
+                            if(isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                            {
+                                $fileNamesToCategoriesToMessages[$entry]['Default'] =
+                                array_merge($fileNamesToCategoriesToMessages[$entry]['Default'],
+                                            getModuleMenuLabelNamesByModuleName($moduleClassName));
+                            }
+                            else
+                            {
+                                $fileNamesToCategoriesToMessages[$entry]['Default'] =
+                                    getModuleMenuLabelNamesByModuleName($moduleClassName);
+                            }
+                        }
+                    }
+                    //Check for any panel titles that need translation
+                    if ( strpos($fullEntryName, 'View.php') !== false)
+                    {
+                        $viewClassName = basename(substr($fullEntryName, 0, -4));
+                        $moduleReflectionClass = new ReflectionClass($viewClassName);
+                        if ($moduleReflectionClass->isSubclassOf('MetadataView') &&
+                            !$moduleReflectionClass->isAbstract())
+                        {
+                            $metadata = $viewClassName::getDefaultMetadata();
+                            if(isset($metadata['global']) && isset($metadata['global']['panels']))
+                            {
+                                foreach($metadata['global']['panels'] as $panel)
+                                {
+                                    if(isset($panel['title']))
+                                    {
+                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $panel['title'];
+                                    }
+                                }
                             }
                         }
                     }
@@ -427,6 +485,77 @@
         $auditEventNames = $moduleClassName::getAuditEventNames();
         $labelsData      = array_merge($rightsNames, $policiesNames);
         return             array_merge($labelsData, $auditEventNames);
+    }
+
+    function getModuleMenuLabelNamesByModuleName($moduleClassName)
+    {
+        $labels   = array();
+        $metadata = $moduleClassName::getMetadata();
+        if(isset($metadata['global']['tabMenuItems']))
+        {
+            foreach($metadata['global']['tabMenuItems'] as $menuItem)
+            {
+                if(isset($menuItem['items']))
+                {
+                    foreach($menuItem['items'] as $subMenuItem)
+                    {
+                        if(!in_array($subMenuItem['label'], $labels))
+                        {
+                            $labels[] = $subMenuItem['label'];
+                        }
+                    }
+                }
+                if(!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if(isset($metadata['global']['shortcutsMenuItems']))
+        {
+            foreach($metadata['global']['shortcutsMenuItems'] as $menuItem)
+            {
+                if(isset($menuItem['items']))
+                {
+                    foreach($menuItem['items'] as $subMenuItem)
+                    {
+                        if(!in_array($subMenuItem['label'], $labels))
+                        {
+                            $labels[] = $subMenuItem['label'];
+                        }
+                    }
+                }
+                if(!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if(isset($metadata['global']['headerMenuItems']))
+        {
+            foreach($metadata['global']['headerMenuItems'] as $menuItem)
+            {
+                if(!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if(isset($metadata['global']['configureMenuItems']))
+        {
+            foreach($metadata['global']['configureMenuItems'] as $menuItem)
+            {
+                if(!in_array($menuItem['titleLabel'], $labels))
+                {
+                    $labels[] = $menuItem['titleLabel'];
+                }
+                if(!in_array($menuItem['descriptionLabel'], $labels))
+                {
+                    $labels[] = $menuItem['descriptionLabel'];
+                }
+            }
+        }
+        return $labels;
     }
 
     function findFileNameToUnexpectedlyFormattedYiiT($path)

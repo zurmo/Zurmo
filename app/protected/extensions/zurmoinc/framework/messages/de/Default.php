@@ -31,8 +31,6 @@
     return array(
         '(None)'
             => '??',
-        '{attribute} "{value}" is already in use.'
-            => '??',
         'Add File'
             => '??',
         'Add Files'
@@ -41,7 +39,13 @@
             => '??',
         'Advanced Search'
             => '??',
+        'After'
+            => '??',
         'All'
+            => '??',
+        'Basic Search'
+            => '??',
+        'Before'
             => '??',
         'by'
             => '??',
@@ -117,6 +121,8 @@
             => '??',
         'Invalid currency code'
             => '??',
+        'Last 7 Days'
+            => '??',
         'Last Modified'
             => '??',
         'Last Modified Date and User'
@@ -148,6 +154,8 @@
         'My List View'
             => '??',
         'Name'
+            => '??',
+        'Next 7 Days'
             => '??',
         'No'
             => '??',
@@ -251,6 +259,8 @@
         'You must select at least one record'
             => '??',
         'You must specify a value.'
+            => '??',
+        '{attribute} "{value}" is already in use.'
             => '??',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '??',

@@ -120,5 +120,17 @@
                 'DELETE',
             );
         }
+
+        /**
+         * Returns list of permission labels
+         */
+        public static function getPermissionLabelsForView()
+        {
+            return array(
+                'READ'   => Yii::t('Default', 'Read'),
+                'WRITE'  => Yii::t('Default', 'Write'),
+                'DELETE' => Yii::t('Default', 'Delete'),
+            );
+        }
     }
 ?>

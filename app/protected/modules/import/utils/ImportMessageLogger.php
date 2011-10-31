@@ -77,5 +77,11 @@
             assert('is_int($interval)');
             $this->messageOutputInterval = $interval;
         }
+
+        public function resetCounts()
+        {
+            $this->rowCount    = 0;
+            $this->pagingCount = 0;
+        }
     }
 ?>

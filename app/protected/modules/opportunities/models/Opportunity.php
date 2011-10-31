@@ -49,7 +49,8 @@
         public function untranslatedAttributeLabels()
         {
             return array_merge(parent::untranslatedAttributeLabels(), array(
-                'account' => AccountsModule::getModuleLabelByTypeAndLanguage('Singular')));
+                'account'  => 'AccountsModuleSingularLabel',
+                'contacts' => 'ContactsModulePluralLabel'));
         }
 
         /**

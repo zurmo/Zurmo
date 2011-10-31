@@ -334,6 +334,7 @@
                 array(
                     'fullName' => 'Name',
                     'timeZone' => 'Time Zone',
+                    'title'    => 'Salutation',
                 )
             );
         }

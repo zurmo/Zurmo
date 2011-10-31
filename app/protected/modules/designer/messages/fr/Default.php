@@ -119,8 +119,6 @@
             => 'Présentations de page sauvegardées.',
         'Layouts'
             => 'Présentations de page',
-        'List View'
-            => 'Vue liste',
         'Manage module fields, layouts, and labels.'
             => 'Personalisez vos champs, étiquettes, mises en pages etc.',
         'Mass Edit View'

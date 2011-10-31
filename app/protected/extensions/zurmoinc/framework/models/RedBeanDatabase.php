@@ -58,8 +58,11 @@
                 R::setup($dsn, $username, $password);
                 R::$redbean->addEventListener("update",       new RedBeanBeforeUpdateHintManager(R::$toolbox));
                 R::$redbean->addEventListener("after_update", new RedBeanAfterUpdateHintManager (R::$toolbox));
-                Yii::app()->performance->setRedBeanQueryLogger(ZurmoRedBeanPluginQueryLogger::
-                                                                 getInstanceAndAttach(R::$adapter ));
+                if(SHOW_QUERY_DATA)
+                {
+                    Yii::app()->performance->setRedBeanQueryLogger(ZurmoRedBeanPluginQueryLogger::
+                                                                   getInstanceAndAttach(R::$adapter ));
+                }
                 $debug = defined('REDBEAN_DEBUG') && REDBEAN_DEBUG;
                 R::debug($debug);
                 self::$isSetup      = true;

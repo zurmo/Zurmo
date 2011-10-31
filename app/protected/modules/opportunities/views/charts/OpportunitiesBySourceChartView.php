@@ -54,7 +54,7 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Opportunities By Lead Source')",
+                    'title' => "eval:Yii::t('Default', 'Opportunities By Lead Source', LabelUtil::getTranslationParamsForAllModules())",
                     'type'  => 'Pie3D',
                 ),
                 'global' => array(

@@ -33,7 +33,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc import <username> [importName] [messageInterval]
+      zurmoc import <username> [importName] [messageInterval] [runTimeInSeconds]
 
     DESCRIPTION
       This command runs any import processes, specifically doing only the specified process if supplied. In a custom
@@ -45,17 +45,21 @@
      Optional Parameters:
      * importName: Name of import process to run
      * messageInterval: how many rows before a message output is displayed showing the progress.
+     * runTimeInSeconds: how many seconds to let this script run, if not specified will default to 20 minutes.
 
 EOD;
     }
 
     /**
-     * Execute the action.
+     * Execute the action.  Changes max run time to 20 minutes, pass the optional parameter
      * @param array command line parameters specific for this command
      */
     public function run($args)
     {
-        set_time_limit('7200');
+        if(SHOW_QUERY_DATA)
+        {
+            $this->usageError('The $queryDataOn parameter must be off to run command line imports.');
+        }
         if (!isset($args[0]))
         {
             $this->usageError('A username must be specified.');
@@ -75,35 +79,7 @@ EOD;
         }
 
         echo "\n";
-        $template        = "{message}\n";
-        $messageStreamer = new MessageStreamer($template);
-        $messageStreamer->setExtraRenderBytes(0);
-
-
-        if (isset($args[0]))
-        {
-            $importName = $args[0];
-            $messageStreamer->add(Yii::t('Default', 'Starting import for process: {processName}',
-                                  array('{processName}' => $importName)));
-        }
-        else
-        {
-            $importName = null;
-            $messageStreamer->add(Yii::t('Default', 'Starting import. Looking for processes.'));
-        }
-
-        $messageLogger = new ImportMessageLogger($messageStreamer);
-        if(isset($args[2]))
-        {
-            $messageLogger->setMessageOutputInterval((int)$args[2]);
-        }
-        $importName = null;
-        if(isset($args[1]))
-        {
-            $importName = $args[1];
-        }
-        Yii::app()->custom->runImportsForImportCommand($messageLogger, $importName);
-        $messageStreamer->add(Yii::t('Default', 'Ending import.'));
+        ImportUtil::runFromImportCommand($args);
     }
 }
 ?>

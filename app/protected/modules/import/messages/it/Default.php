@@ -77,6 +77,8 @@
             => '??',
         'Import complete.  Rows processed: {rowsProcessed}'
             => '??',
+        'Import data into Zurmo'
+            => '??',
         'Import file has no rows to use.'
             => '??',
         'Import model failed to save.'
@@ -168,6 +170,8 @@
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => '??',
         'The file that was uploaded was not a csv.'
+            => '??',
+        'The following field is mapped more than once. {message}'
             => '??',
         'The full name must contain a last name, which is required.'
             => '??',

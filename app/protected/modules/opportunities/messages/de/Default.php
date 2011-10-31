@@ -29,14 +29,20 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access OpportunitiesModulePluralLabel Tab'
+            => '??',
         'Close Date'
             => '??',
         'Closed Lost'
             => '??',
         'Closed Won'
             => '??',
+        'Create OpportunitiesModulePluralLabel'
+            => '??',
         'Create OpportunitiesModuleSingularLabel'
             => '?? OpportunitiesModuleSingularLabel',
+        'Delete OpportunitiesModulePluralLabel'
+            => '??',
         'My OpportunitiesModulePluralLabel'
             => '?? OpportunitiesModulePluralLabel',
         'Negotiating'

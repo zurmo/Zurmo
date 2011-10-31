@@ -32,7 +32,7 @@
         '(Unknown)'
             => '(Inconnu)',
         '(Unnamed)'
-            => '(Anonyme)',
+            => '(Innomé)',
         '2D Donut Chart'
             => 'Anneau',
         '2D Horizontal Bar Graph'
@@ -45,6 +45,12 @@
             => 'Secteur 3D',
         '3D Vertical Bar Graph'
             => 'Histogramme 3D',
+        '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
+            => '<b>Zurmo</b> est un système <b>Customer Relationship Management</b> créer par <b>Zurmo Inc.</b>',
+        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
+            => '<b>Zurmo</b> est licensé sous le GPLv3.  Vous pouvez lire la <a href="http://www.zurmo.org/license">license ici</a>',
+        '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
+            => '<b>Zurmo</b> utilize les outils et cadres Open Source suivants:',
         'About'
             => 'À propos de zurmo',
         'Access Administration Tab'
@@ -127,6 +133,8 @@
             => 'Type de graphique',
         'City'
             => 'Ville',
+        'Close'
+            => 'Fermer',
         'Code'
             => 'Code',
         'Configuration'
@@ -143,6 +151,8 @@
             => 'Créer Groupes',
         'Create New'
             => 'Crée',
+        'Create Role'
+            => 'Créer Rôle',
         'Create Roles'
             => 'Créer Rôles',
         'Currencies: Create'
@@ -157,12 +167,16 @@
             => 'Devise utiliséé.',
         'Currency Value'
             => 'Valeur',
+        'Customer'
+            => 'Client',
         'Dashboard portlet list page size'
             => 'Nb. d\'éléments par page dans les listes portlets',
         'Data'
             => 'Donées',
         'days'
             => 'jours',
+        'Dead'
+            => 'Mort',
         'Delete Group'
             => 'Supprimer le Groupe',
         'Delete Groups'
@@ -225,6 +239,8 @@
             => 'ici',
         'Home'
             => 'Accueil',
+        'In Progress'
+            => 'En cours',
         'Inbound Call'
             => 'Appel Entrant',
         'Incorrect username or password.'
@@ -261,20 +277,28 @@
             => 'L\'étiquette ne peut pas contenir de caractères spéciaux.',
         'Language'
             => 'Langue',
+        'Languages'
+            => 'Langues',
         'Languages: List'
             => 'Langues: Liste',
         'Last Name'
             => 'Nom',
         'Last Updated'
             => 'Dernière Modification',
+        'List Filters'
+            => 'Filtres',
         'List page size'
             => 'Nb. d\'éléments de la vue liste',
+        'List View'
+            => 'Vue liste',
         'Load'
             => 'Télécharger',
         'Login'
             => 'Connexion',
         'Logout'
             => 'Déconnexion',
+        'Manage Active Languages'
+            => 'Gestion des langues',
         'Manage Currency Configuration'
             => 'Gestion des devises',
         'Manage Global Configuration'
@@ -319,6 +343,8 @@
             => 'Ma Vue Liste Configuration',
         'Never'
             => 'Jamais',
+        'New'
+            => 'Nouveau',
         'No Results Found'
             => 'Aucun résultat trouvé',
         'Non Members'
@@ -367,14 +393,20 @@
             => 'Adresse principale',
         'Primary Email'
             => 'E-mail primaire',
+        'Qualified'
+            => 'Qualifié',
         'Rate to'
             => 'Taux de change à l\'',
         'Rate To Base'
             => 'Taux de base',
+        'Read'
+            => 'Lire',
         'Read permissions rebuild complete.'
             => 'Reconstruction des autorisations lecture effectuée.',
         'Recently Viewed'
             => 'Éléments récents',
+        'Recycled'
+            => 'Réactivé',
         'Remember me next time'
             => 'Retenir le nom d\'utilisateur',
         'Retail'
@@ -389,6 +421,10 @@
             => 'Rôle',
         'Roles'
             => 'Rôles',
+        'Salutation'
+            => 'Civilité',
+        'Save Changes'
+            => 'Sauver',
         'Search'
             => 'Rechercher',
         'Search by name, phone, or e-mail'
@@ -453,6 +489,8 @@
             => 'Il manque le(s) champ(s) obligatoire(s) suivant dans le fichier: {view}.  Veuillez contacter votre administrateur système.',
         'This action is only available in debug mode.'
             => 'Cette action est seulement disponible en mode debug.',
+        'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
+            => 'Vous utilisez la <b>version {zurmoVersion}</b> de <b>Zurmo</b>.',
         'This name is reserved. Please pick a different name.'
             => 'Ce nom est réservé.  Veuillez choisir un nom différent.',
         'Time zone'
@@ -475,6 +513,10 @@
             => 'Nom d\'utilisateur',
         'Value'
             => 'Valeur',
+        'Visit <b>Zurmo Inc.</b> at {url}.'
+            => 'Visitez <b>Zurmo Inc.</b>: {url}.',
+        'Visit the <b>Zurmo Open Source Project</b> at {url}.'
+            => 'Visitez le <b>Project Zurmo Open Source</b>: {url}.',
         'Website'
             => 'Site web',
         'Welcome'
@@ -485,6 +527,8 @@
             => 'Autorisation lecture/écriture',
         'Word of Mouth'
             => 'Bouche à oreille',
+        'Write'
+            => 'Écrire',
         'You have tried to access a page you do not have access to.'
             => 'Vous avez tenté d\'accéder à une page dont vous n\'avez pas accès.',
         'You must have at least one active currency.'
@@ -497,5 +541,9 @@
             => 'Votre version de Yii est currentVersion et doit être acceptableVersion.',
         'ZurmoCRM'
             => 'ZurmoCRM',
+        '{url} (installed with Yii)'
+            => '{url} (installé avec Yii)',
+        '{url} (version {version} is installed)'
+            => '{url} (version {version} est installée)',
     );
 ?>

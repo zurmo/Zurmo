@@ -230,11 +230,12 @@
          * @param array $columnNames
          * @throws NotSupportedException
          */
-        public static function bulkInsert($tableName, &$rowsOfColumnValues, &$columnNames)
+        public static function bulkInsert($tableName, & $rowsOfColumnValues, & $columnNames, $bulkQuantity)
         {
             assert('is_string($tableName)');
             assert('is_array($rowsOfColumnValues)');
             assert('is_array($columnNames)');
+            assert('is_int($bulkQuantity)');
 
             if (RedBeanDatabase::getDatabaseType() != 'mysql')
             {
@@ -248,7 +249,7 @@
                     $columnNamesString = self::getQuote() . implode(self::getQuote() . ',' . self::getQuote(), $columnNames) . self::getQuote();
                     $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
                 }
-                if ($counter == 500)
+                if ($counter == $bulkQuantity)
                 {
                     $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
                     R::exec($sql);

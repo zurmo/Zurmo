@@ -150,8 +150,14 @@
         protected static function getAttributesCollectionByModelClassName($modelClassName)
         {
             assert('$modelClassName != null && is_string($modelClassName)');
-            $modelAttributesAdapter = new ModelAttributesImportMappingAdapter(new $modelClassName(false));
+            $modelAttributesAdapter = static::getModelAttributesImportMappingAdapterByModelClassName($modelClassName);
             return $modelAttributesAdapter->getAttributes();
+        }
+
+        protected static function getModelAttributesImportMappingAdapterByModelClassName($modelClassName)
+        {
+            assert('$modelClassName != null && is_string($modelClassName)');
+            return new ModelAttributesImportMappingAdapter(new $modelClassName(false));
         }
 
         /**

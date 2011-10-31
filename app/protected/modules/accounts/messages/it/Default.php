@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access AccountsModulePluralLabel Tab'
+            => '??',
         'Account'
             => '??',
         'Accounts'
@@ -51,10 +53,12 @@
             => '??',
         'Billing Address'
             => 'Indirizzo di Fatturazione',
+        'Create AccountsModulePluralLabel'
+            => '?? AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
             => '?? AccountsModuleSingularLabel',
-        'Customer'
-            => '??',
+        'Delete AccountsModulePluralLabel'
+            => '?? AccountsModulePluralLabel',
         'Employees'
             => '??',
         'My AccountsModulePluralLabel'

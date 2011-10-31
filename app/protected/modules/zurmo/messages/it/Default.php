@@ -45,6 +45,12 @@
             => '??',
         '3D Vertical Bar Graph'
             => '??',
+        '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
+            => '??',
+        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
+            => '??',
+        '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
+            => '??',
         'About'
             => '??',
         'Access Administration Tab'
@@ -127,6 +133,8 @@
             => '??',
         'City'
             => '??',
+        'Close'
+            => '??',
         'Code'
             => '??',
         'Configuration'
@@ -143,6 +151,8 @@
             => '??',
         'Create New'
             => '??',
+        'Create Role'
+            => '??',
         'Create Roles'
             => '??',
         'Currencies: Create'
@@ -157,11 +167,15 @@
             => '??',
         'Currency Value'
             => '??',
+        'Customer'
+            => '??',
         'Dashboard portlet list page size'
             => '??',
         'Data'
             => '??',
         'days'
+            => '??',
+        'Dead'
             => '??',
         'Delete Group'
             => '??',
@@ -225,6 +239,8 @@
             => '??',
         'Home'
             => '??',
+        'In Progress'
+            => '??',
         'Inbound Call'
             => '??',
         'Incorrect username or password.'
@@ -261,19 +277,27 @@
             => '??',
         'Language'
             => '??',
+        'Languages'
+            => '??',
         'Languages: List'
             => '??',
         'Last Name'
             => '??',
         'Last Updated'
             => '??',
+        'List Filters'
+            => '??',
         'List page size'
+            => '??',
+        'List View'
             => '??',
         'Load'
             => '??',
         'Login'
             => '??',
         'Logout'
+            => '??',
+        'Manage Active Languages'
             => '??',
         'Manage Currency Configuration'
             => '??',
@@ -318,6 +342,8 @@
         'My List Configuration View'
             => '??',
         'Never'
+            => '??',
+        'New'
             => '??',
         'No Results Found'
             => '??',
@@ -367,13 +393,19 @@
             => '??',
         'Primary Email'
             => '??',
+        'Qualified'
+            => '??',
         'Rate to'
             => '??',
         'Rate To Base'
             => '??',
+        'Read'
+            => '??',
         'Read permissions rebuild complete.'
             => '??',
         'Recently Viewed'
+            => '??',
+        'Recycled'
             => '??',
         'Remember me next time'
             => '??',
@@ -388,6 +420,10 @@
         'Role'
             => '??',
         'Roles'
+            => '??',
+        'Salutation'
+            => '??',
+        'Save Changes'
             => '??',
         'Search'
             => '??',
@@ -453,6 +489,8 @@
             => '??',
         'This action is only available in debug mode.'
             => '??',
+        'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
+            => '??',
         'This name is reserved. Please pick a different name.'
             => '??',
         'Time zone'
@@ -475,6 +513,10 @@
             => '??',
         'Value'
             => '??',
+        'Visit <b>Zurmo Inc.</b> at {url}.'
+            => '??',
+        'Visit the <b>Zurmo Open Source Project</b> at {url}.'
+            => '??',
         'Website'
             => '??',
         'Welcome'
@@ -484,6 +526,8 @@
         'Who can read and write'
             => '??',
         'Word of Mouth'
+            => '??',
+        'Write'
             => '??',
         'You have tried to access a page you do not have access to.'
             => '??',
@@ -496,6 +540,10 @@
         'Your Yii version is currentVersion and it should be acceptableVersion.'
             => '??',
         'ZurmoCRM'
+            => '??',
+        '{url} (installed with Yii)'
+            => '??',
+        '{url} (version {version} is installed)'
             => '??',
     );
 ?>

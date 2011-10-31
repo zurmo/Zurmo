@@ -49,6 +49,10 @@
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, $this->getModelAttributeName(),
                                                             $value, $columnMappingData, $importSanitizeResultsUtil);
+            if($sanitizedValue == null)
+            {
+                $sanitizedValue = 0;
+            }
             $currencyValue             = new CurrencyValue();
             $currencyValue->value      = $sanitizedValue;
             $currencyValue->rateToBase = $columnMappingData['mappingRulesData']['CurrencyRateToBaseModelAttributeMappingRuleForm']

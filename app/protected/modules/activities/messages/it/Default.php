@@ -37,8 +37,6 @@
             => '??',
         'Latest Date Time'
             => '??',
-        'Listview'
-            => '??',
         'No Activities found.'
             => '??',
         'Related'
