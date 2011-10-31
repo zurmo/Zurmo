@@ -30,25 +30,25 @@
     // DON'T MAKE A MESS!
     return array(
         '(None)'
-            => '??',
+            => '(Ninguno)',
         'Add File'
-            => '??',
+            => 'Añadir archivo',
         'Add Files'
-            => '??',
+            => 'Añadir archivos',
         'Add Item'
-            => '??',
+            => 'Añadir elemento',
         'Advanced Search'
             => 'Búsqueda Avanzada',
         'After'
-            => '??',
+            => 'Después',
         'All'
             => 'Todo',
         'Basic Search'
-            => '??',
+            => 'Búsqueda básica',
         'Before'
-            => '??',
+            => 'Antes',
         'by'
-            => 'por',
+            => 'de',
         'Cancel'
             => 'Cancelar',
         'Cell Settings'
@@ -72,13 +72,13 @@
         'Created On'
             => 'Creado el',
         'CustomManagement class needs to be extended.'
-            => '??',
+            => 'Clase de CustomManagement debe ampliarse',
         'Date'
             => 'Fecha',
         'Date Time'
-            => 'Fecha',
+            => 'Fecha Hora',
         'Default Value'
-            => '??',
+            => 'Valor predeterminado',
         'Delete'
             => 'Eliminar',
         'Detail View Only'
@@ -86,7 +86,7 @@
         'Details'
             => 'Detalles',
         'Done'
-            => '??',
+            => 'Terminado',
         'Edit'
             => 'Editar',
         'Edit Portlet'
@@ -110,19 +110,19 @@
         'Go to Details'
             => 'Ir a detalles',
         'Hour'
-            => '??',
+            => 'Hora',
         'Info'
-            => '??',
+            => 'Info',
         'Inline Edit View'
-            => '??',
+            => 'Formulario de inscripción inline',
         'Integer'
             => 'Número entero',
         'Invalid'
             => 'Inválido',
         'Invalid currency code'
-            => '??',
+            => 'Código de divisa no válido',
         'Last 7 Days'
-            => '??',
+            => 'Últimos 7 días',
         'Last Modified'
             => 'Última Modificación',
         'Last Modified Date and User'
@@ -130,13 +130,13 @@
         'List'
             => 'Lista',
         'Loading'
-            => '??',
+            => 'Cargando',
         'Mass Update'
-            => '??',
+            => 'Actualización Global',
         'Max upload size: {maxSize}'
-            => '??',
+            => 'Max tamaño de subida: {maxSize}',
         'Minute'
-            => '??',
+            => 'Minuto',
         'Model Class Name'
             => 'Nombre de la clase de modelo',
         'Model Id'
@@ -152,25 +152,25 @@
         'More Options'
             => 'Más opciones',
         'My List View'
-            => '??',
+            => 'Mi vista de lista',
         'Name'
             => 'Nombre',
         'Next 7 Days'
-            => '??',
+            => 'Próximos 7 días',
         'No'
             => 'No',
         'No import processes found.'
-            => '??',
+            => 'Ningún procesos de importación encontrado',
         'None'
             => 'Ninguno',
         'Now'
             => 'Ahora',
         'of'
-            => '??',
+            => 'de',
         'Opted Out'
             => 'Excluido',
         'or'
-            => '??',
+            => 'o',
         'Panel'
             => 'Panel',
         'Panel Settings'
@@ -180,7 +180,7 @@
         'Perform Action'
             => 'Realizar accíon',
         'Radio Drop Down'
-            => '??',
+            => 'Elementos del botón radio',
         'record'
             => 'registro',
         'records'
@@ -208,13 +208,13 @@
             => 'Algunos valores no se pueden eliminar, ya que están actualmente en uso ' .
                'Trate de cambiar los registros que usó primero.',
         'Start'
-            => '??',
+            => 'Empezar',
         'Tab'
             => 'Tab',
         'The file did not exist'
-            => '??',
+            => 'El archivo no existe',
         'There was an error uploading the file.'
-            => '??',
+            => 'Error al subir el archivo',
         'There was an error with the web service.'
             => 'Hubo un error con el servicio web.',
         'This module doesn\'t have anything to configure.'
@@ -222,7 +222,7 @@
         'This pick-list is used by more than one module.'
             => 'Esta lista de selección es utilizada por más de un module',
         'This portlet will be removed, ok?'
-            => '??',
+            => 'Se eliminará el portlet, ok?',
         'Time'
             => 'Tiempo',
         'Title/First/LastName'
@@ -234,17 +234,17 @@
         'Tomorrow'
             => 'Mañana',
         'total'
-            => '??',
+            => 'total',
         'Type'
-            => '??',
+            => 'Tipo',
         'Unknown'
             => 'Desconocido',
         'Update Selected'
             => 'Actualización Seleccionada',
         'updated successfully.'
-            => '??',
+            => 'Actualizado con éxito',
         'Updating'
-            => '??',
+            => 'Actualizando',
         'User'
             => 'Usuario',
         'Users'
@@ -256,13 +256,13 @@
         'You must enter a value'
             => 'Debe introducir un valor',
         'You must select at least one field to modify.'
-            => '??',
+            => 'Debe seleccionar al menos un campo a modificar.',
         'You must select at least one record'
-            => '??',
+            => 'Debe seleccionar al menos un dato',
         'You must specify a value.'
-            => '??',
+            => 'Debe especificar un valor',
         '{attribute} "{value}" is already in use.'
-            => '??',
+            => '{attribute} "{value}" ya está en uso.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} es demasiado preciso (máximo de decimales es {precision}).',
     );

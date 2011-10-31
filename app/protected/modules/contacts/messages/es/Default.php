@@ -30,17 +30,17 @@
     // DON'T MAKE A MESS!
     return array(
         'Access ContactsModulePluralLabel Tab'
-            => '?? ContactsModulePluralLabel',
+            => 'Acceso a ContactsModulePluralLabel',
         'Company Name'
             => 'Nombre de la empresa',
         'Contact'
             => 'Contacto',
         'Contact Stage'
-            => 'Estados de contacto',
+            => 'Estatus de contacto',
         'Contact Status Translated Labels'
-            => '??',
+            => 'Etiquetas traducidas de estatus de contacto',
         'Contact Statuses'
-            => 'Estados de contacto',
+            => 'Estatus de contacto',
         'Contacts'
             => 'Contactos',
         'ContactsModulePluralLabel'
@@ -60,7 +60,7 @@
         'Create ContactsModuleSingularLabel'
             => 'Crear una ContactsModuleSingularLabel',
         'Delete ContactsModulePluralLabel'
-            => '?? ContactsModulePluralLabel',
+            => 'Eliminar ContactsModulePluralLabel',
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Cada ContactsModuleSingularLowerCaseLabel debe ser un nombre exclusivo',
         'My ContactsModulePluralLabel'
@@ -68,11 +68,11 @@
         'Order'
             => 'Orden',
         'Serialized Labels'
-            => '??',
+            => 'etiquetas serializadas',
         'Starting Status'
             => 'Estado de partida',
         'The contact stage field'
-            => '??',
+            => 'El campo de estatus del contacto',
         'The default status specified does not exist.'
             => 'El estado especificado predeterminado no existe.',
         'The status is required.  Neither a value nor a default was specified.'

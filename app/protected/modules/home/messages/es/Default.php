@@ -38,7 +38,7 @@
         '2 Columns Right Strong'
             => 'Derecha',
         'Access Dashboards'
-            => '??',
+            => 'Acceso a Panel de Portlets',
         'Add Portlet'
             => 'Agregar Portlet',
         'Are you sure want to delete this dashboard?'

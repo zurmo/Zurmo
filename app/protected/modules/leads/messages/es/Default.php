@@ -30,7 +30,7 @@
     // DON'T MAKE A MESS!
     return array(
         'Access LeadsModulePluralLabel Tab'
-            => '??',
+            => 'Acceso a LeadsModulePluralLabel',
         'AccountsModuleSingularLabel Optional'
             => 'Cuenta opcional',
         'AccountsModuleSingularLabel Required'
@@ -44,15 +44,15 @@
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
             => 'La conversión exige el acceso al módulo de ContactsModulePluralLowerCaseLabel que usted no tiene. Por favor, contacte con su administrador con respecto a este.',
         'Convert LeadsModulePluralLabel'
-            => '??',
+            => 'Convertir LeadsModulePluralLabel',
         'Create LeadsModulePluralLabel'
             => 'Crear LeadsModulePluralLabel',
         'Create LeadsModuleSingularLabel'
             => 'Crear una LeadsModuleSingularLabel',
         'Delete LeadsModulePluralLabel'
-            => '??',
+            => 'Eliminar LeadsModulePluralLabel',
         'Do not show AccountsModuleSingularLabel'
-            => 'No mostrar la cuenta',
+            => 'No mostrar AccountsModuleSingularLabel',
         'Lead'
             => 'Prospecto',
         'Leads'
