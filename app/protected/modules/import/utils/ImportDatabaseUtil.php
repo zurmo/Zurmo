@@ -114,6 +114,15 @@
             {
                 if (count($data) > 0)
                 {
+                    foreach ($data as $k => $v)
+                    {
+                        //Convert characterser to UTF-8
+                        $currentCharset = mb_detect_encoding($v, $other_charsets = 'UTF-8, UTF-7, ASCII, CP1252, EUC-JP, SJIS, eucJP-win, SJIS-win, JIS, ISO-2022-JP');
+                        if(!empty($currentCharset) && $currentCharset != "UTF-8")
+                        {
+                            $data[$k] = mb_convert_encoding($v, "UTF-8");
+                        }
+                    }
                     $importArray[] = $data;
                 }
                 if (count($importArray) > $bulkQuantity)
