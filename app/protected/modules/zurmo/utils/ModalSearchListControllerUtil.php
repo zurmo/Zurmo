@@ -37,6 +37,7 @@
             return self::renderModalSearchList($controller, $modalListLinkProvider, $pageTitle,
                                                $stateMetadataAdapterClassName);
         }
+
         /**
          * @return rendered content from view as string.
          */

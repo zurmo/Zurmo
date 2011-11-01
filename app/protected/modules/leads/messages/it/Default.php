@@ -57,10 +57,10 @@
             => '??',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
-        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
-        ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
+        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
+        'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
+        'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
+        'will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => '??',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',

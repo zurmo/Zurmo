@@ -358,7 +358,7 @@
         {
             $pageSize                 = Yii::app()->pagination->resolveActiveForCurrentUserByType('listPageSize');
             $config                   = array('pagination' => array('pageSize' => $pageSize));
-            if($setCurrentPageToFirst)
+            if ($setCurrentPageToFirst)
             {
                 $config['pagination']['currentPage'] = 0;
             }

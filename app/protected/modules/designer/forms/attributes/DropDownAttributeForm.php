@@ -65,7 +65,7 @@
                 $this->customFieldDataName = $model->$attributeName->data->name;
                 $this->customFieldDataId   = $model->$attributeName->data->id;
                 $this->customFieldDataData = unserialize($model->$attributeName->data->serializedData);
-                if($model->$attributeName->data->serializedLabels !== null)
+                if ($model->$attributeName->data->serializedLabels !== null)
                 {
                     $this->customFieldDataLabels = unserialize($model->$attributeName->data->serializedLabels);
                 }

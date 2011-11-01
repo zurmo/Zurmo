@@ -41,7 +41,7 @@
             $aUser = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB);
             $saved = $aUser->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

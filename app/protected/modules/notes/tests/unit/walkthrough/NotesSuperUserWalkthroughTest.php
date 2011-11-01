@@ -138,7 +138,7 @@
                                       'Note' => array('description' => 'a Valid Name of a Note')));
             $content = $this->runControllerWithRedirectExceptionAndGetContent('notes/default/inlineCreateSave');
             //Confirm changes applied correctly.
-            $notes = Note::getAll();            
+            $notes = Note::getAll();
             $this->assertEquals(2, count($notes));
             $this->assertEquals('a Valid Name of a Note', $notes[1]->description);
 

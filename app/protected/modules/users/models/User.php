@@ -98,7 +98,7 @@
          */
         protected static function resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName)
         {
-            if($baseModelClassName != 'Person')
+            if ($baseModelClassName != 'Person')
             {
                 parent::resolveMixinsOnSaveForEnsuringColumnsAreCorrectlyFormed($baseModelClassName, $modelClassName);
             }
@@ -583,12 +583,12 @@
             {
                 try
                 {
-                    if(new DateTimeZone($this->$attribute) === false)
+                    if (new DateTimeZone($this->$attribute) === false)
                     {
                         $this->addError('timeZone', Yii::t('Default', 'The time zone is invalid.'));
                     }
                 }
-                catch(Exception $e)
+                catch (Exception $e)
                 {
                     //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
                     $this->$attribute == 'UTC';

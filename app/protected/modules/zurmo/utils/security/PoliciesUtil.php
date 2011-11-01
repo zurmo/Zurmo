@@ -49,7 +49,7 @@
                     {
                         foreach ($policies as $policy)
                         {
-                            if(!isset($policyLabels[$policy]))
+                            if (!isset($policyLabels[$policy]))
                             {
                                 throw new NotSupportedException();
                             }

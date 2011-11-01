@@ -31,7 +31,7 @@
         public function onEvent($type, $info)
         {
             assert('$type == "sql_exec"');
-            if(!RedBeanDatabase::isFrozen())
+            if (!RedBeanDatabase::isFrozen())
             {
                 return;
             }

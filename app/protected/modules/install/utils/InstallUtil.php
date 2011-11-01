@@ -363,6 +363,38 @@
             }
         }
 
+        public static function getDatabaseDefaultCollation($databaseType,
+                                                           $databaseHostname,
+                                                           $databaseName,
+                                                           $databaseUsername,
+                                                           $databasePassword,
+                                                           $notAllowedDatabaseCollations,
+                                                           /* out */ & $databaseDefaultCollation)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            assert('is_array($notAllowedDatabaseCollations)');
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    @mysql_select_db($databaseName);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'collation_database'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        $databaseDefaultCollation = $row[1];
+                        return !in_array($databaseDefaultCollation, $notAllowedDatabaseCollations);
+                    }
+                    return false;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
         public static function isDatabaseStrictMode($databaseType,
                                                     $databaseHostname,
                                                     $databaseUsername,
@@ -385,7 +417,8 @@
                         {
                             $isStrict = true;
                         }
-                        else {
+                        else
+                        {
                             $isStrict = false;
                         }
                         return $isStrict;

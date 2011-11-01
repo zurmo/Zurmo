@@ -92,9 +92,9 @@
             assert('is_string($messages)');
             $unserializedMessages = unserialize($messages);
             $content = null;
-            foreach($unserializedMessages as $message)
+            foreach ($unserializedMessages as $message)
             {
-                if($content != null)
+                if ($content != null)
                 {
                     $content .= '<br/>';
                 }

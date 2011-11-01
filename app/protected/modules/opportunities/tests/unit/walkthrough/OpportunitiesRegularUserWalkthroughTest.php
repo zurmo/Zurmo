@@ -226,7 +226,7 @@
 
             //create opportunity owned by super
 
-            $opportunity2 = OpportunityTestHelper::createOpportunityByNameForOwner('testingParentRolePermission',$super);
+            $opportunity2 = OpportunityTestHelper::createOpportunityByNameForOwner('testingParentRolePermission', $super);
 
             //Test userInParentRole, access to details and edit should fail.
             Yii::app()->user->userModel = $userInParentRole;

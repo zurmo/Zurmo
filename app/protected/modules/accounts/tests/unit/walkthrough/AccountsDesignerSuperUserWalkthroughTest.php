@@ -282,43 +282,43 @@
             $this->setPostArray(array('Account' => array(
                                     'name'                              =>  'myNewAccount',
                                     'officePhone'                       =>  '259-784-2169',
-                                    'industry'                          =>  array('value'=>'Automotive'),
+                                    'industry'                          =>  array('value' => 'Automotive'),
                                     'officeFax'                         =>  '299-845-7863',
                                     'employees'                         =>  '930',
                                     'annualRevenue'                     =>  '474000000',
-                                    'type'                              =>  array('value'=>'Prospect'),
+                                    'type'                              =>  array('value' => 'Prospect'),
                                     'website'                           =>  'http://www.Unnamed.com',
-                                    'primaryEmail'                      =>  array('emailAddress'=>'info@myNewAccount.com',
-                                                                                  'optOut'=>'1',
-                                                                                  'isInvalid'=>'0'),
-                                    'secondaryEmail'                    =>  array('emailAddress'=>'',
-                                                                                  'optOut'=>'0',
-                                                                                  'isInvalid'=>'0'),
-                                    'billingAddress'                    =>  array('street1'=>'6466 South Madison Creek',
-                                                                                  'street2'=>'',
-                                                                                  'city'=>'Chicago',
-                                                                                  'state'=>'IL',
-                                                                                  'postalCode'=>'60652',
-                                                                                  'country'=>'USA'),
-                                    'shippingAddress'                   => array('street1'=>'27054 West Michigan Lane',
-                                                                                  'street2'=>'',
-                                                                                  'city'=>'Austin',
-                                                                                  'state'=>'TX',
-                                                                                  'postalCode'=>'78759',
-                                                                                  'country'=>'USA'),
+                                    'primaryEmail'                      =>  array('emailAddress' => 'info@myNewAccount.com',
+                                                                                  'optOut' => '1',
+                                                                                  'isInvalid' => '0'),
+                                    'secondaryEmail'                    =>  array('emailAddress' => '',
+                                                                                  'optOut' => '0',
+                                                                                  'isInvalid' => '0'),
+                                    'billingAddress'                    =>  array('street1' => '6466 South Madison Creek',
+                                                                                  'street2' => '',
+                                                                                  'city' => 'Chicago',
+                                                                                  'state' => 'IL',
+                                                                                  'postalCode' => '60652',
+                                                                                  'country' => 'USA'),
+                                    'shippingAddress'                   => array('street1' => '27054 West Michigan Lane',
+                                                                                  'street2' => '',
+                                                                                  'city' => 'Austin',
+                                                                                  'state' => 'TX',
+                                                                                  'postalCode' => '78759',
+                                                                                  'country' => 'USA'),
                                     'description'                       =>  'This is a Description',
-                                    'explicitReadWriteModelPermissions' =>  array('type'=>null),
+                                    'explicitReadWriteModelPermissions' =>  array('type' => null),
                                     'checkbox'                          =>  '1',
-                                    'currency'                          =>  array('value'   => 45,
-                                                                                  'currency'=> array('id' =>
+                                    'currency'                          =>  array('value'    => 45,
+                                                                                  'currency' => array('id' =>
                                                                                   $baseCurrency->id)),
                                     'date'                              =>  $date,
                                     'datetime'                          =>  $datetime,
                                     'decimal'                           =>  '123',
-                                    'picklist'                          =>  array('value'=>'a'),
+                                    'picklist'                          =>  array('value' => 'a'),
                                     'integer'                           =>  '12',
                                     'phone'                             =>  '259-784-2169',
-                                    'radio'                             =>  array('value'=>'d'),
+                                    'radio'                             =>  array('value' => 'd'),
                                     'text'                              =>  'This is a test Text',
                                     'textarea'                          =>  'This is a test TextArea',
                                     'url'                               =>  'http://wwww.abc.com')));
@@ -399,10 +399,10 @@
                                         'anyPostalCode'         =>  '78759',
                                         'anyCountry'            =>  'USA',
                                         'anyEmail'              =>  'info@myNewAccount.com',
-                                        'anyOptOutEmail'        =>  array('value'=>'1'),
-                                        'anyInvalidEmail'       =>  array('value'=>''),
+                                        'anyOptOutEmail'        =>  array('value' => '1'),
+                                        'anyInvalidEmail'       =>  array('value' => ''),
                                         'ownedItemsOnly'        =>  '1',
-                                        'industry'              =>  array('value'=>'Automotive'),
+                                        'industry'              =>  array('value' => 'Automotive'),
                                         'decimal'               =>  '123',
                                         'integer'               =>  '12',
                                         'phone'                 =>  '259-784-2169',
@@ -440,50 +440,50 @@
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
 
             //Get the account id from the recently created account.
-            $accountId      = self::getModelIdByModelNameAndName('Account','myNewAccount');
+            $accountId      = self::getModelIdByModelNameAndName('Account', 'myNewAccount');
 
             //Edit and save the account.
             $this->setGetArray(array('id' => $accountId));
             $this->setPostArray(array('Account' => array(
                             'name'                              =>  'myEditAccount',
                             'officePhone'                       =>  '259-734-2169',
-                            'industry'                          =>  array('value'=>'Energy'),
+                            'industry'                          =>  array('value' => 'Energy'),
                             'officeFax'                         =>  '299-825-7863',
                             'employees'                         =>  '630',
                             'annualRevenue'                     =>  '472000000',
-                            'type'                              =>  array('value'=>'Customer'),
+                            'type'                              =>  array('value' => 'Customer'),
                             'website'                           =>  'http://www.UnnamedEdit.com',
-                            'primaryEmail'                      =>  array('emailAddress'=>'info@myEditAccount.com',
-                                                                          'optOut'=>'0',
-                                                                          'isInvalid'=>'0'),
-                            'secondaryEmail'                    =>  array('emailAddress'=>'',
-                                                                          'optOut'=>'0',
-                                                                          'isInvalid'=>'0'),
-                            'billingAddress'                    =>  array('street1'=>'26378 South Arlington Ave',
-                                                                          'street2'=>'',
-                                                                          'city'=>'San Jose',
-                                                                          'state'=>'CA',
-                                                                          'postalCode'=>'95131',
-                                                                          'country'=>'USA'),
-                            'shippingAddress'                    => array('street1'=>'8519 East Franklin Center',
-                                                                          'street2'=>'',
-                                                                          'city'=>'Chicago',
-                                                                          'state'=>'IL',
-                                                                          'postalCode'=>'60652',
-                                                                          'country'=>'USA'),
+                            'primaryEmail'                      =>  array('emailAddress' => 'info@myEditAccount.com',
+                                                                          'optOut' => '0',
+                                                                          'isInvalid' => '0'),
+                            'secondaryEmail'                    =>  array('emailAddress' => '',
+                                                                          'optOut' => '0',
+                                                                          'isInvalid' => '0'),
+                            'billingAddress'                    =>  array('street1' => '26378 South Arlington Ave',
+                                                                          'street2' => '',
+                                                                          'city' => 'San Jose',
+                                                                          'state' => 'CA',
+                                                                          'postalCode' => '95131',
+                                                                          'country' => 'USA'),
+                            'shippingAddress'                    => array('street1' => '8519 East Franklin Center',
+                                                                          'street2' => '',
+                                                                          'city' => 'Chicago',
+                                                                          'state' => 'IL',
+                                                                          'postalCode' => '60652',
+                                                                          'country' => 'USA'),
                             'description'                       =>  'This is a Edit Description',
-                            'explicitReadWriteModelPermissions' =>  array('type'=>$explicitReadWriteModelPermission),
+                            'explicitReadWriteModelPermissions' =>  array('type' => $explicitReadWriteModelPermission),
                             'date'                              =>  $date,
                             'datetime'                          =>  $datetime,
                             'checkbox'                          =>  '0',
                             'currency'                          =>  array('value'   => 40,
-                                                                          'currency'=> array(
+                                                                          'currency' => array(
                                                                           'id' => $baseCurrency->id)),
                             'decimal'                           =>  '12',
-                            'picklist'                          =>  array('value'=>'b'),
+                            'picklist'                          =>  array('value' => 'b'),
                             'integer'                           =>  '11',
                             'phone'                             =>  '259-784-2069',
-                            'radio'                             =>  array('value'=>'e'),
+                            'radio'                             =>  array('value' => 'e'),
                             'text'                              =>  'This is a test Edit Text',
                             'textarea'                          =>  'This is a test Edit TextArea',
                             'url'                               =>  'http://wwww.abc-edit.com'),
@@ -546,7 +546,7 @@
          * This function returns the necessary get parameters for the account search form
          * based on the account edited data.
          */
-        public function fetchAccountsSearchFormGetData() 
+        public function fetchAccountsSearchFormGetData()
         {
             return array(
                             'name'                  =>  'myEditAccount',
@@ -562,10 +562,10 @@
                             'anyPostalCode'         =>  '95131',
                             'anyCountry'            =>  'USA',
                             'anyEmail'              =>  'info@myEditAccount.com',
-                            'anyOptOutEmail'        =>  array('value'=> null),
-                            'anyInvalidEmail'       =>  array('value'=>''),
+                            'anyOptOutEmail'        =>  array('value' => null),
+                            'anyInvalidEmail'       =>  array('value' => ''),
                             'ownedItemsOnly'        =>  '1',
-                            'industry'              =>  array('value'=>'Energy'),
+                            'industry'              =>  array('value' => 'Energy'),
                             'decimal'               =>  '12',
                             'integer'               =>  '11',
                             'phone'                 =>  '259-784-2069',
@@ -606,12 +606,12 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //Get the account id from the recently edited account.
-            $accountId = self::getModelIdByModelNameAndName('Account','myEditAccount');
+            $accountId = self::getModelIdByModelNameAndName('Account', 'myEditAccount');
 
             //Set the account id so as to delete the account.
             $this->setGetArray(array('id' => $accountId));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/delete');
-            
+
             //Check whether the account is deleted.
             $account = Account::getByName('myEditAccount');
             $this->assertEquals(0, count($account));

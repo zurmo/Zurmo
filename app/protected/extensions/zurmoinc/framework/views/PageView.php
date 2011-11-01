@@ -94,7 +94,7 @@
             }
             if (SHOW_PERFORMANCE)
             {
-                if(SHOW_QUERY_DATA)
+                if (SHOW_QUERY_DATA)
                 {
                     $performanceMessage .= self::makeShowQueryDataContent();
                 }
@@ -325,7 +325,7 @@
             $performanceMessage  = 'Total/Duplicate Queries: ' . Yii::app()->performance->getRedBeanQueryLogger()->getQueriesCount();
             $performanceMessage .= '/'   . Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesCount();
             $duplicateData = Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesData();
-            if(count($duplicateData) > 0)
+            if (count($duplicateData) > 0)
             {
                 $performanceMessage .= '</br></br>Duplicate Queries:</br>';
             }

@@ -37,7 +37,7 @@
         public function testCanSetNullValueToCache()
         {
             //if memcache is off this test will fail because memcache will not cache null values.
-            if(MEMCACHE_ON)
+            if (MEMCACHE_ON)
             {
                 GeneralCache::cacheEntry('somethingForTesting', null);
                 $value = GeneralCache::getEntry('somethingForTesting');

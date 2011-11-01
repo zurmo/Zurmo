@@ -95,7 +95,7 @@
          */
         public function getActiveCurrencyForCurrentUser()
         {
-            if(Yii::app()->user->userModel->currency->id > 0)
+            if (Yii::app()->user->userModel->currency->id > 0)
             {
                 return Yii::app()->user->userModel->currency;
             }
@@ -107,7 +107,7 @@
             {
                 $currency = Currency::makeBaseCurrency();
             }
-            if($currency->id <= 0)
+            if ($currency->id <= 0)
             {
                 throw new NotSupportedException();
             }
