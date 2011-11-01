@@ -169,7 +169,7 @@
                                     'label' => 'German',
                                     'active' => true,
                                     'canInactivate' => true,
-                                 ),*/
+                                 ), */
                                  'en' => array(
                                     'label' => 'English',
                                     'active' => true,

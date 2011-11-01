@@ -338,7 +338,7 @@
         'Mrs.'
             => 'Sra.',
         'Ms.'
-            => 'Sra.',
+            => 'Srta.',
         'My List Configuration View'
             => 'Mi vista de lista configuración',
         'Never'
@@ -514,8 +514,8 @@
         'Value'
             => 'Valor',
         'Visit <b>Zurmo Inc.</b> at {url}.'
-            => 'Visitar <b>Zurmo Inc.</b> at {url}',
-        'Visit the <b>Zurmo Open Source Project</b> en {url}.'
+            => 'Visitar <b>Zurmo Inc.</b> en {url}',
+        'Visit the <b>Zurmo Open Source Project</b> at {url}.'
             => 'Visitar el <b>Proyecto Zurmo Open Source</b> en {url}.',
         'Website'
             => 'Sitio web',

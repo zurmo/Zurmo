@@ -41,7 +41,7 @@
             $contactStatesLabels             = $attributeForm->contactStatesLabels;
             $startingStateOrder              = (int)$attributeForm->startingStateOrder;
             $contactStatesDataExistingValues = $attributeForm->contactStatesDataExistingValues;
-            if($contactStatesDataExistingValues == null)
+            if ($contactStatesDataExistingValues == null)
             {
                 $contactStatesDataExistingValues = array();
             }
@@ -112,19 +112,19 @@
         {
             assert('is_array($contactStatesLabels) || $contactStatesLabels == null');
             assert('is_int($order)');
-            if($contactStatesLabels == null)
+            if ($contactStatesLabels == null)
             {
                 return null;
             }
             $unserializedLabels = array();
-            foreach($contactStatesLabels as $language => $languageLabelsByOrder)
+            foreach ($contactStatesLabels as $language => $languageLabelsByOrder)
             {
-                if(isset($languageLabelsByOrder[$order]))
+                if (isset($languageLabelsByOrder[$order]))
                 {
                     $unserializedLabels[$language] = $languageLabelsByOrder[$order];
                 }
             }
-            if(count($unserializedLabels) == 0)
+            if (count($unserializedLabels) == 0)
             {
                 return null;
             }

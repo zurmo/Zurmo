@@ -151,7 +151,7 @@
                 $saved = $customFieldData->save();
                 assert('$saved');
             }
-            elseif($customFieldDataLabels !== null)
+            elseif ($customFieldDataLabels !== null)
             {
                 throw new NotSupportedException();
             }

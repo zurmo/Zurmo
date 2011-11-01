@@ -227,12 +227,12 @@
         protected function afterSave()
         {
             parent::afterSave();
-            if($this->rightsChanged)
+            if ($this->rightsChanged)
             {
                 RightsCache::forgetAll();
                 $this->rightsChanged = false;
             }
-            if($this->policiesChanged)
+            if ($this->policiesChanged)
             {
                 PoliciesCache::forgetAll();
                 $this->policiesChanged = false;
@@ -325,7 +325,6 @@
                 }
                 catch (NotFoundException $e)
                 {
-
                     $explictActualPolicy =  ZurmoDatabaseCompatibilityUtil::
                                             callFunction("get_permitable_explicit_actual_policy(
                                                          $permitableId, '$moduleName', '$policyName')");

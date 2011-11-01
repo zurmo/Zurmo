@@ -139,6 +139,7 @@
             }
             return $leadStatesData;
         }
+
         public static function isStateALead(ContactState $state)
         {
             assert('$state->id > 0');

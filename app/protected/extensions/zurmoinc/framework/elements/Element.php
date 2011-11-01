@@ -78,7 +78,6 @@
          */
         protected function renderLabel()
         {
-
             if ($this->form === null)
             {
                 return $this->getFormattedAttributeLabel();

@@ -179,7 +179,7 @@
             {
                 self::buildAndAddSuiteFromDirectory2($parentSuite, $name, $directoryName . '/walkthrough', $whatToTest);
             }
-            if($includeBenchmarks)
+            if ($includeBenchmarks)
             {
                 self::buildAndAddSuiteFromDirectory2($parentSuite, $name, $directoryName . '/benchmark', $whatToTest);
             }

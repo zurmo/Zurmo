@@ -153,9 +153,9 @@
                 //todo!!! if we move the search form fork , here we can eliminate some things.
                 foreach ($value as $relatedAttributeName => $relatedValue)
                 {
-                    if(is_array($relatedValue))
+                    if (is_array($relatedValue))
                     {
-                        if(isset($relatedValue['value']) && $relatedValue['value'] != '')
+                        if (isset($relatedValue['value']) && $relatedValue['value'] != '')
                         {
                             $relatedValue = $relatedValue['value'];
                         }

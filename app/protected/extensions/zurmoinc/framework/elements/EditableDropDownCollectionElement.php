@@ -95,9 +95,9 @@
                 $activeLanguagesData   = $this->getActiveLanguagesData();
                 $labelsAttributeName   = $this->getLabelsAttributeName();
                 $labelsData            = $this->model->$labelsAttributeName;
-                foreach($activeLanguagesData as $language => $notUsed)
+                foreach ($activeLanguagesData as $language => $notUsed)
                 {
-                    if($labelsAttributeName !== null &&
+                    if ($labelsAttributeName !== null &&
                        isset($labelsData[$language]) &&
                        isset($labelsData[$language][$order]))
                     {
@@ -240,9 +240,9 @@
             $activeLanguagesData = $this->getActiveLanguagesData();
             $baseLanguage           = $this->getBaseLanguage();
             $content                = null;
-            foreach($activeLanguagesData as $language => $label)
+            foreach ($activeLanguagesData as $language => $label)
             {
-                if($language != $baseLanguage)
+                if ($language != $baseLanguage)
                 {
                     $content .= "<br/><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
                                 "' + ($('input[name=\"" . $this->getNameForLabelInputField($language) . "\"]').length + 1) +'\"" .
@@ -258,9 +258,9 @@
             $activeLanguagesData = $this->getActiveLanguagesData();
             $baseLanguage           = $this->getBaseLanguage();
             $content                = null;
-            foreach($activeLanguagesData as $language => $label)
+            foreach ($activeLanguagesData as $language => $label)
             {
-                if($language != $baseLanguage)
+                if ($language != $baseLanguage)
                 {
                     $content .= "<br/><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
                                 "{dataLengthPlusOne}\"" .
@@ -327,7 +327,7 @@
         {
             if (isset($this->params['activeLanguagesData']))
             {
-                if(count($this->params['activeLanguagesData']) == 0)
+                if (count($this->params['activeLanguagesData']) == 0)
                 {
                     throw new NotSupportedException();
                 }

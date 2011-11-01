@@ -48,7 +48,7 @@
                     {
                         foreach ($rights as $right)
                         {
-                            if(!isset($rightLabels[$right]))
+                            if (!isset($rightLabels[$right]))
                             {
                                 throw new NotSupportedException();
                             }

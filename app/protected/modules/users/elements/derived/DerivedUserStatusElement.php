@@ -100,7 +100,6 @@
             return Yii::app()->format->text(Yii::t('Default', 'Status'));
         }
 
-
         /**
          * Method required by interface. Returns empty array since there are no real model
          * atttribute names for this element.

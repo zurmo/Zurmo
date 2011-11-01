@@ -54,7 +54,7 @@
             $modelNames  = array();
             foreach ($modules as $module)
             {
-                if($module != 'UsersModule')
+                if ($module != 'UsersModule')
                 {
                     try
                     {
@@ -62,7 +62,6 @@
                     }
                     catch (NotSupportedException $e)
                     {
-
                     }
                 }
             }

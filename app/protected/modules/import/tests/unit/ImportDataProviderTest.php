@@ -82,7 +82,6 @@
             $dataProvider = new ImportDataProvider($testTableName, true, $config);
             $data = $dataProvider->getData();
             $this->assertEquals(4, count($data));
-
         }
     }
 ?>

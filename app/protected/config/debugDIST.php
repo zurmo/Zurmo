@@ -135,7 +135,7 @@
         echo "ASSERTION FAILED in $file on line $line";
         if (is_string($message) && !empty($message))
         {
-            echo ": assert('$message'); ";
+            echo ": assert('$message'); "; // Not Coding Standard
         }
         echo '</span><br />';
     }

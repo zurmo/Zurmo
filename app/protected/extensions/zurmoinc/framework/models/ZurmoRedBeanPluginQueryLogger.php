@@ -24,76 +24,76 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-class ZurmoRedBeanPluginQueryLogger extends RedBean_Plugin_QueryLogger {
-
-    public static function getInstanceAndAttach( RedBean_Observable $adapter )
+    class ZurmoRedBeanPluginQueryLogger extends RedBean_Plugin_QueryLogger
     {
-        $queryLog = new ZurmoRedBeanPluginQueryLogger;
-        $adapter->addEventListener( "sql_exec", $queryLog );
-        return $queryLog;
-    }
-
-    private function __construct()
-    {
-
-    }
-
-    /*
-    public function onEvent( $eventName, $adapter ) {
-        if ($eventName=="sql_exec") {
-            $sql = $adapter->getSQL();
-            $this->logs[] = $sql;
-
-        }
-    }
-    */
-
-    public function getQueriesCount()
-    {
-        return count($this->getLogs());
-    }
-
-    public function getDuplicateQueriesCount()
-    {
-        $existingLogs   = array();
-        $duplicateCount = 0;
-        foreach($this->getLogs() as $log)
+        public static function getInstanceAndAttach( RedBean_Observable $adapter )
         {
-            if(in_array($log, $existingLogs))
+            $queryLog = new ZurmoRedBeanPluginQueryLogger;
+            $adapter->addEventListener( "sql_exec", $queryLog );
+            return $queryLog;
+        }
+
+        private function __construct()
+        {
+        }
+
+        /*
+        public function onEvent( $eventName, $adapter )
+        {
+            if ($eventName == "sql_exec")
             {
-                $duplicateCount ++;
-            }
-            else
-            {
-                $existingLogs[] = $log;
+                $sql = $adapter->getSQL();
+                $this->logs[] = $sql;
             }
         }
-        return $duplicateCount;
-    }
+        */
 
-    public function getDuplicateQueriesData()
-    {
-        $existingLogs   = array();
-        $duplicateData  = array();
-        foreach($this->getLogs() as $log)
+        public function getQueriesCount()
         {
-            if(in_array($log, $existingLogs))
+            return count($this->getLogs());
+        }
+
+        public function getDuplicateQueriesCount()
+        {
+            $existingLogs   = array();
+            $duplicateCount = 0;
+            foreach ($this->getLogs() as $log)
             {
-                if(isset($duplicateData[$log]))
+                if (in_array($log, $existingLogs))
                 {
-                    $duplicateData[$log] ++;
+                    $duplicateCount++;
                 }
                 else
                 {
-                    $duplicateData[$log] = 1;
+                    $existingLogs[] = $log;
                 }
             }
-            else
-            {
-                $existingLogs[] = $log;
-            }
+            return $duplicateCount;
         }
-        return $duplicateData;
+
+        public function getDuplicateQueriesData()
+        {
+            $existingLogs   = array();
+            $duplicateData  = array();
+            foreach ($this->getLogs() as $log)
+            {
+                if (in_array($log, $existingLogs))
+                {
+                    if (isset($duplicateData[$log]))
+                    {
+                        $duplicateData[$log] ++;
+                    }
+                    else
+                    {
+                        $duplicateData[$log] = 1;
+                    }
+                }
+                else
+                {
+                    $existingLogs[] = $log;
+                }
+            }
+            return $duplicateData;
+        }
     }
-}
 ?>

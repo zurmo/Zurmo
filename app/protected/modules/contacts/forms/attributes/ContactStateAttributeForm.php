@@ -31,6 +31,7 @@
         public $startingStateOrder;
 
         public $contactStatesLabels;
+
         /**
          * Used when changing the value of an existing data item.  Coming in from a post, this array will have the
          * old values that can be used to compare against and update the new values accordingly based on any changes.

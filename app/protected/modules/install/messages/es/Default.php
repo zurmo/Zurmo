@@ -258,7 +258,7 @@
         'not specify the database admin username and password. Otherwise pick a database ' .
         'username that does not exist.'
             => 'Ha especificado un usuario existente. Si desea utilizar este usuario, entonces no ' .
-               'especifica el nombre de usuario admin y la contraseña de la base de datos. ,' .
+               'especifica el nombre de usuario admin y la contraseña de la base de datos. , ' .
                'O elegir un nombre de usuario de base de datos que no existe.',
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => 'Zurmo contraseña administrativa. El usuario es `super. Se puede cambiar esto más adelante.',

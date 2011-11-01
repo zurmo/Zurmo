@@ -84,7 +84,7 @@
                     // So I'm getting them with the link manager, but that can
                     // throw if the table or column doesn't exist yet because there
                     // are no linked beans.
-                    if($this->bean->id > 0)
+                    if ($this->bean->id > 0)
                     {
                         $relatedIds                  = R::$linkManager->getKeys($this->bean, $tableName);
                         $this->relatedBeansAndModels = array_values(R::batch($tableName, $relatedIds));
