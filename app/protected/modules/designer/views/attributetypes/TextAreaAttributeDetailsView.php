@@ -67,7 +67,7 @@
                                             ),
                                         ),
                                     )
-                                ),                                
+                                ),
                                 array('cells' =>
                                     array(
                                         array(

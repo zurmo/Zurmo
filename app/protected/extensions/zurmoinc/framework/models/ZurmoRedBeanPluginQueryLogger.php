@@ -40,7 +40,7 @@
         /*
         public function onEvent( $eventName, $adapter )
         {
-            if ($eventName=="sql_exec")
+            if ($eventName == "sql_exec")
             {
                 $sql = $adapter->getSQL();
                 $this->logs[] = $sql;

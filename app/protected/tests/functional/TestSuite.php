@@ -505,7 +505,7 @@
             $error_info = curl_error($ch);
             curl_close($ch);
 
-            if($httpcode == 200 )
+            if ($httpcode == 200)
             {
                 return true;
             }

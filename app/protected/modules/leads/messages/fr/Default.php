@@ -57,10 +57,10 @@
             => 'Pistes',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
-        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
-        ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
+        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
+        'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
+        'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
+        'will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => 'LeadsModulePluralLabel et ContactsModulePluralLabel sont les mêmes données, ' .
                'ils ont juste un statut différent. Pour créer un champ LeadsModuleSingularLowerCaseLabel, ' .
                'veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ ' .
