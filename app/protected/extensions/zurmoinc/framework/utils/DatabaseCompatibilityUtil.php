@@ -246,7 +246,6 @@
             {
                 if ($counter == 0)
                 {
-                    $columnNamesString = self::getQuote() . implode(self::getQuote() . ',' . self::getQuote(), $columnNames) . self::getQuote(); // Not Coding Standard
                     $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
                 }
                 if ($counter == $bulkQuantity)
@@ -261,8 +260,11 @@
                     $counter++;
                 }
             }
-            $sql = trim($sql, ','); // Not Coding Standard
-            R::exec($sql);
+            if($counter > 0)
+            {
+                $sql = trim($sql, ','); // Not Coding Standard
+                R::exec($sql);
+            }
         }
 
         /**
