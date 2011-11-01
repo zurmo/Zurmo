@@ -225,7 +225,7 @@
             $this->assertTrue($parentRole->save());
 
             //create account owned by super
-            $account2 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentRolePermission',$super);
+            $account2 = AccountTestHelper::createAccountByNameForOwner('testingAccountsParentRolePermission', $super);
 
             //Test userInChildRole, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildRole;
@@ -596,9 +596,9 @@
             $account2 = Account::getById($account2->id);
             $account3 = Account::getById($account3->id);
 
-            $this->assertEquals ('7799',        $account1->name);
-            $this->assertEquals ('7799',        $account2->name);
-            $this->assertEquals ('cannotUpdate',$account3->name);
+            $this->assertEquals ('7799',         $account1->name);
+            $this->assertEquals ('7799',         $account2->name);
+            $this->assertEquals ('cannotUpdate', $account3->name);
             $this->assertEquals ("".$super,     "".$account2->owner);
             $this->assertEquals ("".$super,     "".$account2->owner);
             $this->assertEquals ("".$billy,     "".$account3->owner);

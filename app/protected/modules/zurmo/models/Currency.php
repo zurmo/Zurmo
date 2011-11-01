@@ -69,7 +69,7 @@
             $currency->code       = Yii::app()->currencyHelper->getBaseCode();
             $currency->rateToBase = 1;
             $saved                = $currency->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

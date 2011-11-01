@@ -41,11 +41,11 @@
          */
         public function countAfterRowImported()
         {
-            $this->rowCount ++;
-            $this->pagingCount ++;
-            if($this->pagingCount > $this->messageOutputInterval)
+            $this->rowCount++;
+            $this->pagingCount++;
+            if ($this->pagingCount > $this->messageOutputInterval)
             {
-                if($this->messageStreamer != null)
+                if ($this->messageStreamer != null)
                 {
                     $this->messageStreamer->addIgnoringTemplate('.');
                 }
@@ -64,7 +64,7 @@
          */
         public function countDataProviderGetDataImportCompleted()
         {
-            if($this->messageStreamer != null)
+            if ($this->messageStreamer != null)
             {
                 $this->messageStreamer->addIgnoringTemplate("\n");
             }

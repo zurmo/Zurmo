@@ -93,7 +93,7 @@
             if ($elementInformation['type'] != null)
             {
                 $editAndDetailsViewRulesClassName = $elementInformation['type'] . 'EditAndDetailsViewAttributeRules';
-                if(@class_exists($editAndDetailsViewRulesClassName))
+                if (@class_exists($editAndDetailsViewRulesClassName))
                 {
                     $ignoredRules              = $editAndDetailsViewRulesClassName::getIgnoredSavableMetadataRules();
                     if (in_array($rule, $ignoredRules))

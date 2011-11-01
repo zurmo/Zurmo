@@ -57,14 +57,14 @@
             => 'Prospectos',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel Relacionadas',
-        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
-        ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
-            => 'LeadsModulePluralLabel y ContactsModulePluralLabel son los mismos registros,' .
-               ' sólo tienen un estatus diferente. Para crear un campo de LeadsModuleSingularLowerCaseLabel' .
-               ' crear un campo de ContactsModuleSingularLowerCaseLabel, y luego' .
-               ' será aplacable en los diseños de LeadsModulePluralLowerCaseLabel.',
+        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
+        'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
+        'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
+        'will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
+            => 'LeadsModulePluralLabel y ContactsModulePluralLabel son los mismos registros, ' .
+               'sólo tienen un estatus diferente. Para crear un campo de LeadsModuleSingularLowerCaseLabel ' .
+               'crear un campo de ContactsModuleSingularLowerCaseLabel, y luego ' .
+               'será aplacable en los diseños de LeadsModulePluralLowerCaseLabel.',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'

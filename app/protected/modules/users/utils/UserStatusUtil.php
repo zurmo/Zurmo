@@ -176,7 +176,7 @@
         {
             assert('$user->id > 0');
             assert('$anotherUser->id > 0');
-            if($user->isSame($anotherUser))
+            if ($user->isSame($anotherUser))
             {
                 return false;
             }
@@ -184,7 +184,7 @@
             {
                 return false;
             }
-            if(!RightsUtil::canUserAccessModule('UsersModule', $user))
+            if (!RightsUtil::canUserAccessModule('UsersModule', $user))
             {
                 return false;
             }

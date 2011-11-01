@@ -115,16 +115,16 @@
                     $saved                           = $customFieldData->save();
                     assert('$saved');
                 }
-                elseif(isset($importInstructionsData['DropDown'][DropDownSanitizerUtil::MAP_MISSING_VALUES]))
+                elseif (isset($importInstructionsData['DropDown'][DropDownSanitizerUtil::MAP_MISSING_VALUES]))
                 {
                     $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
                                                        $importInstructionsData['DropDown']
                                                        [DropDownSanitizerUtil::MAP_MISSING_VALUES]);
-                    if(isset($lowerCaseMissingValuesToMap[mb_strtolower($value)]))
+                    if (isset($lowerCaseMissingValuesToMap[mb_strtolower($value)]))
                     {
                         $keyToUse           = array_search($lowerCaseMissingValuesToMap[mb_strtolower($value)],
                                                            $lowerCaseDropDownValues);
-                        if($keyToUse === false)
+                        if ($keyToUse === false)
                         {
                             $message = 'Pick list value specified is missing from existing pick list, has a specified mapping value' .
                                ', but the mapping value is not a valid value.';
@@ -144,7 +144,7 @@
                 {
                      $generateMissingPickListError = true;
                 }
-                if($generateMissingPickListError)
+                if ($generateMissingPickListError)
                 {
                     $message = 'Pick list value specified is missing from existing pick list and no valid instructions' .
                                ' were provided on how to resolve this.';

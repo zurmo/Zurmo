@@ -94,7 +94,6 @@
             $this->setGetArray(array('id' => $contact->id));
             $this->resetPostArray();
             $this->runControllerShouldResultInAccessFailureAndGetContent('contacts/default/delete');
-
         }
 
         /**

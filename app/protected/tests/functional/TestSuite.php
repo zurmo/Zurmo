@@ -470,7 +470,8 @@
          * @param string url
          * @param string $action
          */
-        protected static function remoteAction($url, $params){
+        protected static function remoteAction($url, $params)
+        {
             if (!$url)
             {
                 echo "Invalid db control url";
@@ -479,11 +480,13 @@
             if (isset($params['action']) && in_array($params['action'], array('restore')))
             {
                 $url = $url . "?action=" . urlencode($params['action']);
-            }elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
-            {
-                $url = $url . "index.php?r=zurmo/default/login&clearCache=1";
             }
-            else {
+            elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
+            {
+                $url = $url . "index.php?r=zurmo/default/login&clearCache=1"; // Not Coding Standard
+            }
+            else
+            {
                 echo "Invalid params";
                 exit;
             }

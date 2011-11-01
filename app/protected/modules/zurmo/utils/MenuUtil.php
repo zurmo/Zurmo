@@ -189,7 +189,7 @@
         {
             assert('$user instanceof User');
             $metadata = ZurmoModule::getMetadata();
-            if(isset($metadata['global']['tabMenuItemsModuleOrdering']))
+            if (isset($metadata['global']['tabMenuItemsModuleOrdering']))
             {
                 assert('is_array($metadata["global"]["tabMenuItemsModuleOrdering"])');
                 $orderedModules = $metadata['global']['tabMenuItemsModuleOrdering'];

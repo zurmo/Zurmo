@@ -187,7 +187,7 @@
                                                 $model,
                                                 $explicitReadWriteModelPermissions);
                                                 $importRowDataResultsUtil->setStatusToCreated();
-                                if(!$resolved)
+                                if (!$resolved)
                                 {
                                     $importRowDataResultsUtil->addMessage('The record saved, but there was a problem '.
                                     'setting the security permissions. It will at least be viewable by the owner.');
@@ -513,12 +513,12 @@
             }
 
             $messageLogger = new ImportMessageLogger($messageStreamer);
-            if(isset($args[2]))
+            if (isset($args[2]))
             {
                 $messageLogger->setMessageOutputInterval((int)$args[2]);
             }
             $importName = null;
-            if(isset($args[1]))
+            if (isset($args[1]))
             {
                 $importName = $args[1];
             }

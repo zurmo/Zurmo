@@ -417,7 +417,8 @@
                         {
                             $isStrict = true;
                         }
-                        else {
+                        else
+                        {
                             $isStrict = false;
                         }
                         return $isStrict;

@@ -71,7 +71,7 @@
         protected static function resolveLabelByValueAndLabels($value, $labels)
         {
             assert('is_array($labels) || $labels == null');
-            if(isset($labels[$value]) && $labels[$value] != null)
+            if (isset($labels[$value]) && $labels[$value] != null)
             {
                 return $labels[$value];
             }

@@ -1072,7 +1072,7 @@
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
                                 {
                                     $linkFieldName = R::$linkManager->getLinkField($relatedTableName, $linkName);
-                                    if((int)$bean->$linkFieldName > 0)
+                                    if ((int)$bean->$linkFieldName > 0)
                                     {
                                         $beanIdentifier = $relatedTableName .(int)$bean->$linkFieldName;
                                         try
@@ -1089,7 +1089,6 @@
                                             $relatedModel = self::makeModel($relatedBean, $relatedModelClassName);
                                         }
                                     }
-
                                 }
                                 if (!isset($relatedModel))
                                 {
@@ -1709,7 +1708,6 @@
                         $baseModelClassName = null;
                         foreach ($this->modelClassNameToBean as $modelClassName => $bean)
                         {
-
                             R::store($bean);
                             assert('$bean->id > 0');
                             if (!RedBeanDatabase::isFrozen())

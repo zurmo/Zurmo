@@ -70,7 +70,6 @@
             );
         }
 
-
         public function getNonPlaceableLayoutAttributeTypes()
         {
             return array(

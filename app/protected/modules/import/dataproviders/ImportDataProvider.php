@@ -71,7 +71,7 @@
             $this->resolveWhereClause($where);
             $beans        = ImportDatabaseUtil::getSubset($this->tableName, $where, $limit, $offset);
             $indexedBeans = array();
-            foreach($beans as $bean)
+            foreach ($beans as $bean)
             {
                 $indexedBeans[] = $bean;
             }
@@ -138,9 +138,9 @@
                 }
                 $where .= 'id != 1';
             }
-            if($this->filterByStatus)
+            if ($this->filterByStatus)
             {
-                if($where != null)
+                if ($where != null)
                 {
                     $where .= ' and ';
                 }

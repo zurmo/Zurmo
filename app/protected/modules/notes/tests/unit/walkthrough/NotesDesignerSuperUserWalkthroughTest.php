@@ -208,25 +208,25 @@
             $this->setPostArray(array('Note' => array(
                                             'occurredOnDateTime'                => $datetime,
                                             'description'                       => 'Note Description',
-                                            'explicitReadWriteModelPermissions' => array('type'=>null),
+                                            'explicitReadWriteModelPermissions' => array('type' => null),
                                             'checkbox'                          => '1',
                                             'currency'                          => array('value'   => 45,
-                                                                                         'currency'=> array(
+                                                                                         'currency' => array(
                                                                                          'id' => $baseCurrency->id)),
                                             'date'                              => $date,
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
-                                            'picklist'                          => array('value'=>'a'),
+                                            'picklist'                          => array('value' => 'a'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
-                                            'radio'                             => array('value'=>'d'),
+                                            'radio'                             => array('value' => 'd'),
                                             'text'                              => 'This is a test Text',
                                             'textarea'                          => 'This is a test TextArea',
                                             'url'                               => 'http://wwww.abc.com'),
                                       'ActivityItemForm' => array(
                                             'Account'    => array('id'  => $superAccount[0]->id),
                                             'Contact'    => array('id'  => $superContactId),
-                                            'Opportunity'=> array('id'  => $superOpportunityId))));
+                                            'Opportunity' => array('id'  => $superOpportunityId))));
             $this->runControllerWithRedirectExceptionAndGetUrl('notes/default/inlineCreateSave');
 
             //Check the details if they are saved properly for the custom fields.
@@ -288,26 +288,26 @@
             $this->setPostArray(array('Note' => array(
                                 'occurredOnDateTime'                => $datetime,
                                 'description'                       => 'Note Edit Description',
-                                'explicitReadWriteModelPermissions' => array('type'=>$explicitReadWriteModelPermission),
+                                'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                                 'owner'                             => array('id' => $superUserId),
                                 'checkbox'                          => '0',
                                 'currency'                          => array('value'   => 40,
-                                                                             'currency'=> array(
+                                                                             'currency' => array(
                                                                              'id' => $baseCurrency->id)),
                                 'date'                              => $date,
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
-                                'picklist'                          => array('value'=>'b'),
+                                'picklist'                          => array('value' => 'b'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
-                                'radio'                             => array('value'=>'e'),
+                                'radio'                             => array('value' => 'e'),
                                 'text'                              => 'This is a test Edit Text',
                                 'textarea'                          => 'This is a test Edit TextArea',
                                 'url'                               => 'http://wwww.abc-edit.com'),
-                          'ActivityItemForm' => array(
-                                'Account'    => array('id'  => $superAccount[0]->id),
-                                'Contact'    => array('id'  => $superContactId),
-                                'Opportunity'=> array('id'  => $superOpportunityId))));
+                          'ActivityItemForm'  => array(
+                                'Account'     => array('id'  => $superAccount[0]->id),
+                                'Contact'     => array('id'  => $superContactId),
+                                'Opportunity' => array('id'  => $superOpportunityId))));
             $this->runControllerWithRedirectExceptionAndGetUrl('notes/default/edit');
 
             //Check the details if they are saved properly for the custom fields.

@@ -518,7 +518,6 @@
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $values = unserialize($customFieldData->serializedData);
             $this->assertEquals(6, count($values));
-
         }
 
         public function testSanitizeValueBySanitizerTypesForEmailTypeThatIsNotRequired()

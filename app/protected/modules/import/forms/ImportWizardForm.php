@@ -184,9 +184,9 @@
                                                                            $mappedAttributeImportRulesCollection))
             {
                 $attributesLabelContent = null;
-                foreach($requiredAttributeCollection as $noteUsed => $attributeData)
+                foreach ($requiredAttributeCollection as $noteUsed => $attributeData)
                 {
-                    if($attributesLabelContent != null)
+                    if ($attributesLabelContent != null)
                     {
                         $attributesLabelContent .= ', ';
                     }

@@ -57,7 +57,7 @@
                     return 'dd.mm.y';
                 case 'M/d/yy':      //en format
                     return 'm/d/y';
-                case 'dd/MM/yy':    //es,fr,it format
+                case 'dd/MM/yy':    //es, fr, it format
                     return 'dd/mm/y';
                 default :
                     throw new NotImplementedException();
@@ -73,7 +73,7 @@
         {
             switch($timeFormat)
             {
-                case 'HH:mm':       //de,es,fr,it format
+                case 'HH:mm':       //de, es, fr, it format
                     return 'hh:mm';
                 case 'h:mm a':      //en format
                     return 'h:mm TT';

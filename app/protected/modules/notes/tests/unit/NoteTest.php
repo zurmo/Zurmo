@@ -179,8 +179,8 @@
         /**
          * @depends testAutomatedOccurredOnDateTimeAndLatestDateTimeChanges
          */
-        public function testNobodyCanReadWriteDeleteAndStrValOfNoteFunctionsCorrectly() {
-
+        public function testNobodyCanReadWriteDeleteAndStrValOfNoteFunctionsCorrectly()
+        {
             Yii::app()->user->userModel = User::getByUsername('super');
 
             $fileModel    = ZurmoTestHelper::createFileModel();
@@ -219,8 +219,8 @@
         /**
          * @depends testNobodyCanReadWriteDeleteAndStrValOfNoteFunctionsCorrectly
          */
-        public function testAUserCanDeleteANoteNotOwnedButHasExplicitDeletePermission() {
-
+        public function testAUserCanDeleteANoteNotOwnedButHasExplicitDeletePermission()
+        {
             //Create superAccount owned by user super.
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;

@@ -49,7 +49,7 @@
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, $this->getModelAttributeName(),
                                                             $value, $columnMappingData, $importSanitizeResultsUtil);
-            if($sanitizedValue == null)
+            if ($sanitizedValue == null)
             {
                 $sanitizedValue = 0;
             }

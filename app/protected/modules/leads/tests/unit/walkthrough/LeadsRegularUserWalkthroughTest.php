@@ -58,6 +58,7 @@
 
             //Now test peon with elevated permissions to models.
         }
+
         public function testRegularUserAllControllerActionsNoElevation()
         {
             //Create lead owned by user super.
@@ -140,7 +141,6 @@
                 'modalTransferInformation' => array('sourceIdFieldId' => 'x', 'sourceNameFieldId' => 'y')
             ));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/modalList');
-
         }
 
         /**
@@ -239,7 +239,7 @@
             $this->assertTrue($parentRole->save());
 
             //create lead owned by super
-            $lead2 = LeadTestHelper::createLeadByNameForOwner('leadsParentRolePermission',$super);
+            $lead2 = LeadTestHelper::createLeadByNameForOwner('leadsParentRolePermission', $super);
 
             //Test userInChildRole, access to details, edit and delete should fail.
             Yii::app()->user->userModel = $userInChildRole;

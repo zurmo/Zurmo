@@ -78,7 +78,7 @@
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact3', $super, $account);
 
             //Create a meeting for testing.
-            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('superMeeting', $super, $account);   
+            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('superMeeting', $super, $account);
         }
 
         public function testSuperUserMeetingDefaultControllerActions()
@@ -261,24 +261,24 @@
                                             'category'                          => array('value' => 'Meeting'),
                                             'description'                       => 'This is Meeting Description',
                                             'owner'                             => array('id' => $superUserId),
-                                            'explicitReadWriteModelPermissions' => array('type'=>null),
+                                            'explicitReadWriteModelPermissions' => array('type' => null),
                                             'checkbox'                          => '1',
                                             'currency'                          => array('value'   => 45,
-                                                                                         'currency'=> array(
+                                                                                         'currency' => array(
                                                                                          'id' => $baseCurrency->id)),
                                             'date'                              => $date,
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
-                                            'picklist'                          => array('value'=>'a'),
+                                            'picklist'                          => array('value' => 'a'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
-                                            'radio'                             => array('value'=>'d'),
+                                            'radio'                             => array('value' => 'd'),
                                             'text'                              => 'This is a test Text',
                                             'textarea'                          => 'This is a test TextArea',
                                             'url'                               => 'http://wwww.abc.com'),
                                       'ActivityItemForm' => array(
                                             'Account'     => array('id'  => $superAccount[0]->id),
-                                            'contact'     => array('ids' => $superContactId1.','.$superContactId2),
+                                            'contact'     => array('ids' => $superContactId1 . ',' . $superContactId2), // Not Coding Standard
                                             'Opportunity' => array('id'  => $superOpportunityId))));
             $this->runControllerWithRedirectExceptionAndGetUrl('meetings/default/createFromRelation');
 
@@ -340,7 +340,7 @@
             $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
             $baseCurrency       = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
-            $activityItemFormContacts         = $superContactId1.','.$superContactId2.','.$superContactId3;
+            $activityItemFormContacts         = $superContactId1 . ',' . $superContactId2 . ',' . $superContactId3; // Not Coding Standard
 
             //Edit the meeting based on the custom fields and the meeting Id.
             $this->setGetArray (array('id' => $meeting[0]->id));
@@ -352,18 +352,18 @@
                                 'category'                          => array('value' => 'Call'),
                                 'description'                       => 'This is Edit Meeting Description',
                                 'owner'                             => array('id' => $superUserId),
-                                'explicitReadWriteModelPermissions' => array('type'=> $explicitReadWriteModelPermission),
+                                'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                                 'checkbox'                          => '0',
                                 'currency'                          => array('value'   => 40,
-                                                                             'currency'=> array(
+                                                                             'currency' => array(
                                                                              'id' => $baseCurrency->id)),
                                 'date'                              => $date,
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
-                                'picklist'                          => array('value'=>'b'),
+                                'picklist'                          => array('value' => 'b'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
-                                'radio'                             => array('value'=>'e'),
+                                'radio'                             => array('value' => 'e'),
                                 'text'                              => 'This is a test Edit Text',
                                 'textarea'                          => 'This is a test Edit TextArea',
                                 'url'                               => 'http://wwww.abc-edit.com'),

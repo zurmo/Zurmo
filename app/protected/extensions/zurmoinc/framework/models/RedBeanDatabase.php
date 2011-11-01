@@ -58,7 +58,7 @@
                 R::setup($dsn, $username, $password);
                 R::$redbean->addEventListener("update",       new RedBeanBeforeUpdateHintManager(R::$toolbox));
                 R::$redbean->addEventListener("after_update", new RedBeanAfterUpdateHintManager (R::$toolbox));
-                if(SHOW_QUERY_DATA)
+                if (SHOW_QUERY_DATA)
                 {
                     Yii::app()->performance->setRedBeanQueryLogger(ZurmoRedBeanPluginQueryLogger::
                                                                    getInstanceAndAttach(R::$adapter ));

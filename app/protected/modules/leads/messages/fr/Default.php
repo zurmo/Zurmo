@@ -61,10 +61,10 @@
         ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
         ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
         ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
-            => 'LeadsModulePluralLabel et ContactsModulePluralLabel sont les mêmes données,' .
-               ' ils ont juste un statut différent. Pour créer un champ LeadsModuleSingularLowerCaseLabel,' .
-               ' veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ' .
-               ' apparaîtra alors dans les présentations de pages des LeadsModulePluralLowerCaseLabel.',
+            => 'LeadsModulePluralLabel et ContactsModulePluralLabel sont les mêmes données, ' .
+               'ils ont juste un statut différent. Pour créer un champ LeadsModuleSingularLowerCaseLabel, ' .
+               'veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ ' .
+               'apparaîtra alors dans les présentations de pages des LeadsModulePluralLowerCaseLabel.',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'

@@ -60,7 +60,7 @@
                     $this->message  = Yii::t('Default', 'Database default collation is:') . ' ';
                     $this->message .= $databaseDefaultCollation . '. ';
                     $this->message .= Yii::t('Default', 'database default collation shouldn\'t in:') . ' ';
-                    $this->message .= implode(', ',$this->notAllowedDatabaseCollations);
+                    $this->message .= implode(', ', $this->notAllowedDatabaseCollations);
                 }
                 $passed = false;
             }
