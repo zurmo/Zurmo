@@ -332,10 +332,10 @@
         *
         * Test that various accents work correctly going into the database.
         */
-        public function testMakeDatabaseTableWithColumnsThatHaveValuesWithAccents()
+        public function testMakeDatabaseTableFromISO188591WithAccents()
         {
             $testTableName = 'testimporttable';
-            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importAccentsTest.csv', $testTableName));
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importISO88591WithAccentsTest.csv', $testTableName));
             $sql = 'select * from ' . $testTableName;
             $tempTableData = R::getAll($sql);
             $compareData   = array(
