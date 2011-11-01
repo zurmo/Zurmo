@@ -338,7 +338,7 @@
         'Mrs.'
             => 'Sra.',
         'Ms.'
-            => 'Sra.',
+            => 'Srta.',
         'My List Configuration View'
             => 'Mi vista de lista configuración',
         'Never'
