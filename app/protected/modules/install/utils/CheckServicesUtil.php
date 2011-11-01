@@ -67,6 +67,7 @@
                          'DatabaseCheckSafeMode',
                          'DatabaseMaxAllowedPacketSize',
                          'DatabaseMaxSpRecursionDepth',
+                         'DatabaseDefaultCollation'
             );
         }
         /**
