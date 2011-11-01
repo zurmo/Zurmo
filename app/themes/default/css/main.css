@@ -204,4 +204,9 @@ Process view classes
 {
     color: #AAAAAA;
 }
+
+#ui-datepicker-div
+{
+    display: none;
+}
 /* End Misc Classes */

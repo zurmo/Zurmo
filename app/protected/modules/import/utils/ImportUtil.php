@@ -187,7 +187,7 @@
                                                 $model,
                                                 $explicitReadWriteModelPermissions);
                                                 $importRowDataResultsUtil->setStatusToCreated();
-                                if(!$resolved)
+                                if (!$resolved)
                                 {
                                     $importRowDataResultsUtil->addMessage('The record saved, but there was a problem '.
                                     'setting the security permissions. It will at least be viewable by the owner.');
@@ -484,11 +484,7 @@
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(0);
 
-            if (isset($args[3]) && !is_int($args[3]))
-            {
-                $this->usageError('The specified run time in seconds is invalid.');
-            }
-            elseif (isset($args[3]) && is_int($args[3]))
+            if (isset($args[3]))
             {
                 set_time_limit($args[3]);
                 $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
@@ -513,12 +509,12 @@
             }
 
             $messageLogger = new ImportMessageLogger($messageStreamer);
-            if(isset($args[2]))
+            if (isset($args[2]))
             {
                 $messageLogger->setMessageOutputInterval((int)$args[2]);
             }
             $importName = null;
-            if(isset($args[1]))
+            if (isset($args[1]))
             {
                 $importName = $args[1];
             }

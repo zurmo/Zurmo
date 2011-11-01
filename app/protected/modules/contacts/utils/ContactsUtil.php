@@ -95,10 +95,10 @@
             $states = ContactState::getAll('order');
             foreach ($states as $state)
             {
-                if($state->serializedLabels !== null)
+                if ($state->serializedLabels !== null)
                 {
                     $labelsByLanguage = unserialize($state->serializedLabels);
-                    foreach($labelsByLanguage as $language => $label)
+                    foreach ($labelsByLanguage as $language => $label)
                     {
                         $contactStatesLabels[$language][$state->order] = $label;
                     }
@@ -242,10 +242,10 @@
         {
             assert('$state->id > 0');
             assert('is_string($language)');
-            if($state->serializedLabels !== null)
+            if ($state->serializedLabels !== null)
             {
                 $unserializedLabels = unserialize($state->serializedLabels);
-                if(isset($unserializedLabels[$language]))
+                if (isset($unserializedLabels[$language]))
                 {
                     return $unserializedLabels[$language];
                 }

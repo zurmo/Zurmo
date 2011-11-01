@@ -220,7 +220,7 @@
                 $messagesNotInSourceFiles = array_diff($messagesInMessageFile, $messagesInSourceFiles);
                 foreach ($messagesNotInSourceFiles as $message)
                 {
-                    if(strpos($message, 'ModulePluralLabel') === false &&
+                    if (strpos($message, 'ModulePluralLabel') === false &&
                        strpos($message, 'ModuleSingularLabel') === false &&
                        strpos($message, 'ModulePluralLowerCaseLabel') === false &&
                        strpos($message, 'ModuleSingularLowerCaseLabel') === false )
@@ -321,7 +321,6 @@
                 elseif (is_file($fullEntryName) &&
                     pathinfo($entry, PATHINFO_EXTENSION) == 'php')
                 {
-
                     //Avoid any models in the framework/models folder and test models
                     if ( strpos($path, '/framework') === false &&
                          strpos($path, '/tests') === false &&
@@ -339,11 +338,11 @@
                            foreach ($modelAttributes as $attributeName)
                            {
                                 $attributeLabel = $model->getAttributeLabel($attributeName);
-                                if(isset($untranslatedLabels[$attributeName]))
+                                if (isset($untranslatedLabels[$attributeName]))
                                 {
                                     $translatedLabel = Yii::t('Default', $untranslatedLabels[$attributeName],
                                                                          LabelUtil::getTranslationParamsForAllModules());
-                                    if($untranslatedLabels[$attributeName] == $attributeLabel ||
+                                    if ($untranslatedLabels[$attributeName] == $attributeLabel ||
                                        $translatedLabel != $attributeLabel)
                                     {
                                         $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
@@ -367,11 +366,10 @@
                                     $customFieldData = CustomFieldDataModelUtil::
                                                        getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
                                     $customFieldDataNames = unserialize($customFieldData->serializedData);
-                                    foreach($customFieldDataNames as $dataName)
+                                    foreach ($customFieldDataNames as $dataName)
                                     {
                                         $fileNamesToCategoriesToMessages[$entry]['Default'][] = $dataName;
                                     }
-
                                 }
                            }
                         }
@@ -385,9 +383,9 @@
                             !$moduleReflectionClass->isAbstract())
                         {
                             $labelsData = getSecurableModuleRightsPoliciesAndAuditEventLabels($moduleClassName);
-                            if(!empty($labelsData))
+                            if (!empty($labelsData))
                             {
-                                if(isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                                if (isset($fileNamesToCategoriesToMessages[$entry]['Default']))
                                 {
                                     $fileNamesToCategoriesToMessages[$entry]['Default'] =
                                     array_merge($fileNamesToCategoriesToMessages[$entry]['Default'], $labelsData);
@@ -400,11 +398,11 @@
                         }
                         //attempt to detect any 'state' adapters and look for state labels.
                         $stateAdapterClassName = $moduleClassName::getStateMetadataAdapterClassName();
-                        if($stateAdapterClassName != null && $stateAdapterClassName)
+                        if ($stateAdapterClassName != null && $stateAdapterClassName)
                         {
                             $stateModelClassName = $stateAdapterClassName::getStateModelClassName();
                             $states              = $stateModelClassName::getAll();
-                            foreach($states as $state)
+                            foreach ($states as $state)
                             {
                                 $fileNamesToCategoriesToMessages[$entry]['Default'][] = $state->name;
                             }
@@ -412,7 +410,7 @@
                         //check for menu labels
                         if (!$moduleReflectionClass->isAbstract())
                         {
-                            if(isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                            if (isset($fileNamesToCategoriesToMessages[$entry]['Default']))
                             {
                                 $fileNamesToCategoriesToMessages[$entry]['Default'] =
                                 array_merge($fileNamesToCategoriesToMessages[$entry]['Default'],
@@ -434,11 +432,11 @@
                             !$moduleReflectionClass->isAbstract())
                         {
                             $metadata = $viewClassName::getDefaultMetadata();
-                            if(isset($metadata['global']) && isset($metadata['global']['panels']))
+                            if (isset($metadata['global']) && isset($metadata['global']['panels']))
                             {
-                                foreach($metadata['global']['panels'] as $panel)
+                                foreach ($metadata['global']['panels'] as $panel)
                                 {
-                                    if(isset($panel['title']))
+                                    if (isset($panel['title']))
                                     {
                                         $fileNamesToCategoriesToMessages[$entry]['Default'][] = $panel['title'];
                                     }
@@ -491,65 +489,65 @@
     {
         $labels   = array();
         $metadata = $moduleClassName::getMetadata();
-        if(isset($metadata['global']['tabMenuItems']))
+        if (isset($metadata['global']['tabMenuItems']))
         {
-            foreach($metadata['global']['tabMenuItems'] as $menuItem)
+            foreach ($metadata['global']['tabMenuItems'] as $menuItem)
             {
-                if(isset($menuItem['items']))
+                if (isset($menuItem['items']))
                 {
-                    foreach($menuItem['items'] as $subMenuItem)
+                    foreach ($menuItem['items'] as $subMenuItem)
                     {
-                        if(!in_array($subMenuItem['label'], $labels))
+                        if (!in_array($subMenuItem['label'], $labels))
                         {
                             $labels[] = $subMenuItem['label'];
                         }
                     }
                 }
-                if(!in_array($menuItem['label'], $labels))
+                if (!in_array($menuItem['label'], $labels))
                 {
                     $labels[] = $menuItem['label'];
                 }
             }
         }
-        if(isset($metadata['global']['shortcutsMenuItems']))
+        if (isset($metadata['global']['shortcutsMenuItems']))
         {
-            foreach($metadata['global']['shortcutsMenuItems'] as $menuItem)
+            foreach ($metadata['global']['shortcutsMenuItems'] as $menuItem)
             {
-                if(isset($menuItem['items']))
+                if (isset($menuItem['items']))
                 {
-                    foreach($menuItem['items'] as $subMenuItem)
+                    foreach ($menuItem['items'] as $subMenuItem)
                     {
-                        if(!in_array($subMenuItem['label'], $labels))
+                        if (!in_array($subMenuItem['label'], $labels))
                         {
                             $labels[] = $subMenuItem['label'];
                         }
                     }
                 }
-                if(!in_array($menuItem['label'], $labels))
+                if (!in_array($menuItem['label'], $labels))
                 {
                     $labels[] = $menuItem['label'];
                 }
             }
         }
-        if(isset($metadata['global']['headerMenuItems']))
+        if (isset($metadata['global']['headerMenuItems']))
         {
-            foreach($metadata['global']['headerMenuItems'] as $menuItem)
+            foreach ($metadata['global']['headerMenuItems'] as $menuItem)
             {
-                if(!in_array($menuItem['label'], $labels))
+                if (!in_array($menuItem['label'], $labels))
                 {
                     $labels[] = $menuItem['label'];
                 }
             }
         }
-        if(isset($metadata['global']['configureMenuItems']))
+        if (isset($metadata['global']['configureMenuItems']))
         {
-            foreach($metadata['global']['configureMenuItems'] as $menuItem)
+            foreach ($metadata['global']['configureMenuItems'] as $menuItem)
             {
-                if(!in_array($menuItem['titleLabel'], $labels))
+                if (!in_array($menuItem['titleLabel'], $labels))
                 {
                     $labels[] = $menuItem['titleLabel'];
                 }
-                if(!in_array($menuItem['descriptionLabel'], $labels))
+                if (!in_array($menuItem['descriptionLabel'], $labels))
                 {
                     $labels[] = $menuItem['descriptionLabel'];
                 }

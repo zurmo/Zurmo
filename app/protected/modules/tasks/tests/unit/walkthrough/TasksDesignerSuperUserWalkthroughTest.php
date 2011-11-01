@@ -52,7 +52,7 @@
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact2', $super, $account);
 
             //Create a task for testing.
-            TaskTestHelper::createTaskWithOwnerAndRelatedAccount('superTask', $super, $account);   
+            TaskTestHelper::createTaskWithOwnerAndRelatedAccount('superTask', $super, $account);
         }
 
         public function testSuperUserTaskDefaultControllerActions()
@@ -235,18 +235,18 @@
                                             'completedDateTime'                 => '',
                                             'description'                       => 'This is task Description',
                                             'owner'                             => array('id' => $superUserId),
-                                            'explicitReadWriteModelPermissions' => array('type'=>null),
+                                            'explicitReadWriteModelPermissions' => array('type' => null),
                                             'checkbox'                          => '1',
-                                            'currency'                          => array('value'   => 45,
-                                                                                         'currency'=> array(
+                                            'currency'                          => array('value'    => 45,
+                                                                                         'currency' => array(
                                                                                          'id' => $baseCurrency->id)),
                                             'date'                              => $date,
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
-                                            'picklist'                          => array('value'=>'a'),
+                                            'picklist'                          => array('value' => 'a'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
-                                            'radio'                             => array('value'=>'d'),
+                                            'radio'                             => array('value' => 'd'),
                                             'text'                              => 'This is a test Text',
                                             'textarea'                          => 'This is a test TextArea',
                                             'url'                               => 'http://wwww.abc.com'),
@@ -322,18 +322,18 @@
                                 'completedDateTime'                 => $datetime,
                                 'description'                       => 'This is edit task Description',
                                 'owner'                             => array('id' => $superUserId),
-                                'explicitReadWriteModelPermissions' => array('type'=> $explicitReadWriteModelPermission),
+                                'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                                 'checkbox'                          => '0',
                                 'currency'                          => array('value'   => 40,
-                                                                             'currency'=> array(
+                                                                             'currency' => array(
                                                                              'id' => $baseCurrency->id)),
                                 'date'                              => $date,
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
-                                'picklist'                          => array('value'=>'b'),
+                                'picklist'                          => array('value' => 'b'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
-                                'radio'                             => array('value'=>'e'),
+                                'radio'                             => array('value' => 'e'),
                                 'text'                              => 'This is a test Edit Text',
                                 'textarea'                          => 'This is a test Edit TextArea',
                                 'url'                               => 'http://wwww.abc-edit.com'),

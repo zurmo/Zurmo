@@ -67,15 +67,17 @@
                          'DatabaseCheckSafeMode',
                          'DatabaseMaxAllowedPacketSize',
                          'DatabaseMaxSpRecursionDepth',
+                         'DatabaseDefaultCollation'
             );
         }
+
         /**
          * Check all services and return the resulting data in an array. The resulting data is organized first by
          * whether a service passed or not, and then by if it is a required or optional service.
          */
         public static function checkServicesAndGetResultsDataForDisplay($checkAdditionalServices = false, $form = null)
         {
-            if(!$checkAdditionalServices)
+            if (!$checkAdditionalServices)
             {
                 $servicesToCheck                                                  = self::getServicesToCheck();
             }

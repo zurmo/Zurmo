@@ -77,7 +77,7 @@
             $content .= '</tbody>'     . "\n";
             $content .= '</table>'     . "\n";
             $content .= $this->renderErrorListContent();
-            if($this->rowsWithErrors > 0)
+            if ($this->rowsWithErrors > 0)
             {
                 $content .= $this->renderActionLinksContent();
             }

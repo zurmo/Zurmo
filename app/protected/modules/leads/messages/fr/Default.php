@@ -35,8 +35,6 @@
             => 'AccountsModuleSingularLabel Optionnel',
         'AccountsModuleSingularLabel Required'
             => 'AccountsModuleSingularLabel Requis',
-        'Complete Conversion'
-            => 'Convertir',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Convertir la LeadsModuleSingularLowerCaseLabel sans sélectionner ou créer un AccountsModuleSingularLowerCaseLabel.',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
@@ -59,14 +57,14 @@
             => 'Pistes',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
-        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
-        ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
-            => 'LeadsModulePluralLabel et ContactsModulePluralLabel sont les mêmes données,' .
-               ' ils ont juste un statut différent. Pour créer un champ LeadsModuleSingularLowerCaseLabel,' .
-               ' veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ' .
-               ' apparaîtra alors dans les présentations de pages des LeadsModulePluralLowerCaseLabel.',
+        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
+        'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
+        'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
+        'will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
+            => 'LeadsModulePluralLabel et ContactsModulePluralLabel sont les mêmes données, ' .
+               'ils ont juste un statut différent. Pour créer un champ LeadsModuleSingularLowerCaseLabel, ' .
+               'veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ ' .
+               'apparaîtra alors dans les présentations de pages des LeadsModulePluralLowerCaseLabel.',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Conversion'

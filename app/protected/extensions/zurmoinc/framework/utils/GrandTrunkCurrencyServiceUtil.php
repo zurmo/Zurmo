@@ -53,7 +53,7 @@
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 
-            if($httpcode == 200 )
+            if ($httpcode == 200 )
             {
                 if (!empty($fileContents) && floatval($fileContents) > 0)
                 {

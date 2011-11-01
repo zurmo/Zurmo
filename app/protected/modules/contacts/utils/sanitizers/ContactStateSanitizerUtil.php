@@ -69,11 +69,11 @@
                 if ((int)$value <= 0)
                 {
                     $states = ContactState::getByName($value);
-                    if(count($states) > 1)
+                    if (count($states) > 1)
                     {
                         throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is not unique and is invalid.'));
                     }
-                    elseif(count($states) == 0)
+                    elseif (count($states) == 0)
                     {
                         throw new NotFoundException();
                     }

@@ -214,7 +214,7 @@
          */
         protected function resolveElementInformationDuringFormLayoutRender(& $elementInformation)
         {
-            if($elementInformation['type'] == 'DerivedUserStatus' &&
+            if ($elementInformation['type'] == 'DerivedUserStatus' &&
                !UserStatusUtil::canUserEditStatusOnAnotherUser(Yii::app()->user->userModel, $this->model))
             {
                 $elementInformation['type'] = 'ReadOnlyDerivedUserStatus';

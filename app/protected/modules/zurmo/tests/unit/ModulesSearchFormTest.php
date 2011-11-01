@@ -198,8 +198,8 @@
         /**
          * @depends testSearchFormAnyAttributes
          */
-        public function testSearchFormAnyOptOutEmail() {
-
+        public function testSearchFormAnyOptOutEmail()
+        {
             //get the super user here
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;

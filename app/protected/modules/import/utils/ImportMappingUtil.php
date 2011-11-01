@@ -206,8 +206,6 @@
             return $columnNamesAndAttributeIndexOrDerivedTypeLabels;
         }
 
-
-
         public static function makeBooleanColumnMappingData($attributeName)
         {
             return array('attributeIndexOrDerivedType' => $attributeName,
@@ -248,7 +246,7 @@
         public static function makeDropDownColumnMappingData($attributeName, $defaultValue = null,
                                                              $importInstructionsData = null)
         {
-            if($importInstructionsData == null)
+            if ($importInstructionsData == null)
             {
                 $importInstructionsData = array('DropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array()));
             }

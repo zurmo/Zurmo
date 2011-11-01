@@ -56,7 +56,7 @@ EOD;
      */
     public function run($args)
     {
-        if(SHOW_QUERY_DATA)
+        if (SHOW_QUERY_DATA)
         {
             $this->usageError('The $queryDataOn parameter must be off to run command line imports.');
         }
@@ -68,7 +68,7 @@ EOD;
         {
             Yii::app()->user->userModel = User::getByUsername($args[0]);
         }
-        catch(NotFoundException $e)
+        catch (NotFoundException $e)
         {
             $this->usageError('The specified username does not exist.');
         }

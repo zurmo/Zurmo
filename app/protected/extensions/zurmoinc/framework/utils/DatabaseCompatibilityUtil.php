@@ -246,7 +246,6 @@
             {
                 if ($counter == 0)
                 {
-                    $columnNamesString = self::getQuote() . implode(self::getQuote() . ',' . self::getQuote(), $columnNames) . self::getQuote();
                     $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
                 }
                 if ($counter == $bulkQuantity)
@@ -261,8 +260,11 @@
                     $counter++;
                 }
             }
-            $sql = trim($sql, ','); // Not Coding Standard
-            R::exec($sql);
+            if($counter > 0)
+            {
+                $sql = trim($sql, ','); // Not Coding Standard
+                R::exec($sql);
+            }
         }
 
         /**
@@ -278,7 +280,7 @@
 
             $row = R::getRow("SHOW VARIABLES LIKE 'max_allowed_packet'");
 
-            if(isset($row['Value']))
+            if (isset($row['Value']))
             {
                 return $row['Value'];
             }

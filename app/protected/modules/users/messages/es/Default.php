@@ -30,9 +30,9 @@
     // DON'T MAKE A MESS!
     return array(
         'A user field'
-            => '??',
+            => 'Un campo de usuario',
         'Access Users Tab'
-            => '??',
+            => 'Acceso a ficha de usuarios',
         'Change Password'
             => 'Cambiar Contraseña',
         'Change User Passwords'
@@ -44,7 +44,7 @@
         'Create Users'
             => 'Crear Usuario',
         'day(s)'
-            => '??',
+            => 'día(s)',
         'Enforce Strong Passwords'
             => 'Forzar contraseñas robustas',
         'Hash'
@@ -94,6 +94,6 @@
         'User Search'
             => 'Busqueda de Usuarios',
         'Users'
-            => 'Usarios',
+            => 'Usuarios',
     );
 ?>

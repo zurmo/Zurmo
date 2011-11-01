@@ -30,17 +30,17 @@
     // DON'T MAKE A MESS!
     return array(
         'Access MeetingsModulePluralLabel'
-            => '??',
+            => 'Acceso a MeetingsModulePluralLabel',
         'Attendees'
             => 'Asistentes',
         'Call'
-            => '??',
+            => 'Llamada',
         'Category'
             => 'Categoría',
         'Create MeetingsModulePluralLabel'
-            => '??',
+            => 'Crear MeetingsModulePluralLabel',
         'Delete MeetingsModulePluralLabel'
-            => '??',
+            => 'Eliminar MeetingsModulePluralLabel',
         'End Time'
             => 'Hora de finalización',
         'Location'

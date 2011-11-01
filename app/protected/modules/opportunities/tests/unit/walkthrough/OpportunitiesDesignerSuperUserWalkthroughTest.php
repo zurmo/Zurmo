@@ -281,15 +281,15 @@
                             'owner'                             => array('id' => $superUserId),
                             'explicitReadWriteModelPermissions' => array('type' => null),
                             'checkbox'                          => '1',
-                            'currency'                          => array('value'   => 45,
-                                                                         'currency'=> array('id' => $baseCurrency->id)),
+                            'currency'                          => array('value'    => 45,
+                                                                         'currency' => array('id' => $baseCurrency->id)),
                             'date'                              => $date,
                             'datetime'                          => $datetime,
                             'decimal'                           => '123',
-                            'picklist'                          => array('value'=>'a'),
+                            'picklist'                          => array('value' => 'a'),
                             'integer'                           => '12',
                             'phone'                             => '259-784-2169',
-                            'radio'                             => array('value'=>'d'),
+                            'radio'                             => array('value' => 'd'),
                             'text'                              => 'This is a test Text',
                             'textarea'                          => 'This is a test TextArea',
                             'url'                               => 'http://wwww.abc.com')));
@@ -351,7 +351,7 @@
                                                 'ownedItemsOnly'    => '1',
                                                 'account'           => array('id' => $accountId),
                                                 'amount'            => array('value' => '298000',
-                                                                             'currency'=> array(
+                                                                             'currency' => array(
                                                                              'id' => $baseCurrency->id)),
                                                 'closeDate__Date'   => array('value' => 'Today'),
                                                 'stage'             => array('value' => 'Prospecting'),
@@ -368,7 +368,7 @@
                                                 'picklist'          => array('value'  =>  'a'),
                                                 'radio'             => array('value'  =>  'd'),
                                                 'date__Date'        => array('type'   =>  'Today'),
-                                                'datetime__DateTime'=> array('type'   =>  'Today')),
+                                                'datetime__DateTime' => array('type'   =>  'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
@@ -415,15 +415,15 @@
                             'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                             'checkbox'                          => '0',
                             'currency'                          => array('value'   => 40,
-                                                                         'currency'=> array(
+                                                                         'currency' => array(
                                                                          'id' => $baseCurrency->id)),
                             'decimal'                           => '12',
                             'date'                              => $date,
                             'datetime'                          => $datetime,
-                            'picklist'                          => array('value'=>'b'),
+                            'picklist'                          => array('value' => 'b'),
                             'integer'                           => '11',
                             'phone'                             => '259-784-2069',
-                            'radio'                             => array('value'=>'e'),
+                            'radio'                             => array('value' => 'e'),
                             'text'                              => 'This is a test Edit Text',
                             'textarea'                          => 'This is a test Edit TextArea',
                             'url'                               => 'http://wwww.abc-edit.com')));
@@ -471,8 +471,8 @@
          * This function returns the necessary get parameters for the opportunity search form
          * based on the opportunity edited data.
          */
-        public function fetchOpportunitiesSearchFormGetData($accountId, $superUserId, $currencyID) {
-
+        public function fetchOpportunitiesSearchFormGetData($accountId, $superUserId, $currencyID)
+        {
             return array(
                             'name'              =>  'myEditOpportunity',
                             'owner'             =>  array('id' => $superUserId),
@@ -495,7 +495,7 @@
                             'picklist'          =>  array('value'  =>  'b'),
                             'radio'             =>  array('value'  =>  'e'),
                             'date__Date'        =>  array('type'   =>  'Today'),
-                            'datetime__DateTime'=>  array('type'   =>  'Today'));
+                            'datetime__DateTime' =>  array('type'   =>  'Today'));
         }
 
         /**

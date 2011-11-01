@@ -36,7 +36,7 @@
         'A full name value is required but missing.'
             => 'El campo de nombre completo es necesario.',
         'Access Import Tool'
-            => '??',
+            => 'acceso a herramienta de importación',
         'Add Field'
             => 'Agregar campo',
         'All required fields must be mapped or added: {attributesLabelContent}'
@@ -53,6 +53,8 @@
             => 'No asigne este campo',
         'Email was too long.'
             => 'Email era demaciado largo.',
+        'Ending import.'
+            => 'Finalizando la importación.',
         'Error: Invalid delimiter'
             => 'Error: Delimitador inválido',
         'Error: Invalid qualifier'
@@ -76,9 +78,9 @@
         'Import'
             => 'Importar',
         'Import complete.  Rows processed: {rowsProcessed}'
-            => '??',
+            => 'Importación se ha terminado. Filas procesadas: {rowsProcessed}',
         'Import data into Zurmo'
-            => '??',
+            => 'Importar datos en Zurmo',
         'Import file has no rows to use.'
             => 'El archivo no contiene datos.',
         'Import model failed to save.'
@@ -98,7 +100,7 @@
         'Importing data...'
             => 'Importando datos...',
         'Information about the rows with errors'
-            => '??',
+            => 'Información sobre las filas con errores',
         'Invalid check box format.'
             => 'Formato de check box inválido.',
         'Invalid date format.'
@@ -120,7 +122,7 @@
         'Mapping Data'
             => 'Asignando datos',
         'Messages'
-            => '??',
+            => 'Mensajes',
         'Model Permissions'
             => 'Modelo de autorizacón',
         'Module To Import To'
@@ -128,7 +130,7 @@
         'Next'
             => 'Próximo',
         'Other Id'
-            => '??',
+            => 'Otra ID',
         'Pick list is missing corresponding custom field data.'
             => 'falta la lista desplegable de datos del campo personalizado.',
         'Pick list value required, but missing.'
@@ -158,21 +160,27 @@
         'Required Fields'
             => 'Campos obligatorios',
         'Row Id'
-            => '??',
+            => 'ID de fila',
         'Rows processed: {rowsProcessed}'
-            => '??',
+            => 'Filas procesadas: {rowsProcessed}',
         'Rows with errors: {errors}'
             => 'Filas con errores: {errors}',
         'Rules'
             => 'Normas',
         'Sample Row'
             => 'Ejemplo de fila',
+        'Script will run at most for {seconds} seconds.'
+            => 'La duración máxima del script es {seconds} segundos',
+        'Starting import for process: {processName}'
+            => 'Comenzando el proceso de importación: {processName}',
+        'Starting import. Looking for processes.'
+            => 'Comenzando la importación. Buscando procesos.',
         'The file that has been uploaded only has a header row and no additional rows to import.'
             => 'El archivo que se ha subido sólo tiene una fila de cabecera y no hay filas adicionales para importar.',
         'The file that was uploaded was not a csv.'
             => 'El archivo que se ha subido no era un csv.',
         'The following field is mapped more than once. {message}'
-            => '??',
+            => 'El siguiente campo está asignado más de una vez. {message}',
         'The full name must contain a last name, which is required.'
             => 'El nombre completo debe tener un apellido, como es requerido.',
         'The id specified did not match any existing records.'
@@ -194,7 +202,7 @@
         'URL was too long.'
             => 'URL era demaciado larga.',
         'Value is too short.'
-            => '??',
+            => 'Valor es demasiado corto.',
         'Who can read and write the new {importRulesLabel}'
             => 'Quién está autorizado a leer y escribir el nuevo {importRulesLabel}',
         'You can only map each field once.'
@@ -206,9 +214,9 @@
         'Zurmo Field'
             => 'Campo Zurmo',
         'Zurmo Id'
-            => '??',
+            => 'ID Zurmo',
         'Zurmo Username'
-            => '??',
+            => 'Usuario Zurmo',
         '{firstDate} or {secondDate}'
             => '{firstDate} o {secondDate}',
         '{modelLabel} id specified did not match any existing records.'

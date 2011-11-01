@@ -30,7 +30,6 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
-
         }
 
         public function testCreateSourceValues()

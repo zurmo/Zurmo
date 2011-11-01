@@ -46,11 +46,11 @@
         '3D Vertical Bar Graph'
             => 'Histograma 3D',
         '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
-            => '??',
+            => '<b>Zurmo</b> es un systema de <b>Customer Relationship Management</b> de <b>Zurmo Inc.</b>',
         '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
-            => '??',
+            => '<b> Zurmo </ b> está licenciado bajo la licencia GPLv3. Usted puede leer la licencia href="http://www.zurmo.org/license"> <a aquí </ a>',
         '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
-            => '??',
+            => '<b> Zurmo </ b> utiliza las siguientes herramientas de Open Source y frameworks:',
         'About'
             => 'Sobre',
         'Access Administration Tab'
@@ -74,7 +74,7 @@
         'Ad-hoc / Owner'
             => 'Ad-hoc / Propietario',
         'Add Currency'
-            => '??',
+            => 'Añadir divisa',
         'Address'
             => 'Dirección',
         'Admin'
@@ -118,11 +118,11 @@
         'Audit Trail'
             => 'Log de modificaciones',
         'Automotive'
-            => '??',
+            => 'Automóvil',
         'Banking'
-            => '??',
+            => 'Bancario',
         'Business Services'
-            => '??',
+            => 'Servicios de negocios',
         'Cancel'
             => 'Cancelar',
         'Changes to active currencies changed successfully.'
@@ -134,7 +134,7 @@
         'City'
             => 'Ciudad',
         'Close'
-            => '??',
+            => 'Cerrar',
         'Code'
             => 'Código',
         'Configuration'
@@ -168,7 +168,7 @@
         'Currency Value'
             => 'Valor de divisa',
         'Customer'
-            => '??',
+            => 'Cliente',
         'Dashboard portlet list page size'
             => 'Cantidad de elementos que figuran en el portlet',
         'Data'
@@ -176,7 +176,7 @@
         'days'
             => 'Días',
         'Dead'
-            => '??',
+            => 'Muerto',
         'Delete Group'
             => 'Eliminar grupo',
         'Delete Groups'
@@ -192,13 +192,13 @@
         'Description'
             => 'Descripción',
         'Dr.'
-            => '??',
+            => 'Dr.',
         'Email Address'
             => 'Dirección de email',
         'Energy'
-            => '??',
+            => 'Energía',
         'Event Name'
-            => '??',
+            => 'Nombre de evento',
         'every'
             => 'cada',
         'Everyone'
@@ -216,7 +216,7 @@
         'Filtered Lists'
             => 'Listas filtradas',
         'Financial Services'
-            => '??',
+            => 'Servicios Financieros',
         'First Name'
             => 'Primer nombre',
         'Global Configuration'
@@ -240,9 +240,9 @@
         'Home'
             => 'Inicio',
         'In Progress'
-            => '??',
+            => 'En progreso',
         'Inbound Call'
-            => '??',
+            => 'Llamada entrante',
         'Incorrect username or password.'
             => 'Nombre de usuario o contraseña incorrecta.',
         'Industry'
@@ -262,7 +262,7 @@
         'Inherited Value:'
             => 'Valor heredado:',
         'Insurance'
-            => '??',
+            => 'Seguros',
         'Invalid currency code'
             => 'Código de divisa inválido',
         'Is Invalid'
@@ -278,7 +278,7 @@
         'Language'
             => 'Lengua',
         'Languages'
-            => '??',
+            => 'Idiomas',
         'Languages: List'
             => 'Idiomas: Lista',
         'Last Name'
@@ -286,7 +286,7 @@
         'Last Updated'
             => 'Última actualización',
         'List Filters'
-            => '??',
+            => 'Filtros de lista',
         'List page size'
             => 'Número de elementos en la vista de lista',
         'List View'
@@ -298,7 +298,7 @@
         'Logout'
             => 'Salir',
         'Manage Active Languages'
-            => '??',
+            => 'Administrar idiomas activos',
         'Manage Currency Configuration'
             => 'Administrar la configuración de divisas',
         'Manage Global Configuration'
@@ -308,7 +308,7 @@
         'Manage Roles'
             => 'Administrar roles',
         'Manufacturing'
-            => '??',
+            => 'Manufactura',
         'Member'
             => 'Miembro',
         'Member Of'
@@ -334,17 +334,17 @@
         'Module Permissions Saved Successfully.'
             => 'Permisos de módulo guardado correctamente.',
         'Mr.'
-            => '??',
+            => 'Sr.',
         'Mrs.'
-            => '??',
+            => 'Sra.',
         'Ms.'
-            => '??',
+            => 'Srta.',
         'My List Configuration View'
             => 'Mi vista de lista configuración',
         'Never'
             => 'Nunca',
         'New'
-            => '??',
+            => 'Nuevo',
         'No Results Found'
             => 'No se encontraron resultados',
         'Non Members'
@@ -394,23 +394,23 @@
         'Primary Email'
             => 'Email principal',
         'Qualified'
-            => '??',
+            => 'Calificado',
         'Rate to'
             => 'Tipo de cambio a',
         'Rate To Base'
             => 'Tipo de cambio base',
         'Read'
-            => '??',
+            => 'Leer',
         'Read permissions rebuild complete.'
             => 'Reconstrucción de permisis lectura completo.',
         'Recently Viewed'
             => 'Visto recientemente',
         'Recycled'
-            => '??',
+            => 'Reciclado',
         'Remember me next time'
             => 'Recordarme la próxima vez',
         'Retail'
-            => '??',
+            => 'Negocio al por menor',
         'Return to Admin Menu'
             => 'Volver al menú de administración',
         'Rights'
@@ -422,9 +422,9 @@
         'Roles'
             => 'Roles',
         'Salutation'
-            => '??',
+            => 'Saludo',
         'Save Changes'
-            => '??',
+            => 'Guardar cambios',
         'Search'
             => 'Buscar',
         'Search by name, phone, or e-mail'
@@ -444,7 +444,7 @@
         'Select a Role'
             => 'Seleccione un role',
         'Self-Generated'
-            => '??',
+            => 'Autogenerado',
         'Shipping Address'
             => 'Dirección de envío',
         'Size'
@@ -458,11 +458,11 @@
         'Stage'
             => 'Etapa',
         'Standard Fields'
-            => '??',
+            => 'Campos standards',
         'State'
             => 'Estado',
         'Status'
-            => '??',
+            => 'Estatus',
         'Street 1'
             => 'Calle 1',
         'Street 2'
@@ -474,7 +474,7 @@
         'Super Administrators'
             => 'Superadministradores',
         'Technology'
-            => '??',
+            => 'Tecnología',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => 'El servicio web para los tipos de cambio indica que este código de divisa no es válida, aunque zurmo indica que es válida. El tipo de cambio no puede ser actualizado automáticamente',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
@@ -482,7 +482,7 @@
         'The currency was not removed because it is in use.'
             => 'La moneda no se ha eliminado porque está en uso.',
         'The status specified is invalid.'
-            => '??',
+            => 'El estatus especificado no es válido.',
         'There are no recently viewed items.'
             => 'No hay elementons recientemente vistos',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
@@ -490,7 +490,7 @@
         'This action is only available in debug mode.'
             => 'Esta acción sólo está disponible en modo debug.',
         'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
-            => '??',
+            => 'Está utilizando el <b>version {zurmoVersion}</b> de <b>Zurmo</b>.',
         'This name is reserved. Please pick a different name.'
             => 'Este nombre está reservado. Por favor, elija un nombre distinto.',
         'Time zone'
@@ -500,11 +500,11 @@
         'to continue to the home page. If the error persists please contact your administrator.'
             => 'para continuar a la página de inicio. Si el error persiste, por favor comuníquese con el administrador.',
         'Tradeshow'
-            => '??',
+            => 'Feria comercial',
         'Type a currency code or name to search.'
             => 'Escriba un código de divisa o nombre para buscar',
         'Update'
-            => '??',
+            => 'Actualizar',
         'User Membership'
             => 'Miembros del grupo',
         'User Membership Saved Successfully.'
@@ -514,9 +514,9 @@
         'Value'
             => 'Valor',
         'Visit <b>Zurmo Inc.</b> at {url}.'
-            => '??',
+            => 'Visitar <b>Zurmo Inc.</b> en {url}',
         'Visit the <b>Zurmo Open Source Project</b> at {url}.'
-            => '??',
+            => 'Visitar el <b>Proyecto Zurmo Open Source</b> en {url}.',
         'Website'
             => 'Sitio web',
         'Welcome'
@@ -526,9 +526,9 @@
         'Who can read and write'
             => 'Permiso de lectura / escritura',
         'Word of Mouth'
-            => '??',
+            => 'Boca en boca',
         'Write'
-            => '??',
+            => 'Escribir',
         'You have tried to access a page you do not have access to.'
             => 'Ha intentado acceder a una página que no tienen acceso.',
         'You must have at least one active currency.'
@@ -542,8 +542,8 @@
         'ZurmoCRM'
             => 'ZurmoCRM',
         '{url} (installed with Yii)'
-            => '??',
+            => '{url} (instalado con Yii)',
         '{url} (version {version} is installed)'
-            => '??',
+            => '{url} (version {version} es instalado)',
     );
 ?>

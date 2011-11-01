@@ -35,8 +35,6 @@
             => '??',
         'AccountsModuleSingularLabel Required'
             => '??',
-        'Complete Conversion'
-            => '??',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => '??',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
@@ -59,10 +57,10 @@
             => '??',
         'LeadsModulePluralLabel'
             => 'LeadsModulePluralLabel',
-        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records,' .
-        ' just in a different status. To create a LeadsModuleSingularLowerCaseLabel' .
-        ' field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
-        ' will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
+        'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
+        'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
+        'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
+        'will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => '??',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',

@@ -62,9 +62,9 @@
             assert('is_string($language)');
             assert('$customLabels == null || is_array($customLabels)');
             $labels = array();
-            foreach($data as $order => $dataName)
+            foreach ($data as $order => $dataName)
             {
-                if(isset($customLabels[$language]) &&
+                if (isset($customLabels[$language]) &&
                    isset($customLabels[$language][$order]) &&
                    $customLabels[$language][$order] != null)
                 {

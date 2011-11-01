@@ -211,7 +211,7 @@
             $this->assertTrue($parentRole->save());
 
             //create account owned by super
-            $account2 = AccountTestHelper::createAccountByNameForOwner('AccountsParentRolePermission',$super);
+            $account2 = AccountTestHelper::createAccountByNameForOwner('AccountsParentRolePermission', $super);
 
             //Test userInParentRole, access to details and edit should fail.
             Yii::app()->user->userModel = $userInParentRole;

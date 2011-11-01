@@ -79,7 +79,7 @@
                 }
                 elseif ($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER)
                 {
-                    if($value["firstDate"] == null)
+                    if ($value["firstDate"] == null)
                     {
                         return null;
                     }
