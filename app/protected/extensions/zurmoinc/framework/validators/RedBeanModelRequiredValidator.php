@@ -80,7 +80,7 @@
                         }
                         else
                         {
-                            $message = Yii::t('yii', '{attribute} cannot be blank and must validate.');
+                            $message = Yii::t('yii', '{attribute} cannot be blank.');
                         }
                         $this->addError($model, $attributeName, $message);
                     }
@@ -94,7 +94,7 @@
                     }
                     else
                     {
-                        $message = Yii::t('yii', '{attribute} cannot be blank and must validate.');
+                        $message = Yii::t('yii', '{attribute} cannot be blank.');
                     }
                     $this->addError($model, $attributeName, $message);
                 }
