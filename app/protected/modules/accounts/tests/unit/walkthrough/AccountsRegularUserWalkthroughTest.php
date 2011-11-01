@@ -599,9 +599,9 @@
             $this->assertEquals ('7799',         $account1->name);
             $this->assertEquals ('7799',         $account2->name);
             $this->assertEquals ('cannotUpdate', $account3->name);
-            $this->assertEquals ("".$super,     "".$account2->owner);
-            $this->assertEquals ("".$super,     "".$account2->owner);
-            $this->assertEquals ("".$billy,     "".$account3->owner);
+            $this->assertEquals ($super->__toString(), $account2->owner->__toString());
+            $this->assertEquals ($super->__toString(), $account2->owner->__toString());
+            $this->assertEquals ($billy->__toString(), $account3->owner->__toString());
         }
     }
 ?>
