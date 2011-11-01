@@ -364,12 +364,12 @@
         }
 
         public static function getDatabaseDefaultCollation($databaseType,
-                                                              $databaseHostname,
-                                                              $databaseName,
-                                                              $databaseUsername,
-                                                              $databasePassword,
-                                                              $notAllowedDatabaseCollations,
-                                                              /* out */ & $databaseDefaultCollation)
+                                                           $databaseHostname,
+                                                           $databaseName,
+                                                           $databaseUsername,
+                                                           $databasePassword,
+                                                           $notAllowedDatabaseCollations,
+                                                           /* out */ & $databaseDefaultCollation)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             assert('is_array($notAllowedDatabaseCollations)');

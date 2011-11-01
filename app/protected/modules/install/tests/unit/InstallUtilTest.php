@@ -251,8 +251,39 @@
                                                                                $this->hostname,
                                                                                $this->rootUsername,
                                                                                $this->rootPassword,
-                                                                               1,
+                                                                               $minimumRequireBytes,
                                                                                $actualBytes));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testGetDatabaseMaxSpRecursionDepth()
+        {
+            $minimumRequiredMaxSpRecursionDepth = 20;
+            $maxSpRecursionDepth                = null;
+            $this->assertNotNull(InstallUtil::getDatabaseMaxSpRecursionDepth('mysql',
+                                                                             $this->hostname,
+                                                                             $this->rootUsername,
+                                                                             $this->rootPassword,
+                                                                             $minimumRequiredMaxSpRecursionDepth,
+                                                                             $maxSpRecursionDepth));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function getDatabaseDefaultCollation()
+        {
+            $notAllowedDatabaseCollations = array('utf8_general_ci');
+            $databaseDefaultCollation     = null;
+            $this->assertNotNull(InstallUtil::getDatabaseDefaultCollation('mysql',
+                                                                          $this->hostname,
+                                                                          $this->temporaryDatabaseName,
+                                                                          $this->rootUsername,
+                                                                          $this->rootPassword,
+                                                                          $notAllowedDatabaseCollations,
+                                                                          $databaseDefaultCollation));
         }
 
         /**
