@@ -28,8 +28,7 @@
      * This validator can be used by both a User model as well as a CFormModel like in User import for example.
      * This validator validates to see if a valid time zone is entered by validating it with DateTimeZone class.
      * See the yii documentation.
-     */
-     
+     */     
     class validateTimeZone extends CValidator
     {
         /**
@@ -41,12 +40,12 @@
             {
                 try
                 {
-                    if(new DateTimeZone($model->$attributeName) === false)
+                    if (new DateTimeZone($model->$attributeName) === false)
                     {
                         $model->addError($attributeName, Yii::t('Default', 'The time zone is invalid.'));
                     }
                 }
-                catch(Exception $e)
+                catch (Exception $e)
                 {
                     //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
                     $model->$attributeName == 'UTC';
