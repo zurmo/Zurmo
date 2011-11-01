@@ -93,3 +93,34 @@ Selenium.prototype.replaceVariables = function(str) {
     }
     return stringResult;
 };
+
+/*
+ * The below prototype combines the focus, select and click commands of selinium
+ * so as to support different browser.
+ */
+Selenium.prototype.doFocusSelectAndClick = function(selectLocator, optionLocator) {
+
+    //Focus on a Combox element.
+    this.doFocus(selectLocator);
+
+    //Select an option from a Combobox element.
+    this.doSelect(selectLocator, optionLocator);
+
+    //Click the Combobox element.
+    this.doClick(selectLocator);
+};
+
+/*
+ * The below prototype combines the type and typeKeys commands of selinium
+ * so as to support different browser.
+ */
+Selenium.prototype.doTypeAndTypeKeys = function(locator, value) {
+
+    var typeValue = (navigator.appName == "Microsoft Internet Explorer" || navigator.userAgent.toLowerCase().indexOf('chrome') > -1) ? value: "";
+
+    //Type a particulat value in the element.
+    this.doType(locator, typeValue);
+
+    //Type a particulat value in the element, so as to support the auto-complete functionality.
+    this.doTypeKeys(locator, value);
+};
