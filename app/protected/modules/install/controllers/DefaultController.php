@@ -89,7 +89,8 @@
         {
             $serviceCheckResultsDataForDisplay = CheckServicesUtil::checkServicesAndGetResultsDataForDisplay(true, $form);
 
-            if (count($serviceCheckResultsDataForDisplay[CheckServicesUtil::CHECK_FAILED][ServiceHelper::REQUIRED_SERVICE]))
+            if (count($serviceCheckResultsDataForDisplay[CheckServicesUtil::CHECK_FAILED][ServiceHelper::REQUIRED_SERVICE]) &&
+                !defined('IS_TEST'))
             {
                 $checkServicesView = new InstallAdditionalCheckServicesView($this->getId(), $this->getModule()->getId(),
                                                                            $serviceCheckResultsDataForDisplay);
