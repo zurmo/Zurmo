@@ -397,7 +397,7 @@
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('QualifiedA');
-            $contactStateID = $contactState[0]->id;
+            $contactStateId = $contactState[0]->id;
 
             //Create a new contact based on the custom fields.
             $this->resetGetArray();
@@ -405,7 +405,7 @@
                                 'title'                             =>  array('value' => 'Mr.'),
                                 'firstName'                         =>  'Sarah',
                                 'lastName'                          =>  'Williams',
-                                'state'                             =>  array('id' => $contactStateID),
+                                'state'                             =>  array('id' => $contactStateId),
                                 'jobTitle'                          =>  'Sales Director',
                                 'account'                           =>  array('id' => $accountId),
                                 'department'                        =>  'Sales',
@@ -462,7 +462,7 @@
             $this->assertEquals($contact->title->value                   , 'Mr.');
             $this->assertEquals($contact->firstName                      , 'Sarah');
             $this->assertEquals($contact->lastName                       , 'Williams');
-            $this->assertEquals($contact->state->id                      , $contactStateID);
+            $this->assertEquals($contact->state->id                      , $contactStateId);
             $this->assertEquals($contact->jobTitle                       , 'Sales Director');
             $this->assertEquals($contact->account->id                    , $accountId);
             $this->assertEquals($contact->department                     , 'Sales');
@@ -520,7 +520,7 @@
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('QualifiedA');
-            $contactStateID = $contactState[0]->id;
+            $contactStateId = $contactState[0]->id;
 
             //Search a created contact using the customfields.
             $this->resetPostArray();
@@ -536,7 +536,7 @@
                                         'anyStreet'         => '26217 West Third Lane',
                                         'anyCity'           => 'New York',
                                         'anyState'          => 'NY',
-                                        'state'             => array('id' => $contactStateID),
+                                        'state'             => array('id' => $contactStateId),
                                         'owner'             => array('id' => $superUserId),
                                         'firstName'         => 'Sarah',
                                         'lastName'          => 'Williams',
@@ -556,7 +556,7 @@
                                         'picklist'          => array('value'  =>  'a'),
                                         'radio'             => array('value'  =>  'd'),
                                         'date__Date'        => array('type'   =>  'Today'),
-                                        'datetime__DateTime' => array('type'   =>  'Today')),
+                                        'datetime__DateTime'=> array('type'   =>  'Today')),
                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
@@ -590,7 +590,7 @@
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('RecycledC');
-            $contactStateID = $contactState[0]->id;
+            $contactStateId = $contactState[0]->id;
 
             //Edit and save the contact.
             $this->setGetArray(array('id' => $contactId));
@@ -604,7 +604,7 @@
                             'source'                            =>  array('value' => 'Inbound Call'),
                             'mobilePhone'                       =>  '285-300-8232',
                             'officeFax'                         =>  '255-454-1914',
-                            'state'                             =>  array('id' => $contactStateID),
+                            'state'                             =>  array('id' => $contactStateId),
                             'owner'                             =>  array('id' => $superUserId),
                             'account'                           =>  array('id' => $accountId),
                             'primaryEmail'                      =>  array('emailAddress' => 'info@myNewContact.com',
@@ -655,7 +655,7 @@
             $this->assertEquals($contact->title->value                   , 'Mrs.');
             $this->assertEquals($contact->firstName                      , 'Sarah');
             $this->assertEquals($contact->lastName                       , 'Williams Edit');
-            $this->assertEquals($contact->state->id                      , $contactStateID);
+            $this->assertEquals($contact->state->id                      , $contactStateId);
             $this->assertEquals($contact->jobTitle                       , 'Sales Director Edit');
             $this->assertEquals($contact->department                     , 'Sales Edit');
             $this->assertEquals($contact->officePhone                    , '739-742-3005');
@@ -711,13 +711,15 @@
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('RecycledC');
-            $contactStateID = $contactState[0]->id;
+            $contactStateId = $contactState[0]->id;
 
             //Search a created contact using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('ContactsSearchForm' => $this->fetchContactsSearchFormGetData($contactStateID,
-                                                                    $superUserId, $accountId),
-                                     'ajax'               => 'list-view'));
+            $this->setGetArray(array(
+                    'ContactsSearchForm' => ContactsDesignerWalkthroughHelperUtil::fetchContactsSearchFormGetData(
+                                                                         $contactStateId, $superUserId, $accountId),
+                    'ajax'               => 'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
             //Check if the contact name exits after the search is performed on the basis of the
@@ -762,55 +764,16 @@
 
             //Search a created contact using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('ContactsSearchForm' => $this->fetchContactsSearchFormGetData($contactStateId,
-                                                                    $superUserId, $accountId),
-                                     'ajax'               => 'list-view'));
+            $this->setGetArray(array(
+                    'ContactsSearchForm' => ContactsDesignerWalkthroughHelperUtil::fetchContactsSearchFormGetData(
+                                                                         $contactStateId, $superUserId, $accountId),
+                    'ajax'               => 'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
             //Assert that the edit contact does not exits after the search.
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
-        }
-
-        /**
-         * This function returns the necessary get parameters for the contact search form
-         * based on the contact edited data.
-         */
-        public function fetchContactsSearchFormGetData($contactStateId, $superUserId, $accountId)
-        {
-            return  array(
-                            'fullName'          => 'Sarah Williams Edit',
-                            'officePhone'       => '739-742-3005',
-                            'anyPostalCode'     => '95131',
-                            'anyCountry'        => 'USA',
-                            'anyInvalidEmail'   => array('value' => '0'),
-                            'anyEmail'          => 'info@myNewContactEdit.com',
-                            'anyOptOutEmail'    => array('value' => '0'),
-                            'ownedItemsOnly'    => '1',
-                            'anyStreet'         => '26378 South Arlington Ave',
-                            'anyCity'           => 'San Jose',
-                            'anyState'          => 'CA',
-                            'state'             => array('id' => $contactStateId),
-                            'owner'             => array('id' => $superUserId),
-                            'firstName'         => 'Sarah',
-                            'lastName'          => 'Williams Edit',
-                            'jobTitle'          => 'Sales Director Edit',
-                            'officeFax'         => '255-454-1914',
-                            'title'             => array('value' => 'Mrs.'),
-                            'source'            => array('value' => 'Inbound Call'),
-                            'account'           => array('id' => $accountId),
-                            'decimal'           =>  '12',
-                            'integer'           =>  '11',
-                            'phone'             =>  '259-784-2069',
-                            'text'              =>  'This is a test Edit Text',
-                            'textarea'          =>  'This is a test Edit TextArea',
-                            'url'               =>  'http://wwww.abc-edit.com',
-                            'checkbox'          =>  array('value'  =>  '0'),
-                            'currency'          =>  array('value'  =>  40),
-                            'picklist'          =>  array('value'  =>  'b'),
-                            'radio'             =>  array('value'  =>  'e'),
-                            'date__Date'        =>  array('type'   =>  'Today'),
-                            'datetime__DateTime' =>  array('type'   =>  'Today'));
         }
     }
 ?>

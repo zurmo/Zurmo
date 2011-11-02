@@ -368,7 +368,7 @@
                                                 'picklist'          => array('value'  =>  'a'),
                                                 'radio'             => array('value'  =>  'd'),
                                                 'date__Date'        => array('type'   =>  'Today'),
-                                                'datetime__DateTime' => array('type'   =>  'Today')),
+                                                'datetime__DateTime'=> array('type'   =>  'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
@@ -468,37 +468,6 @@
         }
 
         /**
-         * This function returns the necessary get parameters for the opportunity search form
-         * based on the opportunity edited data.
-         */
-        public function fetchOpportunitiesSearchFormGetData($accountId, $superUserId, $currencyID)
-        {
-            return array(
-                            'name'              =>  'myEditOpportunity',
-                            'owner'             =>  array('id' => $superUserId),
-                            'ownedItemsOnly'    =>  '1',
-                            'account'           =>  array('id' => $accountId),
-                            'amount'            =>  array('value'    => 288000,
-                                                          'currency' => array('id' => $currencyID)),
-                            'closeDate__Date'   =>  array('value' => 'Today'),
-                            'stage'             =>  array('value' => 'Qualification'),
-                            'source'            =>  array('value' => 'Inbound Call'),
-                            'probability'       =>  '2',
-                            'decimal'           =>  '12',
-                            'integer'           =>  '11',
-                            'phone'             =>  '259-784-2069',
-                            'text'              =>  'This is a test Edit Text',
-                            'textarea'          =>  'This is a test Edit TextArea',
-                            'url'               =>  'http://wwww.abc-edit.com',
-                            'checkbox'          =>  array('value'  =>  '0'),
-                            'currency'          =>  array('value'  =>  40),
-                            'picklist'          =>  array('value'  =>  'b'),
-                            'radio'             =>  array('value'  =>  'e'),
-                            'date__Date'        =>  array('type'   =>  'Today'),
-                            'datetime__DateTime' =>  array('type'   =>  'Today'));
-        }
-
-        /**
          * @depends testEditOfTheOpportunityForTheCustomFieldsPlacedForOpportunitiesModule
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForOpportunitiesModuleAfterEditingTheOpportunity()
@@ -512,9 +481,12 @@
 
             //Search a created Opportunity using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('OpportunitiesSearchForm' => $this->fetchOpportunitiesSearchFormGetData($accountId,
-                                                                            $superUserId, $baseCurrency->id),
-                                     'ajax'                    =>  'list-view'));
+            $this->setGetArray(array(
+                        'OpportunitiesSearchForm' => 
+                            OpportunitiesDesignerWalkthroughHelperUtil::fetchOpportunitiesSearchFormGetData($accountId,
+                                                                                      $superUserId, $baseCurrency->id),
+                        'ajax'                    =>  'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
             //Assert that the edit Opportunity exits after the edit and is diaplayed on the search page.
@@ -555,9 +527,12 @@
 
             //Search a created Opportunity using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('OpportunitiesSearchForm' => $this->fetchOpportunitiesSearchFormGetData($accountId,
-                                                                            $superUserId, $baseCurrency->id),
-                                     'ajax'                    =>  'list-view'));
+            $this->setGetArray(array(
+                        'OpportunitiesSearchForm' => 
+                            OpportunitiesDesignerWalkthroughHelperUtil::fetchOpportunitiesSearchFormGetData($accountId,
+                                                                                      $superUserId, $baseCurrency->id),
+                        'ajax'                    =>  'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
             //Assert that the edit Opportunity does not exits after the search.

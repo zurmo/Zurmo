@@ -141,7 +141,7 @@ Selenium.prototype.doTypeAndTypeKeys = function(locator, value)
  */
 Selenium.prototype.doCompareText = function(locator, value)
 {
-    //Fetch the locator value and also filter the content based on the regex Object.    
+    //Fetch the locator value and also filter the content based on the regex Object.
     var regex = (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) ? new RegExp("\\n", 'gi') : "\\n/gi";
     var locatorValue = this.getText(locator).replace(regex,"");
 
