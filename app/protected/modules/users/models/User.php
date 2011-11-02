@@ -576,24 +576,5 @@
         {
             return true;
         }
-
-        public function validateTimeZone($attribute, $params)
-        {
-            if ($this->$attribute != null)
-            {
-                try
-                {
-                    if (new DateTimeZone($this->$attribute) === false)
-                    {
-                        $this->addError('timeZone', Yii::t('Default', 'The time zone is invalid.'));
-                    }
-                }
-                catch (Exception $e)
-                {
-                    //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
-                    $this->$attribute == 'UTC';
-                }
-            }
-        }
     }
 ?>
