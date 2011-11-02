@@ -540,45 +540,7 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
-        }
-
-        /**
-         * This function returns the necessary get parameters for the account search form
-         * based on the account edited data.
-         */
-        public function fetchAccountsSearchFormGetData()
-        {
-            return array(
-                            'name'                  =>  'myEditAccount',
-                            'officePhone'           =>  '259-734-2169',
-                            'type'                  =>   array('value'  =>  'Customer'),
-                            'officeFax'             =>  '299-825-7863',
-                            'employees'             =>  '630',
-                            'website'               =>  'http://www.UnnamedEdit.com',
-                            'annualRevenue'         =>  '472000000',
-                            'anyCity'               =>  'San Jose',
-                            'anyState'              =>  'CA',
-                            'anyStreet'             =>  '26378 South Arlington Ave',
-                            'anyPostalCode'         =>  '95131',
-                            'anyCountry'            =>  'USA',
-                            'anyEmail'              =>  'info@myEditAccount.com',
-                            'anyOptOutEmail'        =>  array('value' => null),
-                            'anyInvalidEmail'       =>  array('value' => ''),
-                            'ownedItemsOnly'        =>  '1',
-                            'industry'              =>  array('value' => 'Energy'),
-                            'decimal'               =>  '12',
-                            'integer'               =>  '11',
-                            'phone'                 =>  '259-784-2069',
-                            'text'                  =>  'This is a test Edit Text',
-                            'textarea'              =>  'This is a test Edit TextArea',
-                            'url'                   =>  'http://wwww.abc-edit.com',
-                            'checkbox'              =>  array('value'  =>  '0'),
-                            'currency'              =>  array('value'  =>  40),
-                            'picklist'              =>  array('value'  =>  'b'),
-                            'radio'                 =>  array('value'  =>  'e'),
-                            'date__Date'            =>  array('type'   =>  'Today'),
-                            'datetime__DateTime'    =>  array('type'   =>  'Today'));
-        }
+        }        
 
         /**
          * @depends testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule
@@ -589,8 +551,10 @@
 
             //Search a created account using the customfield.
             $this->resetPostArray();
-            $this->setGetArray(array('AccountsSearchForm' => $this->fetchAccountsSearchFormGetData(),
-                                     'ajax'               =>  'list-view'));
+            $this->setGetArray(array(
+                        'AccountsSearchForm' => AccountsDesignerWalkthroughHelperUtil::fetchAccountsSearchFormGetData(),
+                        'ajax'               => 'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
             //Assert that the edit account exits after the edit and is diaplayed on the search page.
@@ -626,8 +590,10 @@
 
             //Search a created account using the customfield.
             $this->resetGetArray();
-            $this->setGetArray(array('AccountsSearchForm' => $this->fetchAccountsSearchFormGetData(),
-                                     'ajax'               =>  'list-view'));
+            $this->setGetArray(array(
+                        'AccountsSearchForm' => AccountsDesignerWalkthroughHelperUtil::fetchAccountsSearchFormGetData(),
+                        'ajax'               => 'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
             //Assert that the edit account does not exits after the search.

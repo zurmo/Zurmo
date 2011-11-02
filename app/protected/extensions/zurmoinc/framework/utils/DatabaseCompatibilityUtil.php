@@ -271,7 +271,7 @@
          * Get database max alowed packet size.
          * @throws NotSupportedException
          */
-        public static function getDatabaseMaxAllowedPacketsSize()
+        public static function getDatabaseMaxAllowedPacketsSizeRb()
         {
             if (RedBeanDatabase::getDatabaseType() != 'mysql')
             {
@@ -299,7 +299,7 @@
          * @throws NotSupportedException
          * @return int|string error
          */
-        public static function getDatabaseMaxAllowedPacketsSizeRaw($databaseType,
+        public static function getDatabaseMaxAllowedPacketsSize($databaseType,
                                                                    $databaseHostname,
                                                                    $databaseUsername,
                                                                    $databasePassword)
@@ -335,10 +335,10 @@
          * @param string $databasePassword
          * @throws NotSupportedException
          */
-        public static function getDatabaseMaxSpRecursionDepthRaw($databaseType,
-                                                                 $databaseHostname,
-                                                                 $databaseUsername,
-                                                                 $databasePassword)
+        public static function getDatabaseMaxSpRecursionDepth($databaseType,
+                                                              $databaseHostname,
+                                                              $databaseUsername,
+                                                              $databasePassword)
         {
             if ($databaseType != 'mysql')
             {
@@ -372,11 +372,11 @@
          * @throws NotSupportedException
          * @return string|boolean
          */
-        public static function getDatabaseDefaultCollationRaw($databaseType,
-                                                              $databaseHostname,
-                                                              $databaseName,
-                                                              $databaseUsername,
-                                                              $databasePassword)
+        public static function getDatabaseDefaultCollation($databaseType,
+                                                           $databaseHostname,
+                                                           $databaseName,
+                                                           $databaseUsername,
+                                                           $databasePassword)
         {
             if ($databaseType != 'mysql')
             {
@@ -411,7 +411,7 @@
          * @throws NotSupportedException
          * @return boolean
          */
-        public static function isDatabaseStrictModeRaw($databaseType,
+        public static function isDatabaseStrictMode($databaseType,
                                                     $databaseHostname,
                                                     $databaseUsername,
                                                     $databasePassword)
@@ -454,7 +454,7 @@
          * @throws NotSupportedException
          * @return true|string $error
          */
-        public static function checkDatabaseConnectionRaw($databaseType, $host, $rootUsername, $rootPassword)
+        public static function checkDatabaseConnection($databaseType, $host, $rootUsername, $rootPassword)
         {
             if ($databaseType != 'mysql')
             {
@@ -490,7 +490,7 @@
          * @throws NotSupportedException
          * @returns true/false for if the named database exists.
          */
-        public static function checkDatabaseExistsRaw($databaseType, $host, $rootUsername, $rootPassword,
+        public static function checkDatabaseExists($databaseType, $host, $rootUsername, $rootPassword,
                                                    $databaseName)
         {
             if ($databaseType != 'mysql')
@@ -528,7 +528,7 @@
          * @throws NotSupportedException
          * @returns true/false for if the named database user exists.
          */
-        public static function checkDatabaseUserExistsRaw($databaseType, $host, $rootUsername, $rootPassword, $username)
+        public static function checkDatabaseUserExists($databaseType, $host, $rootUsername, $rootPassword, $username)
         {
         if ($databaseType != 'mysql')
             {
@@ -591,7 +591,7 @@
          * @throws NotSupportedException
          * @return boolean|string error
          */
-        public static function createDatabaseRaw($databaseType, $host, $rootUsername, $rootPassword, $databaseName)
+        public static function createDatabase($databaseType, $host, $rootUsername, $rootPassword, $databaseName)
         {
             if ($databaseType != 'mysql')
             {
@@ -632,7 +632,7 @@
          * @throws NotSupportedException
          * @return boolean|string error
          */
-        public static function createDatabaseUserRaw($databaseType, $host, $rootUsername, $rootPassword,
+        public static function createDatabaseUser($databaseType, $host, $rootUsername, $rootPassword,
                                                   $databaseName, $username, $password)
         {
             if ($databaseType != 'mysql')

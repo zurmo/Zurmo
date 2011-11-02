@@ -313,10 +313,10 @@
                                                                 /* out */ & $actualBytes)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            $actualBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSizeRaw($databaseType,
-                                                                                          $databaseHostname,
-                                                                                          $databaseUsername,
-                                                                                          $databasePassword);
+            $actualBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize($databaseType,
+                                                                                       $databaseHostname,
+                                                                                       $databaseUsername,
+                                                                                       $databasePassword);
             return $minimumRequireBytes <= $actualBytes;
         }
 
@@ -328,10 +328,10 @@
                                                               /* out */ & $maxSpRecursionDepth)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            $maxSpRecursionDepth = DatabaseCompatibilityUtil::getDatabaseMaxSpRecursionDepthRaw($databaseType,
-                                                                                                $databaseHostname,
-                                                                                                $databaseUsername,
-                                                                                                $databasePassword);
+            $maxSpRecursionDepth = DatabaseCompatibilityUtil::getDatabaseMaxSpRecursionDepth($databaseType,
+                                                                                             $databaseHostname,
+                                                                                             $databaseUsername,
+                                                                                             $databasePassword);
             return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
         }
 
@@ -345,11 +345,11 @@
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             assert('is_array($notAllowedDatabaseCollations)');
-            $databaseDefaultCollation = DatabaseCompatibilityUtil::getDatabaseDefaultCollationRaw($databaseType,
-                                                                                                  $databaseHostname,
-                                                                                                  $databaseName,
-                                                                                                  $databaseUsername,
-                                                                                                  $databasePassword);
+            $databaseDefaultCollation = DatabaseCompatibilityUtil::getDatabaseDefaultCollation($databaseType,
+                                                                                               $databaseHostname,
+                                                                                               $databaseName,
+                                                                                               $databaseUsername,
+                                                                                               $databasePassword);
             return !in_array($databaseDefaultCollation, $notAllowedDatabaseCollations);
         }
 
@@ -681,7 +681,7 @@
             InstallUtil::checkPhpPostSizeSetting(1, $actualPostLimitBytes);
             $actualUploadLimitBytes = null;
             InstallUtil::checkPhpUploadSizeSetting(1, $actualUploadLimitBytes);
-            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize();
+            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSizeRb();
             return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
 

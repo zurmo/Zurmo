@@ -799,5 +799,43 @@
                     ),
             );
         }
+
+        /**
+         * This function returns the necessary get parameters for the account search form
+         * based on the account edited data.
+         */
+        public static function fetchAccountsSearchFormGetData()
+        {
+            return array(
+                            'name'                  =>  'myEditAccount',
+                            'officePhone'           =>  '259-734-2169',
+                            'type'                  =>   array('value'  =>  'Customer'),
+                            'officeFax'             =>  '299-825-7863',
+                            'employees'             =>  '630',
+                            'website'               =>  'http://www.UnnamedEdit.com',
+                            'annualRevenue'         =>  '472000000',
+                            'anyCity'               =>  'San Jose',
+                            'anyState'              =>  'CA',
+                            'anyStreet'             =>  '26378 South Arlington Ave',
+                            'anyPostalCode'         =>  '95131',
+                            'anyCountry'            =>  'USA',
+                            'anyEmail'              =>  'info@myEditAccount.com',
+                            'anyOptOutEmail'        =>  array('value' => null),
+                            'anyInvalidEmail'       =>  array('value' => ''),
+                            'ownedItemsOnly'        =>  '1',
+                            'industry'              =>  array('value' => 'Energy'),
+                            'decimal'               =>  '12',
+                            'integer'               =>  '11',
+                            'phone'                 =>  '259-784-2069',
+                            'text'                  =>  'This is a test Edit Text',
+                            'textarea'              =>  'This is a test Edit TextArea',
+                            'url'                   =>  'http://wwww.abc-edit.com',
+                            'checkbox'              =>  array('value'  =>  '0'),
+                            'currency'              =>  array('value'  =>  40),
+                            'picklist'              =>  array('value'  =>  'b'),
+                            'radio'                 =>  array('value'  =>  'e'),
+                            'date__Date'            =>  array('type'   =>  'Today'),
+                            'datetime__DateTime'    =>  array('type'   =>  'Today'));
+        }
     }
 ?>

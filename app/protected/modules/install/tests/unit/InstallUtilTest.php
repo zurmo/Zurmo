@@ -291,7 +291,7 @@
         */
         public function testIsDatabaseStrictMode()
         {
-            $this->assertNotNull(DatabaseCompatibilityUtil::isDatabaseStrictModeRaw('mysql',
+            $this->assertNotNull(DatabaseCompatibilityUtil::isDatabaseStrictMode('mysql',
                                                                                  $this->hostname,
                                                                                  $this->rootUsername,
                                                                                  $this->rootPassword));
@@ -312,11 +312,11 @@
 
         public function testDatabaseConnection_mysql()
         {
-            $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseConnectionRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword));
+            $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername, $this->rootPassword));
             $this->assertEquals(array(1045, "Access denied for user '{$this->rootUsername}'@'{$this->hostname}' (using password: YES)"),
-                                DatabaseCompatibilityUtil::checkDatabaseConnectionRaw('mysql', $this->hostname, $this->rootUsername,   'wrong'));
+                                DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername,   'wrong'));
             $this->assertEquals(array(1045, "Access denied for user 'nobody'@'{$this->hostname}' (using password: YES)"),
-                                DatabaseCompatibilityUtil::checkDatabaseConnectionRaw('mysql', $this->hostname, 'nobody', 'password'));
+                                DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, 'nobody', 'password'));
         }
 
         /**
@@ -327,9 +327,9 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseExistsRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->existingDatabaseName));
+                $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->existingDatabaseName));
                 $this->assertEquals(array(1049, "Unknown database 'junk'"),
-                                    DatabaseCompatibilityUtil::checkDatabaseExistsRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'junk'));
+                                    DatabaseCompatibilityUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'junk'));
             }
         }
 
@@ -341,8 +341,8 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue (DatabaseCompatibilityUtil::checkDatabaseUserExistsRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->rootUsername));
-                $this->assertFalse(DatabaseCompatibilityUtil::checkDatabaseUserExistsRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'dude'));
+                $this->assertTrue (DatabaseCompatibilityUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->rootUsername));
+                $this->assertFalse(DatabaseCompatibilityUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'dude'));
             }
         }
 
@@ -351,7 +351,7 @@
          */
         public function testCreateDatabase()
         {
-            $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
+            $this->assertTrue(DatabaseCompatibilityUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
         }
 
         /**
@@ -362,9 +362,9 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseRaw    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUserRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUserRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', ''));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', ''));
             }
         }
 
@@ -376,8 +376,8 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseRaw    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUserRaw('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
                 InstallUtil::connectToDatabase('mysql', $this->hostname, 'wacky', $this->rootUsername, $this->rootPassword);
                 Yii::app()->user->userModel = InstallUtil::createSuperUser('super', 'super');
                 $messageLogger = new MessageLogger();
