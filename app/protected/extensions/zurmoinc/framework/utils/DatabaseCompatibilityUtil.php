@@ -607,7 +607,7 @@
                     $result = true;
                     if (($connection = @mysql_connect($host, $rootUsername, $rootPassword))                   === false ||
                     @mysql_query("drop   database if exists `$databaseName`", $connection) === false ||
-                    @mysql_query("create database           `$databaseName`", $connection) === false)
+                    @mysql_query("create database `$databaseName` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;", $connection) === false)
                     {
                         $result = array(mysql_errno(), mysql_error());
                     }
