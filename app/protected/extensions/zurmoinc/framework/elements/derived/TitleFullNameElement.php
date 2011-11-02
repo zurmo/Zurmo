@@ -63,7 +63,17 @@
             $title = null;
             if ($this->model->title != null && $this->model->title->value != null)
             {
-                $title  = Yii::app()->format->text($this->model->title);
+                $titleDataAndLabels =  $this->getTitleDropDownArray();
+
+                if(isset($titleDataAndLabels[$this->model->title->value]))
+                {
+                    $titleLabel = $titleDataAndLabels[$this->model->title->value];
+                }
+                else
+                {
+                    $titleLabel = $this->model->title;
+                }
+                $title .= Yii::app()->format->text($titleLabel);
                 $title .= ' ';
             }
             return Yii::app()->format->text($title . $this->model);
@@ -105,6 +115,14 @@
                 array('attributeName' => 'firstName', 'type' => 'Text'),
                 array('attributeName' => 'lastName', 'type' => 'Text'),
             );
+        }
+
+        protected function getTitleDropDownArray()
+        {
+            $dropDownModel = $this->model->title;
+            $dataAndLabels    = CustomFieldDataUtil::
+                                getDataIndexedByDataAndTranslatedLabelsByLanguage($dropDownModel->data, Yii::app()->language);
+            return $dataAndLabels;
         }
     }
 ?>

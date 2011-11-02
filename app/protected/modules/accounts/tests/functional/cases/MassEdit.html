@@ -12,178 +12,263 @@
 <tr><td rowspan="1" colspan="3">Mass Edit</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>3000</td>
-	<td></td>
+    <td>setSpeed</td>
+    <td>3000</td>
+    <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default</td>
-	<td></td>
+    <td>open</td>
+    <td>index.php?r=accounts/default</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyTextPresent</td>
+    <td>Advanced Search</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>off</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>open</td>
+    <td>index.php?r=accounts/default</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>link=2</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Displaying 11-</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>off</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>open</td>
+    <td>index.php?r=accounts/default</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/div/div/ul/li[2]/ul/li[2]/a/span</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertEditable</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertEditable</td>
+    <td>list-view-rowSelector_1</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>list-view-rowSelector_all</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>list-view-select-all-rows-link</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertNotEditable</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertNotEditable</td>
+    <td>list-view-rowSelector_1</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_1</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>assertNotEditable</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertNotEditable</td>
+    <td>list-view-rowSelector_1</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_1</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>assertNotEditable</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertNotEditable</td>
+    <td>list-view-rowSelector_1</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_0</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>list-view-rowSelector_1</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>open</td>
+    <td>index.php?r=accounts/default</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/div/div/ul/li[2]/ul/li[2]/a/span</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>list-view-rowSelector_0</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>list-view-rowSelector_1</td>
+    <td></td>
+</tr>
+<tr>
+	<td>focusSelectAndClick</td>
+	<td>id=list-view-massAction</td>
+	<td>label=Update Selected</td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>2 records selected for updating</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>MassEdit_owner</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Owner cannot be blank.</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>MassEdit_owner</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>MassEdit_industry</td>
+    <td></td>
+</tr>
+<tr>
+    <td>select</td>
+    <td>Account_industry_value</td>
+    <td>label=Financial Services</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Successfully updated 2 records</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='list-view']/table/tbody/tr[1]/td[5]/a/img</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyTextPresent</td>
+    <td>Financial Services</td>
+    <td></td>
+</tr>
+<tr>
+    <td>open</td>
+    <td>index.php?r=accounts/default</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/div/div/ul/li[2]/ul/li[2]/a/span</td>
+    <td></td>
 </tr>
 <tr>
 	<td>waitForPageToLoad</td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>off</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 11-</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>off</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/div/div/ul/li[2]/ul/li[2]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertEditable</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertEditable</td>
-	<td>list-view-rowSelector_1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>list-view-rowSelector_all</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>list-view-select-all-rows-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertNotEditable</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertNotEditable</td>
-	<td>list-view-rowSelector_1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_1</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>assertNotEditable</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertNotEditable</td>
-	<td>list-view-rowSelector_1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_1</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>assertNotEditable</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertNotEditable</td>
-	<td>list-view-rowSelector_1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_0</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>list-view-rowSelector_1</td>
-	<td>on</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/div/div/ul/li[2]/ul/li[2]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>list-view-rowSelector_0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>list-view-rowSelector_1</td>
 	<td></td>
 </tr>
 <tr>
@@ -192,94 +277,9 @@
 	<td>label=Update Selected</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>2 records selected for updating</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>MassEdit_owner</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>Owner cannot be blank and must validate.</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>MassEdit_owner</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>MassEdit_industry</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>Account_industry_value</td>
-	<td>label=Financial Services</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>Successfully updated 2 records</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='list-view']/table/tbody/tr[1]/td[5]/a/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Financial Services</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/div/div/ul/li[2]/ul/li[2]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>focusSelectAndClick</td>
-	<td>id=list-view-massAction</td>
-	<td>label=Update Selected</td>
-</tr>
-<tr>
-	<td>assertAlert</td>
-	<td>You must select at least one record</td>
-	<td></td>
+    <td>assertAlert</td>
+    <td>You must select at least one record</td>
+    <td></td>
 </tr>
 </tbody></table>
 </body>

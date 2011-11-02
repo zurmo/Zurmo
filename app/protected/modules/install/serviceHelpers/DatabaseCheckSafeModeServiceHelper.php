@@ -40,10 +40,10 @@
         protected function checkService()
         {
             $passed = true;
-            if (!InstallUtil::isDatabaseStrictMode('mysql',
-                                                   $this->form->databaseHostname,
-                                                   $this->form->databaseUsername,
-                                                   $this->form->databasePassword))
+            if (!DatabaseCompatibilityUtil::isDatabaseStrictModeRaw('mysql',
+                                                                 $this->form->databaseHostname,
+                                                                 $this->form->databaseUsername,
+                                                                 $this->form->databasePassword))
             {
                 $this->message  = Yii::t('Default', 'Database is in strict mode.');
                 $passed = false;

@@ -67,6 +67,7 @@
         {
             return array(
                 'listPageSize'              => Yii::t('Default', 'List page size'),
+                'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
             );
         }
     }

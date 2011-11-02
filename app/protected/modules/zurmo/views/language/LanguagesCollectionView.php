@@ -137,6 +137,7 @@
             if (!$canInactivate)
             {
                 $htmlOptions['disabled'] = 'disabled';
+                $htmlOptions['uncheckValue'] = '1';
             }
             return CHtml::checkBox($name, $active, $htmlOptions);
         }
