@@ -212,5 +212,10 @@
             return Yii::app()->dateFormatter->formatDateTime(
                     $metadata['Currency']['lastAttemptedRateUpdateTimeStamp'], 'short');
         }
+
+        public function resetErrors()
+        {
+            $this->currencyService->resetErrors();
+        }
     }
 ?>
