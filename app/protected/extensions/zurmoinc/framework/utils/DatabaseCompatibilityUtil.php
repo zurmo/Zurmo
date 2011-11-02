@@ -260,7 +260,7 @@
                     $counter++;
                 }
             }
-            if($counter > 0)
+            if ($counter > 0)
             {
                 $sql = trim($sql, ','); // Not Coding Standard
                 R::exec($sql);

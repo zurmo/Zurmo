@@ -65,7 +65,7 @@
             {
                 $titleDataAndLabels =  $this->getTitleDropDownArray();
 
-                if(isset($titleDataAndLabels[$this->model->title->value]))
+                if (isset($titleDataAndLabels[$this->model->title->value]))
                 {
                     $titleLabel = $titleDataAndLabels[$this->model->title->value];
                 }
