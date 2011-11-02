@@ -273,7 +273,7 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
-        public function getDatabaseDefaultCollation()
+        public function testGetDatabaseDefaultCollation()
         {
             $notAllowedDatabaseCollations = array('utf8_general_ci');
             $databaseDefaultCollation     = null;
