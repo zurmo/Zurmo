@@ -44,20 +44,33 @@
         {
             assert('($filterByAttributeName == null && $filterByAttributeValue == null) ||
                         ($filterByAttributeName != null && $filterByAttributeValue != null)');
-            $countData  = array();
-            $model      = new $modelClassName();
-            $columnName = ModelDataProviderUtil::getColumnNameByAttribute($model, $attributeName);
-            $tableName  = RedBeanModel::getTableName($modelClassName);
-            $where      = '';
+            $countData          = array();
+            $model              = new $modelClassName();
+            $tableName          = RedBeanModel::getTableName($modelClassName);
+            $columnName         = ModelDataProviderUtil::getColumnNameByAttribute($model, $attributeName);
+            $where              = null;
             if ($filterByAttributeName != null)
             {
-               $filterByColumnName = ModelDataProviderUtil::getColumnNameByAttribute($model, $filterByAttributeName);
-               $where = 'where ' . $filterByColumnName . '=' . $filterByAttributeValue;
+               $attributeModelClassName    = ModelDataProviderUtil::
+                                             resolveAttributeModelClassName($model, $filterByAttributeName);
+               $filterByAttributeTableName = RedBeanModel::getTableName($attributeModelClassName);
+               $filterByColumnName         = ModelDataProviderUtil::getColumnNameByAttribute($model, $filterByAttributeName);
+               $where = $filterByAttributeTableName . '.' . $filterByColumnName . '=' . $filterByAttributeValue;
             }
-            $sql  = 'select count(*) count, ' . $columnName . ' attribute ' .
-                    'from ' . $tableName . ' '                              .
-                    $where . ' '                                            .
-                    'group by ' . $columnName . ' ';
+            $quote                     = DatabaseCompatibilityUtil::getQuote();
+            $where                     = $where;
+            $selectDistinct            = false;
+            $joinTablesAdapter         = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
+            $selectQueryAdapter        = new RedBeanModelSelectQueryAdapter();
+            $selectQueryAdapter->addClause($tableName, $columnName, 'attribute');
+            $selectQueryAdapter->addCountClause($tableName, 'id', 'count');
+            if ($filterByAttributeName != null && $filterByAttributeTableName != $tableName)
+            {
+                $joinTablesAdapter->addFromTableAndGetAliasName($filterByAttributeTableName, $filterByAttributeTableName . '_id', $tableName);
+            }
+            $groupBy                   = "{$quote}$tableName{$quote}.{$quote}$columnName{$quote}";
+            $sql                       = SQLQueryUtil::makeQuery($tableName, $selectQueryAdapter,
+                                                                 $joinTablesAdapter, null, null, $where, null, $groupBy);
             $rows = R::getAll($sql);
             foreach ($rows as $row)
             {
