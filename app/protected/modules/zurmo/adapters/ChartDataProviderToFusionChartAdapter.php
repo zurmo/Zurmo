@@ -38,6 +38,7 @@
             assert('is_array($chartParams)');
             Yii::import('ext.fusioncharts.FusionChartMaker');
             $fusionChart = new FusionChartMaker();
+            $fusionChart->setChartParam('rotateNames', 0);
             $fusionChart->setChartParam('xAxisName',         $dataProvider->getXAxisName());
             $fusionChart->setChartParam('showValues',        BooleanUtil::boolIntVal($chartParams['showValues']));
             $fusionChart->setChartParam('yAxisName',         $dataProvider->getYAxisName());

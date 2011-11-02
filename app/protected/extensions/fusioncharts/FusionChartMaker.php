@@ -756,7 +756,7 @@ class FusionChartMaker
 
         # Closing Chart element
         $this->strXML .= "</graph>";
-
+        $this->strXML = chr(239) . chr(187) . chr(191) . '<?xml version="1.0" encoding="UTF-8"?>' . $this->strXML;
         # Return XML output
         return $this->strXML;
       }
