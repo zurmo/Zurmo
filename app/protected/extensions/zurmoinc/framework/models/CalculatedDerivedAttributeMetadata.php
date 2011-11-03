@@ -24,29 +24,22 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownAttributeForm extends DropDownAttributeForm
+    /**
+     * Holds metadata for a calculated derived attribute. A calculated attribute is an attribute that derives its value
+     * by using a math equation of other model attribute values.
+     */
+    class CalculatedDerivedAttributeMetadata extends DerivedAttributeMetadata
     {
-        public static function getAttributeTypeDisplayName()
+        public static function getDefaultMetadata()
         {
-            return Yii::t('Default', 'Multi-Select Pick List');
-        }
-
-        public static function getAttributeTypeDisplayDescription()
-        {
-            return Yii::t('Default', 'A pick list that can have multiple selections');
-        }
-
-        public function getAttributeTypeName()
-        {
-            return 'MultiSelectDropDown';
-        }
-
-        /**
-         * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
-         */
-        public static function getModelAttributeAdapterNameForSavingAttributeFormData()
-        {
-            return 'MultiSelectDropDownModelAttributesAdapter';
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                ),
+                'rules' => array(
+                )
+            );
+            return $metadata;
         }
     }
 ?>

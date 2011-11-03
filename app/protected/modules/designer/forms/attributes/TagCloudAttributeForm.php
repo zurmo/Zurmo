@@ -24,29 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownAttributeForm extends DropDownAttributeForm
+    class TagCloudAttributeForm extends MultiSelectDropDownAttributeForm
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Multi-Select Pick List');
+            return Yii::t('Default', 'Tag Cloud');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A pick list that can have multiple selections');
+            return Yii::t('Default', 'A tag cloud');
         }
 
         public function getAttributeTypeName()
         {
-            return 'MultiSelectDropDown';
-        }
-
-        /**
-         * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
-         */
-        public static function getModelAttributeAdapterNameForSavingAttributeFormData()
-        {
-            return 'MultiSelectDropDownModelAttributesAdapter';
+            return 'TagCloud';
         }
     }
 ?>

@@ -24,29 +24,36 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownAttributeForm extends DropDownAttributeForm
+    /**
+     * Model used when a @see MultipleValuesCustomField needs to store values.
+     */
+    class CustomFieldValue extends RedBeanModel
     {
-        public static function getAttributeTypeDisplayName()
+        public function __toString()
         {
-            return Yii::t('Default', 'Multi-Select Pick List');
+            $s = strval($this->value);
+            if ($s == '')
+            {
+                return Yii::t('Default', '(None)');
+            }
+            return $s;
         }
 
-        public static function getAttributeTypeDisplayDescription()
+        public static function getDefaultMetadata()
         {
-            return Yii::t('Default', 'A pick list that can have multiple selections');
-        }
-
-        public function getAttributeTypeName()
-        {
-            return 'MultiSelectDropDown';
-        }
-
-        /**
-         * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
-         */
-        public static function getModelAttributeAdapterNameForSavingAttributeFormData()
-        {
-            return 'MultiSelectDropDownModelAttributesAdapter';
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'value',
+                ),
+                'relations' => array(
+                ),
+                'rules' => array(
+                    array('value', 'type', 'type' => 'string'),
+                ),
+                'defaultSortAttribute' => 'value'
+            );
+            return $metadata;
         }
     }
 ?>

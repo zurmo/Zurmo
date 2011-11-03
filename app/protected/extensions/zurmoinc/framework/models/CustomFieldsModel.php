@@ -42,9 +42,17 @@
                         $customFieldData = CustomFieldData::getByName($customFieldDataName);
                         if ($bean === null)
                         {
-                            if (($customField->value === null || $customField->value === '') && $setDefaults)
+                            if ($customField instanceof CustomField &&
+                                ($customField->value === null || $customField->value === '') && $setDefaults)
                             {
                                 $customField->value = $customFieldData->defaultValue;
+                            }
+                            elseif ($customField instanceof MultipleValuesCustomField &&
+                                 $customField->values->count() == 0 && $setDefaults)
+                            {
+                                $customFieldValue = new CustomFieldValue();
+                                $customFieldValue->value = $customFieldData->defaultValue;
+                                $customField->values->add($customFieldValue);
                             }
                         }
                         $customField->data = $customFieldData;

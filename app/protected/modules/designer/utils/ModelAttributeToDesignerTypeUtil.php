@@ -81,16 +81,19 @@ $designerTypes[] = substr($formClassName, 0, strlen($formClassName) - strlen('At
         public static function getAvailableCustomAttributeTypes()
         {
             return array(
+                'CalculatedNumber',
                 'CheckBox',
                 'CurrencyValue',
                 'Date',
                 'DateTime',
                 'Decimal',
+                'DropdownDependency',
                 'DropDown',
                 'Integer',
-                //'MultiSelectDropDown', Turn on once this feature is finished.
+                'MultiSelectDropDown',
                 'Phone',
                 'RadioDropDown',
+                'TagCloud',
                 'Text',
                 'TextArea',
                 'Url',

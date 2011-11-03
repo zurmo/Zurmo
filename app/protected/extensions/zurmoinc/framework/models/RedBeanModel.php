@@ -2462,7 +2462,16 @@
                             }
                             else
                             {
-                                $this->$attributeName->setAttributes($value);
+                                $setAttributeMethodName = 'set' . ucfirst($attributeName);
+                                if($this->$attributeName instanceof RedBeanOneToManyRelatedModels &&
+                                   method_exists($this, $setAttributeMethodName))
+                                {
+                                    $this->$setAttributeMethodName($value);
+                                }
+                                else
+                                {
+                                    $this->$attributeName->setAttributes($value);
+                                }
                             }
                         }
                     }

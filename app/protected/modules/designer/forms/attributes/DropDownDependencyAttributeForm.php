@@ -24,21 +24,43 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownAttributeForm extends DropDownAttributeForm
+    class DropDownDependencyAttributeForm extends AttributeForm
     {
+        public function rules()
+        {
+            return array_merge(parent::rules(), array(
+                //array('defaultValue', 'boolean'),
+            ));
+        }
+
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Multi-Select Pick List');
+            return Yii::t('Default', 'Dependent Pick Lists');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A pick list that can have multiple selections');
+            return Yii::t('Default', 'A set of dependent pick lists');
         }
 
         public function getAttributeTypeName()
         {
-            return 'MultiSelectDropDown';
+            return 'DropDownDependency';
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see AttributeForm::validateAttributeNameDoesNotExists()
+         */
+        public function validateAttributeNameDoesNotExists()
+        {
+            assert('$this->modelClassName != null');
+            $models = DropDownDependencyDerivedAttributeMetadata::
+                      getByNameAndModelClassName($this->attributeName, $this->modelClassName);
+            if (count($models) > 0)
+            {
+                $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+            }
         }
 
         /**
@@ -46,7 +68,7 @@
          */
         public static function getModelAttributeAdapterNameForSavingAttributeFormData()
         {
-            return 'MultiSelectDropDownModelAttributesAdapter';
+            return 'DropDownDependencyModelAttributesAdapter';
         }
     }
 ?>
