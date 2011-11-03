@@ -470,6 +470,8 @@
 
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
+            chmod($perInstanceConfigFile, 0777);
+            chmod($debugConfigFile, 0777);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
             $contents = file_get_contents($debugConfigFile);
