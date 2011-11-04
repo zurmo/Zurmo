@@ -492,6 +492,7 @@
 
             //Check the details if they are saved properly for the custom fields after the edit.
             $account = Account::getByName('myEditAccount');
+
             //Retrieve the permission of the account
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem(Account::getById($account[0]->id));
@@ -540,7 +541,7 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
-        }        
+        }
 
         /**
          * @depends testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule

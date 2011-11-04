@@ -29,7 +29,7 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        'A file must be uploaded in order to continue the import process.'
+         'A file must be uploaded in order to continue the import process.'
             => 'Un archivo se debe cargar para continuar con el proceso de importación.',
         'A file must be uploaded with at least one row to import.'
             => 'Un archivo debe ser cargado con al menos una fila a la importación.',

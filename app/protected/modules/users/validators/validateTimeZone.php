@@ -28,7 +28,7 @@
      * This validator can be used by both a User model as well as a CFormModel like in User import for example.
      * This validator validates to see if a valid time zone is entered by validating it with DateTimeZone class.
      * See the yii documentation.
-     */     
+     */
     class validateTimeZone extends CValidator
     {
         /**

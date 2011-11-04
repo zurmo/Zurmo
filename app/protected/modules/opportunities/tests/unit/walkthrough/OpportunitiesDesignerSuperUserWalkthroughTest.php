@@ -67,8 +67,10 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             Currency::makeBaseCurrency();
+
             //Create a account for testing.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
+
             //Create a Opportunity for testing.
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp', $super, $account);
         }
@@ -346,29 +348,29 @@
             //Search a created opportunity using the customfield.
             $this->resetPostArray();
             $this->setGetArray(array('OpportunitiesSearchForm' => array(
-                                                'name'              => 'myNewOpportunity',
-                                                'owner'             => array('id' => $superUserId),
-                                                'ownedItemsOnly'    => '1',
-                                                'account'           => array('id' => $accountId),
-                                                'amount'            => array('value' => '298000',
+                                                'name'               => 'myNewOpportunity',
+                                                'owner'              => array('id' => $superUserId),
+                                                'ownedItemsOnly'     => '1',
+                                                'account'            => array('id' => $accountId),
+                                                'amount'             => array('value' => '298000',
                                                                              'currency' => array(
                                                                              'id' => $baseCurrency->id)),
-                                                'closeDate__Date'   => array('value' => 'Today'),
-                                                'stage'             => array('value' => 'Prospecting'),
-                                                'source'            => array('value' => 'Self-Generated'),
-                                                'probability'       => '1',
-                                                'decimal'           => '123',
-                                                'integer'           => '12',
-                                                'phone'             => '259-784-2169',
-                                                'text'              => 'This is a test Text',
-                                                'textarea'          => 'This is a test TextArea',
-                                                'url'               => 'http://wwww.abc.com',
-                                                'checkbox'          => array('value'  =>  '0'),
-                                                'currency'          => array('value'  =>  45),
-                                                'picklist'          => array('value'  =>  'a'),
-                                                'radio'             => array('value'  =>  'd'),
-                                                'date__Date'        => array('type'   =>  'Today'),
-                                                'datetime__DateTime'=> array('type'   =>  'Today')),
+                                                'closeDate__Date'    => array('value' => 'Today'),
+                                                'stage'              => array('value' => 'Prospecting'),
+                                                'source'             => array('value' => 'Self-Generated'),
+                                                'probability'        => '1',
+                                                'decimal'            => '123',
+                                                'integer'            => '12',
+                                                'phone'              => '259-784-2169',
+                                                'text'               => 'This is a test Text',
+                                                'textarea'           => 'This is a test TextArea',
+                                                'url'                => 'http://wwww.abc.com',
+                                                'checkbox'           => array('value'  =>  '0'),
+                                                'currency'           => array('value'  =>  45),
+                                                'picklist'           => array('value'  =>  'a'),
+                                                'radio'              => array('value'  =>  'd'),
+                                                'date__Date'         => array('type'   =>  'Today'),
+                                                'datetime__DateTime' => array('type'   =>  'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
@@ -482,7 +484,7 @@
             //Search a created Opportunity using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array(
-                        'OpportunitiesSearchForm' => 
+                        'OpportunitiesSearchForm' =>
                             OpportunitiesDesignerWalkthroughHelperUtil::fetchOpportunitiesSearchFormGetData($accountId,
                                                                                       $superUserId, $baseCurrency->id),
                         'ajax'                    =>  'list-view')
@@ -528,7 +530,7 @@
             //Search a created Opportunity using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array(
-                        'OpportunitiesSearchForm' => 
+                        'OpportunitiesSearchForm' =>
                             OpportunitiesDesignerWalkthroughHelperUtil::fetchOpportunitiesSearchFormGetData($accountId,
                                                                                       $superUserId, $baseCurrency->id),
                         'ajax'                    =>  'list-view')

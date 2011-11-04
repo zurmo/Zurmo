@@ -78,7 +78,7 @@
 
         public function testConcat()
         {
-            $res = DatabaseCompatibilityUtil::concat(array('column1','column2'));
+            $res = DatabaseCompatibilityUtil::concat(array('column1', 'column2'));
             $this->assertEquals('concat(column1, column2)', $res);
         }
 

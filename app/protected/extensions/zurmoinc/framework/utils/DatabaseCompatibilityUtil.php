@@ -305,6 +305,7 @@
             }
             return false;
         }
+
         /**
          * Get database max alowed packet size.
          * @throws NotSupportedException
@@ -568,7 +569,7 @@
          */
         public static function checkDatabaseUserExists($databaseType, $host, $rootUsername, $rootPassword, $username)
         {
-        if ($databaseType != 'mysql')
+            if ($databaseType != 'mysql')
             {
                 throw new NotSupportedException();
             }
