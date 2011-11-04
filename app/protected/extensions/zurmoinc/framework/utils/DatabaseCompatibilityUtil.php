@@ -280,7 +280,7 @@
                                                   $databaseUsername,
                                                   $databasePassword)
         {
-            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            if ($databaseType != 'mysql')
             {
                 throw new NotSupportedException();
             }
