@@ -69,7 +69,7 @@
         public function handleBrowserCheck($event)
         {
             $browserName = Yii::app()->browser->getName();
-            if(isset($_GET['ignoreBrowserCheck']))
+            if (isset($_GET['ignoreBrowserCheck']))
             {
                 $browserIsSupported = ($_GET['ignoreBrowserCheck'] == 1) ? 1 : 0;
             }
