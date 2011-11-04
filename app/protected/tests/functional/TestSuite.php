@@ -486,7 +486,7 @@
                     isset($params['ignoreBrowserCheck']) && $params['ignoreBrowserCheck'] == '1')
             {
                 $url = $url . "index.php?r=zurmo/default/login&clearCache=1&ignoreBrowserCheck=1"; // Not Coding Standard
-            }           
+            }
             else
             {
                 echo "Invalid params";
@@ -517,6 +517,7 @@
             }
         }
     }
+
     $testRunner = new TestSuite();
     $testRunner->run();
 ?>
