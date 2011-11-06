@@ -28,7 +28,7 @@
      * Holds metadata for derived attribute if required. Some derived attributes such as calculated attributes and
      * dropdown dependencies require metadata to be stored.
      */
-    class DerivedAttributeMetadata extends RedBeanModel
+    abstract class DerivedAttributeMetadata extends RedBeanModel
     {
         /**
          * Get by specifying a name and model class name. This combination is unique
@@ -40,7 +40,7 @@
             assert('$name != ""');
             assert('is_string($modelClassName)');
             assert('$modelClassName != ""');
-            assert('get_called_class() == "DerivedAttributeMetadata"');
+            assert('get_called_class() != "DerivedAttributeMetadata"');
             $bean = R::findOne('derivedattributemetadata', "name = '$name' and modelclassname = '$modelClassName'");
             $derivedAttirbuteMetadataTableName   = RedBeanModel::getTableName('DerivedAttributeMetadata');
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
@@ -94,9 +94,9 @@
             if ($this->$attribute != null)
             {
                 $tableName = self::getTableName('DerivedAttributeMetadata');
-                $sql       = 'select id from ' . $tableName . " where name = '$value' and ";
+                $sql       = 'select id from ' . $tableName . " where name = '{$this->$attribute}' and ";
                 $sql      .= "modelclassname = '" . $this->modelClassName . "'";
-                $rows      = R::getAll();
+                $rows      = R::getAll($sql);
                 if(count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->id)
                 {
                     return;

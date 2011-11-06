@@ -62,24 +62,25 @@
             return $metadata;
         }
 
-        /*
         public static function updateValueByDataIdAndOldValueAndNewValue($customFieldDataId, $oldValue, $newValue)
         {
             $quote                         = DatabaseCompatibilityUtil::getQuote();
-            $customFieldTableName          = RedBeanModel::getTableName('CustomField');
+            $customFieldTableName          = RedBeanModel::getTableName('MultipleValuesCustomField');
             $baseCustomFieldTableName      = RedBeanModel::getTableName('BaseCustomField');
+            $customFieldValueTableName     = RedBeanModel::getTableName('CustomFieldValue');
             $baseCustomFieldJoinColumnName = $baseCustomFieldTableName . '_id';
             $valueAttributeColumnName      = 'value';
             $dataAttributeColumnName       = RedBeanModel::getForeignKeyName('BaseCustomField', 'data');
-            $sql  = "update {$quote}{$customFieldTableName}{$quote}, {$quote}{$baseCustomFieldTableName}{$quote} ";
-            $sql .= "set {$quote}{$valueAttributeColumnName}{$quote} = '{$newValue}' ";
+            $sql  = "update {$quote}{$customFieldValueTableName}{$quote}, {$quote}{$customFieldTableName}{$quote}, ";
+            $sql .= "{$quote}{$baseCustomFieldTableName}{$quote} ";
+            $sql .= "set {$quote}{$customFieldValueTableName}{$quote}.{$valueAttributeColumnName} = '{$newValue}' ";
             $sql .= "where {$quote}{$customFieldTableName}{$quote}.$baseCustomFieldJoinColumnName = ";
             $sql .= "{$quote}{$baseCustomFieldTableName}{$quote}.id ";
             $sql .= "AND {$quote}{$dataAttributeColumnName}{$quote} = $customFieldDataId ";
-            $sql .= "AND {$quote}{$valueAttributeColumnName}{$quote} = '{$oldValue}'";
+            $sql .= "AND {$quote}{$customFieldTableName}{$quote}.id = {$quote}{$customFieldValueTableName}{$quote}.{$customFieldTableName}_id ";
+            $sql .= "AND {$quote}{$customFieldValueTableName}{$quote}.{$valueAttributeColumnName} = '{$oldValue}'";
             R::exec($sql);
         }
-        */
 
         public function setValues($values)
         {
