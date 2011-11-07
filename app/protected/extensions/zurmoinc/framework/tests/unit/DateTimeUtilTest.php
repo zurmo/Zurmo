@@ -95,12 +95,19 @@
 
         public function testConvertFromUtcUnixStampByTimeZone()
         {
+            $timeZoneObject = new DateTimeZone('America/Chicago');
+            $offset = $timeZoneObject->getOffset(new DateTime());
+            $this->assertTrue($offset == -18000 || $offset == -21600);
             $utcTimeStamp = time();
             $adjustedTimeStamp = DateTimeUtil::convertFromUtcUnixStampByTimeZone($utcTimeStamp, 'America/Chicago');
-            $this->assertEquals($utcTimeStamp - 18000, $adjustedTimeStamp);
+            $this->assertEquals($utcTimeStamp + $offset, $adjustedTimeStamp);
+
             //other locales
+            $timeZoneObject = new DateTimeZone('America/New_York');
+            $offset = $timeZoneObject->getOffset(new DateTime());
+            $this->assertTrue($offset == -18000 || $offset == -14400);
             $adjustedTimeStamp = DateTimeUtil::convertFromUtcUnixStampByTimeZone($utcTimeStamp, 'America/New_York');
-            $this->assertEquals($utcTimeStamp - 14400, $adjustedTimeStamp);
+            $this->assertEquals($utcTimeStamp + $offset, $adjustedTimeStamp);
         }
 
         public function testIsValidDbFormattedDate()
