@@ -169,30 +169,11 @@
                                             $minimumRequiredVersion,
                                             /* out */ &$actualVersion)
         {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                        $PhpDriverVersion = phpversion('mysql');
-                        if ($PhpDriverVersion !== null)
-                        {
-                            $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
-                            $result = @mysql_query("SELECT VERSION()");
-                            $row    = @mysql_fetch_row($result);
-                            if (is_resource($connection))
-                            {
-                                mysql_close($connection);
-                            }
-                            if (isset($row[0]))
-                            {
-                                $actualVersion = $row[0];
-                                return self::checkVersion($minimumRequiredVersion, $actualVersion);
-                            }
-                        }
-                        return false;
-                default:
-                    throw new NotSupportedException();
-            }
+            $actualVersion = DatabaseCompatibilityUtil::getDatabaseVersion($databaseType,
+                                                                           $databaseHostname,
+                                                                           $databaseUsername,
+                                                                           $databasePassword);
+            return self::checkVersion($minimumRequiredVersion, $actualVersion);
         }
 
         /**

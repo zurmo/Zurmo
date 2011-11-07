@@ -168,7 +168,8 @@
                     self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                     echo "Restored test db";
                     echo 'Clear cache on remote server';
-                    self::remoteAction(TEST_BASE_URL, array('clearCache' => '1'));
+                    self::remoteAction(TEST_BASE_URL, array('clearCache'         => '1',
+                                                            'ignoreBrowserCheck' => '1'));
                     echo "Cache cleared";
 
                     echo 'Running test suite: ';
@@ -481,9 +482,10 @@
             {
                 $url = $url . "?action=" . urlencode($params['action']);
             }
-            elseif (isset($params['clearCache']) && $params['clearCache'] == '1')
+            elseif (isset($params['clearCache']) && $params['clearCache'] == '1' &&
+                    isset($params['ignoreBrowserCheck']) && $params['ignoreBrowserCheck'] == '1')
             {
-                $url = $url . "index.php?r=zurmo/default/login&clearCache=1"; // Not Coding Standard
+                $url = $url . "index.php?r=zurmo/default/login&clearCache=1&ignoreBrowserCheck=1"; // Not Coding Standard
             }
             else
             {
@@ -494,7 +496,6 @@
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_URL, $url);
-
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
@@ -516,6 +517,7 @@
             }
         }
     }
+
     $testRunner = new TestSuite();
     $testRunner->run();
 ?>
