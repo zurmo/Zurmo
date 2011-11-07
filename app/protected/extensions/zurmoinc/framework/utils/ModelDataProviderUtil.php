@@ -535,8 +535,11 @@
         /**
          * This method is needed to interpret when the attributeName is 'id'.  Since id is not an attribute
          * on the model, we manaully check for this and return the appropriate class name.
+         * @param RedBeanModel $model
+         * @param string $attributeName
+         * @return the model class name for the attribute.  This could be a casted up model class name.
          */
-        protected static function resolveAttributeModelClassName(RedBeanModel $model, $attributeName)
+        public static function resolveAttributeModelClassName(RedBeanModel $model, $attributeName)
         {
             assert('is_string($attributeName)');
             if ($attributeName == 'id')

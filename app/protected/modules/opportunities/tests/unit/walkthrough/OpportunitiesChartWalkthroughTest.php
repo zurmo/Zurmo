@@ -64,7 +64,7 @@
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/makeChartXML');
             $this->assertFalse(strpos($content, '<graph') === false);
-            $this->assertEquals(0, strpos($content, '<graph'));
+            $this->assertEquals(0, strpos($content, chr(239) . chr(187) . chr(191) . '<?xml version="1.0" encoding="UTF-8"?><graph'));
 
             //Test OpportunitiesBySource
             $portlet = new Portlet();
@@ -79,7 +79,7 @@
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/makeChartXML');
             $this->assertFalse(strpos($content, '<graph') === false);
-            $this->assertEquals(0, strpos($content, '<graph'));
+            $this->assertEquals(0, strpos($content, chr(239) . chr(187) . chr(191) . '<?xml version="1.0" encoding="UTF-8"?><graph'));
         }
     }
 ?>

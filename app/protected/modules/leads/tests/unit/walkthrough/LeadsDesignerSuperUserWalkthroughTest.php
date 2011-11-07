@@ -258,7 +258,7 @@
 
             //Retrieve the Lead State (Status) Id based on the name.
             $leadState   = ContactState::getByName('New');
-            $leadStateID = $leadState[0]->id;
+            $leadStateId = $leadState[0]->id;
 
             //Create a new Lead based on the custom fields.
             $this->resetGetArray();
@@ -266,7 +266,7 @@
                                     'title'                             =>  array('value' => 'Mr.'),
                                     'firstName'                         =>  'Sarah',
                                     'lastName'                          =>  'Williams',
-                                    'state'                             =>  array('id' => $leadStateID),
+                                    'state'                             =>  array('id' => $leadStateId),
                                     'jobTitle'                          =>  'Sales Director',
                                     'companyName'                       =>  'ABC Telecom',
                                     'industry'                          =>  array('value' => 'Automotive'),
@@ -326,7 +326,7 @@
             $this->assertEquals($lead->title->value                   , 'Mr.');
             $this->assertEquals($lead->firstName                      , 'Sarah');
             $this->assertEquals($lead->lastName                       , 'Williams');
-            $this->assertEquals($lead->state->id                      , $leadStateID);
+            $this->assertEquals($lead->state->id                      , $leadStateId);
             $this->assertEquals($lead->jobTitle                       , 'Sales Director');
             $this->assertEquals($lead->companyName                    , 'ABC Telecom');
             $this->assertEquals($lead->industry->value                , 'Automotive');
@@ -385,45 +385,45 @@
 
             //Retrieve the Lead State (Status) Id based on the name.
             $leadState   = ContactState::getByName('New');
-            $leadStateID = $leadState[0]->id;
+            $leadStateId = $leadState[0]->id;
 
             //Search a created lead using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('LeadsSearchForm' => array(
-                                                            'fullName'          => 'Sarah Williams',
-                                                            'officePhone'       => '739-741-3005',
-                                                            'anyPostalCode'     => '10169',
-                                                            'companyName'       => 'ABC Telecom',
-                                                            'department'        => 'Sales',
-                                                            'industry'          => array('value' => 'Automotive'),
-                                                            'website'           => 'http://www.company.com',
-                                                            'anyCountry'        => 'USA',
-                                                            'anyInvalidEmail'   => array('value' => '0'),
-                                                            'anyEmail'          => 'info@myNewLead.com',
-                                                            'anyOptOutEmail'    => array('value' => '1'),
-                                                            'ownedItemsOnly'    => '1',
-                                                            'anyStreet'         => '26217 West Third Lane',
-                                                            'anyCity'           => 'New York',
-                                                            'anyState'          => 'NY',
-                                                            'state'             => array('id' => $leadStateID),
-                                                            'owner'             => array('id' => $superUserId),
-                                                            'firstName'         => 'Sarah',
-                                                            'lastName'          => 'Williams',
-                                                            'jobTitle'          => 'Sales Director',
-                                                            'officeFax'         => '255-455-1914',
-                                                            'title'             => array('value' => 'Mr.'),
-                                                            'source'            => array('value' => 'Self-Generated'),
-                                                            'decimal'           => '123',
-                                                            'integer'           => '12',
-                                                            'phone'             => '259-784-2169',
-                                                            'text'              => 'This is a test Text',
-                                                            'textarea'          => 'This is a test TextArea',
-                                                            'url'               => 'http://wwww.abc.com',
-                                                            'checkbox'          => array('value'  =>  '0'),
-                                                            'currency'          => array('value'  =>  45),
-                                                            'picklist'          => array('value'  =>  'a'),
-                                                            'radio'             => array('value'  =>  'd'),
-                                                            'date__Date'        => array('type'   =>  'Today'),
+                                                            'fullName'           => 'Sarah Williams',
+                                                            'officePhone'        => '739-741-3005',
+                                                            'anyPostalCode'      => '10169',
+                                                            'companyName'        => 'ABC Telecom',
+                                                            'department'         => 'Sales',
+                                                            'industry'           => array('value' => 'Automotive'),
+                                                            'website'            => 'http://www.company.com',
+                                                            'anyCountry'         => 'USA',
+                                                            'anyInvalidEmail'    => array('value' => '0'),
+                                                            'anyEmail'           => 'info@myNewLead.com',
+                                                            'anyOptOutEmail'     => array('value' => '1'),
+                                                            'ownedItemsOnly'     => '1',
+                                                            'anyStreet'          => '26217 West Third Lane',
+                                                            'anyCity'            => 'New York',
+                                                            'anyState'           => 'NY',
+                                                            'state'              => array('id' => $leadStateId),
+                                                            'owner'              => array('id' => $superUserId),
+                                                            'firstName'          => 'Sarah',
+                                                            'lastName'           => 'Williams',
+                                                            'jobTitle'           => 'Sales Director',
+                                                            'officeFax'          => '255-455-1914',
+                                                            'title'              => array('value' => 'Mr.'),
+                                                            'source'             => array('value' => 'Self-Generated'),
+                                                            'decimal'            => '123',
+                                                            'integer'            => '12',
+                                                            'phone'              => '259-784-2169',
+                                                            'text'               => 'This is a test Text',
+                                                            'textarea'           => 'This is a test TextArea',
+                                                            'url'                => 'http://wwww.abc.com',
+                                                            'checkbox'           => array('value'  =>  '0'),
+                                                            'currency'           => array('value'  =>  45),
+                                                            'picklist'           => array('value'  =>  'a'),
+                                                            'radio'              => array('value'  =>  'd'),
+                                                            'date__Date'         => array('type'   =>  'Today'),
                                                             'datetime__DateTime' => array('type'   =>  'Today')),
                                                             'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
@@ -456,7 +456,7 @@
 
             //Retrieve the Lead State (Status) Id based on the name.
             $leadState   = ContactState::getByName('In Progress');
-            $leadStateID = $leadState[0]->id;
+            $leadStateId = $leadState[0]->id;
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
 
             //Edit and save the lead.
@@ -474,7 +474,7 @@
                             'source'                            =>  array('value' => 'Inbound Call'),
                             'mobilePhone'                       =>  '285-300-8232',
                             'officeFax'                         =>  '255-454-1914',
-                            'state'                             =>  array('id' => $leadStateID),
+                            'state'                             =>  array('id' => $leadStateId),
                             'owner'                             =>  array('id' => $superUserId),
                             'primaryEmail'                      =>  array('emailAddress' => 'info@myNewLead.com',
                                                                           'optOut' => '0',
@@ -524,7 +524,7 @@
             $this->assertEquals($lead->title->value                   , 'Mrs.');
             $this->assertEquals($lead->firstName                      , 'Sarah');
             $this->assertEquals($lead->lastName                       , 'Williams Edit');
-            $this->assertEquals($lead->state->id                      , $leadStateID);
+            $this->assertEquals($lead->state->id                      , $leadStateId);
             $this->assertEquals($lead->jobTitle                       , 'Sales Director Edit');
             $this->assertEquals($lead->companyName                    , 'ABC Telecom Edit');
             $this->assertEquals($lead->industry->value                , 'Banking');
@@ -571,50 +571,6 @@
         }
 
         /**
-         * This function returns the necessary get parameters for the lead search form
-         * based on the lead edited data.
-         */
-        public function fetchLeadsSearchFormGetData($leadStateID, $superUserId)
-        {
-            return  array(
-                            'fullName'          => 'Sarah Williams Edit',
-                            'officePhone'       => '739-742-3005',
-                            'anyPostalCode'     => '95131',
-                            'department'        => 'Sales Edit',
-                            'companyName'       => 'ABC Telecom Edit',
-                            'industry'          => array('value' => 'Banking'),
-                            'website'           => 'http://www.companyedit.com',
-                            'anyCountry'        => 'USA',
-                            'anyInvalidEmail'   => array('value' => '0'),
-                            'anyEmail'          => 'info@myNewLeadEdit.com',
-                            'anyOptOutEmail'    => array('value' => '0'),
-                            'ownedItemsOnly'    => '1',
-                            'anyStreet'         => '26378 South Arlington Ave',
-                            'anyCity'           => 'San Jose',
-                            'anyState'          => 'CA',
-                            'state'             => array('id' => $leadStateID),
-                            'owner'             => array('id' => $superUserId),
-                            'firstName'         => 'Sarah',
-                            'lastName'          => 'Williams Edit',
-                            'jobTitle'          => 'Sales Director Edit',
-                            'officeFax'         => '255-454-1914',
-                            'title'             => array('value' => 'Mrs.'),
-                            'source'            => array('value' => 'Inbound Call'),
-                            'decimal'           => '12',
-                            'integer'           => '11',
-                            'phone'             => '259-784-2069',
-                            'text'              => 'This is a test Edit Text',
-                            'textarea'          => 'This is a test Edit TextArea',
-                            'url'               => 'http://wwww.abc-edit.com',
-                            'checkbox'          => array('value'  => '0'),
-                            'currency'          => array('value'  => 40),
-                            'picklist'          => array('value'  => 'b'),
-                            'radio'             => array('value'  => 'e'),
-                            'date__Date'        => array('type'   => 'Today'),
-                            'datetime__DateTime' => array('type'   => 'Today'));
-        }
-
-        /**
          * @depends testEditOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterEditingTheLeadUser()
@@ -626,13 +582,15 @@
 
             //Retrieve the Lead State (Status) Id based on the name.
             $leadState   = ContactState::getByName('In Progress');
-            $leadStateID = $leadState[0]->id;
+            $leadStateId = $leadState[0]->id;
 
             //Search a created lead using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('LeadsSearchForm' => $this->fetchLeadsSearchFormGetData($leadStateID,
-                                                                    $superUserId),
-                                     'ajax'               => 'list-view'));
+            $this->setGetArray(array(
+                        'LeadsSearchForm' => LeadsDesignerWalkthroughHelperUtil::fetchLeadsSearchFormGetData(
+                                                                                   $leadStateId, $superUserId),
+                        'ajax'            => 'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
             //Check if the lead name exits after the search is performed on the basis of the
@@ -672,13 +630,15 @@
 
             //Retrieve the Lead State (Status) Id based on the name.
             $leadState   = ContactState::getByName('In Progress');
-            $leadStateID = $leadState[0]->id;
+            $leadStateId = $leadState[0]->id;
 
             //Search a created lead using the customfields.
             $this->resetPostArray();
-            $this->setGetArray(array('LeadsSearchForm' => $this->fetchLeadsSearchFormGetData($leadStateID,
-                                                                    $superUserId),
-                                     'ajax'               => 'list-view'));
+            $this->setGetArray(array(
+                        'LeadsSearchForm' => LeadsDesignerWalkthroughHelperUtil::fetchLeadsSearchFormGetData(
+                                                                                   $leadStateId, $superUserId),
+                        'ajax'            => 'list-view')
+            );
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
             //Assert that the edit lead does not exits after the search.

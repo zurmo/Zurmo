@@ -243,11 +243,11 @@
         /**
          * Simple test to confirm the check doesnt break.
          */
-        public function testGetDatabaseMaxAllowedPacketsSize()
+        public function testCheckDatabaseMaxAllowedPacketsSize()
         {
             $minimumRequireBytes = 1;
             $actualBytes         = null;
-            $this->assertNotNull(InstallUtil::getDatabaseMaxAllowedPacketsSize('mysql',
+            $this->assertNotNull(InstallUtil::checkDatabaseMaxAllowedPacketsSize('mysql',
                                                                                $this->hostname,
                                                                                $this->rootUsername,
                                                                                $this->rootPassword,
@@ -258,11 +258,11 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
-        public function testGetDatabaseMaxSpRecursionDepth()
+        public function testCheckDatabaseMaxSpRecursionDepth()
         {
             $minimumRequiredMaxSpRecursionDepth = 20;
             $maxSpRecursionDepth                = null;
-            $this->assertNotNull(InstallUtil::getDatabaseMaxSpRecursionDepth('mysql',
+            $this->assertNotNull(InstallUtil::checkDatabaseMaxSpRecursionDepth('mysql',
                                                                              $this->hostname,
                                                                              $this->rootUsername,
                                                                              $this->rootPassword,
@@ -273,11 +273,11 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
-        public function getDatabaseDefaultCollation()
+        public function testCheckDatabaseDefaultCollation()
         {
             $notAllowedDatabaseCollations = array('utf8_general_ci');
             $databaseDefaultCollation     = null;
-            $this->assertNotNull(InstallUtil::getDatabaseDefaultCollation('mysql',
+            $this->assertNotNull(InstallUtil::checkDatabaseDefaultCollation('mysql',
                                                                           $this->hostname,
                                                                           $this->temporaryDatabaseName,
                                                                           $this->rootUsername,
@@ -291,10 +291,10 @@
         */
         public function testIsDatabaseStrictMode()
         {
-            $this->assertNotNull(InstallUtil::isDatabaseStrictMode('mysql',
-                                                                   $this->hostname,
-                                                                   $this->rootUsername,
-                                                                   $this->rootPassword));
+            $this->assertNotNull(DatabaseCompatibilityUtil::isDatabaseStrictMode('mysql',
+                                                                                 $this->hostname,
+                                                                                 $this->rootUsername,
+                                                                                 $this->rootPassword));
         }
 
         public function testCheckMemcacheConnection()
@@ -310,74 +310,13 @@
                                 10060 == $results[0]);
         }
 
-        public function testDatabaseConnection_mysql()
-        {
-            $this->assertTrue  (InstallUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername, $this->rootPassword));
-            $this->assertEquals(array(1045, "Access denied for user '{$this->rootUsername}'@'{$this->hostname}' (using password: YES)"),
-                                InstallUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername,   'wrong'));
-            $this->assertEquals(array(1045, "Access denied for user 'nobody'@'{$this->hostname}' (using password: YES)"),
-                                InstallUtil::checkDatabaseConnection('mysql', $this->hostname, 'nobody', 'password'));
-        }
-
-        /**
-         * @depends testDatabaseConnection_mysql
-         */
-        public function testCheckDatabaseExists()
-        {
-            // This test cannot run as saltdev. It is therefore skipped on the server.
-            if ($this->rootUsername == 'root')
-            {
-                $this->assertTrue  (InstallUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->existingDatabaseName));
-                $this->assertEquals(array(1049, "Unknown database 'junk'"),
-                                    InstallUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'junk'));
-            }
-        }
-
-        /**
-         * @depends testCheckDatabaseExists
-         */
-        public function testCheckDatabaseUserExists()
-        {
-            // This test cannot run as saltdev. It is therefore skipped on the server.
-            if ($this->rootUsername == 'root')
-            {
-                $this->assertTrue (InstallUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->rootUsername));
-                $this->assertFalse(InstallUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'dude'));
-            }
-        }
-
-        /**
-         * @depends testCheckDatabaseUserExists
-         */
-        public function testCreateDatabase()
-        {
-            $this->assertTrue(InstallUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
-        }
-
-        /**
-         * @depends testCreateDatabase
-         */
-        public function testCreateDatabaseUser()
-        {
-            // This test cannot run as saltdev. It is therefore skipped on the server.
-            if ($this->rootUsername == 'root')
-            {
-                $this->assertTrue(InstallUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
-                $this->assertTrue(InstallUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
-                $this->assertTrue(InstallUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', ''));
-            }
-        }
-
-        /**
-         * @depends testCreateDatabaseUser
-         */
         public function testConnectToDatabaseCreateSuperUserBuildDatabaseAndFreeze()
         {
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue(InstallUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
-                $this->assertTrue(InstallUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
                 InstallUtil::connectToDatabase('mysql', $this->hostname, 'wacky', $this->rootUsername, $this->rootPassword);
                 Yii::app()->user->userModel = InstallUtil::createSuperUser('super', 'super');
                 $messageLogger = new MessageLogger();

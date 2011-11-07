@@ -57,12 +57,32 @@
             $this->assertEquals($compareData, $data);
         }
 
+        public function testFilteringByAttributeInDifferentTable()
+        {
+            $this->makeJModel(3, 5);
+            $this->makeJModel(3, 6);
+            $this->makeJModel(4, 5);
+            $this->makeJModel(4, 6);
+            $this->makeJModel(5, 6);
+            $this->makeJModel(5, 6);
+            $data = GroupedAttributeCountUtil::getCountData('J', 'jMember', 'name', 6);
+            $this->assertEquals(array(3 => 1, 4 => 1, 5 => 2), $data);
+        }
+
         protected function makeModel($a, $b)
         {
             $zz = new ZZ();
             $zz->a = $a;
             $zz->b = $b;
             $this->assertTrue($zz->save());
+        }
+
+        protected function makeJModel($jMember, $name)
+        {
+            $j = new J();
+            $j->jMember = $jMember;
+            $j->name = $name;
+            $this->assertTrue($j->save());
         }
     }
 ?>

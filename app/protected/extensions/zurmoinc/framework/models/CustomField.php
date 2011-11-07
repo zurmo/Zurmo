@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class CustomField extends RedBeanModel
+    class CustomField extends BaseCustomField
     {
         public function __toString()
         {
@@ -36,19 +36,6 @@
             return $s;
         }
 
-        public function __set($attributeName, $value)
-        {
-            $wasModified = $this->isModified();
-            parent::__set($attributeName, $value);
-            if ($attributeName == 'data')
-            {
-                if (!$wasModified)
-                {
-                    $this->unrestrictedSet('modified', false);
-                }
-            }
-        }
-
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
@@ -57,7 +44,6 @@
                     'value',
                 ),
                 'relations' => array(
-                    'data' => array(RedBeanModel::HAS_ONE, 'CustomFieldData'),
                 ),
                 'rules' => array(
                     array('value', 'type', 'type' => 'string'),
@@ -69,13 +55,17 @@
 
         public static function updateValueByDataIdAndOldValueAndNewValue($customFieldDataId, $oldValue, $newValue)
         {
-            $quote                    = DatabaseCompatibilityUtil::getQuote();
-            $customFieldTableName     = RedBeanModel::getTableName('CustomField');
-            $valueAttributeColumnName = 'value';
-            $dataAttributeColumnName  = RedBeanModel::getForeignKeyName('CustomField', 'data');
-            $sql  = "update {$quote}{$customFieldTableName}{$quote} ";
+            $quote                         = DatabaseCompatibilityUtil::getQuote();
+            $customFieldTableName          = RedBeanModel::getTableName('CustomField');
+            $baseCustomFieldTableName      = RedBeanModel::getTableName('BaseCustomField');
+            $baseCustomFieldJoinColumnName = $baseCustomFieldTableName . '_id';
+            $valueAttributeColumnName      = 'value';
+            $dataAttributeColumnName       = RedBeanModel::getForeignKeyName('BaseCustomField', 'data');
+            $sql  = "update {$quote}{$customFieldTableName}{$quote}, {$quote}{$baseCustomFieldTableName}{$quote} ";
             $sql .= "set {$quote}{$valueAttributeColumnName}{$quote} = '{$newValue}' ";
-            $sql .= "where {$quote}{$dataAttributeColumnName}{$quote} = $customFieldDataId ";
+            $sql .= "where {$quote}{$customFieldTableName}{$quote}.$baseCustomFieldJoinColumnName = "; // Not Coding Standard
+            $sql .= "{$quote}{$baseCustomFieldTableName}{$quote}.id ";
+            $sql .= "AND {$quote}{$dataAttributeColumnName}{$quote} = $customFieldDataId ";
             $sql .= "AND {$quote}{$valueAttributeColumnName}{$quote} = '{$oldValue}'";
             R::exec($sql);
         }

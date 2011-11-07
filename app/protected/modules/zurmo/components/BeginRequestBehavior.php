@@ -69,7 +69,14 @@
         public function handleBrowserCheck($event)
         {
             $browserName = Yii::app()->browser->getName();
-            $browserIsSupported = in_array($browserName, array('msie', 'mozilla', 'chrome', 'safari'));
+            if (isset($_GET['ignoreBrowserCheck']))
+            {
+                $browserIsSupported = ($_GET['ignoreBrowserCheck'] == 1) ? 1 : 0;
+            }
+            else
+            {
+                $browserIsSupported = in_array($browserName, array('msie', 'mozilla', 'chrome', 'safari'));
+            }
             if (array_key_exists('r', $_GET)                                   &&
                 in_array($_GET['r'], array('zurmo/default/unsupportedBrowser')) &&
                 $browserIsSupported)

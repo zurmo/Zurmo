@@ -100,12 +100,12 @@
 
         protected function getNameForIdField()
         {
-                return 'ActivityItemForm[contact][ids]';
+                return 'ActivityItemForm[Contact][ids]';
         }
 
         protected function getIdForIdField()
         {
-            return 'ActivityItemForm_contact_ids';
+            return 'ActivityItemForm_Contact_ids';
         }
 
         protected function getExistingContactRelationsIdsAndLabels()

@@ -126,7 +126,7 @@
                         'admin username, you must enter a password'));
                         return;
                     }
-                    $connectionResult = InstallUtil::checkDatabaseConnection($this->databaseType,
+                    $connectionResult = DatabaseCompatibilityUtil::checkDatabaseConnection($this->databaseType,
                                                                       $this->databaseHostname,
                                                                       $this->databaseAdminUsername,
                                                                       $this->databaseAdminPassword);
@@ -136,7 +136,7 @@
                         $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
-                    $userExistsResult = InstallUtil::checkDatabaseUserExists($this->databaseType,
+                    $userExistsResult = DatabaseCompatibilityUtil::checkDatabaseUserExists($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
@@ -148,7 +148,7 @@
                         'password. Otherwise pick a database username that does not exist.'));
                         return;
                     }
-                    $databaseExistsResult = InstallUtil::checkDatabaseExists($this->databaseType,
+                    $databaseExistsResult = DatabaseCompatibilityUtil::checkDatabaseExists($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
@@ -160,7 +160,7 @@
                         'password. Otherwise pick a database name that does not exist.'));
                         return;
                     }
-                    $createDatabaseResult = InstallUtil::createDatabase(     $this->databaseType,
+                    $createDatabaseResult = DatabaseCompatibilityUtil::createDatabase($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
@@ -171,7 +171,7 @@
                         'Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
-                    $createUserResult = InstallUtil::createDatabaseUser(     $this->databaseType,
+                    $createUserResult = DatabaseCompatibilityUtil::createDatabaseUser($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseAdminUsername,
                                                                              $this->databaseAdminPassword,
@@ -187,7 +187,7 @@
                 }
                 else
                 {
-                    $connectionResult = InstallUtil::checkDatabaseConnection($this->databaseType,
+                    $connectionResult = DatabaseCompatibilityUtil::checkDatabaseConnection($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseUsername,
                                                                              $this->databasePassword);
@@ -197,7 +197,7 @@
                         $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
-                    $databaseExistsResult = InstallUtil::checkDatabaseExists($this->databaseType,
+                    $databaseExistsResult = DatabaseCompatibilityUtil::checkDatabaseExists($this->databaseType,
                                                                              $this->databaseHostname,
                                                                              $this->databaseUsername,
                                                                              $this->databasePassword,

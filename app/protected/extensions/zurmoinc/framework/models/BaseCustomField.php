@@ -24,35 +24,34 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Makes sure the upload file size is large enough.
-     */
-    class DatabaseCheckSafeModeServiceHelper extends ServiceHelper
+    abstract class BaseCustomField extends RedBeanModel
     {
-        protected $form;
-
-        public function __construct($form)
+        public function __set($attributeName, $value)
         {
-            assert('$form instanceof InstallSettingsForm');
-            $this->form = $form;
+            $wasModified = $this->isModified();
+            parent::__set($attributeName, $value);
+            if ($attributeName == 'data')
+            {
+                if (!$wasModified)
+                {
+                    $this->unrestrictedSet('modified', false);
+                }
+            }
         }
 
-        protected function checkService()
+        public static function getDefaultMetadata()
         {
-            $passed = true;
-            if (!DatabaseCompatibilityUtil::isDatabaseStrictMode('mysql',
-                                                                 $this->form->databaseHostname,
-                                                                 $this->form->databaseUsername,
-                                                                 $this->form->databasePassword))
-            {
-                $this->message  = Yii::t('Default', 'Database is in strict mode.');
-                $passed = false;
-            }
-            else
-            {
-                $this->message = Yii::t('Default', 'Database is not in strict mode.');
-            }
-            return $passed;
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                ),
+                'relations' => array(
+                    'data' => array(RedBeanModel::HAS_ONE, 'CustomFieldData'),
+                ),
+                'rules' => array(
+                ),
+            );
+            return $metadata;
         }
     }
 ?>

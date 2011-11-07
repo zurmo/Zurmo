@@ -266,7 +266,8 @@
             if ($contact->save())
             {
                 Yii::app()->user->setFlash('notification',
-                    Yii::t('Default', 'LeadsModuleSingularLabel successfully converted.')
+                    Yii::t('Default', 'LeadsModuleSingularLabel successfully converted.',
+                                           LabelUtil::getTranslationParamsForAllModules())
                 );
                 $this->redirect(array('/contacts/default/details', 'id' => $contact->id));
             }

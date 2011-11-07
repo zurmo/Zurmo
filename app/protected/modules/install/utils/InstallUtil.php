@@ -169,30 +169,11 @@
                                             $minimumRequiredVersion,
                                             /* out */ &$actualVersion)
         {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                        $PhpDriverVersion = phpversion('mysql');
-                        if ($PhpDriverVersion !== null)
-                        {
-                            $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
-                            $result = @mysql_query("SELECT VERSION()");
-                            $row    = @mysql_fetch_row($result);
-                            if (is_resource($connection))
-                            {
-                                mysql_close($connection);
-                            }
-                            if (isset($row[0]))
-                            {
-                                $actualVersion = $row[0];
-                                return self::checkVersion($minimumRequiredVersion, $actualVersion);
-                            }
-                        }
-                        return false;
-                default:
-                    throw new NotSupportedException();
-            }
+            $actualVersion = DatabaseCompatibilityUtil::getDatabaseVersion($databaseType,
+                                                                           $databaseHostname,
+                                                                           $databaseUsername,
+                                                                           $databasePassword);
+            return self::checkVersion($minimumRequiredVersion, $actualVersion);
         }
 
         /**
@@ -305,7 +286,7 @@
             return array($errorNumber, $errorString);
         }
 
-        public static function getDatabaseMaxAllowedPacketsSize($databaseType,
+        public static function checkDatabaseMaxAllowedPacketsSize($databaseType,
                                                                 $databaseHostname,
                                                                 $databaseUsername,
                                                                 $databasePassword,
@@ -313,28 +294,14 @@
                                                                 /* out */ & $actualBytes)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
-                    $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
-                    $row    = @mysql_fetch_row($result);
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    if (isset($row[1]))
-                    {
-                        $actualBytes = $row[1];
-                        return $minimumRequireBytes <= $actualBytes;
-                    }
-                    return false;
-                default:
-                    throw new NotSupportedException();
-            }
+            $actualBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize($databaseType,
+                                                                                       $databaseHostname,
+                                                                                       $databaseUsername,
+                                                                                       $databasePassword);
+            return $minimumRequireBytes <= $actualBytes;
         }
 
-        public static function getDatabaseMaxSpRecursionDepth($databaseType,
+        public static function checkDatabaseMaxSpRecursionDepth($databaseType,
                                                               $databaseHostname,
                                                               $databaseUsername,
                                                               $databasePassword,
@@ -342,28 +309,14 @@
                                                               /* out */ & $maxSpRecursionDepth)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
-                    $result = @mysql_query("SHOW VARIABLES LIKE 'max_sp_recursion_depth'");
-                    $row    = @mysql_fetch_row($result);
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    if (isset($row[1]))
-                    {
-                        $maxSpRecursionDepth = $row[1];
-                        return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
-                    }
-                    return false;
-                default:
-                    throw new NotSupportedException();
-            }
+            $maxSpRecursionDepth = DatabaseCompatibilityUtil::getDatabaseMaxSpRecursionDepth($databaseType,
+                                                                                             $databaseHostname,
+                                                                                             $databaseUsername,
+                                                                                             $databasePassword);
+            return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
         }
 
-        public static function getDatabaseDefaultCollation($databaseType,
+        public static function checkDatabaseDefaultCollation($databaseType,
                                                            $databaseHostname,
                                                            $databaseName,
                                                            $databaseUsername,
@@ -373,243 +326,12 @@
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             assert('is_array($notAllowedDatabaseCollations)');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
-                    @mysql_select_db($databaseName);
-                    $result = @mysql_query("SHOW VARIABLES LIKE 'collation_database'");
-                    $row    = @mysql_fetch_row($result);
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    if (isset($row[1]))
-                    {
-                        $databaseDefaultCollation = $row[1];
-                        return !in_array($databaseDefaultCollation, $notAllowedDatabaseCollations);
-                    }
-                    return false;
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        public static function isDatabaseStrictMode($databaseType,
-                                                    $databaseHostname,
-                                                    $databaseUsername,
-                                                    $databasePassword)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
-                    $result = @mysql_query("SELECT @@sql_mode;");
-                    $row    = @mysql_fetch_row($result);
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    if (isset($row[0]))
-                    {
-                        if ($row[0] == '' || strstr($row[0], 'STRICT_TRANS_TABLES') !== false)
-                        {
-                            $isStrict = true;
-                        }
-                        else
-                        {
-                            $isStrict = false;
-                        }
-                        return $isStrict;
-                    }
-                    return false;
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        /**
-         * @returns true, or an error string .
-         */
-        public static function checkDatabaseConnection($databaseType, $host, $rootUsername, $rootPassword)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            assert('is_string($host)         && $host != ""');
-            assert('is_string($rootUsername) && $rootUsername != ""');
-            assert('is_string($rootPassword) && $rootPassword != ""');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword)) === false)
-                    {
-                        $result = array(mysql_errno(), mysql_error());
-                    }
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    return $result;
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        /**
-         * @returns true/false for if the named database exists.
-         */
-        public static function checkDatabaseExists($databaseType, $host, $rootUsername, $rootPassword,
-                                                   $databaseName)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            assert('is_string($host)         && $host         != ""');
-            assert('is_string($rootUsername) && $rootUsername != ""');
-            assert('is_string($rootPassword) && $rootPassword != ""');
-            assert('is_string($databaseName) && $databaseName != ""');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword)) === false ||
-                                       @mysql_select_db($databaseName, $connection)         === false)
-                    {
-                        $result = array(mysql_errno(), mysql_error());
-                    }
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    return $result;
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        /**
-         * @returns true/false for if the named database user exists.
-         */
-        public static function checkDatabaseUserExists($databaseType, $host, $rootUsername, $rootPassword, $username)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            assert('is_string($host)         && $host         != ""');
-            assert('is_string($rootUsername) && $rootUsername != ""');
-            assert('is_string($rootPassword) && $rootPassword != ""');
-            assert('is_string($username)     && $username     != ""');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $result             = true;
-                    $query              = "select count(*) from user where Host in ('%', '$host') and User ='$username'";
-                    $connection         = @mysql_connect($host, $rootUsername, $rootPassword);
-                    $databaseConnection = @mysql_select_db('mysql', $connection);
-                    $queryResult        = @mysql_query($query, $connection);
-                    $row                = @mysql_fetch_row($queryResult);
-                    if ($connection === false || $databaseConnection === false || $queryResult === false ||
-                        $row === false)
-                    {
-                        $result = array(mysql_errno(), mysql_error());
-                    }
-                    else
-                    {
-                        if ($row == null)
-                        {
-                            $result = array(mysql_errno(), mysql_error());
-                        }
-                        elseif (is_array($row) && count($row) == 1 && $row[0] == 0)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            assert('is_array($row) && count($row) == 1 && $row[0] >= 1');
-                            $result = $row[0] == 1;
-                        }
-                    }
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    return $result;
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        // Methods that modify things.
-        // The aim is that when all of the checks above pass
-        // these should be expected to succeed.
-
-        /**
-         * Creates the named database, dropping it first if it already exists.
-         */
-        public static function createDatabase($databaseType, $host, $rootUsername, $rootPassword, $databaseName)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            assert('is_string($host)         && $host         != ""');
-            assert('is_string($rootUsername) && $rootUsername != ""');
-            assert('is_string($rootPassword) && $rootPassword != ""');
-            assert('is_string($databaseName) && $databaseName != ""');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword))                   === false ||
-                                       @mysql_query("drop   database if exists `$databaseName`", $connection) === false ||
-                                       @mysql_query("create database           `$databaseName`", $connection) === false)
-                    {
-                        $result = array(mysql_errno(), mysql_error());
-                    }
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    return $result;
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        /**
-         * Creates the named database user, dropping it first if it already exists.
-         * Grants the user full access on the given database.
-         */
-        public static function createDatabaseUser($databaseType, $host, $rootUsername, $rootPassword,
-                                                  $databaseName, $username, $password)
-        {
-            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            assert('is_string($host)         && $host         != ""');
-            assert('is_string($rootUsername) && $rootUsername != ""');
-            assert('is_string($rootPassword) && $rootPassword != ""');
-            assert('is_string($databaseName) && $databaseName != ""');
-            assert('is_string($username)     && $username     != ""');
-            assert('is_string($password)');
-            switch ($databaseType)
-            {
-                case 'mysql':
-                    $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword))                               === false ||
-                                       // The === 666 is to execute this command ignoring whether it fails.
-                                       @mysql_query("drop user `$username`", $connection) === 666                                  ||
-                                       @mysql_query("grant all on `$databaseName`.* to `$username`",        $connection) === false ||
-                                       @mysql_query("set password for `$username` = password('$password')", $connection) === false)
-                    {
-                        $result = array(mysql_errno(), mysql_error());
-                    }
-                    if (is_resource($connection))
-                    {
-                        mysql_close($connection);
-                    }
-                    return $result;
-
-                default:
-                    throw new NotSupportedException();
-            }
+            $databaseDefaultCollation = DatabaseCompatibilityUtil::getDatabaseDefaultCollation($databaseType,
+                                                                                               $databaseHostname,
+                                                                                               $databaseName,
+                                                                                               $databaseUsername,
+                                                                                               $databasePassword);
+            return !in_array($databaseDefaultCollation, $notAllowedDatabaseCollations);
         }
 
         /**
@@ -729,6 +451,8 @@
 
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
+            chmod($perInstanceConfigFile, 0777);
+            chmod($debugConfigFile, 0777);
 
             // NOTE: These keep the tidy formatting of the files they are modifying - the whitespace matters!
             $contents = file_get_contents($debugConfigFile);
@@ -940,7 +664,7 @@
             InstallUtil::checkPhpPostSizeSetting(1, $actualPostLimitBytes);
             $actualUploadLimitBytes = null;
             InstallUtil::checkPhpUploadSizeSetting(1, $actualUploadLimitBytes);
-            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize();
+            $actualMaxAllowedBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSizeRb();
             return min($actualPostLimitBytes, $actualUploadLimitBytes, $actualMaxAllowedBytes);
         }
 

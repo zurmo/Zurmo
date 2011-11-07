@@ -25,34 +25,32 @@
      ********************************************************************************/
 
     /**
-     * Makes sure the upload file size is large enough.
+     * This validator can be used by both a User model as well as a CFormModel like in User import for example.
+     * This validator validates to see if a valid time zone is entered by validating it with DateTimeZone class.
+     * See the yii documentation.
      */
-    class DatabaseCheckSafeModeServiceHelper extends ServiceHelper
+    class validateTimeZone extends CValidator
     {
-        protected $form;
-
-        public function __construct($form)
+        /**
+         * See the yii documentation.
+         */
+        protected function validateAttribute($model, $attributeName)
         {
-            assert('$form instanceof InstallSettingsForm');
-            $this->form = $form;
-        }
-
-        protected function checkService()
-        {
-            $passed = true;
-            if (!DatabaseCompatibilityUtil::isDatabaseStrictMode('mysql',
-                                                                 $this->form->databaseHostname,
-                                                                 $this->form->databaseUsername,
-                                                                 $this->form->databasePassword))
+            if ($model->$attributeName != null)
             {
-                $this->message  = Yii::t('Default', 'Database is in strict mode.');
-                $passed = false;
+                try
+                {
+                    if (new DateTimeZone($model->$attributeName) === false)
+                    {
+                        $model->addError($attributeName, Yii::t('Default', 'The time zone is invalid.'));
+                    }
+                }
+                catch (Exception $e)
+                {
+                    //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
+                    $model->$attributeName == 'UTC';
+                }
             }
-            else
-            {
-                $this->message = Yii::t('Default', 'Database is not in strict mode.');
-            }
-            return $passed;
         }
     }
 ?>

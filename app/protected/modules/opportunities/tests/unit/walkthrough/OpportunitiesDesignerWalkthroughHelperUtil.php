@@ -677,5 +677,36 @@
                     ),
             );
         }
+
+        /**
+         * This function returns the necessary get parameters for the opportunity search form
+         * based on the opportunity edited data.
+         */
+        public static function fetchOpportunitiesSearchFormGetData($accountId, $superUserId, $currencyId)
+        {
+            return array(
+                            'name'               =>  'myEditOpportunity',
+                            'owner'              =>  array('id' => $superUserId),
+                            'ownedItemsOnly'     =>  '1',
+                            'account'            =>  array('id' => $accountId),
+                            'amount'             =>  array('value'    => 288000,
+                                                          'currency' => array('id' => $currencyId)),
+                            'closeDate__Date'    =>  array('value' => 'Today'),
+                            'stage'              =>  array('value' => 'Qualification'),
+                            'source'             =>  array('value' => 'Inbound Call'),
+                            'probability'        =>  '2',
+                            'decimal'            =>  '12',
+                            'integer'            =>  '11',
+                            'phone'              =>  '259-784-2069',
+                            'text'               =>  'This is a test Edit Text',
+                            'textarea'           =>  'This is a test Edit TextArea',
+                            'url'                =>  'http://wwww.abc-edit.com',
+                            'checkbox'           =>  array('value'  =>  '0'),
+                            'currency'           =>  array('value'  =>  40),
+                            'picklist'           =>  array('value'  =>  'b'),
+                            'radio'              =>  array('value'  =>  'e'),
+                            'date__Date'         =>  array('type'   =>  'Today'),
+                            'datetime__DateTime' =>  array('type'   =>  'Today'));
+        }
     }
 ?>

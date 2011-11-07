@@ -370,5 +370,16 @@
             );
             $this->assertEquals($compareData, $tempTableData);
         }
+
+        /**
+        * @depends testDropTableByTableName
+        */
+        public function testBulkInsert()
+        {
+            $testTableName = 'testimporttable';
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName('importBulkTest.csv', $testTableName));
+            $count = ImportDatabaseUtil::getCount($testTableName);
+            $this->assertEquals(520, $count);
+        }
     }
 ?>

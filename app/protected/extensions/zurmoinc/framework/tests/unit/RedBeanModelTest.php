@@ -675,7 +675,7 @@
             $this->assertEquals(1, count($errors['a']));
             $this->assertEquals('A cannot be blank.', $errors['a'][0]);
             $this->assertEquals(1, count($errors['eRequired']));
-            $this->assertEquals('E Required cannot be blank and must validate.', $errors['eRequired'][0]);
+            $this->assertEquals('E Required cannot be blank.', $errors['eRequired'][0]);
 
             $c->a = 1;
             $c->eRequired->e = 'hello';
@@ -690,7 +690,7 @@
             $this->assertEquals(1, count($errors['a']));
             $this->assertEquals('A must be either 1 or 0.', $errors['a'][0]);
             $this->assertEquals(1, count($errors['eRequired']));
-            $this->assertEquals('E Required cannot be blank and must validate.', $errors['eRequired'][0]);
+            $this->assertEquals('E Required cannot be blank.', $errors['eRequired'][0]);
             $errors = $c->getErrors('a');
             $this->assertEquals(1, count($errors));
             $this->assertEquals(1, count($errors[0]));

@@ -44,7 +44,7 @@
         {
             $passed = true;
             $databaseDefaultCollation = null;
-            if (!InstallUtil::getDatabaseDefaultCollation('mysql',
+            if (!InstallUtil::checkDatabaseDefaultCollation('mysql',
                                                           $this->form->databaseHostname,
                                                           $this->form->databaseName,
                                                           $this->form->databaseUsername,
@@ -52,15 +52,14 @@
                                                           $this->notAllowedDatabaseCollations,
                                                           $databaseDefaultCollation))
             {
-                if ($databaseDefaultCollation == null)
+                if ($databaseDefaultCollation != null)
                 {
-                }
-                else
-                {
-                    $this->message  = Yii::t('Default', 'Database default collation is:') . ' ';
-                    $this->message .= $databaseDefaultCollation . '. ';
-                    $this->message .= Yii::t('Default', 'database default collation shouldn\'t in:') . ' ';
-                    $this->message .= implode(', ', $this->notAllowedDatabaseCollations);
+                    $notAllowedCollations = implode(', ', $this->notAllowedDatabaseCollations);
+                    $this->message  = Yii::t('Default', 'Database default collation is: {collation}',
+                                             array('{collation}' => $databaseDefaultCollation));
+                    $this->message .= ' . ';
+                    $this->message .= Yii::t('Default', 'Database default collation should not be in: {listOfCollations}',
+                                             array('{listOfCollations}' => $notAllowedCollations));
                 }
                 $passed = false;
             }
