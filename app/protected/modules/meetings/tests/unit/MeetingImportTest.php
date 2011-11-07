@@ -33,7 +33,7 @@
             MeetingTestHelper::createCategories();
         }
 
-        public function testSimplUserImportWhereAllRowsSucceed()
+        public function testSimpleUserImportWhereAllRowsSucceed()
         {
             Yii::app()->user->userModel            = User::getByUsername('super');
 
