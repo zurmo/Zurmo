@@ -64,7 +64,7 @@
         'Employees'
             => 'Empleados',
         'My AccountsModulePluralLabel'
-            => 'Mi AccountsModulePluralLabel',
+            => 'Mis AccountsModulePluralLabel',
         'Parent AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel padre',
         'Prospect'

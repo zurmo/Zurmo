@@ -56,7 +56,7 @@
         'Leads'
             => 'Prospectos',
         'LeadsModulePluralLabel'
-            => 'LeadsModulePluralLabel Relacionadas',
+            => 'LeadsModulePluralLabel',
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
         'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
         'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
@@ -76,7 +76,7 @@
         'LeadsModuleSingularLabel was not converted. An error occurred.'
             => 'El prospecto no se convirtió. Ha ocurrido un error.',
         'My LeadsModulePluralLabel'
-            => 'Mi LeadsModulePluralLabel',
+            => 'Mis LeadsModulePluralLabel',
         'Select AccountsModuleSingularLabel'
             => 'Seleccione AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'
