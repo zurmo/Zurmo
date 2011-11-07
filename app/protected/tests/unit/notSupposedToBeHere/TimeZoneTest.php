@@ -47,7 +47,7 @@
             $this->assertEquals($offset, $offset1);
             $this->assertEquals($offset, $offset2);
 
-            if($offset == -18000)
+            if ($offset == -18000)
             {
                 $offsetHours = 6;
             }
