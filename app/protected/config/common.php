@@ -146,6 +146,14 @@
                 'enableCsrfValidation' => true,
                 'enableCookieValidation' => false, //keep off until we can fix it on linux/windows servers.
             ),
+            'urlManager' => array (
+                'urlFormat' => 'path',
+                'caseSensitive' => true,
+                'showScriptName'=>false,
+                'rules'=>array(
+                    '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
+                )
+            ),
             'user' => array(
                 'allowAutoLogin' => true,
                 'class'          => 'WebUser',

@@ -70,7 +70,7 @@
                 array('explicitReadWriteModelPermissions' => $postData)));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             //Confirm the permissions are set right based on how the account was saved.
             $accounts[0]->forget();
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
@@ -88,7 +88,7 @@
                 array('explicitReadWriteModelPermissions' => $postData)));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             //Confirm the permissions are set right based on how the account was saved.
             $accounts[0]->forget();
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
@@ -106,7 +106,7 @@
                 array('explicitReadWriteModelPermissions' => $postData)));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             //Confirm the permissions are set right based on how the account was saved.
             $accounts[0]->forget();
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::

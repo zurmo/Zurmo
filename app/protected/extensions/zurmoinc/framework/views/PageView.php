@@ -222,8 +222,8 @@
             {
                 $title = "$title - $subtitle";
             }
-            $defaultTheme = 'themes/default';
-            $theme        = 'themes/' . Yii::app()->theme->name;
+            $defaultTheme = '/themes/default';
+            $theme        = '/themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
 
@@ -236,13 +236,13 @@
                 }
             }
 
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/theme.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/screen.css', 'screen, projection');
+            $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/print.css', 'print');
+            $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/theme.css');
 
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
+                $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css' . '/ie.css', 'screen, projection');
             }
 
             foreach ($this->getStyles() as $style)
@@ -251,7 +251,7 @@
                 {
                     if (file_exists("$theme/css/$style.css"))
                     {
-                        $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
+                        $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/' . $style. '.css'); // Not Coding Standard
                     }
                 }
             }

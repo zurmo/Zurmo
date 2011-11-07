@@ -361,13 +361,13 @@
             $contact = ContactTestHelper::createContactbyNameForOwner('ContactNotLead',  $super);
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/edit',
-                                                                   'contacts/default/edit&id=' . $contact->id, true);
+                                                                   Yii::app()->createUrl('contacts/default/edit',    array('id' => $contact->id)), true);
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/details',
-                                                                   'contacts/default/details&id=' . $contact->id, true);
+                                                                   Yii::app()->createUrl('contacts/default/details', array('id' => $contact->id)), true);
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
-                                                                   'contacts/default/delete&id=' .  $contact->id, true);
+                                                                   Yii::app()->createUrl('contacts/default/delete',  array('id' => $contact->id)), true);
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/convert',
-                                                                   'contacts/default/details&id=' . $contact->id, true);
+                                                                   Yii::app()->createUrl('contacts/default/details', array('id' => $contact->id)), true);
         }
     }
 ?>
