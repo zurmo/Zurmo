@@ -83,9 +83,23 @@
                     array('modelClassName',      'length', 'max'   => 64),
                     array('serializedMetadata',  'required'),
                     array('serializedMetadata',  'type', 'type' => 'string'),
+                    array('serializedMetadata',  'validateSerializedMetadata'),
                 )
             );
             return $metadata;
+        }
+
+        public function validateSerializedMetadata($attribute, $params)
+        {
+            if ($this->$attribute != null)
+            {
+                $unserializedData = unserialize($this->serializedMetadata);
+                if(!isset($unserializedData['attributeLabels']))
+                {
+                    $message = Yii::t('Default', 'Missing the attribute labels.');
+                    $this->addError('name', $message);
+                }
+            }
         }
 
         public function validateUniqueNameByModelClassName($attribute, $params)
@@ -105,6 +119,17 @@
                                   array('{attribute}' => $attribute, '{name}' => $this->$attribute));
                 $this->addError('name', $message);
             }
+        }
+
+        public function getLabelByLanguage($language)
+        {
+            assert('is_string($language)');
+            $unserializedData = unserialize($this->serializedMetadata);
+            if(isset($unserializedData['attributeLabels']) && isset($unserializedData['attributeLabels'][$language]))
+            {
+                return $unserializedData['attributeLabels'][$language];
+            }
+            return $this->name;
         }
     }
 ?>

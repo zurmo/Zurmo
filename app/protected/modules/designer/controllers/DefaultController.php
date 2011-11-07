@@ -73,16 +73,19 @@
             }
             else
             {
-                $modelClassName  = $moduleClassName::getPrimaryModelName();
-                $model           = new $modelClassName();
-                $adapter         = new ModelAttributesAdapter($model);
+                $modelClassName           = $moduleClassName::getPrimaryModelName();
+                $model                    = new $modelClassName();
+                $adapter                  = new ModelAttributesAdapter($model);
+                $derivedAttributesAdapter = new DerivedAttributesAdapter(get_class($model));
+                $customAttributes         = array_merge($adapter->getCustomAttributes(),
+                                                        $derivedAttributesAdapter->getAttributes());
                 $canvasView = new StandardAndCustomAttributesListView(
                             $this->getId(),
                             $this->getModule()->getId(),
                             $_GET['moduleClassName'],
                             $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                             $adapter->getStandardAttributes(),
-                            $adapter->getCustomAttributes(),
+                            $customAttributes,
                             $modelClassName,
                             $breadcrumbLinks
                 );
