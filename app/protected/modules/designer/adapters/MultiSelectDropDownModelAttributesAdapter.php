@@ -67,7 +67,7 @@
                    if (isset($attributeForm->customFieldDataDataExistingValues[$order]) &&
                       $attributeForm->customFieldDataDataExistingValues[$order] != $newValue)
                    {
-                       CustomField::updateValueByDataIdAndOldValueAndNewValue(
+                       MultipleValuesCustomField::updateValueByDataIdAndOldValueAndNewValue(
                                         $attributeForm->getCustomFieldDataId(),
                                         $attributeForm->customFieldDataDataExistingValues[$order],
                                         $newValue);

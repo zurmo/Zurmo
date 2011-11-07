@@ -82,8 +82,8 @@
         {
             if ($this->customFieldDataId > 0)
             {
-            return GroupedAttributeCountUtil::getCountData('CustomField', 'value', 'data',
-                                                $this->customFieldDataId);
+                return GroupedAttributeCountUtil::getCountData('CustomField', 'value', 'data',
+                                                               $this->customFieldDataId);
             }
             return 0;
         }
