@@ -87,7 +87,7 @@ $designerTypes[] = substr($formClassName, 0, strlen($formClassName) - strlen('At
                 'Date',
                 'DateTime',
                 'Decimal',
-                'DropdownDependency',
+                'DropDownDependency',
                 'DropDown',
                 'Integer',
                 'MultiSelectDropDown',

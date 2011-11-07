@@ -127,6 +127,7 @@
             if (!empty($_GET['attributeName']))
             {
                 $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
+                $attributeForm->setModelClassName($modelClassName);
             }
             else
             {

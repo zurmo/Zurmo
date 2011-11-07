@@ -40,6 +40,10 @@
         {
             assert('$model instanceof RedBeanModel || $model instanceof ModelForm');
             assert('is_string($attributeName) && $attributeName != ""');
+            if(!$model->isAttribute($attributeName))
+            {
+                return static::getDerivedAttributeType(get_class($model), $attributeName);
+            }
             $metadata = $model->getMetadata();
             foreach ($metadata as $className => $perClassMetadata)
             {
@@ -112,6 +116,37 @@
                 }
             }
             return null;
+        }
+
+        public static function getDerivedAttributeType($modelClassName, $attributeName)
+        {
+            assert('is_string($modelClassName) && $modelClassName != ""');
+            assert('is_string($attributeName) && $attributeName != ""');
+            try
+            {
+                $models = CalculatedDerivedAttributeMetadata::
+                          getByNameAndModelClassName($attributeName, $modelClassName);
+                if (count($models) == 1)
+                {
+                    return 'CalculatedNumber';
+                }
+            }
+            catch(NotFoundException $e)
+            {
+            }
+            try
+            {
+                $models = DropdownDependencyDerivedAttributeMetadata::
+                          getByNameAndModelClassName($attributeName, $modelClassName);
+                if (count($models) == 1)
+                {
+                    return 'DropdownDependency';
+                }
+            }
+            catch(NotFoundException $e)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 ?>

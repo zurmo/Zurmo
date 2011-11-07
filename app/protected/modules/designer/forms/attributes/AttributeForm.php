@@ -43,7 +43,7 @@
                 $this->attributeName     = $attributeName;
                 $this->attributeLabels   = $model->getAttributeLabelsForAllSupportedLanguagesByAttributeName(
                                                     $attributeName);
-                //should be $model->getAttributeLabelsForAllSupportedLanguagesByAttributeName($attributeName);
+
                 $this->attributePropertyToDesignerFormAdapter = new AttributePropertyToDesignerFormAdapter();
                 $validators = $model->getValidators($attributeName);
                 foreach ($validators as $validator)
@@ -176,6 +176,11 @@
         public function setModelClassName($modelClassName)
         {
             $this->modelClassName = $modelClassName;
+        }
+
+        public function getModelClassName()
+        {
+            return $this->modelClassName;
         }
 
         /**

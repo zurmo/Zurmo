@@ -24,12 +24,49 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Form for working with calculated number derived attributes.
+     */
     class CalculatedNumberAttributeForm extends AttributeForm
     {
+        public $id;
+
+        public $formula;
+
+        public function __construct(RedBeanModel $model = null, $attributeName = null)
+        {
+            assert('$attributeName === null || is_string($attributeName)');
+            assert('$model === null || !$model->isAttribute($attributeName)');
+            if ($model !== null)
+            {
+                if($attributeName != null)
+                {
+                    $metadata              = CalculatedDerivedAttributeMetadata::
+                                             getByNameAndModelClassName($attributeName, get_class($model));
+                    $unserializedMetadata  = unserialize($metadata->serializedMetadata);
+                    $this->id              = $metadata->id;
+                    $this->attributeName   = $metadata->name;
+                    $this->attributeLabels = $unserializedMetadata['attributeLabels'];
+                    $this->formula         = $unserializedMetadata['formula'];
+                }
+                else
+                {
+                    $unserializedMetadata = array();
+                }
+            }
+        }
+
         public function rules()
         {
             return array_merge(parent::rules(), array(
-                //array('defaultValue', 'boolean'),
+                array('formula',        'validateFormula'),
+            ));
+        }
+
+        public function attributeLabels()
+        {
+            return array_merge(parent::attributeLabels(), array(
+                'formula' => Yii::t('Default', 'Formula'),
             ));
         }
 
@@ -48,6 +85,11 @@
             return 'CalculatedNumber';
         }
 
+        public function validateFormula($attribute, $params)
+        {
+            //todo:
+        }
+
         /**
          * (non-PHPdoc)
          * @see AttributeForm::validateAttributeNameDoesNotExists()
@@ -55,11 +97,17 @@
         public function validateAttributeNameDoesNotExists()
         {
             assert('$this->modelClassName != null');
-            $models = CalculatedDerivedAttributeMetadata::
-                      getByNameAndModelClassName($this->attributeName, $this->modelClassName);
-            if (count($models) > 0)
+            try
             {
-                $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+                $models = CalculatedDerivedAttributeMetadata::
+                          getByNameAndModelClassName($this->attributeName, $this->modelClassName);
+                if (count($models) > 0)
+                {
+                    $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+                }
+            }
+            catch(NotFoundException $e)
+            {
             }
         }
 
@@ -68,7 +116,16 @@
          */
         public static function getModelAttributeAdapterNameForSavingAttributeFormData()
         {
-            return 'CalculatedNumberModelAttributesAdapter';
+            return 'CalculatedNumberModelDerivedAttributesAdapter';
+        }
+
+        public function canUpdateAttributeProperty($propertyName)
+        {
+            if($propertyName == 'attributeName' && $this->id != null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 ?>

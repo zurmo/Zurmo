@@ -97,7 +97,7 @@
                 $sql       = 'select id from ' . $tableName . " where name = '{$this->$attribute}' and ";
                 $sql      .= "modelclassname = '" . $this->modelClassName . "'";
                 $rows      = R::getAll($sql);
-                if(count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->id)
+                if(count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->getClassId('DerivedAttributeMetadata'))
                 {
                     return;
                 }
