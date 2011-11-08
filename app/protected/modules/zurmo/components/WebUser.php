@@ -87,5 +87,69 @@
             AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_OUT);
             return true;
         }
+
+        /**
+        * Initializes the application component.
+        * This method overrides the parent implementation by starting session,
+        * performing cookie-based authentication if enabled, and updating the flash variables.
+        */
+        public function init()
+        {
+            CApplicationComponent::init();
+            Yii::app()->getSession()->open();
+
+            if ($this->getIsGuest() && $this->allowAutoLogin)
+            {
+                $this->restoreFromCookie();
+            }
+            elseif ($this->autoRenewCookie && $this->allowAutoLogin)
+            {
+                $this->renewCookie();
+            }
+
+            /*
+            if ($this->getIsGuest() && 1)
+            {
+                $this->restoreFromSession();
+            }
+            */
+            if($this->autoUpdateFlash)
+                $this->updateFlash();
+
+            $this->updateAuthStatus();
+        }
+
+        /**
+        * Populates the current user object with the information obtained from cookie.
+        * This method is used when automatic login ({@link allowAutoLogin}) is enabled.
+        * The user identity information is recovered from cookie.
+        * Sufficient security measures are used to prevent cookie data from being tampered.
+        * @see saveToCookie
+        */
+        protected function restoreFromSession()
+        {
+            $app=Yii::app();
+            return;
+            //$data = $this->changeIdentity($id,$name,$states);
+            $cookie=$app->getRequest()->getCookies()->itemAt($this->getStateKeyPrefix());
+            if($cookie && !empty($cookie->value) && ($data=$app->getSecurityManager()->validateData($cookie->value))!==false)
+            {
+                $data=@unserialize($data);
+                if(is_array($data) && isset($data[0],$data[1],$data[2],$data[3]))
+                {
+                    list($id,$name,$duration,$states)=$data;
+                    if($this->beforeLogin($id,$states,true))
+                    {
+                        $this->changeIdentity($id,$name,$states);
+                        if($this->autoRenewCookie)
+                        {
+                            $cookie->expire=time()+$duration;
+                            $app->getRequest()->getCookies()->add($cookie->name,$cookie);
+                        }
+                        $this->afterLogin(true);
+                    }
+                }
+            }
+        }
     }
 ?>

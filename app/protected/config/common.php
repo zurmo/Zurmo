@@ -151,6 +151,13 @@
                 'caseSensitive' => true,
                 'showScriptName'=>false,
                 'rules'=>array(
+                    // REST patterns
+                    array('api/rest/login',  'pattern'=>'api/rest/login',                'verb'=>'GET'),
+                    array('api/rest/list',   'pattern'=>'api/rest/<model:\w+>',          'verb'=>'GET'),
+                    array('api/rest/view',   'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
+                    array('api/rest/update', 'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
+                    array('api/rest/delete', 'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
+                    array('api/rest/create', 'pattern'=>'api/rest/<model:\w+>',          'verb'=>'POST'),
                     '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
                 )
             ),
@@ -214,6 +221,7 @@
         'modules' => array(
             'accounts',
             'activities',
+            'api',
             'configuration',
             'contacts',
             'designer',
