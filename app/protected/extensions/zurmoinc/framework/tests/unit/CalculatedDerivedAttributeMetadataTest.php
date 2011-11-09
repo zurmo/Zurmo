@@ -29,12 +29,14 @@
         public function testMetadata()
         {
             $metadata = new CalculatedDerivedAttributeMetadata();
+            $metadata->setScenario('nonAutoBuild');
             $metadata->name = 'someName';
             $metadata->modelClassName     = 'Whatever';
             $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array()));
             $this->assertTrue($metadata->save());
             unset($metadata);
             $metadata = CalculatedDerivedAttributeMetadata::getByNameAndModelClassName('someName', 'Whatever');
+            $metadata->setScenario('nonAutoBuild');
             $this->assertEquals('someName', $metadata->name);
             $this->assertEquals('Whatever', $metadata->modelClassName);
             $this->assertEquals('a:3:{i:0;s:5:"stuff";i:1;i:1;s:15:"attributeLabels";a:0:{}}', $metadata->serializedMetadata);
@@ -49,12 +51,14 @@
         public function testSavingMetadataWithSameName()
         {
             $metadata = new CalculatedDerivedAttributeMetadata();
+            $metadata->setScenario('nonAutoBuild');
             $metadata->name = 'someName';
             $metadata->modelClassName     = 'Whatever';
             $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array()));
             $this->assertFalse($metadata->save());
 
             $metadata = new CalculatedDerivedAttributeMetadata();
+            $metadata->setScenario('nonAutoBuild');
             $metadata->name = 'someName';
             $metadata->modelClassName     = 'Whatever2';
             $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array()));

@@ -361,7 +361,9 @@
                                //that will need to be translated.
                                if ($model->isRelation($attributeName) &&
                                    ($model->getRelationModelClassName($attributeName) == 'OwnedCustomField' ||
-                                   $model->getRelationModelClassName($attributeName) == 'CustomField'))
+                                   $model->getRelationModelClassName($attributeName) == 'CustomField' ||
+                                   $model->getRelationModelClassName($attributeName) == 'MultipleValuesCustomField' ||
+                                   $model->getRelationModelClassName($attributeName) == 'OwnedMultipleValuesCustomField'))
                                 {
                                     $customFieldData = CustomFieldDataModelUtil::
                                                        getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);

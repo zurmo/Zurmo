@@ -83,7 +83,7 @@
                     array('modelClassName',      'length', 'max'   => 64),
                     array('serializedMetadata',  'required'),
                     array('serializedMetadata',  'type', 'type' => 'string'),
-                    array('serializedMetadata',  'validateSerializedMetadata'),
+                    array('serializedMetadata',  'validateSerializedMetadata', 'on'   => 'nonAutoBuild'),
                 )
             );
             return $metadata;

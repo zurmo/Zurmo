@@ -103,7 +103,6 @@
             self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $relationName);
             self::addOrUpdateRules($modelClassName, $relationName, null, null, null,
                                    null, null, $isRequired, array(), $metadata);
-
             $modelClassName::setMetadata($metadata);
         }
 
@@ -116,7 +115,8 @@
                                                               $elementType,
                                                               $customFieldDataName,
                                                               $customFieldDataData = null,
-                                                              $customFieldDataLabels = null)
+                                                              $customFieldDataLabels = null,
+                                                              $relationModelClassName = 'OwnedCustomField')
         {
             assert('is_string($modelClassName)      && $modelClassName != ""');
             assert('is_string($relationName)        && $relationName != ""');
@@ -125,12 +125,14 @@
             assert('is_bool($isAudited)');
             assert('is_string($customFieldDataName) && $customFieldDataName != ""');
             assert('is_array($customFieldDataLabels) || $customFieldDataLabels == null');
+            assert('in_array($relationModelClassName, array("OwnedCustomField", "OwnedMultipleValuesCustomField"))');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
             if (!isset           (               $metadata[$modelClassName]['relations']) ||
                  !array_key_exists($relationName, $metadata[$modelClassName]['relations']))
             {
-                $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,  'CustomField');
+                $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,
+                                                                               $relationModelClassName, RedBeanModel::OWNED);
             }
             $metadata[$modelClassName]['elements'][$relationName] = $elementType;
             self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $relationName);

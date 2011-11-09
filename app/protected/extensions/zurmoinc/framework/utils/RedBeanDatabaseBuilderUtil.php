@@ -78,7 +78,7 @@
             }
             foreach (self::$modelClassNamesToSampleModels as $modelClassName => $model)
             {
-                if (!$model instanceof OwnedModel && !$model instanceof OwnedCustomField)
+                if (!$model instanceof OwnedModel && !$model instanceof OwnedCustomField && !$model instanceof OwnedMultipleValuesCustomField)
                 {
                     try
                     {
@@ -102,6 +102,7 @@
                     {
                         $messageLogger->addErrorMessage("*** Saving the sample $modelClassName failed.");
                         if (is_subclass_of($modelClassName, 'OwnedCustomField') ||
+                            is_subclass_of($modelClassName, 'OwnedMultipleValuesCustomField') ||
                             is_subclass_of($modelClassName, 'OwnedModel'))
                         {
                             $messageLogger->addErrorMessage('It is OWNED and was probably not saved via its owner, making it not a root model.');

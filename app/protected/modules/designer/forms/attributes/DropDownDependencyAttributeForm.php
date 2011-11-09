@@ -26,6 +26,15 @@
 
     class DropDownDependencyAttributeForm extends AttributeForm
     {
+        public $customFieldMappingData;
+        /**
+         * array
+         * 	array('customFieldName' => 'topLevelName'),
+         *  array('customFieldName' => 'secondLevelName', 'mappingData' => array()),
+         *  array('customFieldName' => 'thirdLevelName', 'mappingData' => array()),
+         *  array('customFieldName' => 'fourthLevelName', 'mappingData' => array()),
+         */
+
         public function rules()
         {
             return array_merge(parent::rules(), array(

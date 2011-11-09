@@ -59,7 +59,8 @@
                                                               $elementType,
                                                               $customFieldDataName,
                                                               $customFieldDataData,
-                                                              $customFieldDataLabels);
+                                                              $customFieldDataLabels,
+                                                              'OwnedMultipleValuesCustomField');
             if ($attributeForm->getCustomFieldDataId() != null)
             {
                 foreach ($attributeForm->customFieldDataData as $order => $newValue)

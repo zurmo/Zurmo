@@ -24,45 +24,36 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownAttributeForm extends DropDownAttributeForm
+    /**
+     * A MultipleValuesCustomField owned by a SecurableItem in the sense that it is
+     * included in a relation with RedBeanModel::OWNED - its lifetime
+     * is controlled by the owning model. SecurableItems are secured
+     * and auditable and so the related models that they own are secured
+     * and auditable.
+     */
+    class OwnedMultipleValuesCustomField extends MultipleValuesCustomField
     {
-        public static function getAttributeTypeDisplayName()
+        // On changing a member value the original value
+        // is saved (ie: on change it again the original
+        // value is not overwritten) so that on save the
+        // changes can be written to the audit log.
+        public $originalAttributeValues = array();
+
+        public function __set($attributeName, $value)
         {
-            return Yii::t('Default', 'Multi-Select Pick List');
+            AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
+            parent::__set($attributeName, $value);
         }
 
-        public static function getAttributeTypeDisplayDescription()
+        public function save($runValidation = true, array $attributeNames = null)
         {
-            return Yii::t('Default', 'A pick list that can have multiple selections');
+            AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
+            return parent::save($runValidation, $attributeNames);
         }
 
-        public function getAttributeTypeName()
+        public function forgetOriginalAttributeValues()
         {
-            return 'MultiSelectDropDown';
+            $this->unrestrictedSet('originalAttributeValues', array());
         }
-
-        /**
-         * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
-         */
-        public static function getModelAttributeAdapterNameForSavingAttributeFormData()
-        {
-            return 'MultiSelectDropDownModelAttributesAdapter';
-        }
-
-
-        /**
-         * Get how many records in a model have each possible customFieldData value selected.
-         * If the customFieldData doesn't exist yet, then return 0.
-         */
-        public function getCollectionCountData()
-        {
-            if ($this->customFieldDataId > 0)
-            {
-                return GroupedAttributeCountUtil::getCountData('MultipleValuesCustomField', 'values', 'data',
-                                                               $this->customFieldDataId);
-            }
-            return 0;
-        }
-
     }
 ?>

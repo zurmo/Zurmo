@@ -41,10 +41,12 @@
             if($id != null)
             {
                 $metadata = CalculatedDerivedAttributeMetadata::getById($id);
+                $metadata->setScenario('nonAutoBuild');
             }
             else
             {
                 $metadata = new CalculatedDerivedAttributeMetadata();
+                $metadata->setScenario('nonAutoBuild');
             }
             $metadata->name               = $attributeName;
             $metadata->modelClassName     = $modelClassName;

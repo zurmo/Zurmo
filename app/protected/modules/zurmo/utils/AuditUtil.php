@@ -50,9 +50,10 @@
 
         public static function saveOriginalAttributeValue($auditableModel, $attributeName, $value)
         {
-            assert('$auditableModel instanceof Item          ||
-                    $auditableModel instanceof OwnedModel    ||
-                    $auditableModel instanceof OwnedCustomField');
+            assert('$auditableModel instanceof Item             ||
+                    $auditableModel instanceof OwnedModel       ||
+                    $auditableModel instanceof OwnedCustomField ||
+                    $auditableModel instanceof OwnedMultipleValuesCustomField');
             assert('property_exists($auditableModel, "originalAttributeValues")');
             if (!array_key_exists($attributeName, $auditableModel->originalAttributeValues))
             {
@@ -139,7 +140,8 @@
                                   // so we can safely ignore them.
                     }
                     if ($ownedModel instanceof OwnedModel ||
-                        $ownedModel instanceof OwnedCustomField)
+                        $ownedModel instanceof OwnedCustomField ||
+                        $ownedModel instanceof OwnedMultipleValuesCustomField)
                     {
                         $ownedModels = array($ownedModel);
                     }
@@ -224,7 +226,8 @@
                         continue;
                     }
                     if ($ownedModel instanceof OwnedModel ||
-                        $ownedModel instanceof OwnedCustomField)
+                        $ownedModel instanceof OwnedCustomField ||
+                        $ownedModel instanceof OwnedMultipleValuesCustomField)
                     {
                         $ownedModels = array($ownedModel);
                     }
@@ -246,7 +249,8 @@
         {
             assert('$auditableModel instanceof Item       ||
                     $auditableModel instanceof OwnedModel ||
-                    $auditableModel instanceof OwnedCustomField');
+                    $auditableModel instanceof OwnedCustomField ||
+                    $auditableModel instanceof OwnedMultipleValuesCustomField');
             $noAuditAttributes = array();
             $metadata = $auditableModel->getMetadata();
             foreach ($metadata as $notUsed => $classMetadata)
