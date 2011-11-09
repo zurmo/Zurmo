@@ -279,6 +279,14 @@
                                                                                 $columnMappingData,
                                                                                 $importSanitizeResultsUtil);
                 }
+                elseif ($attributeImportRules instanceof AfterSaveActionNonDerivedAttributeImportRules)
+                {
+                    static::resolveAfterSaveActionNonDerivedAttributeImportRules($afterSaveActionsData,
+                                                                                 $attributeImportRules,
+                                                                                 $valueReadyToSanitize,
+                                                                                 $columnMappingData,
+                                                                                 $importSanitizeResultsUtil);
+                }
                 else
                 {
                     static::
@@ -379,7 +387,7 @@
         }
 
         /**
-         * Some attributeImportRules require the sanitized values to be processed after the model is saved. An example
+         * Some derivedAttributeImportRules require the sanitized values to be processed after the model is saved. An example
          * is the user status which is a derived attribute requiring processing after the user has been saved. This
          * method gets the sanitized value and adds it along with the attributeImportRules class name to an array
          * by reference.  After the model is saved, this array is referenced and each attribute import rule is processed.
@@ -391,6 +399,37 @@
          * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
          */
         protected static function resolveAfterSaveActionDerivedAttributeImportRules(
+                                  & $afterSaveActionsData,
+                                  DeriivedAttributeImportRules $attributeImportRules,
+                                  $valueReadyToSanitize,
+                                  $columnMappingData,
+                                  ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        {
+            assert('is_array($afterSaveActionsData)');
+            assert('$attributeImportRules instanceof AfterSaveActionDerivedAttributeImportRules');
+            assert('is_array($columnMappingData)');
+            $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
+                                                                                 $columnMappingData,
+                                                                                 $importSanitizeResultsUtil);
+            if ($attributeValueData != null)
+            {
+                $afterSaveActionsData[] = array(get_class($attributeImportRules), $attributeValueData);
+            }
+        }
+
+        /**
+         * Some attributeImportRules require the sanitized values to be processed after the model is saved. An example
+         * is the user status which is a derived attribute requiring processing after the user has been saved. This
+         * method gets the sanitized value and adds it along with the attributeImportRules class name to an array
+         * by reference.  After the model is saved, this array is referenced and each attribute import rule is processed.
+         * @see AfterSaveActionNonDerivedAttributeImportRules
+         * @param array $afterSaveActionsData
+         * @param AttributeImportRules $attributeImportRules
+         * @param mixed $valueReadyToSanitize
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         */
+        protected static function resolveAfterSaveActionNonDerivedAttributeImportRules(
                                   & $afterSaveActionsData,
                                   AttributeImportRules $attributeImportRules,
                                   $valueReadyToSanitize,
@@ -408,7 +447,6 @@
                 $afterSaveActionsData[] = array(get_class($attributeImportRules), $attributeValueData);
             }
         }
-
         protected static function resolveModelForModelDerivedAttribute(
                                   RedBeanModel $model,
                                   $importRulesType,
