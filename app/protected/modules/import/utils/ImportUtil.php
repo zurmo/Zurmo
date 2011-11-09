@@ -400,7 +400,7 @@
          */
         protected static function resolveAfterSaveActionDerivedAttributeImportRules(
                                   & $afterSaveActionsData,
-                                  DeriivedAttributeImportRules $attributeImportRules,
+                                  DerivedAttributeImportRules $attributeImportRules,
                                   $valueReadyToSanitize,
                                   $columnMappingData,
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)
@@ -431,7 +431,7 @@
          */
         protected static function resolveAfterSaveActionNonDerivedAttributeImportRules(
                                   & $afterSaveActionsData,
-                                  AttributeImportRules $attributeImportRules,
+                                  NonDerivedAttributeImportRules $attributeImportRules,
                                   $valueReadyToSanitize,
                                   $columnMappingData,
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)

@@ -285,6 +285,22 @@
                     'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
+              'primaryAddress__latitude' =>
+                  array (
+                    'attributeLabel' => 'Primary Address - Latitude',
+                    'attributeName' => 'primaryAddress',
+                    'relationAttributeName' => 'latitude',
+                    'attributeImportRulesType' => 'Decimal',
+                    'isRequired' => false,
+                  ),
+              'primaryAddress__longitude' =>
+                  array (
+                    'attributeLabel' => 'Primary Address - Longitude',
+                    'attributeName' => 'primaryAddress',
+                    'relationAttributeName' => 'longitude',
+                    'attributeImportRulesType' => 'Decimal',
+                    'isRequired' => false,
+                  ),
             );
             $this->assertEquals($compareData, $attributesCollection);
         }

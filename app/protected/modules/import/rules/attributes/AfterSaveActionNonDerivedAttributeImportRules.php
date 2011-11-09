@@ -27,7 +27,7 @@
     /**
      * Extend this rule if the attribute is processed after save of the import model instead of the beforehand.
      */
-    abstract class AfterSaveActionNonDerivedAttributeImportRules extends AttributeImportRules
+    abstract class AfterSaveActionNonDerivedAttributeImportRules extends NonDerivedAttributeImportRules
     {
         /**
          * Override to implement method.  This method is called after the model is saved during import. Allows for
