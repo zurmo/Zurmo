@@ -50,5 +50,16 @@
             $this->assertEquals('123 Knob Street, Apartment 4b, Chicago, Illinois, 60606, USA',
                                 strval($address));
         }
+
+        public function testAddressLatitudeAndLongitude()
+        {
+            $address            = new Address();
+            $address->latitude  = 123.145638;
+            $this->assertEquals('123.145638',
+                                $address->getLatitude());
+            $address->longitude = 121.176129;
+            $this->assertEquals('121.176129',
+                                $address->getLongitude());
+        }
     }
 ?>
