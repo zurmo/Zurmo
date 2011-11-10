@@ -2604,7 +2604,9 @@
             $modelIdentifier = $modelClassName . strval($bean->id);
             try
             {
-                return RedBeanModelsCache::getModel($modelIdentifier);
+                $model = RedBeanModelsCache::getModel($modelIdentifier);
+                $model->constructDerived($bean, false);
+                return $model;
             }
             catch (NotFoundException $e)
             {
