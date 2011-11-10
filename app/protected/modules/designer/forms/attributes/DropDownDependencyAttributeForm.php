@@ -24,9 +24,32 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Form for managing the dependent drop down derived attributes that can be created in the designer tool.
+     * An example is if you have 3 dropdowns that need to be connected together so some values in the second dropdown
+     * only show based on the value of the first dropdown.
+     */
     class DropDownDependencyAttributeForm extends AttributeForm
     {
-        public $customFieldMappingData;
+        /**
+         * Array of mapping data.  Below is an example:
+         * @code
+            <?php
+                $mappingData = array(
+                    array('customFieldName' => 'topLevelCustomFieldName'),
+                    array('customFieldName' => 'secondLevelCustomFieldName',
+                          'mappingData' => array('secondLevelValueB' => 'topLevelValueA')),
+                    array('customFieldName' => 'thirdLevelCustomFieldName',
+                          'mappingData' => array()),
+                    array('customFieldName' => 'fourthLevelCustomFieldName',
+                          'mappingData' => array()),
+                );
+            ?>
+         * @endcode
+         *
+         * @var array
+         */
+        public $mappingData;
         /**
          * array
          * 	array('customFieldName' => 'topLevelName'),
@@ -35,13 +58,43 @@
          *  array('customFieldName' => 'fourthLevelName', 'mappingData' => array()),
          */
 
+        public function __construct(RedBeanModel $model = null, $attributeName = null)
+        {
+            assert('$attributeName === null || is_string($attributeName)');
+            assert('$model === null || !$model->isAttribute($attributeName)');
+            if ($model !== null)
+            {
+                if($attributeName != null)
+                {
+                    $metadata              = CalculatedDerivedAttributeMetadata::
+                                             getByNameAndModelClassName($attributeName, get_class($model));
+                    $unserializedMetadata  = unserialize($metadata->serializedMetadata);
+                    $this->id              = $metadata->id;
+                    $this->attributeName   = $metadata->name;
+                    $this->attributeLabels = $unserializedMetadata['attributeLabels'];
+                    $this->mappingData     = $unserializedMetadata['mappingData'];
+                }
+                else
+                {
+                    $unserializedMetadata = array();
+                }
+            }
+        }
+
         public function rules()
         {
             return array_merge(parent::rules(), array(
-                //array('defaultValue', 'boolean'),
+                array('mappingData', 'safe'),
+                array('mappingData', 'validateMappingData'),
             ));
         }
 
+        public function attributeLabels()
+        {
+            return array_merge(parent::attributeLabels(), array(
+                'mappingData'   => Yii::t('Default', 'Dependency Mapping'),
+            ));
+        }
         public static function getAttributeTypeDisplayName()
         {
             return Yii::t('Default', 'Dependent Pick Lists');
@@ -71,6 +124,17 @@
                 $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
             }
         }
+
+        /**
+         * Make sure the mappings are formed correctly.
+         */
+        public function validateMappingData($attribute, $params)
+        {
+            //todo: what kind of validation issues are possible?
+            //some mapped values arent from the next level up dropdown? but how would you even explain this in UI since
+            //that shouldnt even be possible. we should still validate it as being correct. and show a general message if not.
+        }
+
 
         /**
          * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
