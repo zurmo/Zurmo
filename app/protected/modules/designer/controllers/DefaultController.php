@@ -57,11 +57,6 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
-
-            $modulePermissionsData =  PermissionsUtil::getAllModulePermissionsDataByPermitable(Yii::app()->user->userModel);
-            echo "<pre>";
-            print_r($modulePermissionsData);
-            echo "</pre>";
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
@@ -224,6 +219,7 @@
                 RequiredAttributesValidViewUtil::
                 removeAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
             }
+            RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
             $routeParams = array_merge($_GET, array(
                 'attributeName' => $attributeForm->attributeName,
                 0 => 'default/attributeDetails'
