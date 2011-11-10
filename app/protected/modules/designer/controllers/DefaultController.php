@@ -57,6 +57,11 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
+
+            $modulePermissionsData =  PermissionsUtil::getAllModulePermissionsDataByPermitable(Yii::app()->user->userModel);
+            echo "<pre>";
+            print_r($modulePermissionsData);
+            echo "</pre>";
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
