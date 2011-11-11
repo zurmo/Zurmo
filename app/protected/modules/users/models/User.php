@@ -76,7 +76,10 @@
                 $personBean = R::getBean($userBean, $tableName);
                 assert('$personBean !== null');
             }
-            $this->setClassBean                  ($modelClassName, $personBean);
+            if(!array_key_exists($modelClassName, $this->modelClassNameToBean))
+            {
+                $this->setClassBean              ($modelClassName, $personBean);
+            }
             $this->mapAndCacheMetadataAndSetHints($modelClassName, $personBean);
             parent::constructDerived($bean, $setDefaults);
         }
