@@ -81,11 +81,8 @@
             $content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";
             return $content;
-            $element  = new EditableDropDownCollectionElement($this->model, 'customFieldDataData', $form,
-                                array('specificValueFromDropDownAttributeName' => 'defaultValueOrder',
-                                      'baseLanguage'           => Yii::app()->languageHelper->getBaseLanguage(),
-                                      'activeLanguagesData'    => Yii::app()->languageHelper->getActiveLanguagesData(),
-                                      'labelsAttributeName'    => 'customFieldDataLabels'));
+            $element  = new DropDownDependencyMappingElement($this->model, 'mappingData', $form,
+                                array('modelRelationsCustomFieldsAndLabels' => array()));
             $content .= $element->render();
             $content .= '</div>' . "\n";
             return $content;

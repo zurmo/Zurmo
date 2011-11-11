@@ -36,12 +36,12 @@
          * @code
             <?php
                 $mappingData = array(
-                    array('customFieldName' => 'topLevelCustomFieldName'),
-                    array('customFieldName' => 'secondLevelCustomFieldName',
+                    array('attributeName' => 'topLevelAttributeName'),
+                    array('attributeName' => 'secondLevelAttributeName',
                           'mappingData' => array('secondLevelValueB' => 'topLevelValueA')),
-                    array('customFieldName' => 'thirdLevelCustomFieldName',
+                    array('attributeName' => 'thirdLevelAttributeName',
                           'mappingData' => array()),
-                    array('customFieldName' => 'fourthLevelCustomFieldName',
+                    array('attributeName' => 'fourthLevelAttributeName',
                           'mappingData' => array()),
                 );
             ?>
@@ -58,6 +58,12 @@
          *  array('customFieldName' => 'fourthLevelName', 'mappingData' => array()),
          */
 
+        /**
+         * The model class name that this drop down dependency is related to.
+         * @param string $modelClassName
+         */
+        public $modelClassName;
+
         public function __construct(RedBeanModel $model = null, $attributeName = null)
         {
             assert('$attributeName === null || is_string($attributeName)');
@@ -66,13 +72,14 @@
             {
                 if($attributeName != null)
                 {
-                    $metadata              = CalculatedDerivedAttributeMetadata::
+                    $metadata              = DropDownDependencyDerivedAttributeMetadata::
                                              getByNameAndModelClassName($attributeName, get_class($model));
                     $unserializedMetadata  = unserialize($metadata->serializedMetadata);
                     $this->id              = $metadata->id;
                     $this->attributeName   = $metadata->name;
                     $this->attributeLabels = $unserializedMetadata['attributeLabels'];
                     $this->mappingData     = $unserializedMetadata['mappingData'];
+                    $this->modelClassName  = get_class($model);
                 }
                 else
                 {
@@ -130,9 +137,57 @@
          */
         public function validateMappingData($attribute, $params)
         {
-            //todo: what kind of validation issues are possible?
-            //some mapped values arent from the next level up dropdown? but how would you even explain this in UI since
-            //that shouldnt even be possible. we should still validate it as being correct. and show a general message if not.
+            assert('$this->modelClassName != null');
+                $mappingData = array(
+                    array('customFieldName' => 'topLevelCustomFieldName'),
+                    array('attributeName' => 'secondLevelCustomFieldName',
+                          'mappingData' => array('secondLevelValueB' => 'topLevelValueA')),
+                    array('customFieldName' => 'thirdLevelCustomFieldName',
+                          'mappingData' => array()),
+                    array('customFieldName' => 'fourthLevelCustomFieldName',
+                          'mappingData' => array()),
+                );
+            assert('$attribute == "mappingData"');
+            $mappingData = $this->$attribute;
+            if(count($mappingData) < 2)
+            {
+                $this->addError('mappingData',  Yii::t('Default', 'You must select at least 2 pick-lists.'));
+            }
+            if(count($mappingData) > 4)
+            {
+                $this->addError('mappingData',  Yii::t('Default', 'You can only have at most 4 pick-lists selected.'));
+            }
+            foreach($mappingData as $position => $attributeNameAndData)
+            {
+                assert('isset($attributeNameAndData["attributeName"])');
+                if($position > 0)
+                {
+                    assert('isset($attributeNameAndData["mappingData"])');
+                    $customFieldData        = CustomFieldDataModelUtil::
+                                              getDataByModelClassNameAndAttributeName($this->modelClassName,
+                                                                                      $attributeName);
+                    $dataValues             = unserialize($parentCustomFieldData->serializedData);
+                    $parentPosition         = $position - 1;
+                    $parentAttributeName    = $mappingData[$parentPosition]['attributeName'];
+                    $parentCustomFieldData  = CustomFieldDataModelUtil::
+                                              getDataByModelClassNameAndAttributeName($this->modelClassName,
+                                                                                      $parentAttributeName);
+                    $parentDataValues       = unserialize($parentCustomFieldData->serializedData);
+
+                    foreach($attributeNameAndData['mappingData'] as $customFieldDataValue => $parentCustomFieldDataValue)
+                    {
+                        if(!in_array($parentCustomFieldDataValue, $parentDataValues))
+                        {
+                            $this->addError('mappingData',
+                                            Yii::t('Default',
+                                            'Each pick-list value must map correctly to a parent pick-list value. ' .
+                                            'This value does map correctly: {value} - {parentValue}',
+                                            array('{value}'       => $customFieldDataValue,
+                                                  '{parentValue}' => $parentCustomFieldDataValue)));
+                        }
+                    }
+                }
+            }
         }
 
 
