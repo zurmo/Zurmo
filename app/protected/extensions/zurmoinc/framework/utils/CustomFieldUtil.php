@@ -25,39 +25,26 @@
      ********************************************************************************/
 
     /**
-     * Holds metadata for a dependent set of dropdowns.
+     * Helper class for working with CustomField models
      */
-    class DropDownDependencyDerivedAttributeMetadata extends DerivedAttributeMetadata
+    class CustomFieldUtil
     {
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                ),
-                'rules' => array(
-                )
-            );
-            return $metadata;
-        }
-
-        public function getUsedModelAttributeNames()
+        public static function getCustomFieldAttributeNames(RedBeanModel $model)
         {
             $attributeNames = array();
-            if($this->serializedMetadata != null)
+            $modelClassName = get_class($model);
+            $metadata       = $modelClassName::getMetadata();
+            foreach ($metadata as $unused => $classMetadata)
             {
-                $unserializedMetadata = unserialize($this->serializedMetadata);
-                if(isset($unserializedMetadata['mappingData']))
+                if (isset($classMetadata['customFields']))
                 {
-                    foreach($unserializedMetadata['mappingData'] as $data)
+                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
                     {
-                        if($data['attributeName'] != null)
+                        $relationModelClassName = $model->getRelationModelClassName($customFieldName);
+                        if( is_subclass_of($relationModelClassName, 'CustomField') ||
+                            $relationModelClassName == 'CustomField')
                         {
-                            $attributeNames[] = $data['attributeName'];
-                        }
-                        else
-                        {
-                            throw new NotSupportedException();
+                            $attributeNames[] = $customFieldName;
                         }
                     }
                 }

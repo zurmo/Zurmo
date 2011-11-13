@@ -49,14 +49,7 @@
          *
          * @var array
          */
-        public $mappingData;
-        /**
-         * array
-         * 	array('customFieldName' => 'topLevelName'),
-         *  array('customFieldName' => 'secondLevelName', 'mappingData' => array()),
-         *  array('customFieldName' => 'thirdLevelName', 'mappingData' => array()),
-         *  array('customFieldName' => 'fourthLevelName', 'mappingData' => array()),
-         */
+        public $mappingData = array();
 
         /**
          * The model class name that this drop down dependency is related to.
@@ -80,10 +73,6 @@
                     $this->attributeLabels = $unserializedMetadata['attributeLabels'];
                     $this->mappingData     = $unserializedMetadata['mappingData'];
                     $this->modelClassName  = get_class($model);
-                }
-                else
-                {
-                    $unserializedMetadata = array();
                 }
             }
         }

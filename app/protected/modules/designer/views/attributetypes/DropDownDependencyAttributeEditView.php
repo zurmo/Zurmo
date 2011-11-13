@@ -79,14 +79,27 @@
             $titleBar = new TitleBarView ($this->getAfterFormLayoutTranslatedTitleContent());
             $content  = $titleBar->render();
             $content .= '<div class="horizontal-line"></div>' . "\n";
-            $content .= '<div>' . "\n";
-            return $content;
-            $element  = new DropDownDependencyMappingElement($this->model, 'mappingData', $form,
-                                array('modelRelationsCustomFieldsAndLabels' => array()));
-            $content .= $element->render();
-            $content .= '</div>' . "\n";
+            $content .= $this->renderMappingLayoutContent($form);
             return $content;
         }
+
+        protected function renderMappingLayoutContent(ZurmoActiveForm $form)
+        {
+            $ajaxActionId                    = 'changeDropDownDependencyAttribute';
+            $content                         = '<div id="DropDownDependency">';
+            $adapter                         = new DropDownDependencyToMappingLayoutAdapter(
+                                                    $this->model->modelClassName, $this->model->attributeName, 4);
+            $dependencyCollection            = $adapter->makeDependencyCollectionByMappingData($this->model->mappingData);
+            $dropDownDependencyMappingLayout = new DropDownDependencyMappingLayout($dependencyCollection,
+                                                                                   $form,
+                                                                                   $this->controllerId,
+                                                                                   $this->moduleId,
+                                                                                   $ajaxActionId);
+            $content                        .= $dropDownDependencyMappingLayout->render();
+            $content                        .= '</div>' . "\n";
+            return $content;
+        }
+
 
         protected function getAfterFormLayoutTranslatedTitleContent()
         {

@@ -41,7 +41,6 @@
             assert('is_string($modelClassName)');
             assert('$modelClassName != ""');
             assert('get_called_class() != "DerivedAttributeMetadata"');
-            $bean = R::findOne('derivedattributemetadata', "name = '$name' and modelclassname = '$modelClassName'");
             $derivedAttirbuteMetadataTableName   = RedBeanModel::getTableName('DerivedAttributeMetadata');
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
             $joinTablesAdapter->addFromTableAndGetAliasName($derivedAttirbuteMetadataTableName,
@@ -54,6 +53,26 @@
                 throw new NotFoundException();
             }
             return $models[0];
+        }
+
+        /**
+         * Given a model class name, return all the derived attributes based on the called class.
+         * @param string $modelClassName
+         */
+        public static function getAllByModelClassName($modelClassName)
+        {
+            assert('$modelClassName != ""');
+            $derivedAttirbuteMetadataTableName   = RedBeanModel::getTableName('DerivedAttributeMetadata');
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
+            $joinTablesAdapter->addFromTableAndGetAliasName($derivedAttirbuteMetadataTableName,
+                                                            "{$derivedAttirbuteMetadataTableName}_id");
+            $where = "$derivedAttirbuteMetadataTableName.modelclassname = '$modelClassName'";
+            $models = static::getSubset($joinTablesAdapter, null, null, $where);
+            if (count($models) == 0)
+            {
+                return array();
+            }
+            return $models;
         }
 
         public static function getDefaultMetadata()

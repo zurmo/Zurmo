@@ -24,45 +24,46 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Holds metadata for a dependent set of dropdowns.
-     */
-    class DropDownDependencyDerivedAttributeMetadata extends DerivedAttributeMetadata
+    class DropDownDependencyCustomFieldMapping
     {
-        public static function getDefaultMetadata()
+        protected $allowAttributeSelection = true;
+
+        protected $position;
+
+        protected $attributeName;
+
+        protected $availableCustomFieldAttributes;
+
+        protected $customFieldData;
+
+        protected $mappingData;
+
+        public function __construct($position,
+                                    $attributeName,
+                                    $availableCustomFieldAttributes,
+                                    $customFieldData,
+                                    $mappingData)
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                ),
-                'rules' => array(
-                )
-            );
-            return $metadata;
+            assert('is_int($position)');
+            assert('is_string($attributeName) || $attributeName == null');
+            assert('is_array($availableCustomFieldAttributes)');
+            assert('$customFieldData instanceof CustomFieldData || $customFieldData == null');
+            assert('is_array($mappingData) || $mappingData == null');
+            $this->position                       = $position;
+            $this->attributeName                  = $attributeName;
+            $this->availableCustomFieldAttributes = $availableCustomFieldAttributes;
+            $this->customFieldData                = $customFieldData;
+            $this->mappingData                    = $mappingData;
         }
 
-        public function getUsedModelAttributeNames()
+        public function doNotAllowAttributeSelection()
         {
-            $attributeNames = array();
-            if($this->serializedMetadata != null)
-            {
-                $unserializedMetadata = unserialize($this->serializedMetadata);
-                if(isset($unserializedMetadata['mappingData']))
-                {
-                    foreach($unserializedMetadata['mappingData'] as $data)
-                    {
-                        if($data['attributeName'] != null)
-                        {
-                            $attributeNames[] = $data['attributeName'];
-                        }
-                        else
-                        {
-                            throw new NotSupportedException();
-                        }
-                    }
-                }
-            }
-            return $attributeNames;
+            $this->allowAttributeSelection = false;
+        }
+
+        public function allowsAttributeSelection()
+        {
+            return $this->allowAttributeSelection;
         }
     }
 ?>
