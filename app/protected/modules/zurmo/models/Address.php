@@ -66,6 +66,16 @@
             return join(', ' , $address);
         }
 
+        public function getLatitude()
+        {
+            return $this->latitude;
+        }
+
+        public function getLongitude()
+        {
+            return $this->longitude;
+        }
+
         protected static function getPluralLabel()
         {
             return 'Addresses';
@@ -81,22 +91,30 @@
                     'city',
                     'state',
                     'postalCode',
+                    'latitude',
+                    'longitude',
                     // Todo: make these relations.
                     'country',
                 ),
                 'rules' => array(
-                    array('street1',    'type', 'type' => 'string'),
-                    array('street1',    'length', 'max' => 128),
-                    array('street2',    'type', 'type' => 'string'),
-                    array('street2',    'length', 'max' => 128),
-                    array('city',       'type', 'type' => 'string'),
-                    array('city',       'length', 'max' => 32),
-                    array('state',      'type', 'type' => 'string'),
-                    array('state',      'length', 'max' => 32),
-                    array('country',    'type', 'type' => 'string'),
-                    array('country',    'length', 'max' => 32),
-                    array('postalCode', 'type', 'type' => 'string'),
-                    array('postalCode', 'length', 'max' => 16),
+                    array('street1',    'type',      'type'      => 'string'),
+                    array('street1',    'length',    'max'       => 128),
+                    array('street2',    'type',      'type'      => 'string'),
+                    array('street2',    'length',    'max'       => 128),
+                    array('city',       'type',      'type'      => 'string'),
+                    array('city',       'length',    'max'       => 32),
+                    array('state',      'type',      'type'      => 'string'),
+                    array('state',      'length',    'max'       => 32),
+                    array('country',    'type',      'type'      => 'string'),
+                    array('country',    'length',    'max'       => 32),
+                    array('postalCode', 'type',      'type'      => 'string'),
+                    array('postalCode', 'length',    'max'       => 16),
+                    array('latitude',   'type',      'type'      => 'float'),
+                    array('latitude',   'length',    'max'       => 10),
+                    array('latitude',   'numerical', 'precision' => 6),
+                    array('longitude',  'type',      'type'      => 'float'),
+                    array('longitude',  'length',    'max'       => 10),
+                    array('longitude',  'numerical', 'precision' => 6),
                 ),
             );
             return $metadata;

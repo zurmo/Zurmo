@@ -47,8 +47,8 @@
             => 'Histograma 3D',
         '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
             => '<b>Zurmo</b> es un systema de <b>Customer Relationship Management</b> de <b>Zurmo Inc.</b>',
-        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
-            => '<b> Zurmo </ b> está licenciado bajo la licencia GPLv3. Usted puede leer la licencia href="http://www.zurmo.org/license"> <a aquí </ a>',
+        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
+            => '<b> Zurmo </ b> está licenciado bajo la licencia GPLv3. Usted puede leer la licencia <a href="http://www.zurmo.org/license">aquí</ a>.',
         '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
             => '<b> Zurmo </ b> utiliza las siguientes herramientas de Open Source y frameworks:',
         'About'
@@ -246,7 +246,7 @@
         'Incorrect username or password.'
             => 'Nombre de usuario o contraseña incorrecta.',
         'Industry'
-            => 'industria',
+            => 'Industria',
         'Inherited - All'
             => 'Heredar - Todos',
         'Inherited - Allow'
@@ -354,7 +354,7 @@
         'Not Set - Ad-hoc / Owner'
             => 'Predeterminado - Ad-hoc / Propietario',
         'Office Fax'
-            => 'Fax de Oficina',
+            => 'Fax de la oficina',
         'Office Phone'
             => 'Teléfono de la Oficina',
         'Oh no!'
@@ -436,7 +436,7 @@
         'Securable Item'
             => 'Artículo asegurable',
         'Security'
-            => 'seguridad',
+            => 'Seguridad',
         'Select a Parent Group'
             => 'Seleccione un grupo de padres',
         'Select a Parent Role'
@@ -530,7 +530,7 @@
         'Write'
             => 'Escribir',
         'You have tried to access a page you do not have access to.'
-            => 'Ha intentado acceder a una página que no tienen acceso.',
+            => 'Ha intentado acceder a una página que no tiene acceso.',
         'You must have at least one active currency.'
             => 'Debe tener al menos una divisa activa.',
         'Your Profile'

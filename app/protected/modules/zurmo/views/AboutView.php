@@ -57,7 +57,7 @@
             $content .= '<br/>';
             $content .= '</p>';
             $content .= '<p>';
-            $content .= Yii::t('Default', '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>');
+            $content .= Yii::t('Default', '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.');
             $content .= '</p>';
             $content .= '<p>';
             $content .= Yii::t('Default', '<b>Zurmo</b> uses the following great Open Source tools and frameworks:');

@@ -64,7 +64,7 @@
         'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named'
             => 'Cada ContactsModuleSingularLowerCaseLabel debe ser un nombre exclusivo',
         'My ContactsModulePluralLabel'
-            => 'Mi ContactsModulePluralLabel',
+            => 'Mis ContactsModulePluralLabel',
         'Order'
             => 'Orden',
         'Serialized Labels'

@@ -34,13 +34,13 @@
         'Access Users Tab'
             => 'Acceso a ficha de usuarios',
         'Change Password'
-            => 'Cambiar Contraseña',
+            => 'Cambiar contraseña',
         'Change User Passwords'
             => 'Cambiar las contraseñas de Usuarios',
         'Confirm Password'
-            => 'Confirmar Contraseña',
+            => 'Confirmar contraseña',
         'Create User'
-            => 'Crear Usario',
+            => 'Crear Usuario',
         'Create Users'
             => 'Crear Usuario',
         'day(s)'
@@ -60,7 +60,7 @@
         'Login Via Web API'
             => 'Conexión Web API',
         'Manage Users'
-            => 'Administrar Usarios',
+            => 'Administrar Usuarios',
         'Manager'
             => 'Administrador',
         'Minimum Password Length'
@@ -88,7 +88,7 @@
         'Time Zone'
             => 'Zona horaria',
         'User'
-            => 'Usario',
+            => 'Usuario',
         'User configuration saved successfully.'
             => 'Configuración de usuario guardado con éxito.',
         'User Search'

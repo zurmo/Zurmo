@@ -47,7 +47,7 @@
             => '??',
         '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
             => '??',
-        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the <a href="http://www.zurmo.org/license">license here</a>'
+        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
             => '??',
         '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
             => '??',

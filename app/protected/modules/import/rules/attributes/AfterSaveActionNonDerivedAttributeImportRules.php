@@ -24,40 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        'Access TasksModulePluralLabel'
-            => 'Acceso a TasksModulePluralLabel',
-        'Completed'
-            => 'Terminado',
-        'Completed On'
-            => 'Completó el',
-        'Create TasksModulePluralLabel'
-            => 'Crear TasksModulePluralLabel',
-        'Delete TasksModulePluralLabel'
-            => 'Eliminar TasksModulePluralLabel',
-        'Due On'
-            => 'Fecha de vencimiento',
-        'My Open TasksModulePluralLabel'
-            => 'Mis TasksModulePluralLabel abiertas',
-        'Open TasksModulePluralLabel'
-            => 'TasksModulePluralLabel abiertas',
-        'Task'
-            => 'Tarea',
-        'Tasks'
-            => 'Tareas',
-        'TasksModulePluralLabel'
-            => 'TasksModulePluralLabel',
-        'TasksModulePluralLabel For AccountsModuleSingularLabel'
-            => 'TasksModulePluralLabel para AccountsModuleSingularLabel',
-        'TasksModulePluralLabel For ContactsModuleSingularLabel'
-            => 'TasksModulePluralLabel para ContactsModuleSingularLabel',
-        'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => 'TasksModulePluralLabel para OpportunitiesModuleSingularLabel',
-        'TasksModuleSingularLabel'
-            => 'TasksModuleSingularLabel',
-    );
+    /**
+     * Extend this rule if the attribute is processed after save of the import model instead of the beforehand.
+     */
+    abstract class AfterSaveActionNonDerivedAttributeImportRules extends NonDerivedAttributeImportRules
+    {
+        /**
+         * Override to implement method.  This method is called after the model is saved during import. Allows for
+         * additional after save processing to occur that is attribute specific.
+         * @param RedBeanModel $model
+         * @param array $attributeValueData
+         */
+        public static function processAfterSaveAction(RedBeanModel $model, $attributeValueData)
+        {
+            assert('is_array($attributeValueData)');
+            throw notImplementedException();
+        }
+    }
 ?>

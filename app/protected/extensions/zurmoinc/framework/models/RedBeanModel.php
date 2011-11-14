@@ -400,6 +400,17 @@
             assert('is_bool($setDefaults)');
         }
 
+        /**
+         * Utilized when pieces of information need to be constructed on an existing model, that can potentially be
+         * missing. For example, if a model is created, then a custom field is added, it is possible the cached model
+         * is missing the custom field customFieldData.
+         * @param unknown_type $bean
+         */
+        protected function constructIncomplete($bean)
+        {
+            assert('$bean === null || $bean instanceof RedBean_OODBBean');
+        }
+
         public function serialize()
         {
             return serialize(array(
@@ -2604,7 +2615,9 @@
             $modelIdentifier = $modelClassName . strval($bean->id);
             try
             {
-                return RedBeanModelsCache::getModel($modelIdentifier);
+                $model = RedBeanModelsCache::getModel($modelIdentifier);
+                $model->constructIncomplete($bean, false);
+                return $model;
             }
             catch (NotFoundException $e)
             {
