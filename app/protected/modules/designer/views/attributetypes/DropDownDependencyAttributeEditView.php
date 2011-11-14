@@ -79,27 +79,40 @@
             $titleBar = new TitleBarView ($this->getAfterFormLayoutTranslatedTitleContent());
             $content  = $titleBar->render();
             $content .= '<div class="horizontal-line"></div>' . "\n";
-            $content .= $this->renderMappingLayoutContent($form);
+            $content .= $form->error($this->model, 'mappingData');
+            $content .= $this->renderContainerAndMappingLayoutContent($this->model, $this->controllerId, $this->moduleId);
             return $content;
         }
 
-        protected function renderMappingLayoutContent(ZurmoActiveForm $form)
+        public static function renderContainerAndMappingLayoutContent(DropDownDependencyAttributeForm $model,
+                                                                      $controllerId, $moduleId, $renderContainer = true)
         {
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            assert('is_bool($renderContainer)');
+            $mappingDataDivId                = 'DropDownDependencyMappingData';
             $ajaxActionId                    = 'changeDropDownDependencyAttribute';
-            $content                         = '<div id="DropDownDependency">';
+            $content                         = null;
+            if($renderContainer)
+            {
+                $content                    .= '<div id="' . $mappingDataDivId . '">';
+            }
             $adapter                         = new DropDownDependencyToMappingLayoutAdapter(
-                                                    $this->model->modelClassName, $this->model->attributeName, 4);
-            $dependencyCollection            = $adapter->makeDependencyCollectionByMappingData($this->model->mappingData);
-            $dropDownDependencyMappingLayout = new DropDownDependencyMappingLayout($dependencyCollection,
-                                                                                   $form,
-                                                                                   $this->controllerId,
-                                                                                   $this->moduleId,
-                                                                                   $ajaxActionId);
+                                                    $model->modelClassName, $model->attributeName, 4);
+            $dependencyCollection            = $adapter->makeDependencyCollectionByMappingData($model->mappingData);
+            $dropDownDependencyMappingLayout = new DropDownDependencyMappingFormLayoutUtil($dependencyCollection,
+                                                                                           get_class($model),
+                                                                                           $controllerId,
+                                                                                           $moduleId,
+                                                                                           $ajaxActionId,
+                                                                                           $mappingDataDivId);
             $content                        .= $dropDownDependencyMappingLayout->render();
-            $content                        .= '</div>' . "\n";
+            if($renderContainer)
+            {
+                $content                        .= '</div>' . "\n";
+            }
             return $content;
         }
-
 
         protected function getAfterFormLayoutTranslatedTitleContent()
         {

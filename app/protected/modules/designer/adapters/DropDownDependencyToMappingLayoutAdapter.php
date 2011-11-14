@@ -52,12 +52,13 @@
             foreach($mappingData as $dependencyData)
             {
                 self::resolveAvailableCustomFieldAttributes($availableCustomFieldAttributes, $parentAttributeName);
+                $valuesToParentValues = self::resolveValuesToParentValues($dependencyData);
                 $dependencyMapping   = new DropDownDependencyCustomFieldMapping(
                                              $depthCount,
                                              $dependencyData['attributeName'],
                                              $availableCustomFieldAttributes,
                                              self::getAttributeCustomFieldData($dependencyData['attributeName']),
-                                             $dependencyData['mappingData']);
+                                             $valuesToParentValues);
                 $collection[]        = $dependencyMapping;
                 $parentAttributeName = $dependencyData['attributeName'];
                 $depthCount ++;
@@ -130,8 +131,23 @@
 
         protected function getAttributeCustomFieldData($attributeName)
         {
+            assert('is_string($attributeName) || $attributeName == null');
+            if($attributeName == null)
+            {
+                return null;
+            }
             return CustomFieldDataModelUtil::
                    getDataByModelClassNameAndAttributeName($this->modelClassName, $attributeName);
+        }
+
+        protected function resolveValuesToParentValues($dependencyData)
+        {
+            assert('is_array($dependencyData)');
+            if(isset($dependencyData['valuesToParentValues']))
+            {
+                return $dependencyData['valuesToParentValues'];
+            }
+            return null;
         }
     }
 ?>

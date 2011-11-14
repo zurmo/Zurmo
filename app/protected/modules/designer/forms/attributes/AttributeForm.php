@@ -193,5 +193,16 @@
         {
             return 'ModelAttributesAdapter';
         }
+
+        /**
+         * Wrapper method to allow any special sanitization to be done on post data prior to setting the attribute values.
+         * Override and extend as needed.
+         * @param array $values
+         */
+        public function sanitizeFromPostAndSetAttributes($values)
+        {
+            assert('is_array($values)');
+            $this->setAttributes($values);
+        }
     }
 ?>

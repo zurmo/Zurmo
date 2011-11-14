@@ -168,7 +168,8 @@
 
         protected function actionAttributeValidate($attributeForm)
         {
-            echo ZurmoActiveForm::validate($attributeForm);
+            $attributeForm->sanitizeFromPostAndSetAttributes($_POST[get_class($attributeForm)]);
+            echo ZurmoActiveForm::validate($attributeForm, null, false);
             Yii::app()->end(0, false);
         }
 
@@ -205,14 +206,10 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $wasRequired = $attributeForm->isRequired;
-            $attributeForm->setAttributes($_POST[get_class($attributeForm)]);
+            $attributeForm->sanitizeFromPostAndSetAttributes($_POST[get_class($attributeForm)]);
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName($model);
             $adapter->setAttributeMetadataFromForm($attributeForm);
-
-            //if wasRequired and now is not... ( make sure you use oldAttributeName to catch proper array alignment)
-            //removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName, $attributeName)
-
             if ($attributeForm->isRequired && !$wasRequired)
             {
                 RequiredAttributesValidViewUtil::
@@ -395,6 +392,37 @@
                 0 => 'default/modulesMenu'
             ));
             $this->redirect($routeParams);
+        }
+
+        public function actionChangeDropDownDependencyAttribute()
+        {
+            assert('!empty($_GET["moduleClassName"])');
+            assert('!empty($_GET["attributeTypeName"])');
+            $attributeFormClassName = $_GET['attributeTypeName'] . 'AttributeForm';
+            $moduleClassName = $_GET['moduleClassName'];
+            $modelClassName  = $moduleClassName::getPrimaryModelName();
+            $model = new $modelClassName();
+            if (!empty($_GET['attributeName']))
+            {
+                $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
+                $attributeForm->setModelClassName($modelClassName);
+            }
+            else
+            {
+                $attributeForm   = new $attributeFormClassName();
+                $attributeForm->setScenario('createAttribute');
+                $attributeForm->setModelClassName($modelClassName);
+            }
+            if (isset($_POST[get_class($attributeForm)]))
+            {
+                $attributeForm->sanitizeFromPostAndSetAttributes($_POST[get_class($attributeForm)]);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            echo DropDownDependencyAttributeEditView::
+                 renderContainerAndMappingLayoutContent($attributeForm, $this->getId(), $this->getModule()->getId(), false);
         }
     }
 ?>

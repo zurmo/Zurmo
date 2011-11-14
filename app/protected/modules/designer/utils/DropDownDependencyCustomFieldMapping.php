@@ -65,5 +65,48 @@
         {
             return $this->allowAttributeSelection;
         }
+
+        public function getTitle()
+        {
+            return Yii::t('Default', 'Level: {number}', array('{number}' => ($this->position + 1)));
+        }
+
+        public function getPosition()
+        {
+            return $this->position;
+        }
+
+        public function getAttributeName()
+        {
+            return $this->attributeName;
+        }
+
+        public function getAvailableCustomFieldAttributes()
+        {
+            return $this->availableCustomFieldAttributes;
+        }
+
+        public function getSelectHigherLevelFirstMessage()
+        {
+            if($this->allowsAttributeSelection())
+            {
+                throw new NotSupportedException();
+            }
+            return Yii::t('Default', 'First select level {number}', array('{number}' => ($this->position)));
+        }
+
+        public function getCustomFieldData()
+        {
+            return $this->customFieldData;
+        }
+
+        public function getMappingDataSelectedParentValueByValue($value)
+        {
+            if(isset($this->mappingData[$value]))
+            {
+                return $this->mappingData[$value];
+            }
+            return null;
+        }
     }
 ?>

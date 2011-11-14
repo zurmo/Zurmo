@@ -38,11 +38,11 @@
                 $mappingData = array(
                     array('attributeName' => 'topLevelAttributeName'),
                     array('attributeName' => 'secondLevelAttributeName',
-                          'mappingData' => array('secondLevelValueB' => 'topLevelValueA')),
+                          'valuesToParentValues' => array('secondLevelValueB' => 'topLevelValueA')),
                     array('attributeName' => 'thirdLevelAttributeName',
-                          'mappingData' => array()),
+                          'valuesToParentValues' => array()),
                     array('attributeName' => 'fourthLevelAttributeName',
-                          'mappingData' => array()),
+                          'valuesToParentValues' => array()),
                 );
             ?>
          * @endcode
@@ -113,11 +113,14 @@
         public function validateAttributeNameDoesNotExists()
         {
             assert('$this->modelClassName != null');
-            $models = DropDownDependencyDerivedAttributeMetadata::
-                      getByNameAndModelClassName($this->attributeName, $this->modelClassName);
-            if (count($models) > 0)
+            try
             {
+                $models = DropDownDependencyDerivedAttributeMetadata::
+                          getByNameAndModelClassName($this->attributeName, $this->modelClassName);
                 $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+            }
+            catch(NotFoundException $e)
+            {
             }
         }
 
@@ -127,52 +130,59 @@
         public function validateMappingData($attribute, $params)
         {
             assert('$this->modelClassName != null');
-                $mappingData = array(
-                    array('customFieldName' => 'topLevelCustomFieldName'),
-                    array('attributeName' => 'secondLevelCustomFieldName',
-                          'mappingData' => array('secondLevelValueB' => 'topLevelValueA')),
-                    array('customFieldName' => 'thirdLevelCustomFieldName',
-                          'mappingData' => array()),
-                    array('customFieldName' => 'fourthLevelCustomFieldName',
-                          'mappingData' => array()),
-                );
             assert('$attribute == "mappingData"');
-            $mappingData = $this->$attribute;
-            if(count($mappingData) < 2)
+            $mappingData            = $this->$attribute;
+            $selectedAttributeNames = 0;
+            foreach($mappingData as $data)
+            {
+                if(isset($data['attributeName']) && $data['attributeName'] != null)
+                {
+                    $selectedAttributeNames ++;
+                }
+            }
+            if(count($mappingData) < 2  || $selectedAttributeNames < 2)
             {
                 $this->addError('mappingData',  Yii::t('Default', 'You must select at least 2 pick-lists.'));
             }
-            if(count($mappingData) > 4)
+            if(count($mappingData) > 4 || $selectedAttributeNames > 4)
             {
                 $this->addError('mappingData',  Yii::t('Default', 'You can only have at most 4 pick-lists selected.'));
             }
             foreach($mappingData as $position => $attributeNameAndData)
             {
                 assert('isset($attributeNameAndData["attributeName"])');
-                if($position > 0)
+                if($position > 0 && $attributeNameAndData['attributeName'] != null)
                 {
-                    assert('isset($attributeNameAndData["mappingData"])');
-                    $customFieldData        = CustomFieldDataModelUtil::
-                                              getDataByModelClassNameAndAttributeName($this->modelClassName,
-                                                                                      $attributeName);
-                    $dataValues             = unserialize($parentCustomFieldData->serializedData);
-                    $parentPosition         = $position - 1;
-                    $parentAttributeName    = $mappingData[$parentPosition]['attributeName'];
-                    $parentCustomFieldData  = CustomFieldDataModelUtil::
-                                              getDataByModelClassNameAndAttributeName($this->modelClassName,
-                                                                                      $parentAttributeName);
-                    $parentDataValues       = unserialize($parentCustomFieldData->serializedData);
-
-                    foreach($attributeNameAndData['mappingData'] as $customFieldDataValue => $parentCustomFieldDataValue)
+                    if(!isset($attributeNameAndData['valuesToParentValues']) ||
+                       self::getValuesToParentValuesMappedCount($attributeNameAndData['valuesToParentValues']) == 0)
                     {
-                        if(!in_array($parentCustomFieldDataValue, $parentDataValues))
+                        $this->addError('mappingData', Yii::t('Default', 'At least one pick-list value must be mapped for each used level.'));
+                    }
+                    else
+                    {
+                        $customFieldData        = CustomFieldDataModelUtil::
+                                                  getDataByModelClassNameAndAttributeName($this->modelClassName,
+                                                                                          $attributeNameAndData['attributeName']);
+                        $dataValues             = unserialize($customFieldData->serializedData);
+                        $parentPosition         = $position - 1;
+                        $parentAttributeName    = $mappingData[$parentPosition]['attributeName'];
+                        $parentCustomFieldData  = CustomFieldDataModelUtil::
+                                                  getDataByModelClassNameAndAttributeName($this->modelClassName,
+                                                                                          $parentAttributeName);
+                        $parentDataValues       = unserialize($parentCustomFieldData->serializedData);
+
+                        foreach($attributeNameAndData['valuesToParentValues'] as $customFieldDataValue => $parentCustomFieldDataValue)
                         {
-                            $this->addError('mappingData',
-                                            Yii::t('Default',
-                                            'Each pick-list value must map correctly to a parent pick-list value. ' .
-                                            'This value does map correctly: {value} - {parentValue}',
-                                            array('{value}'       => $customFieldDataValue,
-                                                  '{parentValue}' => $parentCustomFieldDataValue)));
+                            if($parentCustomFieldDataValue != null &&
+                               !in_array($parentCustomFieldDataValue, $parentDataValues))
+                            {
+                                $this->addError('mappingData',
+                                                Yii::t('Default',
+                                                'Each pick-list value must map correctly to a parent pick-list value. ' .
+                                                'This value does map correctly: {value} - {parentValue}',
+                                                array('{value}'       => $customFieldDataValue,
+                                                      '{parentValue}' => $parentCustomFieldDataValue)));
+                            }
                         }
                     }
                 }
@@ -186,6 +196,36 @@
         public static function getModelAttributeAdapterNameForSavingAttributeFormData()
         {
             return 'DropDownDependencyModelAttributesAdapter';
+        }
+
+        public function sanitizeFromPostAndSetAttributes($values)
+        {
+            assert('is_array($values)');
+            if(isset($values['mappingData']))
+            {
+                foreach($values['mappingData'] as $position => $data)
+                {
+                    if($data['attributeName'] == null && isset($data['valuesToParentValues']))
+                    {
+                        unset($values['mappingData'][$position]['valuesToParentValues']);
+                    }
+                }
+            }
+            parent::sanitizeFromPostAndSetAttributes($values);
+        }
+
+        public function getValuesToParentValuesMappedCount($valuesToParentValues)
+        {
+            assert('is_array($valuesToParentValues)');
+            $count = 0;
+            foreach($valuesToParentValues as $value => $parentValue)
+            {
+                if($parentValue != null)
+                {
+                    $count ++;
+                }
+            }
+            return $count;
         }
     }
 ?>
