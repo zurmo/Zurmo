@@ -204,8 +204,7 @@
             $this->assertEquals('Opportunité', CHtml::encode('Opportunité'));
 
             $label = OpportunitiesModule::getModuleLabelByTypeAndLanguage('SingularLowerCase', 'fr');
-            $this->assertEquals('Opportunité', $label); //failing. What encoding is this Opportunité in vs. the message file?
-            $this->assertEquals('Opportunité', CHtml::encode($label));
+            $this->assertEquals(strtolower('Opportunité'), $label);
         }
     }
 ?>
