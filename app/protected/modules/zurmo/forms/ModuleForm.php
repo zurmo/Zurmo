@@ -58,12 +58,11 @@
             $data = $this->$attribute;
             foreach (Yii::app()->languageHelper->getActiveLanguagesData() as $language => $name)
             {
-                $data[$language] = mb_convert_encoding($data[$language], 'ISO-8859-1', Yii::app()->charset);
                 if ( empty($data[$language]))
                 {
                     $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
                 }
-                if ($data[$language] != strtolower($data[$language]))
+                if ($data[$language] != mb_strtolower($data[$language], Yii::app()->charset))
                 {
                     $this->addError($attribute . '[' . $language . ']',
                                 Yii::t('Default', 'Label must be all lowercase.'));
