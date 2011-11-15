@@ -23,7 +23,8 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
+    Yii::import("application.modules.api.tests.unit.controllers.ApiTestController");
+    Yii::import("application.modules.api.tests.unit.models.ApiModelTestItem");
     /**
      *
      * All requests to api will go to this controller.
@@ -42,29 +43,15 @@
         public function __construct($id, $module = null)
         {
             parent::__construct($id, $module);
-            $this->apiRequest         = new ApiRestRequest();
-            $this->apiResponse        = new ApiRestResponse();
-            $this->serviceType        = $this->apiRequest->getServiceType();
-            $this->serviceContentType = $this->apiRequest->getServiceContentType();
         }
 
         public function actionList()
         {
-            print_r(unserialize(Yii::app()->session->readSession('bdekl6vbb4it74fl026nig6o0')));
-            echo "aa";
-            exit;
-
-            $sessId = Yii::app()->getSession()->getSessionID();
-            echo $sessId . "<br />";
-            Yii::app()->getSession()->setSessionID('bdekl6vbb4it74fl026nig6o0');
-            $sessId = Yii::app()->getSession()->getSessionID();
-            echo $sessId . "<br />";
-            print_r(Yii::app());
-            exit;
             $baseControllerName = $this->getBaseController();
+
             if ($baseControllerName != null)
             {
-                $baseController = new $baseControllerName($baseControllerName, 'accounts');
+                $baseController = new $baseControllerName($baseControllerName, 'api');
                 $res = $baseController->getAll();
                 print_r($res);
             }
@@ -96,14 +83,12 @@
 
         public function actionLogin()
         {
-            $credentials = $this->apiRequest->getCredentials();
-            $identity = new UserIdentity('super', 'super');
+            $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
             $identity->authenticate();
             if ($identity->errorCode == UserIdentity::ERROR_NONE)
             {
                 Yii::app()->user->login($identity);
-                echo Yii::app()->getSession()->getSessionID();
-                print_r($_SESSION);
+                echo 'SessionId:' . Yii::app()->getSession()->getSessionID() . "<br />";
                 return true;
                 //returm tokenId
             }
@@ -111,6 +96,7 @@
             {
                 return false;
             }
+            exit;
         }
 
         protected function getBaseController()
@@ -118,8 +104,11 @@
             $model = $_GET['model'];
             switch($_GET['model'])
             {
-                case 'account':
+                case 'accounts':
                     $controllerName = 'AccountsApiController';
+                    break;
+                case 'apiTest':
+                    $controllerName = 'ApiTestController';
                     break;
                 default:
                     $controllerName = null;

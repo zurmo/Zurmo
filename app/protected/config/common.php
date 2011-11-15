@@ -43,6 +43,9 @@
             'assetManager' => array(
                 'basePath' => INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'assets/',
             ),
+            'apiRequest' => array(
+                'class' => 'application.modules.api.components.ApiRequest',
+            ),
             'browser' => array(
                 'class'          => 'application.extensions.zurmoinc.framework.components.Browser',
             ),
@@ -135,6 +138,10 @@
                 'sanitizePost'   => false, //off for now
                 'sanitizeCookie' => false, //off for now
             ),
+            'session'=>array(
+                'class'=>'CHttpSession',
+                'autoStart' => false,
+            ),
             'themeManager' => array(
                 'basePath' => INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes',
             ),
@@ -143,7 +150,7 @@
                 'timeZone'             => 'America/Chicago',
             ),
             'request' => array(
-                'enableCsrfValidation' => true,
+                'enableCsrfValidation' => false,
                 'enableCookieValidation' => false, //keep off until we can fix it on linux/windows servers.
             ),
             'urlManager' => array (

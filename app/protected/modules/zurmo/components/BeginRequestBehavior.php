@@ -28,10 +28,12 @@
     {
         public function attach($owner)
         {
-            if(!$this->isApiRequest()){
+            if(!Yii::app()->apiRequest->isApiRequest())
+            {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
+
                 if (!Yii::app()->isApplicationInstalled())
                 {
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
@@ -48,19 +50,18 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
                 }
-            }else
+            }
+            else
             {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleApiRequest'));
-
             }
         }
 
@@ -150,14 +151,13 @@
             if (Yii::app()->user->isGuest)
             {
                 $allowedGuestUserUrls = array (
-                    Yii::app()->createUrl('api/rest'),
                     Yii::app()->createUrl('api/rest/login'),
                 );
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;
                 foreach ($allowedGuestUserUrls as $url)
                 {
-                    if (strpos($reqestedUrl, $url) === 0)
+                    if (strpos($reqestedUrl, $url) === 0 || strpos($reqestedUrl, $url) === 1)
                     {
                         $isUrlAllowedToGuests = true;
                     }
@@ -254,24 +254,5 @@
                 Yii::app()->custom->resolveIsCustomDataLoaded();
             }
         }
-
-        public function handleApiRequest($event)
-        {
-            ApiRequest::processRequest();
-            echo "dd";
-        }
-
-        protected function isApiRequest()
-        {
-            $reqestedUrl = Yii::app()->getRequest()->getUrl();
-            if (strpos($reqestedUrl, 'api/') === 0 || strpos($reqestedUrl, 'api/') === 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+     }
 ?>

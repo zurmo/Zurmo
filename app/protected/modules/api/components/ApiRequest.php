@@ -24,56 +24,140 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRequest extends CHttpRequest
+    class ApiRequest
     {
-        public static function processRequest()
-  {
-    // get our verb
-    print_r(parse_str(file_get_contents('php://input'), $arguments));
-    echo $_SERVER['REQUEST_METHOD'];
-    $request_method = strtolower($_SERVER['REQUEST_METHOD']);
-    //$return_obj		= new RestRequest();
-    // we'll store our data here
-    $data			= array();
+        protected $requestType;
+        protected $paramsFormat;
 
-    switch ($request_method)
-    {
-      // gets are easy...
-      case 'get':
-        $data = $_GET;
-        break;
-      // so are posts
-      case 'post':
-        $data = $_POST;
-        break;
-      // here's the tricky bit...
-      case 'put':
-        // basically, we read a string from PHP's special input location,
-        // and then parse it out into an array via parse_str... per the PHP docs:
-        // Parses str  as if it were the query string passed via a URL and sets
-        // variables in the current scope.
-        parse_str(file_get_contents('php://input'), $put_vars);
-        $data = $put_vars;
-        break;
-    }
-    print_r($_GET);
-    print_r($data);
-    exit;
-/*
-    // store the method
-    $return_obj->setMethod($request_method);
+        /**
+         * Store params from request
+         * @var array
+         */
+        protected $params = array();
 
-    // set the raw data, so we can access it if needed (there may be
-    // other pieces to your requests)
-    $return_obj->setRequestVars($data);
+        public function init()
+        {
+            $this->parseRequestType();
+            $this->parseParamsFormat();
+            $this->parseParams();
+        }
 
-    if(isset($data['data']))
-    {
-      // translate the JSON to an Object for use however you want
-      $return_obj->setData(json_decode($data['data']));
-    }
-    return $return_obj;
-    */
-  }
+        public function getParams()
+        {
+            return $this->params;
+        }
+
+        public function setParams($params)
+        {
+            $this->params = $params;
+        }
+
+        public function getRequestType()
+        {
+            return $this->requestType;
+        }
+
+        public function setRequestType($requestType)
+        {
+            $this->requestType = $requestType;
+        }
+
+        public function getParamsFormat()
+        {
+            return $this->paramsFormat;
+        }
+
+        public function setParamsFormat($paramsFormat)
+        {
+            $this->paramsFormat = $paramsFormat;
+        }
+
+        protected function parseRequestType()
+        {
+            $reqestedUrl = Yii::app()->getRequest()->getUrl();
+            if (strpos($reqestedUrl, 'api/rest') === 0 || strpos($reqestedUrl, 'api/rest') === 1)
+            {
+                $this->requestType = 'REST';
+            }
+            elseif (strpos($reqestedUrl, 'api/soap') === 0 || strpos($reqestedUrl, 'api/soap') === 1)
+            {
+                $this->requestType = 'SOAP';
+            }
+            else
+            {
+                $this->requestType = false;
+            }
+        }
+
+        protected function parseParamsFormat()
+        {
+            $this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
+        }
+
+        public function getSessionId()
+        {
+            if(isset($_SERVER['HTTP_ZURMO_SESSION_ID']))
+            {
+                return $_SERVER['HTTP_ZURMO_SESSION_ID'];
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public function getUsername()
+        {
+            if(isset($_SERVER['HTTP_ZURMO_AUTH_USERNAME']))
+            {
+                return $_SERVER['HTTP_ZURMO_AUTH_USERNAME'];
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public function getPassword()
+        {
+            if(isset($_SERVER['HTTP_ZURMO_AUTH_PASSWORD']))
+            {
+                return $_SERVER['HTTP_ZURMO_AUTH_PASSWORD'];
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected function parseParams()
+        {
+            if ($this->getRequestType() == 'REST')
+            {
+                $params = ApiRestRequest::getRestParams();
+            }
+            elseif ($this->getRequestType() == 'SOAP')
+            {
+                $params = ApiSoapRequest::getParams();
+            }
+            else {
+                echo "Invalid request";
+                Yii::app()->end();
+            }
+            $this->setParams($params);
+        }
+
+        public function isApiRequest()
+        {
+            $reqestedUrl = Yii::app()->getRequest()->getUrl();
+            if (strpos($reqestedUrl, 'api/') === 0 || strpos($reqestedUrl, 'api/') === 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 ?>
