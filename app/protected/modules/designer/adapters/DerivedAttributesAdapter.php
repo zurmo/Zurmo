@@ -51,7 +51,16 @@
                 );
             }
 
-            //todo:dependents
+            $dropdownDependencyAttributes = DropDownDependencyDerivedAttributeMetadata::getSubset();
+            foreach($dropdownDependencyAttributes as $attribute)
+            {
+                ModelAttributeCollectionUtil::populateCollection(
+                    $attributes,
+                    $attribute->name,
+                    $attribute->getLabelByLanguage(Yii::app()->language),
+                    DerivedAttributeToMixedTypeUtil::getType($this->modelClassName, $attribute->name)
+                );
+            }
 
             return $attributes;
         }

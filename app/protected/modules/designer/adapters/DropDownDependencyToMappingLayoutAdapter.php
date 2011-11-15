@@ -104,9 +104,10 @@
                     $usedAttributeNames = $dropDownDependency->getUsedModelAttributeNames();
                     foreach($usedAttributeNames as $usedAttributeName)
                     {
-                        if(isset($attributeNames[$usedAttributeName]))
+                        if(in_array($usedAttributeName, $attributeNames))
                         {
-                            unset($attributeNames[$usedAttributeName]);
+                            $key = array_search($usedAttributeName, $attributeNames);
+                            unset($attributeNames[$key]);
                         }
                     }
                 }

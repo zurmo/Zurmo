@@ -70,7 +70,7 @@
                     $classToEvaluate     = new ReflectionClass($formClassName);
                     if (is_subclass_of($formClassName, 'AttributeForm') && !$classToEvaluate->isAbstract())
                     {
-$designerTypes[] = substr($formClassName, 0, strlen($formClassName) - strlen('AttributeForm'));
+                        $designerTypes[] = substr($formClassName, 0, strlen($formClassName) - strlen('AttributeForm'));
                     }
                 }
             }

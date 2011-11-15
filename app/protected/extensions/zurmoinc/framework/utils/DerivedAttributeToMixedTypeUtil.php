@@ -58,7 +58,7 @@
                           getByNameAndModelClassName($attributeName, $modelClassName);
                 if (count($models) == 1)
                 {
-                    return 'DropdownDependency';
+                    return 'DropDownDependency';
                 }
             }
             catch(NotFoundException $e)

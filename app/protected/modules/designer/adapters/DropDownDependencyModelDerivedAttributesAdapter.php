@@ -25,40 +25,38 @@
      ********************************************************************************/
 
     /**
-     * Holds metadata for a dependent set of dropdowns.
+     * Adapter to set attributes from a dropdown dependency attribute form.
      */
-    class DropDownDependencyDerivedAttributeMetadata extends DerivedAttributeMetadata
+    class DropDownDependencyModelDerivedAttributesAdapter extends ModelAttributesAdapter
     {
-        public static function getDefaultMetadata()
+        public function setAttributeMetadataFromForm(AttributeForm $attributeForm)
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                ),
-                'rules' => array(
-                )
-            );
-            return $metadata;
-        }
-
-        public function getUsedModelAttributeNames()
-        {
-            $attributeNames = array();
-            if($this->serializedMetadata != null)
+            assert('$attributeForm instanceof DropDownDependencyAttributeForm');
+            $modelClassName    = get_class($this->model);
+            $attributeName     = $attributeForm->attributeName;
+            $attributeLabels   = $attributeForm->attributeLabels;
+            $elementType       = $attributeForm->getAttributeTypeName();
+            $mappingData       = $attributeForm->mappingData;
+            $id                = $attributeForm->id;
+            if($id != null)
             {
-                $unserializedMetadata = unserialize($this->serializedMetadata);
-                if(isset($unserializedMetadata['mappingData']))
-                {
-                    foreach($unserializedMetadata['mappingData'] as $data)
-                    {
-                        if($data['attributeName'] != null)
-                        {
-                            $attributeNames[] = $data['attributeName'];
-                        }
-                    }
-                }
+                $metadata = DropDownDependencyDerivedAttributeMetadata::getById($id);
+                $metadata->setScenario('nonAutoBuild');
             }
-            return $attributeNames;
+            else
+            {
+                $metadata = new DropDownDependencyDerivedAttributeMetadata();
+                $metadata->setScenario('nonAutoBuild');
+            }
+            $metadata->name               = $attributeName;
+            $metadata->modelClassName     = $modelClassName;
+            $metadata->serializedMetadata = serialize(array('mappingData'     => $mappingData,
+                                                            'attributeLabels' => $attributeLabels));
+            $saved = $metadata->save();
+            if(!$saved)
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 ?>

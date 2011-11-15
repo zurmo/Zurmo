@@ -31,6 +31,8 @@
      */
     class DropDownDependencyAttributeForm extends AttributeForm
     {
+        public $id;
+
         /**
          * Array of mapping data.  Below is an example:
          * @code
@@ -195,7 +197,7 @@
          */
         public static function getModelAttributeAdapterNameForSavingAttributeFormData()
         {
-            return 'DropDownDependencyModelAttributesAdapter';
+            return 'DropDownDependencyModelDerivedAttributesAdapter';
         }
 
         public function sanitizeFromPostAndSetAttributes($values)
@@ -226,6 +228,15 @@
                 }
             }
             return $count;
+        }
+
+        public function canUpdateAttributeProperty($propertyName)
+        {
+            if($propertyName == 'attributeName' && $this->id != null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 ?>
