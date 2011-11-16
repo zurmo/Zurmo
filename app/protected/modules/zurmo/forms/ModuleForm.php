@@ -58,17 +58,16 @@
             $data = $this->$attribute;
             foreach (Yii::app()->languageHelper->getActiveLanguagesData() as $language => $name)
             {
-                $data[$language] = mb_convert_encoding($data[$language], 'ISO-8859-1', Yii::app()->charset);
                 if ( empty($data[$language]))
                 {
                     $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
                 }
-                if ($data[$language] != strtolower($data[$language]))
+                if ($data[$language] != mb_strtolower($data[$language], Yii::app()->charset))
                 {
                     $this->addError($attribute . '[' . $language . ']',
                                 Yii::t('Default', 'Label must be all lowercase.'));
                 }
-                if (!preg_match('/^[\p{L}A-Za-z0-9_ ]+$/', $data[$language])) // Not Coding Standard
+                if (!preg_match('/^[\p{L}A-Za-z0-9_ ]+$/u', $data[$language])) // Not Coding Standard
                 {
                     $this->addError($attribute . '[' . $language . ']',
                         Yii::t('Default', 'Label must not contain any special characters.'));
