@@ -204,7 +204,8 @@
             $this->assertEquals('Opportunité', CHtml::encode('Opportunité'));
 
             $label = OpportunitiesModule::getModuleLabelByTypeAndLanguage('SingularLowerCase', 'fr');
-            $this->assertEquals(strtolower('Opportunité'), $label);
+            $this->assertEquals('opportunité', $label);
+            $this->assertEquals('opportunité', CHtml::encode($label));
         }
     }
 ?>
