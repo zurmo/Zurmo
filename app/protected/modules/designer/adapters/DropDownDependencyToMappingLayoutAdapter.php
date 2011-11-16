@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class to adapt a drop down dependency mapping into a dependency collection that can be utilized by
+     * the mapping layout to display in the user interface.
+     */
     class DropDownDependencyToMappingLayoutAdapter
     {
         protected $modelClassName;
@@ -32,6 +36,11 @@
 
         protected $maxDepth;
 
+        /**
+         * @param string $modelClassName
+         * @param string $attributeName
+         * @param integer $maxDepth
+         */
         public function __construct($modelClassName, $attributeName, $maxDepth)
         {
             assert('is_string($modelClassName)');
@@ -42,6 +51,13 @@
             $this->maxDepth       = $maxDepth;
         }
 
+        /**
+         * Given an array of mapping data, create a collection of DropDownDependencyCustomFieldMapping objects.
+         * Include the unmapped objects as well.  For example, if the mapping data only has mappings for 2 attributes,
+         * based on the @see $this->maxDepth, it should make additional DropDownDependencyCustomFieldMapping if required.
+         * @param array $mappingData
+         * @return array of DropDownDependencyCustomFieldMapping objects.
+         */
         public function makeDependencyCollectionByMappingData($mappingData)
         {
             assert('is_array($mappingData)');
@@ -91,7 +107,7 @@
         /**
          * Public for testing only.
          */
-        protected function getCustomFieldAttributesNotUsedInOtherDependencyAttributes()
+        public function getCustomFieldAttributesNotUsedInOtherDependencyAttributes()
         {
             $modelClassName           = $this->modelClassName;
             $model                    = new $modelClassName(false);
@@ -101,7 +117,7 @@
             {
                 if($dropDownDependency->name != $this->attributeName)
                 {
-                    $usedAttributeNames = $dropDownDependency->getUsedModelAttributeNames();
+                    $usedAttributeNames = $dropDownDependency->getUsedAttributeNames();
                     foreach($usedAttributeNames as $usedAttributeName)
                     {
                         if(in_array($usedAttributeName, $attributeNames))

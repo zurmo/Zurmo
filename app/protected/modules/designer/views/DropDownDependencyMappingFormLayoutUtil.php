@@ -24,20 +24,57 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class that can take an array of @see DropDownDependencyCustomFieldMapping objects and render content
+     * for a user interface. This user interface is where a user can decide on the mappings for a drop down dependency
+     * attribute.
+     */
     class DropDownDependencyMappingFormLayoutUtil
     {
+        /**
+         * Array of @see DropDownDependencyCustomFieldMapping objects
+         * @var array
+         */
         protected $dependencyCollection;
 
-        protected $form;
+        /**
+         * Name of form being used by the containing view.
+         * @var string
+         */
+        protected $formName;
 
+        /**
+         * Controller Id to be used by any actions called.
+         * @var string
+         */
         protected $controllerId;
 
+        /**
+         * Module Id to be used by an actions called.
+         * @var string
+         */
         protected $moduleId;
 
+        /**
+         * Action Id to be used by the ajax action called in this class.
+         * @var string
+         */
         protected $ajaxActionId;
 
+        /**
+         * Div Id of the containing div. This is used by the ajax action to know which div content to update.
+         * @var string
+         */
         protected $mappingDataDivId;
 
+        /**
+         * @param array $dependencyCollection
+         * @param string $formName
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $ajaxActionId
+         * @param string $mappingDataDivId
+         */
         public function __construct($dependencyCollection,
                                     $formName,
                                     $controllerId,
@@ -58,6 +95,10 @@
             $this->ajaxActionId         = $ajaxActionId;
             $this->mappingDataDivId     = $mappingDataDivId;
         }
+
+        /**
+         * Render content and return as a string.
+         */
         public function render()
         {
             return $this->renderContainerContent();

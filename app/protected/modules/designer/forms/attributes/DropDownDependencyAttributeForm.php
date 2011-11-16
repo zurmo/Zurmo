@@ -127,7 +127,14 @@
         }
 
         /**
-         * Make sure the mappings are formed correctly.
+         * Make sure the mappings are formed correctly.  There are several validation conditions for mapping data.
+         * 1. There must be at least 2 attributes mapped to form a dependency.
+         * 2. At this time no more than 4 mapped attributes is supported.
+         * 3. Any mapped attribute, must have at least one of it's customFieldData values mapped to a parent value, except
+         *    the top level mapping.
+         * 4. Of the values mapped for a given attribute, make sure the mappings are to valid parent values.
+         * @param string $attribute
+         * @param $params
          */
         public function validateMappingData($attribute, $params)
         {
@@ -200,6 +207,10 @@
             return 'DropDownDependencyModelDerivedAttributesAdapter';
         }
 
+        /**
+         * Override to remove any valuesToParentValues where the attributeName is null.
+         * @see AttributeForm::sanitizeFromPostAndSetAttributes()
+         */
         public function sanitizeFromPostAndSetAttributes($values)
         {
             assert('is_array($values)');
@@ -216,6 +227,12 @@
             parent::sanitizeFromPostAndSetAttributes($values);
         }
 
+        /**
+         * Given an array of $valuesToParentValues, ascertain and return the count of how many values are mapped
+         * to a parent value.
+         * @param array $valuesToParentValues
+         * @return integer
+         */
         public function getValuesToParentValuesMappedCount($valuesToParentValues)
         {
             assert('is_array($valuesToParentValues)');

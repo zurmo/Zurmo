@@ -59,10 +59,23 @@
 
             $metadata = new CalculatedDerivedAttributeMetadata();
             $metadata->setScenario('nonAutoBuild');
-            $metadata->name = 'someName';
+            $metadata->name = 'someName2';
             $metadata->modelClassName     = 'Whatever2';
             $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array()));
             $this->assertTrue($metadata->save());
+        }
+
+        /**
+         * @depends testSavingMetadataWithSameName
+         */
+        public function testGetAllByModelClassName()
+        {
+            $models = CalculatedDerivedAttributeMetadata::getAllByModelClassName('Whatever');
+            $this->assertEquals(1, count($models));
+            $this->assertEquals('someName', $models[0]->name);
+            $models = CalculatedDerivedAttributeMetadata::getAllByModelClassName('Whatever2');
+            $this->assertEquals(1, count($models));
+            $this->assertEquals('someName2', $models[0]->name);
         }
     }
 ?>

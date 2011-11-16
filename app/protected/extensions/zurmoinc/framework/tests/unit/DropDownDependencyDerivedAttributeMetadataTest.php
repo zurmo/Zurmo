@@ -59,10 +59,41 @@
 
             $metadata = new DropDownDependencyDerivedAttributeMetadata();
             $metadata->setScenario('nonAutoBuild');
-            $metadata->name = 'someName';
+            $metadata->name = 'someName2';
             $metadata->modelClassName     = 'Whatever2';
             $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array()));
             $this->assertTrue($metadata->save());
+        }
+
+        /**
+         * @depends testSavingMetadataWithSameName
+         */
+        public function testGetAllByModelClassName()
+        {
+            $models = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName('Whatever');
+            $this->assertEquals(1, count($models));
+            $this->assertEquals('someName', $models[0]->name);
+            $models = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName('Whatever2');
+            $this->assertEquals(1, count($models));
+            $this->assertEquals('someName2', $models[0]->name);
+        }
+
+        public function testGetUsedAttributeNames()
+        {
+            $mappingData = array(array('attributeName' => 'a'),
+                                 array('attributeName' => 'b'),
+                                 array('attributeName' => 'c'));
+            $metadata = new DropDownDependencyDerivedAttributeMetadata();
+            $metadata->setScenario('nonAutoBuild');
+            $metadata->name = 'someName3';
+            $metadata->modelClassName     = 'Whatever2';
+            $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array(),
+                                                            'mappingData' => $mappingData));
+            $this->assertTrue($metadata->save());
+
+            $usedModelAttributeNames = $metadata->getUsedAttributeNames();
+            $this->assertEquals(array('a', 'b', 'c'), $usedModelAttributeNames);
+
         }
     }
 ?>

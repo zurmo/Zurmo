@@ -29,6 +29,10 @@
      */
     class CustomFieldUtil
     {
+        /**
+         * Given a model, return an array of attributes names that extend the CustomField class.
+         * @param RedBeanModel $model
+         */
         public static function getCustomFieldAttributeNames(RedBeanModel $model)
         {
             $attributeNames = array();

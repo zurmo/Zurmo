@@ -24,20 +24,54 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Class contains information about mapping for a particular 'level' in the drop down dependency.
+     */
     class DropDownDependencyCustomFieldMapping
     {
+        /**
+         * Whether to allow a selection of an attribute name.
+         * @var boolean
+         */
         protected $allowAttributeSelection = true;
 
+        /**
+         * The position or 'level' of this object in relation to the other dependencies.
+         * @var integer
+         */
         protected $position;
 
+        /**
+         * The selected attribute name.
+         * @var string
+         */
         protected $attributeName;
 
+        /**
+         * Array of available model attribute names that can be selected for this level as an attribute name.
+         * @var array
+         */
         protected $availableCustomFieldAttributes;
 
+        /**
+         * CustomFieldData object that is used by the attribute name's customField.
+         * @var CustomFieldData
+         */
         protected $customFieldData;
 
+        /**
+         * Array of mapping data
+         * @var array
+         */
         protected $mappingData;
 
+        /**
+         * @param integer $position
+         * @param string $attributeName
+         * @param array $availableCustomFieldAttributes
+         * @param CustomFieldData $customFieldData
+         * @param array $mappingData
+         */
         public function __construct($position,
                                     $attributeName,
                                     $availableCustomFieldAttributes,
@@ -56,6 +90,10 @@
             $this->mappingData                    = $mappingData;
         }
 
+        /**
+         * Sets $allowAttributeSelection to false. This method is called when a higher 'level' mapping is required first
+         * before an attribute can be selected at this level.
+         */
         public function doNotAllowAttributeSelection()
         {
             $this->allowAttributeSelection = false;
@@ -86,6 +124,10 @@
             return $this->availableCustomFieldAttributes;
         }
 
+        /**
+         * In the event that this 'level' requires a higher level to be selected first, then a string with message
+         * content will ber returned.
+         */
         public function getSelectHigherLevelFirstMessage()
         {
             if($this->allowsAttributeSelection())
@@ -100,8 +142,13 @@
             return $this->customFieldData;
         }
 
+        /**
+         * Given a value, return the mapped parent value.
+         * @param string $value
+         */
         public function getMappingDataSelectedParentValueByValue($value)
         {
+            assert('is_string($value)');
             if(isset($this->mappingData[$value]))
             {
                 return $this->mappingData[$value];

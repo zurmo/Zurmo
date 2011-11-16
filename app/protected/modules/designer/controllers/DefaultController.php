@@ -394,6 +394,10 @@
             $this->redirect($routeParams);
         }
 
+        /**
+         * Action called from user interface when the attributeName drop down is changed in the edit view for a dropdown
+         * dependency.
+         */
         public function actionChangeDropDownDependencyAttribute()
         {
             assert('!empty($_GET["moduleClassName"])');

@@ -24,45 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Holds metadata for a dependent set of dropdowns.
-     */
-    class DropDownDependencyDerivedAttributeMetadata extends DerivedAttributeMetadata
+    class TestDropDownDependencyModel extends CustomFieldsModel
     {
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
-                'members' => array(
+                'relations' => array(
+                    'something1'         => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
+                    'something2'         => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
+                    'something3'         => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
+                    'something4'         => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
+                    'multipleIndustries' => array(RedBeanModel::HAS_ONE, 'MultipleValuesCustomField'),
                 ),
-                'rules' => array(
-                )
+                'customFields' => array(
+                    'something1'           => 'Something1',
+                    'something2'           => 'Something2',
+                    'something3'           => 'Something3',
+                    'something4'           => 'Something4',
+                    'multipleIndustries' => 'MultipleIndustries',
+                ),
             );
             return $metadata;
-        }
-
-        /**
-         * Based on the serialized mappingData, get a list of the used attribute names.
-         * @return array of attribute names.
-         */
-        public function getUsedAttributeNames()
-        {
-            $attributeNames = array();
-            if($this->serializedMetadata != null)
-            {
-                $unserializedMetadata = unserialize($this->serializedMetadata);
-                if(isset($unserializedMetadata['mappingData']))
-                {
-                    foreach($unserializedMetadata['mappingData'] as $data)
-                    {
-                        if($data['attributeName'] != null)
-                        {
-                            $attributeNames[] = $data['attributeName'];
-                        }
-                    }
-                }
-            }
-            return $attributeNames;
         }
     }
 ?>
