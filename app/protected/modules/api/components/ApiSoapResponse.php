@@ -24,7 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiSoapRequest extends ApiRequest
+    class ApiSoapResponse extends ApiResponse
     {
+        public static function generateOutput($data, $format)
+        {
+            if ($format == ApiRequest::XML_FORMAT)
+            {
+                //To-Do: Improve this xml generator, I think it doesn't work for nested elements
+                $xml = new SimpleXMLElement('<root/>');
+                array_walk_recursive($data, array($xml, 'addChild'));
+                return $xml->asXML();
+            }
+            else
+            {
+                return "Invalid format";
+            }
+        }
     }
 ?>

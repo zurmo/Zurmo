@@ -26,6 +26,11 @@
 
     class ApiRequest
     {
+        const REST           = 'REST';
+        const SOAP           = 'SOAP';
+        const JSON_FORMAT    = 'json';
+        const XML_FORMAT     = 'xml';
+
         protected $requestType;
         protected $paramsFormat;
 
@@ -35,11 +40,20 @@
          */
         protected $params = array();
 
+        //To be redeclard in children classes
+        public function getServiceType()
+        {
+        }
+
+        //To be redeclard in children classes
+        public static function getParamsFromRequest()
+        {
+        }
+
         public function init()
         {
             $this->parseRequestType();
             $this->parseParamsFormat();
-            $this->parseParams();
         }
 
         public function getParams()
@@ -77,11 +91,11 @@
             $reqestedUrl = Yii::app()->getRequest()->getUrl();
             if (strpos($reqestedUrl, 'api/rest') === 0 || strpos($reqestedUrl, 'api/rest') === 1)
             {
-                $this->requestType = 'REST';
+                $this->requestType = self::REST;
             }
             elseif (strpos($reqestedUrl, 'api/soap') === 0 || strpos($reqestedUrl, 'api/soap') === 1)
             {
-                $this->requestType = 'SOAP';
+                $this->requestType = self::SOAP;
             }
             else
             {
@@ -91,7 +105,7 @@
 
         protected function parseParamsFormat()
         {
-            $this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
+            $this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], self::JSON_FORMAT)) ? self::JSON_FORMAT : self::XML_FORMAT;
         }
 
         public function getSessionId()
@@ -130,15 +144,15 @@
             }
         }
 
-        protected function parseParams()
+        public function parseParams()
         {
-            if ($this->getRequestType() == 'REST')
+            if ($this->getRequestType() == self::REST)
             {
-                $params = ApiRestRequest::getRestParams();
+                $params = ApiRestRequest::getParamsFromRequest();
             }
-            elseif ($this->getRequestType() == 'SOAP')
+            elseif ($this->getRequestType() == self::SOAP)
             {
-                $params = ApiSoapRequest::getParams();
+                $params = ApiSoapRequest::getParamsFromRequest();
             }
             else {
                 echo "Invalid request";

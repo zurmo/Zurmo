@@ -26,77 +26,16 @@
 
     class ApiModelTestItem extends OwnedSecurableItem
     {
-        protected function untranslatedAttributeLabels()
-        {
-            return array_merge(parent::untranslatedAttributeLabels(),
-                array(
-                    'fullName' => 'Name',
-                )
-            );
-        }
-
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'firstName',
-                    'lastName',
-                    'boolean',
-                    'date',
-                    'dateTime',
-                    'float',
-                    'integer',
-                    'phone',
-                    'string',
-                    'textArea',
-                    'url',
-            ),
-                'relations' => array(
-                    'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
-                    'dropDown'         => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
-                    'radioDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
-                    'hasOne'           => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem2'),
-                    'hasMany'          => array(RedBeanModel::MANY_MANY, 'ImportModelTestItem3'),
-                    'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem4'),
-                    'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
-                    'primaryAddress'   => array(RedBeanModel::HAS_ONE,   'Address', RedBeanModel::OWNED),
-
+                    'name',
                 ),
                 'rules' => array(
-                    array('firstName', 'type',   'type' => 'string'),
-                    array('firstName', 'length', 'min'  => 1, 'max' => 32),
-                    array('lastName',  'required'),
-                    array('lastName',  'type',   'type' => 'string'),
-                    array('lastName',  'length', 'min'  => 2, 'max' => 32),
-                    array('boolean',   'boolean'),
-                    array('date',      'type', 'type' => 'date'),
-                    array('dateTime',  'type', 'type' => 'datetime'),
-                    array('float',     'type',    'type' => 'float'),
-                    array('integer',   'type',    'type' => 'integer'),
-                    array('phone',     'type',    'type' => 'string'),
-                    array('phone',     'length',  'min'  => 1, 'max' => 14),
-                    array('string',    'required'),
-                    array('string',    'type',  'type' => 'string'),
-                    array('string',    'length',  'min'  => 3, 'max' => 64),
-                    array('textArea',  'type',    'type' => 'string'),
-                    array('url',       'url'),
-                ),
-                'elements' => array(
-                    'currencyValue'    => 'CurrencyValue',
-                    'date'             => 'Date',
-                    'dateTime'         => 'DateTime',
-                    'hasOne'           => 'ImportModelTestItem2',
-                    'hasOneAlso'       => 'ImportModelTestItem4',
-                    'phone'            => 'Phone',
-                    'primaryEmail'     => 'EmailAddressInformation',
-                    'primaryAddress'   => 'Address',
-                    'textArea'         => 'TextArea',
-                    'radioDropDown'    => 'RadioDropDown',
-                ),
-                'customFields' => array(
-                    'dropDown'        => 'ImportTestDropDown',
-                    'radioDropDown'   => 'ImportTestRadioDropDown',
+                    array('name',  'type',   'type' => 'string'),
+                    array('name',  'length', 'max' => 32),
                 ),
             );
             return $metadata;
@@ -105,6 +44,11 @@
         public static function isTypeDeletable()
         {
             return true;
+        }
+
+        public static function getModuleClassName()
+        {
+            return 'ApiModule';
         }
     }
 ?>

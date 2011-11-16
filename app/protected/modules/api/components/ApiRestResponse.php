@@ -26,5 +26,22 @@
 
     class ApiRestResponse extends ApiResponse
     {
+        public static function generateOutput($data, $format)
+        {
+            if ($format == ApiRequest::JSON_FORMAT)
+            {
+                return json_encode($data);
+            }
+            elseif ($format == ApiRequest::XML_FORMAT)
+            {
+                $xml = new SimpleXMLElement('<root/>');
+                array_walk_recursive($data, array($xml, 'addChild'));
+                return $xml->asXML();
+            }
+            else
+            {
+                return "Invalid format";
+            }
+        }
     }
 ?>

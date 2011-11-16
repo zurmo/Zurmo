@@ -24,57 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiTestController extends ZurmoModuleController
+    class ApiTestHelper
     {
-        public function getAll()
+        public static function createApiModelTestItem($name)
         {
-            $data = ApiModelTestItem::getAll();
-            foreach ($data as $model)
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
             {
-                $model->delete();
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
             }
-            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem('aaa');
-            $apiModelTestItemModel2 = ApiTestHelper::createApiModelTestItem('bbb');
-            $apiModelTestItemModel3 = ApiTestHelper::createApiModelTestItem('ccc');
-
-            $data = ApiModelTestItem::getAll();
-            $outputArray = array();
-            foreach ($data as $k => $model)
-            {
-                $outputArray[] = $model->name;
-            }
-            return $outputArray;
-        }
-
-        public function getById($id)
-        {
-            $model = ApiModelTestItem::getById($id);
-            $outputArray = array();
-            $outputArray[] = $model->name;
-            return $outputArray;
-        }
-
-        public function create($name)
-        {
-            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem($name);
-            return true;
-        }
-
-        public function update($id, $name)
-        {
-            $model = ApiModelTestItem::getById($id);
+            $model = new ApiModelTestItem();
             $model->name = $name;
             $saved = $model->save();
             assert('$saved');
-
-            return true;
-        }
-
-        public function delete($id)
-        {
-            $model = ApiModelTestItem::getById($id);
-            $model->delete();
-            return true;
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
         }
     }
 ?>

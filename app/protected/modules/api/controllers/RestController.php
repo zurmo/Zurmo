@@ -23,8 +23,6 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-    Yii::import("application.modules.api.tests.unit.controllers.ApiTestController");
-    Yii::import("application.modules.api.tests.unit.models.ApiModelTestItem");
     /**
      *
      * All requests to api will go to this controller.
@@ -43,17 +41,26 @@
         public function __construct($id, $module = null)
         {
             parent::__construct($id, $module);
+            Yii::app()->apiRequest->parseParams();
         }
 
         public function actionList()
         {
             $baseControllerName = $this->getBaseController();
-
             if ($baseControllerName != null)
             {
                 $baseController = new $baseControllerName($baseControllerName, 'api');
                 $res = $baseController->getAll();
-                print_r($res);
+
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                {
+                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                echo $output;
             }
             else
             {
@@ -63,22 +70,98 @@
 
         public function actionView()
         {
-
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->getById($params['id']);
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                {
+                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                echo $output;
+            }
+            else
+            {
+                // Send error.
+            }
         }
 
         public function actionCreate()
         {
-
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->create($params['name']);
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                {
+                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                echo $output;
+            }
+            else
+            {
+                // Send error.
+            }
         }
 
         public function actionUpdate()
         {
-
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->update($params['id'], $params['name']);
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                {
+                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                echo $output;
+            }
+            else
+            {
+                // Send error.
+            }
         }
 
         public function actionDelete()
         {
-
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->delete($params['id']);
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                {
+                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                }
+                echo $output;
+            }
+            else
+            {
+                // Send error.
+            }
         }
 
         public function actionLogin()
@@ -104,9 +187,6 @@
             $model = $_GET['model'];
             switch($_GET['model'])
             {
-                case 'accounts':
-                    $controllerName = 'AccountsApiController';
-                    break;
                 case 'apiTest':
                     $controllerName = 'ApiTestController';
                     break;

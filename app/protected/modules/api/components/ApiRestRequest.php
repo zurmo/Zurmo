@@ -24,28 +24,32 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestRequest
+    class ApiRestRequest extends ApiRequest
     {
         public function getServiceType(){
-            return 'REST';
+            return ApiRequest::REST;
         }
 
-        public static function getRestParams()
+        public static function getParamsFromRequest()
         {
             $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
             switch ($requestMethod)
             {
                 case 'get':
-                    return $_GET;
+                    $params = $_GET;
                     break;
                 case 'post':
-                    return $_POST;
+                    $params = $_POST;
                     break;
                 case 'put':
-                    parse_str(file_get_contents('php://input'), $putVars);
-                    return $putVars;
+                    parse_str(file_get_contents('php://input'), $params);
+                    $params['id'] = $_GET['id'];
+                    break;
+                case 'delete':
+                    $params['id'] = $_GET['id'];
                     break;
             }
+            return $params;
         }
     }
 ?>
