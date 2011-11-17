@@ -24,7 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiJsonDataGenerator extends DataGenerator
+    class ApiRestTestHelper
     {
+        public static function createApiModelTestItem($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ApiModelTestItem();
+            $model->name = $name;
+            $saved = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
     }
 ?>

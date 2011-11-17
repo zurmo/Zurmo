@@ -26,21 +26,40 @@
 
     class ApiRestResponse extends ApiResponse
     {
-        public static function generateOutput($data, $format)
+        /**
+         * Generate service output, in xml or json format
+         * @param string $format
+         * @param string $status
+         * @param array $data
+         * @param string $error
+         */
+        public static function generateOutput($format, $status, $data = null, $message = null)
         {
+
             if ($format == ApiRequest::JSON_FORMAT)
             {
-                return json_encode($data);
+                $output['status'] = $status;
+                if (isset($message))
+                {
+                    $output['message'] = $message;
+                }
+
+                if (isset($data) && count($data))
+                {
+                    $output['data'] = $data;
+                }
+                echo json_encode($output);
             }
             elseif ($format == ApiRequest::XML_FORMAT)
             {
                 $xml = new SimpleXMLElement('<root/>');
                 array_walk_recursive($data, array($xml, 'addChild'));
-                return $xml->asXML();
+                echo $xml->asXML();
             }
             else
             {
-                return "Invalid format";
+                echo "Invalid format";
+                exit;
             }
         }
     }

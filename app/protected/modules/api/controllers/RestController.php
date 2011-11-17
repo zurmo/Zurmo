@@ -54,17 +54,24 @@
 
                 if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
                 {
-                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
                 elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
-                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
-                echo $output;
             }
             else
             {
-                // Send error.
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
             }
         }
 
@@ -76,19 +83,27 @@
             {
                 $baseController = new $baseControllerName($baseControllerName, 'api');
                 $res = $baseController->getById($params['id']);
+
                 if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
                 {
-                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
                 elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
-                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
-                echo $output;
             }
             else
             {
-                // Send error.
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);.
             }
         }
 
@@ -102,17 +117,24 @@
                 $res = $baseController->create($params['name']);
                 if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
                 {
-                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
                 elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
-                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
-                echo $output;
             }
             else
             {
-                // Send error.
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);.
             }
         }
 
@@ -126,17 +148,24 @@
                 $res = $baseController->update($params['id'], $params['name']);
                 if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
                 {
-                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
                 elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
-                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
-                echo $output;
             }
             else
             {
-                // Send error.
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
             }
         }
 
@@ -150,17 +179,24 @@
                 $res = $baseController->delete($params['id']);
                 if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
                 {
-                    $output = ApiSoapResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
                 elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
-                    $output = ApiRestResponse::generateOutput($res, Yii::app()->apiRequest->getParamsFormat());
+                    ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data']);
                 }
-                echo $output;
             }
             else
             {
-                // Send error.
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
             }
         }
 
@@ -168,18 +204,52 @@
         {
             $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
             $identity->authenticate();
+
             if ($identity->errorCode == UserIdentity::ERROR_NONE)
             {
                 Yii::app()->user->login($identity);
-                echo 'SessionId:' . Yii::app()->getSession()->getSessionID() . "<br />";
-                return true;
-                //returm tokenId
+                $data['sessionId'] = Yii::app()->getSession()->getSessionID();
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_SUCCESS,
+                                                $data);
             }
             else
             {
-                return false;
+                $error = Yii::t('Default', 'Invalid username or password.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
             }
-            exit;
+        }
+
+        public function actionLogout()
+        {
+            Yii::app()->user->logout();
+            if (Yii::app()->user->isGuest)
+            {
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_SUCCESS);
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Error. User is not logged out.');
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
+        }
+
+        public function actionError()
+        {
+            if ($error = Yii::app()->errorHandler->error)
+            {
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiRestResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
         }
 
         protected function getBaseController()

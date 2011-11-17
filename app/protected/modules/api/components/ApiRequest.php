@@ -105,7 +105,8 @@
 
         protected function parseParamsFormat()
         {
-            $this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], self::JSON_FORMAT)) ? self::JSON_FORMAT : self::XML_FORMAT;
+            //ToDo:This produce warnings, when running unit tests, because $_SERVER['HTTP_ACCEPT'] is not defined in cli environment
+            @$this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], self::JSON_FORMAT)) ? self::JSON_FORMAT : self::XML_FORMAT;
         }
 
         public function getSessionId()

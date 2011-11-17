@@ -37,44 +37,99 @@
             $apiModelTestItemModel2 = ApiTestHelper::createApiModelTestItem('bbb');
             $apiModelTestItemModel3 = ApiTestHelper::createApiModelTestItem('ccc');
 
-            $data = ApiModelTestItem::getAll();
-            $outputArray = array();
-            foreach ($data as $k => $model)
+            try
             {
-                $outputArray[] = $model->name;
+                $data = ApiModelTestItem::getAll();
+
+                $outputArray = array();
+                if (count($data))
+                {
+                    $outputArray['status'] = 'SUCCESS';
+                    foreach ($data as $k => $model)
+                    {
+                        $outputArray['data'][]['name'] = $model->name;
+                    }
+                }
+                else
+                {
+                    $outputArray['status'] = 'FAILURE';
+                    $outputArray['message'] = Yii::t('Default', 'Error');
+                }
+            }
+            catch (Exception $e)
+            {
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
             }
             return $outputArray;
         }
 
         public function getById($id)
         {
-            $model = ApiModelTestItem::getById($id);
-            $outputArray = array();
-            $outputArray[] = $model->name;
+            try
+            {
+                $model = ApiModelTestItem::getById($id);
+                $outputArray = array();
+                $outputArray['status'] = 'SUCCESS';
+                $outputArray['data']['name'] = $model->name;
+            }
+            catch (Exception $e)
+            {
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
+            }
             return $outputArray;
         }
 
         public function create($name)
         {
             $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem($name);
-            return true;
+            $outputArray = array();
+            $outputArray['id'] = $apiModelTestItemModel1->id;
+            return $outputArray;
         }
 
         public function update($id, $name)
         {
-            $model = ApiModelTestItem::getById($id);
-            $model->name = $name;
-            $saved = $model->save();
-            assert('$saved');
-
-            return true;
+            try
+            {
+                $model = ApiModelTestItem::getById($id);
+                $model->name = $name;
+                $saved = $model->save();
+                $outputArray = array();
+                if ($saved)
+                {
+                    $outputArray['status'] = 'SUCCESS';
+                    $outputArray['data']['name'] = $model->name;
+                }
+                else
+                {
+                    $outputArray['status'] = 'FAILURE';
+                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                }
+            }
+            catch (Exception $e)
+            {
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
+            }
+            return $outputArray;
         }
 
         public function delete($id)
         {
-            $model = ApiModelTestItem::getById($id);
-            $model->delete();
-            return true;
+            try
+            {
+                $model = ApiModelTestItem::getById($id);
+                $model->delete();
+                $outputArray['status'] = 'SUCCESS';
+            }
+            catch (Exception $e)
+            {
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
+            }
+            return $outputArray;
         }
     }
 ?>
