@@ -110,7 +110,7 @@
             {
                 try
                 {
-                    return User::getByUsername($value);
+                    return User::getByUsername(strtolower($value));
                 }
                 catch (NotFoundException $e)
                 {
