@@ -118,12 +118,12 @@
                                         $importRules::getType(), $columnMappingData['attributeIndexOrDerivedType']);
                 $valueReadyToSanitize = static::
                                         resolveValueToSanitizeByValueAndColumnType($rowBean->$idColumnName,
-                                                                                   $columnMappingData['columnType']);
+                                                                                   $columnMappingData['type']);
                 $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
-                                                                                             $columnMappingData,
-                                                                                             $importSanitizeResultsUtil);
+                                                                                     $columnMappingData,
+                                                                                     $importSanitizeResultsUtil);
                 assert('count($attributeValueData) == 0 || count($attributeValueData) == 1');
-                if ($attributeValueData['id'] != null)
+                if (isset($attributeValueData['id']) && $attributeValueData['id'] != null)
                 {
                     $model        = $modelClassName::getById($attributeValueData['id']);
                     $makeNewModel = false;
@@ -381,8 +381,10 @@
                                                                                  $importSanitizeResultsUtil);
             foreach ($attributeValueData as $attributeName => $value)
             {
-                assert('$model->isAttribute($attributeName)');
-                static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
+                if($model->isAttribute($attributeName))
+                {
+                    static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
+                }
             }
         }
 
