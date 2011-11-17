@@ -94,7 +94,6 @@
             assert('is_string($columnName)');
             assert('is_string($mappingRuleType)');
             assert('is_array($mappingRuleData)');
-            assert('is_int($mappingRuleData["type"])');
             $this->ensureTypeValueIsValid($mappingRuleData["type"]);
             $this->type = $mappingRuleData["type"];
             if ($this->type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)

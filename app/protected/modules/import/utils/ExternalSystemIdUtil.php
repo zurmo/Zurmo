@@ -44,11 +44,9 @@
         {
             assert('$externalSystemId == null || is_string($externalSystemId)');
             $columnName = self::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            $tableName  = $model::getTableName(get_class_name($model));
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar($tableName, $columnName);
-            R::exec("update " . $tableName . " set $columnName = ':externalSystemId' where id = :id",
-                    array('externalSystemId' => $externalSystemId, 'id' => $model->id));
+            $tableName  = $model::getTableName(get_class($model));
+            RedBean_Plugin_Optimizer_ExternalSystemId::ensureColumnIsVarchar($tableName, $columnName);
+            R::exec("update " . $tableName . " set $columnName = '" . $externalSystemId . "' where id = " . $model->id);
         }
     }
 ?>

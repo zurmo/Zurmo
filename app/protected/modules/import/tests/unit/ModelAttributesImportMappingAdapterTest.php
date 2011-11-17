@@ -301,6 +301,30 @@
                     'attributeImportRulesType' => 'Decimal',
                     'isRequired' => false,
                   ),
+              'secondaryEmail__emailAddress' =>
+                  array (
+                    'attributeLabel' => 'Secondary Email - Email Address',
+                    'attributeName' => 'secondaryEmail',
+                    'relationAttributeName' => 'emailAddress',
+                    'attributeImportRulesType' => 'Email',
+                    'isRequired' => false,
+                  ),
+              'secondaryEmail__optOut' =>
+                  array (
+                    'attributeLabel' => 'Secondary Email - Opt Out',
+                    'attributeName' => 'secondaryEmail',
+                    'relationAttributeName' => 'optOut',
+                    'attributeImportRulesType' => 'CheckBox',
+                    'isRequired' => false,
+                  ),
+              'secondaryEmail__isInvalid' =>
+                  array (
+                    'attributeLabel' => 'Secondary Email - Is Invalid',
+                    'attributeName' => 'secondaryEmail',
+                    'relationAttributeName' => 'isInvalid',
+                    'attributeImportRulesType' => 'CheckBox',
+                    'isRequired' => false,
+                  ),
             );
             $this->assertEquals($compareData, $attributesCollection);
         }

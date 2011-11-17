@@ -61,6 +61,7 @@
                     'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ImportModelTestItem4'),
                     'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
                     'primaryAddress'   => array(RedBeanModel::HAS_ONE,   'Address', RedBeanModel::OWNED),
+                    'secondaryEmail'   => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
 
                 ),
                 'rules' => array(
@@ -90,6 +91,7 @@
                     'hasOneAlso'       => 'ImportModelTestItem4',
                     'phone'            => 'Phone',
                     'primaryEmail'     => 'EmailAddressInformation',
+                    'secondaryEmail'   => 'EmailAddressInformation',
                     'primaryAddress'   => 'Address',
                     'textArea'         => 'TextArea',
                     'radioDropDown'    => 'RadioDropDown',

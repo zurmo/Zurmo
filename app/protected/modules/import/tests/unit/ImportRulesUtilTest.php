@@ -119,6 +119,12 @@
             catch (ImportAttributeMappedMoreThanOnceException $e)
             {
             }
+
+            //This should not fail because
+            $mappedAttributeImportRulesCollection = AttributeImportRulesFactory::
+                                                    makeCollection('ImportModelTestItem',
+                                                    array('primaryEmail__emailAddress', 'secondaryEmail__emailAddress'));
+            ImportRulesUtil::checkIfAnyAttributesAreDoubleMapped($mappedAttributeImportRulesCollection);
         }
 
         /**
