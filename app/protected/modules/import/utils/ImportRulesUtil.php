@@ -150,19 +150,29 @@
         {
             assert('is_array($mappedAttributeImportRulesCollection)');
             $mappedModelAttributeNames = array();
-            foreach ($mappedAttributeImportRulesCollection as $attributeImportRules)
+            foreach ($mappedAttributeImportRulesCollection as $attributeIndexOrDerivedAttributeType => $attributeImportRules)
             {
+                $relationNameAndAttributeName = explode(FormModelUtil::DELIMITER, $attributeIndexOrDerivedAttributeType);
+                if (count($relationNameAndAttributeName) == 2)
+                {
+                    $relationName = $relationNameAndAttributeName[0];
+                }
+                else
+                {
+                    $relationName = 'None';
+                }
                 if ($attributeImportRules instanceof AttributeImportRules)
                 {
                     $modelAttributeNames       = $attributeImportRules->getRealModelAttributeNames();
                     foreach ($modelAttributeNames as $modelAttributeName)
                     {
-                        if (in_array($modelAttributeName, $mappedModelAttributeNames))
+                        if (isset($mappedModelAttributeNames[$relationName]) &&
+                            in_array($modelAttributeName, $mappedModelAttributeNames[$relationName]))
                         {
                             $displayLabel = $attributeImportRules->getDisplayLabelByAttributeName($modelAttributeName);
                             throw new ImportAttributeMappedMoreThanOnceException($displayLabel);
                         }
-                        $mappedModelAttributeNames[] = $modelAttributeName;
+                        $mappedModelAttributeNames[$relationName][] = $modelAttributeName;
                     }
                 }
                 else
