@@ -285,6 +285,8 @@
             => '??',
         'Last Updated'
             => '??',
+        'Latitude'
+            => '??',
         'List Filters'
             => '??',
         'List page size'
@@ -296,6 +298,8 @@
         'Login'
             => '??',
         'Logout'
+            => '??',
+        'Longitude'
             => '??',
         'Manage Active Languages'
             => '??',
