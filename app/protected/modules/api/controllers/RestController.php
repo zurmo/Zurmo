@@ -60,19 +60,16 @@
                     $status = ApiResponse::STATUS_FAILURE;
                 }
 
-                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
-                {
-                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                    ApiResponse::STATUS_SUCCESS,
-                                                    $res['data'],
-                                                    $res['message']);
-                }
-                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     ApiResponse::STATUS_SUCCESS,
                                                     $res['data'],
                                                     $res['message']);
+                }
+                else
+                {
+                    //error
                 }
             }
             else
@@ -102,19 +99,16 @@
                     $status = ApiResponse::STATUS_FAILURE;
                 }
 
-                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
-                {
-                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                    $status,
-                                                    $res['data'],
-                                                    $res['message']);
-                }
-                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     $status,
                                                     $res['data'],
                                                     $res['message']);
+                }
+                else
+                {
+                    //error
                 }
             }
             else
@@ -144,19 +138,16 @@
                     $status = ApiResponse::STATUS_FAILURE;
                 }
 
-                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
-                {
-                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                    $status,
-                                                    $res['data'],
-                                                    $res['message']);
-                }
-                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     $status,
                                                     $res['data'],
                                                     $res['message']);
+                }
+                else
+                {
+                    //error
                 }
             }
             else
@@ -186,19 +177,16 @@
                     $status = ApiResponse::STATUS_FAILURE;
                 }
 
-                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
-                {
-                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                    $status,
-                                                    $res['data'],
-                                                    $res['message']);
-                }
-                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     $status,
                                                     $res['data'],
                                                     $res['message']);
+                }
+                else
+                {
+                    //error
                 }
             }
             else
@@ -228,19 +216,16 @@
                     $status = ApiResponse::STATUS_FAILURE;
                 }
 
-                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
-                {
-                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                    $status,
-                                                    null,
-                                                    $res['message']);
-                }
-                elseif(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+                if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
                 {
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     $status,
                                                     null,
                                                     $res['message']);
+                }
+                else
+                {
+                    //error
                 }
             }
             else

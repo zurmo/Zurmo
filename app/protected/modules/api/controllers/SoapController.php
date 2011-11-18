@@ -23,7 +23,6 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
     /**
      *
      * All requests to api will go to this controller.
@@ -31,37 +30,279 @@
      * We should be able to catch all actions, even invalid one, and to provide error to user in that case.
      *
      */
-    class SoapController extends ZurmoModuleController
+    class ApiSoapController extends ZurmoModuleController
     {
-        protected $moduleController;
         protected $serviceType;
         protected $serviceContentType;
         protected $apiRequest;
         protected $apiResponse;
+        protected $params;
+
+        public function __construct($id, $module = null)
+        {
+            parent::__construct($id, $module);
+            Yii::app()->apiRequest->parseParams();
+        }
 
         public function actionList()
         {
-            //
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->getAll();
+                if($res['status'] == 'SUCCESS')
+                {
+                    $status = ApiResponse::STATUS_SUCCESS;
+                }
+                else
+                {
+                    $status = ApiResponse::STATUS_FAILURE;
+                }
+
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    ApiResponse::STATUS_SUCCESS,
+                                                    $res['data'],
+                                                    $res['message']);
+                }
+                else
+                {
+                    //error
+                }
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
         }
 
         public function actionView()
         {
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->getById($params['id']);
+                if($res['status'] == 'SUCCESS')
+                {
+                    $status = ApiResponse::STATUS_SUCCESS;
+                }
+                else
+                {
+                    $status = ApiResponse::STATUS_FAILURE;
+                }
 
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    $status,
+                                                    $res['data'],
+                                                    $res['message']);
+                }
+                else
+                {
+                    //error
+                }
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
         }
 
         public function actionCreate()
         {
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->create($params['name']);
+                if($res['status'] == 'SUCCESS')
+                {
+                    $status = ApiResponse::STATUS_SUCCESS;
+                }
+                else
+                {
+                    $status = ApiResponse::STATUS_FAILURE;
+                }
 
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    $status,
+                                                    $res['data'],
+                                                    $res['message']);
+                }
+                else
+                {
+                    //error
+                }
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
         }
 
         public function actionUpdate()
         {
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->update($params['id'], $params['name']);
+                if($res['status'] == 'SUCCESS')
+                {
+                    $status = ApiResponse::STATUS_SUCCESS;
+                }
+                else
+                {
+                    $status = ApiResponse::STATUS_FAILURE;
+                }
 
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    $status,
+                                                    $res['data'],
+                                                    $res['message']);
+                }
+                else
+                {
+                    //error
+                }
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
         }
 
         public function actionDelete()
         {
+            $params = Yii::app()->apiRequest->getParams();
+            $baseControllerName = $this->getBaseController();
+            if ($baseControllerName != null)
+            {
+                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $res = $baseController->delete($params['id']);
+                if($res['status'] == 'SUCCESS')
+                {
+                    $status = ApiResponse::STATUS_SUCCESS;
+                }
+                else
+                {
+                    $status = ApiResponse::STATUS_FAILURE;
+                }
 
+                if (Yii::app()->apiRequest->getRequestType() == ApiRequest::SOAP)
+                {
+                    ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                    $status,
+                                                    null,
+                                                    $res['message']);
+                }
+                else
+                {
+                    //error
+                }
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Invalid controller.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
+        }
+
+        public function actionLogin()
+        {
+            $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
+            $identity->authenticate();
+
+            if ($identity->errorCode == UserIdentity::ERROR_NONE)
+            {
+                Yii::app()->user->login($identity);
+                $data['sessionId'] = Yii::app()->getSession()->getSessionID();
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_SUCCESS,
+                                                $data);
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Invalid username or password.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
+        }
+
+        public function actionLogout()
+        {
+            Yii::app()->user->logout();
+            if (Yii::app()->user->isGuest)
+            {
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_SUCCESS);
+            }
+            else
+            {
+                $error = Yii::t('Default', 'Error. User is not logged out.');
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
+        }
+
+        public function actionError()
+        {
+            if ($error = Yii::app()->errorHandler->error)
+            {
+                ApiSoapResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                ApiSoapResponse::STATUS_FAILURE,
+                                                null,
+                                                $error);
+            }
+        }
+
+        protected function getBaseController()
+        {
+            $model = $_GET['model'];
+            switch($_GET['model'])
+            {
+                case 'apiTest':
+                    $controllerName = 'ApiTestController';
+                    break;
+                default:
+                    $controllerName = null;
+                    break;
+            }
+            return $controllerName;
         }
     }
 ?>
