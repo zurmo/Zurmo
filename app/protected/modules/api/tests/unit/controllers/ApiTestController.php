@@ -45,6 +45,7 @@
                 if (count($data))
                 {
                     $outputArray['status'] = 'SUCCESS';
+                    $outputArray['message'] = '';
                     foreach ($data as $k => $model)
                     {
                         $outputArray['data'][]['name'] = $model->name;
@@ -72,9 +73,11 @@
                 $outputArray = array();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['data']['name'] = $model->name;
+                $outputArray['message'] = '';
             }
             catch (Exception $e)
             {
+                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -84,8 +87,9 @@
         public function create($name)
         {
             $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem($name);
-            $outputArray = array();
-            $outputArray['id'] = $apiModelTestItemModel1->id;
+            $outputArray['status'] = 'SUCCESS';
+            $outputArray['data']['id'] = $apiModelTestItemModel1->id;;
+            $outputArray['message'] = '';
             return $outputArray;
         }
 
@@ -101,6 +105,7 @@
                 {
                     $outputArray['status'] = 'SUCCESS';
                     $outputArray['data']['name'] = $model->name;
+                    $outputArray['message'] = '';
                 }
                 else
                 {
@@ -123,6 +128,7 @@
                 $model = ApiModelTestItem::getById($id);
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
+                $outputArray['message'] = '';
             }
             catch (Exception $e)
             {

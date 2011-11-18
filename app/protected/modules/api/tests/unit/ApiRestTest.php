@@ -46,7 +46,7 @@
                 'ZURMO_AUTH_USERNAME: super',
                 'ZURMO_AUTH_PASSWORD: super'
             );
-            $response = $this->createApiCall('http://zurmo.local/api/rest/login', 'POST', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/login', 'POST', $headers);
             $response = json_decode($response, true);
 
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
@@ -64,41 +64,41 @@
             );
             //Test Create
             $data = array('name' => 'new name');
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest', 'POST', $headers, $data);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest', 'POST', $headers, $data);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertTrue(is_int($response['data']['id']));
             $this->assertGreaterThan(0, $response['data']['id']);
             $id = $response['data']['id'];
 
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals('new name', $response['data']['name']);
 
             //Test Update
             $data = array('name' => 'new name 2');
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'PUT', $headers, $data);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'PUT', $headers, $data);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals('new name 2', $response['data']['name']);
 
             //Test Delete
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             //ToDo:Test that it doesn't exist
 
             //Test List
-            $response = $this->createApiCall('http://zurmo.local/api/rest/apiTest', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/apiTest', 'GET', $headers);
             $response = json_decode($response, true);
 
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
@@ -112,7 +112,7 @@
                             'Accept: application/json',
                             'ZURMO_SESSION_ID: ' . $sessionId
             );
-            $response = $this->createApiCall('http://zurmo.local/api/rest/logout', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/logout', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
         }
@@ -124,49 +124,10 @@
                             'ZURMO_AUTH_USERNAME: super',
                             'ZURMO_AUTH_PASSWORD: super'
             );
-            $response = $this->createApiCall('http://zurmo.local/api/rest/login', 'POST', $headers);
+            $response = ApiRestTestHelper::createApiCall('http://zurmo.local/api/rest/login', 'POST', $headers);
             $response = json_decode($response, true);
             return $response['data']['sessionId'];
         }
 
-        protected function createApiCall($url, $method, $headers, $data = array())
-        {
-            if ($method == 'PUT')
-            {
-                $headers[] = 'X-HTTP-Method-Override: PUT';
-            }
-
-            $handle = curl_init();
-            curl_setopt($handle, CURLOPT_URL, $url);
-            curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
-
-            switch($method)
-            {
-
-                case 'GET':
-                    break;
-
-                case 'POST':
-                    curl_setopt($handle, CURLOPT_POST, true);
-                    curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
-                    break;
-
-                case 'PUT':
-                    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
-                    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
-                    break;
-
-                case 'DELETE':
-                    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                    break;
-            }
-            $response = curl_exec($handle);
-            //$info = curl_getinfo($handle);
-            //print_r($info);
-            return $response;
-        }
     }
 ?>
