@@ -40,7 +40,8 @@
         public function getAttributes()
         {
             $attributes = array();
-            $calculatedAttributes = CalculatedDerivedAttributeMetadata::getSubset();
+            $calculatedAttributes = CalculatedDerivedAttributeMetadata::
+                                    getAllByModelClassName($this->modelClassName);
             foreach($calculatedAttributes as $attribute)
             {
                 ModelAttributeCollectionUtil::populateCollection(
@@ -51,7 +52,8 @@
                 );
             }
 
-            $dropdownDependencyAttributes = DropDownDependencyDerivedAttributeMetadata::getSubset();
+            $dropdownDependencyAttributes = DropDownDependencyDerivedAttributeMetadata::
+                                            getAllByModelClassName($this->modelClassName);
             foreach($dropdownDependencyAttributes as $attribute)
             {
                 ModelAttributeCollectionUtil::populateCollection(

@@ -28,14 +28,25 @@
     {
         protected function renderControlEditable()
         {
-            $content = null;
-            $content .= $this->form->listBox(
-                $this->model->{$this->attribute},
-                'value',
-                $this->getDropDownArray(),
-                $this->getEditableHtmlOptions()
-            );
+            $multipleValuesCustomField = $this->model->{$this->attribute};
+            assert('$multipleValuesCustomField instanceof MultipleValuesCustomField');
+            $content  = null;
+            $content .= CHtml::listBox($this->getNameForSelectInput(),
+                                       static::getSelectedValuesByModel($multipleValuesCustomField),
+                                       $this->getDropDownArray(),
+                                       $this->getEditableHtmlOptions());
             return $content;
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see DropDownElement::renderControlNonEditable()
+         */
+        protected function renderControlNonEditable()
+        {
+            $multipleValuesCustomField = $this->model->{$this->attribute};
+            assert('$multipleValuesCustomField instanceof MultipleValuesCustomField');
+            return Yii::app()->format->text(strval($multipleValuesCustomField));
         }
 
         protected function getEditableHtmlOptions()
@@ -43,6 +54,26 @@
             $htmlOptions = parent::getEditableHtmlOptions();
             $htmlOptions['multiple'] = true;
             return $htmlOptions;
+        }
+
+        protected static function getSelectedValuesByModel(MultipleValuesCustomField $model)
+        {
+            $selectedValues = array();
+            foreach($model->values as $customFieldValue)
+            {
+                $selectedValues[] = $customFieldValue->value;
+            }
+            return $selectedValues;
+        }
+
+        protected function getIdForSelectInput()
+        {
+            return $this->getEditableInputId($this->attribute, 'values');
+        }
+
+        protected function getNameForSelectInput()
+        {
+            return $this->getEditableInputName($this->attribute, 'values');
         }
     }
 ?>

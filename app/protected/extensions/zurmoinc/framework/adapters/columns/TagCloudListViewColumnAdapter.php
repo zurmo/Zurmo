@@ -24,14 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownListViewColumnAdapter extends DropDownListViewColumnAdapter
+    class TagCloudListViewColumnAdapter extends MultiSelectDropDownListViewColumnAdapter
     {
-        public function renderGridViewData()
-        {
-            return array(
-                'sortable' => false,
-                'name'     => $this->attribute,
-            );
-        }
     }
 ?>

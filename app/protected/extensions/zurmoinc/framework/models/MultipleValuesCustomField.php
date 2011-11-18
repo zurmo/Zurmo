@@ -36,13 +36,17 @@
                 return Yii::t('Default', '(None)');
             }
             $s = null;
+
+            $dataAndLabels = CustomFieldDataUtil::
+                             getDataIndexedByDataAndTranslatedLabelsByLanguage($this->data, Yii::app()->language);
+            $s             = null;
             foreach($this->values as $customFieldValue)
             {
                 if($s != null)
                 {
                     $s .= ', ';
                 }
-                $s .= strval($customFieldValue);
+                $s .= ArrayUtil::getArrayValue($dataAndLabels, strval($customFieldValue));
             }
             return $s;
         }
