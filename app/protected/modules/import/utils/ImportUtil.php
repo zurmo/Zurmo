@@ -381,7 +381,7 @@
                                                                                  $importSanitizeResultsUtil);
             foreach ($attributeValueData as $attributeName => $value)
             {
-                if($model->isAttribute($attributeName))
+                if ($model->isAttribute($attributeName))
                 {
                     static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
                 }
@@ -449,6 +449,7 @@
                 $afterSaveActionsData[] = array(get_class($attributeImportRules), $attributeValueData);
             }
         }
+
         protected static function resolveModelForModelDerivedAttribute(
                                   RedBeanModel $model,
                                   $importRulesType,

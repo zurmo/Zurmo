@@ -171,7 +171,7 @@
                     foreach ($classMetadata['relations'] as $relationName => $relationTypeModelClassNameAndOwns)
                     {
                         //Always use the current user to ensure the model can later be saved and removed.
-                        if($relationName == 'owner' && $model instanceof OwnedSecurableItem)
+                        if ($relationName == 'owner' && $model instanceof OwnedSecurableItem)
                         {
                             $model->owner = Yii::app()->user->userModel;
                         }
