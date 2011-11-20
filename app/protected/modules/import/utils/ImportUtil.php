@@ -118,12 +118,12 @@
                                         $importRules::getType(), $columnMappingData['attributeIndexOrDerivedType']);
                 $valueReadyToSanitize = static::
                                         resolveValueToSanitizeByValueAndColumnType($rowBean->$idColumnName,
-                                                                                   $columnMappingData['columnType']);
+                                                                                   $columnMappingData['type']);
                 $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
-                                                                                             $columnMappingData,
-                                                                                             $importSanitizeResultsUtil);
+                                                                                     $columnMappingData,
+                                                                                     $importSanitizeResultsUtil);
                 assert('count($attributeValueData) == 0 || count($attributeValueData) == 1');
-                if ($attributeValueData['id'] != null)
+                if (isset($attributeValueData['id']) && $attributeValueData['id'] != null)
                 {
                     $model        = $modelClassName::getById($attributeValueData['id']);
                     $makeNewModel = false;
@@ -279,6 +279,14 @@
                                                                                 $columnMappingData,
                                                                                 $importSanitizeResultsUtil);
                 }
+                elseif ($attributeImportRules instanceof AfterSaveActionNonDerivedAttributeImportRules)
+                {
+                    static::resolveAfterSaveActionNonDerivedAttributeImportRules($afterSaveActionsData,
+                                                                                 $attributeImportRules,
+                                                                                 $valueReadyToSanitize,
+                                                                                 $columnMappingData,
+                                                                                 $importSanitizeResultsUtil);
+                }
                 else
                 {
                     static::
@@ -373,13 +381,15 @@
                                                                                  $importSanitizeResultsUtil);
             foreach ($attributeValueData as $attributeName => $value)
             {
-                assert('$model->isAttribute($attributeName)');
-                static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
+                if ($model->isAttribute($attributeName))
+                {
+                    static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
+                }
             }
         }
 
         /**
-         * Some attributeImportRules require the sanitized values to be processed after the model is saved. An example
+         * Some derivedAttributeImportRules require the sanitized values to be processed after the model is saved. An example
          * is the user status which is a derived attribute requiring processing after the user has been saved. This
          * method gets the sanitized value and adds it along with the attributeImportRules class name to an array
          * by reference.  After the model is saved, this array is referenced and each attribute import rule is processed.
@@ -392,7 +402,38 @@
          */
         protected static function resolveAfterSaveActionDerivedAttributeImportRules(
                                   & $afterSaveActionsData,
-                                  AttributeImportRules $attributeImportRules,
+                                  DerivedAttributeImportRules $attributeImportRules,
+                                  $valueReadyToSanitize,
+                                  $columnMappingData,
+                                  ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        {
+            assert('is_array($afterSaveActionsData)');
+            assert('$attributeImportRules instanceof AfterSaveActionDerivedAttributeImportRules');
+            assert('is_array($columnMappingData)');
+            $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
+                                                                                 $columnMappingData,
+                                                                                 $importSanitizeResultsUtil);
+            if ($attributeValueData != null)
+            {
+                $afterSaveActionsData[] = array(get_class($attributeImportRules), $attributeValueData);
+            }
+        }
+
+        /**
+         * Some attributeImportRules require the sanitized values to be processed after the model is saved. An example
+         * is the user status which is a derived attribute requiring processing after the user has been saved. This
+         * method gets the sanitized value and adds it along with the attributeImportRules class name to an array
+         * by reference.  After the model is saved, this array is referenced and each attribute import rule is processed.
+         * @see AfterSaveActionNonDerivedAttributeImportRules
+         * @param array $afterSaveActionsData
+         * @param AttributeImportRules $attributeImportRules
+         * @param mixed $valueReadyToSanitize
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         */
+        protected static function resolveAfterSaveActionNonDerivedAttributeImportRules(
+                                  & $afterSaveActionsData,
+                                  NonDerivedAttributeImportRules $attributeImportRules,
                                   $valueReadyToSanitize,
                                   $columnMappingData,
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)

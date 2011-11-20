@@ -64,6 +64,12 @@
             => 'Mot de passe administrateur',
         'Database admin username'
             => 'Nom d\'utilisateur administrateur',
+        'Database default collation is: {collation}'
+            => 'La collation de la base de données est: {collation}',
+        'Database default collation meets minimum requirement.'
+            => 'La collation par défaut de la base de données répond aux exigences minimales.',
+        'Database default collation should not be in: {listOfCollations}'
+            => 'La collation par défaut de la base de données ne devrait pas être en: {listOfCollations}',
         'Database host'
             => 'L\'hôte de la base de données',
         'Database is in strict mode.'

@@ -25,32 +25,20 @@
      ********************************************************************************/
 
     /**
-     * This validator can be used by both a User model as well as a CFormModel like in User import for example.
-     * This validator validates to see if a valid time zone is entered by validating it with DateTimeZone class.
-     * See the yii documentation.
+     * Extend this rule if the attribute is processed after save of the import model instead of the beforehand.
      */
-    class validateTimeZone extends CValidator
+    abstract class AfterSaveActionNonDerivedAttributeImportRules extends NonDerivedAttributeImportRules
     {
         /**
-         * See the yii documentation.
+         * Override to implement method.  This method is called after the model is saved during import. Allows for
+         * additional after save processing to occur that is attribute specific.
+         * @param RedBeanModel $model
+         * @param array $attributeValueData
          */
-        protected function validateAttribute($model, $attributeName)
+        public static function processAfterSaveAction(RedBeanModel $model, $attributeValueData)
         {
-            if ($model->$attributeName != null)
-            {
-                try
-                {
-                    if (new DateTimeZone($model->$attributeName) === false)
-                    {
-                        $model->addError($attributeName, Yii::t('Default', 'The time zone is invalid.'));
-                    }
-                }
-                catch (Exception $e)
-                {
-                    //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
-                    $model->$attributeName == 'UTC';
-                }
-            }
+            assert('is_array($attributeValueData)');
+            throw notImplementedException();
         }
     }
 ?>

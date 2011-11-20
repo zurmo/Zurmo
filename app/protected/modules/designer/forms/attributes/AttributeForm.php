@@ -43,7 +43,6 @@
                 $this->attributeName     = $attributeName;
                 $this->attributeLabels   = $model->getAttributeLabelsForAllSupportedLanguagesByAttributeName(
                                                     $attributeName);
-
                 $this->attributePropertyToDesignerFormAdapter = new AttributePropertyToDesignerFormAdapter();
                 $validators = $model->getValidators($attributeName);
                 foreach ($validators as $validator)
@@ -56,7 +55,8 @@
                     {
                         $this->isRequired = true;
                         $modelAttributesAdapter = new ModelAttributesAdapter($model);
-                        if ($modelAttributesAdapter->isStandardAttribute($attributeName))
+                        if ($modelAttributesAdapter->isStandardAttribute($attributeName) &&
+                            $modelAttributesAdapter->isStandardAttributeRequiredByDefault($attributeName))
                         {
                             $this->attributePropertyToDesignerFormAdapter->setUpdateRequiredFieldStatus(false);
                         }

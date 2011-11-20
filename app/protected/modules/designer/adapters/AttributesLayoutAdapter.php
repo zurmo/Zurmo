@@ -238,5 +238,29 @@
                 }
             }
         }
+
+        /**
+         * @return array of effective placed attributes. Includes all non-derived attributes directly placed in the
+         * layout as well as real attributes that are part of a derived attribute. For example: fullName. Even though
+         * this is derived, it effectively places the lastName attribute.
+         */
+        public function getEffectivePlacedAttributes()
+        {
+
+            $placedAttributes = $this->getAttributesInPlace();
+            foreach($this->getDerivedAttributesInPlace() as $derivedAttributeType)
+            {
+                $elementClassName = $derivedAttributeType . 'Element';
+                $attributesUsed = $elementClassName::getModelAttributeNames();
+                foreach($attributesUsed as $attribute)
+                {
+                    if(!in_array($attribute, $placedAttributes))
+                    {
+                        $placedAttributes[] = $attribute;
+                    }
+                }
+            }
+            return $placedAttributes;
+        }
     }
 ?>

@@ -63,7 +63,7 @@
             $dataAttributeColumnName       = RedBeanModel::getForeignKeyName('BaseCustomField', 'data');
             $sql  = "update {$quote}{$customFieldTableName}{$quote}, {$quote}{$baseCustomFieldTableName}{$quote} ";
             $sql .= "set {$quote}{$valueAttributeColumnName}{$quote} = '{$newValue}' ";
-            $sql .= "where {$quote}{$customFieldTableName}{$quote}.$baseCustomFieldJoinColumnName = ";
+            $sql .= "where {$quote}{$customFieldTableName}{$quote}.$baseCustomFieldJoinColumnName = "; // Not Coding Standard
             $sql .= "{$quote}{$baseCustomFieldTableName}{$quote}.id ";
             $sql .= "AND {$quote}{$dataAttributeColumnName}{$quote} = $customFieldDataId ";
             $sql .= "AND {$quote}{$valueAttributeColumnName}{$quote} = '{$oldValue}'";

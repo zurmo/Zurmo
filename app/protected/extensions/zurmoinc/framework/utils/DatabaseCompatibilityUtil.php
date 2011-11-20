@@ -268,6 +268,45 @@
         }
 
         /**
+         * Get version number of database
+         * @param unknown_type $databaseType
+         * @param unknown_type $databaseHostname
+         * @param unknown_type $databaseUsername
+         * @param unknown_type $databasePassword
+         * @throws NotSupportedException
+         */
+        public static function getDatabaseVersion($databaseType,
+                                                  $databaseHostname,
+                                                  $databaseUsername,
+                                                  $databasePassword)
+        {
+            if ($databaseType != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $PhpDriverVersion = phpversion('mysql');
+                    if ($PhpDriverVersion !== null)
+                    {
+                        $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                        $result = @mysql_query("SELECT VERSION()");
+                        $row    = @mysql_fetch_row($result);
+                        if (is_resource($connection))
+                        {
+                            mysql_close($connection);
+                        }
+                        if (isset($row[0]))
+                        {
+                            return $row[0];
+                        }
+                    }
+            }
+            return false;
+        }
+
+        /**
          * Get database max alowed packet size.
          * @throws NotSupportedException
          */
@@ -300,9 +339,9 @@
          * @return int|string error
          */
         public static function getDatabaseMaxAllowedPacketsSize($databaseType,
-                                                                   $databaseHostname,
-                                                                   $databaseUsername,
-                                                                   $databasePassword)
+                                                                $databaseHostname,
+                                                                $databaseUsername,
+                                                                $databasePassword)
         {
             if ($databaseType != 'mysql')
             {
@@ -530,7 +569,7 @@
          */
         public static function checkDatabaseUserExists($databaseType, $host, $rootUsername, $rootPassword, $username)
         {
-        if ($databaseType != 'mysql')
+            if ($databaseType != 'mysql')
             {
                 throw new NotSupportedException();
             }

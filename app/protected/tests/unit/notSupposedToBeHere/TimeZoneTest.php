@@ -37,14 +37,27 @@
             $dateStamp2 = date("Y-m-d G:i",  $timeStamp);
             Yii::app()->setTimeZone('America/New_York');
 
+            $timeZoneObject = new DateTimeZone('America/New_York');
+            $offset = $timeZoneObject->getOffset(new DateTime());
+            $this->assertTrue($offset == -18000 || $offset == -14400);
+
             $newYorkTimeZone = new DateTimeZone(date_default_timezone_get());
             $offset1         = $newYorkTimeZone->getOffset($dateTimeUtc);
             $offset2         = timezone_offset_get($newYorkTimeZone , $dateTimeUtc);
-            $this->assertEquals(-14400, $offset1);
-            $this->assertEquals(-14400, $offset2);
+            $this->assertEquals($offset, $offset1);
+            $this->assertEquals($offset, $offset2);
+
+            if ($offset == -18000)
+            {
+                $offsetHours = 6;
+            }
+            else
+            {
+                $offsetHours = 5;
+            }
 
             $dateStamp3 = date("Y-m-d G:i",  $timeStamp);
-            $this->assertEquals(strtotime($dateStamp),  strtotime($dateStamp2) + (3600 * 5));   // + 5 from GMT
+            $this->assertEquals(strtotime($dateStamp),  strtotime($dateStamp2) + (3600 * $offsetHours));   // + 5 from GMT or +6 depending on DST
             $this->assertEquals(strtotime($dateStamp3), strtotime($dateStamp2) + (3600 * 1));   // + 1 from NY
             //Use retrieved offset based on timezone.
             Yii::app()->setTimeZone($oldTimeZone);

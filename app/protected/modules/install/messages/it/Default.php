@@ -63,6 +63,12 @@
             => '??',
         'Database admin username'
             => '??',
+        'Database default collation is: {collation}'
+            => '??',
+        'Database default collation meets minimum requirement.'
+            => '??',
+        'Database default collation should not be in: {listOfCollations}'
+            => '??',
         'Database host'
             => '??',
         'Database is in strict mode.'

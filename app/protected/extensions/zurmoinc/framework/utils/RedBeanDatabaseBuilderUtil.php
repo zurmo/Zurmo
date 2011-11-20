@@ -131,7 +131,7 @@
                 }
                 catch (NotSupportedException $e)
                 {
-                    $messageLogger->addInfoMessage("*** Deleting the sample $modelClassName failed. It is marked not deletable.");
+                    $messageLogger->addErrorMessage("*** Deleting the sample $modelClassName failed. It is marked not deletable.");
                 }
             }
             if (count(self::$modelClassNamesToSampleModels))
@@ -171,7 +171,12 @@
                 {
                     foreach ($classMetadata['relations'] as $relationName => $relationTypeModelClassNameAndOwns)
                     {
-                        if (!$model->isAttributeReadOnly($relationName))
+                        //Always use the current user to ensure the model can later be saved and removed.
+                        if ($relationName == 'owner' && $model instanceof OwnedSecurableItem)
+                        {
+                            $model->owner = Yii::app()->user->userModel;
+                        }
+                        elseif (!$model->isAttributeReadOnly($relationName))
                         {
                             $messageLogger->addInfoMessage("Setting $modelClassName->$relationName.");
 

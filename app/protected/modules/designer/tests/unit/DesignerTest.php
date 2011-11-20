@@ -363,7 +363,7 @@
             $this->assertTrue($attributeForm instanceof TextAttributeForm);
             $this->assertEquals('name', $attributeForm->attributeName);
             $compareAttributeLabels = array(
-                'de' => '??',
+                'de' => 'Name',
                 'en' => 'Name',
                 'es' => 'Nombre',
                 'fr' => 'Nom',
@@ -642,6 +642,106 @@
                 'TitleFullName',
             );
             $this->assertEquals($compareTypes, $requiredTypes);
+        }
+
+        /**
+         * There was a bug if you had an existing model, then created a custom drop down, it would not show
+         * any values.  This was resolved by making sure cached models constructDerived.  This test should pass now
+         * that the fix is implemented.
+         */
+        public function testExistingModelsShowCustomFieldDataCorrectlyWhenAttributeIsAddedAsDatabaseColumn()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //Create account
+            $account   = AccountTestHelper::createAccountByNameForOwner('test', $super);
+            $accountId = $account->id;
+            $account->forget();
+
+            $originalMetadata = Account::getMetadata();
+            $attributeLabels  = array('en' => 'newRelation');
+            ModelMetadataUtil::addOrUpdateCustomFieldRelation('Account', 'newRelation', $attributeLabels,
+                null, false, false, 'DropDown', 'Things', array('thing 1', 'thing 2'),
+                                                          array('fr' => array('thing 1 fr', 'thing 2 fr')));
+            $adapter  = new ModelAttributesAdapter(new Account());
+            $adapter->resolveDatabaseSchemaForModel('Account');
+            $metadata = Account::getMetadata();
+            $this->assertNotEquals($originalMetadata, $metadata);
+
+            $this->assertEquals($originalMetadata['Account']['rules'], $metadata['Account']['rules']);
+            $newRelation = $metadata['Account']['relations']['newRelation'];
+            $this->assertEquals(array(RedBeanModel::HAS_ONE,  'CustomField'), $newRelation);
+            $this->assertEquals('Things', $metadata['Account']['customFields']['newRelation']);
+
+            //on a new account, does the serialized data show correctly.
+            $account = new Account();
+            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
+
+            ForgetAllCacheUtil::forgetAllCaches();
+
+            //retrieve account and make sure the serialized data shows correctly.
+            //This will not be cached.
+            $account = Account::getById($accountId);
+            $this->assertNotNull($account->industry->data->serializedData);
+            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
+
+            //This will pull from cached.  Clear the php cache first, which simulates a new page request without destroying
+            //the persistent cache.
+            RedBeanModelsCache::forgetAll(true);
+            $account = Account::getById($accountId);
+
+            //Test pulling a different CustomField first. This simulates caching the customField
+            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
+        }
+
+        public function testStandardAttributeThatBecomesRequiredCanStillBeChangedToBeUnrequired()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $account                    = new Account();
+
+            //Name for example, is required by default.
+            $adapter       = new ModelAttributesAdapter($account);
+            $this->assertTrue($adapter->isStandardAttributeRequiredByDefault('name'));
+
+            //Industry is not required by default.
+            $adapter       = new DropDownModelAttributesAdapter($account);
+            $this->assertFalse($adapter->isStandardAttributeRequiredByDefault('industry'));
+
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'industry');
+            $this->assertFalse($attributeForm->isRequired);
+            $this->assertTrue($attributeForm->canUpdateAttributeProperty('isRequired'));
+
+            //Now make industry required.
+            $attributeForm->isRequired = true;
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+            RedBeanModelsCache::forgetAll();
+
+            $account       = new Account();
+            $adapter       = new DropDownModelAttributesAdapter($account);
+            $this->assertFalse($adapter->isStandardAttributeRequiredByDefault('industry'));
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'industry');
+            $this->assertTrue($attributeForm->isRequired);
+            $this->assertTrue($attributeForm->canUpdateAttributeProperty('isRequired'));
+        }
+
+        public function testIsStandardAttributeRequiredByDefault()
+        {
+            //Testing an attribute that is not on the specified model, but requires a casting up.
+            $contact       = new Contact();
+            $adapter       = new ModelAttributesAdapter($contact);
+            $this->assertTrue($adapter->isStandardAttributeRequiredByDefault('lastName'));
         }
     }
 ?>

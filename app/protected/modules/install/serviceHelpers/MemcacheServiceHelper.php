@@ -68,6 +68,7 @@
                         $this->checkResultedInWarning = true;
                         $this->message  = $displayLabel . ' ' .
                         Yii::t('Default', 'is installed, but the version is unknown.');
+                        return true;
                     }
                 }
                 else

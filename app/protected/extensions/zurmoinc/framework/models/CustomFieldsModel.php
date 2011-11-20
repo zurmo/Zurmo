@@ -60,5 +60,29 @@
                 }
             }
         }
+
+        /**
+         * Utilized for existing models, that were not originally saved with a new custom field.  This will be utilized
+         * to ensure cached models properly generate information needed by the model.
+         * (non-PHPdoc)
+         * @see RedBeanModel::constructIncomplete()
+         */
+        protected function constructIncomplete($bean)
+        {
+            assert('$bean === null || $bean instanceof RedBean_OODBBean');
+            $metadata = $this->getMetadata();
+            foreach ($metadata as $unused => $classMetadata)
+            {
+                if (isset($classMetadata['customFields']))
+                {
+                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
+                    {
+                        $customField       = $this->unrestrictedGet($customFieldName);
+                        $customFieldData   = CustomFieldData::getByName($customFieldDataName);
+                        $customField->data = $customFieldData;
+                    }
+                }
+            }
+        }
     }
 ?>

@@ -42,7 +42,7 @@
         'Due On'
             => 'Fecha de vencimiento',
         'My Open TasksModulePluralLabel'
-            => 'Mis Open TasksModulePluralLabel',
+            => 'Mis TasksModulePluralLabel abiertas',
         'Open TasksModulePluralLabel'
             => 'TasksModulePluralLabel abiertas',
         'Task'

@@ -64,6 +64,12 @@
             => 'Contraseña de administrador',
         'Database admin username'
             => 'Nombre de usuario de administrador',
+        'Database default collation is: {collation}'
+            => 'La colación de la base de datos es: {collation}',
+        'Database default collation meets minimum requirement.'
+            => 'La colación predeterminada de la base de datos cumple con los requisitos mínimos.',
+        'Database default collation should not be in: {listOfCollations}'
+            => 'La colación predeterminada de la base de datos no debería ser: {listOfCollations}',
         'Database host'
             => 'Host de base de datos',
         'Database is in strict mode.'

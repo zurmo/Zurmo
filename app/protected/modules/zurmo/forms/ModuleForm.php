@@ -62,12 +62,12 @@
                 {
                     $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
                 }
-                if ($data[$language] != strtolower($data[$language]))
+                if ($data[$language] != mb_strtolower($data[$language], Yii::app()->charset))
                 {
                     $this->addError($attribute . '[' . $language . ']',
                                 Yii::t('Default', 'Label must be all lowercase.'));
                 }
-                if (!preg_match('/^[A-Za-z0-9_ ]+$/', $data[$language])) // Not Coding Standard
+                if (!preg_match('/^[\p{L}A-Za-z0-9_ ]+$/u', $data[$language])) // Not Coding Standard
                 {
                     $this->addError($attribute . '[' . $language . ']',
                         Yii::t('Default', 'Label must not contain any special characters.'));

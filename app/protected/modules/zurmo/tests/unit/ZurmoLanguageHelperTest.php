@@ -193,5 +193,19 @@
                                  )*/);
             $this->assertEquals($compareData, $data);
         }
+
+        /**
+         * This test shows that accents are maybe not in the right encoding in the message file. This is just an example
+         * of something that was not working in windows correctly. The result was the label would not display in the
+         * input box in the browser in the module general edit in designer.
+         */
+        public function testAccentsAreEncodingProperly()
+        {
+            $this->assertEquals('Opportunité', CHtml::encode('Opportunité'));
+
+            $label = OpportunitiesModule::getModuleLabelByTypeAndLanguage('SingularLowerCase', 'fr');
+            $this->assertEquals('opportunité', $label);
+            $this->assertEquals('opportunité', CHtml::encode($label));
+        }
     }
 ?>
