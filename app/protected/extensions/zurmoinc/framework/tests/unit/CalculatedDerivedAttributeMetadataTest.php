@@ -77,5 +77,24 @@
             $this->assertEquals(1, count($models));
             $this->assertEquals('someName2', $models[0]->name);
         }
+
+        /**
+         * @depends testGetAllByModelClassName
+         */
+        public function testGetFormula()
+        {
+            $metadata = new CalculatedDerivedAttributeMetadata();
+            $metadata->setScenario('nonAutoBuild');
+            $metadata->name = 'someName3';
+            $metadata->modelClassName     = 'Whatever3';
+            $metadata->serializedMetadata = serialize(array('stuff', 1, 'attributeLabels' => array(), 'formula' => 'test'));
+            $saved = $metadata->save();
+            $this->assertTrue($saved);
+
+            $models = CalculatedDerivedAttributeMetadata::getAllByModelClassName('Whatever3');
+            $this->assertEquals(1, count($models));
+            $this->assertEquals('someName3', $models[0]->name);
+            $this->assertEquals('test', $models[0]->getFormula());
+        }
     }
 ?>
