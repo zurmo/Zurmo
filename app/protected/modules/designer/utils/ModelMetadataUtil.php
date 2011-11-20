@@ -125,7 +125,7 @@
             assert('is_bool($isAudited)');
             assert('is_string($customFieldDataName) && $customFieldDataName != ""');
             assert('is_array($customFieldDataLabels) || $customFieldDataLabels == null');
-            assert('in_array($relationModelClassName, array("OwnedCustomField", "OwnedMultipleValuesCustomField"))');
+            assert('in_array($relationModelClassName, array("CustomField", "OwnedCustomField", "OwnedMultipleValuesCustomField"))');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
             if (!isset           (               $metadata[$modelClassName]['relations']) ||
