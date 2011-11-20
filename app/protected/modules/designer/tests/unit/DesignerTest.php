@@ -694,5 +694,54 @@
             //Test pulling a different CustomField first. This simulates caching the customField
             $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
         }
+
+        public function testStandardAttributeThatBecomesRequiredCanStillBeChangedToBeUnrequired()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $account                    = new Account();
+
+            //Name for example, is required by default.
+            $adapter       = new ModelAttributesAdapter($account);
+            $this->assertTrue($adapter->isStandardAttributeRequiredByDefault('name'));
+
+            //Industry is not required by default.
+            $adapter       = new DropDownModelAttributesAdapter($account);
+            $this->assertFalse($adapter->isStandardAttributeRequiredByDefault('industry'));
+
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'industry');
+            $this->assertFalse($attributeForm->isRequired);
+            $this->assertTrue($attributeForm->canUpdateAttributeProperty('isRequired'));
+
+            //Now make industry required.
+            $attributeForm->isRequired = true;
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+            RedBeanModelsCache::forgetAll();
+
+            $account       = new Account();
+            $adapter       = new DropDownModelAttributesAdapter($account);
+            $this->assertFalse($adapter->isStandardAttributeRequiredByDefault('industry'));
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'industry');
+            $this->assertTrue($attributeForm->isRequired);
+            $this->assertTrue($attributeForm->canUpdateAttributeProperty('isRequired'));
+        }
+
+        public function testIsStandardAttributeRequiredByDefault()
+        {
+            //Testing an attribute that is not on the specified model, but requires a casting up.
+            $contact       = new Contact();
+            $adapter       = new ModelAttributesAdapter($contact);
+            $this->assertTrue($adapter->isStandardAttributeRequiredByDefault('lastName'));
+        }
     }
 ?>

@@ -60,8 +60,77 @@
             $this->setGetArray (array('id' => $account->id));
             $content = $this->runControllerWithExitExceptionAndGetContent('accounts/default/edit');
             $this->assertFalse(strpos($content, 'There are required fields missing from the following layout') === false);
+
+            //Remove the new field.
+            $modelAttributesAdapterClassName = TextAttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            $adapter->removeAttributeMetadata('text');
+            RequiredAttributesValidViewUtil::resolveToRemoveAttributeAsMissingRequiredAttribute('Account','text');
+            $account = new Account();
+            $this->assertFalse($account->isAttribute('text'));
+            unset($account);
         }
 
+        /**
+         * @depends testRequiredAttributesAreMissingFromLayout
+         */
+        public function testMakingAlreadyPlacedNonrequiredStandardAttributeRequiredAndThenMakingItUnrequired()
+        {
+            $super   = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/create');
+            $this->assertTrue(strpos($content, 'There are required fields missing from the following layout') === false);
+
+            //Now make industry required.
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'industry');
+            $this->assertFalse($attributeForm->isRequired);
+            $attributeForm->isRequired       = true;
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+            RequiredAttributesValidViewUtil::resolveToSetAsMissingRequiredAttributesByModelClassName('Account', 'industry');
+            RedBeanModelsCache::forgetAll();
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/create');
+            $this->assertTrue(strpos($content, 'There are required fields missing from the following layout') === false);
+
+            //Now make industry unrequired.
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'industry');
+            $this->assertTrue($attributeForm->isRequired);
+            $attributeForm->isRequired       = false;
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+            RequiredAttributesValidViewUtil::resolveToRemoveAttributeAsMissingRequiredAttribute('Account','industry');
+            RedBeanModelsCache::forgetAll();
+
+            //Confirm industry is truly unrequired.
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), 'industry');
+            $this->assertFalse($attributeForm->isRequired);
+
+            //Now the layout should not show an error message.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/create');
+            $this->assertTrue(strpos($content, 'There are required fields missing from the following layout') === false);
+        }
+
+        /**
+         * @depends testMakingAlreadyPlacedNonrequiredStandardAttributeRequiredAndThenMakingItUnrequired
+         */
         public function testRequiredContactAttributesProperlyAreRequiredToBePlacedInLeadLayouts()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -103,8 +172,6 @@
             $this->assertFalse(strpos($content, 'There are required fields missing from the following layout') === false);
         }
 
-        //todo: test switching existing attribute to required.
-        //todo: test switching existing attribute to not required from required.
         //todo: test note inlineEditSave
         //todo: test out multiple custom fields not placed, make sure array of config for RequiredAttributesValidViewUtil is working ok.
     }
