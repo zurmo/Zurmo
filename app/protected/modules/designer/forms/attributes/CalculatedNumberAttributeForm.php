@@ -33,6 +33,8 @@
 
         public $formula;
 
+        protected $modelClassName;
+
         public function __construct(RedBeanModel $model = null, $attributeName = null)
         {
             assert('$attributeName === null || is_string($attributeName)');
@@ -53,6 +55,7 @@
                 {
                     $unserializedMetadata = array();
                 }
+                $this->modelClassName = get_class($model);
             }
         }
 
@@ -87,7 +90,14 @@
 
         public function validateFormula($attribute, $params)
         {
-            //todo:
+            assert('$attribute == "formula"');
+            assert('$this->modelClassName != null');
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            if(!CalculatedNumberUtil::isFormulaValid($this->{$attribute}, $model))
+            {
+                $this->addError('formula', Yii::t('Default', 'The formula is invalid.'));
+            }
         }
 
         /**

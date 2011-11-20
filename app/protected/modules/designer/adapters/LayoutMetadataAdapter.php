@@ -172,6 +172,22 @@
                 $this->placedDerivedAttributeTypes[] = $elementName;
                 $placeElement = true;
             }
+            elseif(isset($this->placeableLayoutAttributes[$elementName]) &&
+                   $this->placeableLayoutAttributes[$elementName]['elementType'] == 'DropDownDependency')
+            {
+                $moduleClassName              = $this->moduleClassName;
+                $modelClassName               = $moduleClassName::getPrimaryModelName();
+                $metadata                     = DropDownDependencyDerivedAttributeMetadata::
+                                                getByNameAndModelClassName($elementName, $modelClassName);
+                $this->placedAttributeNames   = array_merge($this->placedAttributeNames,
+                                                $metadata->getUsedAttributeNames());
+                $this->placedAttributeNames[] = $elementName;
+                $element                      = array(
+                                                    'attributeName' => $elementName,
+                                                    'type' => $this->placeableLayoutAttributes[$elementName]['elementType']
+                );
+                $placeElement = true;
+            }
             elseif (isset($this->placeableLayoutAttributes[$elementName]))
             {
                 $element = array(

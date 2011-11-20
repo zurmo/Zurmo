@@ -41,5 +41,15 @@
             );
             return $metadata;
         }
+
+
+        /**
+         * @return string content of the stored formula.
+         */
+        public function getFormula()
+        {
+            $unserializedMetadata  = unserialize($this->serializedMetadata);
+            return $unserializedMetadata['formula'];
+        }
     }
 ?>

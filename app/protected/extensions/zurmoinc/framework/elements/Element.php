@@ -116,9 +116,9 @@
         protected function renderEditable()
         {
             $data = array();
-            $data['label'] = $this->renderLabel();
+            $data['label']   = $this->renderLabel();
             $data['content'] = $this->renderControlEditable();
-            $data['error'] = $this->renderError();
+            $data['error']   = $this->renderError();
             $data['colspan'] = $this->getColumnSpan();
             return $this->resolveContentTemplate($this->editableTemplate, $data);
         }
@@ -131,7 +131,7 @@
         protected function renderNonEditable()
         {
             $data = array();
-            $data['label'] = $this->renderLabel();
+            $data['label']   = $this->renderLabel();
             $data['content'] = $this->renderControlNonEditable();
             $data['colspan'] = $this->getColumnSpan();
             return $this->resolveContentTemplate($this->nonEditableTemplate, $data);

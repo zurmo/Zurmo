@@ -24,71 +24,20 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ListViewDesignerRules extends DesignerRules
+    class CalculatedNumberListViewColumnAdapter extends TextListViewColumnAdapter
     {
-        public function canAddPanels()
+        public function renderGridViewData()
         {
-            return false;
-        }
-
-        public function canMergeAndSplitCells()
-        {
-            return false;
-        }
-
-        public function canModifyCellSettings()
-        {
-            return false;
-        }
-
-        public function canModifyPanelSettings()
-        {
-            return false;
-        }
-
-        public function canMovePanels()
-        {
-            return false;
-        }
-
-        public function canRemovePanels()
-        {
-            return false;
-        }
-
-        public function getDisplayName()
-        {
-            return Yii::t('Default', 'List View');
-        }
-
-        public function getNonPlaceableLayoutAttributeTypes()
-        {
+            assert('$this->view instanceof ModelView');
+            $metadata = CalculatedDerivedAttributeMetadata::
+                        getByNameAndModelClassName($this->attribute, $this->view->getModelClassName());
             return array(
-                'DropDownDependency'
+                'name'     => $this->attribute,
+                'value'    => 'CalculatedNumberUtil::calculateByFormulaAndModel("' . $metadata->getFormula() . '", $data)',
+                'type'     => 'raw',
+                'sortable' => false,
+                'header'   => $metadata->getLabelByLanguage(Yii::app()->language)
             );
-        }
-
-        public function getSavableMetadataRules()
-        {
-            return array('AddLink');
-        }
-
-        public function maxCellsPerRow()
-        {
-            return 1;
-        }
-
-        public function mergeRowAndAttributePlacement()
-        {
-            return true;
-        }
-
-        /**
-         * List views should never have null elements, which would result in null columns.
-         */
-        public function shouldPlaceNullElement()
-        {
-            return false;
         }
     }
 ?>

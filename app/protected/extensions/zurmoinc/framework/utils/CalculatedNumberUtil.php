@@ -24,71 +24,40 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ListViewDesignerRules extends DesignerRules
+    /**
+     * Helper class to work with calculated numbers.
+     */
+    class CalculatedNumberUtil
     {
-        public function canAddPanels()
+        /**
+         * Given a formula string and a model, calculate the number using the formula and values from the attributes
+         * on the model.
+         * @param string $formula
+         * @param RedBeanModel $model
+         * @return calculated value as number.
+         */
+        public static function calculateByFormulaAndModel($formula, RedBeanModel $model)
         {
-            return false;
-        }
-
-        public function canMergeAndSplitCells()
-        {
-            return false;
-        }
-
-        public function canModifyCellSettings()
-        {
-            return false;
-        }
-
-        public function canModifyPanelSettings()
-        {
-            return false;
-        }
-
-        public function canMovePanels()
-        {
-            return false;
-        }
-
-        public function canRemovePanels()
-        {
-            return false;
-        }
-
-        public function getDisplayName()
-        {
-            return Yii::t('Default', 'List View');
-        }
-
-        public function getNonPlaceableLayoutAttributeTypes()
-        {
-            return array(
-                'DropDownDependency'
-            );
-        }
-
-        public function getSavableMetadataRules()
-        {
-            return array('AddLink');
-        }
-
-        public function maxCellsPerRow()
-        {
-            return 1;
-        }
-
-        public function mergeRowAndAttributePlacement()
-        {
-            return true;
+            assert('is_string($formula)');
+            //todo:
+            return 'todo';
         }
 
         /**
-         * List views should never have null elements, which would result in null columns.
+         * Given a formula string and a model, determine if the formula is correctly formed and is using valid
+         * attributes from the given model.
+         * @param string $formula
+         * @param RedBeanModel $model
+         * @return boolean true/false
          */
-        public function shouldPlaceNullElement()
+        public static function isFormulaValid($formula, RedBeanModel $model)
         {
-            return false;
+            assert('is_string($formula)');
+            //todo:
+            //Test that all attributes specified in the formula are valid attributes on the model and number or
+            //currency attributes.
+            //Test that the operators + - / * and () are correctly formed.
         }
     }
+
 ?>

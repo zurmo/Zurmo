@@ -87,6 +87,8 @@
                 'TextArea',
                 'EmailAddressInformation',
                 'Address',
+                'CalculatedNumber',
+                'DropDownDependency'
             );
         }
 
