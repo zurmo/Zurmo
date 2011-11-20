@@ -406,7 +406,7 @@
             $this->assertTrue($appleCustomField->save());
             $attributeLabels  = array('en' => 'fruit');
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
-                $appleCustomField, false, false, 'DropDown', 'Fruit', null, null, 'CustomField');
+                $appleCustomField, false, false, 'DropDown', 'Fruit', null, null, 'CustomField', false);
 
             $a = new A();
             $a->a = 1;
@@ -435,7 +435,7 @@
             $this->assertTrue($appleCustomField->save());
             $attributeLabels  = array('en' => 'Fruit');
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
-                null, true, false, 'DropDown', 'Fruit', null, null, 'CustomField');
+                null, true, false, 'DropDown', 'Fruit', null, null, 'CustomField', false);
 
             $a = new A();
             $a->a = 1;
@@ -477,7 +477,7 @@
             $this->assertTrue($appleCustomField->save());
             $attributeLabels  = array('en' => 'fruit');
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
-                $appleCustomField, true, false, 'DropDown', 'Fruit', null, null, 'CustomField');
+                $appleCustomField, true, false, 'DropDown', 'Fruit', null, null, 'CustomField', false);
 
             $a = new A();
             $a->a = 1;
@@ -519,7 +519,7 @@
             $appleCustomField->data = CustomFieldData::getByName('Fruit');
             $this->assertTrue($appleCustomField->save());
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
-                $appleCustomField, true, false, 'DropDown', 'Fruit', null, null, 'CustomField');
+                $appleCustomField, true, false, 'DropDown', 'Fruit', null, null, 'CustomField', false);
             $metadata = A::getMetadata();
             $this->assertEquals($metadata['A']['labels']['fruit'],
                                 array('en' => 'fruit', 'fr' => 'somethingDifferent2'));
@@ -541,7 +541,7 @@
             $attributeLabels  = array('en' => 'fruit');
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
                 $appleCustomField, true, false, 'DropDown', 'Fruit', array('apple', 'grape', 'orange'),
-                array('fr' => array('appleFr', 'grapeFr', 'orangeFr'), 'de' => array('', 'grape', '')), 'CustomField');
+                array('fr' => array('appleFr', 'grapeFr', 'orangeFr'), 'de' => array('', 'grape', '')), 'CustomField', false);
 
             $a = new A();
             $a->a = 1;
