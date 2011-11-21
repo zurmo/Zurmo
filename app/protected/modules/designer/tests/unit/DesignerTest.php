@@ -671,7 +671,7 @@
 
             $this->assertEquals($originalMetadata['Account']['rules'], $metadata['Account']['rules']);
             $newRelation = $metadata['Account']['relations']['newRelation'];
-            $this->assertEquals(array(RedBeanModel::HAS_ONE,  'CustomField'), $newRelation);
+            $this->assertEquals(array(RedBeanModel::HAS_ONE,  'OwnedCustomField', RedBeanModel::OWNED), $newRelation);
             $this->assertEquals('Things', $metadata['Account']['customFields']['newRelation']);
 
             //on a new account, does the serialized data show correctly.
@@ -738,6 +738,7 @@
 
         public function testIsStandardAttributeRequiredByDefault()
         {
+            Yii::app()->user->userModel = User::getByUsername('super');
             //Testing an attribute that is not on the specified model, but requires a casting up.
             $contact       = new Contact();
             $adapter       = new ModelAttributesAdapter($contact);

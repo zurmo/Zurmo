@@ -148,19 +148,25 @@
                                 "";
             $this->assertEquals($compareWhere, $where);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
-            $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
+            $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
             $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
-            $this->assertEquals('customfield', $leftTables[0]['tableName']);
-            $this->assertEquals('customfield', $leftTables[1]['tableName']);
+            $this->assertEquals('ownedcustomfield', $leftTables[0]['tableName']);
+            $this->assertEquals('customfield',      $leftTables[1]['tableName']);
+            $this->assertEquals('ownedcustomfield', $leftTables[2]['tableName']);
+            $this->assertEquals('customfield',      $leftTables[3]['tableName']);
 
             //Now test that the subsetSQL query produced is correct.
             $subsetSql = Account::makeSubsetOrCountSqlQuery('account', $joinTablesAdapter, 1, 5, $where, null);
             $compareSubsetSql  = "select {$quote}account{$quote}.{$quote}id{$quote} id ";
             $compareSubsetSql .= "from {$quote}account{$quote} ";
+            $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}dropdown_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
-            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}dropdown_customfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield{$quote}.{$quote}customfield_id{$quote} ";
+            $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} ownedcustomfield1 on ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield1{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}radio_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} customfield1 on ";
-            $compareSubsetSql .= "{$quote}customfield1{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}radio_customfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}customfield1{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield1{$quote}.{$quote}customfield_id{$quote} ";
             $compareSubsetSql .= "where " . $compareWhere . ' ';
             $compareSubsetSql .= 'limit 5 offset 1';
             $this->assertEquals($compareSubsetSql, $subsetSql);

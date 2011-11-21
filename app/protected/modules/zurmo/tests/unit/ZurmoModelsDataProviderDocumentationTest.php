@@ -83,7 +83,7 @@
 
             //Is the where clause constructed correctly?
             $where = RedBeanModelDataProvider::makeWhere('Account', $searchAttributeData, $joinTablesAdapter);
-            $this->assertEquals("({$quote}customfield$quote.{$quote}value$quote like lower('Automotive%'))", $where);
+            $this->assertEquals("({$quote}customfield$quote.{$quote}value$quote = lower('Automotive'))", $where);
 
             //Is the join information correct?
             $leftTablesAndAliases = $joinTablesAdapter->getLeftTablesAndAliases();
@@ -106,7 +106,7 @@
             $compareSubsetSql .= "{$quote}ownedcustomfield$quote.{$quote}id{$quote} = {$quote}account$quote.{$quote}industry_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
             $compareSubsetSql .= "{$quote}customfield$quote.{$quote}id{$quote} = {$quote}ownedcustomfield$quote.{$quote}customfield_id{$quote}";
-            $compareSubsetSql .= " where ({$quote}customfield{$quote}.{$quote}value{$quote} like lower('Automotive%')) ";
+            $compareSubsetSql .= " where ({$quote}customfield{$quote}.{$quote}value{$quote} = lower('Automotive')) ";
             $compareSubsetSql .= "limit 5 offset 1";
             $this->assertEquals($compareSubsetSql, $subsetSql);
         }

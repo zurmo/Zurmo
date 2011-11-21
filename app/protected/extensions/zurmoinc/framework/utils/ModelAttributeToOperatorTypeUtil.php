@@ -41,7 +41,7 @@
         {
             assert('$model instanceof RedBeanModel || $model instanceof RedBeanModels || $model instanceof ModelForm');
             assert('is_string($attributeName) && $attributeName != ""');
-            if (get_class($model) == 'CustomField' || $attributeName == 'id')
+            if ($model instanceof CustomField || $attributeName == 'id')
             {
                 return 'equals';
             }

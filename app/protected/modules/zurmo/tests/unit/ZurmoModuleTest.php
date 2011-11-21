@@ -41,7 +41,7 @@
         public function testGetModelClassNames()
         {
             $modelClassNames = ZurmoModule::getModelClassNames();
-            $this->assertEquals(22, count($modelClassNames));
+            $this->assertEquals(23, count($modelClassNames));
             $this->assertEquals('Address', $modelClassNames[0]);
             $this->assertEquals('AuditEvent', $modelClassNames[1]);
             $this->assertEquals('Currency', $modelClassNames[2]);
@@ -55,15 +55,16 @@
             $this->assertEquals('NamedSecurableItem', $modelClassNames[10]);
             $this->assertEquals('OwnedCustomField', $modelClassNames[11]);
             $this->assertEquals('OwnedModel', $modelClassNames[12]);
-            $this->assertEquals('OwnedSecurableItem', $modelClassNames[13]);
-            $this->assertEquals('Permission', $modelClassNames[14]);
-            $this->assertEquals('Permitable', $modelClassNames[15]);
-            $this->assertEquals('Person', $modelClassNames[16]);
-            $this->assertEquals('Policy', $modelClassNames[17]);
-            $this->assertEquals('Right', $modelClassNames[18]);
-            $this->assertEquals('Role', $modelClassNames[19]);
-            $this->assertEquals('SecurableItem', $modelClassNames[20]);
-            $this->assertEquals('ZurmoModelSearch', $modelClassNames[21]);
+            $this->assertEquals('OwnedMultipleValuesCustomField', $modelClassNames[13]);
+            $this->assertEquals('OwnedSecurableItem', $modelClassNames[14]);
+            $this->assertEquals('Permission', $modelClassNames[15]);
+            $this->assertEquals('Permitable', $modelClassNames[16]);
+            $this->assertEquals('Person', $modelClassNames[17]);
+            $this->assertEquals('Policy', $modelClassNames[18]);
+            $this->assertEquals('Right', $modelClassNames[19]);
+            $this->assertEquals('Role', $modelClassNames[20]);
+            $this->assertEquals('SecurableItem', $modelClassNames[21]);
+            $this->assertEquals('ZurmoModelSearch', $modelClassNames[22]);
         }
     }
 ?>
