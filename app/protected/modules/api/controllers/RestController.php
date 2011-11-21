@@ -30,20 +30,8 @@
      * We should be able to catch all actions, even invalid one, and to provide error to user in that case.
      *
      */
-    class ApiRestController extends ZurmoModuleController
+    class ApiRestController extends ApiController
     {
-        protected $serviceType;
-        protected $serviceContentType;
-        protected $apiRequest;
-        protected $apiResponse;
-        protected $params;
-
-        public function __construct($id, $module = null)
-        {
-            parent::__construct($id, $module);
-            Yii::app()->apiRequest->parseParams();
-        }
-
         public function actionList()
         {
             $baseControllerName = $this->getBaseController();
@@ -236,73 +224,6 @@
                                                 null,
                                                 $error);
             }
-        }
-
-        public function actionLogin()
-        {
-            $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
-            $identity->authenticate();
-
-            if ($identity->errorCode == UserIdentity::ERROR_NONE)
-            {
-                Yii::app()->user->login($identity);
-                $data['sessionId'] = Yii::app()->getSession()->getSessionID();
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiRestResponse::STATUS_SUCCESS,
-                                                $data);
-            }
-            else
-            {
-                $error = Yii::t('Default', 'Invalid username or password.');
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiRestResponse::STATUS_FAILURE,
-                                                null,
-                                                $error);
-            }
-        }
-
-        public function actionLogout()
-        {
-            Yii::app()->user->logout();
-            if (Yii::app()->user->isGuest)
-            {
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiRestResponse::STATUS_SUCCESS);
-            }
-            else
-            {
-                $error = Yii::t('Default', 'Error. User is not logged out.');
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiRestResponse::STATUS_FAILURE,
-                                                null,
-                                                $error);
-            }
-        }
-
-        public function actionError()
-        {
-            if ($error = Yii::app()->errorHandler->error)
-            {
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiRestResponse::STATUS_FAILURE,
-                                                null,
-                                                $error);
-            }
-        }
-
-        protected function getBaseController()
-        {
-            $model = $_GET['model'];
-            switch($_GET['model'])
-            {
-                case 'apiTest':
-                    $controllerName = 'ApiTestController';
-                    break;
-                default:
-                    $controllerName = null;
-                    break;
-            }
-            return $controllerName;
         }
     }
 ?>

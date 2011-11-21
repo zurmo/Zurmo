@@ -28,10 +28,16 @@
     {
         public function attach($owner)
         {
+            if(Yii::app()->apiRequest->isApiRequest())
+            {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
+            }
+
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
+
             if(!Yii::app()->apiRequest->isApiRequest())
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
 
                 if (!Yii::app()->isApplicationInstalled())
@@ -40,22 +46,10 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 }
-                else
-                {
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
-                }
             }
-            else
+
+            if (Yii::app()->isApplicationInstalled())
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
