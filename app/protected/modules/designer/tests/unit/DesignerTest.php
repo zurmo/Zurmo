@@ -738,6 +738,7 @@
 
         public function testIsStandardAttributeRequiredByDefault()
         {
+            Yii::app()->user->userModel = User::getByUsername('super');
             //Testing an attribute that is not on the specified model, but requires a casting up.
             $contact       = new Contact();
             $adapter       = new ModelAttributesAdapter($contact);
