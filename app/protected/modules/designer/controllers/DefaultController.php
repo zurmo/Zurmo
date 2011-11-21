@@ -205,10 +205,6 @@
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName($model);
             $adapter->setAttributeMetadataFromForm($attributeForm);
-
-            //if wasRequired and now is not... ( make sure you use oldAttributeName to catch proper array alignment)
-            //removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName, $attributeName)
-
             if ($attributeForm->isRequired && !$wasRequired)
             {
                 RequiredAttributesValidViewUtil::
@@ -217,7 +213,7 @@
             elseif (!$attributeForm->isRequired && $wasRequired)
             {
                 RequiredAttributesValidViewUtil::
-                removeAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
+                resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
             }
             RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
             $routeParams = array_merge($_GET, array(

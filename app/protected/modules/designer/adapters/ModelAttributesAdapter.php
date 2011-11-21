@@ -236,5 +236,35 @@
                 }
             }
         }
+
+        /**
+         * Given a standard attribute, check if by default, this attribute is required. This means the default metadata
+         * has this attribute has being required, regardless of any customziation to that metadata.
+         * @param string $attributeName
+         * @throws NotSupportedException
+         */
+        public function isStandardAttributeRequiredByDefault($attributeName)
+        {
+            assert('is_string($attributeName)');
+            if(!$this->isStandardAttribute($attributeName))
+            {
+                throw new NotSupportedException();
+            }
+            $modelClassName  = $this->model->getAttributeModelClassName($attributeName);
+            $metadata        = $modelClassName::getDefaultMetadata();
+            if (isset($metadata[$modelClassName]['rules']))
+            {
+                foreach ($metadata[$modelClassName]['rules'] as $validatorMetadata)
+                {
+                    assert('isset($validatorMetadata[0])');
+                    assert('isset($validatorMetadata[1])');
+                    if($validatorMetadata[0] == $attributeName && $validatorMetadata[1] == 'required')
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 ?>

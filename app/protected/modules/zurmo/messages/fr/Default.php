@@ -285,6 +285,8 @@
             => 'Nom',
         'Last Updated'
             => 'Dernière Modification',
+        'Latitude'
+            => 'Latitude',
         'List Filters'
             => 'Filtres',
         'List page size'
@@ -297,6 +299,8 @@
             => 'Connexion',
         'Logout'
             => 'Déconnexion',
+        'Longitude'
+            => 'Longitude',
         'Manage Active Languages'
             => 'Gestion des langues',
         'Manage Currency Configuration'

@@ -121,9 +121,10 @@
                                                         array('{view}' => $viewDisplayName));
         }
 
-        public static function resolveToSetAsMissingRequiredAttributesByModelClassName($modelClassName)
+        public static function resolveToSetAsMissingRequiredAttributesByModelClassName($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -142,7 +143,56 @@
                                 if ($designerRules->allowEditInLayoutTool() &&
                                    $designerRules->requireAllRequiredFieldsInLayout())
                                 {
-                                    self::setAsMissingRequiredAttributes(get_class($module), $viewClassName);
+                                    $attributesLayoutAdapter = AttributesLayoutAdapterUtil::
+                                                               makeByViewAndModelAndDesignerRules($viewClassName,
+                                                                                                  $modelClassName,
+                                                                                                  $designerRules);
+                                    if(!in_array($attributeName, $attributesLayoutAdapter->getEffectivePlacedAttributes()))
+                                    {
+                                        self::setAsMissingRequiredAttributes(get_class($module), $viewClassName);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (NotSupportedException $e)
+                {
+                }
+            }
+        }
+
+        public static function resolveToRemoveAttributeAsMissingRequiredAttribute($modelClassName, $attributeName)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_string($attributeName)');
+            $modules = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                try
+                {
+                    if ($module::getPrimaryModelName() == $modelClassName)
+                    {
+                        $viewClassNames          = $module::getViewClassNames();
+                        foreach ($viewClassNames as $viewClassName)
+                        {
+                            $classToEvaluate     = new ReflectionClass($viewClassName);
+                            if (is_subclass_of($viewClassName, 'MetadataView') && !$classToEvaluate->isAbstract() &&
+                                $viewClassName::getDesignerRulesType() != null)
+                            {
+                                $designerRules = DesignerRulesFactory::createDesignerRulesByView($viewClassName);
+                                if ($designerRules->allowEditInLayoutTool() &&
+                                   $designerRules->requireAllRequiredFieldsInLayout())
+                                {
+                                    $attributesLayoutAdapter = AttributesLayoutAdapterUtil::
+                                                               makeByViewAndModelAndDesignerRules($viewClassName,
+                                                                                                  $modelClassName,
+                                                                                                  $designerRules);
+                                    if(!in_array($attributeName, $attributesLayoutAdapter->getEffectivePlacedAttributes()))
+                                    {
+                                        self::
+                                        removeAttributeAsMissingRequiredAttribute(get_class($module), $viewClassName);
+                                    }
                                 }
                             }
                         }

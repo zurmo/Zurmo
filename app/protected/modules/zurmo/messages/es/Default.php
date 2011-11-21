@@ -285,6 +285,8 @@
             => 'Apellido',
         'Last Updated'
             => 'Última actualización',
+        'Latitude'
+            => 'Latitud',
         'List Filters'
             => 'Filtros de lista',
         'List page size'
@@ -297,6 +299,8 @@
             => 'Acceder',
         'Logout'
             => 'Salir',
+        'Longitude'
+            => 'Longitud',
         'Manage Active Languages'
             => 'Administrar idiomas activos',
         'Manage Currency Configuration'

@@ -49,6 +49,22 @@
             );
         }
 
+        public static function makeByViewAndModelAndDesignerRules(
+                               $viewClassName, $modelClassName, DesignerRules $designerRules)
+        {
+            assert('is_string($viewClassName)');
+            assert('is_string($modelClassName)');
+            $editableMetadata        = $viewClassName::getMetadata();
+            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
+            $attributeCollection     = $modelAttributesAdapter->getAttributes();
+            $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
+                $attributeCollection,
+                $designerRules,
+                $editableMetadata
+            );
+            return $attributesLayoutAdapter;
+        }
+
         protected static function getNonPlaceableLayoutAttributeNames($designerRules, $editableMetadata)
         {
             $attributeNames = $designerRules->getNonPlaceableLayoutAttributeNames();
