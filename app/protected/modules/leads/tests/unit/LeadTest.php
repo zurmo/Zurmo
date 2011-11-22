@@ -299,5 +299,25 @@
                                  $deadStates[0]->id        => 'Mort');
             $this->assertEquals($compareData, $data);
         }
+
+        public function testLeadsStateMetadataAdapterWithNoStates()
+        {
+            $metadata = ContactsModule::getMetadata();
+            $metadata['global']['startingStateId'] = LeadsUtil::getStartingState()->id;
+            ContactsModule::setMetadata($metadata);
+            $adapter = new LeadsStateMetadataAdapter(array('clauses' => array(), 'structure' => ''));
+            $adaptedMetadata = $adapter->getAdaptedDataProviderMetadata();
+            $compareMetadata = array(
+                'clauses' => array(
+                    1 => array(
+                        'attributeName' => 'state',
+                        'operatorType' => 'equals',
+                        'value' => '-1'
+                    ),
+                ),
+                'structure' => '(1)',
+            );
+            $this->assertEquals($compareMetadata, $adaptedMetadata);
+        }
     }
 ?>
