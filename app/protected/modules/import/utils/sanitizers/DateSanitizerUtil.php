@@ -48,7 +48,10 @@
                 'yyyy-MM-dd',
                 'MM-dd-yyyy',
                 'dd-MM-yyyy',
-                'MM/dd/yyyy'
+                'MM/dd/yyyy',
+                'M/d/yyyy',
+                'd/M/yyyy',
+                'yyyy-M-d'
             );
         }
 
