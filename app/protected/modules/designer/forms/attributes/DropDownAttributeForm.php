@@ -140,7 +140,8 @@
         }
 
         /**
-         * Test if there are two picklist values with the same name.  This is not allowed.
+         * Test if there are two picklist values with the same name.  This is not allowed. Also make sure there is
+         * no comma in the value string.
          */
         public function validateCustomFieldDataData($attribute, $params)
         {
@@ -160,6 +161,17 @@
                 Yii::t('Default',
                 'Each item must be uniquely named and the following are not: {values}',
                 array('{values}' => $nonUniqueValuesString)));
+            }
+            if (!empty($data))
+            {
+                foreach($data as $value)
+                {
+                    if($value != str_replace(',', '', $value))
+                    {
+                        $this->addError('customFieldDataData', Yii::t('Default', 'Each value must not contain a comma.'));
+                        return;
+                    }
+                }
             }
         }
 
