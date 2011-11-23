@@ -26,13 +26,13 @@
 
     /**
      * Sanitizer for resolving if an attribute is required or not and whether the value is present. Override to
-     * handle drop down type attributes specifically.
+     * handle multi-select drop down type attributes specifically.
      */
-    class DropDownRequiredSanitizerUtil extends RequiredSanitizerUtil
+    class MultiSelectDropDownRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
         public static function getLinkedMappingRuleType()
         {
-            return 'DefaultValueDropDownModelAttribute';
+            return 'DefaultValueMultiSelectDropDownModelAttribute';
         }
 
         /**
@@ -52,14 +52,19 @@
             {
                 return $value;
             }
-            assert('$value == null || $value instanceof OwnedCustomField');
+            assert('$value == null || $value instanceof OwnedMultipleValuesCustomField');
             assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
             if ($mappingRuleData['defaultValue'] != null)
             {
                 try
                 {
-                    $customField = new OwnedCustomField();
-                    $customField->value = $mappingRuleData['defaultValue'];
+                    $customField = new OwnedMultipleValuesCustomField();
+                    foreach($mappingRuleData['defaultValue'] as $aDefaultValue)
+                    {
+                        $customFieldValue = new CustomFieldValue();
+                        $customFieldValue->value = $aDefaultValue;
+                        $customField->values->add($customFieldValue);
+                    }
                     $customField->data  = CustomFieldDataModelUtil::
                                           getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
                 }
@@ -76,7 +81,7 @@
                 {
                     return $value;
                 }
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list value required, but missing.'));
+                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Multi-Select Pick list value required, but missing.'));
             }
             return $value;
         }

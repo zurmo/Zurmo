@@ -44,6 +44,26 @@
             $saved = $customFieldData->save();
             assert($saved);    // Not Coding Standard
 
+            $values = array(
+                'Multi 1',
+                'Multi 2',
+                'Multi 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ImportTestMultiDropDown');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert($saved);    // Not Coding Standard
+
+            $values = array(
+                'Cloud 1',
+                'Cloud 2',
+                'Cloud 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ImportTestTagCloud');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert($saved);    // Not Coding Standard
+
             //Ensure the external system id column is present.
             $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             RedBean_Plugin_Optimizer_ExternalSystemId::
@@ -253,7 +273,16 @@
                                     'mappingRulesData' => array(
                                         'FullNameDefaultValueModelAttributeMappingRuleForm' =>
                                         array('defaultValue' => null))),
-                                        );
+
+                'column_24' => array('attributeIndexOrDerivedType' => 'multiDropDown',      'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'DefaultValueMultiSelectDropDownModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+                'column_25' => array('attributeIndexOrDerivedType' => 'tagCloud',      'type' => 'importColumn',
+                                    'mappingRulesData' => array(
+                                        'DefaultValueMultiSelectDropDownModelAttributeMappingRuleForm' =>
+                                        array('defaultValue' => null))),
+                                     );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
             $import->serializedData        = serialize($serializedData);
@@ -370,6 +399,14 @@
                     array('message'=> '1 value(s) are too large for this field. These rows will be skipped during import.',                      // Not Coding Standard
                           'sanitizerUtilType' => 'FullName', 'moreAvailable' => false),
                 ),
+                'column_24' => array(
+                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',                // Not Coding Standard
+                           'sanitizerUtilType' => 'MultiSelectDropDown', 'moreAvailable' => false),
+                ),
+                'column_25' => array(
+                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',                // Not Coding Standard
+                           'sanitizerUtilType' => 'MultiSelectDropDown', 'moreAvailable' => false),
+                ),
             );
             $this->assertEquals($compareData, $messagesData);
             $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
@@ -377,6 +414,12 @@
                                             array('DropDown' =>
                                                 array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
                                                     array('neverpresent', 'notpresent'))));
+            $compareInstructionsData['column_24'] = array('MultiSelectDropDown' =>
+                                                        array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
+                                                            array('Multi 5', 'Multi 4')));
+            $compareInstructionsData['column_25'] = array('MultiSelectDropDown' =>
+                                                        array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
+                                                            array('Cloud 5', 'Cloud 4')));
             $this->assertEquals($compareInstructionsData, $importInstructionsData);
             ImportUtil::setDataAnalyzerMessagesDataToImport($import, $messagesData);
             $compareData = unserialize($import->serializedData);
@@ -385,7 +428,9 @@
             $newMappingData           = ImportMappingUtil::
                                         resolveImportInstructionsDataIntoMappingData($mappingData, $importInstructionsData);
             $compareMappingData       = $mappingData;
-            $compareMappingData['column_6']['importInstructionsData'] = $compareInstructionsData['column_6'];
+            $compareMappingData['column_6']['importInstructionsData']  = $compareInstructionsData['column_6'];
+            $compareMappingData['column_24']['importInstructionsData'] = $compareInstructionsData['column_24'];
+            $compareMappingData['column_25']['importInstructionsData'] = $compareInstructionsData['column_25'];
             $this->assertEquals($compareMappingData, $newMappingData);
         }
 
@@ -474,6 +519,22 @@
             $messages = $dataAnalyzer->getMessages();
             $this->assertEquals(1, count($messages));
             $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test multi-select dropdown sanitization by batch.
+            $dataAnalyzer = new MultiSelectDropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'multiDropDown');
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_24');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
+            $this->assertEquals($compareMessage, $messages[0]);
+
+            //Test multi-select dropdown sanitization by batch.
+            $dataAnalyzer = new MultiSelectDropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'tagCloud');
+            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_25');
+            $messages = $dataAnalyzer->getMessages();
+            $this->assertEquals(1, count($messages));
+            $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 
