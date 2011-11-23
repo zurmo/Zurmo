@@ -74,6 +74,32 @@
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
 
+        public function testSearchingOnMultipleValuesCustomFields()
+        {
+            $searchAttributes = array(
+                'multipleIndustries' => array(
+                    'values'    => array('Something'),
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestCustomFieldsModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'multipleIndustries',
+                    'relatedAttributeName' => 'values',
+                    'operatorType'         => 'oneOf',
+                    'value'                => array('Something'),
+                ),
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
         public function testGetAdaptedMetadataUsingOrClause()
         {
             $super = User::getByUsername('super');

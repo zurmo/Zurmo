@@ -45,6 +45,10 @@
             {
                 return 'equals';
             }
+            if ($model instanceof MultipleValuesCustomField)
+            {
+                return 'oneOf';
+            }
             $metadata = $model->getMetadata();
             foreach ($metadata as $className => $perClassMetadata)
             {

@@ -33,10 +33,12 @@
                 'relations' => array(
                     'industry'           => array(RedBeanModel::HAS_ONE, 'CustomField'),
                     'multipleIndustries' => array(RedBeanModel::HAS_ONE, 'MultipleValuesCustomField'),
+                    'multipleSomethings' => array(RedBeanModel::HAS_ONE, 'MultipleValuesCustomField'),
                 ),
                 'customFields' => array(
                     'industry'           => 'Industries',
                     'multipleIndustries' => 'MultipleIndustries',
+                    'multipleSomethings' => 'MultipleSomethings',
                 ),
             );
             return $metadata;

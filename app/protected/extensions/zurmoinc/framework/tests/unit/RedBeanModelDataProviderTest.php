@@ -33,8 +33,141 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+
+            $values = array(
+                'A',
+                'B',
+                'C',
+                'CC',
+                'CCC',
+            );
+            $customFieldData = CustomFieldData::getByName('MultipleIndustries');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert($saved);    // Not Coding Standard
+
+            $values = array(
+                'D',
+                'E',
+                'F',
+                'FF',
+                'FFF',
+            );
+            $customFieldData = CustomFieldData::getByName('MultipleSomethings');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert($saved);    // Not Coding Standard
         }
 
+        public function testSearchByMultipleValuesCustomField()
+        {
+            //Save a sample model.
+            $model = new TestCustomFieldsModel();
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'A';
+            $model->multipleIndustries->values->add($customFieldValue);
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'D';
+            $model->multipleSomethings->values->add($customFieldValue);
+            $this->assertTrue($model->save());
+
+            //Save a second model with nothing.
+            $model = new TestCustomFieldsModel();
+            $this->assertTrue($model->save());
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            //Test where relatioon id is in a joining table.  Many to Many relationship
+            $_FAKEPOST['TestCustomFieldsModel'] = array();
+            $_FAKEPOST['TestCustomFieldsModel']['multipleIndustries']['values'] = array('A', 'B', 'C');
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter(
+                                        new TestCustomFieldsModel(false), 1, $_FAKEPOST['TestCustomFieldsModel']);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('TestCustomFieldsModel');
+            $where        = RedBeanModelDataProvider::makeWhere('TestCustomFieldsModel', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
+                            "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
+                            "{$quote}multiplevaluescustomfield{$quote}.id " .
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN(lower('A'),lower('B'),lower('C'))))";
+            $this->assertEquals($compareWhere, $where);
+            //Now test that the joinTablesAdapter has correct information.
+            $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
+            $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
+            $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
+            $this->assertEquals('multiplevaluescustomfield', $leftTables[0]['tableName']);
+
+            //Now test that the subsetSQL query produced is correct.
+            $subsetSql         = TestCustomFieldsModel::
+                                 makeSubsetOrCountSqlQuery('testcustomfieldsmodel', $joinTablesAdapter, 1, 5, $where, null);
+            $compareSubsetSql  = "select {$quote}testcustomfieldsmodel{$quote}.{$quote}id{$quote} id ";
+            $compareSubsetSql .= "from {$quote}testcustomfieldsmodel{$quote} ";
+            $compareSubsetSql .= "left join {$quote}multiplevaluescustomfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}multiplevaluescustomfield{$quote}.{$quote}id{$quote} = ";
+            $compareSubsetSql .= "{$quote}testcustomfieldsmodel{$quote}.{$quote}multipleindustries_multiplevaluescustomfield_id{$quote} ";
+            $compareSubsetSql .= "where " . $compareWhere . ' ';
+            $compareSubsetSql .= 'limit 5 offset 1';
+            $this->assertEquals($compareSubsetSql, $subsetSql);
+
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('TestCustomFieldsModel', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+            $this->assertEquals(1, count($data));
+        }
+
+       /**
+         * @depends testSearchByMultipleValuesCustomField
+         */
+        public function testSearchByTwoMultipleValuesCustomField()
+        {
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            //Test where relatioon id is in a joining table.  Many to Many relationship
+            $_FAKEPOST['TestCustomFieldsModel'] = array();
+            $_FAKEPOST['TestCustomFieldsModel']['multipleIndustries']['values'] = array('A', 'B', 'C');
+            $_FAKEPOST['TestCustomFieldsModel']['multipleSomethings']['values'] = array('D', 'E', 'F');
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter(
+                                        new TestCustomFieldsModel(false), 1, $_FAKEPOST['TestCustomFieldsModel']);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('TestCustomFieldsModel');
+            $where        = RedBeanModelDataProvider::makeWhere('TestCustomFieldsModel', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
+                            "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
+                            "{$quote}multiplevaluescustomfield{$quote}.id " .
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN(lower('A'),lower('B'),lower('C'))))";
+            $compareWhere .= " and (1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
+                            "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
+                            "{$quote}multiplevaluescustomfield1{$quote}.id " .
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN(lower('D'),lower('E'),lower('F'))))";
+            $this->assertEquals($compareWhere, $where);
+            //Now test that the joinTablesAdapter has correct information.
+            $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
+            $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
+            $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
+            $this->assertEquals('multiplevaluescustomfield', $leftTables[0]['tableName']);
+            $this->assertEquals('multiplevaluescustomfield', $leftTables[1]['tableName']);
+
+            //Now test that the subsetSQL query produced is correct.
+            $subsetSql         = TestCustomFieldsModel::
+                                 makeSubsetOrCountSqlQuery('testcustomfieldsmodel', $joinTablesAdapter, 1, 5, $where, null);
+            $compareSubsetSql  = "select {$quote}testcustomfieldsmodel{$quote}.{$quote}id{$quote} id ";
+            $compareSubsetSql .= "from {$quote}testcustomfieldsmodel{$quote} ";
+            $compareSubsetSql .= "left join {$quote}multiplevaluescustomfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}multiplevaluescustomfield{$quote}.{$quote}id{$quote} = ";
+            $compareSubsetSql .= "{$quote}testcustomfieldsmodel{$quote}.{$quote}multipleindustries_multiplevaluescustomfield_id{$quote} ";
+            $compareSubsetSql .= "left join {$quote}multiplevaluescustomfield{$quote} multiplevaluescustomfield1 on ";
+            $compareSubsetSql .= "{$quote}multiplevaluescustomfield1{$quote}.{$quote}id{$quote} = ";
+            $compareSubsetSql .= "{$quote}testcustomfieldsmodel{$quote}.{$quote}multiplesomethings_multiplevaluescustomfield_id{$quote} ";
+            $compareSubsetSql .= "where " . $compareWhere . ' ';
+            $compareSubsetSql .= 'limit 5 offset 1';
+            $this->assertEquals($compareSubsetSql, $subsetSql);
+
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('TestCustomFieldsModel', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+            $this->assertEquals(1, count($data));
+        }
+
+       /**
+         * @depends testSearchByTwoMultipleValuesCustomField
+         */
         public function testSearchByRelationId()
         {
             $quote        = DatabaseCompatibilityUtil::getQuote();

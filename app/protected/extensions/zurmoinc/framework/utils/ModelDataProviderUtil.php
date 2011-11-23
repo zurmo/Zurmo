@@ -242,11 +242,67 @@
                                                  $onTableAliasName,
                                                  $relationModelClassName, $relationAttributeModelClassName,
                                                  $relationAttributeTableName, $relationColumnName);
-                $relationWhere                   = array();
-                self::addWherePartByClauseInformation($clauseInformation['operatorType'], $clauseInformation['value'],
-                      $relationWhere, 1, $relationAttributeTableAliasName, $relationColumnName);
+                $relationWhere = array();
+                if($relationModel->isRelation($clauseInformation['relatedAttributeName']) &&
+                   $relationModel->getRelationType($clauseInformation['relatedAttributeName']) == RedBeanModel::HAS_MANY)
+                {
+
+                   static::
+                   buildWhereForRelatedAttributeThatIsItselfAHasManyRelation($relationModel,
+                                                                             $joinTablesAdapter,
+                                                                             $relationAttributeTableAliasName,
+                                                                             $clauseInformation['relatedAttributeName'],
+                                                                             $clauseInformation['operatorType'],
+                                                                             $clauseInformation['value'],
+                                                                             $relationWhere,
+                                                                             1);
+                }
+                else
+                {
+                    self::addWherePartByClauseInformation($clauseInformation['operatorType'], $clauseInformation['value'],
+                          $relationWhere, 1, $relationAttributeTableAliasName, $relationColumnName);
+                }
                 $where[$whereKey] = strtr('1', $relationWhere);
             }
+        }
+
+        protected static function buildWhereForRelatedAttributeThatIsItselfAHasManyRelation(RedBeanModel $relationModel,
+                                                                                            $joinTablesAdapter,
+                                                                                            $relationAttributeTableAliasName,
+                                                                                            $relationAttributeName,
+                                                                                            $operatorType,
+                                                                                            $value,
+                                                                                            & $where,
+                                                                                            $whereKey
+                                                                                            )
+        {
+            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
+            assert('is_string($relationAttributeTableAliasName)');
+            assert('is_string($relationAttributeName)');
+            assert('is_string($operatorType)');
+            assert('is_array($value) && count($value) > 0');
+            assert('is_array($where)');
+            assert('is_int($whereKey)');
+
+            $relationAttributeModelClassName = $relationModel->getRelationModelClassName($relationAttributeName);
+            if($relationAttributeModelClassName != 'CustomFieldValue')
+            {
+                //Until we can add a third parameter to the search adapter metadata, we have to assume we are only doing
+                //this for CustomFieldValue searches. Below we have $joinColumnName, since we don't have any other way
+                //of ascertaining this information for now.
+                throw new NotSupportedException();
+            }
+            $relationAttributeTableName      = RedBeanModel::getTableName($relationAttributeModelClassName);
+            $tableAliasName                  = $relationAttributeTableName;
+            $joinColumnName                  = 'value';
+            $relationColumnName              = RedBeanModel::getTableName(self::resolveAttributeModelClassName(
+                                                    $relationModel, $relationAttributeName)) . "_id";
+            $quote                           = DatabaseCompatibilityUtil::getQuote();
+            $where[$whereKey]   = "(1 = (select 1 from $quote$relationAttributeTableName$quote $tableAliasName " . // Not Coding Standard
+                                  "where $quote$tableAliasName$quote.$quote$relationColumnName$quote = " . // Not Coding Standard
+                                  "$quote$relationAttributeTableAliasName$quote.id " . // Not Coding Standard
+                                  "and $quote$tableAliasName$quote.$quote$joinColumnName$quote " . // Not Coding Standard
+                                  DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType, $value) . "))";
         }
 
         protected static function resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(

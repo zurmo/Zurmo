@@ -58,9 +58,13 @@
             {
                 return 'int';
             }
-            if (get_class($model) == 'CustomField')
+            if ($model instanceof CustomField)
             {
                 return 'string';
+            }
+            if ($model instanceof MultipleValuesCustomField)
+            {
+                return 'array';
             }
             $metadata = $model->getMetadata();
             foreach ($metadata as $className => $perClassMetadata)

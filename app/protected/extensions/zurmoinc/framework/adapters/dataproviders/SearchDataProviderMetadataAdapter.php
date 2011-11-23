@@ -159,6 +159,11 @@
                         {
                             $relatedValue = $relatedValue['value'];
                         }
+                        elseif($this->model->$attributeName->$relatedAttributeName instanceof RedBeanModels &&
+                               is_array($relatedValue) && count($relatedValue) > 0)
+                        {
+                            //Continue on using relatedValue as is.
+                        }
                         else
                         {
                             break;
