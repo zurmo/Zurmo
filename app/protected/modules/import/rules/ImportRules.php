@@ -137,7 +137,7 @@
                 assert('$attributeImportRules instanceof DerivedAttributeImportRules');
                 $mappableAttributeIndicesAndDerivedTypes[$derivedType] = $attributeImportRules->getDisplayLabel();
             }
-            asort($mappableAttributeIndicesAndDerivedTypes);
+            natcasesort($mappableAttributeIndicesAndDerivedTypes);
             return $mappableAttributeIndicesAndDerivedTypes;
         }
 

@@ -157,6 +157,14 @@
                     'attributeImportRulesType' => 'Text',
                     'isRequired' => true,
                   ),
+              'tagCloud' =>
+                  array (
+                    'attributeLabel' => 'Tag Cloud',
+                    'attributeName' => 'tagCloud',
+                    'relationAttributeName' => null,
+                    'attributeImportRulesType' => 'TagCloud',
+                    'isRequired' => false,
+                  ),
               'textArea' =>
                   array (
                     'attributeLabel' => 'Text Area',
@@ -187,6 +195,14 @@
                     'attributeName' => 'dropDown',
                     'relationAttributeName' => null,
                     'attributeImportRulesType' => 'DropDown',
+                    'isRequired' => false,
+                  ),
+              'multiDropDown' =>
+                  array (
+                    'attributeLabel' => 'Multi Drop Down',
+                    'attributeName' => 'multiDropDown',
+                    'relationAttributeName' => null,
+                    'attributeImportRulesType' => 'MultiSelectDropDown',
                     'isRequired' => false,
                   ),
               'radioDropDown' =>

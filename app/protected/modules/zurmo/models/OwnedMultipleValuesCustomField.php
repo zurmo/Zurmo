@@ -45,6 +45,17 @@
             parent::__set($attributeName, $value);
         }
 
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'noAudit' => array(
+                    'values'
+                ),
+            );
+            return $metadata;
+        }
+
         public function save($runValidation = true, array $attributeNames = null)
         {
             AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
