@@ -34,7 +34,7 @@
     {
         public function __construct($model, $attribute, $form = null, array $params = array())
         {
-            assert('$model instanceof DefaultValueMultiSelectDropDownModelAttributeMappingRuleForm');
+            assert('$model instanceof DefaultValueDropDownModelAttributeMappingRuleForm');
             parent::__construct($model, $attribute, $form, $params);
         }
 

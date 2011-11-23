@@ -31,7 +31,7 @@
     {
         protected static function getAllModelAttributeMappingRuleFormTypesAndElementTypes()
         {
-            return array('DefaultValueMultiSelectDropDownModelAttribute' =>
+            return array('DefaultValueDropDownModelAttribute' =>
                          'ImportMappingRuleDefaultMultiSelectDropDownForm');
         }
 
