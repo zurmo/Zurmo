@@ -90,6 +90,50 @@
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
             $this->assertEquals($testArray, $newArray);
+
+            //Now test various empty and 0 combinations
+            $_GET['testing'] = array(
+                'a' => null,
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '',
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => 0,
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => 0), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '0',
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => '0'), $newArray);
+        }
+
+        public function testAdaptSearchAttributesToSetInRedBeanModel()
+        {
+            $model = new ASearchFormTestModel(new A(false));
+            $searchAttributes = array(
+                'differentOperatorB' => array('value' => 'thiswillstay'),
+                'a'				     => array('value' => 'thiswillgo'),
+                'differentOperatorB' => 'something',
+                'name'				 => array('value' => 'thiswillstay'),
+            );
+            $adaptedSearchAttributes = SearchUtil::adaptSearchAttributesToSetInRedBeanModel($searchAttributes, $model);
+            $compareData = array(
+                'differentOperatorB' => array('value' => 'thiswillstay'),
+                'a'				     => 'thiswillgo',
+                'differentOperatorB' => 'something',
+                'name'				 => array('value' => 'thiswillstay'),
+            );
+            $this->assertEquals($compareData, $adaptedSearchAttributes);
         }
     }
 ?>

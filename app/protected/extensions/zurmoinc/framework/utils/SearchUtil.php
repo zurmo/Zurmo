@@ -124,10 +124,48 @@
          */
         private static function changeEmptyValueToNull(&$value, $key)
         {
-            if (empty($value))
+            if (empty($value) && !is_numeric($value))
             {
                 $value = null;
             }
+        }
+
+        public static function adaptSearchAttributesToSetInRedBeanModel($searchAttributes, $model)
+        {
+            assert('$model instanceof RedBeanModel || $model instanceof SearchForm');
+            $searchAttributesReadyToSetToModel = array();
+            if($model instanceof SearchForm)
+            {
+                $modelToUse =  $model->getModel();
+            }
+            else
+            {
+                $modelToUse =  $model;
+            }
+            foreach($searchAttributes as $attributeName => $data)
+            {
+                if($modelToUse->isAttribute($attributeName))
+                {
+                    $type = ModelAttributeToMixedTypeUtil::getType($modelToUse, $attributeName);
+                    switch($type)
+                    {
+                        case 'CheckBox':
+
+                            if(is_array($data) && isset($data['value']))
+                            {
+                                $data = $data['value'];
+                            }
+                            elseif(is_array($data) && $data['value'] == null)
+                            {
+                                $data = null;
+                            }
+                        default :
+                            continue;
+                    }
+                }
+                $searchAttributesReadyToSetToModel[$attributeName] = $data;
+            }
+            return $searchAttributesReadyToSetToModel;
         }
     }
 ?>
