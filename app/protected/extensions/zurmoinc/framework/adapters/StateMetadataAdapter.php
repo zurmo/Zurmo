@@ -47,28 +47,38 @@
         {
             $metadata = $this->metadata;
             $stateIds = $this->getStateIds();
-            if (empty($stateIds))
-            {
-                return $metadata;
-            }
             $clauseCount = count($metadata['clauses']);
             $startingCount = $clauseCount + 1;
             $structure = '';
             $first = true;
-            foreach ($stateIds as $stateId)
+            //No StateIds mean the list should come up empty
+            if(count($stateIds) == 0)
             {
                 $metadata['clauses'][$startingCount] = array(
                     'attributeName' => 'state',
                     'operatorType'  => 'equals',
-                    'value'         => $stateId
+                    'value'         => -1
                 );
-                if (!$first)
-                {
-                    $structure .= ' or ';
-                }
-                $first = false;
                 $structure .= $startingCount;
                 $startingCount++;
+            }
+            else
+            {
+                foreach ($stateIds as $stateId)
+                {
+                    $metadata['clauses'][$startingCount] = array(
+                        'attributeName' => 'state',
+                        'operatorType'  => 'equals',
+                        'value'         => $stateId
+                    );
+                    if (!$first)
+                    {
+                        $structure .= ' or ';
+                    }
+                    $first = false;
+                    $structure .= $startingCount;
+                    $startingCount++;
+                }
             }
             if (empty($metadata['structure']))
             {
