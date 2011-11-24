@@ -32,7 +32,7 @@
 
         public static function getParamsFromRequest()
         {
-            //parse xml to get params
+            //$params = ApiXmlParser::toArray($xml);
         }
     }
 ?>

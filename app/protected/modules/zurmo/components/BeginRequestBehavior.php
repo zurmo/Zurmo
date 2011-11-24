@@ -146,6 +146,7 @@
             {
                 $allowedGuestUserUrls = array (
                     Yii::app()->createUrl('api/rest/login'),
+                Yii::app()->createUrl('api/soap/quote'),
                 );
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;

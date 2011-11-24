@@ -30,10 +30,8 @@
         {
             if ($format == ApiRequest::XML_FORMAT)
             {
-                //To-Do: Improve this xml generator, I think it doesn't work for nested elements
-                $xml = new SimpleXMLElement('<root/>');
-                array_walk_recursive($data, array($xml, 'addChild'));
-                return $xml->asXML();
+                $xml = ApiXmlParser::arrayToXml($data);
+                return $xml;
             }
             else
             {

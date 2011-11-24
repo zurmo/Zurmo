@@ -108,11 +108,11 @@
             else
             {
                 Yii::app()->session->open();
-                if ($this->getIsGuest() && $this->allowAutoLogin && !Yii::app()->apiRequest->isApiRequest())
+                if ($this->getIsGuest() && $this->allowAutoLogin)
                 {
                     $this->restoreFromCookie();
                 }
-                elseif ($this->autoRenewCookie && $this->allowAutoLogin && !Yii::app()->apiRequest->isApiRequest())
+                elseif ($this->autoRenewCookie && $this->allowAutoLogin)
                 {
                     $this->renewCookie();
                 }
