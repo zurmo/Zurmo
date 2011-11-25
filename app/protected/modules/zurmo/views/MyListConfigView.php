@@ -77,7 +77,8 @@
                                       ArrayUtil::getArrayValue($_POST, $this->getSearchModelPostArrayName()));
 
             $searchAttributes                   = SearchUtil::
-                                                  getSearchAttributesFromSearchArray($sanitizedPostArray);
+                                                  getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria
+                                                  ($sanitizedPostArray);
            $searchAttributesAdaptedToSetInModel = SearchUtil::adaptSearchAttributesToSetInRedBeanModel(
                                                       $searchAttributes, $this->searchModel);
            $this->searchAttributes              = $searchAttributesAdaptedToSetInModel;

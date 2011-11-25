@@ -108,12 +108,58 @@
                 'a' => 0,
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
-            $this->assertEquals(array('a' => 0), $newArray);
+            $this->assertEquals(array('a' => null), $newArray);
 
             $_GET['testing'] = array(
                 'a' => '0',
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+        }
+
+        public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()
+        {
+            $searchArray = array(
+                'a' => 'apple',
+                'b' => '',
+            );
+            $testArray = array(
+                'a' => 'apple',
+                'b' => null,
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals($testArray, $newArray);
+
+            $searchArray = array(
+                'a' => 'apple',
+                'b' => '',
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals($testArray, $newArray);
+
+            //Now test various empty and 0 combinations
+            $searchArray = array(
+                'a' => null,
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $searchArray = array(
+                'a' => '',
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $searchArray = array(
+                'a' => 0,
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => 0), $newArray);
+
+            $searchArray = array(
+                'a' => '0',
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
             $this->assertEquals(array('a' => '0'), $newArray);
         }
 

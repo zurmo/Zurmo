@@ -121,8 +121,33 @@
 
         /**
          * if a value is empty, then change it to null
+         * @see getSearchAttributesFromSearchArray
          */
         private static function changeEmptyValueToNull(&$value, $key)
+        {
+            if (empty($value))
+            {
+                $value = null;
+            }
+        }
+
+        /**
+         * Convert search array into a savable array of searchAttributes. If you want to resolve search attributes
+         * to be used in the RedBeanDataProvider then use @see getSearchAttributesFromSearchArray
+         * array. Primary purpose is to set null any 'empty', except for '0' values as '0' values mean that 'No' was
+         * specfically specified for a boolean value for example.
+         */
+        public static function getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray)
+        {
+            array_walk_recursive($searchArray, 'SearchUtil::changeEmptyValueToNullExceptNumeric');
+            return $searchArray;
+        }
+
+        /**
+         * if a value is empty, then change it to null, except 0 values or '0' which will retain its value.
+         * @see getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria
+         */
+        private static function changeEmptyValueToNullExceptNumeric(&$value, $key)
         {
             if (empty($value) && !is_numeric($value))
             {
