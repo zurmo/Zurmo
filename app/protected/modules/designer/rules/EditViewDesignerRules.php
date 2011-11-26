@@ -31,6 +31,11 @@
             return false;
         }
 
+        public function requireOnlyUniqueFieldsInLayout()
+        {
+            return true;
+        }
+
         public function getDisplayName()
         {
             return Yii::t('Default', 'Edit View');

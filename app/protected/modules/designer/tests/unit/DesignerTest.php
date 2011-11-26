@@ -243,7 +243,80 @@
         }
 
         /**
-         * @depends testGetModelAttributesAdapter
+         * @depends testSetMetadataFromLayoutWithAndWithOutRequiredDerivedField
+         */
+        public function testSetMetadataFromLayoutWithAndWithOutOnlyUniqueFields()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            //First create a dependency
+            $mappingData = array(array('attributeName' => 'type'),
+                                 array('attributeName' => 'officePhone',
+                                        'valuesToParentValues' =>
+                                         array('b1' => 'a1',
+                                               'b2' => 'a2',
+                                               'b3' => 'a3',
+                                               'b4' => 'a4'
+                                         )));
+            $metadata = new DropDownDependencyDerivedAttributeMetadata();
+            $metadata->setScenario('nonAutoBuild');
+            $metadata->name               = 'aName';
+            $metadata->modelClassName     = 'Account';
+            $metadata->serializedMetadata = serialize(array('attributeLabels' => array('a' => 'b'),
+                                                            'mappingData' => $mappingData));
+            $this->assertTrue($metadata->save());
+
+            $layout = array('panels' =>
+                array(
+                    array(
+                        'rows' => array(
+                            array(
+                                'cells' => array(
+                                    array('element' => 'aName'),
+                                ),
+                            ),
+                            array(
+                                'cells' => array(
+                                    array('element' => 'type'),
+                                ),
+                            ),
+                            array(
+                                'cells' => array(
+                                    array('element' => 'officeFax'),
+                                ),
+                            ),
+                            array(
+                                'cells' => array(
+                                    array('element' => 'employees'),
+                                ),
+                            ),
+                        )
+                    )
+                )
+            );
+            $model = new Account();
+            $editableMetadata = AccountEditAndDetailsView::getMetadata();
+            $modelAttributesAdapter = new ModelAttributesAdapter($model);
+            $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
+                $modelAttributesAdapter->getAttributes(),
+                new EditAndDetailsViewDesignerRules(),
+                $editableMetadata
+            );
+
+            $adapter = new LayoutMetadataAdapter('AccountEditAndDetailsView',
+                'AccountsModule',
+                $editableMetadata,
+                new EditAndDetailsViewDesignerRules(),
+                $attributesLayoutAdapter->getPlaceableLayoutAttributes(),
+                $attributesLayoutAdapter->getRequiredDerivedLayoutAttributeTypes()
+            );
+            $x = $adapter->setMetadataFromLayout($layout, array());
+            $this->assertFalse($adapter->setMetadataFromLayout($layout, array()));
+            $this->assertEquals($adapter->getMessage(), 'All required fields must be placed in this layout.');
+        }
+
+        /**
+         * @depends testSetMetadataFromLayoutWithAndWithOutOnlyUniqueFields
          */
         public function testMakeLayoutAttributes()
         {

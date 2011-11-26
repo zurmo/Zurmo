@@ -72,6 +72,11 @@
             return true;
         }
 
+        public function requireOnlyUniqueFieldsInLayout()
+        {
+            return true;
+        }
+
         public function canConfigureLayoutPanelsType()
         {
             return true;

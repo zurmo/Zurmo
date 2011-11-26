@@ -40,6 +40,14 @@
         private   $placedAttributeNames = array();
         private   $placedDerivedAttributeTypes = array();
 
+        /**
+         * Contains array of attributes placed as elements. A dropdown dependent attribute that contains real attributes A and B
+         * would not be included in this data.  A and B would however be included in @see $placedAttributeNames. A normal
+         * derived attribute however, would include A and B in this data.
+         * @var array
+         */
+        private   $placedDirectAttributeNamesAsElements = array();
+
         public function __construct($viewClassName,
             $moduleClassName,
             $existingMetadata,
@@ -74,12 +82,13 @@
                 is_array($layout['panels']) &&
                 count($layout['panels']) > 0)
             {
+                $atLeastOneElementPlaced = false;
                 foreach ($layout['panels'] as $panelKey => $panel)
                 {
                     $panelMetadata = array();
-                    $savableMetadata['panels'][$panelKey] = $this->adaptPanelSettingsToMetadata($panel, $panelMetadata);
-                    if (is_array($panel['rows']))
+                    if (isset($panel['rows']) && is_array($panel['rows']))
                     {
+                        $savableMetadata['panels'][$panelKey] = $this->adaptPanelSettingsToMetadata($panel, $panelMetadata);
                         foreach ($panel['rows'] as $rowKey => $row)
                         {
                             foreach ($row['cells'] as $cellKey => $cell)
@@ -90,6 +99,7 @@
                                 if (isset($cellMetadata['elements']) && count($cellMetadata['elements']) > 0)
                                 {
                                     $savableMetadata['panels'][$panelKey]['rows'][$rowKey]['cells'][$cellKey] = $cellMetadata;
+                                    $atLeastOneElementPlaced = true;
                                 }
                             }
                         }
@@ -98,6 +108,11 @@
                     {
                         $savableMetadata['panels'][$panelKey]['rows'] = array();
                     }
+                }
+                if(!$atLeastOneElementPlaced)
+                {
+                    $this->message = Yii::t('Default', 'You must have at least one field placed in order to save a layout.');
+                    return false;
                 }
             }
             else
@@ -108,6 +123,10 @@
             if ($this->designerRules->requireAllRequiredFieldsInLayout() && !$this->areAllRequiredAttributesPlaced())
             {
                 $this->message = Yii::t('Default', 'All required fields must be placed in this layout.');
+                return false;
+            }
+            if ($this->designerRules->requireOnlyUniqueFieldsInLayout() && !$this->areAllPlacedAttributesUnique())
+            {
                 return false;
             }
             $viewsToSetMetadataFor = $this->designerRules->getMetadataViewClassNames($this->viewClassName, $this->moduleClassName);
@@ -169,7 +188,9 @@
                 $elementClassName = $elementName . 'Element';
                 $attributesUsed = $elementClassName::getModelAttributeNames();
                 $this->placedAttributeNames = array_merge($this->placedAttributeNames, $attributesUsed);
-                $this->placedDerivedAttributeTypes[] = $elementName;
+                $this->placedDerivedAttributeTypes[]          = $elementName;
+                $this->placedDirectAttributeNamesAsElements   = array_merge($this->placedDirectAttributeNamesAsElements,
+                                                                            $attributesUsed);
                 $placeElement = true;
             }
             elseif(isset($this->placeableLayoutAttributes[$elementName]) &&
@@ -182,6 +203,7 @@
                 $this->placedAttributeNames   = array_merge($this->placedAttributeNames,
                                                 $metadata->getUsedAttributeNames());
                 $this->placedAttributeNames[] = $elementName;
+                $this->placedDirectAttributeNamesAsElements[] = $elementName;
                 $element                      = array(
                                                     'attributeName' => $elementName,
                                                     'type' => $this->placeableLayoutAttributes[$elementName]['elementType']
@@ -194,7 +216,8 @@
                     'attributeName' => $elementName,
                     'type' => $this->placeableLayoutAttributes[$elementName]['elementType']
                 );
-                $this->placedAttributeNames[] = $elementName;
+                $this->placedAttributeNames[]                 = $elementName;
+                $this->placedDirectAttributeNamesAsElements[] = $elementName;
                 $placeElement = true;
             }
             else
@@ -272,6 +295,44 @@
                 }
             }
 
+            return true;
+        }
+
+        protected function areAllPlacedAttributesUnique()
+        {
+            $moduleClassName = $this->moduleClassName;
+            $modelClassName  = $moduleClassName::getPrimaryModelName();
+            foreach ($this->placedDirectAttributeNamesAsElements as $attributeName)
+            {
+                if(isset($this->placeableLayoutAttributes[$attributeName]))
+                {
+                    $elementType = $this->placeableLayoutAttributes[$attributeName]['elementType'];
+                    if($elementType == 'DropDownDependency')
+                    {
+                        $metadata           = DropDownDependencyDerivedAttributeMetadata::
+                                              getByNameAndModelClassName($attributeName, $modelClassName);
+                        $usedAttributeNames = $metadata->getUsedAttributeNames();
+                        foreach($usedAttributeNames as $usedAttribute)
+                        {
+                            if(in_array($usedAttribute, $this->placedDirectAttributeNamesAsElements))
+                            {
+                                $this->message =
+                                Yii::t('Default', 'All field placed must be unique. Two of the placed ' .
+                                                  'fields: {field1Label} and {field2Label} contain the same fields.',
+                                                   array('{field1Label}'   => $this->placeableLayoutAttributes
+                                                                              [$attributeName]['attributeLabel'],
+                                                         '{field2Label}'   => $this->placeableLayoutAttributes
+                                                                              [$usedAttribute]['attributeLabel']));
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //Do nothing. This means a real attribute is only placable as part of a derived attribute.
+                }
+            }
             return true;
         }
     }

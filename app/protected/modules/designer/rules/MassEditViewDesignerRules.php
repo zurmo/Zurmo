@@ -101,5 +101,10 @@
         {
             return true;
         }
+
+        public function requireOnlyUniqueFieldsInLayout()
+        {
+            return true;
+        }
     }
 ?>
