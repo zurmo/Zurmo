@@ -165,9 +165,8 @@
 
         protected function renderAttributeNameSelectionContent(DropDownDependencyCustomFieldMapping $mapping)
         {
-            $inputName         = $this->formName . '[mappingData][' . $mapping->getPosition() . '][attributeName]';
-            $inputId           = CHtml::getIdByName($inputName);
-
+            $inputName            = $this->formName . '[mappingData][' . $mapping->getPosition() . '][attributeName]';
+            $inputId              = CHtml::getIdByName($inputName);
             $htmlOptions          = array();
             $htmlOptions['id']    = $inputId;
 
@@ -220,6 +219,7 @@
             $content .= '<b>' . Yii::t('Default', 'Show If') . '</b>';
             $content .= '</td>';
             $content .= '</tr>';
+            $valuePosition = 0;
             foreach($dataAndLabels as $value => $label)
             {
                 $content .= '<tr>';
@@ -231,9 +231,11 @@
                                         $parentMapping,
                                         $mapping->getPosition(),
                                         $value,
+                                        $valuePosition,
                                         $mapping->getMappingDataSelectedParentValueByValue($value));
                 $content .= '</td>';
                 $content .= '</tr>';
+                $valuePosition ++;
             }
             $content .= '</table>';
             return $content;
@@ -243,11 +245,15 @@
                                                                             $parentMapping,
                                                                             $position,
                                                                             $value,
+                                                                            $valuePosition,
                                                                             $selectedParentValue)
         {
-            $inputName         = $this->formName . '[mappingData][' . $position . '][valuesToParentValues][' . $value . ']';
-            $inputId           = CHtml::getIdByName($inputName);
-
+            assert('is_int($position)');
+            assert('is_string($value)');
+            assert('is_int($valuePosition)');
+            assert('is_string($selectedParentValue) || $selectedParentValue == null');
+            $inputName           = $this->formName . '[mappingData][' . $position . '][valuesToParentValues][' . $value . ']';
+            $inputId             = $this->formName . '_mappingData_' . $position . '_valuesToParentValues_' . $valuePosition;
             $htmlOptions          = array();
             $htmlOptions['id']    = $inputId;
             $htmlOptions['empty'] = Yii::t('Default', '(None)');
