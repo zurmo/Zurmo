@@ -212,13 +212,29 @@
             $adapter->setAttributeMetadataFromForm($attributeForm);
             if ($attributeForm->isRequired && !$wasRequired)
             {
-                RequiredAttributesValidViewUtil::
-                resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
+                if($model->isAttribute($attributeForm->attributeName))
+                {
+                    RequiredAttributesValidViewUtil::
+                    resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
+                }
+                else
+                {
+                    //A derived attribute that can be made required/unrequired is not supported.
+                    throw new NotSupportedException();
+                }
             }
             elseif (!$attributeForm->isRequired && $wasRequired)
             {
-                RequiredAttributesValidViewUtil::
-                resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
+                if($model->isAttribute($attributeForm->attributeName))
+                {
+                    RequiredAttributesValidViewUtil::
+                    resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
+                }
+                else
+                {
+                    //A derived attribute that can be made required/unrequired is not supported.
+                    throw new NotSupportedException();
+                }
             }
             RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
             $routeParams = array_merge($_GET, array(
