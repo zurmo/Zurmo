@@ -62,6 +62,7 @@
                                                               $customFieldDataLabels);
             if ($attributeForm->getCustomFieldDataId() != null)
             {
+                $oldAndNewValuePairs = array();
                 foreach ($attributeForm->customFieldDataData as $order => $newValue)
                 {
                    if (isset($attributeForm->customFieldDataDataExistingValues[$order]) &&
@@ -71,8 +72,24 @@
                                         $attributeForm->getCustomFieldDataId(),
                                         $attributeForm->customFieldDataDataExistingValues[$order],
                                         $newValue);
+                       $oldValue                       = $attributeForm->customFieldDataDataExistingValues[$order];
+                       $oldAndNewValuePairs[$oldValue] = $newValue;
+
                    }
                 }
+                if(count($oldAndNewValuePairs) > 0)
+                {
+                    DropDownDependencyDerivedAttributeDesignerUtil::
+                    updateValueInMappingByOldAndNewValue($modelClassName,
+                                                        $attributeName,
+                                                        $oldAndNewValuePairs,
+                                                        $attributeForm->customFieldDataDataExistingValues[$order],
+                                                        $newValue);
+                }
+                DropDownDependencyDerivedAttributeDesignerUtil::
+                resolveValuesInMappingWhenValueWasRemoved($modelClassName,
+                                                          $attributeName,
+                                                          $attributeForm->customFieldDataData);
             }
             $this->resolveDatabaseSchemaForModel($modelClassName);
         }
