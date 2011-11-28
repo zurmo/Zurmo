@@ -44,6 +44,7 @@
                                  //@see CustomManagement
 
     $urlManager = array (); //Set any parameters you want to customize url manager.
+    $testApiUrl = '';
 
     if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
     {

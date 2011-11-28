@@ -46,7 +46,7 @@
         '3D Vertical Bar Graph'
             => 'Histogramme 3D',
         '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
-            => '<b>Zurmo</b> est un système <b>Customer Relationship Management</b> créer par <b>Zurmo Inc.</b>',
+            => '<b>Zurmo</b> est un système <b>Customer Relationship Management</b> crée par <b>Zurmo Inc.</b>',
         '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
             => '<b>Zurmo</b> est licensé sous le GPLv3.  Vous pouvez lire la license <a href="http://www.zurmo.org/license">ici</a>.',
         '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'

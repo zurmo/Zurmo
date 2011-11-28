@@ -75,8 +75,13 @@
             $sanitizedPostArray     = PostUtil::sanitizePostByDesignerTypeForSavingModel(
                                       $this->searchModel,
                                       ArrayUtil::getArrayValue($_POST, $this->getSearchModelPostArrayName()));
-            $this->searchAttributes = SearchUtil::
-                                      getSearchAttributesFromSearchArray($sanitizedPostArray);
+
+            $searchAttributes                   = SearchUtil::
+                                                  getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria
+                                                  ($sanitizedPostArray);
+           $searchAttributesAdaptedToSetInModel = SearchUtil::adaptSearchAttributesToSetInRedBeanModel(
+                                                      $searchAttributes, $this->searchModel);
+           $this->searchAttributes              = $searchAttributesAdaptedToSetInModel;
         }
 
         /**

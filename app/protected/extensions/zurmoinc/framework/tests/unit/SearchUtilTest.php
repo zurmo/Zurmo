@@ -90,6 +90,96 @@
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
             $this->assertEquals($testArray, $newArray);
+
+            //Now test various empty and 0 combinations
+            $_GET['testing'] = array(
+                'a' => null,
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '',
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => 0,
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '0',
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => null), $newArray);
+        }
+
+        public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()
+        {
+            $searchArray = array(
+                'a' => 'apple',
+                'b' => '',
+            );
+            $testArray = array(
+                'a' => 'apple',
+                'b' => null,
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals($testArray, $newArray);
+
+            $searchArray = array(
+                'a' => 'apple',
+                'b' => '',
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals($testArray, $newArray);
+
+            //Now test various empty and 0 combinations
+            $searchArray = array(
+                'a' => null,
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $searchArray = array(
+                'a' => '',
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => null), $newArray);
+
+            $searchArray = array(
+                'a' => 0,
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => 0), $newArray);
+
+            $searchArray = array(
+                'a' => '0',
+            );
+            $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
+            $this->assertEquals(array('a' => '0'), $newArray);
+        }
+
+        public function testAdaptSearchAttributesToSetInRedBeanModel()
+        {
+            $model = new ASearchFormTestModel(new A(false));
+            $searchAttributes = array(
+                'differentOperatorB' => array('value' => 'thiswillstay'),
+                'a'				     => array('value' => 'thiswillgo'),
+                'differentOperatorB' => 'something',
+                'name'				 => array('value' => 'thiswillstay'),
+            );
+            $adaptedSearchAttributes = SearchUtil::adaptSearchAttributesToSetInRedBeanModel($searchAttributes, $model);
+            $compareData = array(
+                'differentOperatorB' => array('value' => 'thiswillstay'),
+                'a'				     => 'thiswillgo',
+                'differentOperatorB' => 'something',
+                'name'				 => array('value' => 'thiswillstay'),
+            );
+            $this->assertEquals($compareData, $adaptedSearchAttributes);
         }
     }
 ?>

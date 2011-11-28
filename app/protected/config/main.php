@@ -83,6 +83,9 @@
                 ),
                 'urlManager' => $urlManager,
             ),
+            'params' => array(
+                'testApiUrl' => $testApiUrl,
+            ),
         )
     );
     if (isset($instanceConfig))

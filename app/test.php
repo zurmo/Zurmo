@@ -26,10 +26,7 @@
     require_once('version.php');
     require_once('roots.php');
 
-    if (!defined('IS_TEST'))
-    {
-        //define('IS_TEST', true);
-    }
+    define('IS_TEST', true);
 
     // Debug is used per instance.
     if (is_file(INSTANCE_ROOT . '/protected/config/debug.php'))
