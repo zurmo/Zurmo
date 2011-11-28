@@ -26,6 +26,16 @@
 
     class K extends H
     {
+        public function __toString()
+        {
+            $s = strval($this->kMember);
+            if ($s == '')
+            {
+                return Yii::t('Default', '(None)');
+            }
+            return $s;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();

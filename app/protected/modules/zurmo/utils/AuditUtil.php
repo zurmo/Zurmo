@@ -91,7 +91,13 @@
                     $processAuditEvent = true;
                     if (!$attributeModel->isRelation($attributeName))
                     {
+
                         $newValue = $attributeModel->$attributeName;
+                    }
+                    elseif($attributeModel->$attributeName instanceof RedBeanOneToManyRelatedModels)
+                    {
+                            $newValue = $attributeModel->$attributeName->getStringifiedData();
+                            assert('$oldValue != $newValue');
                     }
                     else
                     {
@@ -148,7 +154,7 @@
                     else
                     {
                         assert('$ownedModel instanceof RedBeanModels');
-                        $ownedModels = $ownedModel;
+                        $ownedModels = array();
                     }
                     foreach ($ownedModels as $ownedModel)
                     {
@@ -175,6 +181,10 @@
                     $value = Yii::t('Default', '(None)');
                 }
                 $s = $value;
+            }
+            elseif($attributeModel->$attributeName instanceof RedBeanOneToManyRelatedModels)
+            {
+                $s = $attributeModel->stringifyOneToManyRelatedModelsValues($value);
             }
             else
             {

@@ -2658,5 +2658,15 @@
             }
             return $models;
         }
+
+        /**
+         * Given an array of data, create stringified content.
+         * @param array $values
+         */
+        public function stringifyOneToManyRelatedModelsValues($values)
+        {
+            assert('is_array($values)');
+            return ArrayUtil::stringify($values);
+        }
     }
 ?>

@@ -39,6 +39,62 @@
             assert(AuditEvent::getCount() == 4); // Not Coding Standard
         }
 
+        public function testLogAuditForOwnedMultipleValuesCustomField()
+        {
+            Yii::app()->user->userModel = User::getByUsername('jimmy');
+            if (!RedBeanDatabase::isFrozen())
+            {
+                $beforeCount = AuditEvent::getCount();
+                $values = array(
+                    'A',
+                    'B',
+                    'C',
+                    'CC',
+                    'CCC',
+                );
+                $customFieldData = CustomFieldData::getByName('MultipleIndustries');
+                $customFieldData->serializedData = serialize($values);
+                $saved = $customFieldData->save();
+                $this->assertTrue($saved);
+
+                $model = new TestOwnedCustomFieldsModel();
+                $this->assertTrue($model->save());
+                $this->assertEquals($beforeCount + 1, AuditEvent::getCount());
+
+                $model = TestOwnedCustomFieldsModel::getById($model->id);
+                $value = new CustomFieldValue();
+                $value->value = 'C';
+                $model->multipleIndustries->values->removeAll(); //To remove the blank CustomFieldValue. This mimics
+                                                                 //setValues($values) in MultipleValuesCustomField.
+                $model->multipleIndustries->values->add($value);
+                $this->assertTrue($model->save());
+                $this->assertEquals($beforeCount + 2, AuditEvent::getCount());
+
+                $model = TestOwnedCustomFieldsModel::getById($model->id);
+                $value = new CustomFieldValue();
+                $value->value = 'B';
+                $model->multipleIndustries->values->add($value);
+                $this->assertTrue($model->save());
+                $this->assertEquals($beforeCount + 3, AuditEvent::getCount());
+
+                $AuditEventsList = AuditEvent::getTailEvents(3);
+                $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, '   .    // Not Coding Standard
+                                'James Boondog, Item Created, '                       .
+                                'TestOwnedCustomFieldsModel\([0-9]+\), \(None\)/',         // Not Coding Standard
+                                ZurmoModule::stringifyAuditEvent($AuditEventsList[0]));
+                $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, '   .    // Not Coding Standard
+                                'James Boondog, Item Modified, '                      .
+                                'TestOwnedCustomFieldsModel\([0-9]+\), \(None\), '    .    // Not Coding Standard
+                                'Changed Multiple Industries Values from \(None\) to C/',  // Not Coding Standard
+                                ZurmoModule::stringifyAuditEvent($AuditEventsList[1]));
+                $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, '   .    // Not Coding Standard
+                                'James Boondog, Item Modified, '                      .
+                                'TestOwnedCustomFieldsModel\([0-9]+\), \(None\), '    .    // Not Coding Standard
+                                'Changed Multiple Industries Values from C to C, B/',      // Not Coding Standard
+                                ZurmoModule::stringifyAuditEvent($AuditEventsList[2]));
+            }
+        }
+
         public function testLogAuditEventsListForUser()
         {
             Yii::app()->user->userModel = User::getByUsername('jimmy');

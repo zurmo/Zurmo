@@ -117,5 +117,26 @@
                 }
             }
         }
+
+        /**
+         * Given an array of data, create stringified content.  Method is extended to provide support for translating
+         * the data into the correct language.
+         * (non-PHPdoc)
+         * @see RedBeanModel::stringifyOneToManyRelatedModelsValues()
+         */
+        public function stringifyOneToManyRelatedModelsValues($values)
+        {
+            assert('is_array($values)');
+            $dataAndLabels = CustomFieldDataUtil::
+                             getDataIndexedByDataAndTranslatedLabelsByLanguage($this->data, Yii::app()->language);
+            foreach($values as $key => $value)
+            {
+                if(ArrayUtil::getArrayValue($dataAndLabels, $value) != null)
+                {
+                    $values[$key] = ArrayUtil::getArrayValue($dataAndLabels, $value);
+                }
+            }
+            return ArrayUtil::stringify($values);
+        }
     }
 ?>

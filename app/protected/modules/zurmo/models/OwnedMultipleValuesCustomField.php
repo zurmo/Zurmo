@@ -39,21 +39,51 @@
         // changes can be written to the audit log.
         public $originalAttributeValues = array();
 
+        /**
+         * Array of original data.
+         * @var array
+         */
+        private $originalCustomFieldValuesData;
+
+        /**
+         * Whether the @see $originalCustomFieldValuesData has been processed yet
+         * @var boolean
+         */
+        private $originalCustomFieldValuesDataProcessed = false;
+
         public function __set($attributeName, $value)
         {
             AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
             parent::__set($attributeName, $value);
         }
 
-        public static function getDefaultMetadata()
+        /**
+         * Method extended to provide some additional logic.  Because the relation 'values' data is going to be processed
+         * for audit in this class, the original data for 'values' needs to be stored when a __get is performed. Normally
+         * during __set this is performed, but we cannot do this because we can't override the __set in the 'values' class.
+         * The 'values' class is a RedBeanOneToManyRelationModels.  This data then will be further processed in the
+         * afterSave method.
+         * (non-PHPdoc)
+         * @see RedBeanModel::__get()
+         * @see $this->afterSave
+         */
+        public function __get($attributeName)
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'noAudit' => array(
-                    'values'
-                ),
-            );
-            return $metadata;
+
+            $value = parent::__get($attributeName);
+            if($attributeName == 'values')
+            {
+                if(!$this->originalCustomFieldValuesDataProcessed)
+                {
+                    $data = $value->getStringifiedData();
+                    if(count($data) > 0)
+                    {
+                        $this->originalCustomFieldValuesData = $data;
+                    }
+                    $this->originalCustomFieldValuesDataProcessed = true;
+                }
+            }
+            return $value;
         }
 
         public function save($runValidation = true, array $attributeNames = null)
@@ -62,9 +92,32 @@
             return parent::save($runValidation, $attributeNames);
         }
 
+        /**
+         * Extended method to properly process 'values' audit information.  The original information is stored during
+         * a __get call.
+         * (non-PHPdoc)
+         * @see RedBeanModel::afterSave()
+         * @see $this->__get
+         */
+        protected function afterSave()
+        {
+            if($this->originalCustomFieldValuesDataProcessed)
+            {
+                $newData = $this->values->getStringifiedData();
+                $oldData = $this->originalCustomFieldValuesData;
+                if($oldData != $newData)
+                {
+                    $this->originalAttributeValues['values'] = $oldData;
+                }
+            }
+            parent::afterSave();
+        }
+
         public function forgetOriginalAttributeValues()
         {
             $this->unrestrictedSet('originalAttributeValues', array());
+            $this->originalCustomFieldValuesData           = array();
+            $this->originalCustomFieldValuesDataProcessed  = false;
         }
     }
 ?>

@@ -87,5 +87,21 @@
             $this->deferredUnrelateBeans = array();
             return true;
         }
+
+        /**
+         * Return an array of stringified values for each of the contained models.
+         */
+        public function getStringifiedData()
+        {
+            $data = null;
+            foreach($this as $containedModel)
+            {
+                if($containedModel->id > 0)
+                {
+                    $data[] = strval($containedModel);
+                }
+            }
+            return $data;
+        }
     }
 ?>

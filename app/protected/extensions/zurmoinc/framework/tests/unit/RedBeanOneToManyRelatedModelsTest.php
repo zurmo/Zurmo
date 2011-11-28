@@ -24,54 +24,32 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper functionality for use in accessing and manipulating arrays.
-     */
-    class ArrayUtil
+    class RedBeanOneToManyRelatedModelsTest extends BaseTest
     {
-        /**
-         * Returns value of $array[$element] if $element is defined, otherwise if not defined will return null
-         */
-        public static function getArrayValue($array, $element)
+        public function testGetStringifiedData()
         {
-            if (isset($array[$element]))
-            {
-                return $array[$element];
-            }
-            return null;
-        }
-
-        public static function resolveArrayToLowerCase($array)
-        {
-            return unserialize(mb_strtolower(serialize($array)));
-        }
-
-        /**
-         * Case insensitive version of @link http://www.php.net/manual/en/function.array-unique.php
-         * @param array $array
-         */
-        public static function array_iunique($array)
-        {
-            return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
-        }
-
-        /**
-         * Given an array, stringify the array values into content seperated by commas and return the content.
-         * @param array $data
-         */
-        public static function stringify($data)
-        {
-            assert('is_array($data)');
-            $s             = null;
-            foreach($data as $value)
-            {
-                if($s != null)
-                {
-                    $s .= ', ';
-                }
-                $s .= $value;
-            }
-            return $s;
+            $i = new I();
+            $i->iMember = 'a';
+            $k = new K();
+            $k->kMember = 'kA1';
+            $i->ks->add($k);
+            $this->assertTrue($i->save());
+            $content = $i->ks->getStringifiedData();
+            $this->assertEquals(array('kA1'), $content);
+            $iId = $i->id;
+            $i->forget();
+            unset($i);
+            $i = I::getById($iId);
+            $content = $i->ks->getStringifiedData();
+            $this->assertEquals(array('kA1'), $content);
+            $k = new K();
+            $k->kMember = 'kA2';
+            $i->ks->add($k);
+            $k = new K();
+            $k->kMember = 'kA3';
+            $i->ks->add($k);
+            $this->assertTrue($i->save());
+            $content = $i->ks->getStringifiedData();
+            $this->assertEquals(array('kA1', 'kA2', 'kA3'), $content);
         }
     }
-?>

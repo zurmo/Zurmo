@@ -24,54 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper functionality for use in accessing and manipulating arrays.
-     */
-    class ArrayUtil
+    class ArrayUtilTest extends BaseTest
     {
-        /**
-         * Returns value of $array[$element] if $element is defined, otherwise if not defined will return null
-         */
-        public static function getArrayValue($array, $element)
+        public function testStringify()
         {
-            if (isset($array[$element]))
-            {
-                return $array[$element];
-            }
-            return null;
-        }
+            $data           = array('a', 'b', 'c');
+            $content        = ArrayUtil::stringify($data);
+            $compareContent = 'a, b, c';
+            $this->assertEquals($compareContent, $content);
 
-        public static function resolveArrayToLowerCase($array)
-        {
-            return unserialize(mb_strtolower(serialize($array)));
-        }
-
-        /**
-         * Case insensitive version of @link http://www.php.net/manual/en/function.array-unique.php
-         * @param array $array
-         */
-        public static function array_iunique($array)
-        {
-            return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
-        }
-
-        /**
-         * Given an array, stringify the array values into content seperated by commas and return the content.
-         * @param array $data
-         */
-        public static function stringify($data)
-        {
-            assert('is_array($data)');
-            $s             = null;
-            foreach($data as $value)
-            {
-                if($s != null)
-                {
-                    $s .= ', ';
-                }
-                $s .= $value;
-            }
-            return $s;
+            $data           = array('a');
+            $content        = ArrayUtil::stringify($data);
+            $compareContent = 'a';
+            $this->assertEquals($compareContent, $content);
         }
     }
 ?>

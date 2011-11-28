@@ -404,6 +404,7 @@
                 $model            = ZurmoControllerUtil::
                                     saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             }
+
             if ($savedSucessfully)
             {
                 $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
