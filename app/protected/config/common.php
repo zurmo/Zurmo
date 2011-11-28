@@ -156,7 +156,7 @@
             'urlManager' => array (
                 'urlFormat' => 'path',
                 'caseSensitive' => true,
-                'showScriptName'=>false,
+                'showScriptName' => true,
                 'rules'=>array(
                     // REST patterns
                     array('api/rest/login',  'pattern'=>'api/rest/login',                'verb'=>'POST'),

@@ -43,6 +43,8 @@
     $instanceConfig   = array(); //Set any parameters you want to have merged into configuration array.
                                  //@see CustomManagement
 
+    $urlManager = array (); //Set any parameters you want to customize url manager.
+
     if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
     {
         require_once INSTANCE_ROOT . '/protected/config/perInstanceConfig.php';

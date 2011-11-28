@@ -29,7 +29,7 @@
         public function attach($owner)
         {
             if(Yii::app()->apiRequest->isApiRequest())
-            {
+            {;
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
             }
 
@@ -45,6 +45,10 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                }
+                else
+                {
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
                 }
             }
 
@@ -146,13 +150,13 @@
             {
                 $allowedGuestUserUrls = array (
                     Yii::app()->createUrl('api/rest/login'),
-                Yii::app()->createUrl('api/soap/quote'),
+                    Yii::app()->createUrl('api/soap/quote'),
                 );
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;
                 foreach ($allowedGuestUserUrls as $url)
                 {
-                    if (strpos($reqestedUrl, $url) === 0 || strpos($reqestedUrl, $url) === 1)
+                    if (ZurmoUrlManager::getPositionOfPathInUrl($url) === 0)
                     {
                         $isUrlAllowedToGuests = true;
                     }

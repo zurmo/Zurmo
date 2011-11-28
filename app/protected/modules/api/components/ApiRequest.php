@@ -89,11 +89,11 @@
         protected function parseRequestType()
         {
             $reqestedUrl = Yii::app()->getRequest()->getUrl();
-            if (strpos($reqestedUrl, 'api/rest') === 0 || strpos($reqestedUrl, 'api/rest') === 1)
+            if (ZurmoUrlManager::getPositionOfPathInUrl('api/rest') === 0)
             {
                 $this->requestType = self::REST;
             }
-            elseif (strpos($reqestedUrl, 'api/soap') === 0 || strpos($reqestedUrl, 'api/soap') === 1)
+            elseif (ZurmoUrlManager::getPositionOfPathInUrl('api/soap') === 0)
             {
                 $this->requestType = self::SOAP;
             }
@@ -164,8 +164,7 @@
 
         public function isApiRequest()
         {
-            $reqestedUrl = Yii::app()->getRequest()->getUrl();
-            if (strpos($reqestedUrl, 'api/') === 0 || strpos($reqestedUrl, 'api/') === 1)
+            if (ZurmoUrlManager::getPositionOfPathInUrl('api/') === 0)
             {
                 return true;
             }

@@ -107,7 +107,7 @@
             }
             else
             {
-                Yii::app()->session->open();
+                Yii::app()->getSession()->open();
                 if ($this->getIsGuest() && $this->allowAutoLogin)
                 {
                     $this->restoreFromCookie();
