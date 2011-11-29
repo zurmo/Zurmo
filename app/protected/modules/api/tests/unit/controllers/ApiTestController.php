@@ -30,7 +30,7 @@
         {
             try
             {
-                $data = ApiModelTestItem::getAll();
+                $data = ApiModelTestItem2::getAll();
 
                 $outputArray = array();
                 if (count($data))
@@ -60,7 +60,7 @@
         {
             try
             {
-                $model = ApiModelTestItem::getById($id);
+                $model = ApiModelTestItem2::getById($id);
                 $outputArray = array();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['data']['name'] = $model->name;
@@ -77,7 +77,7 @@
 
         public function create($name)
         {
-            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem($name);
+            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem2($name);
             $outputArray['status'] = 'SUCCESS';
             $outputArray['data']['id'] = $apiModelTestItemModel1->id;;
             $outputArray['message'] = '';
@@ -88,7 +88,7 @@
         {
             try
             {
-                $model = ApiModelTestItem::getById($id);
+                $model = ApiModelTestItem2::getById($id);
                 $model->name = $name;
                 $saved = $model->save();
                 $outputArray = array();
@@ -116,7 +116,7 @@
         {
             try
             {
-                $model = ApiModelTestItem::getById($id);
+                $model = ApiModelTestItem2::getById($id);
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';

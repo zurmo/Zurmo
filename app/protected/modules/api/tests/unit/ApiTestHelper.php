@@ -26,7 +26,7 @@
 
     class ApiTestHelper
     {
-        public static function createApiModelTestItem($name)
+        public static function createApiModelTestItem($string, $lastName)
         {
             $freeze = false;
             if (RedBeanDatabase::isFrozen())
@@ -35,6 +35,26 @@
                 $freeze = true;
             }
             $model = new ApiModelTestItem();
+            $model->string   = $string;
+            $model->lastName = $lastName;
+            $saved           = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
+
+        public static function createApiModelTestItem2($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ApiModelTestItem2();
             $model->name = $name;
             $saved = $model->save();
             assert('$saved');
@@ -43,6 +63,51 @@
                 RedBeanDatabase::unfreeze();
             }
             return $model;
+        }
+
+        public static function createApiModelTestItem3($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ApiModelTestItem3();
+            $model->name = $name;
+            $saved = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
+
+        public static function createApiModelTestItem4($name)
+        {
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $model = new ApiModelTestItem4();
+            $model->name = $name;
+            $saved = $model->save();
+            assert('$saved');
+            if ($freeze)
+            {
+                RedBeanDatabase::unfreeze();
+            }
+            return $model;
+        }
+
+        public static function updateModelsExternalId(RedBeanModel $model, $externalId)
+        {
+            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            R::exec("update " . $model::getTableName(get_class($model))
+            . " set $columnName = '" . $externalId . "' where id = {$model->id}");
         }
     }
 ?>
