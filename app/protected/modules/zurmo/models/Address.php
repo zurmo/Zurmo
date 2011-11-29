@@ -124,5 +124,10 @@
         {
             return true;
         }
+
+        public static function canSaveMetadata()
+        {
+            return true;
+        }
     }
 ?>

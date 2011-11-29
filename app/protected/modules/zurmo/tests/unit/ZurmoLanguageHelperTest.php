@@ -164,12 +164,11 @@
         public function testLanguagesToLanguageCollectionViewUtil()
         {
             $data = LanguagesToLanguageCollectionViewUtil::getLanguagesData();
-            $compareData = array(/* Enable once German is completed.
-                                    'de' => array(
+            $compareData = array('de' => array(
                                     'label' => 'German',
                                     'active' => true,
                                     'canInactivate' => true,
-                                 ), */
+                                 ),
                                  'en' => array(
                                     'label' => 'English',
                                     'active' => true,

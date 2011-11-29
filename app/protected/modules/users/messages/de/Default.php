@@ -30,70 +30,70 @@
     // DON'T MAKE A MESS!
     return array(
         'A user field'
-            => '??',
+            => 'Ein Benutzer Feld',
         'Access Users Tab'
-            => '??',
+            => 'Zugang Benutzer Tab',
         'Change Password'
-            => '??',
+            => 'Kennwort ändern',
         'Change User Passwords'
-            => '??',
+            => 'Ändern Kennwörter von Benutzern',
         'Confirm Password'
-            => '??',
+            => 'Kennwort bestätigen',
         'Create User'
-            => '??',
+            => 'Benutzer erstellen',
         'Create Users'
-            => '??',
+            => 'Benutzern erstellen',
         'day(s)'
-            => '??',
+            => 'Tag(e)',
         'Enforce Strong Passwords'
-            => '??',
+            => 'Erzwingen sicherer Kennwörter',
         'Hash'
-            => '??',
+            => 'Hash',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
-            => '??',
+            => 'Inaktive Benutzer können sich nicht anmelden über die Web-, Mobil-oder Web-API. Anmeldung für aktive Benutzer wird durch Gruppenrechte kontrolliert.',
         'Inherited Value:'
-            => '??',
+            => 'Vererbte Wert:',
         'Login Via Mobile'
-            => '??',
+            => 'Anmelden via Mobile',
         'Login Via Web'
-            => '??',
+            => 'Anmelden via Web',
         'Login Via Web API'
-            => '??',
+            => 'Anmelden via Web API',
         'Manage Users'
-            => '??',
+            => 'Benutzer verwalten',
         'Manager'
-            => '??',
+            => 'Manager',
         'Minimum Password Length'
-            => '??',
+            => 'Minimale Kennwortlänge',
         'Minimum Username Length'
-            => '??',
+            => 'Minimale Länge des Benutzernamens',
         'Password Expires'
-            => '??',
+            => 'Kennwort abläuft',
         'Password Expiry Days'
-            => '??',
+            => 'Kennwort Ablauf Tage',
         'Profile'
-            => '??',
+            => 'Profil',
         'The password is too short. Minimum length is {minimumLength}.'
-            => '??',
+            => 'Das Kennwort ist zu kurz. Minimale Länge ist {minimumLength}.',
         'The password must have at least one lowercase letter'
-            => '??',
+            => 'Das Kennwort muss mindestens einen Kleinbuchstaben enthalten',
         'The password must have at least one number and one letter'
-            => '??',
+            => 'Das Kennwort muss mindestens eine Zahl und einen Buchstaben enthalten',
         'The password must have at least one uppercase letter'
-            => '??',
+            => 'Das Kennwort muss mindestens einen Großbuchstaben enthalten',
         'The time zone is invalid.'
-            => '??',
+            => 'Die Zeitzone ist ungültig.',
         'The username is too short. Minimum length is {minimumLength}.'
-            => '??',
+            => 'Der Benutzername ist zu kurz. Minimale Länge ist {minimumLength}.',
         'Time Zone'
-            => '??',
+            => 'Zeitzone',
         'User'
-            => '??',
+            => 'Benutzer',
         'User configuration saved successfully.'
-            => '??',
+            => 'Benutzerkonfiguration erfolgreich gespeichert.',
         'User Search'
-            => '??',
+            => 'Benutzer Suche',
         'Users'
-            => '??',
+            => 'Benutzern',
     );
 ?>

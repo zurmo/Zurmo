@@ -94,3 +94,7 @@ table.files th, table.files td
 .ui-state-disabled input {
   cursor: default;
 }
+
+.readonly-field {
+  background-color: #E3E3E3;
+}
