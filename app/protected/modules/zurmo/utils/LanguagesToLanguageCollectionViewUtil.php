@@ -33,7 +33,7 @@
             foreach (Yii::app()->languageHelper->getSupportedLanguagesData() as $language => $label)
             {
                 //Remove this exception for de/it once German and Italian are completed
-                if ($language == 'de' || $language == 'it')
+                if ($language == 'it')
                 {
                     continue;
                 }

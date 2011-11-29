@@ -186,7 +186,6 @@ $(function () {
     $('.fileupload-buttonbar').removeClass('ui-widget-header ui-corner-top');
     $('.fileupload-content').removeClass('ui-widget-content ui-corner-bottom');
     $('#fileUpload{$id}').bind('fileuploaddestroy', function (e, data) {
-    $('#ImportWizardForm_rowColumnDelimiter').removeAttr('readonly');
             {$this->afterDeleteAction}
     });
     $('#fileUpload{$id}').bind('fileuploadalways', function (e, data) {

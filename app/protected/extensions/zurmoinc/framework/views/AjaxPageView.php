@@ -40,8 +40,8 @@
 
         public function render()
         {
-            $content = $this->renderContent();
             Yii::app()->getClientScript()->setToAjaxMode();
+            $content = $this->renderContent();
             Yii::app()->getClientScript()->render($content);
             return $content;
         }

@@ -30,33 +30,33 @@
     // DON'T MAKE A MESS!
     return array(
         'Access TasksModulePluralLabel'
-            => '??',
+            => 'Zugang TasksModulePluralLabel',
         'Completed'
-            => '??',
+            => 'Abgeschlossen',
         'Completed On'
-            => '??',
+            => 'Abgeschlossen am',
         'Create TasksModulePluralLabel'
-            => '??',
+            => 'TasksModulePluralLabel erstellen',
         'Delete TasksModulePluralLabel'
-            => '??',
+            => 'TasksModulePluralLabel löschen',
         'Due On'
-            => '??',
+            => 'Fällig am',
         'My Open TasksModulePluralLabel'
-            => '??',
+            => 'Meine offenen TasksModulePluralLabel',
         'Open TasksModulePluralLabel'
-            => '??',
+            => 'Offene TasksModulePluralLabel',
         'Task'
-            => '??',
+            => 'Aufgabe',
         'Tasks'
-            => '??',
+            => 'Aufgaben',
         'TasksModulePluralLabel'
-            => '??',
+            => 'TasksModulePluralLabel',
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
-            => '??',
+            => 'TasksModulePluralLabel für AccountsModuleSingularLabel',
         'TasksModulePluralLabel For ContactsModuleSingularLabel'
-            => '??',
+            => 'TasksModulePluralLabel für ContactsModuleSingularLabel',
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => '??',
+            => 'TasksModulePluralLabel für OpportunitiesModuleSingularLabel',
         'TasksModuleSingularLabel'
             => 'TasksModuleSingularLabel',
     );
