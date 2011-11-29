@@ -107,6 +107,12 @@
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals('new name 2', $response['data']['name']);
 
+            //Test List
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTest', 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']));
+
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTest/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
@@ -115,14 +121,6 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTest/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-            //ToDo:Test that it doesn't exist
-
-            //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTest', 'GET', $headers);
-            $response = json_decode($response, true);
-
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']));
         }
 
         /**

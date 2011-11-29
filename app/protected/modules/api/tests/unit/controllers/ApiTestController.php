@@ -28,15 +28,6 @@
     {
         public function getAll()
         {
-            $data = ApiModelTestItem::getAll();
-            foreach ($data as $model)
-            {
-                $model->delete();
-            }
-            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem('aaa');
-            $apiModelTestItemModel2 = ApiTestHelper::createApiModelTestItem('bbb');
-            $apiModelTestItemModel3 = ApiTestHelper::createApiModelTestItem('ccc');
-
             try
             {
                 $data = ApiModelTestItem::getAll();

@@ -73,7 +73,6 @@
         {
             $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
             $identity->authenticate();
-
             if ($identity->errorCode == UserIdentity::ERROR_NONE)
             {
                 Yii::app()->user->login($identity);
