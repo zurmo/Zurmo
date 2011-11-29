@@ -49,10 +49,14 @@
             $inputNameAndId = $this->getEditableInputId('file');
 
             $beforeUploadAction  = "$('#{$this->getEditableInputId('rowColumnDelimiter')}').attr('readonly', true);";
+            $beforeUploadAction .= "$('#{$this->getEditableInputId('rowColumnDelimiter')}').addClass('readonly-field');";
             $beforeUploadAction .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').attr('readonly', true);";
+            $beforeUploadAction .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').addClass('readonly-field');";
 
-            $afterDeleteAction    = "$('#{$this->getEditableInputId('rowColumnDelimiter')}').removeAttr('readonly');";
-            $afterDeleteAction   .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').removeAttr('readonly');";
+            $afterDeleteAction   = "$('#{$this->getEditableInputId('rowColumnDelimiter')}').removeAttr('readonly');";
+            $afterDeleteAction  .= "$('#{$this->getEditableInputId('rowColumnDelimiter')}').removeClass('readonly-field');";
+            $afterDeleteAction  .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').removeAttr('readonly');";
+            $afterDeleteAction  .= "$('#{$this->getEditableInputId('rowColumnEnclosure')}').removeClass('readonly-field');";
 
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("filesElement");
@@ -81,7 +85,8 @@
             $params = array('htmlOptions' => array('size' => 5));
             if (count($existingFilesInformation) == 1)
             {
-                $params['htmlOptions']['readonly'] = 'readonly';
+                $params['htmlOptions']['readonly']  = 'readonly';
+                $params['htmlOptions']['class']     = 'readonly-field';
             }
 
             $delimiterElement                          = new TextElement($this->model, 'rowColumnDelimiter',
