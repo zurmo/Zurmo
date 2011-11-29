@@ -52,6 +52,11 @@
             $this->shouldRenderCoreScripts = $value;
         }
 
+        public function isAjaxMode()
+        {
+            return $this->shouldRenderCoreScripts;
+        }
+
         public function renderCoreScripts()
         {
             if ($this->shouldRenderCoreScripts)
