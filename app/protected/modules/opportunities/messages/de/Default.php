@@ -30,48 +30,48 @@
     // DON'T MAKE A MESS!
     return array(
         'Access OpportunitiesModulePluralLabel Tab'
-            => '??',
+            => 'Zugang OpportunitiesModulePluralLabel Tab',
         'Close Date'
-            => '??',
+            => 'Abschlussdatum',
         'Closed Lost'
-            => '??',
+            => 'Closed Lost',
         'Closed Won'
-            => '??',
+            => 'Closed Won',
         'Create OpportunitiesModulePluralLabel'
-            => '??',
+            => 'OpportunitiesModulePluralLabel erstellen',
         'Create OpportunitiesModuleSingularLabel'
-            => '?? OpportunitiesModuleSingularLabel',
+            => 'OpportunitiesModuleSingularLabel erstellen',
         'Delete OpportunitiesModulePluralLabel'
-            => '??',
+            => 'OpportunitiesModulePluralLabel löschen',
         'My OpportunitiesModulePluralLabel'
-            => '?? OpportunitiesModulePluralLabel',
+            => 'Meine OpportunitiesModulePluralLabel',
         'Negotiating'
-            => '??',
+            => 'Negotiating',
         'Opportunities'
-            => '??',
+            => 'Verkaufschancen',
         'Opportunities By Lead Source'
-            => '??',
+            => 'Verkaufschancen von Interessente Quelle',
         'Opportunities By Sales Stage'
-            => '??',
+            => 'Verkaufschancen von Verkaufsphase',
         'OpportunitiesModulePluralLabel'
             => 'OpportunitiesModulePluralLabel',
         'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel ?? AccountsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel für AccountsModuleSingularLabel',
         'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
-            => 'OpportunitiesModulePluralLabel ?? ContactsModuleSingularLabel',
+            => 'OpportunitiesModulePluralLabel für ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
             => 'OpportunitiesModuleSingularLabel',
         'OpportunitiesModuleSingularLabel Search'
-            => 'OpportunitiesModuleSingularLabel ??',
+            => 'OpportunitiesModuleSingularLabel Suche',
         'Opportunity'
-            => '??',
+            => 'Verkaufschance',
         'Probability'
-            => '??',
+            => 'Wahrscheinlichkeit ',
         'Prospecting'
-            => '??',
+            => 'Prospecting',
         'Qualification'
-            => '??',
+            => 'Qualifikation',
         'Verbal'
-            => '??',
+            => 'Mündlich',
     );
 ?>
