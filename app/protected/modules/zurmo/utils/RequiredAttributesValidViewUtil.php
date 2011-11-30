@@ -147,7 +147,7 @@
                                                                makeByViewAndModelAndDesignerRules($viewClassName,
                                                                                                   $modelClassName,
                                                                                                   $designerRules);
-                                    if(!in_array($attributeName, $attributesLayoutAdapter->getEffectivePlacedAttributes()))
+                                    if (!in_array($attributeName, $attributesLayoutAdapter->getEffectivePlacedAttributes()))
                                     {
                                         self::setAsMissingRequiredAttributes(get_class($module), $viewClassName);
                                     }
@@ -188,7 +188,7 @@
                                                                makeByViewAndModelAndDesignerRules($viewClassName,
                                                                                                   $modelClassName,
                                                                                                   $designerRules);
-                                    if(!in_array($attributeName, $attributesLayoutAdapter->getEffectivePlacedAttributes()))
+                                    if (!in_array($attributeName, $attributesLayoutAdapter->getEffectivePlacedAttributes()))
                                     {
                                         self::
                                         removeAttributeAsMissingRequiredAttribute(get_class($module), $viewClassName);

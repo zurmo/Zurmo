@@ -65,7 +65,7 @@
             $modelAttributesAdapterClassName = TextAttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
             $adapter->removeAttributeMetadata('text');
-            RequiredAttributesValidViewUtil::resolveToRemoveAttributeAsMissingRequiredAttribute('Account','text');
+            RequiredAttributesValidViewUtil::resolveToRemoveAttributeAsMissingRequiredAttribute('Account', 'text');
             $account = new Account();
             $this->assertFalse($account->isAttribute('text'));
             unset($account);
@@ -116,7 +116,7 @@
                 echo $e->getMessage();
                 $this->fail();
             }
-            RequiredAttributesValidViewUtil::resolveToRemoveAttributeAsMissingRequiredAttribute('Account','industry');
+            RequiredAttributesValidViewUtil::resolveToRemoveAttributeAsMissingRequiredAttribute('Account', 'industry');
             RedBeanModelsCache::forgetAll();
 
             //Confirm industry is truly unrequired.

@@ -62,7 +62,7 @@
         'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
         'will be placeable in the LeadsModulePluralLowerCaseLabel layouts.'
             => 'LeadsModulePluralLabel und ContactsModulePluralLabel sind die gleichen Datensätze' .
-            'aber in einen anderen Status. Zum Erstellen einer LeadsModuleSingularLowerCaseLabel Feld, erstellen Sie eine ContactsModuleSingularLowerCaseLabel Feld,' .
+            'aber in einen anderen Status. Zum Erstellen einer LeadsModuleSingularLowerCaseLabel Feld, erstellen Sie eine ContactsModuleSingularLowerCaseLabel Feld, ' .
             'und dann wird es in der LeadsModulePluralLowerCaseLabel Layouts platziert werden.',
         'LeadsModuleSingularLabel'
             => 'LeadsModuleSingularLabel',

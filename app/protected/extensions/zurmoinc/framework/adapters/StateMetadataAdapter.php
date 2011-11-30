@@ -52,7 +52,7 @@
             $structure = '';
             $first = true;
             //No StateIds mean the list should come up empty
-            if(count($stateIds) == 0)
+            if (count($stateIds) == 0)
             {
                 $metadata['clauses'][$startingCount] = array(
                     'attributeName' => 'state',

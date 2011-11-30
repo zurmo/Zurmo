@@ -246,7 +246,7 @@
         public function isStandardAttributeRequiredByDefault($attributeName)
         {
             assert('is_string($attributeName)');
-            if(!$this->isStandardAttribute($attributeName))
+            if (!$this->isStandardAttribute($attributeName))
             {
                 throw new NotSupportedException();
             }
@@ -258,7 +258,7 @@
                 {
                     assert('isset($validatorMetadata[0])');
                     assert('isset($validatorMetadata[1])');
-                    if($validatorMetadata[0] == $attributeName && $validatorMetadata[1] == 'required')
+                    if ($validatorMetadata[0] == $attributeName && $validatorMetadata[1] == 'required')
                     {
                         return true;
                     }
