@@ -127,7 +127,7 @@
                 $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
                 $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('OwnedSecurableTestItem');
                 $where = RedBeanModelDataProvider::makeWhere('OwnedSecurableTestItem', $searchAttributeData, $joinTablesAdapter);
-                $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like lower('test%'))";
+                $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like 'test%')";
                 $this->assertEquals($compareWhere, $where);
                 $subsetSql = OwnedSecurableTestItem::makeSubsetOrCountSqlQuery('ownedsecurabletestitem',
                                                         $joinTablesAdapter, 1, 5, $where, null);
@@ -181,7 +181,7 @@
                 $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
                 $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('OwnedSecurableTestItem');
                 $where = RedBeanModelDataProvider::makeWhere('OwnedSecurableTestItem', $searchAttributeData, $joinTablesAdapter);
-                $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like lower('test%'))";
+                $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like 'test%')";
                 $this->assertEquals($compareWhere, $where);
                 $subsetSql = OwnedSecurableTestItem::makeSubsetOrCountSqlQuery('ownedsecurabletestitem',
                                                         $joinTablesAdapter, 1, 5, $where, null);
@@ -270,8 +270,8 @@
                 );
                 $unionSql     = RedBeanModelsDataProvider::makeUnionSql($modelClassNamesAndSearchAttributeData,
                                                                         null, false, 2, 7);
-                $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like lower('test4%'))";
-                $compareWhere2 = "({$quote}ownedsecurabletestitem2{$quote}.{$quote}member{$quote} like lower('test4%'))";
+                $compareWhere = "({$quote}ownedsecurabletestitem{$quote}.{$quote}member{$quote} like 'test4%')";
+                $compareWhere2 = "({$quote}ownedsecurabletestitem2{$quote}.{$quote}member{$quote} like 'test4%')";
                 $compareSubsetSql  = "(";
                 $compareSubsetSql .= "select distinct {$quote}ownedsecurabletestitem{$quote}.{$quote}id{$quote} id";
                 $compareSubsetSql .= ", 'OwnedSecurableTestItem' modelClassName ";

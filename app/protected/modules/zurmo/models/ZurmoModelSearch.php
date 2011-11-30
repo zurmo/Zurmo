@@ -38,7 +38,7 @@
             $fullNameSql = DatabaseCompatibilityUtil::concat(array('person.firstname',
                                                                    '\' \'',
                                                                    'person.lastname'));
-            $where = "$fullNameSql = lower('{$fullName}')";
+            $where = "$fullNameSql = '{$fullName}'";
             return $modelClassName::getSubset($joinTablesAdapter, null, null, $where);
         }
     }

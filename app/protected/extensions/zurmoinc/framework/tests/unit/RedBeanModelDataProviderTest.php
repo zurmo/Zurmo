@@ -87,7 +87,7 @@
             $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                             "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                             "{$quote}multiplevaluescustomfield{$quote}.id " .
-                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN(lower('A'),lower('B'),lower('C'))))";
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C')))";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -131,11 +131,11 @@
             $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                             "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                             "{$quote}multiplevaluescustomfield{$quote}.id " .
-                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN(lower('A'),lower('B'),lower('C'))))";
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C')))";
             $compareWhere .= " and (1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                             "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                             "{$quote}multiplevaluescustomfield1{$quote}.id " .
-                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN(lower('D'),lower('E'),lower('F'))))";
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('D','E','F')))";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -308,7 +308,7 @@
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}g{$quote}.{$quote}g{$quote} like lower('somevalue%'))";
+            $compareWhere = "({$quote}g{$quote}.{$quote}g{$quote} like 'somevalue%')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
@@ -334,7 +334,7 @@
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('II');
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('II', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}g{$quote}.{$quote}g{$quote} like lower('somevalue%'))";
+            $compareWhere = "({$quote}g{$quote}.{$quote}g{$quote} like 'somevalue%')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(2, $joinTablesAdapter->getFromTableJoinCount());
@@ -384,7 +384,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}k{$quote}.{$quote}kmember{$quote} = lower('somevalue'))";
+            $compareWhere = "({$quote}k{$quote}.{$quote}kmember{$quote} = 'somevalue')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -438,7 +438,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}l{$quote}.{$quote}lmember{$quote} = lower('somevalue'))";
+            $compareWhere = "({$quote}l{$quote}.{$quote}lmember{$quote} = 'somevalue')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());

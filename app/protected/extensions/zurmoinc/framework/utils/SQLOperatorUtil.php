@@ -158,7 +158,7 @@
                     }
                     else
                     {
-                        $inPart .= "lower('" . $theValue . "')";
+                        $inPart .= "'" . $theValue . "'";
                     }
                 }
                 elseif (is_numeric($theValue))

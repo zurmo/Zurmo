@@ -135,16 +135,16 @@
             $where = RedBeanModelDataProvider::makeWhere('Account', $searchAttributeData, $joinTablesAdapter);
             $compareWhere     = "({$quote}account{$quote}.{$quote}checkbox{$quote} = 1)"                               .
                                 " and ({$quote}account{$quote}.{$quote}currency_currencyvalue_id{$quote} = 108.45)"                       .
-                                " and ({$quote}account{$quote}.{$quote}date{$quote} = lower('2007-07-01'))"              .
-                                " and ({$quote}account{$quote}.{$quote}datetime{$quote} = lower('2007-07-01 06:12:45'))" .
+                                " and ({$quote}account{$quote}.{$quote}date{$quote} = '2007-07-01')"              .
+                                " and ({$quote}account{$quote}.{$quote}datetime{$quote} = '2007-07-01 06:12:45')" .
                                 " and ({$quote}account{$quote}.{$quote}decimal{$quote} = 45.6)" .
-                                " and ({$quote}customfield{$quote}.{$quote}value{$quote} = lower('3'))" .
+                                " and ({$quote}customfield{$quote}.{$quote}value{$quote} = '3')" .
                                 " and ({$quote}account{$quote}.{$quote}integer{$quote} = 67876)" .
-                                " and ({$quote}account{$quote}.{$quote}phone{$quote} like lower('123456%'))" .
-                                " and ({$quote}customfield1{$quote}.{$quote}value{$quote} = lower('2'))" .
-                                " and ({$quote}account{$quote}.{$quote}text{$quote} like lower('Some Text%'))" .
-                                " and ({$quote}account{$quote}.{$quote}textarea{$quote} like lower('%Some description%'))" .
-                                " and ({$quote}account{$quote}.{$quote}url{$quote} like lower('%somesite.com%'))" .
+                                " and ({$quote}account{$quote}.{$quote}phone{$quote} like '123456%')" .
+                                " and ({$quote}customfield1{$quote}.{$quote}value{$quote} = '2')" .
+                                " and ({$quote}account{$quote}.{$quote}text{$quote} like 'Some Text%')" .
+                                " and ({$quote}account{$quote}.{$quote}textarea{$quote} like '%Some description%')" .
+                                " and ({$quote}account{$quote}.{$quote}url{$quote} like '%somesite.com%')" .
                                 "";
             $this->assertEquals($compareWhere, $where);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -214,8 +214,8 @@
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Contact');
             $where        = RedBeanModelDataProvider::makeWhere('Contact', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}email{$quote}.{$quote}emailaddress{$quote} like lower('asearch@something.com%')) ";
-            $compareWhere .= "and ({$quote}email1{$quote}.{$quote}emailaddress{$quote} like lower('bsearch@something.com%'))";
+            $compareWhere = "({$quote}email{$quote}.{$quote}emailaddress{$quote} like 'asearch@something.com%') ";
+            $compareWhere .= "and ({$quote}email1{$quote}.{$quote}emailaddress{$quote} like 'bsearch@something.com%')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
@@ -303,7 +303,7 @@
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Contact');
             $where        = RedBeanModelDataProvider::makeWhere('Contact', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}account{$quote}.{$quote}name{$quote} like lower('abc%'))";
+            $compareWhere = "({$quote}account{$quote}.{$quote}name{$quote} like 'abc%')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());

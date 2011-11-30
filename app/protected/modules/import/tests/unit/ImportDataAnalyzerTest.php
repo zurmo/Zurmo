@@ -92,7 +92,7 @@
         {
             $string = SQLOperatorUtil::
                       resolveOperatorAndValueForOneOf('oneOf', BooleanSanitizerUtil::getAcceptableValues());
-            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))"; // Not Coding Standard
+            $compareString = "IN('false','true','y','n','yes','no','0','1','')"; // Not Coding Standard
             $this->assertEquals($compareString, $string);
         }
 

@@ -103,9 +103,9 @@
             $fullNameSql = DatabaseCompatibilityUtil::concat(array('person.firstname',
                                                                    '\' \'',
                                                                    'person.lastname'));
-            return "      (person.firstname      like lower('$partialName%') or "    .
-                   "       person.lastname       like lower('$partialName%') or "    .
-                   "       $fullNameSql like lower('$partialName%')) ";
+            return "      (person.firstname      like '$partialName%' or "    .
+                   "       person.lastname       like '$partialName%' or "    .
+                   "       $fullNameSql like '$partialName%') ";
         }
     }
 ?>
