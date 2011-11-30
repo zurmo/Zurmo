@@ -286,7 +286,7 @@
         'Last Updated'
             => 'Aktualisiert',
         'Latitude'
-            => 'Latitude',
+            => 'Breite',
         'List Filters'
             => 'Liste Filtern',
         'List page size'
@@ -300,7 +300,7 @@
         'Logout'
             => 'Abmelden',
         'Longitude'
-            => 'Longitude',
+            => 'Länge',
         'Manage Active Languages'
             => 'Verwaltung der aktiven Sprachen',
         'Manage Currency Configuration'

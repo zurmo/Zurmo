@@ -64,9 +64,9 @@
         'Create'
             => 'Erstellen',
         'Created By User'
-            => 'Erstellt von User',
+            => 'Erstellt von Benutzer',
         'Created Date and User'
-            => 'Erstellt Datum und User',
+            => 'Erstellt Datum und Benutzer',
         'Created Date Time'
             => 'Erstellt Datum Uhrzeit',
         'Created On'
@@ -126,7 +126,7 @@
         'Last Modified'
             => 'Letzte Änderung',
         'Last Modified Date and User'
-            => 'Letzte Änderung Datum und User ',
+            => 'Letzte Änderung Datum und benutzer ',
         'List'
             => 'Liste',
         'Loading'
@@ -142,7 +142,7 @@
         'Model Id'
             => 'Modell Id',
         'Modified By User'
-            => 'Geändert von user',
+            => 'Geändert von Benutzer',
         'Modified Date Time'
             => 'Geändert Datum Uhrzeit',
         'Module Name'
@@ -246,9 +246,9 @@
         'Updating'
             => 'Aktualisierung',
         'User'
-            => 'User',
+            => 'Benutzer',
         'Users'
-            => 'Users',
+            => 'Benutzern',
         'Yes'
             => 'Ja',
         'Yesterday'

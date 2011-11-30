@@ -202,7 +202,7 @@
             => 'Installation von Systemdaten',
         'Since you specified an existing database you must check this box in order ' .
         'to proceed. THIS WILL REMOVE ALL EXISTING DATA.'
-            => 'Da Sie eine vorhandene Datenbank angegeben haben,' .
+            => 'Da Sie eine vorhandene Datenbank angegeben haben, ' .
             'müssen dieses Kontrollkästchen aktivieren, um fortzufahren. Alle vorhandenen Daten werden gelöscht.',
         'SOAP is installed.'
             => 'SOAP ist installiert.',
@@ -257,7 +257,7 @@
         'You have specified an existing database. If you would like to use this database, ' .
         'then do not specify the database admin username and password. Otherwise pick a ' .
         'database name that does not exist.'
-            => 'Sie haben eine bestehende Datenbank angegeben. Wenn Sie diese Datenbank nutzen wollen,' .
+            => 'Sie haben eine bestehende Datenbank angegeben. Wenn Sie diese Datenbank nutzen wollen, ' .
             'dann geben Sie nicht den Datenbank-Administrator-Benutzernamen und Passwort.' .
             'Ansonsten wählen Sie einen Datenbank-Namen, die nicht existiert.',
         'You have specified an existing user. If you would like to use this user, then do ' .

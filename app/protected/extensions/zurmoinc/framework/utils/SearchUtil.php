@@ -159,7 +159,7 @@
         {
             assert('$model instanceof RedBeanModel || $model instanceof SearchForm');
             $searchAttributesReadyToSetToModel = array();
-            if($model instanceof SearchForm)
+            if ($model instanceof SearchForm)
             {
                 $modelToUse =  $model->getModel();
             }
@@ -167,20 +167,20 @@
             {
                 $modelToUse =  $model;
             }
-            foreach($searchAttributes as $attributeName => $data)
+            foreach ($searchAttributes as $attributeName => $data)
             {
-                if($modelToUse->isAttribute($attributeName))
+                if ($modelToUse->isAttribute($attributeName))
                 {
                     $type = ModelAttributeToMixedTypeUtil::getType($modelToUse, $attributeName);
                     switch($type)
                     {
                         case 'CheckBox':
 
-                            if(is_array($data) && isset($data['value']))
+                            if (is_array($data) && isset($data['value']))
                             {
                                 $data = $data['value'];
                             }
-                            elseif(is_array($data) && $data['value'] == null)
+                            elseif (is_array($data) && $data['value'] == null)
                             {
                                 $data = null;
                             }
