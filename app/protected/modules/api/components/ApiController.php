@@ -125,8 +125,11 @@
             $model = $_GET['model'];
             switch($_GET['model'])
             {
-                case 'apiTest':
-                    $controllerName = 'ApiTestController';
+                case 'apiTestModelItem':
+                    $controllerName = 'ApiTestModelItemController';
+                    break;
+                case 'apiTestModelItem2':
+                    $controllerName = 'ApiTestModelItem2Controller';
                     break;
                 default:
                     $controllerName = null;

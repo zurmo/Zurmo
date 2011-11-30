@@ -34,11 +34,12 @@
     {
         public function actionList()
         {
+            $params = Yii::app()->apiRequest->getParams();
             $baseControllerName = $this->getBaseController();
             if ($baseControllerName != null)
             {
                 $baseController = new $baseControllerName($baseControllerName, 'api');
-                $res = $baseController->getAll();
+                $res = $baseController->getAll($params);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;

@@ -160,7 +160,15 @@
             R::exec("update " . ApiModelTestItem3::getTableName('ApiModelTestItem4')
             . " set $externalSystemIdColumnName = 'J' where id = {$apiModelTestItem4Model2->id}");
 
-            exit;
+            //Test related models
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $apiModelTestItemModel1->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            //$myVar = print_r($response, true);
+            //$fp = fopen('data.txt', 'w');
+            //fwrite($fp, $myVar);
+            //fclose($fp);
+            //echo $response['data']['string'];
+            //            exit;
         }
 
         /**

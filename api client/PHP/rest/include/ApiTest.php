@@ -35,7 +35,7 @@
         public static function listAll($baseUrl, $sessionId)
         {
             $headers = self::createAuthenticatedHeaders($sessionId);
-            $response = self::createApiCall($baseUrl . '/index.php/api/rest/apiTest', 'GET', $headers);
+            $response = self::createApiCall($baseUrl . '/index.php/api/rest/ApiTestModelItem2', 'GET', $headers);
             $response = json_decode($response, true);
             return $response;
         }
@@ -50,7 +50,7 @@
         public static function view($baseUrl, $sessionId, $id)
         {
             $headers = self::createAuthenticatedHeaders($sessionId);
-            $response = self::createApiCall($baseUrl . '/index.php/api/rest/apiTest/' . $id, 'GET', $headers);
+            $response = self::createApiCall($baseUrl . '/index.php/api/rest/ApiTestModelItem2/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             return $response;
         }
@@ -65,7 +65,7 @@
         public static function create($baseUrl, $sessionId, $data)
         {
             $headers = self::createAuthenticatedHeaders($sessionId);
-            $response = self::createApiCall($baseUrl . '/index.php/api/rest/apiTest', 'POST', $headers, $data);
+            $response = self::createApiCall($baseUrl . '/index.php/api/rest/ApiTestModelItem2', 'POST', $headers, $data);
             $response = json_decode($response, true);
             return $response;
         }
@@ -82,7 +82,7 @@
         {
             $headers = self::createAuthenticatedHeaders($sessionId);
             $data = array('name' => 'new name 2');
-            $response = self::createApiCall($baseUrl . '/index.php/api/rest/apiTest/' . $id, 'PUT', $headers, $data);
+            $response = self::createApiCall($baseUrl . '/index.php/api/rest/ApiTestModelItem2/' . $id, 'PUT', $headers, $data);
             $response = json_decode($response, true);
             return $response;
         }
@@ -97,7 +97,7 @@
         public static function delete($baseUrl, $sessionId, $id)
         {
             $headers = self::createAuthenticatedHeaders($sessionId);
-            $response = self::createApiCall($baseUrl . '/index.php/api/rest/apiTest/' . $id, 'DELETE', $headers);
+            $response = self::createApiCall($baseUrl . '/index.php/api/rest/ApiTestModelItem2/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             return $response;
         }
