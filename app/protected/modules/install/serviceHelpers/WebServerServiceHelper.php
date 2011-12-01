@@ -29,11 +29,17 @@
      */
     class WebServerServiceHelper extends ServiceHelper
     {
-        protected $minimumVersion = array('apache' => '2.2.16');
+        protected $minimumVersion = array('microsoft-iis' => '5.0.0', 'apache' => '2.2.16');
 
         protected function checkService()
         {
-            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Apache'));
+            $serverName = $_SERVER['SERVER_SOFTWARE'];
+            if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
+                return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Apache'));
+            }
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
+                return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Microsoft-IIS'));
+            }
         }
 
         /**
@@ -84,7 +90,13 @@
         protected function getMinimumVersionLabel()
         {
             assert('is_array($this->minimumVersion)');
-            return $this->minimumVersion['apache'];
+            $serverName = $_SERVER['SERVER_SOFTWARE'];
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
+                return $this->minimumVersion['microsoft-iis'];
+            }
+            else  if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
+                return $this->minimumVersion['apache'];
+            }
         }
     }
 ?>
