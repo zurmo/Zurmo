@@ -52,6 +52,8 @@
          */
         protected $model;
 
+        private $relatedModel;
+
         /**
          * @param string $modelClassName
          * @param string $attribute
@@ -164,8 +166,12 @@
          */
         public function getRelationModel()
         {
-            $relationModelClassName     = $this->getRelationModelClassName();
-            return new $relationModelClassName(false);
+            if($this->relatedModel == null)
+            {
+                $relationModelClassName     = $this->getRelationModelClassName();
+                $this->relatedModel         = new $relationModelClassName(false);
+            }
+            return $this->relatedModel;
         }
 
         /**
