@@ -60,9 +60,12 @@
             try
             {
                 $model = ApiModelTestItem::getById($id);
+                $util  = new RedBeanModelToApiDataUtil($model);
+                $data  = $util->getData();
+
                 $outputArray = array();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['data'] = (array)$model;
+                $outputArray['status']  = 'SUCCESS';
+                $outputArray['data']    = (array)$model;
                 $outputArray['message'] = '';
             }
             catch (Exception $e)

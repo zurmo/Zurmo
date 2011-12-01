@@ -202,6 +202,7 @@
         ),
         'import' => array(
             'application.extensions.zurmoinc.framework.adapters.*',
+            'application.extensions.zurmoinc.framework.adapters.api.*',
             'application.extensions.zurmoinc.framework.adapters.columns.*',
             'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
             'application.extensions.zurmoinc.framework.configuration.*',
