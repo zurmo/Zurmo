@@ -398,8 +398,8 @@
                 while (get_parent_class($modelClassName) !=
                        $modelAttributeToDataProviderAdapter->getAttributeModelClassName())
                 {
-                    $castedDownModelClassName   = $modelAttributeToDataProviderAdapter->getModelClassName();
-                    $modelClassName             = get_parent_class($modelAttributeToDataProviderAdapter->getModelClassName());
+                    $castedDownModelClassName   = $modelClassName;
+                    $modelClassName             = get_parent_class($modelClassName);
                     $castedUpAttributeTableName = $modelClassName::getTableName($modelClassName);
                     if (!$joinTablesAdapter->isTableInFromTables($castedUpAttributeTableName))
                     {

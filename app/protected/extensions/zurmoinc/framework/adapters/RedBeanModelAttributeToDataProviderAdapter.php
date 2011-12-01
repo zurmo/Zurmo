@@ -116,7 +116,7 @@
             return $modelClassName::getTableName($this->getAttributeModelClassName());
         }
 
-        private function getModel()
+        protected function getModel()
         {
             if($this->model == null)
             {
@@ -164,7 +164,7 @@
         /**
          * If the attribute is a relation, returns the RedBeanModel of that relation.
          */
-        public function getRelationModel()
+        protected function getRelationModel()
         {
             if($this->relatedModel == null)
             {
@@ -244,6 +244,10 @@
 
         public function getRelatedAttributeRelationModelClassName()
         {
+            if(!$this->isRelatedAttributeRelation())
+            {
+                throw new NotSupportedException();
+            }
             return $this->getRelationModel()->getRelationModelClassName($this->relatedAttribute);
         }
     }
