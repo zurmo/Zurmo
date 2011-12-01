@@ -80,6 +80,31 @@
             $this->assertEquals($expectedVersion, $actualVersion);
             $_SERVER['SERVER_SOFTWARE'] = 'Apache';
             $this->assertFalse (InstallUtil::checkWebServer(array('apache' => '1.0.0'),  $actualVersion));
+
+            $_SERVER['SERVER_SOFTWARE'] = 'Apache/2.2.16 (Debian) Server Blaa Blaa Blaa';
+            InstallUtil::checkWebServer(array('apache' => '10.0.0'), $expectedVersion);
+            $this->assertFalse (InstallUtil::checkWebServer(array('apache' => '3.0.0'),  $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
+            $this->assertTrue  (InstallUtil::checkWebServer(array('apache' => '2.2.16'), $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
+            $this->assertTrue  (InstallUtil::checkWebServer(array('apache' => '2.2.0'),  $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
+            $this->assertFalse (InstallUtil::checkWebServer(array('iis'    => '5.0.0'),  $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
+            $_SERVER['SERVER_SOFTWARE'] = 'Apache';
+            $this->assertFalse (InstallUtil::checkWebServer(array('apache' => '1.0.0'),  $actualVersion));
+
+            $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS/5.0';
+            InstallUtil::checkWebServer(array('microsoft-iis' => '5.0.0'), $expectedVersion);
+            $this->assertTrue (InstallUtil::checkWebServer(array('microsoft-iis' => '5.0.0'),  $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
+            $this->assertTrue (InstallUtil::checkWebServer(array('microsoft-iis' => '3.0.0'),  $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
+
+            $_SERVER['SERVER_SOFTWARE'] = 'Microsoft-IIS/3.0';
+            InstallUtil::checkWebServer(array('microsoft-iis' => '5.0.0'), $expectedVersion);
+            $this->assertFalse (InstallUtil::checkWebServer(array('microsoft-iis' => '5.0.0'),  $actualVersion));
+            $this->assertEquals($expectedVersion, $actualVersion);
         }
 
         public function testCheckPhp()
