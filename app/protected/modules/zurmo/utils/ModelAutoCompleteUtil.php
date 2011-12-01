@@ -102,7 +102,7 @@
             assert('is_string($partialTerm)');
             assert('is_int($pageSize)');
             assert('$user->id > 0');
-            $modelClassNamesAndSearchAttributeData = self::makeMmodelClassNamesAndSearchAttributeData($partialTerm, $user);
+            $modelClassNamesAndSearchAttributeData = self::makeModelClassNamesAndSearchAttributeData($partialTerm, $user);
             if (empty($modelClassNamesAndSearchAttributeData))
             {
                 return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
@@ -128,7 +128,7 @@
             return $autoCompleteResults;
         }
 
-        protected static function makeMmodelClassNamesAndSearchAttributeData($partialTerm, User $user)
+        protected static function makeModelClassNamesAndSearchAttributeData($partialTerm, User $user)
         {
             assert('is_string($partialTerm)');
             assert('$user->id > 0');

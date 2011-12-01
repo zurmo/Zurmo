@@ -43,22 +43,31 @@
             $quote = DatabaseCompatibilityUtil::getQuote();
 
             //Test a standard non-relation attribute on I
-            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
-            $sort = ModelDataProviderUtil::resolveSortAttributeColumnName('I', $joinTablesAdapter, 'iMember');
+            $joinTablesAdapter                   = new RedBeanModelJoinTablesQueryAdapter('I');
+            $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter('I', 'iMember');
+            $sort                                = ModelDataProviderUtil::
+                                                   resolveSortAttributeColumnName(
+                                                   $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
             $this->assertEquals("{$quote}i{$quote}.{$quote}imember{$quote}", $sort);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
 
             //Test a standard casted up attribute on H from I
-            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
-            $sort = ModelDataProviderUtil::resolveSortAttributeColumnName('I', $joinTablesAdapter, 'name');
+            $joinTablesAdapter                   = new RedBeanModelJoinTablesQueryAdapter('I');
+            $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter('I', 'name');
+            $sort                                = ModelDataProviderUtil::
+                                                   resolveSortAttributeColumnName(
+                                                   $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
             $this->assertEquals("{$quote}h{$quote}.{$quote}name{$quote}", $sort);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
 
             //Test a relation attribute G->g from H
-            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('H');
-            $sort = ModelDataProviderUtil::resolveSortAttributeColumnName('H', $joinTablesAdapter, 'castUpHasOne', 'g');
+            $joinTablesAdapter                   = new RedBeanModelJoinTablesQueryAdapter('H');
+            $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter('H', 'castUpHasOne', 'g');
+            $sort                                = ModelDataProviderUtil::
+                                                   resolveSortAttributeColumnName(
+                                                   $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
             $this->assertEquals("{$quote}g{$quote}.{$quote}g{$quote}", $sort);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
@@ -66,8 +75,11 @@
             $this->assertEquals('g', $leftTables[0]['tableName']);
 
             //Test a relation attribute G->g where casted up from I
-            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
-            $sort = ModelDataProviderUtil::resolveSortAttributeColumnName('I', $joinTablesAdapter, 'castUpHasOne', 'g');
+            $joinTablesAdapter                   = new RedBeanModelJoinTablesQueryAdapter('I');
+            $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter('I', 'castUpHasOne', 'g');
+            $sort                                = ModelDataProviderUtil::
+                                                   resolveSortAttributeColumnName(
+                                                   $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
             $this->assertEquals("{$quote}g{$quote}.{$quote}g{$quote}", $sort);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
@@ -77,9 +89,11 @@
             $this->assertEquals('g', $leftTables[0]['tableName']);
 
             //Test a customField like TestCustomFieldsModel->industry
-            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('TestCustomFieldsModel');
-            $sort = ModelDataProviderUtil::resolveSortAttributeColumnName(
-                                            'TestCustomFieldsModel', $joinTablesAdapter, 'industry', 'value');
+            $joinTablesAdapter                   = new RedBeanModelJoinTablesQueryAdapter('TestCustomFieldsModel');
+            $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter('TestCustomFieldsModel', 'industry', 'value');
+            $sort                                = ModelDataProviderUtil::
+                                                   resolveSortAttributeColumnName(
+                                                   $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
             $this->assertEquals("{$quote}customfield{$quote}.{$quote}value{$quote}", $sort);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());

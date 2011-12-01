@@ -64,16 +64,15 @@
             else
             {
                 $attributeTableName = $tableName;
-                $columnName         = ModelDataProviderUtil::getColumnNameByAttribute($model, $attributeName);
+                $columnName         = $model->getColumnNameByAttribute($attributeName);
             }
 
             $where = null;
             if ($filterByAttributeName != null)
             {
-               $attributeModelClassName    = ModelDataProviderUtil::
-                                             resolveAttributeModelClassName($model, $filterByAttributeName);
+               $attributeModelClassName    = $model->resolveAttributeModelClassName($filterByAttributeName);
                $filterByAttributeTableName = RedBeanModel::getTableName($attributeModelClassName);
-               $filterByColumnName         = ModelDataProviderUtil::getColumnNameByAttribute($model, $filterByAttributeName);
+               $filterByColumnName         = $model->getColumnNameByAttribute($filterByAttributeName);
                $where = $filterByAttributeTableName . '.' . $filterByColumnName . '=' . $filterByAttributeValue;
                if($filterByAttributeTableName != $tableName)
                {
