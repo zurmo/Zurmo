@@ -24,35 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Utilized by module views that extend ListView
-     * to provide abstracted column element information
-     * that can be translated into one of the available
-     * GridView widgets in Yii.
-     */
-    abstract class RedBeanModelAttributeValueToApiValueAdapter
+    class TextRedBeanModelAttributeValueToApiValueAdapter extends RedBeanModelAttributeValueToApiValueAdapter
     {
-        protected $model;
-
-        protected $attribute;
-
-        protected $value;
-
-        public function __construct($model, $attribute, $value)
+        public function renderGridViewData()
         {
-            $this->model     = $model;
-            $this->attribute = $attribute;
-            $this->value     = $value;
-        }
-
-        /**
-         * Resolve data
-         * @param array $data
-         */
-        public function resolveData(&$data)
-        {
-            $data[$this->attribute] = $this->value;
-            return;
+            if ($this->getIsLink())
+            {
+                return array(
+                    'name' => $this->attribute,
+                    'type' => 'raw',
+                    'value' => $this->view->getLinkString('$data->' . $this->attribute),
+                );
+            }
+            else
+            {
+                return array(
+                    'name'  => $this->attribute,
+                );
+            }
         }
     }
 ?>

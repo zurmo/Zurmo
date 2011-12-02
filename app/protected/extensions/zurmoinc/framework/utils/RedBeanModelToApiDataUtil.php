@@ -40,10 +40,11 @@
         {
             $data = array();
             //First do id manually
-//            $data['id'] = $this->model->id;
-$attributes = $this->model->getAttributes();
-            print_r($attributes);
-exit;
+            //For Jason: Why when modelis empty models ids are negative, for example if there are no secondaryEmail for accounts, id is -7
+            if (isset($this->model->id) && $this->model->id > 0){
+                $data['id'] = $this->model->id;
+            }
+
             //Second get attributes
             foreach($this->model->getAttributes() as $attributeName => $value)
             {
@@ -52,23 +53,43 @@ exit;
                 {
                     //do something for relations ALSO MAKE SURE HAS_ONE IN the case of owned stuff?
                     //similer use of adapters. with relations you can use the getType on the attributeName as well, since DropDown for example is one type.  This would work well then.
-
                     //if something like address
-                    echo $attributeName;
-                    exit;
-                    if($this->model->isAttribute($attributeName) && !is_object($this->model->attributeName))
+                    $relationType = $this->model->getRelationType($attributeName);
+                    if ($relationType == RedBeanModel::HAS_ONE)
                     {
-                        $util = new RedBeanModelToApiDataUtil($this->model->attributeName);
+                        $util = new RedBeanModelToApiDataUtil($this->model->{$attributeName});
                         $relatedData          = $util->getData();
                         $data[$attributeName] = $relatedData;
                     }
-                    else
+                 }
+                 //We don't want to list properties from CustomFieldData objects
+                 elseif ($this->model->isRelation($attributeName) && $attributeName != 'data')
+                 {
+
+                     $relationType = $this->model->getRelationType($attributeName);
+                     //echo $this->model . " - " . $attributeName . ' - ' . $relationType . ' - ' . $value . '<br />';
+                     //We need to avoid recursion when createdByUserId is not setup, for example
+                     if (isset($value) && $value != '(Unnamed)' && $relationType == RedBeanModel::HAS_ONE)
+                     {
+
+                         $util = new RedBeanModelToApiDataUtil($this->model->{$attributeName});
+                         $relatedData          = $util->getData();
+                         $data[$attributeName] = $relatedData;
+                     }
+
+                     $relationType = $this->model->getRelationType($attributeName);
+                 }
+                 elseif(!$this->model->isRelation($attributeName))
+                 {
+                    if($attributeName == 'serializedData')
                     {
-                        $type = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
-                        $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
-                        $adapter = new $adapterClassName($this->model, $attribute, $value);
-                        $adapter->resolveData($data); //data is passed by reference.
+                        $value = unserialize($value);
                     }
+                    $type = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
+                    $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
+                    $adapter = new $adapterClassName($this->model, $attributeName, $value);
+                    // $data passed by reference
+                    $adapter->resolveData($data);
                 }
             }
             //Third get owner if owned
@@ -77,6 +98,22 @@ exit;
 
             //}
             return $data;
+        }
+
+        public function getCustomFields()
+        {
+            $data = array();
+            $metadata = $this->model->getMetadata();
+            foreach ($metadata as $key => $classMetadata)
+            {
+                if (isset($classMetadata['customFields']))
+                {
+                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
+                    {
+                        //Extract custom field data here
+                    }
+                }
+            }
         }
     }
 ?>
