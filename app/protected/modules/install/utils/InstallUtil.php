@@ -717,5 +717,30 @@
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
+
+        /**
+         * From the command line, run the autobuild method which will effectively update
+         * the database schema.
+         */
+        public static function runAutoBuildFromUpdateSchemaCommand()
+        {
+            $unfreezeWhenDone     = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $unfreezeWhenDone = true;
+            }
+            $template        = "{message}\n";
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
+            $messageLogger = new MessageLogger($messageStreamer);
+            self::autoBuildDatabase($messageLogger);
+            $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
+            if($unfreezeWhenDone)
+            {
+                RedBeanDatabase::freeze();
+            }
+        }
     }
 ?>
