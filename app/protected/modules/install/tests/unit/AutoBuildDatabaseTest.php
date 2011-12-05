@@ -40,6 +40,12 @@
 
         public function testAutoBuildDatabase()
         {
+            $unfreezeWhenDone     = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $unfreezeWhenDone = true;
+            }
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $messageLogger              = new MessageLogger();
@@ -50,6 +56,10 @@
             //are comprised of the following:
             //audit_log (54), activity_items (3), contact_Opportunity, (1) _group__user (1)
             $this->assertEquals($beforeRowCount, ($afterRowCount - 59));
+            if($unfreezeWhenDone)
+            {
+                RedBeanDatabase::freeze();
+            }
         }
     }
 ?>
