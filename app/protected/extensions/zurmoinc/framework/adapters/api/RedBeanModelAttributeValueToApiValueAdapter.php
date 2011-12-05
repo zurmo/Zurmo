@@ -36,22 +36,19 @@
 
         protected $attribute;
 
-        protected $value;
-
-        public function __construct($model, $attribute, $value)
+        public function __construct($model, $attribute)
         {
             $this->model     = $model;
             $this->attribute = $attribute;
-            $this->value     = $value;
         }
 
         /**
          * Resolve data
          * @param array $data
          */
-        public function resolveData(&$data)
+        public function resolveData(& $data)
         {
-            $data[$this->attribute] = $this->value;
+            $data[$this->attribute] = $this->model->{$this->attribute};
             return;
         }
     }

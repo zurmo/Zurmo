@@ -26,22 +26,5 @@
 
     class TextRedBeanModelAttributeValueToApiValueAdapter extends RedBeanModelAttributeValueToApiValueAdapter
     {
-        public function renderGridViewData()
-        {
-            if ($this->getIsLink())
-            {
-                return array(
-                    'name' => $this->attribute,
-                    'type' => 'raw',
-                    'value' => $this->view->getLinkString('$data->' . $this->attribute),
-                );
-            }
-            else
-            {
-                return array(
-                    'name'  => $this->attribute,
-                );
-            }
-        }
     }
 ?>

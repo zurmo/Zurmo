@@ -33,70 +33,54 @@
 
         public function __construct($model)
         {
+            assert('$model->id > 0');
             $this->model = $model;
         }
 
         public function getData()
         {
-            $data = array();
-            //First do id manually
-            //For Jason: Why when modelis empty models ids are negative, for example if there are no secondaryEmail for accounts, id is -7
-            if (isset($this->model->id) && $this->model->id > 0){
-                $data['id'] = $this->model->id;
-            }
-
-            //Second get attributes
-            foreach($this->model->getAttributes() as $attributeName => $value)
+            $data       = array();
+            $data['id'] = $this->model->id;
+            foreach($this->model->getAttributes() as $attributeName => $notUsed)
             {
-
-                if($this->model->isOwnedRelation($attributeName))
+                $type             = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
+                $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
+                if($type != null && @class_exists($adapterClassName) &&
+                   !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
+                      RedBeanModel::HAS_ONE))
                 {
-                    //do something for relations ALSO MAKE SURE HAS_ONE IN the case of owned stuff?
-                    //similer use of adapters. with relations you can use the getType on the attributeName as well, since DropDown for example is one type.  This would work well then.
-                    //if something like address
-                    $relationType = $this->model->getRelationType($attributeName);
-                    if ($relationType == RedBeanModel::HAS_ONE)
+                    $adapter = new $adapterClassName($this->model, $attributeName);
+                    $adapter->resolveData($data);
+                }
+                elseif($this->model->isOwnedRelation($attributeName) &&
+                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
+                {
+                    if($this->model->{$attributeName}->id > 0)
                     {
                         $util = new RedBeanModelToApiDataUtil($this->model->{$attributeName});
                         $relatedData          = $util->getData();
                         $data[$attributeName] = $relatedData;
+                        $data[$attributeName] = null;
+                    }
+                    else
+                    {
+                        $data[$attributeName] = null;
                     }
                  }
                  //We don't want to list properties from CustomFieldData objects
-                 elseif ($this->model->isRelation($attributeName) && $attributeName != 'data')
+                 elseif ($this->model->isRelation($attributeName) &&
+                         $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                  {
-
-                     $relationType = $this->model->getRelationType($attributeName);
-                     //echo $this->model . " - " . $attributeName . ' - ' . $relationType . ' - ' . $value . '<br />';
-                     //We need to avoid recursion when createdByUserId is not setup, for example
-                     if (isset($value) && $value != '(Unnamed)' && $relationType == RedBeanModel::HAS_ONE)
-                     {
-
-                         $util = new RedBeanModelToApiDataUtil($this->model->{$attributeName});
-                         $relatedData          = $util->getData();
-                         $data[$attributeName] = $relatedData;
-                     }
-
-                     $relationType = $this->model->getRelationType($attributeName);
-                 }
-                 elseif(!$this->model->isRelation($attributeName))
-                 {
-                    if($attributeName == 'serializedData')
+                    if($this->model->{$attributeName}->id > 0)
                     {
-                        $value = unserialize($value);
+                        $data[$attributeName] = array('id' => $this->model->{$attributeName}->id);
                     }
-                    $type = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
-                    $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
-                    $adapter = new $adapterClassName($this->model, $attributeName, $value);
-                    // $data passed by reference
-                    $adapter->resolveData($data);
-                }
+                    else
+                    {
+                        $data[$attributeName] = null;
+                    }
+                 }
             }
-            //Third get owner if owned
-            //if($model instanceof OwnedSecurableItem)
-            //{
-
-            //}
             return $data;
         }
 
