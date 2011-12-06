@@ -199,8 +199,6 @@
                     'id' => $super->id,
                     'username' => 'super'
                 ),
-                'createdDateTime'  => $createStamp,
-                'modifiedDateTime' => $createStamp,
                 'createdByUser'    => array(
                     'id' => $super->id,
                     'username' => 'super'
@@ -210,12 +208,16 @@
                     'username' => 'super'
                 )
             );
+            unset($data['createdDateTime']);
+            unset($data['modifiedDateTime']);
             $this->assertEquals($compareData, $data);
 
             //Test View
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            unset($response['data']['createdDateTime']);
+            unset($response['data']['modifiedDateTime']);
             $this->assertEquals($compareData, $response['data']);
 
             //Test List
@@ -223,6 +225,11 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']));
+            foreach ($response['data'] as $key => $value)
+            {
+                unset($response['data'][$key]['createdDateTime']);
+                unset($response['data'][$key]['modifiedDateTime']);
+            }
             $this->assertEquals(array($compareData), $response['data']);
 
             //Test Update
@@ -233,52 +240,104 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
-            unset($compareData['modifiedDateTime']);
+            //Don't compare dates.
+            unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
-            /*
-            $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            //Add test ApiModelTestItem models for use in this test.
-            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem('aaa', 'aba');
-            $apiModelTestItemModel2 = ApiTestHelper::createApiModelTestItem('ddw', 'daf');
-            //Update model2 to have an externalSystemId.
-            R::exec("update " . ApiModelTestItem::getTableName('ApiModelTestItem')
-            . " set $externalSystemIdColumnName = 'B' where id = {$apiModelTestItemModel2->id}");
 
-            //Add test ApiModelTestItem2 models for use in this test.
-            $apiModelTestItem2Model1 = ApiTestHelper::createApiModelTestItem2('aaa');
-            $apiModelTestItem2Model2 = ApiTestHelper::createApiModelTestItem2('bbb');
-            $apiModelTestItem2Model3 = ApiTestHelper::createApiModelTestItem2('ccc');
-            //Update model2 to have an externalSystemId.
-            R::exec("update " . ApiModelTestItem2::getTableName('ApiModelTestItem2')
-            . " set $externalSystemIdColumnName = 'B' where id = {$apiModelTestItem2Model2->id}");
-
-            //Add test ApiModelTestItem3 models for use in this test.
-            $apiModelTestItem3Model1 = ApiTestHelper::createApiModelTestItem3('aaa');
-            $apiModelTestItem3Model2 = ApiTestHelper::createApiModelTestItem3('dd');
-            //Update model2 to have an externalSystemId.
-            R::exec("update " . ApiModelTestItem3::getTableName('ApiModelTestItem3')
-            . " set $externalSystemIdColumnName = 'K' where id = {$apiModelTestItem3Model2->id}");
-
-            //Add test ApiModelTestItem4 models for use in this test.
-            $apiModelTestItem4Model1 = ApiTestHelper::createApiModelTestItem4('aaa');
-            $apiModelTestItem4Model2 = ApiTestHelper::createApiModelTestItem4('dd');
-            //Update model2 to have an externalSystemId.
-            R::exec("update " . ApiModelTestItem3::getTableName('ApiModelTestItem4')
-            . " set $externalSystemIdColumnName = 'J' where id = {$apiModelTestItem4Model2->id}");
-
-            //Test related models
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $apiModelTestItemModel1->id, 'GET', $headers);
+            //Test Delete
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
-            //$myVar = print_r($response, true);
-            //$fp = fopen('data.txt', 'w');
-            //fwrite($fp, $myVar);
-            //fclose($fp);
-            //echo $response['data']['string'];
-            //            exit;
-             *
-             */
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            //Test Create
+            $testItem = new ApiModelTestItem();
+            $testItem->firstName     = 'Bob5';
+            $testItem->lastName      = 'Bob5';
+            $testItem->boolean       = true;
+            $testItem->date          = '2002-04-03';
+            $testItem->dateTime      = '2002-04-03 02:00:43';
+            $testItem->float         = 54.22;
+            $testItem->integer       = 10;
+            $testItem->phone         = '21313213';
+            $testItem->string        = 'aString';
+            $testItem->textArea      = 'Some Text Area';
+            $testItem->url           = 'http://www.asite.com';
+            $testItem->owner         = $super;
+            $testItem->currencyValue = $currencyValue;
+            $testItem->hasOne        = $testItem2;
+            $testItem->hasMany->add($testItem3_1);
+            $testItem->hasMany->add($testItem3_2);
+            $testItem->hasOneAlso    = $testItem4;
+            $util  = new RedBeanModelToApiDataUtil($testItem);
+            $data  = $util->getData();
+            $testItem->forget();
+            unset($testItem);
+
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+
+            $compareData = array(
+                                                    'id'                => $response['data']['id'],
+                                                    'firstName'         => 'Bob5',
+                                                    'lastName'          => 'Bob5',
+                                                    'boolean'           => 1,
+                                                    'date'              => '2002-04-03',
+                                                    'dateTime'          => '2002-04-03 02:00:43',
+                                                    'float'             => 54.22,
+                                                    'integer'           => 10,
+                                                    'phone'             => '21313213',
+                                                    'string'            => 'aString',
+                                                    'textArea'          => 'Some Text Area',
+                                                    'url'               => 'http://www.asite.com',
+                                                    'currencyValue'     => array(
+                                                        'id'         => $currencyValue->id,
+                                                        'value'      => 100,
+                                                        'rateToBase' => 1,
+                                                        'currency'   => array(
+                                                            'id'     => $currencies[0]->id,
+            ),
+            ),
+                                                    'dropDown'          => null,
+                                                    'radioDropDown'     => null,
+                                                    'hasOne'            => array('id' => $testItem2->id),
+                                                    'hasOneAlso'        => array('id' => $testItem4->id),
+                                                    'primaryEmail'      => null,
+                                                    'primaryAddress'    => null,
+                                                    'secondaryEmail'    => null,
+                                                    'owner' => array(
+                                                        'id' => $super->id,
+                                                        'username' => 'super'
+            ),
+                                                    'createdByUser'    => array(
+                                                        'id' => $super->id,
+                                                        'username' => 'super'
+            ),
+                                                    'modifiedByUser' => array(
+                                                        'id' => $super->id,
+                                                        'username' => 'super'
+            )
+            );
+            unset($response['data']['createdDateTime']);
+            unset($response['data']['modifiedDateTime']);
+            unset($response['data']['currencyValue']['id']);
+            unset($compareData['currencyValue']['id']);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $response['data']['id'], 'GET', $headers);
+            $response = json_decode($response, true);
+            unset($response['data']['createdDateTime']);
+            unset($response['data']['modifiedDateTime']);
+            unset($response['data']['currencyValue']['id']);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
         }
 
         /**

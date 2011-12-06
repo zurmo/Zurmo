@@ -117,7 +117,7 @@
             if ($baseControllerName != null)
             {
                 $baseController = new $baseControllerName($baseControllerName, 'api');
-                $res = $baseController->create($params['name']);
+                $res = $baseController->create($params['data']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;

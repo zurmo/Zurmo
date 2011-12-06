@@ -48,7 +48,7 @@
 
                 case 'POST':
                     curl_setopt($handle, CURLOPT_POST, true);
-                    curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+                    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
                     break;
 
                 case 'PUT':

@@ -27,6 +27,7 @@
     class ApiRestTest extends BaseTest
     {
         public $serverUrl = '';
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -82,7 +83,7 @@
             );
             //Test Create
             $data = array('name' => 'new name');
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem2', 'POST', $headers, $data);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem2', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertTrue(is_int($response['data']['id']));
@@ -96,7 +97,7 @@
 
             //Test Update
             $data = array('name' => 'new name 2');
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem2/' . $id, 'PUT', $headers, $data);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem2/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 

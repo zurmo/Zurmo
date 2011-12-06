@@ -39,7 +39,8 @@
                     $outputArray['message'] = '';
                     foreach ($data as $k => $model)
                     {
-                        $outputArray['data'][]['name'] = $model->name;
+                        $util  = new RedBeanModelToApiDataUtil($model);
+                        $outputArray['data'][] = $util->getData();
                     }
                 }
                 else
@@ -61,9 +62,11 @@
             try
             {
                 $model = ApiModelTestItem2::getById($id);
+                $util  = new RedBeanModelToApiDataUtil($model);
+                $data  = $util->getData();
                 $outputArray = array();
                 $outputArray['status'] = 'SUCCESS';
-                $outputArray['data']['name'] = $model->name;
+                $outputArray['data']   = $data;
                 $outputArray['message'] = '';
             }
             catch (Exception $e)
@@ -75,27 +78,63 @@
             return $outputArray;
         }
 
-        public function create($name)
+        public function create($data)
         {
-            $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem2($name);
-            $outputArray['status'] = 'SUCCESS';
-            $outputArray['data']['id'] = $apiModelTestItemModel1->id;;
-            $outputArray['message'] = '';
+            try
+            {
+                $model= new ApiModelTestItem2();
+                $model->name     = $data['name'];
+
+                $saved = $model->save();
+                $id = $model->id;
+                $model->forget();
+                unset($model);
+                $outputArray = array();
+                if ($saved)
+                {
+                    $model = ApiModelTestItem2::getById($id);
+                    $util  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $util->getData();
+                    $outputArray['status']  = 'SUCCESS';
+                    $outputArray['data']    = $data;
+                    $outputArray['message'] = '';
+                }
+                else
+                {
+                    $outputArray['status'] = 'FAILURE';
+                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                }
+            }
+            catch (Exception $e)
+            {
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
+            }
             return $outputArray;
         }
 
-        public function update($id, $name)
+        public function update($id, $data)
         {
             try
             {
                 $model = ApiModelTestItem2::getById($id);
-                $model->name = $name;
+                foreach ($data as $key => $value)
+                {
+                    if ($key != 'id' && $key != 'createdDateTime' && $key != 'modifiedDateTime')
+                    {
+                        $model->{$key} = $value;
+                    }
+                }
                 $saved = $model->save();
                 $outputArray = array();
                 if ($saved)
                 {
-                    $outputArray['status'] = 'SUCCESS';
-                    $outputArray['data']['name'] = $model->name;
+                    $model = ApiModelTestItem2::getById($id);
+                    $util  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $util->getData();
+
+                    $outputArray['status']  = 'SUCCESS';
+                    $outputArray['data']    = $data;
                     $outputArray['message'] = '';
                 }
                 else
