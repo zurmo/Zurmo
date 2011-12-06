@@ -26,10 +26,32 @@
 
     class RedBeanModelToApiDataUtilTest extends BaseTest
     {
+        public $freeze = false;
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             $super = SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function setUp(){
+            parent::setUp();
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $this->freeze = $freeze;
+        }
+
+        public function teardown()
+        {
+            if ($this->freeze)
+            {
+                RedBeanDatabase::freeze();
+            }
+            parent::teardown();
         }
 
         public function testGetDataWithNoRelationsSet()
@@ -102,6 +124,18 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
+            $values = array(
+                            'Test1',
+                            'Test2',
+                            'Test3',
+                            'Sample',
+                            'Demo',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestDropDown');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            $this->assertTrue($saved);
+
             $currencies                 = Currency::getAll();
             $currencyValue              = new CurrencyValue();
             $currencyValue->value       = 100;
@@ -122,6 +156,7 @@
             $testItem->url           = 'http://www.asite.com';
             $testItem->owner         = $super;
             $testItem->currencyValue = $currencyValue;
+            $testItem->dropDown->value = $values[1];
             $createStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
@@ -152,7 +187,10 @@
                         'id'     => $currencies[0]->id,
                     ),
                 ),
-                'dropDown'          => null,
+                'dropDown'          => array(
+                    'id'         => 2,
+                    'value'      => $values[1],
+                ),
                 'radioDropDown'     => null,
                 'hasOne'            => null,
                 'hasOneAlso'        => null,
@@ -173,6 +211,107 @@
                     'id' => $super->id,
                     'username' => 'super'
                 )
+            );
+            $this->assertEquals($compareData, $data);
+        }
+
+        public function testGetDataWithHasOneRelatedModel()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $currencies                 = Currency::getAll();
+            $currencyValue              = new CurrencyValue();
+            $currencyValue->value       = 100;
+            $currencyValue->currency    = $currencies[0];
+            $this->assertEquals('USD', $currencyValue->currency->code);
+
+            $testItem2 = new ApiModelTestItem2();
+            $testItem2->name     = 'John';
+            $this->assertTrue($testItem2->save());
+
+            $testItem4 = new ApiModelTestItem4();
+            $testItem4->name     = 'John';
+            $this->assertTrue($testItem4->save());
+
+            //HAS_MANY and MANY_MANY relationships should be ignored.
+            $testItem3_1 = new ApiModelTestItem3();
+            $testItem3_1->name     = 'Kevin';
+            $this->assertTrue($testItem3_1->save());
+
+            $testItem3_2 = new ApiModelTestItem3();
+            $testItem3_2->name     = 'Jim';
+            $this->assertTrue($testItem3_2->save());
+
+            $testItem = new ApiModelTestItem();
+            $testItem->firstName     = 'Bob3';
+            $testItem->lastName      = 'Bob3';
+            $testItem->boolean       = true;
+            $testItem->date          = '2002-04-03';
+            $testItem->dateTime      = '2002-04-03 02:00:43';
+            $testItem->float         = 54.22;
+            $testItem->integer       = 10;
+            $testItem->phone         = '21313213';
+            $testItem->string        = 'aString';
+            $testItem->textArea      = 'Some Text Area';
+            $testItem->url           = 'http://www.asite.com';
+            $testItem->owner         = $super;
+            $testItem->currencyValue = $currencyValue;
+            $testItem->hasOne        = $testItem2;
+            $testItem->hasMany->add($testItem3_1);
+            $testItem->hasMany->add($testItem3_2);
+            $testItem->hasOneAlso    = $testItem4;
+            $createStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $this->assertTrue($testItem->save());
+            $id = $testItem->id;
+            $testItem->forget();
+            unset($testItem);
+
+            $testItem    = ApiModelTestItem::getById($id);
+            $adapter     = new RedBeanModelToApiDataUtil($testItem);
+            $data        = $adapter->getData();;
+            $compareData = array(
+                        'id'                => $id,
+                        'firstName'         => 'Bob3',
+                        'lastName'          => 'Bob3',
+                        'boolean'           => 1,
+                        'date'              => '2002-04-03',
+                        'dateTime'          => '2002-04-03 02:00:43',
+                        'float'             => 54.22,
+                        'integer'           => 10,
+                        'phone'             => '21313213',
+                        'string'            => 'aString',
+                        'textArea'          => 'Some Text Area',
+                        'url'               => 'http://www.asite.com',
+                        'currencyValue'     => array(
+                            'id'         => $currencyValue->id,
+                            'value'      => 100,
+                            'rateToBase' => 1,
+                            'currency'   => array(
+                                'id'     => $currencies[0]->id,
+                            ),
+                        ),
+                        'dropDown'          => null,
+                        'radioDropDown'     => null,
+                        'hasOne'            => array('id' => $testItem2->id),
+                        'hasOneAlso'        => array('id' => $testItem4->id),
+                        'primaryEmail'      => null,
+                        'primaryAddress'    => null,
+                        'secondaryEmail'    => null,
+                        'owner' => array(
+                            'id' => $super->id,
+                            'username' => 'super'
+                        ),
+                        'createdDateTime'  => $createStamp,
+                        'modifiedDateTime' => $createStamp,
+                        'createdByUser'    => array(
+                            'id' => $super->id,
+                            'username' => 'super'
+                        ),
+                        'modifiedByUser' => array(
+                            'id' => $super->id,
+                            'username' => 'super'
+                        )
             );
             $this->assertEquals($compareData, $data);
         }

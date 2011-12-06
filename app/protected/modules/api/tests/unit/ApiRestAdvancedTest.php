@@ -27,12 +27,14 @@
     class ApiRestAdvancedTest extends BaseTest
     {
         public $serverUrl = '';
+        public $freeze = false;
 
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             $super = SecurityTestHelper::createSuperAdmin();
             $jim = UserTestHelper::createBasicUser('jim');
+
             $values = array(
                 'Test1',
                 'Test2',
@@ -44,23 +46,6 @@
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
             assert($saved);    // Not Coding Standard
-
-            //Ensure the external system id column is present.
-            $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(User::getTableName('User'), $columnName);
-            $userTableName = User::getTableName('User');
-            R::exec("update " . $userTableName . " set $columnName = 'A' where id = {$super->id}");
-            R::exec("update " . $userTableName . " set $columnName = 'B' where id = {$jim->id}");
-
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-                ensureColumnIsVarchar(ApiModelTestItem::getTableName('ApiModelTestItem'),   $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-                ensureColumnIsVarchar(ApiModelTestItem2::getTableName('ApiModelTestItem2'), $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-                ensureColumnIsVarchar(ApiModelTestItem3::getTableName('ApiModelTestItem3'), $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-                ensureColumnIsVarchar(ApiModelTestItem4::getTableName('ApiModelTestItem4'), $columnName);
         }
 
         public static function tearDownAfterClass()
@@ -74,25 +59,24 @@
             {
                 $this->serverUrl = Yii::app()->params['testApiUrl'];
             }
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $this->freeze = $freeze;
         }
 
-        /**
-        * This test was needed because of the wierd type casting issues with 0 and 1 and '1' and '0' as keys in an array.
-        * '0' and '1' turn into integers which they shouldn't and this messes up the oneOf sql query builder. Additionally
-        * on some versions of MySQL, 0,1 in a NOT IN, will evaluate true to 'abc' which it shouldn't.  As a result
-        * the 0/1 boolean values have been removed from the BooleanSanitizerUtil::getAcceptableValues().
-        */
-        public function testBooleanAcceptableValuesMappingAndSqlOneOfString()
+        public function teardown()
         {
-            $string = SQLOperatorUtil::
-                resolveOperatorAndValueForOneOf('oneOf', BooleanSanitizerUtil::getAcceptableValues());
-            $compareString = "IN(lower('false'),lower('true'),lower('y'),lower('n'),lower('yes'),lower('no'),lower('0'),lower('1'),lower(''))"; // Not Coding Standard
-            $this->assertEquals($compareString, $string);
+            if ($this->freeze)
+            {
+                RedBeanDatabase::freeze();
+            }
+            parent::teardown();
         }
 
-        /**
-        * @depends testBooleanAcceptableValuesMappingAndSqlOneOfString
-        */
         public function testApiServerUrl()
         {
             $this->assertTrue(strlen($this->serverUrl) > 0);
@@ -130,6 +114,130 @@
                 'ZURMO_SESSION_ID: ' . $sessionId
             );
 
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $currencies                 = Currency::getAll();
+            $currencyValue              = new CurrencyValue();
+            $currencyValue->value       = 100;
+            $currencyValue->currency    = $currencies[0];
+            $this->assertEquals('USD', $currencyValue->currency->code);
+
+            $testItem2 = new ApiModelTestItem2();
+            $testItem2->name     = 'John';
+            $this->assertTrue($testItem2->save());
+
+            $testItem4 = new ApiModelTestItem4();
+            $testItem4->name     = 'John';
+            $this->assertTrue($testItem4->save());
+
+            //HAS_MANY and MANY_MANY relationships should be ignored.
+            $testItem3_1 = new ApiModelTestItem3();
+            $testItem3_1->name     = 'Kevin';
+            $this->assertTrue($testItem3_1->save());
+
+            $testItem3_2 = new ApiModelTestItem3();
+            $testItem3_2->name     = 'Jim';
+            $this->assertTrue($testItem3_2->save());
+
+            $testItem = new ApiModelTestItem();
+            $testItem->firstName     = 'Bob3';
+            $testItem->lastName      = 'Bob3';
+            $testItem->boolean       = true;
+            $testItem->date          = '2002-04-03';
+            $testItem->dateTime      = '2002-04-03 02:00:43';
+            $testItem->float         = 54.22;
+            $testItem->integer       = 10;
+            $testItem->phone         = '21313213';
+            $testItem->string        = 'aString';
+            $testItem->textArea      = 'Some Text Area';
+            $testItem->url           = 'http://www.asite.com';
+            $testItem->owner         = $super;
+            $testItem->currencyValue = $currencyValue;
+            $testItem->hasOne        = $testItem2;
+            $testItem->hasMany->add($testItem3_1);
+            $testItem->hasMany->add($testItem3_2);
+            $testItem->hasOneAlso    = $testItem4;
+            $createStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $this->assertTrue($testItem->save());
+            $id = $testItem->id;
+            $testItem->forget();
+            unset($testItem);
+
+            $testItem    = ApiModelTestItem::getById($id);
+            $adapter     = new RedBeanModelToApiDataUtil($testItem);
+            $data        = $adapter->getData();;
+            $compareData = array(
+                'id'                => $id,
+                'firstName'         => 'Bob3',
+                'lastName'          => 'Bob3',
+                'boolean'           => 1,
+                'date'              => '2002-04-03',
+                'dateTime'          => '2002-04-03 02:00:43',
+                'float'             => 54.22,
+                'integer'           => 10,
+                'phone'             => '21313213',
+                'string'            => 'aString',
+                'textArea'          => 'Some Text Area',
+                'url'               => 'http://www.asite.com',
+                'currencyValue'     => array(
+                    'id'         => $currencyValue->id,
+                    'value'      => 100,
+                    'rateToBase' => 1,
+                    'currency'   => array(
+                        'id'     => $currencies[0]->id,
+                    ),
+                ),
+                'dropDown'          => null,
+                'radioDropDown'     => null,
+                'hasOne'            => array('id' => $testItem2->id),
+                'hasOneAlso'        => array('id' => $testItem4->id),
+                'primaryEmail'      => null,
+                'primaryAddress'    => null,
+                'secondaryEmail'    => null,
+                'owner' => array(
+                    'id' => $super->id,
+                    'username' => 'super'
+                ),
+                'createdDateTime'  => $createStamp,
+                'modifiedDateTime' => $createStamp,
+                'createdByUser'    => array(
+                    'id' => $super->id,
+                    'username' => 'super'
+                ),
+                'modifiedByUser' => array(
+                    'id' => $super->id,
+                    'username' => 'super'
+                )
+            );
+            $this->assertEquals($compareData, $data);
+
+            //Test View
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+
+            //Test List
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem', 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']));
+            $this->assertEquals(array($compareData), $response['data']);
+
+            //Test Update
+            $compareData['lastName'] = 'Bob4';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'PUT', $headers, array('data' => $compareData));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
+            $response = json_decode($response, true);
+            unset($compareData['modifiedDateTime']);
+            unset($response['data']['modifiedDateTime']);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+            /*
             $externalSystemIdColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
             //Add test ApiModelTestItem models for use in this test.
             $apiModelTestItemModel1 = ApiTestHelper::createApiModelTestItem('aaa', 'aba');
@@ -169,6 +277,8 @@
             //fclose($fp);
             //echo $response['data']['string'];
             //            exit;
+             *
+             */
         }
 
         /**

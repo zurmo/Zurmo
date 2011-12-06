@@ -26,13 +26,5 @@
 
     class DateTimeRedBeanModelAttributeValueToApiValueAdapter extends TextRedBeanModelAttributeValueToApiValueAdapter
     {
-        public function renderGridViewData()
-        {
-            return array(
-                'name'  => $this->attribute,
-                'value' => 'Yii::app()->dateFormatter->formatDateTime($data->' . $this->attribute . ', "short")',
-                'type'  => 'raw',
-            );
-        }
     }
 ?>

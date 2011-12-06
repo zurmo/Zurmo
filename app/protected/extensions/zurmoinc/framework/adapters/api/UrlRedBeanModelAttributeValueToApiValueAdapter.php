@@ -26,13 +26,5 @@
 
     class UrlRedBeanModelAttributeValueToApiValueAdapter extends TextRedBeanModelAttributeValueToApiValueAdapter
     {
-        public function renderGridViewData()
-        {
-            return array(
-                'name' => $this->attribute,
-                'value' => 'Yii::app()->format->url($data->' . $this->attribute . ', array("target" => "blank"))',
-                'type' => 'raw',
-            );
-        }
     }
 ?>

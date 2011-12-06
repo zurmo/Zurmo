@@ -106,7 +106,7 @@
             $this->assertEquals('new name 2', $response['data']['name']);
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem2?page=2', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem2', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']));

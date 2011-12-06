@@ -38,7 +38,8 @@
                     $outputArray['message'] = '';
                     foreach ($data as $k => $model)
                     {
-                        $outputArray['data'][]['name'] = $model->name;
+                        $util  = new RedBeanModelToApiDataUtil($model);
+                        $outputArray['data'][] = $util->getData();
                     }
                 }
                 else
@@ -65,7 +66,7 @@
 
                 $outputArray = array();
                 $outputArray['status']  = 'SUCCESS';
-                $outputArray['data']    = (array)$model;
+                $outputArray['data']    = $data;
                 $outputArray['message'] = '';
             }
             catch (Exception $e)
@@ -86,18 +87,39 @@
             return $outputArray;
         }
 
-        public function update($id, $name)
+        public function update($id, $data)
         {
             try
             {
                 $model = ApiModelTestItem::getById($id);
-                $model->name = $name;
+                foreach ($data as $key => $value)
+                {
+                    if (!is_array($value) && $key != 'id' && $key != 'createdDateTime' && $key != 'modifiedDateTime')
+                    {
+                        $model->{$key} = $value;
+                    }
+                    elseif (is_array($value))
+                    {
+                        switch ($key) {
+                            case 'currencyValue':
+                                $currencyValue              = new CurrencyValue();
+                                $currencyValue->value       = $value['value'];
+                                $currencyValue->currency    = Currency::getById($value['id']);
+                            break;
+
+                        }
+                    }
+                }
                 $saved = $model->save();
                 $outputArray = array();
                 if ($saved)
                 {
-                    $outputArray['status'] = 'SUCCESS';
-                    $outputArray['data']['name'] = $model->name;
+                    $model = ApiModelTestItem::getById($id);
+                    $util  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $util->getData();
+
+                    $outputArray['status']  = 'SUCCESS';
+                    $outputArray['data']    = $data;
                     $outputArray['message'] = '';
                 }
                 else

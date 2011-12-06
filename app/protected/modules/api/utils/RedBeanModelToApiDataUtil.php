@@ -60,7 +60,6 @@
                         $util = new RedBeanModelToApiDataUtil($this->model->{$attributeName});
                         $relatedData          = $util->getData();
                         $data[$attributeName] = $relatedData;
-                        $data[$attributeName] = null;
                     }
                     else
                     {
@@ -68,6 +67,8 @@
                     }
                  }
                  //We don't want to list properties from CustomFieldData objects
+                 //This is also case fo rrelated models, not only for custom fields
+                 //To-Do: Check if we need some additional info about related objects, for example username
                  elseif ($this->model->isRelation($attributeName) &&
                          $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                  {

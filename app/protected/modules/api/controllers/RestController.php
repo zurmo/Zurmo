@@ -156,7 +156,7 @@
             if ($baseControllerName != null)
             {
                 $baseController = new $baseControllerName($baseControllerName, 'api');
-                $res = $baseController->update($params['id'], $params['name']);
+                $res = $baseController->update($params['id'], $params['data']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;

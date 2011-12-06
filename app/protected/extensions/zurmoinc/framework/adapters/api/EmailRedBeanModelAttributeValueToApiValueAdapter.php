@@ -26,13 +26,5 @@
 
     class EmailRedBeanModelAttributeValueToApiValueAdapter extends TextRedBeanModelAttributeValueToApiValueAdapter
     {
-        public function renderGridViewData()
-        {
-            return array(
-                'name'  => $this->attribute,
-                'value' => 'Yii::app()->format->email($data->' . $this->attribute . '->emailAddress)',
-                'type'  => 'raw',
-            );
-        }
     }
 ?>

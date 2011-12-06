@@ -26,13 +26,5 @@
 
     class DateRedBeanModelAttributeValueToApiValueAdapter extends TextRedBeanModelAttributeValueToApiValueAdapter
     {
-        public function renderGridViewData()
-        {
-            return array(
-                'name'  => $this->attribute,
-                'value' => 'DateTimeUtil::resolveValueForDateLocaleFormattedDisplay($data->' . $this->attribute . ')',
-                'type'  => 'raw',
-            );
-        }
     }
 ?>
