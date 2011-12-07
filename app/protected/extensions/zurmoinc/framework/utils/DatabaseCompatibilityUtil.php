@@ -703,5 +703,32 @@
                     return $result;
             }
         }
+
+        public static function getDatabaseNameFromConnectionString()
+        {
+            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
+            return $matches[2];
+        }
+
+        public static function getTableRowsCountTotal()
+        {
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            $databaseName = self::getDatabaseNameFromConnectionString();
+            $sql       = "show tables";
+            $totalCount = 0;
+            $rows       = R::getAll($sql);
+            $columnName = 'Tables_in_' . $databaseName;
+            foreach($rows as $row)
+            {
+                $tableName  = $row[$columnName];
+                $tableSql   = "select count(*) count from " . $tableName;
+                $row        = R::getRow($tableSql);
+                $totalCount = $totalCount + $row['count'];
+            }
+            return $totalCount;
+        }
     }
 ?>

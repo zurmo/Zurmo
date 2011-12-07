@@ -128,7 +128,8 @@
                     $model        = $modelClassName::getById($attributeValueData['id']);
                     $makeNewModel = false;
                 }
-                elseif ($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
+                elseif (isset($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME]) &&
+                        $attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
                 {
                     $externalSystemId = $attributeValueData
                                         [ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME];
@@ -144,7 +145,8 @@
             foreach ($mappingData as $columnName => $columnMappingData)
             {
                 if ($columnMappingData['attributeIndexOrDerivedType'] != null &&
-                    $columnMappingData['attributeIndexOrDerivedType'] != 'owner')
+                    $columnMappingData['attributeIndexOrDerivedType'] != 'owner' &&
+                    $idColumnName != $columnName)
                 {
                     static::sanitizeValueAndPopulateModel($rowBean, $importRules, $model, $columnName, $modelClassName,
                                                           $columnMappingData, $importSanitizeResultsUtil,
@@ -156,7 +158,8 @@
             foreach ($mappingData as $columnName => $columnMappingData)
             {
                 if ($columnMappingData['attributeIndexOrDerivedType'] != null &&
-                    $columnMappingData['attributeIndexOrDerivedType'] == 'owner')
+                    $columnMappingData['attributeIndexOrDerivedType'] == 'owner' &&
+                    $idColumnName != $columnName)
                 {
                     static::sanitizeValueAndPopulateModel($rowBean, $importRules, $model, $columnName, $modelClassName,
                                                           $columnMappingData, $importSanitizeResultsUtil,
