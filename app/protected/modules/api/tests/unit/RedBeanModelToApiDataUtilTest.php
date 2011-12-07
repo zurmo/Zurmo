@@ -188,7 +188,7 @@
                     ),
                 ),
                 'dropDown'          => array(
-                    'id'         => 2,
+                    'id'         => $testItem->dropDown->id,
                     'value'      => $values[1],
                 ),
                 'radioDropDown'     => null,

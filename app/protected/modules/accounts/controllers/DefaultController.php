@@ -69,10 +69,6 @@
         public function actionDetails($id)
         {
             $account = Account::getById(intval($id));
-            $util  = new RedBeanModelToApiDataUtil($account);
-            $data  = $util->getData();
-            print_r($data);
-            exit;
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($account);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($account), $account);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($account, 'AccountsModule',

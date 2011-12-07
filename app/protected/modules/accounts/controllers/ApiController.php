@@ -24,13 +24,13 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiTestModelItem2Controller extends ZurmoModuleApiController
+    class AccountsApiController extends ZurmoModuleApiController
     {
         public function getAll()
         {
             try
             {
-                $data = ApiModelTestItem2::getAll();
+                $data = Account::getAll();
 
                 $outputArray = array();
                 if (count($data))
@@ -61,7 +61,7 @@
         {
             try
             {
-                $model = ApiModelTestItem2::getById($id);
+                $model = Account::getById($id);
                 $util  = new RedBeanModelToApiDataUtil($model);
                 $data  = $util->getData();
                 $outputArray = array();
@@ -82,7 +82,7 @@
         {
             try
             {
-                $model= new ApiModelTestItem2();
+                $model= new Account();
                 $model->name     = $data['name'];
 
                 $saved = $model->save();
@@ -118,14 +118,14 @@
         {
             try
             {
-                $model = ApiModelTestItem2::getById($id);
+                $model = Account::getById($id);
                 $model->name     = $data['name'];
 
                 $saved = $model->save();
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = ApiModelTestItem2::getById($id);
+                    $model = Account::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
@@ -151,7 +151,7 @@
         {
             try
             {
-                $model = ApiModelTestItem2::getById($id);
+                $model = Account::getById($id);
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';
@@ -162,6 +162,17 @@
                 $outputArray['message'] = $e->getMessage();
             }
             return $outputArray;
+        }
+
+        public function getCustomFields()
+        {
+            $industryFieldData = CustomFieldData::getByName('Industries');
+            $typeFieldData = CustomFieldData::getByName('AccountTypes');
+
+            return array(
+                'Industries'   => $industryFieldData,
+                'AccountTypes' => $typeFieldData
+            );
         }
     }
 ?>

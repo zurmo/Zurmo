@@ -246,5 +246,9 @@
                                                 $error);
             }
         }
+
+        public function actionGetCustomData()
+        {
+        }
     }
 ?>

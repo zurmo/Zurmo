@@ -137,24 +137,27 @@
             try
             {
                 $model = ApiModelTestItem::getById($id);
-                foreach ($data as $key => $value)
-                {
-                    if (!is_array($value) && $key != 'id' && $key != 'createdDateTime' && $key != 'modifiedDateTime')
-                    {
-                        $model->{$key} = $value;
-                    }
-                    elseif (is_array($value))
-                    {
-                        switch ($key) {
-                            case 'currencyValue':
-                                $currencyValue              = new CurrencyValue();
-                                $currencyValue->value       = $value['value'];
-                                $currencyValue->currency    = Currency::getById($value['currency']['id']);
-                            break;
+                $currencyValue              = CurrencyValue::getById($data['currencyValue']['id']);
+                $currencyValue->value       = $data['currencyValue']['value'];
+                $currencyValue->currency    = Currency::getById($data['currencyValue']['currency']['id']);
+                $testItem2 = ApiModelTestItem2::getById($data['hasOne']['id']);
+                $testItem4 = ApiModelTestItem4::getById($data['hasOneAlso']['id']);
 
-                        }
-                    }
-                }
+                $model->firstName     = $data['firstName'];
+                $model->lastName      = $data['lastName'];
+                $model->boolean       = $data['boolean'];
+                $model->date          = $data['date'];
+                $model->dateTime      = $data['dateTime'];
+                $model->float         = $data['float'];
+                $model->integer       = $data['integer'];
+                $model->phone         = $data['phone'];
+                $model->string        = $data['string'];
+                $model->textArea      = $data['textArea'];
+                $model->url           = $data['url'];
+                $model->currencyValue = $currencyValue;
+                $model->hasOne        = $testItem2;
+                $model->hasOneAlso    = $testItem4;
+
                 $saved = $model->save();
                 $outputArray = array();
                 if ($saved)

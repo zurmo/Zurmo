@@ -226,5 +226,37 @@
                                                 $error);
             }
         }
+
+        public function actionCustomData()
+        {
+            $industryFieldData = CustomFieldData::getByName('Industries');
+            $typeFieldData = CustomFieldData::getByName('AccountTypes');
+
+            if(count($industryFieldData) > 0 && count($typeFieldData) > 0)
+            {
+                $status = ApiResponse::STATUS_SUCCESS;
+                $data = array(
+                    'Industries'   => $industryFieldData,
+                    'AccountTypes' => $typeFieldData
+                );
+            }
+            else
+            {
+                $status = ApiResponse::STATUS_FAILURE;
+                $data = null;
+            }
+
+            if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+            {
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                $status,
+                                                $data,
+                                                null);
+            }
+            else
+            {
+                //error
+            }
+        }
     }
 ?>

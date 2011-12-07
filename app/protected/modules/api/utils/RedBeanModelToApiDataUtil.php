@@ -84,21 +84,5 @@
             }
             return $data;
         }
-
-        public function getCustomFields()
-        {
-            $data = array();
-            $metadata = $this->model->getMetadata();
-            foreach ($metadata as $key => $classMetadata)
-            {
-                if (isset($classMetadata['customFields']))
-                {
-                    foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
-                    {
-                        //Extract custom field data here
-                    }
-                }
-            }
-        }
     }
 ?>

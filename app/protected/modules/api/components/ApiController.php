@@ -69,6 +69,11 @@
             //To be extended by children controllers
         }
 
+        public function actionGetCustomData()
+        {
+            //To be extended by children controllers
+        }
+
         public function actionLogin()
         {
             $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
