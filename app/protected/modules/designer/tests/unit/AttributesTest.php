@@ -616,6 +616,66 @@
         /**
          * @depends testSetAndGetIntegerAttribute
          */
+        public function testsetAndGetIntegerAttributeWithNoMinOrMax()
+        {
+            $attributeName = 'integernominmax';
+            $attributeForm = new IntegerAttributeForm();
+            $attributeForm->attributeName = $attributeName;
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Integer NoMinMax de',
+                'en' => 'Test Integer NoMinMax en',
+                'es' => 'Test Integer NoMinMax es',
+                'fr' => 'Test Integer NoMinMax fr',
+                'it' => 'Test Integer NoMinMax it',
+            );
+            $attributeForm->isAudited     = true;
+            $attributeForm->isRequired    = false;
+            $attributeForm->maxLength     = 11;
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
+            $this->assertEquals('Integer',        $attributeForm->getAttributeTypeName());
+            $this->assertEquals($attributeName,   $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Integer NoMinMax de',
+                'en' => 'Test Integer NoMinMax en',
+                'es' => 'Test Integer NoMinMax es',
+                'fr' => 'Test Integer NoMinMax fr',
+                'it' => 'Test Integer NoMinMax it',
+            );
+            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+            $this->assertEquals(true,  $attributeForm->isAudited);
+            $this->assertEquals(false, $attributeForm->isRequired);
+            $this->assertEquals(11,    $attributeForm->maxLength);
+            $this->assertEquals(null,  $attributeForm->minValue);
+            $this->assertEquals(null,  $attributeForm->maxValue);
+            $this->assertEquals(null,  $attributeForm->defaultValue);
+        }
+
+        /**
+         * @depends testsetAndGetIntegerAttributeWithNoMinOrMax
+         */
         public function testSetAndGetMultiSelectDropDownAttribute()
         {
             //todo:

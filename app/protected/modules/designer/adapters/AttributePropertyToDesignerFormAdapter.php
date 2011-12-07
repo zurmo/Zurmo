@@ -56,13 +56,13 @@
                     return false;
 
                 case 'minValue':
-                    return false;
+                    return true;
 
                 case 'maxValue':
-                    return false;
+                    return true;
 
                 case 'precisionLength':
-                    return false;
+                    return true;
 
                 default :
                     throw new NotImplementedException($propertyName);
