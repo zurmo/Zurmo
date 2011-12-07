@@ -53,10 +53,13 @@
         protected function renderControlEditable()
         {
             $this->assertModelIsValid();
-            $content      = CHtml::radioButtonList($this->getEditableInputName($this->getAttributeName(), 'type'),
-                                                   $this->resolveSelectedType(),
-                                                   $this->resolveData(),
-                                                   $this->getEditableHtmlOptions());
+            list($data, $dataSelectOption)  = $this->resolveData();
+            $content                        = ZurmoHtml::radioButtonList(
+                                                        $this->getEditableInputName($this->getAttributeName(), 'type'),
+                                                        $this->resolveSelectedType(),
+                                                        $data,
+                                                        $this->getEditableHtmlOptions(),
+                                                        $dataSelectOption);
             return $content;
         }
 
@@ -125,18 +128,19 @@
          */
         protected function resolveData()
         {
-            $selectableGroupsDropDownContent     = $this->renderSelectableGroupsContent();
-            $data                                = $this->getPermissionTypes();
-            $dataIndex                           = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP;
+            $selectableGroupsDropDownContent     =  $this->renderSelectableGroupsContent();
+            $data                                =  $this->getPermissionTypes();
+            $dataIndex                           =  ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP;
+            $dataSelectOption                    =  array();
             if ($selectableGroupsDropDownContent != null)
             {
-                $data[$dataIndex]                = $data[$dataIndex] . '&#160;' . $selectableGroupsDropDownContent;
+                $dataSelectOption[$dataIndex]        = '&#160;' . $selectableGroupsDropDownContent;
             }
             else
             {
                 unset($data[$dataIndex]);
             }
-            return $data;
+            return array($data, $dataSelectOption);
         }
 
         /**
@@ -204,7 +208,8 @@
         protected function renderSelectableGroupsContent()
         {
             $htmlOptions = array(
-                'id'   => $this->getEditableInputId   ($this->getAttributeName(), 'nonEveryoneGroup'),
+                'id'        => $this->getEditableInputId   ($this->getAttributeName(), 'nonEveryoneGroup'),
+                'onclick'   => 'document.getElementById("{bindId}").checked="checked";',
             );
             $name        = $this->getEditableInputName($this->getAttributeName(), 'nonEveryoneGroup');
             $dropDownArray = $this->getSelectableGroupsData();
