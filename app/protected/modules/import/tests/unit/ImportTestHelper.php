@@ -65,7 +65,7 @@
             assert('$saved');
             if ($freeze)
             {
-                RedBeanDatabase::unfreeze();
+                RedBeanDatabase::freeze();
             }
             return $model;
         }
@@ -84,7 +84,7 @@
             assert('$saved');
             if ($freeze)
             {
-                RedBeanDatabase::unfreeze();
+                RedBeanDatabase::freeze();
             }
             return $model;
         }
@@ -103,7 +103,7 @@
             assert('$saved');
             if ($freeze)
             {
-                RedBeanDatabase::unfreeze();
+                RedBeanDatabase::freeze();
             }
             return $model;
         }
@@ -122,7 +122,7 @@
             assert('$saved');
             if ($freeze)
             {
-                RedBeanDatabase::unfreeze();
+                RedBeanDatabase::freeze();
             }
             return $model;
         }
