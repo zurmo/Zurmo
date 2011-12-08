@@ -96,27 +96,9 @@
         }
         
          /**
-         * Generates a radio button list.
-         * A radio button list is like a {@link checkBoxList check box list}, except that
-         * it only allows single selection.
-         * @param string $name name of the radio button list. You can use this name to retrieve
-         * the selected value(s) once the form is submitted.
-         * @param mixed $select selection of the radio buttons. This can be either a string
-         * for single selection or an array for multiple selections.
-         * @param array $data value-label pairs used to generate the radio button list.
-         * Note, the values will be automatically HTML-encoded, while the labels will not.
-         * @param array $htmlOptions addtional HTML options. The options will be applied to
-         * each radio button input. The following special options are recognized:
-         * <ul>
-         * <li>template: string, specifies how each radio button is rendered. Defaults
-         * to "{input} {label}", where "{input}" will be replaced by the generated
-         * radio button input tag while "{label}" will be replaced by the corresponding radio button label.</li>
-         * <li>separator: string, specifies the string that separates the generated radio buttons.</li>
-         * <li>labelOptions: array, specifies the additional HTML attributes to be rendered
-         * for every label tag in the list. This option has been available since version 1.0.10.</li>
-         * </ul>
-         * @return string the generated radio button list
-         */
+          * This function overrides the radioButtonList from CHtml and excepts a new variable which consists of select
+          * box to be appended to the label element.
+          */
         public static function radioButtonList($name, $select, $data, $htmlOptions = array(), 
                                                $dataSelectOption = array())
         {
