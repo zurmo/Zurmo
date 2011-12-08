@@ -37,10 +37,10 @@
             => 'Cuenta es requerida',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Completar conversión de prospecto sin seleccionar o crear una cuenta.',
-        'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
-            => 'Conversión se fija para requerir un AccountsModuleSingularLowerCaseLabel y usted no tiene el acceso. Por favor, contacte con su administrador con respecto a este.',
-        'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
-            => 'La conversión exige el acceso al módulo de ContactsModulePluralLowerCaseLabel que usted no tiene. Por favor, contacte con su administrador con respecto a este.',
+        'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator.'
+            => 'Conversión se fija para requerir un AccountsModuleSingularLowerCaseLabel y usted no tiene el acceso. Por favor, contacte con su administrador.',
+        'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator.'
+            => 'La conversión exige el acceso al módulo de ContactsModulePluralLowerCaseLabel que usted no tiene. Por favor, contacte con su administrador.',
         'Convert LeadsModulePluralLabel'
             => 'Convertir LeadsModulePluralLabel',
         'Create LeadsModulePluralLabel'

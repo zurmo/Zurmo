@@ -33,8 +33,12 @@
             parent::__construct($model, $attributeName);
             if ($model !== null)
             {
-                $this->maxLength = StringValidatorHelper::
+                $maxLength = StringValidatorHelper::
                                    getMaxLengthByModelAndAttributeName($model, $attributeName);
+                if($maxLength !== null)
+                {
+                    $this->maxLength = $maxLength;
+                }
             }
         }
 

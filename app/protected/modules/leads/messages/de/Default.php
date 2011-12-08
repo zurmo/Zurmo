@@ -37,9 +37,9 @@
             => 'AccountsModuleSingularLabel Erforderlich',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Konvertieren LeadsModuleSingularLowerCaseLabel ohne eine AccountsModuleSingularLowerCaseLabel',
-        'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator regarding this.'
+        'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator.'
             => 'Konvertierung erfordert eine AccountsModuleSingularLowerCaseLabel. Derzeit Sie haben keinen Zugriff auf die AccountsModulePluralLowerCaseLabel Modul. Bitte kontaktieren Sie an Ihren Administrator..',
-        'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator regarding this.'
+        'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator.'
             => 'Konvertierung erfordert Zugang zu den ContactsModulePluralLowerCaseLabel Modul, das Sie nicht haben. Bitte kontaktieren Sie an Ihren Administrator.',
         'Convert LeadsModulePluralLabel'
             => 'Konvertieren LeadsModulePluralLabel',
