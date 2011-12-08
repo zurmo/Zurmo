@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestAccountTest extends ApiRestTest
+    class ApiRestContactTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {
@@ -56,14 +56,23 @@
             $industryFieldData->serializedData = serialize($industryValues);
             $this->assertTrue($industryFieldData->save());
 
-            $typeValues = array(
-                'Prospect',
-                'Customer',
-                'Vendor',
+            $sourceValues = array(
+                'Word of Mouth',
+                'Outbound',
+                'Trade Show',
             );
-            $typeFieldData = CustomFieldData::getByName('AccountTypes');
-            $typeFieldData->serializedData = serialize($typeValues);
-            $this->assertTrue($typeFieldData->save());
+            $sourceFieldData = CustomFieldData::getByName('LeadSources');
+            $sourceFieldData->serializedData = serialize($sourceValues);
+            $this->assertTrue($sourceFieldData->save());
+
+            $titles = array('Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Swami');
+            $customFieldData = CustomFieldData::getByName('Titles');
+            $customFieldData->serializedData = serialize($titles);
+            $this->assertTrue($customFieldData->save());
+
+            $this->assertTrue(ContactsModule::loadStartingData());
+            $this->assertEquals(6, count(ContactState::GetAll()));
+            $contactStates = ContactState::GetAll();
 
             $primaryEmail['emailAddress']   = "a@example.com";
             $primaryEmail['optOut']         = 1;
@@ -73,36 +82,48 @@
             $secondaryEmail['isInvalid']    = 1;
 
 
-            $billingAddress['street1']      = '129 Noodle Boulevard';
-            $billingAddress['street2']      = 'Apartment 6000A';
-            $billingAddress['city']         = 'Noodleville';
-            $billingAddress['postalCode']   = '23453';
-            $billingAddress['country']      = 'The Good Old US of A';
+            $primaryAddress['street1']      = '129 Noodle Boulevard';
+            $primaryAddress['street2']      = 'Apartment 6000A';
+            $primaryAddress['city']         = 'Noodleville';
+            $primaryAddress['postalCode']   = '23453';
+            $primaryAddress['country']      = 'The Good Old US of A';
 
-            $shippingAddress['street1']     = '25 de Agosto 2543';
-            $shippingAddress['street2']     = 'Local 3';
-            $shippingAddress['city']        = 'Ciudad de Los Fideos';
-            $shippingAddress['postalCode']  = '5123-4';
-            $shippingAddress['country']     = 'Latinoland';
+            $secondaryAddress['street1']    = '25 de Agosto 2543';
+            $secondaryAddress['street2']    = 'Local 3';
+            $secondaryAddress['city']       = 'Ciudad de Los Fideos';
+            $secondaryAddress['postalCode'] = '5123-4';
+            $secondaryAddress['country']    = 'Latinoland';
 
-            $account = new Account();
-            $data['name']                = "My Company";
-            $data['officePhone']         = "6438238";
-            $data['officeFax']           = "6565465436";
-            $data['employees']           = 100;
-            $data['website']             = "http://www.google.com";
-            $data['annualRevenue']       = "1000000";
-            $data['description']         = "Some Description";
+            $account        = new Account();
+            $account->name  = 'Some Account';
+            $account->owner = $super;
+            $this->assertTrue($account->save());
+
+            $data['firstName']           = "Michael";
+            $data['lastName']            = "Smith";
+            $data['jobTitle']            = "President";
+            $data['department']          = "Sales";
+            $data['officePhone']         = "653-235-7824";
+            $data['mobilePhone']         = "653-235-7821";
+            $data['officeFax']           = "653-235-7834";
+            $data['description']         = "Some desc.";
+            $data['companyName']         = "Michael Co,";
+            $data['website']             = "http://sample.com";
+
 
             $data['industry']['value']   = $industryValues[2];
-            $data['type']['value']       = $typeValues[1];
+            $data['source']['value']     = $sourceValues[1];
+            $data['title']['value']      = $titles[3];
+            $data['state']['id']         = $contactStates[3]->id;
+            $data['account']['id']       = $account->id;
 
             $data['primaryEmail']        = $primaryEmail;
             $data['secondaryEmail']      = $secondaryEmail;
-            $data['billingAddress']      = $billingAddress;
-            $data['shippingAddress']     = $shippingAddress;
+            $data['primaryAddress']      = $primaryAddress;
+            $data['secondaryAddress']    = $secondaryAddress;
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'POST', $headers, array('data' => $data));
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -124,27 +145,28 @@
             unset($response['data']['modifiedDateTime']);
             unset($response['data']['primaryEmail']['id'] );
             unset($response['data']['secondaryEmail']['id']);
-            unset($response['data']['billingAddress']['id']);
-            unset($response['data']['billingAddress']['state']);
-            unset($response['data']['billingAddress']['longitude']);
-            unset($response['data']['billingAddress']['latitude']);
+            unset($response['data']['primaryAddress']['id']);
+            unset($response['data']['primaryAddress']['state']);
+            unset($response['data']['primaryAddress']['longitude']);
+            unset($response['data']['primaryAddress']['latitude']);
 
-            unset($response['data']['shippingAddress']['id']);
-            unset($response['data']['shippingAddress']['state']);
-            unset($response['data']['shippingAddress']['longitude']);
-            unset($response['data']['shippingAddress']['latitude']);
+            unset($response['data']['secondaryAddress']['id']);
+            unset($response['data']['secondaryAddress']['state']);
+            unset($response['data']['secondaryAddress']['longitude']);
+            unset($response['data']['secondaryAddress']['latitude']);
             unset($response['data']['industry']['id']);
-            unset($response['data']['type']['id']);
+            unset($response['data']['source']['id']);
+            unset($response['data']['title']['id']);
 
             $this->assertEquals(ksort($data), ksort($response['data']));
             $id = $response['data']['id'];
             //Test update
-            $data['name']                = "My Company 2";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'PUT', $headers, array('data' => $data));
+            $data['department']                = "Support";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -153,22 +175,23 @@
             unset($response['data']['modifiedDateTime']);
             unset($response['data']['primaryEmail']['id'] );
             unset($response['data']['secondaryEmail']['id']);
-            unset($response['data']['billingAddress']['id']);
-            unset($response['data']['billingAddress']['state']);
-            unset($response['data']['billingAddress']['longitude']);
-            unset($response['data']['billingAddress']['latitude']);
+            unset($response['data']['primaryAddress']['id']);
+            unset($response['data']['primaryAddress']['state']);
+            unset($response['data']['primaryAddress']['longitude']);
+            unset($response['data']['primaryAddress']['latitude']);
 
-            unset($response['data']['shippingAddress']['id']);
-            unset($response['data']['shippingAddress']['state']);
-            unset($response['data']['shippingAddress']['longitude']);
-            unset($response['data']['shippingAddress']['latitude']);
+            unset($response['data']['secondaryAddress']['id']);
+            unset($response['data']['secondaryAddress']['state']);
+            unset($response['data']['secondaryAddress']['longitude']);
+            unset($response['data']['secondaryAddress']['latitude']);
             unset($response['data']['industry']['id']);
-            unset($response['data']['type']['id']);
+            unset($response['data']['source']['id']);
+            unset($response['data']['title']['id']);
 
             $this->assertEquals(ksort($data), ksort($response['data']));
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']));
@@ -176,31 +199,32 @@
             {
                 unset($response['data'][$key]['createdDateTime']);
                 unset($response['data'][$key]['modifiedDateTime']);
-                unset($response['data'][$key]['primaryEmail']['id'] );
-                unset($response['data'][$key]['primaryEmail']['isInvalid'] );
+                unset($response['data'][$key]['primaryEmail']['id']);
+                unset($response['data'][$key]['primaryEmail']['isInvalid']);
                 unset($response['data'][$key]['secondaryEmail']['id']);
-                unset($response['data'][$key]['billingAddress']['id']);
-                unset($response['data'][$key]['billingAddress']['state']);
-                unset($response['data'][$key]['billingAddress']['longitude']);
-                unset($response['data'][$key]['billingAddress']['latitude']);
+                unset($response['data'][$key]['primaryAddress']['id']);
+                unset($response['data'][$key]['primaryAddress']['state']);
+                unset($response['data'][$key]['primaryAddress']['longitude']);
+                unset($response['data'][$key]['primaryAddress']['latitude']);
 
-                unset($response['data'][$key]['shippingAddress']['id']);
-                unset($response['data'][$key]['shippingAddress']['state']);
-                unset($response['data'][$key]['shippingAddress']['longitude']);
-                unset($response['data'][$key]['shippingAddress']['latitude']);
+                unset($response['data'][$key]['secondaryAddress']['id']);
+                unset($response['data'][$key]['secondaryAddress']['state']);
+                unset($response['data'][$key]['secondaryAddress']['longitude']);
+                unset($response['data'][$key]['secondaryAddress']['latitude']);
                 unset($response['data'][$key]['industry']['id']);
-                unset($response['data'][$key]['type']['id']);
+                unset($response['data'][$key]['source']['id']);
+                unset($response['data'][$key]['title']['id']);
                 unset($response['data'][$key]['id']);
                 ksort($response['data'][$key]);
             }
             $this->assertEquals(array($data), $response['data']);
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
         }

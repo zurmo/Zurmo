@@ -24,18 +24,44 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestTest extends ApiBaseTest
+    class ApiBaseTest extends BaseTest
     {
-        protected function login()
+        protected $serverUrl = '';
+        protected $freeze = false;
+
+        public static function setUpBeforeClass()
         {
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_AUTH_USERNAME: super',
-                'ZURMO_AUTH_PASSWORD: super'
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
-            $response = json_decode($response, true);
-            return $response['data']['sessionId'];
+            parent::setUpBeforeClass();
+            $super = SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function setUp(){
+            parent::setUp();
+            if (strlen(Yii::app()->params['testApiUrl']) > 0)
+            {
+                $this->serverUrl = Yii::app()->params['testApiUrl'];
+            }
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $this->freeze = $freeze;
+        }
+
+        public function teardown()
+        {
+            if ($this->freeze)
+            {
+                RedBeanDatabase::freeze();
+            }
+            parent::teardown();
+        }
+
+        public function testApiServerUrl()
+        {
+            $this->assertTrue(strlen($this->serverUrl) > 0);
         }
     }
 ?>

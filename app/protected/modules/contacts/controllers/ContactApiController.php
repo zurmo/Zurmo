@@ -24,13 +24,13 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AccountApiController extends ZurmoModuleApiController
+    class ContactApiController extends ZurmoModuleApiController
     {
         public function getAll()
         {
             try
             {
-                $data = Account::getAll();
+                $data = Contact::getAll();
 
                 $outputArray = array();
                 if (count($data))
@@ -61,7 +61,7 @@
         {
             try
             {
-                $model = Account::getById($id);
+                $model = Contact::getById($id);
                 $util  = new RedBeanModelToApiDataUtil($model);
                 $data  = $util->getData();
                 $outputArray = array();
@@ -82,47 +82,74 @@
         {
             try
             {
-                $model= new Account();
+                $model= new Contact();
 
-                if (isset($data['name']))
+                if (isset($data['firstName']))
                 {
-                    $model->name            = $data['name'];
+                    $model->firstName            = $data['firstName'];
+                }
+                if (isset($data['lastName']))
+                {
+                    $model->lastName     = $data['lastName'];
+                }
+                if (isset($data['jobTitle']))
+                {
+                    $model->jobTitle       = $data['jobTitle'];
+                }
+                if (isset($data['department']))
+                {
+                    $model->department       = $data['department'];
+
                 }
                 if (isset($data['officePhone']))
                 {
-                    $model->officePhone     = $data['officePhone'];
+                    $model->officePhone         = $data['officePhone'];
+                }
+                if (isset($data['mobilePhone']))
+                {
+                    $model->mobilePhone   = $data['mobilePhone'];
                 }
                 if (isset($data['officeFax']))
                 {
-                    $model->officeFax       = $data['officeFax'];
+                    $model->officeFax     = $data['officeFax'];
                 }
-                if (isset($data['employees']))
-                {
-                    $model->employees       = $data['employees'];
 
-                }
-                if (isset($data['website']))
-                {
-                    $model->website         = $data['website'];
-                }
-                if (isset($data['annualRevenue']))
-                {
-                    $model->annualRevenue   = $data['annualRevenue'];
-                }
                 if (isset($data['description']))
                 {
                     $model->description     = $data['description'];
                 }
+                if (isset($data['companyName']))
+                {
+                    $model->companyName     = $data['companyName'];
+                }
+                if (isset($data['website']))
+                {
+                    $model->website     = $data['website'];
+                }
 
+                if (isset($data['title']))
+                {
+                    $model->title->value        = $data['title']['value'];
+                }
                 if (isset($data['industry']))
                 {
                     $model->industry->value        = $data['industry']['value'];
                 }
-                if (isset($data['type']))
+                if (isset($data['source']))
                 {
-                    $model->type->value            = $data['type']['value'];
-                }
+                    $model->source->value        = $data['source']['value'];
+                };
+                if (isset($data['account']))
+                {
+                    $account = Account::getById($data['account']['id']);
+                    $model->account        = $account;
 
+                }
+                if (isset($data['state']))
+                {
+                    $contactState = ContactState::getById($data['state']['id']);
+                    $model->state        = $contactState;
+                }
                 if (isset($data['primaryEmail']))
                 {
                     $email = new Email();
@@ -131,6 +158,16 @@
                         $email->{$key}  = $value;
                     }
                     $model->primaryEmail = $email;
+                }
+
+                if (isset($data['primaryAddress']))
+                {
+                    $address = new Address();
+                    foreach ($data['primaryAddress'] as $key => $value)
+                    {
+                        $address->{$key}  = $value;
+                    }
+                    $model->primaryAddress = $address;
                 }
 
                 if (isset($data['secondaryEmail']))
@@ -142,23 +179,14 @@
                     }
                     $model->secondaryEmail = $email;
                 }
-                if (isset($data['billingAddress']))
+                if (isset($data['secondaryAddress']))
                 {
                     $address = new Address();
-                    foreach ($data['billingAddress'] as $key => $value)
+                    foreach ($data['secondaryAddress'] as $key => $value)
                     {
                         $address->{$key}  = $value;
                     }
-                    $model->billingAddress = $address;
-                }
-                if (isset($data['shippingAddress']))
-                {
-                    $address = new Address();
-                    foreach ($data['shippingAddress'] as $key => $value)
-                    {
-                        $address->{$key}  = $value;
-                    }
-                    $model->shippingAddress = $address;
+                    $model->secondaryAddress = $address;
                 }
                 $saved = $model->save();
                 $id = $model->id;
@@ -167,7 +195,7 @@
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = Account::getById($id);
+                    $model = Contact::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
@@ -193,60 +221,69 @@
         {
             try
             {
-                $model = Account::getById($id);
+                $model = Contact::getById($id);
 
-                if (isset($data['name']))
+                if (isset($data['firstName']))
                 {
-                    $model->name            = $data['name'];
+                    $model->firstName            = $data['firstName'];
                 }
                 else
                 {
-                    $model->name            = null;
+                    $model->firstName = null;
+                }
+
+                if (isset($data['lastName']))
+                {
+                    $model->lastName     = $data['lastName'];
+                }
+                else
+                {
+                    $model->lastName = null;
+                }
+
+                if (isset($data['jobTitle']))
+                {
+                    $model->jobTitle       = $data['jobTitle'];
+                }
+                else
+                {
+                    $model->jobTitle = null;
+                }
+
+                if (isset($data['department']))
+                {
+                    $model->department       = $data['department'];
+                }
+                else
+                {
+                    $model->department = null;
                 }
 
                 if (isset($data['officePhone']))
                 {
-                    $model->officePhone     = $data['officePhone'];
+                    $model->officePhone         = $data['officePhone'];
                 }
                 else
                 {
-                    $model->officePhone     = null;
+                    $model->officePhone = null;
+                }
+
+                if (isset($data['mobilePhone']))
+                {
+                    $model->mobilePhone   = $data['mobilePhone'];
+                }
+                else
+                {
+                    $model->mobilePhone = null;
                 }
 
                 if (isset($data['officeFax']))
                 {
-                    $model->officeFax       = $data['officeFax'];
+                    $model->officeFax     = $data['officeFax'];
                 }
                 else
                 {
-                    $model->officeFax       = null;
-                }
-
-                if (isset($data['employees']))
-                {
-                    $model->employees       = $data['employees'];
-                }
-                else
-                {
-                    $model->employees       = null;
-                }
-
-                if (isset($data['website']))
-                {
-                    $model->website         = $data['website'];
-                }
-                else
-                {
-                    $model->website         = null;
-                }
-
-                if (isset($data['annualRevenue']))
-                {
-                    $model->annualRevenue   = $data['annualRevenue'];
-                }
-                else
-                {
-                    $model->annualRevenue   = null;
+                    $model->officeFax = null;
                 }
 
                 if (isset($data['description']))
@@ -255,25 +292,72 @@
                 }
                 else
                 {
-                    $model->description     = null;
+                    $model->description = null;
+                }
+
+                if (isset($data['companyName']))
+                {
+                    $model->companyName     = $data['companyName'];
+                }
+                else
+                {
+                    $model->companyName = null;
+                }
+
+                if (isset($data['website']))
+                {
+                    $model->website     = $data['website'];
+                }
+                else
+                {
+                    $model->website = null;
+                }
+
+                if (isset($data['title']))
+                {
+                    $model->title->value        = $data['title']['value'];
+                }
+                else
+                {
+                    $model->title = null;
                 }
 
                 if (isset($data['industry']))
                 {
-                    $model->industry->value = $data['industry']['value'];
+                    $model->industry->value        = $data['industry']['value'];
                 }
                 else
                 {
-                    $model->industry        = null;
+                    $model->industry = null;
                 }
 
-                if (isset($data['type']))
+                if (isset($data['source']))
                 {
-                    $model->type->value            = $data['type']['value'];
+                    $model->source->value        = $data['source']['value'];
                 }
                 else
                 {
-                    $model->type            = null;
+                    $model->source = null;
+                }
+
+                if (isset($data['account']))
+                {
+                    $account = Account::getById($data['account']['id']);
+                    $model->account        = $account;
+                }
+                else
+                {
+                    $model->account = null;
+                }
+
+                if (isset($data['state']))
+                {
+                    $contactState = ContactState::getById($data['state']['id']);
+                    $model->state        = $contactState;
+                }
+                else
+                {
+                    $model->state = null;
                 }
 
                 if (isset($data['primaryEmail']))
@@ -283,11 +367,25 @@
                     {
                         $email->{$key}  = $value;
                     }
-                    $model->primaryEmail    = $email;
+                    $model->primaryEmail = $email;
                 }
                 else
                 {
-                    $model->primaryEmail    = null;
+                    $model->primaryEmail = null;
+                }
+
+                if (isset($data['primaryAddress']))
+                {
+                    $address = new Address();
+                    foreach ($data['primaryAddress'] as $key => $value)
+                    {
+                        $address->{$key}  = $value;
+                    }
+                    $model->primaryAddress = $address;
+                }
+                else
+                {
+                    $model->primaryAddress = null;
                 }
 
                 if (isset($data['secondaryEmail']))
@@ -297,46 +395,32 @@
                     {
                         $email->{$key}  = $value;
                     }
-                    $model->secondaryEmail  = $email;
+                    $model->secondaryEmail = $email;
                 }
                 else
                 {
-                    $model->secondaryEmail  = null;
+                    $model->secondaryEmail = null;
                 }
 
-                if (isset($data['billingAddress']))
+                if (isset($data['secondaryAddress']))
                 {
                     $address = new Address();
-                    foreach ($data['billingAddress'] as $key => $value)
-                    {
-                        $address->{$key}    = $value;
-                    }
-                    $model->billingAddress  = $address;
-                }
-                else
-                {
-                    $model->billingAddress  = null;
-                }
-
-                if (isset($data['shippingAddress']))
-                {
-                    $address = new Address();
-                    foreach ($data['shippingAddress'] as $key => $value)
+                    foreach ($data['secondaryAddress'] as $key => $value)
                     {
                         $address->{$key}  = $value;
                     }
-                    $model->shippingAddress = $address;
+                    $model->secondaryAddress = $address;
                 }
                 else
                 {
-                    $model->shippingAddress = null;
+                    $model->secondaryAddress = null;
                 }
 
                 $saved = $model->save();
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = Account::getById($id);
+                    $model = Contact::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
@@ -362,7 +446,7 @@
         {
             try
             {
-                $model = Account::getById($id);
+                $model = Contact::getById($id);
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';

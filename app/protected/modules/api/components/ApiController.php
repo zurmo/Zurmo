@@ -139,6 +139,36 @@
                 case 'account':
                     $controllerName = 'AccountApiController';
                     break;
+                case 'contact':
+                    $controllerName = 'ContactApiController';
+                    break;
+                case 'lead':
+                    $controllerName = 'LeadApiController';
+                    break;
+                case 'meeting':
+                    $controllerName = 'MeetingApiController';
+                   break;
+                case 'note':
+                    $controllerName = 'NoteApiController';
+                    break;
+                case 'opportunity':
+                    $controllerName = 'OpportunityApiController';
+                    break;
+                case 'task':
+                    $controllerName = 'TaskApiController';
+                    break;
+                case 'user':
+                    $controllerName = 'UserApiController';
+                    break;
+                case 'group':
+                    $controllerName = 'GroupApiController';
+                    break;
+                case 'role':
+                    $controllerName = 'RoleApiController';
+                    break;
+                case 'currency':
+                    $controllerName = 'CurrencyApiController';
+                    break;
                 default:
                     $controllerName = null;
                     break;

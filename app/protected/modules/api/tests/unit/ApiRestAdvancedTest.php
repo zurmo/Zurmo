@@ -24,54 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestAdvancedTest extends BaseTest
+    class ApiRestAdvancedTest extends ApiRestTest
     {
-        public $serverUrl = '';
-        public $freeze = false;
-
-        public static function setUpBeforeClass()
-        {
-            parent::setUpBeforeClass();
-            $super = SecurityTestHelper::createSuperAdmin();
-            $jim = UserTestHelper::createBasicUser('jim');
-
-            $values = array(
-                'Test1',
-                'Test2',
-                'Test3',
-                'Sample',
-                'Demo',
-            );
-            $customFieldData = CustomFieldData::getByName('ApiTestDropDown');
-            $customFieldData->serializedData = serialize($values);
-            $saved = $customFieldData->save();
-            assert($saved);    // Not Coding Standard
-        }
-
-        public function setUp(){
-            parent::setUp();
-            if (strlen(Yii::app()->params['testApiUrl']) > 0)
-            {
-                $this->serverUrl = Yii::app()->params['testApiUrl'];
-            }
-            $freeze = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $this->freeze = $freeze;
-        }
-
-        public function teardown()
-        {
-            if ($this->freeze)
-            {
-                RedBeanDatabase::freeze();
-            }
-            parent::teardown();
-        }
-
         public function testApiServerUrl()
         {
             $this->assertTrue(strlen($this->serverUrl) > 0);
@@ -161,7 +115,7 @@
 
             $testItem    = ApiModelTestItem::getById($id);
             $adapter     = new RedBeanModelToApiDataUtil($testItem);
-            $data        = $adapter->getData();;
+            $data        = $adapter->getData();
             $compareData = array(
                 'id'                => $id,
                 'firstName'         => 'Bob3',
@@ -279,45 +233,45 @@
             $response = json_decode($response, true);
 
             $compareData = array(
-                                                    'id'                => $response['data']['id'],
-                                                    'firstName'         => 'Bob5',
-                                                    'lastName'          => 'Bob5',
-                                                    'boolean'           => 1,
-                                                    'date'              => '2002-04-03',
-                                                    'dateTime'          => '2002-04-03 02:00:43',
-                                                    'float'             => 54.22,
-                                                    'integer'           => 10,
-                                                    'phone'             => '21313213',
-                                                    'string'            => 'aString',
-                                                    'textArea'          => 'Some Text Area',
-                                                    'url'               => 'http://www.asite.com',
-                                                    'currencyValue'     => array(
-                                                        'id'         => $currencyValue->id,
-                                                        'value'      => 100,
-                                                        'rateToBase' => 1,
-                                                        'currency'   => array(
-                                                            'id'     => $currencies[0]->id,
-            ),
-            ),
-                                                    'dropDown'          => null,
-                                                    'radioDropDown'     => null,
-                                                    'hasOne'            => array('id' => $testItem2->id),
-                                                    'hasOneAlso'        => array('id' => $testItem4->id),
-                                                    'primaryEmail'      => null,
-                                                    'primaryAddress'    => null,
-                                                    'secondaryEmail'    => null,
-                                                    'owner' => array(
-                                                        'id' => $super->id,
-                                                        'username' => 'super'
-            ),
-                                                    'createdByUser'    => array(
-                                                        'id' => $super->id,
-                                                        'username' => 'super'
-            ),
-                                                    'modifiedByUser' => array(
-                                                        'id' => $super->id,
-                                                        'username' => 'super'
-            )
+                'id'                => $response['data']['id'],
+                'firstName'         => 'Bob5',
+                'lastName'          => 'Bob5',
+                'boolean'           => 1,
+                'date'              => '2002-04-03',
+                'dateTime'          => '2002-04-03 02:00:43',
+                'float'             => 54.22,
+                'integer'           => 10,
+                'phone'             => '21313213',
+                'string'            => 'aString',
+                'textArea'          => 'Some Text Area',
+                'url'               => 'http://www.asite.com',
+                'currencyValue'     => array(
+                    'id'         => $currencyValue->id,
+                    'value'      => 100,
+                    'rateToBase' => 1,
+                    'currency'   => array(
+                        'id'     => $currencies[0]->id,
+                    ),
+                ),
+                'dropDown'          => null,
+                'radioDropDown'     => null,
+                'hasOne'            => array('id' => $testItem2->id),
+                'hasOneAlso'        => array('id' => $testItem4->id),
+                'primaryEmail'      => null,
+                'primaryAddress'    => null,
+                'secondaryEmail'    => null,
+                'owner' => array(
+                    'id' => $super->id,
+                    'username' => 'super'
+                ),
+                'createdByUser'    => array(
+                    'id' => $super->id,
+                    'username' => 'super'
+                ),
+                'modifiedByUser' => array(
+                    'id' => $super->id,
+                    'username' => 'super'
+                )
             );
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
@@ -385,18 +339,5 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
         }
-
-        protected function login()
-        {
-            $headers = array(
-                            'Accept: application/json',
-                            'ZURMO_AUTH_USERNAME: super',
-                            'ZURMO_AUTH_PASSWORD: super'
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
-            $response = json_decode($response, true);
-            return $response['data']['sessionId'];
-        }
-
     }
 ?>
