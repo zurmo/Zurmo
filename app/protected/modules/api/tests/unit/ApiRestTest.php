@@ -27,6 +27,7 @@
     class ApiRestTest extends BaseTest
     {
         public $serverUrl = '';
+        public $freeze = false;
 
         public static function setUpBeforeClass()
         {
@@ -39,12 +40,29 @@
             parent::tearDownAfterClass();
         }
 
+
         public function setUp(){
             parent::setUp();
             if (strlen(Yii::app()->params['testApiUrl']) > 0)
             {
                 $this->serverUrl = Yii::app()->params['testApiUrl'];
             }
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $this->freeze = $freeze;
+        }
+
+        public function teardown()
+        {
+            if ($this->freeze)
+            {
+                RedBeanDatabase::freeze();
+            }
+            parent::teardown();
         }
 
         public function testApiServerUrl()

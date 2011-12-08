@@ -48,11 +48,6 @@
             assert($saved);    // Not Coding Standard
         }
 
-        public static function tearDownAfterClass()
-        {
-            //parent::tearDownAfterClass();
-        }
-
         public function setUp(){
             parent::setUp();
             if (strlen(Yii::app()->params['testApiUrl']) > 0)

@@ -136,6 +136,9 @@
                 case 'apiTestModelItem2':
                     $controllerName = 'ApiTestModelItem2Controller';
                     break;
+                case 'account':
+                    $controllerName = 'AccountApiController';
+                    break;
                 default:
                     $controllerName = null;
                     break;
