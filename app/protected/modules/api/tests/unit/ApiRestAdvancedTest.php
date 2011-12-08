@@ -116,6 +116,7 @@
             $testItem    = ApiModelTestItem::getById($id);
             $adapter     = new RedBeanModelToApiDataUtil($testItem);
             $data        = $adapter->getData();
+
             $compareData = array(
                 'id'                => $id,
                 'firstName'         => 'Bob3',
