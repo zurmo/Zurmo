@@ -25,10 +25,11 @@
      ********************************************************************************/
 
     /**
-     * Helper class that overrides CFileHelper with some additional functionality for handling various file operations.
+     * 
      */
     abstract class MappingHelper extends CApplicationComponent
     {
         abstract public function getMappingLinkContentForElement();
 
     }
+?>
