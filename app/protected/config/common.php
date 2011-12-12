@@ -225,6 +225,7 @@
                 ),
             ),
             'users',
+            'maps',
         ),
 
         'params' => array(

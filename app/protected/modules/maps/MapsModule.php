@@ -61,7 +61,7 @@
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
                         'titleLabel'       => 'Maps',
                         'descriptionLabel' => 'Manage Map Configuration',
-                        'route'            => '/maps/default/configureMapApiKey',
+                        'route'            => '/maps/default/configurationView',
                         'right'            => self::RIGHT_ACCESS_MAPS,
                     ),
                 ),

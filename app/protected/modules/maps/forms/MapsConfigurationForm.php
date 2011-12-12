@@ -25,40 +25,25 @@
      ********************************************************************************/
 
     /**
-     * Edit and details view for the admin configuration view for maps.
+     * Form to all editing and viewing of global configuration values in the user interface.
      */
-    class AdminConfigurationView extends EditAndDetailsView
+    class MapsConfigurationForm extends ConfigurationForm
     {
-        public static function getDefaultMetadata()
+        public $apiKey;
+
+        public function rules()
         {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type' => 'ConfigurationLink'),
-                            array('type' => 'SaveButton',    'renderType' => 'Edit'),
-                            array('type' => 'EditLink',      'renderType' => 'Details'),
-                        ),
-                    ),
-                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
-                    'panels' => array(
-                        array(
-                            'rows' => array(
-                               array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'apiKey', 'type' => 'text'),
-                                             ),
-                                        ),
-                                    )
-                               ),
-                            ),
-                        ),
-                    ),
-                ),
+            return array(
+                array('apiKey',          'required'),
+                array('apiKey',          'type',      'type' => 'text'),
             );
-            return $metadata;
+        }
+
+        public function attributeLabels()
+        {
+            return array(
+                'apiKey'           => Yii::t('Default', 'Google Map API Key'),
+            );
         }
     }
 ?>

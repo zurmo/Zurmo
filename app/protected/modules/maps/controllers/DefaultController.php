@@ -39,11 +39,39 @@
 
         public function actionIndex()
         {
-            $this->actionConfigureMapApiKey();
+            $this->actionConfigurationView();
         }
 
-        public function actionConfigureMapApiKey()
+        public function actionConfigurationView()
         {
+            $configurationForm = new MapsConfigurationForm();
+            if (null != $apiKey = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey'))
+            {
+                $configurationForm->apiKey  = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey');
+            }
+            $postVariableName  = get_class($configurationForm);
+            if (isset($_POST[$postVariableName]))
+            {
+                $configurationForm->setAttributes($_POST[$postVariableName]);
+                if ($configurationForm->validate())
+                {
+                    ZurmoConfigurationUtil::setByModuleName('MapsModule', 'googleMapApiKey', $configurationForm->apiKey);
+                    Yii::app()->user->setFlash('notification',
+                        Yii::t('Default', 'Maps configuration saved successfully.')
+                    );
+                    $this->redirect(Yii::app()->createUrl('maps/default/configurationView'));
+                }
+            }
+            $titleBarAndEditView = new TitleBarAndConfigurationEditAndDetailsView(
+                                    $this->getId(),
+                                    $this->getModule()->getId(),
+                                    $configurationForm,
+                                    'AdminConfigurationView',
+                                    'Edit',
+                                    Yii::t('Default', 'Maps Configuration')
+            );
+            $view = new ZurmoConfigurationPageView($this, $titleBarAndEditView);
+            echo $view->render();
         }
     }
 ?>
