@@ -384,7 +384,11 @@
                                                                                  $importSanitizeResultsUtil);
             foreach ($attributeValueData as $attributeName => $value)
             {
-                if ($model->isAttribute($attributeName))
+                if( $model->$attributeName instanceof RedBeanManyToManyRelatedModels)
+                {
+                    static::resolveValueThatIsManyModelsRelationToAttribute($model, $attributeName, $value);
+                }
+                elseif ($model->isAttribute($attributeName))
                 {
                     static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
                 }
@@ -489,6 +493,17 @@
                 $model->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 $model->$attributeName = $value;
+            }
+        }
+
+        protected static function resolveValueThatIsManyModelsRelationToAttribute($model, $attributeName, $value)
+        {
+            assert('is_string($attributeName)');
+            assert('$model->$attributeName instanceof RedBeanManyToManyRelatedModels');
+            assert('$value == null || $value instanceof RedBeanModel');
+            if ($value != null && !$model->$attributeName->contains($value))
+            {
+                $model->$attributeName->add($value);
             }
         }
 
