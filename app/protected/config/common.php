@@ -161,7 +161,8 @@
                     // REST patterns
                     array('api/rest/login',  'pattern'=>'api/rest/login',                'verb'=>'POST'),
                     array('api/rest/logout', 'pattern'=>'api/rest/logout',               'verb'=>'GET'),
-                    array('api/rest/customData', 'pattern'=>'api/rest/customData',       'verb'=>'GET'),
+                    array('api/rest/listCustomData', 'pattern'=>'api/rest/customData',       'verb'=>'GET'),
+                    array('api/rest/customData', 'pattern'=>'api/rest/customData/<model:\w+>', 'verb'=>'GET'),
                     array('api/rest/list',   'pattern'=>'api/rest/<model:\w+>',          'verb'=>'GET'),
                     array('api/rest/view',   'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
                     array('api/rest/update', 'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),

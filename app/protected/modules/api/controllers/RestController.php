@@ -227,18 +227,56 @@
             }
         }
 
-        public function actionCustomData()
+        public function actionListCustomData()
         {
             $industryFieldData = CustomFieldData::getByName('Industries');
-            $typeFieldData = CustomFieldData::getByName('AccountTypes');
+            $typeFieldData     = CustomFieldData::getByName('AccountTypes');
+            $sourceFieldData   = CustomFieldData::getByName('LeadSources');
+            $meetingFieldData  = CustomFieldData::getByName('MeetingCategories');
+            $stageFieldData    = CustomFieldData::getByName('SalesStages');
+            $titleFieldData    = CustomFieldData::getByName('Titles');
 
-            if(count($industryFieldData) > 0 && count($typeFieldData) > 0)
+            $industryFieldData = unserialize($industryFieldData->serializedData);
+            $typeFieldData     = unserialize($typeFieldData->serializedData);
+            $sourceFieldData   = unserialize($sourceFieldData->serializedData);
+            $meetingFieldData  = unserialize($meetingFieldData->serializedData);
+            $stageFieldData    = unserialize($stageFieldData->serializedData);
+            $titleFieldData    = unserialize($titleFieldData->serializedData);
+
+            $status = ApiResponse::STATUS_SUCCESS;
+            $data = array(
+                'Industries'        => $industryFieldData,
+                'AccountTypes'      => $typeFieldData,
+                'LeadSources'       => $sourceFieldData,
+                'MeetingCategories' => $meetingFieldData,
+                'SalesStages'       => $stageFieldData,
+                'Titles'            => $titleFieldData,
+            );
+
+            if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
+            {
+                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
+                                                $status,
+                                                $data,
+                                                null);
+            }
+            else
+            {
+                //error
+            }
+        }
+
+        public function actionCustomData()
+        {
+            $model = $_GET['model'];
+
+            $customFieldData = CustomFieldData::getByName($model);
+            $customFieldData    = unserialize($customFieldData->serializedData);
+
+            if(count($customFieldData) > 0)
             {
                 $status = ApiResponse::STATUS_SUCCESS;
-                $data = array(
-                    'Industries'   => $industryFieldData,
-                    'AccountTypes' => $typeFieldData
-                );
+                $data = $customFieldData;
             }
             else
             {
@@ -249,9 +287,9 @@
             if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
             {
                 ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                $status,
-                                                $data,
-                                                null);
+                $status,
+                $data,
+                null);
             }
             else
             {
