@@ -244,20 +244,23 @@
             $counter = 0;
             foreach ($rowsOfColumnValues as $row)
             {
-                if ($counter == 0)
+                if(count($row) == count($columnNames))
                 {
-                    $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
-                }
-                if ($counter == $bulkQuantity)
-                {
-                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
-                    R::exec($sql);
-                    $counter = 0;
-                }
-                else
-                {
-                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
-                    $counter++;
+                    if ($counter == 0)
+                    {
+                        $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
+                    }
+                    if ($counter == $bulkQuantity)
+                    {
+                        $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
+                        R::exec($sql);
+                        $counter = 0;
+                    }
+                    else
+                    {
+                        $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
+                        $counter++;
+                    }
                 }
             }
             if ($counter > 0)

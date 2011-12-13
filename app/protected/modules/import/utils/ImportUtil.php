@@ -446,7 +446,7 @@
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($afterSaveActionsData)');
-            assert('$attributeImportRules instanceof AfterSaveActionDerivedAttributeImportRules');
+            assert('$attributeImportRules instanceof AfterSaveActionNonDerivedAttributeImportRules');
             assert('is_array($columnMappingData)');
             $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
                                                                                  $columnMappingData,
