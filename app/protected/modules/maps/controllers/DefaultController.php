@@ -45,10 +45,9 @@
         public function actionConfigurationView()
         {
             $configurationForm = new MapsConfigurationForm();
-            if (null != $apiKey = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey'))
-            {
-                $configurationForm->apiKey  = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey');
-            }
+
+            $configurationForm->apiKey  = GoogleGeoCodeUtil::getGoogleAPIKey();
+
             $postVariableName  = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {

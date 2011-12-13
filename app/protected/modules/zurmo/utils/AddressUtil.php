@@ -25,10 +25,21 @@
      ********************************************************************************/
 
     /**
-     * 
+     * Class to fetch GeoCode for Addresses and update the latitude and longitude for the corresponding addresses.
      * 
      */
     class AddressUtil
     {
+        public static function updateChangedAddress()
+        {
+            $address    = '1600 Amphitheatre Parkway, Mountain View, CA';
+            $latlongarr = self::fetchGeocodeForAddress($address);
+            return $latlongarr;
+        }
+
+        public static function fetchGeocodeForAddress($address)
+        {
+            return GoogleGeoCodeUtil::getLatitudeLongitude($address);
+        }
     }
 ?>

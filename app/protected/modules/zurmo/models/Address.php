@@ -76,6 +76,11 @@
             return $this->longitude;
         }
 
+        public function getInvalid()
+        {
+            return $this->invalid;
+        }
+
         protected static function getPluralLabel()
         {
             return 'Addresses';
@@ -95,6 +100,7 @@
                     'longitude',
                     // Todo: make these relations.
                     'country',
+                    'invalid',
                 ),
                 'rules' => array(
                     array('street1',    'type',      'type'      => 'string'),
@@ -115,6 +121,7 @@
                     array('longitude',  'type',      'type'      => 'float'),
                     array('longitude',  'length',    'max'       => 10),
                     array('longitude',  'numerical', 'precision' => 6),
+                    array('invalid',    'type',      'type'      => 'boolean'),
                 ),
             );
             return $metadata;

@@ -61,5 +61,14 @@
             $this->assertEquals('121.176129',
                                 $address->getLongitude());
         }
+
+        public function testAddressFetchLatitudeAndLongitude()
+        {
+            $latlongarr = AddressUtil::updateChangedAddress();
+            $this->assertEquals('37.4211444',
+                                $latlongarr['latitude']);
+            $this->assertEquals('-122.0853032',
+                                $latlongarr['longitude']);
+        }
     }
 ?>

@@ -30,6 +30,5 @@
     abstract class MappingHelper extends CApplicationComponent
     {
         abstract public function getMappingLinkContentForElement();
-
     }
 ?>
