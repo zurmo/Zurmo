@@ -67,6 +67,11 @@
             R::exec("drop table $tableName;");
         }
 
+        public static function escape($value)
+        {
+            return R::$adapter->escape($value);
+        }
+
         /**
          * Returns an array of table names from the database.
          */
@@ -207,9 +212,10 @@
             }
             if (is_string($value))
             {
-                return SQLOperatorUtil::getOperatorByType($operatorType) .
-                " lower('" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
-                $value . SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "')";
+                return SQLOperatorUtil::getOperatorByType($operatorType) . " " .
+                       self::lower("'" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
+                       self::escape($value) .
+                       SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'");
             }
             elseif (is_array($value) && count($value) > 0)
             {
