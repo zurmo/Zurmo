@@ -53,7 +53,8 @@
                     $adapter->resolveData($data);
                 }
                 elseif($this->model->isOwnedRelation($attributeName) &&
-                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
+                       ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
+                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
                 {
                     if($this->model->{$attributeName}->id > 0)
                     {

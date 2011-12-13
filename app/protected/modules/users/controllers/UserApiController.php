@@ -45,12 +45,14 @@
                 }
                 else
                 {
+                    $outputArray['data'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Error');
                 }
             }
             catch (Exception $e)
             {
+                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -62,12 +64,29 @@
             try
             {
                 $model = User::getById($id);
-                $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();
-                $outputArray = array();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['data']   = $data;
-                $outputArray['message'] = '';
+
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+                if ($isAllowed === false)
+                {
+                    throw new Exception('This action is not allowed.');
+                }
+
+                if ($this->resolveCanCurrentUserAccessAction($id))
+                {
+                    $util  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $util->getData();
+                    $outputArray = array();
+                    $outputArray['status'] = 'SUCCESS';
+                    $outputArray['data']   = $data;
+                    $outputArray['message'] = '';
+                }
+                else
+                {
+                    $outputArray['data'] = null;
+                    $outputArray['status'] = 'FAILURE';
+                    $outputArray['message'] = Yii::t('Default', 'This action is not allowed.');
+                }
+
             }
             catch (Exception $e)
             {
@@ -183,12 +202,14 @@
                 }
                 else
                 {
+                    $outputArray['data'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
                 }
             }
             catch (Exception $e)
             {
+                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -200,6 +221,11 @@
             try
             {
                 $model = User::getById($id);
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
+                if ($isAllowed === false || !$this->resolveCanCurrentUserAccessAction($id))
+                {
+                    throw new Exception('This action is not allowed.');
+                }
 
                 if (isset($data['firstName']))
                 {
@@ -370,12 +396,14 @@
                 }
                 else
                 {
+                    $outputArray['data'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
                 }
             }
             catch (Exception $e)
             {
+                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -387,6 +415,11 @@
             try
             {
                 $model = User::getById($id);
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
+                if ($isAllowed === false || !$this->resolveCanCurrentUserAccessAction($id))
+                {
+                    throw new Exception('This action is not allowed.');
+                }
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';
@@ -397,6 +430,19 @@
                 $outputArray['message'] = $e->getMessage();
             }
             return $outputArray;
+        }
+
+        protected function resolveCanCurrentUserAccessAction($userId)
+        {
+            if (Yii::app()->user->userModel->id == $userId ||
+            RightsUtil::canUserAccessModule('UsersModule', Yii::app()->user->userModel))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 ?>

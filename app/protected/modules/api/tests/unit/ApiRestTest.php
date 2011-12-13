@@ -26,16 +26,23 @@
 
     class ApiRestTest extends ApiBaseTest
     {
-        protected function login()
+        protected function login($username = 'super', $password = 'super')
         {
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_AUTH_USERNAME: super',
-                'ZURMO_AUTH_PASSWORD: super'
+                'ZURMO_AUTH_USERNAME: ' . $username,
+                'ZURMO_AUTH_PASSWORD: ' . $password
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
             $response = json_decode($response, true);
-            return $response['data']['sessionId'];
+            if ($response['status'] == ApiRestResponse::STATUS_SUCCESS)
+            {
+                return $response['data']['sessionId'];
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 ?>

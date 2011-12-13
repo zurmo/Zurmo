@@ -34,9 +34,15 @@
         /**
         * @depends testApiServerUrl
         */
-        public function testListViewCreateUpdateDeleteWithRelatedModels()
+        public function testListViewCreateUpdateDelete()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
+            $notAllowedUser = UserTestHelper::createBasicUser('Steven');
+            $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
+            $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS, Right::DENY);
+
+            $saved = $notAllowedUser->save();
+
             $sessionId = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -155,7 +161,32 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']));
+            $this->assertEquals(4, count($response['data']));
+
+            // Test with unprivileged user to view, edit and delete account.
+            $sessionId = $this->login('steven', 'steven');
+            $headers = array(
+                                        'Accept: application/json',
+                                        'ZURMO_SESSION_ID: ' . $sessionId
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            // Test with privileged user
+            $sessionId = $this->login();
+            $headers = array(
+                                        'Accept: application/json',
+                                        'ZURMO_SESSION_ID: ' . $sessionId
+            );
 
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'DELETE', $headers);

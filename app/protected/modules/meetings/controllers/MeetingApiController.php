@@ -62,6 +62,11 @@
             try
             {
                 $model = Meeting::getById($id);
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+                if ($isAllowed === false)
+                {
+                    throw new Exception('This action is not allowed.');
+                }
                 $util  = new RedBeanModelToApiDataUtil($model);
                 $data  = $util->getData();
                 $outputArray = array();
@@ -131,12 +136,14 @@
                 }
                 else
                 {
+                    $outputArray['data'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
                 }
             }
             catch (Exception $e)
             {
+                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -148,7 +155,11 @@
             try
             {
                 $model = Meeting::getById($id);
-
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
+                if ($isAllowed === false)
+                {
+                    throw new Exception('This action is not allowed.');
+                }
                 if (isset($data['name']))
                 {
                     $model->name     = $data['name'];
@@ -217,12 +228,14 @@
                 }
                 else
                 {
+                    $outputArray['data'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
                 }
             }
             catch (Exception $e)
             {
+                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -234,6 +247,11 @@
             try
             {
                 $model = Meeting::getById($id);
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
+                if ($isAllowed === false)
+                {
+                    throw new Exception('This action is not allowed.');
+                }
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';

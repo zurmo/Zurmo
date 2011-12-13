@@ -29,7 +29,7 @@
         public function attach($owner)
         {
             if(Yii::app()->apiRequest->isApiRequest())
-            {;
+            {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
             }
 

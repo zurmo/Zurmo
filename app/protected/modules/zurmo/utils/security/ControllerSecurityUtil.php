@@ -60,6 +60,10 @@
             {
                 return;
             }
+            elseif (Yii::app()->apiRequest->isApiRequest())
+            {
+                return false;
+            }
             ControllerSecurityUtil::renderAccessFailureView($fromAjax);
             Yii::app()->end(0, false);
         }
@@ -76,6 +80,10 @@
             {
                 return;
             }
+            elseif (Yii::app()->apiRequest->isApiRequest())
+            {
+                return false;
+            }
             ControllerSecurityUtil::renderAccessFailureView($fromAjax);
             Yii::app()->end(0, false);
         }
@@ -91,6 +99,10 @@
             if (ControllerSecurityUtil::doesCurrentUserHavePermissionOnSecurableItem($model, Permission::DELETE))
             {
                 return;
+            }
+            elseif (Yii::app()->apiRequest->isApiRequest())
+            {
+                return false;
             }
             ControllerSecurityUtil::renderAccessFailureView($fromAjax);
             Yii::app()->end(0, false);

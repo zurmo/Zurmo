@@ -70,10 +70,6 @@
         public function actionDetails($id)
         {
             $contact = Contact::getById(intval($id));
-            $adapter     = new RedBeanModelToApiDataUtil($contact);
-            $data        = $adapter->getData();
-            print_r($data);
-            exit;
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($contact), $contact);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'ContactsModule',
