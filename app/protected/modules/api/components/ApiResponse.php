@@ -28,6 +28,9 @@
     {
         const STATUS_SUCCESS           = 'SUCCESS';
         const STATUS_FAILURE           = 'FAILURE';
-        abstract public static function generateOutput($data, $format);
+        public static function generateOutput($data, $format)
+        {
+            throw new NotImplementedException();
+        }
     }
 ?>

@@ -173,14 +173,7 @@
             $this->assertEquals(ksort($data), ksort($response['data']));
 
             // Test List
-            $searchParams = array(
-                'page'     => 1,
-                'pageSize' =>10,
-                'type'     => 'Customer',
-                'industry' => 'Financial Services'
-            );
-            $searchParams = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/filter/' . $searchParams, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']));
@@ -239,6 +232,60 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+        }
+
+        public function testSearch()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+            AccountTestHelper::createAccountByNameForOwner('First Account', $super);
+            AccountTestHelper::createAccountByNameForOwner('Seccond Account', $super);
+            AccountTestHelper::createAccountByNameForOwner('Third Account', $super);
+            AccountTestHelper::createAccountByNameForOwner('Forth Account', $super);
+            AccountTestHelper::createAccountByNameForOwner('Fifth Account', $super);
+
+            $searchParams = array(
+                            'page'     => 1,
+                            'pageSize' =>3,
+                            'name' => '',
+            );
+            $searchParams = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/filter/' . $searchParams, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']));
+
+            // Second page
+            $searchParams['page'] = 2;
+            $searchParams = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/filter/' . $searchParams, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(2, count($response['data']));
+
+            // Search by name
+            $searchParams['page'] = 1;
+            $searchParams['name'] = 'First Account';
+            $searchParams = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/filter/' . $searchParams, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']));
+
+            // No results
+            $searchParams['page'] = 1;
+            $searchParams['name'] = 'First Account 2';
+            $searchParams = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/filter/' . $searchParams, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(0, count($response['data']));
+
         }
     }
 ?>

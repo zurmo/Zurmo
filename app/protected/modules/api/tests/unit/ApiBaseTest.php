@@ -32,7 +32,6 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            ForgetAllCacheUtil::forgetAllCaches();
             $super = SecurityTestHelper::createSuperAdmin();
         }
 
