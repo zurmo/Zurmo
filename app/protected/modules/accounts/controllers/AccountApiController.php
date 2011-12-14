@@ -37,16 +37,17 @@
                 }
                 $data = Account::getAll();
                 /*
+                $stateMetadataAdapterClassName = null; //would populate for contacts/leads
                 $pageSize = $_GET['pageSize'];
                 $account = new Account(false);
                 $searchForm = new AccountsSearchForm($account);
-                $dataProvider = $this->makeSearchFilterListDataProvider(
-                $searchForm,
-                                'Account',
-                                'AccountsFilteredList',
-                $pageSize,
-                Yii::app()->user->userModel->id
-                );
+
+                $dataProvider = $this->makeRedBeanDataProviderFromGet(
+                    $searchForm,
+                    'Account',
+                    $pageSize,
+                    Yii::app()->user->userModel->id,
+                    $stateMetadataAdapterClassName);
                 $outputArray = array();
                 foreach ($dataProvider->data as $account)
                 {
