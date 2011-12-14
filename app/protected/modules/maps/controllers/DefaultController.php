@@ -46,7 +46,7 @@
         {
             $configurationForm = new MapsConfigurationForm();
 
-            $configurationForm->apiKey  = GoogleGeoCodeUtil::getGoogleAPIKey();
+            $configurationForm->apiKey  = ZurmoMappingHelper::getGeoCodeApi();
 
             $postVariableName  = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))

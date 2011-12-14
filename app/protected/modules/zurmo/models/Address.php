@@ -121,10 +121,42 @@
                     array('longitude',  'type',      'type'      => 'float'),
                     array('longitude',  'length',    'max'       => 10),
                     array('longitude',  'numerical', 'precision' => 6),
-                    array('invalid',    'type',      'type'      => 'bool'),
+                    array('invalid',    'boolean'),
                 ),
             );
             return $metadata;
+        }
+
+        protected function beforeSave()
+        {
+            if (parent::beforeSave())
+            {
+                $isAddressChanged   = false;
+                $addressCheckFields = array('street1','street2','city','state','country','postalCode');
+                foreach ($addressCheckFields as $addressField)
+                {
+                    if (array_key_exists($addressField, $this->originalAttributeValues))
+                    {
+                        if ($this->$addressField != $this->originalAttributeValues[$addressField])
+                        {
+                            $isAddressChanged = true;
+                            break;
+                        }
+                    }
+                }
+
+                if ($isAddressChanged)
+                {
+                    $this->latitude     = 0.0;
+                    $this->longitude    = 0.0;
+                    $this->invalid      = false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static function isTypeDeletable()

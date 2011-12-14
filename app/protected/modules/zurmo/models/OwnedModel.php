@@ -51,6 +51,11 @@
             return parent::save($runValidation, $attributeNames);
         }
 
+        public function unrestrictedSave($runValidation = true, array $attributeNames = null)
+        {
+            return parent::save($runValidation, $attributeNames);
+        }
+
         public function forgetOriginalAttributeValues()
         {
             $this->unrestrictedSet('originalAttributeValues', array());

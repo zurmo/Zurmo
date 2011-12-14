@@ -32,5 +32,22 @@
         public function getMappingLinkContentForElement()
         {
         }
+
+        public static function getGeoCodes($address)
+        {
+            return GoogleGeoCodeUtil::getLatitudeLongitude(self::getGeoCodeApi(), $address);
+        }
+
+        public static function getGeoCodeApi()
+        {
+            if (null != $apiKey = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey'))
+            {
+                return $apiKey;
+            }
+            else
+            {
+                return '';
+            }
+        }
     }
 ?>

@@ -33,35 +33,40 @@
         public static function updateChangedAddress()
         {
             $addressCollection = Address::getSubset();
-            foreach($addressCollection as $addressCollectionRow)
+            foreach ($addressCollection as $addressCollectionRow)
             {
                 $address = strval($addressCollectionRow);
+                if ($addressCollectionRow->invalid == 1 || $address == '')
+                {
+                    continue;
+                }
+
                 try
                 {
                     $latitudeLongitudeCordinates     = self::fetchGeocodeForAddress($address);
                 }
-                catch(GeoCode_Exception $e)
+                catch (GeoCode_Exception $e)
                 {
                     $latitudeLongitudeCordinates     = null;
                 }
 
-                if($latitudeLongitudeCordinates != null)
+                if ($latitudeLongitudeCordinates != null)
                 {
-                    $addressCollectionRow->latitude     = $latitudeLongitudeCordinates['latitude'];
-                    $addressCollectionRow->longitude    = $latitudeLongitudeCordinates['longitude'];
+                    $addressCollectionRow->latitude     = (double)$latitudeLongitudeCordinates['latitude'];
+                    $addressCollectionRow->longitude    = (double)$latitudeLongitudeCordinates['longitude'];
                     $addressCollectionRow->invalid      = false;
                 }
                 else
                 {
                     $addressCollectionRow->invalid      = true;
                 }
-                //$addressCollectionRow->save();
+                $addressCollectionRow->unrestrictedSave(false);
             }
         }
 
         public static function fetchGeocodeForAddress($address)
         {
-            return GoogleGeoCodeUtil::getLatitudeLongitude($address);
+            return ZurmoMappingHelper::getGeoCodes($address);
         }
     }
 ?>

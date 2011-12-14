@@ -31,37 +31,24 @@
     {
         private static $geoCoder;
 
-        public static function getLatitudeLongitude($address)
+        public static function getLatitudeLongitude($apiKey, $address)
         {
-            self::getGeoCoder();
+            self::getGeoCoder($apiKey);
             $geoCodeGoogleCodeObj   = self::$geoCoder->query($address);
             $latitude               = $geoCodeGoogleCodeObj->__get('latitude');
             $longitude              = $geoCodeGoogleCodeObj->__get('longitude');
             return array('latitude' => $latitude, 'longitude' => $longitude);
         }
 
-        private static function getGeoCoder()
+        private static function getGeoCoder($apiKey)
         {
             if (!isset(self::$geoCoder))
             {
                 Yii::import('application.extensions.geocoder.*');
                 self::$geoCoder = new GeoCoder;
-                $apiKey         = self::getGoogleAPIKey();
                 self::$geoCoder->setApiKey($apiKey);
                 self::$geoCoder->setApiDriver('Google');
                 self::$geoCoder->init();
-            }
-        }
-
-        public static function getGoogleAPIKey()
-        {
-            if (null != $apiKey = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey'))
-            {
-                return $apiKey;
-            }
-            else
-            {
-                return '';
             }
         }
     }
