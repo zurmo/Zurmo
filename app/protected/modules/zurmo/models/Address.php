@@ -121,7 +121,7 @@
                     array('longitude',  'type',      'type'      => 'float'),
                     array('longitude',  'length',    'max'       => 10),
                     array('longitude',  'numerical', 'precision' => 6),
-                    array('invalid',    'type',      'type'      => 'boolean'),
+                    array('invalid',    'type',      'type'      => 'bool'),
                 ),
             );
             return $metadata;

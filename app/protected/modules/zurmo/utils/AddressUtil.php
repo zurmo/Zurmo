@@ -32,9 +32,31 @@
     {
         public static function updateChangedAddress()
         {
-            $address    = '1600 Amphitheatre Parkway, Mountain View, CA';
-            $latlongarr = self::fetchGeocodeForAddress($address);
-            return $latlongarr;
+            $addressCollection = Address::getSubset();
+            foreach($addressCollection as $addressCollectionRow)
+            {
+                $address = strval($addressCollectionRow);
+                try
+                {
+                    $latitudeLongitudeCordinates     = self::fetchGeocodeForAddress($address);
+                }
+                catch(GeoCode_Exception $e)
+                {
+                    $latitudeLongitudeCordinates     = null;
+                }
+
+                if($latitudeLongitudeCordinates != null)
+                {
+                    $addressCollectionRow->latitude     = $latitudeLongitudeCordinates['latitude'];
+                    $addressCollectionRow->longitude    = $latitudeLongitudeCordinates['longitude'];
+                    $addressCollectionRow->invalid      = false;
+                }
+                else
+                {
+                    $addressCollectionRow->invalid      = true;
+                }
+                //$addressCollectionRow->save();
+            }
         }
 
         public static function fetchGeocodeForAddress($address)

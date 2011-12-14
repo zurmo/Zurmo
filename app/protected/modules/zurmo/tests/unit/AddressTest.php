@@ -26,6 +26,12 @@
 
     class AddressTest extends BaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
         public function testStringify()
         {
             $address = new Address();
@@ -64,11 +70,43 @@
 
         public function testAddressFetchLatitudeAndLongitude()
         {
-            $latlongarr = AddressUtil::updateChangedAddress();
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $address = array();
+            $address['street1']       = "123 Knob Street";
+            $address['street2']       = "Apartment 4b";
+            $address['city']          = 'Chicago';
+            $address['state']         = 'Illinois';
+            $address['postalCode']    = '60606';
+            $address['country']       = 'USA';
+            $account1                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
+            $accountId1               = $account1->id;
+            unset($account1);
+            
+            $address = array();
+            $address['street1']       = "1600 Amphitheatre Parkway";
+            $address['street2']       = "";
+            $address['city']          = 'Mountain View';
+            $address['state']         = 'California';
+            $address['postalCode']    = '60606';
+            $address['country']       = 'USA';
+            $account2                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
+            $accountId2               = $account2->id;
+            unset($account2);
+
+            AddressUtil::updateChangedAddress();
+
+            $account1 = Account::getById($accountId1);
+            $this->assertEquals('42.1153153',
+                                $account1->billingAddress->latitude);
+            $this->assertEquals('-87.9763703',
+                                $account1->billingAddress->longitude);
+                                
+            $account2 = Account::getById($accountId2);
             $this->assertEquals('37.4211444',
-                                $latlongarr['latitude']);
+                                $account2->billingAddress->latitude);
             $this->assertEquals('-122.0853032',
-                                $latlongarr['longitude']);
+                                $account2->billingAddress->longitude);
         }
     }
 ?>
