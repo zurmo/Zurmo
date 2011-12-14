@@ -77,7 +77,7 @@
             $manager->title->value = 'Mr.';
             $manager->firstName    = 'Super';
             $manager->lastName     = 'User';
-            $manager->setPassword('jimmy021');
+            $manager->setPassword('smith45');
             $saved = $manager->save();
             $this->assertTrue($saved);
 
@@ -106,12 +106,6 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-/*
-            $data['owner'] = array(
-                'id' => $super->id,
-                'username' => 'super'
-            );
-            */
 
             $data['createdByUser']    = array(
                 'id' => $super->id,
@@ -134,7 +128,23 @@
             unset($response['data']['currency']);
             $this->assertEquals(ksort($data), ksort($response['data']));
             $id = $response['data']['id'];
-            //Test update
+
+            // Check if new user can log in
+            $newUser = User::getByUsername('diggy011');
+            $newUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
+            $saved = $newUser->save();
+            $sessionId = $this->login('diggy011', 'diggy011');
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+            // Test update
             $data['firstName']                = "John";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
@@ -157,7 +167,7 @@
 
             $this->assertEquals(ksort($data), ksort($response['data']));
 
-            //Test List
+            // Test List
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
@@ -166,8 +176,8 @@
             // Test with unprivileged user to view, edit and delete account.
             $sessionId = $this->login('steven', 'steven');
             $headers = array(
-                                        'Accept: application/json',
-                                        'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -188,7 +198,7 @@
                                         'ZURMO_SESSION_ID: ' . $sessionId
             );
 
-            //Test Delete
+            // Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);

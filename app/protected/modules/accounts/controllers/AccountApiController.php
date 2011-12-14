@@ -31,6 +31,26 @@
             try
             {
                 $data = Account::getAll();
+                /*
+                $pageSize = $_GET['pageSize'];
+                $account = new Account(false);
+                $searchForm = new AccountsSearchForm($account);
+                $dataProvider = $this->makeSearchFilterListDataProvider(
+                $searchForm,
+                                'Account',
+                                'AccountsFilteredList',
+                $pageSize,
+                Yii::app()->user->userModel->id
+                );
+                $outputArray = array();
+                foreach ($dataProvider->data as $account)
+                {
+                    $util  = new RedBeanModelToApiDataUtil($account);
+                    $outputArray['data'][] = $util->getData();
+                }
+                print_r($outputArray);
+                exit;
+                */
 
                 $outputArray = array();
                 if (count($data))
