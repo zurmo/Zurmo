@@ -30,6 +30,11 @@
         {
             try
             {
+                $filterParams = array();
+                if (isset($_GET['filter']) && $_GET['filter'] != '')
+                {
+                    parse_str($_GET['filter'], $filterParams);
+                }
                 $data = Account::getAll();
                 /*
                 $pageSize = $_GET['pageSize'];

@@ -142,7 +142,8 @@
 
             $this->assertEquals(ksort($data), ksort($response['data']));
             $id = $response['data']['id'];
-            //Test update
+
+            // Test update
             $data['name']                = "My Company 2";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
@@ -171,8 +172,15 @@
 
             $this->assertEquals(ksort($data), ksort($response['data']));
 
-            //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'GET', $headers);
+            // Test List
+            $searchParams = array(
+                'page'     => 1,
+                'pageSize' =>10,
+                'type'     => 'Customer',
+                'industry' => 'Financial Services'
+            );
+            $searchParams = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/filter/' . $searchParams, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']));
@@ -232,7 +240,5 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
         }
-
-
     }
 ?>

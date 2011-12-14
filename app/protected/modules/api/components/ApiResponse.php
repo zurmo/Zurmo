@@ -26,8 +26,6 @@
 
     abstract class ApiResponse
     {
-        const STATUS_SUCCESS           = 'SUCCESS';
-        const STATUS_FAILURE           = 'FAILURE';
         abstract public static function generateOutput($data, $format);
     }
 ?>

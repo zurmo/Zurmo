@@ -224,8 +224,10 @@
             $testItem->hasMany->add($testItem3_1);
             $testItem->hasMany->add($testItem3_2);
             $testItem->hasOneAlso    = $testItem4;
+            $testItem->save();
             $util  = new RedBeanModelToApiDataUtil($testItem);
             $data  = $util->getData();
+            $testItem->delete();
             $testItem->forget();
             unset($testItem);
 
