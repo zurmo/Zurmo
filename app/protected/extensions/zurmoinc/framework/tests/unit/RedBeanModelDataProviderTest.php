@@ -35,6 +35,44 @@
             SecurityTestHelper::createSuperAdmin();
         }
 
+        public function testEscapedSingleQuoteInWhereClause()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //I has many ls.
+            $i = new I();
+            $l = new L();
+            $l->lMember = 'def';
+            $this->assertTrue($l->save());
+            $i->iMember = 'abc';
+            $i->ls->add($l);
+            $this->assertTrue($i->save());
+
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'ls',
+                    'relatedAttributeName' => 'lMember',
+                    'operatorType'         => 'equals',
+                    'value'                => "some'value",
+                )
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}l{$quote}.{$quote}lmember{$quote} = lower('some\'value'))";
+            $this->assertEquals($compareWhere, $where);
+
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+        }
+
+        /**
+         * @depends testEscapedSingleQuoteInWhereClause
+         */
         public function testSearchByRelationId()
         {
             $quote        = DatabaseCompatibilityUtil::getQuote();

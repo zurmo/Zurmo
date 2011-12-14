@@ -61,5 +61,12 @@
         {
             SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array(array()));
         }
+
+        public function testResolveOperatorAndValueForOneOfWithEscapedContent()
+        {
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array('a', "b'd", 'c'));
+            $compareQueryPart = "IN(lower('a'),lower('b\'d'),lower('c'))"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+        }
     }
 ?>

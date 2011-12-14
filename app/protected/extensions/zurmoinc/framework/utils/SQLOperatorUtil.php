@@ -154,11 +154,11 @@
                 {
                     if ($ignoreStringToLower)
                     {
-                        $inPart .= "'" . $theValue . "'";
+                        $inPart .= "'" . DatabaseCompatibilityUtil::escape($theValue) . "'";
                     }
                     else
                     {
-                        $inPart .= "lower('" . $theValue . "')";
+                        $inPart .= "lower('" . DatabaseCompatibilityUtil::escape($theValue) . "')";
                     }
                 }
                 elseif (is_numeric($theValue))
