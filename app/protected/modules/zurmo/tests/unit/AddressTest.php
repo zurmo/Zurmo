@@ -30,6 +30,10 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+            //if(Yii::app()->params['testGoogleGeoCodeApiKey'] != null)
+            //{
+            //    set the API key.
+            //}
         }
 
         public function testStringify()
@@ -82,7 +86,7 @@
             $account1                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
             $accountId1               = $account1->id;
             unset($account1);
-            
+
             $address = array();
             $address['street1']       = "1600 Amphitheatre Parkway";
             $address['street2']       = "";
@@ -101,7 +105,7 @@
                                 $account1->billingAddress->latitude);
             $this->assertEquals('-87.9763703',
                                 $account1->billingAddress->longitude);
-                                
+
             $account2 = Account::getById($accountId2);
             $this->assertEquals('37.4211444',
                                 $account2->billingAddress->latitude);
