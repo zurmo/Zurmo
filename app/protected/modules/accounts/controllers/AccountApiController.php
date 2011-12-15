@@ -35,10 +35,30 @@
                 {
                     parse_str($_GET['filter'], $filterParams);
                 }
-                $data = Account::getAll();
-                /*
+
+                $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
+                if (isset($filterParams['pagination']['pageSize']))
+                {
+                    $pageSize = $filterParams['pagination']['pageSize'];
+                }
+
+                if (isset($filterParams['pagination']['page']))
+                {
+                    $_GET['Account_page'] = $filterParams['pagination']['page'];
+                }
+
+                if (isset($filterParams['sort']))
+                {
+                    $_GET['Account_sort'] = $filterParams['sort'];
+                }
+
+
+                if (isset($filterParams['search']))
+                {
+                    $_GET['AccountsSearchForm'] = $filterParams['search'];
+                }
+
                 $stateMetadataAdapterClassName = null; //would populate for contacts/leads
-                $pageSize = $_GET['pageSize'];
                 $account = new Account(false);
                 $searchForm = new AccountsSearchForm($account);
 
@@ -48,30 +68,26 @@
                     $pageSize,
                     Yii::app()->user->userModel->id,
                     $stateMetadataAdapterClassName);
-                $outputArray = array();
-                foreach ($dataProvider->data as $account)
-                {
-                    $util  = new RedBeanModelToApiDataUtil($account);
-                    $outputArray['data'][] = $util->getData();
-                }
-                print_r($outputArray);
-                exit;
-                */
 
+                $totalItems = $dataProvider->getTotalItemCount();
                 $outputArray = array();
-                if (count($data))
+                $outputArray['data']['total'] = $totalItems;
+
+                if ($totalItems > 0)
                 {
                     $outputArray['status'] = 'SUCCESS';
                     $outputArray['message'] = '';
-                    foreach ($data as $k => $model)
+
+                    $data = $dataProvider->getData();
+                    foreach ($data as $account)
                     {
-                        $util  = new RedBeanModelToApiDataUtil($model);
-                        $outputArray['data'][] = $util->getData();
+                        $util  = new RedBeanModelToApiDataUtil($account);
+                        $outputArray['data']['array'][] = $util->getData();
                     }
                 }
                 else
                 {
-                    $outputArray['data'] = null;
+                    $outputArray['data']['array'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Error');
                 }
