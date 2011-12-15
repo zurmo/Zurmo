@@ -30,21 +30,66 @@
         {
             try
             {
-                $data = Contact::getAll();
-
-                $outputArray = array();
-                if (count($data))
+                $filterParams = array();
+                if (isset($_GET['filter']) && $_GET['filter'] != '')
                 {
+                    parse_str($_GET['filter'], $filterParams);
+                }
+
+                $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
+                if (isset($filterParams['pagination']['pageSize']))
+                {
+                    $pageSize = $filterParams['pagination']['pageSize'];
+                }
+
+                if (isset($filterParams['pagination']['page']))
+                {
+                    $_GET['Contact_page'] = $filterParams['pagination']['page'];
+                }
+
+                if (isset($filterParams['sort']))
+                {
+                    $_GET['Contact_sort'] = $filterParams['sort'];
+                }
+
+
+                if (isset($filterParams['search']))
+                {
+                    $_GET['ContactsSearchForm'] = $filterParams['search'];
+                }
+
+                $stateMetadataAdapterClassName = 'ContactsStateMetadataAdapter';
+                $stateMetadataAdapterClassName = null;
+                $contact= new Contact(false);
+                $searchForm = new ContactsSearchForm($contact);
+
+                $dataProvider = $this->makeRedBeanDataProviderFromGet(
+                    $searchForm,
+                    'Contact',
+                    $pageSize,
+                    Yii::app()->user->userModel->id,
+                    $stateMetadataAdapterClassName);
+
+                $totalItems = $dataProvider->getTotalItemCount();
+                $outputArray = array();
+                $outputArray['data']['total'] = $totalItems;
+
+                if ($totalItems > 0)
+                {
+
                     $outputArray['status'] = 'SUCCESS';
                     $outputArray['message'] = '';
-                    foreach ($data as $k => $model)
+
+                    $data = $dataProvider->getData();
+                    foreach ($data as $contact)
                     {
-                        $util  = new RedBeanModelToApiDataUtil($model);
-                        $outputArray['data'][] = $util->getData();
+                        $util  = new RedBeanModelToApiDataUtil($contact);
+                        $outputArray['data']['array'][] = $util->getData();
                     }
                 }
                 else
                 {
+                    $outputArray['data']['array'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Error');
                 }

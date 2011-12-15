@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestContactTest extends ApiRestTest
+    class ApiRestLeadTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {
@@ -127,7 +127,7 @@
             $data['secondaryAddress']    = $secondaryAddress;
 
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -167,11 +167,11 @@
 
             //Test update
             $data['department']                = "Support";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -196,7 +196,7 @@
             $this->assertEquals(ksort($data), ksort($response['data']));
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -230,15 +230,15 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $sessionId
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
@@ -249,12 +249,13 @@
                 'ZURMO_SESSION_ID: ' . $sessionId
             );
 
+
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
         }
@@ -275,11 +276,11 @@
             $account  = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
             $account2 = AccountTestHelper::createAccountByNameForOwner('superAccount2', $super);
 
-            ContactTestHelper::createContactWithAccountByNameForOwner('First Contact', $super, $account);
-            ContactTestHelper::createContactWithAccountByNameForOwner('Second Contact', $super, $account);
-            ContactTestHelper::createContactWithAccountByNameForOwner('Third Contact', $super, $account);
-            ContactTestHelper::createContactWithAccountByNameForOwner('Forth Contact', $super, $account2);
-            ContactTestHelper::createContactWithAccountByNameForOwner('Fifth Contact', $super, $account2);
+            LeadTestHelper::createLeadWithAccountByNameForOwner('First Lead', $super, $account);
+            LeadTestHelper::createLeadWithAccountByNameForOwner('Second Lead', $super, $account);
+            LeadTestHelper::createLeadWithAccountByNameForOwner('Third Lead', $super, $account);
+            LeadTestHelper::createLeadWithAccountByNameForOwner('Forth Lead', $super, $account2);
+            LeadTestHelper::createLeadWithAccountByNameForOwner('Fifth Lead', $super, $account2);
 
             $searchParams = array(
                 'pagination' => array(
@@ -292,42 +293,42 @@
                 'sort' => 'firstName',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Fifth Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('First Contact', $response['data']['array'][1]['firstName']);
-            $this->assertEquals('Forth Contact', $response['data']['array'][2]['firstName']);
+            $this->assertEquals('Fifth Lead', $response['data']['array'][0]['firstName']);
+            $this->assertEquals('First Lead', $response['data']['array'][1]['firstName']);
+            $this->assertEquals('Forth Lead', $response['data']['array'][2]['firstName']);
 
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Second Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Third Contact', $response['data']['array'][1]['firstName']);
+            $this->assertEquals('Second Lead', $response['data']['array'][0]['firstName']);
+            $this->assertEquals('Third Lead', $response['data']['array'][1]['firstName']);
 
             // Search by name
             $searchParams['pagination']['page'] = 1;
-            $searchParams['search']['firstName'] = 'First Contact';
+            $searchParams['search']['firstName'] = 'First Lead';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
             $this->assertEquals(1, $response['data']['total']);
-            $this->assertEquals('First Contact', $response['data']['array'][0]['firstName']);
+            $this->assertEquals('First Lead', $response['data']['array'][0]['firstName']);
 
             // No results
             $searchParams['pagination']['page'] = 1;
-            $searchParams['search']['firstName'] = 'First Contact 2';
+            $searchParams['search']['firstName'] = 'First Lead 2';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(0, $response['data']['total']);
@@ -345,25 +346,25 @@
                 'sort' => 'firstName.desc',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Third Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Second Contact', $response['data']['array'][1]['firstName']);
-            $this->assertEquals('Forth Contact', $response['data']['array'][2]['firstName']);
+            $this->assertEquals('Third Lead', $response['data']['array'][0]['firstName']);
+            $this->assertEquals('Second Lead', $response['data']['array'][1]['firstName']);
+            $this->assertEquals('Forth Lead', $response['data']['array'][2]['firstName']);
 
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('First Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Fifth Contact', $response['data']['array'][1]['firstName']);
+            $this->assertEquals('First Lead', $response['data']['array'][0]['firstName']);
+            $this->assertEquals('Fifth Lead', $response['data']['array'][1]['firstName']);
 
             // Search by custom fields, order by name desc
             $searchParams = array(
@@ -378,13 +379,13 @@
                 'sort' => 'firstName.desc',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/lead/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals(2, $response['data']['total']);
-            $this->assertEquals('Forth Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Fifth Contact', $response['data']['array'][1]['firstName']);
+            $this->assertEquals('Forth Lead', $response['data']['array'][0]['firstName']);
+            $this->assertEquals('Fifth Lead', $response['data']['array'][1]['firstName']);
         }
     }
 ?>
