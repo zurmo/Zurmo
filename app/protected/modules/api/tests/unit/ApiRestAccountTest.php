@@ -345,6 +345,7 @@
                 'search' => array(
                     'industry' => array( 'value' => 'Financial Services'),
                     'type'     => array( 'value' => 'Vendor'),
+                    'owner'   => array( 'id' => 1),
                 ),
                 'sort' => 'name.desc',
             );
