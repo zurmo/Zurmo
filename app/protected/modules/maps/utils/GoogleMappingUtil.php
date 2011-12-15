@@ -29,6 +29,28 @@
      */
     class GoogleMappingUtil
     {
-
+        private static $geoCodeResult;
+        
+        public static function renderGeoCoderMap($apiKey)
+        {
+            self::getGeoResult($apiKey);
+            self::$geoCodeResult->__set('latitude', '42.1153153');
+            self::$geoCodeResult->__set('longitude', '-87.9763703');
+            self::$geoCodeResult->renderMap('map_canvas');
+        }
+        
+        private static function getGeoResult($apiKey)
+        {
+            if (!isset(self::$geoCodeResult))
+            {
+                Yii::import('application.extensions.geocoder.*');
+                $geoCoder = new GeoCoder;
+                $geoCoder->setApiKey($apiKey);
+                $geoCoder->setApiDriver('Google');
+                $geoCoder->init();
+                $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
+                self::$geoCodeResult = new GeoCode_Result($geoCodeDriver);
+            }
+        }
     }
 ?>

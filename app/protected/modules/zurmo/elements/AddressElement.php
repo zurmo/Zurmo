@@ -41,12 +41,15 @@
         {
             assert('$this->model->{$this->attribute} instanceof Address');
             $addressModel = $this->model->{$this->attribute};
+            $id           = $addressModel->id;
             $street1      = $addressModel->street1;
             $street2      = $addressModel->street2;
             $city         = $addressModel->city;
             $state        = $addressModel->state;
             $postalCode   = $addressModel->postalCode;
             $country      = $addressModel->country;
+            $latitude     = $addressModel->latitude;
+            $longitude    = $addressModel->longitude;
             $content = null;
             if (!empty($street1))
             {
@@ -75,6 +78,11 @@
             if (!empty($country))
             {
                 $content .= Yii::app()->format->text($country);
+            }
+            if ($latitude != 0 || $longitude != 0)
+            {
+                $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement($latitude,$longitude);
+                $content .= CHtml::link(CHtml::encode('view map'), $mapRenderUrl, array('rel'=>'maps'));
             }
             return $content;
         }

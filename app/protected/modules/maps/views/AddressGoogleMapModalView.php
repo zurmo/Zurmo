@@ -26,6 +26,12 @@
 
     class AddressGoogleMapModalView extends ModalView
     {
+        public static function getModalMapUrl()
+        {
+        }
 
+        public static function renderModalMapWithAddressMarking()
+        {
+        }
     }
 ?>

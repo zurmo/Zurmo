@@ -142,6 +142,9 @@
                 'class' => 'application.modules.zurmo.components.ZurmoTimeZoneHelper',
                 'timeZone'             => 'America/Chicago',
             ),
+            'mappingHelper' => array(
+                'class' => 'application.modules.maps.components.ZurmoMappingHelper',
+            ),
             'request' => array(
                 'enableCsrfValidation' => true,
                 'enableCookieValidation' => false, //keep off until we can fix it on linux/windows servers.

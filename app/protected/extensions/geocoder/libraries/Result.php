@@ -247,7 +247,6 @@
         private function render($_view_, $_data_=null, $_return_=false)
         {
             // Variable names are special so we don't get collisions with extract
-
             // Get the filename to render
             $_viewFile_ = $this->getViewFile($_view_);
 
@@ -262,12 +261,12 @@
             {
                 ob_start();
                 ob_implicit_flush(false);
-                require($_viewFile_);
+                require(str_replace("\\", "/", $_viewFile_));
                 return ob_get_clean();
             }
             else
             {
-                require($_viewFile_);
+                require(str_replace("\\", "/", $_viewFile_));
             }
         }
 

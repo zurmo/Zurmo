@@ -29,8 +29,15 @@
      */
     class ZurmoMappingHelper extends MappingHelper
     {
-        public function getMappingLinkContentForElement()
+        public function getMappingLinkContentForElement($latitude,$longitude)
         {
+            return Yii::app()->createUrl('/maps/default/RenderAddressMapView', array_merge($_GET, array('latitude'=>$latitude, 
+                                                                                                        'longitude'=>$longitude)));
+        }
+
+        public static function renderAddressMap()
+        {
+            return GoogleMappingUtil::renderGeoCoderMap(self::getGeoCodeApi());
         }
 
         public static function getGeoCodes($address)

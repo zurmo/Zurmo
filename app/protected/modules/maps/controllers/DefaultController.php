@@ -72,5 +72,12 @@
             $view = new ZurmoConfigurationPageView($this, $titleBarAndEditView);
             echo $view->render();
         }
+
+        public function actionRenderAddressMapView()
+        {
+            ZurmoMappingHelper::renderAddressMap();
+            echo "<div id='map_canvas' style='width: 500px; height: 300px'></div>";
+            $this->actionConfigurationView();
+        }
     }
 ?>
