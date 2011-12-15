@@ -65,6 +65,9 @@
                 'emulatePrepare' => true,
                 'charset'        => 'utf8',
             ),
+            'emailHelper' => array(
+                'class'       => 'application.modules.zurmo.components.ZurmoEmailHelper',
+            ),
             'errorHandler' => array(
                 'errorAction' => 'zurmo/default/error',
             ),
@@ -215,6 +218,7 @@
             'leads',
             'meetings',
             'notes',
+            'notifications',
             'opportunities',
             'rssReader',
             'tasks',
