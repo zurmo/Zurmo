@@ -29,7 +29,7 @@
      * Collection includes street1, street2,
      * city, state, postal code, and country.
      */
-    class AddressElement extends Element
+    class AddressElement extends ModelElement
     {
         /**
          * Renders the noneditable address content.
@@ -81,8 +81,14 @@
             }
             if ($latitude != 0 || $longitude != 0)
             {
-                $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement($latitude,$longitude);
-                $content .= CHtml::link(CHtml::encode('view map'), $mapRenderUrl, array('rel'=>'maps'));
+                $cs = Yii::app()->getClientScript();
+                $cs->registerScriptFile(
+                    Yii::app()->getAssetManager()->publish(
+                        Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
+                        ),
+                    CClientScript::POS_END
+                );
+                $content .= $this->renderMapLink($latitude,$longitude);
             }
             return $content;
         }
@@ -116,6 +122,49 @@
             $textField   = $form->textField($model, $attribute, $htmlOptions);
             $error       = $form->error    ($model, $attribute);
             return $label . "<br/>\n" . $textField . $error;
+        }
+
+         /**
+         * Render a select link. This link calls a modal
+         * popup.
+         * @return The element's content as a string.
+         */
+        protected function renderMapLink($latitude,$longitude)
+        {
+            $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement($latitude,$longitude);
+            $id = $this->getIdForSelectLink();
+            $content  = '<span>';
+            $content .= CHtml::ajaxLink(Yii::t('Default', 'view map'),
+                Yii::app()->createUrl($mapRenderUrl), array(
+                    'onclick' => '$("#modalContainer").dialog("open"); return false;',
+                    'update' => '#modalContainer',
+                    'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
+                    'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
+                    ),
+                    array(
+                    'id' => $id,
+                    'style' => $this->getSelectLinkStartingStyle(),
+                    )
+            );
+            $content .= '</span>';
+            return $content;
+        }
+        
+        protected function getIdForSelectLink()
+        {
+            return $this->getEditableInputId($this->attribute, 'MapLink');
+        }
+
+        protected function getSelectLinkStartingStyle()
+        {
+            if ($this->getDisabledValue() == 'disabled')
+            {
+                return 'display:';
+            }
+            else
+            {
+                return 'display:';
+            }
         }
 
         protected function renderError()
