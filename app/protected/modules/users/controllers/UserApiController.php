@@ -26,40 +26,7 @@
 
     class UserApiController extends ZurmoModuleApiController
     {
-        public function getAll()
-        {
-            try
-            {
-                $data = User::getAll();
-
-                $outputArray = array();
-                if (count($data))
-                {
-                    $outputArray['status'] = 'SUCCESS';
-                    $outputArray['message'] = '';
-                    foreach ($data as $k => $model)
-                    {
-                        $util  = new RedBeanModelToApiDataUtil($model);
-                        $outputArray['data'][] = $util->getData();
-                    }
-                }
-                else
-                {
-                    $outputArray['data'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Error');
-                }
-            }
-            catch (Exception $e)
-            {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
-        }
-
-        public function getById($id)
+        public function getById($modelClassName, $id)
         {
             try
             {
@@ -410,7 +377,7 @@
             return $outputArray;
         }
 
-        public function delete($id)
+        public function delete($modelClassName, $id)
         {
             try
             {

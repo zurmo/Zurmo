@@ -26,11 +26,12 @@
 
     class ApiTestModelItemController extends ZurmoModuleApiController
     {
+
         public function getAll()
         {
             try
             {
-                $data = ApiModelTestItem::getAll();
+                $data = ApiTestModelItem::getAll();
                 $outputArray = array();
                 if (count($data))
                 {
@@ -55,12 +56,12 @@
             }
             return $outputArray;
         }
-
+        /*
         public function getById($id)
         {
             try
             {
-                $model = ApiModelTestItem::getById($id);
+                $model = ApiTestModelItem::getById($id);
                 $util  = new RedBeanModelToApiDataUtil($model);
                 $data  = $util->getData();
 
@@ -77,7 +78,7 @@
             }
             return $outputArray;
         }
-
+*/
         public function create($data)
         {
             try
@@ -85,10 +86,10 @@
                 $currencyValue              = new CurrencyValue();
                 $currencyValue->value       = $data['currencyValue']['value'];
                 $currencyValue->currency    = Currency::getById($data['currencyValue']['currency']['id']);
-                $testItem2 = ApiModelTestItem2::getById($data['hasOne']['id']);
-                $testItem4 = ApiModelTestItem4::getById($data['hasOneAlso']['id']);
+                $testItem2 = ApiTestModelItem2::getById($data['hasOne']['id']);
+                $testItem4 = ApiTestModelItem4::getById($data['hasOneAlso']['id']);
 
-                $model= new ApiModelTestItem();
+                $model= new ApiTestModelItem();
                 $model->firstName     = $data['firstName'];
                 $model->lastName      = $data['lastName'];
                 $model->boolean       = $data['boolean'];
@@ -111,7 +112,7 @@
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = ApiModelTestItem::getById($id);
+                    $model = ApiTestModelItem::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
                     $outputArray['status']  = 'SUCCESS';
@@ -136,12 +137,12 @@
         {
             try
             {
-                $model = ApiModelTestItem::getById($id);
+                $model = ApiTestModelItem::getById($id);
                 $currencyValue              = CurrencyValue::getById($data['currencyValue']['id']);
                 $currencyValue->value       = $data['currencyValue']['value'];
                 $currencyValue->currency    = Currency::getById($data['currencyValue']['currency']['id']);
-                $testItem2 = ApiModelTestItem2::getById($data['hasOne']['id']);
-                $testItem4 = ApiModelTestItem4::getById($data['hasOneAlso']['id']);
+                $testItem2 = ApiTestModelItem2::getById($data['hasOne']['id']);
+                $testItem4 = ApiTestModelItem4::getById($data['hasOneAlso']['id']);
 
                 $model->firstName     = $data['firstName'];
                 $model->lastName      = $data['lastName'];
@@ -162,7 +163,7 @@
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = ApiModelTestItem::getById($id);
+                    $model = ApiTestModelItem::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
@@ -183,12 +184,12 @@
             }
             return $outputArray;
         }
-
+/*
         public function delete($id)
         {
             try
             {
-                $model = ApiModelTestItem::getById($id);
+                $model = ApiTestModelItem::getById($id);
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';
@@ -200,5 +201,6 @@
             }
             return $outputArray;
         }
+        */
     }
 ?>

@@ -58,7 +58,7 @@
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $testItem = new ApiModelTestItem();
+            $testItem = new ApiTestModelItem();
             $testItem->firstName = 'Bob';
             $testItem->lastName  = 'Bob';
             $testItem->boolean   = true;
@@ -77,7 +77,7 @@
             $testItem->forget();
             unset($testItem);
 
-            $testItem    = ApiModelTestItem::getById($id);
+            $testItem    = ApiTestModelItem::getById($id);
             $adapter     = new RedBeanModelToApiDataUtil($testItem);
             $data        = $adapter->getData();
             $compareData = array(
@@ -142,7 +142,7 @@
             $currencyValue->currency    = $currencies[0];
             $this->assertEquals('USD', $currencyValue->currency->code);
 
-            $testItem = new ApiModelTestItem();
+            $testItem = new ApiTestModelItem();
             $testItem->firstName     = 'Bob2';
             $testItem->lastName      = 'Bob2';
             $testItem->boolean       = true;
@@ -163,7 +163,7 @@
             $testItem->forget();
             unset($testItem);
 
-            $testItem    = ApiModelTestItem::getById($id);
+            $testItem    = ApiTestModelItem::getById($id);
             $adapter     = new RedBeanModelToApiDataUtil($testItem);
             $data        = $adapter->getData();
             $compareData = array(
@@ -226,24 +226,24 @@
             $currencyValue->currency    = $currencies[0];
             $this->assertEquals('USD', $currencyValue->currency->code);
 
-            $testItem2 = new ApiModelTestItem2();
+            $testItem2 = new ApiTestModelItem2();
             $testItem2->name     = 'John';
             $this->assertTrue($testItem2->save());
 
-            $testItem4 = new ApiModelTestItem4();
+            $testItem4 = new ApiTestModelItem4();
             $testItem4->name     = 'John';
             $this->assertTrue($testItem4->save());
 
             //HAS_MANY and MANY_MANY relationships should be ignored.
-            $testItem3_1 = new ApiModelTestItem3();
+            $testItem3_1 = new ApiTestModelItem3();
             $testItem3_1->name     = 'Kevin';
             $this->assertTrue($testItem3_1->save());
 
-            $testItem3_2 = new ApiModelTestItem3();
+            $testItem3_2 = new ApiTestModelItem3();
             $testItem3_2->name     = 'Jim';
             $this->assertTrue($testItem3_2->save());
 
-            $testItem = new ApiModelTestItem();
+            $testItem = new ApiTestModelItem();
             $testItem->firstName     = 'Bob3';
             $testItem->lastName      = 'Bob3';
             $testItem->boolean       = true;
@@ -267,7 +267,7 @@
             $testItem->forget();
             unset($testItem);
 
-            $testItem    = ApiModelTestItem::getById($id);
+            $testItem    = ApiTestModelItem::getById($id);
             $adapter     = new RedBeanModelToApiDataUtil($testItem);
             $data        = $adapter->getData();;
             $compareData = array(

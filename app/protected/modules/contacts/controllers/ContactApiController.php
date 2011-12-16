@@ -26,108 +26,6 @@
 
     class ContactApiController extends ZurmoModuleApiController
     {
-        public function getAll()
-        {
-            try
-            {
-                $filterParams = array();
-                if (isset($_GET['filter']) && $_GET['filter'] != '')
-                {
-                    parse_str($_GET['filter'], $filterParams);
-                }
-
-                $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
-                if (isset($filterParams['pagination']['pageSize']))
-                {
-                    $pageSize = $filterParams['pagination']['pageSize'];
-                }
-
-                if (isset($filterParams['pagination']['page']))
-                {
-                    $_GET['Contact_page'] = $filterParams['pagination']['page'];
-                }
-
-                if (isset($filterParams['sort']))
-                {
-                    $_GET['Contact_sort'] = $filterParams['sort'];
-                }
-
-
-                if (isset($filterParams['search']))
-                {
-                    $_GET['ContactsSearchForm'] = $filterParams['search'];
-                }
-
-                $stateMetadataAdapterClassName = 'ContactsStateMetadataAdapter';
-                $stateMetadataAdapterClassName = null;
-                $contact= new Contact(false);
-                $searchForm = new ContactsSearchForm($contact);
-
-                $dataProvider = $this->makeRedBeanDataProviderFromGet(
-                    $searchForm,
-                    'Contact',
-                    $pageSize,
-                    Yii::app()->user->userModel->id,
-                    $stateMetadataAdapterClassName);
-
-                $totalItems = $dataProvider->getTotalItemCount();
-                $outputArray = array();
-                $outputArray['data']['total'] = $totalItems;
-
-                if ($totalItems > 0)
-                {
-
-                    $outputArray['status'] = 'SUCCESS';
-                    $outputArray['message'] = '';
-
-                    $data = $dataProvider->getData();
-                    foreach ($data as $contact)
-                    {
-                        $util  = new RedBeanModelToApiDataUtil($contact);
-                        $outputArray['data']['array'][] = $util->getData();
-                    }
-                }
-                else
-                {
-                    $outputArray['data']['array'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Error');
-                }
-            }
-            catch (Exception $e)
-            {
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
-        }
-
-        public function getById($id)
-        {
-            try
-            {
-                $model = Contact::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-                if ($isAllowed === false)
-                {
-                    throw new Exception('This action is not allowed.');
-                }
-                $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();
-                $outputArray = array();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['data']   = $data;
-                $outputArray['message'] = '';
-            }
-            catch (Exception $e)
-            {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
-        }
-
         public function create($data)
         {
             try
@@ -494,28 +392,6 @@
             catch (Exception $e)
             {
                 $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
-        }
-
-        public function delete($id)
-        {
-            try
-            {
-                $model = Contact::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
-                if ($isAllowed === false)
-                {
-                    throw new Exception('This action is not allowed.');
-                }
-                $model->delete();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['message'] = '';
-            }
-            catch (Exception $e)
-            {
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }

@@ -115,16 +115,16 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']));
-            foreach ($response['data'] as $key => $value)
+            $this->assertEquals(1, count($response['data']['array']));
+            foreach ($response['data']['array'] as $key => $value)
             {
-                unset($response['data'][$key]['createdDateTime']);
-                unset($response['data'][$key]['modifiedDateTime']);
-                unset($response['data'][$key]['category']['id']);
-                unset($response['data'][$key]['id']);
-                ksort($response['data'][$key]);
+                unset($response['data']['array'][$key]['createdDateTime']);
+                unset($response['data']['array'][$key]['modifiedDateTime']);
+                unset($response['data']['array'][$key]['category']['id']);
+                unset($response['data']['array'][$key]['id']);
+                ksort($response['data']['array'][$key]);
             }
-            $this->assertEquals(array($data), $response['data']);
+            $this->assertEquals(array($data), $response['data']['array']);
 
             // Test with unprivileged user to view, edit and delete account.
             $sessionId = $this->login('steven', 'steven');

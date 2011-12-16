@@ -125,55 +125,77 @@
             }
         }
 
-        protected function getBaseController()
+        protected function getParamsForBaseController()
         {
             $model = $_GET['model'];
+            $data = array(
+                'modelName'                     => ucfirst($model),
+                'stateMetadataAdapterClassName' => null,);
             switch($_GET['model'])
             {
                 case 'apiTestModelItem':
-                    $controllerName = 'ApiTestModelItemController';
+                    $data['controllerName'] = 'ApiTestModelItemController';
+                    $data['searchFormName'] = null;
                     break;
                 case 'apiTestModelItem2':
-                    $controllerName = 'ApiTestModelItem2Controller';
+                    $data['controllerName'] = 'ApiTestModelItem2Controller';
+                    $data['searchFormName'] = null;
                     break;
                 case 'account':
-                    $controllerName = 'AccountApiController';
+                    $data['controllerName'] = 'AccountApiController';
+                    $data['searchFormName'] = 'AccountsSearchForm';
                     break;
                 case 'contact':
-                    $controllerName = 'ContactApiController';
+                    $data['controllerName'] = 'ContactApiController';
+                    $data['searchFormName'] = 'ContactsSearchForm';
+                    $data['stateMetadataAdapterClassName'] = 'ContactsStateMetadataAdapter';
+                    $data['stateMetadataAdapterClassName'] = null;
                     break;
                 case 'lead':
-                    $controllerName = 'LeadApiController';
+                    $data['controllerName'] = 'LeadApiController';
+                    $data['searchFormName'] = 'LeadsSearchForm';
+                    $data['stateMetadataAdapterClassName'] = 'LeadsStateMetadataAdapter';
+                    $data['modelName'] = 'Contact';
+                    $data['stateMetadataAdapterClassName'] = null;
                     break;
                 case 'meeting':
-                    $controllerName = 'MeetingApiController';
+                    $data['controllerName'] = 'MeetingApiController';
+                    $data['searchFormName'] = 'MeetingsSearchForm';
                    break;
                 case 'note':
-                    $controllerName = 'NoteApiController';
+                    $data['controllerName'] = 'NoteApiController';
+                    $data['searchFormName'] = 'NotesSearchForm';
                     break;
                 case 'opportunity':
-                    $controllerName = 'OpportunityApiController';
+                    $data['controllerName'] = 'OpportunityApiController';
+                    $data['searchFormName'] = 'OpportunitiesSearchForm';
                     break;
                 case 'task':
-                    $controllerName = 'TaskApiController';
+                    $data['controllerName'] = 'TaskApiController';
+                    $data['searchFormName'] = 'TasksSearchForm';
                     break;
                 case 'user':
-                    $controllerName = 'UserApiController';
+                    $data['controllerName'] = 'UserApiController';
+                    $data['searchFormName'] = 'UsersSearchForm';
                     break;
                 case 'group':
-                    $controllerName = 'GroupApiController';
+                    $data['controllerName'] = 'GroupApiController';
+                    $data['searchFormName'] = null;
                     break;
                 case 'role':
-                    $controllerName = 'RoleApiController';
+                    $data['controllerName'] = 'RoleApiController';
+                    $data['searchFormName'] = null;
                     break;
                 case 'currency':
-                    $controllerName = 'CurrencyApiController';
+                    $data['controllerName'] = 'CurrencyApiController';
+                    $data['searchFormName'] = null;
                     break;
                 default:
-                    $controllerName = null;
+                    $data['controllerName'] = null;
+                    $data['searchFormName'] = null;
                     break;
             }
-            return $controllerName;
+            return $data;
         }
     }
 ?>

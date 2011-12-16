@@ -128,8 +128,8 @@
             // Test with privileged user
             $sessionId = $this->login();
             $headers = array(
-                                        'Accept: application/json',
-                                        'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
             );
 
             //Test Delete

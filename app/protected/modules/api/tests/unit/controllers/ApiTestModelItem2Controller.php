@@ -26,11 +26,12 @@
 
     class ApiTestModelItem2Controller extends ZurmoModuleApiController
     {
+
         public function getAll()
         {
             try
             {
-                $data = ApiModelTestItem2::getAll();
+                $data = ApiTestModelItem2::getAll();
 
                 $outputArray = array();
                 if (count($data))
@@ -56,12 +57,12 @@
             }
             return $outputArray;
         }
-
+        /*
         public function getById($id)
         {
             try
             {
-                $model = ApiModelTestItem2::getById($id);
+                $model = ApiTestModelItem2::getById($id);
                 $util  = new RedBeanModelToApiDataUtil($model);
                 $data  = $util->getData();
                 $outputArray = array();
@@ -77,12 +78,12 @@
             }
             return $outputArray;
         }
-
+*/
         public function create($data)
         {
             try
             {
-                $model= new ApiModelTestItem2();
+                $model= new ApiTestModelItem2();
                 $model->name     = $data['name'];
 
                 $saved = $model->save();
@@ -92,7 +93,7 @@
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = ApiModelTestItem2::getById($id);
+                    $model = ApiTestModelItem2::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
@@ -118,14 +119,14 @@
         {
             try
             {
-                $model = ApiModelTestItem2::getById($id);
+                $model = ApiTestModelItem2::getById($id);
                 $model->name     = $data['name'];
 
                 $saved = $model->save();
                 $outputArray = array();
                 if ($saved)
                 {
-                    $model = ApiModelTestItem2::getById($id);
+                    $model = ApiTestModelItem2::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
@@ -146,12 +147,12 @@
             }
             return $outputArray;
         }
-
+/*
         public function delete($id)
         {
             try
             {
-                $model = ApiModelTestItem2::getById($id);
+                $model = ApiTestModelItem2::getById($id);
                 $model->delete();
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['message'] = '';
@@ -163,5 +164,6 @@
             }
             return $outputArray;
         }
+        */
     }
 ?>

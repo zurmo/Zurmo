@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiModelTestItem extends OwnedSecurableItem
+    class ApiTestModelItem extends OwnedSecurableItem
     {
         protected function untranslatedAttributeLabels()
         {
@@ -56,9 +56,9 @@
                     'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
                     'dropDown'         => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
                     'radioDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
-                    'hasOne'           => array(RedBeanModel::HAS_ONE,   'ApiModelTestItem2'),
-                    'hasMany'          => array(RedBeanModel::MANY_MANY, 'ApiModelTestItem3'),
-                    'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ApiModelTestItem4'),
+                    'hasOne'           => array(RedBeanModel::HAS_ONE,   'ApiTestModelItem2'),
+                    'hasMany'          => array(RedBeanModel::MANY_MANY, 'ApiTestModelItem3'),
+                    'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ApiTestModelItem4'),
                     'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
                     'primaryAddress'   => array(RedBeanModel::HAS_ONE,   'Address', RedBeanModel::OWNED),
                     'secondaryEmail'   => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),

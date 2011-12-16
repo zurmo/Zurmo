@@ -171,7 +171,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(4, count($response['data']));
+            $this->assertEquals(4, count($response['data']['array']));
 
             // Test with unprivileged user to view, edit and delete account.
             $sessionId = $this->login('steven', 'steven');
@@ -194,8 +194,8 @@
             // Test with privileged user
             $sessionId = $this->login();
             $headers = array(
-                                        'Accept: application/json',
-                                        'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
             );
 
             // Test Delete

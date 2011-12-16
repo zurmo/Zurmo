@@ -35,11 +35,14 @@
         public function actionList()
         {
             $params = Yii::app()->apiRequest->getParams();
-            $baseControllerName = $this->getBaseController();
-            if ($baseControllerName != null)
+            $requestData = $this->getParamsForBaseController();
+            if ($requestData['controllerName'] != null)
             {
-                $baseController = new $baseControllerName($baseControllerName, 'api');
-                $res = $baseController->getAll($params);
+                $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
+
+                $res = $baseController->getAll($requestData['modelName'],
+                                               $requestData['searchFormName'],
+                                               $requestData['stateMetadataAdapterClassName']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;
@@ -74,11 +77,11 @@
         public function actionView()
         {
             $params = Yii::app()->apiRequest->getParams();
-            $baseControllerName = $this->getBaseController();
-            if ($baseControllerName != null)
+            $requestData = $this->getParamsForBaseController();
+            if ($requestData['controllerName'] != null)
             {
-                $baseController = new $baseControllerName($baseControllerName, 'api');
-                $res = $baseController->getById($params['id']);
+                $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
+                $res = $baseController->getById($requestData['modelName'], $params['id']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;
@@ -113,10 +116,10 @@
         public function actionCreate()
         {
             $params = Yii::app()->apiRequest->getParams();
-            $baseControllerName = $this->getBaseController();
-            if ($baseControllerName != null)
+            $requestData = $this->getParamsForBaseController();
+            if ($requestData['controllerName'] != null)
             {
-                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
                 $res = $baseController->create($params['data']);
                 if($res['status'] == 'SUCCESS')
                 {
@@ -152,10 +155,10 @@
         public function actionUpdate()
         {
             $params = Yii::app()->apiRequest->getParams();
-            $baseControllerName = $this->getBaseController();
-            if ($baseControllerName != null)
+            $requestData = $this->getParamsForBaseController();
+            if ($requestData['controllerName'] != null)
             {
-                $baseController = new $baseControllerName($baseControllerName, 'api');
+                $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
                 $res = $baseController->update($params['id'], $params['data']);
                 if($res['status'] == 'SUCCESS')
                 {
@@ -191,11 +194,11 @@
         public function actionDelete()
         {
             $params = Yii::app()->apiRequest->getParams();
-            $baseControllerName = $this->getBaseController();
-            if ($baseControllerName != null)
+            $requestData = $this->getParamsForBaseController();
+            if ($requestData['controllerName'] != null)
             {
-                $baseController = new $baseControllerName($baseControllerName, 'api');
-                $res = $baseController->delete($params['id']);
+                $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
+                $res = $baseController->delete($requestData['modelName'], $params['id']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;

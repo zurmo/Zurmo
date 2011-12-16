@@ -26,7 +26,7 @@
 
     class NoteApiController extends ZurmoModuleApiController
     {
-        public function getAll()
+        public function getAll($modelClassName, $searchFormClassName, $stateMetadataAdapterClassName)
         {
             try
             {
@@ -51,32 +51,6 @@
             }
             catch (Exception $e)
             {
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
-        }
-
-        public function getById($id)
-        {
-            try
-            {
-                $model = Note::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-                if ($isAllowed === false)
-                {
-                    throw new Exception('This action is not allowed.');
-                }
-                $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();
-                $outputArray = array();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['data']   = $data;
-                $outputArray['message'] = '';
-            }
-            catch (Exception $e)
-            {
-                $outputArray['data'] = null;
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
@@ -170,28 +144,6 @@
             catch (Exception $e)
             {
                 $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
-        }
-
-        public function delete($id)
-        {
-            try
-            {
-                $model = Note::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
-                if ($isAllowed === false)
-                {
-                    throw new Exception('This action is not allowed.');
-                }
-                $model->delete();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['message'] = '';
-            }
-            catch (Exception $e)
-            {
                 $outputArray['status'] = 'FAILURE';
                 $outputArray['message'] = $e->getMessage();
             }
