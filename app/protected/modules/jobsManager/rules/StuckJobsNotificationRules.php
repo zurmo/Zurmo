@@ -25,42 +25,35 @@
      ********************************************************************************/
 
     /**
-     * A class for creating notification messages. A message can then have zero or more
-     * notifications attached to it.
+     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
+     * job monitor.
      */
-    class NotificationMessage extends Item
+    class StuckJobsNotificationRules extends NotificationRules
     {
-        public static function getDefaultMetadata()
+        public static function getType()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'textContent',
-                    'htmlContent',
-                ),
-                'relations' => array(
-                    'notifications' => array(RedBeanModel::HAS_MANY, 'Notification'),
-                ),
-                'rules' => array(
-                    array('textContent',   'type',    'type' => 'string'),
-                    array('htmlContent',   'type',    'type' => 'string'),
-                ),
-                'elements' => array(
-                    'textContent'     => 'TextArea',
-                    'htmlContent'     => 'TextArea',
-                ),
-                'defaultSortAttribute' => null,
-                'noAudit' => array(
-                    'textContent',
-                    'htmlContent',
-                )
-            );
-            return $metadata;
+            return 'StuckJobs';
         }
 
-        public static function isTypeDeletable()
+        public function isCritical()
         {
             return true;
+        }
+
+        /**
+         * Any user who has access to the scheduler module is added to receive a
+         * notification.
+         */
+        protected function loadUsers()
+        {
+            foreach(User::getAll() as $user)
+            {
+                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
+                    Right::ALLOW)
+                {
+                    $this->addUser($user);
+                }
+            }
         }
     }
 ?>

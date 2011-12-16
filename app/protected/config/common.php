@@ -215,6 +215,7 @@
             'home',
             'import',
             'install',
+            'jobsManager',
             'leads',
             'meetings',
             'notes',

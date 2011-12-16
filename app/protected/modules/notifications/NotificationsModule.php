@@ -24,11 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class NotificationsModule extends SecurableModule
+    class NotificationsModule extends Module
     {
         public function getDependencies()
         {
            return array('zurmo');
+        }
+
+        public function getRootModelNames()
+        {
+            return array('Notification', 'NotificationMessage');
         }
     }
 ?>

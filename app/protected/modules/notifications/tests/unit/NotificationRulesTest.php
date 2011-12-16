@@ -24,31 +24,48 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
-     */
-    class StuckJobsNotificationRules extends NotificationRules
+    class NotificationRulesTest extends BaseTest
     {
-        public static function getType()
+        public static function setUpBeforeClass()
         {
-            return 'StuckJobs';
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+            UserTestHelper::createBasicUser('billy');
         }
 
-        /**
-         * Any user who has access to the scheduler module is added to receive a
-         * notification.
-         */
-        protected function loadUsers()
+        public function testAllowDuplicates()
         {
-            foreach(Users::getAll() as $user)
-            {
-                if($user->getEffectiveRight('AccountsModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
-                    Right::ALLOW)
-                {
-                    $this->addUser($user);
-                }
-            }
+            $rules = new SimpleNotificationRules();
+            $this->assertFalse($rules->allowDuplicates());
+        }
+
+        public function testSetGetIsCritical()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertFalse($rules->isCritical());
+            $rules->setCritical(true);
+            $this->assertTrue($rules->isCritical());
+            $rules->setCritical(false);
+            $this->assertFalse($rules->isCritical());
+        }
+
+        public function testGetType()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertEquals('Simple', $rules->getType());
+        }
+
+        public function addAndGetUsers()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertEquals(0, $rules->getUsers());
+            $rules->addUser(User::getByUsername('billy'));
+            $this->assertEquals(1, $rules->getUsers());
+            //Try to add same user again.
+            $rules->addUser(User::getByUsername('billy'));
+            $this->assertEquals(1, $rules->getUsers());
+            $rules->addUser(User::getByUsername('super'));
+            $this->assertEquals(2, $rules->getUsers());
         }
     }
 ?>

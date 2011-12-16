@@ -52,15 +52,15 @@
                     'operatorType'         => 'equals',
                     'value'                => $user->id,
                 ),
-                1 => array(
+                3 => array(
                     'attributeName'        => 'isRead',
-                    'operatorType'         => 'equals',
-                    'value'                => '0',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
                 ),
             );
             $searchAttributeData['structure'] = '1 and 2 and 3';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Notification');
-            $where = RedBeanModelDataProvider::makeWhere('Notifcation', $searchAttributeData, $joinTablesAdapter);
+            $where = RedBeanModelDataProvider::makeWhere('Notification', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
             return count($models);
         }
@@ -75,13 +75,14 @@
                 ),
                 'relations' => array(
                     'owner' => array(RedBeanModel::HAS_ONE, 'User'),
-                    'notificationMessage' => array(RedBeanModel::HAS_MANY_BELONGS_TO,  'NotificationMessage'),
+                    'notificationMessage' => array(RedBeanModel::HAS_ONE,  'NotificationMessage'),
                 ),
                 'rules' => array(
                     array('type',   'required'),
                     array('type',   'type',    'type' => 'string'),
                     array('type',   'length',  'min'  => 3, 'max' => 64),
                     array('isRead', 'boolean'),
+                    array('isRead',   'validateIsReadIsSet'),
                     array('owner',  'required'),
                 ),
                 'elements' => array(
@@ -92,6 +93,14 @@
                 )
             );
             return $metadata;
+        }
+
+        public function validateIsReadIsSet()
+        {
+            if($this->isRead == null)
+            {
+                $this->addError('isRead', Yii::t('Default', 'Is Read must be set as true or false, not null.'));
+            }
         }
 
         public static function isTypeDeletable()

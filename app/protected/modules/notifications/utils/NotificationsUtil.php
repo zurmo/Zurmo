@@ -31,7 +31,7 @@
     {
         protected static function getEmailSubject()
         {
-            return Yii::t('Default', 'You have a new notifcation');
+            return Yii::t('Default', 'You have a new notification');
         }
 
         /**
@@ -70,6 +70,7 @@
                     $notification                      = new Notification();
                     $notification->owner               = $user;
                     $notification->type                = $type;
+                    $notification->isRead              = false;
                     $notification->notificationMessage = $message;
                     $saved                             = $notification->save();
                     if(!$saved)

@@ -24,43 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A class for creating notification messages. A message can then have zero or more
-     * notifications attached to it.
-     */
-    class NotificationMessage extends Item
+    class StuckJobsNotificationRulesTest extends BaseTest
     {
-        public static function getDefaultMetadata()
+        public static function setUpBeforeClass()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'textContent',
-                    'htmlContent',
-                ),
-                'relations' => array(
-                    'notifications' => array(RedBeanModel::HAS_MANY, 'Notification'),
-                ),
-                'rules' => array(
-                    array('textContent',   'type',    'type' => 'string'),
-                    array('htmlContent',   'type',    'type' => 'string'),
-                ),
-                'elements' => array(
-                    'textContent'     => 'TextArea',
-                    'htmlContent'     => 'TextArea',
-                ),
-                'defaultSortAttribute' => null,
-                'noAudit' => array(
-                    'textContent',
-                    'htmlContent',
-                )
-            );
-            return $metadata;
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+            UserTestHelper::createBasicUser('billy');
+            UserTestHelper::createBasicUser('sally');
         }
 
-        public static function isTypeDeletable()
+        public function testGetUsers()
         {
-            return true;
+            $billy = User::getByUsername('billy');
+            $sally = User::getByUsername('sally');
+            $rules = new StuckJobsNotificationRules();
+            $this->assertEquals(1, count($rules->getUsers())); //super user
+
+            //Now add billy and sally to allow rights to the JobManager
+            $billy->setRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER);
+            $this->assertTrue($billy->save());
+            $sally->setRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER);
+            $this->assertTrue($sally->save());
+
+            $billy = User::getByUsername('billy');
+            $this->assertEquals(Right::ALLOW,
+                    $billy->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER));
+
+            //Rules should still show 1 since the users are already loaded (isLoaded = true)
+            $this->assertEquals(1, count($rules->getUsers()));
+
+            //Instantiate a new rules object.
+            $rules = new StuckJobsNotificationRules();
+            $this->assertEquals(3, count($rules->getUsers()));
         }
     }
 ?>

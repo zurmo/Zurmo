@@ -24,43 +24,23 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A class for creating notification messages. A message can then have zero or more
-     * notifications attached to it.
-     */
-    class NotificationMessage extends Item
+    class JobsManagerModule extends SecurableModule
     {
-        public static function getDefaultMetadata()
+        const RIGHT_ACCESS_JOBSMANAGER = 'Access Jobs Manager Tab';
+
+        public function getDependencies()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'textContent',
-                    'htmlContent',
-                ),
-                'relations' => array(
-                    'notifications' => array(RedBeanModel::HAS_MANY, 'Notification'),
-                ),
-                'rules' => array(
-                    array('textContent',   'type',    'type' => 'string'),
-                    array('htmlContent',   'type',    'type' => 'string'),
-                ),
-                'elements' => array(
-                    'textContent'     => 'TextArea',
-                    'htmlContent'     => 'TextArea',
-                ),
-                'defaultSortAttribute' => null,
-                'noAudit' => array(
-                    'textContent',
-                    'htmlContent',
-                )
-            );
-            return $metadata;
+           return array('notifications', 'zurmo');
         }
 
-        public static function isTypeDeletable()
+        public static function getAccessRight()
         {
-            return true;
+            return self::RIGHT_ACCESS_JOBSMANAGER;
+        }
+
+        protected static function getSingularModuleLabel()
+        {
+            return 'JobManager';
         }
     }
 ?>

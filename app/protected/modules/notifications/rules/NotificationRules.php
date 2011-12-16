@@ -28,7 +28,7 @@
      * Class to help the notifications module understand the logic for specific notifications
      * it processes and creates.
      */
-    abstract class NotificationsRules
+    abstract class NotificationRules
     {
         /**
          * Sets to true during @see NotificationRules::getUsers();
@@ -41,6 +41,8 @@
          * @var array
          */
         protected $users       = array();
+
+        protected $critical    = false;
 
         /**
          * @return true/false whether to allow multiple notifications by type for a single owner to be
@@ -57,7 +59,18 @@
          */
         public function isCritical()
         {
-            return false;
+            return $this->critical;
+        }
+
+        /**
+         * Set the notification as being critical or not. This will override the default
+         * setting for this particular NotificationRules
+         * @param boolean $critical
+         */
+        public function setCritical($critical)
+        {
+            assert('is_bool($critical)');
+            $this->critical = $critical;
         }
 
         /**

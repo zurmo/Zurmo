@@ -24,43 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A class for creating notification messages. A message can then have zero or more
-     * notifications attached to it.
-     */
-    class NotificationMessage extends Item
+    class NotificationRulesFactoryTest extends BaseTest
     {
-        public static function getDefaultMetadata()
+        public static function setUpBeforeClass()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'textContent',
-                    'htmlContent',
-                ),
-                'relations' => array(
-                    'notifications' => array(RedBeanModel::HAS_MANY, 'Notification'),
-                ),
-                'rules' => array(
-                    array('textContent',   'type',    'type' => 'string'),
-                    array('htmlContent',   'type',    'type' => 'string'),
-                ),
-                'elements' => array(
-                    'textContent'     => 'TextArea',
-                    'htmlContent'     => 'TextArea',
-                ),
-                'defaultSortAttribute' => null,
-                'noAudit' => array(
-                    'textContent',
-                    'htmlContent',
-                )
-            );
-            return $metadata;
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
         }
 
-        public static function isTypeDeletable()
+        public function testCreateNotificationRulesByType()
         {
-            return true;
+            $rules = NotificationRulesFactory::createNotificationRulesByType('Simple');
+            $this->assertEquals('SimpleNotificationRules', get_class($rules));
         }
     }
 ?>
