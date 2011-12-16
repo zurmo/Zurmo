@@ -100,6 +100,7 @@
          */
         public function addUser(User $user)
         {
+            assert('$user->id > 0');
             if(!isset($this->users[$user->id]))
             {
                 $this->users[$user->id] = $user;
