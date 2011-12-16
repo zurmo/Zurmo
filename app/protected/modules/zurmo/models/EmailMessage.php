@@ -24,23 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    //Todo: finish class, and rework as needed.  Currently a stub as we complete
+    //notifications and scheduler.
+    class EmailMessage
     {
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
-        }
+
     }
 ?>

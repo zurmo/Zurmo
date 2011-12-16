@@ -24,21 +24,35 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    class NotificationDetailsView extends DetailsView
     {
         public static function getDefaultMetadata()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
+            $metadata = array(
+                'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type' => 'ListLink', 'label' => "eval:Yii::t('Default', 'Notifications List')"
+                            ),
+                        ),
+                    ),
+                    'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
+                    'panels' => array(
+                        array(
+                            'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'notificationMessage', 'type' => 'MessageForNotification'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
             );
             return $metadata;
         }

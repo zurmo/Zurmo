@@ -228,14 +228,14 @@
                 1 => array(
                     'attributeName'        => 'primaryEmail',
                     'relatedAttributeName' => 'optOut',
-                    'operatorType'         => 'equals',
-                    'value'                => (bool)0,
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
                 ),
                 2 => array(
                     'attributeName'        => 'secondaryEmail',
                     'relatedAttributeName' => 'optOut',
-                    'operatorType'         => 'equals',
-                    'value'                => (bool)0,
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
                 ),
             );
             $compareStructure = '(1 or 2)';

@@ -24,23 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    /**
+     * Displays the html/text content from the related NotificationMessage
+     *
+     */
+    class MessageForNotificationElement extends Element
     {
-        public static function getDefaultMetadata()
+        protected function renderEditable()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+            throw NotSupportedException();
+        }
+
+        protected function renderControlEditable()
+        {
+            throw NotSupportedException();
+        }
+
+        /**
+         * Renders the attribute from the model.
+         * @return The element's content.
+         */
+        protected function renderControlNonEditable()
+        {
+            assert('$this->model instanceof Notification');
+            if($this->model->notificationMessage->id > 0)
+            {
+                $content = null;
+                if($this->model->notificationMessage->htmlContent != null)
+                {
+                    $content = $this->model->notificationMessage->htmlContent;
+                }
+                elseif($this->model->notificationMessage->textContent != null)
+                {
+                    $content = $this->model->notificationMessage->textContent;
+                }
+                return Yii::app()->format->text($content);
+            }
         }
     }
 ?>

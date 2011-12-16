@@ -24,39 +24,48 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    class NotificationRulesTest extends BaseTest
     {
-        protected function renderContent()
+        public static function setUpBeforeClass()
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
-
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+            UserTestHelper::createBasicUser('billy');
         }
 
-        protected function renderNotificationsLinkContent()
+        public function testAllowDuplicates()
         {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '</li><span class="notifications-link">' . $content . '</span></li>';
+            $rules = new SimpleNotificationRules();
+            $this->assertFalse($rules->allowDuplicates());
+        }
+
+        public function testSetGetIsCritical()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertFalse($rules->isCritical());
+            $rules->setCritical(true);
+            $this->assertTrue($rules->isCritical());
+            $rules->setCritical(false);
+            $this->assertFalse($rules->isCritical());
+        }
+
+        public function testGetType()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertEquals('Simple', $rules->getType());
+        }
+
+        public function addAndGetUsers()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertEquals(0, $rules->getUsers());
+            $rules->addUser(User::getByUsername('billy'));
+            $this->assertEquals(1, $rules->getUsers());
+            //Try to add same user again.
+            $rules->addUser(User::getByUsername('billy'));
+            $this->assertEquals(1, $rules->getUsers());
+            $rules->addUser(User::getByUsername('super'));
+            $this->assertEquals(2, $rules->getUsers());
         }
     }
 ?>
