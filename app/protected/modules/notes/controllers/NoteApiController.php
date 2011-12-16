@@ -30,21 +30,72 @@
         {
             try
             {
-                $data = Note::getAll();
-
-                $outputArray = array();
-                if (count($data))
+                $filterParams = array();
+                if (isset($_GET['filter']) && $_GET['filter'] != '')
                 {
+                    parse_str($_GET['filter'], $filterParams);
+                }
+
+                $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
+                if (isset($filterParams['pagination']['pageSize']))
+                {
+                    $pageSize = $filterParams['pagination']['pageSize'];
+                }
+
+                if (isset($filterParams['pagination']['page']))
+                {
+                    $_GET[$modelClassName . '_page'] = $filterParams['pagination']['page'];
+                }
+
+                if (isset($filterParams['sort']))
+                {
+                    $_GET[$modelClassName . '_sort'] = $filterParams['sort'];
+                }
+
+
+                if (isset($filterParams['search']) && isset($searchFormClassName))
+                {
+                    $_GET[$searchFormClassName] = $filterParams['search'];
+                }
+
+                $stateMetadataAdapterClassName = null;
+                $model= new $modelClassName(false);
+                if (isset($searchFormClassName))
+                {
+                    $searchForm = new $searchFormClassName($model);
+                }
+                else{
+                    $searchForm = null;
+                }
+
+                $dataProvider = $this->makeRedBeanDataProviderFromGet(
+                    $searchForm,
+                    $modelClassName,
+                    $pageSize,
+                    Yii::app()->user->userModel->id,
+                    $stateMetadataAdapterClassName
+                );
+
+                $totalItems = $dataProvider->getTotalItemCount();
+                $outputArray = array();
+                $outputArray['data']['total'] = $totalItems;
+
+                if ($totalItems > 0)
+                {
+
                     $outputArray['status'] = 'SUCCESS';
                     $outputArray['message'] = '';
-                    foreach ($data as $k => $model)
+
+                    $data = $dataProvider->getData();
+                    foreach ($data as $model)
                     {
                         $util  = new RedBeanModelToApiDataUtil($model);
-                        $outputArray['data'][] = $util->getData();
+                        $outputArray['data']['array'][] = $util->getData();
                     }
                 }
                 else
                 {
+                    $outputArray['data']['array'] = null;
                     $outputArray['status'] = 'FAILURE';
                     $outputArray['message'] = Yii::t('Default', 'Error');
                 }

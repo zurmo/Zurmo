@@ -129,8 +129,8 @@
             // Test with unprivileged user to view, edit and delete account.
             $sessionId = $this->login('steven', 'steven');
             $headers = array(
-                                        'Accept: application/json',
-                                        'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -147,8 +147,8 @@
             // Test with privileged user
             $sessionId = $this->login();
             $headers = array(
-                                        'Accept: application/json',
-                                        'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
             );
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'DELETE', $headers);
@@ -158,6 +158,133 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+        }
+
+        /**
+        * @depends testListViewCreateUpdateDelete
+        */
+        public function testSearch()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $anotherUser = User::getByUsername('steven');
+
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+            MeetingTestHelper::createMeetingByNameForOwner('First Meeting', $super);
+            MeetingTestHelper::createMeetingByNameForOwner('Second Meeting', $super);
+            MeetingTestHelper::createMeetingByNameForOwner('Third Meeting', $super);
+            MeetingTestHelper::createMeetingByNameForOwner('Forth Meeting', $anotherUser);
+            MeetingTestHelper::createMeetingByNameForOwner('Fifth Meeting', $super);
+
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                    'name' => '',
+                ),
+                'sort' => 'name',
+            );
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(5, $response['data']['total']);
+            $this->assertEquals('Fifth Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals('First Meeting', $response['data']['array'][1]['name']);
+            $this->assertEquals('Forth Meeting', $response['data']['array'][2]['name']);
+
+            // Second page
+            $searchParams['pagination']['page'] = 2;
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(2, count($response['data']['array']));
+            $this->assertEquals(5, $response['data']['total']);
+            $this->assertEquals('Second Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals('Third Meeting', $response['data']['array'][1]['name']);
+
+            // Search by name
+            $searchParams['pagination']['page'] = 1;
+            $searchParams['search']['name'] = 'First Meeting';
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']['array']));
+            $this->assertEquals(1, $response['data']['total']);
+            $this->assertEquals('First Meeting', $response['data']['array'][0]['name']);
+
+            // No results
+            $searchParams['pagination']['page'] = 1;
+            $searchParams['search']['name'] = 'First Meeting 2';
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(0, $response['data']['total']);
+            $this->assertFalse(isset($response['data']['array']));
+
+            // Search by name desc.
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                    'name' => '',
+                ),
+                'sort' => 'name.desc',
+            );
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(5, $response['data']['total']);
+            $this->assertEquals('Third Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals('Second Meeting', $response['data']['array'][1]['name']);
+            $this->assertEquals('Forth Meeting', $response['data']['array'][2]['name']);
+
+            // Second page
+            $searchParams['pagination']['page'] = 2;
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(2, count($response['data']['array']));
+            $this->assertEquals(5, $response['data']['total']);
+            $this->assertEquals('First Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals('Fifth Meeting', $response['data']['array'][1]['name']);
+
+            // Search by custom fields, order by name desc
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                    'owner'   => array( 'id' => 1),
+                ),
+                'sort' => 'name.desc',
+            );
+
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(4, $response['data']['total']);
+            $this->assertEquals('Third Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals('Second Meeting', $response['data']['array'][1]['name']);
+            $this->assertEquals('First Meeting', $response['data']['array'][2]['name']);
         }
     }
 ?>

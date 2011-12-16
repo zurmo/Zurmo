@@ -149,14 +149,12 @@
                     $data['controllerName'] = 'ContactApiController';
                     $data['searchFormName'] = 'ContactsSearchForm';
                     $data['stateMetadataAdapterClassName'] = 'ContactsStateMetadataAdapter';
-                    $data['stateMetadataAdapterClassName'] = null;
                     break;
                 case 'lead':
                     $data['controllerName'] = 'LeadApiController';
                     $data['searchFormName'] = 'LeadsSearchForm';
                     $data['stateMetadataAdapterClassName'] = 'LeadsStateMetadataAdapter';
                     $data['modelName'] = 'Contact';
-                    $data['stateMetadataAdapterClassName'] = null;
                     break;
                 case 'meeting':
                     $data['controllerName'] = 'MeetingApiController';
@@ -164,7 +162,7 @@
                    break;
                 case 'note':
                     $data['controllerName'] = 'NoteApiController';
-                    $data['searchFormName'] = 'NotesSearchForm';
+                    $data['searchFormName'] = null;
                     break;
                 case 'opportunity':
                     $data['controllerName'] = 'OpportunityApiController';

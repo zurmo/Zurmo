@@ -207,5 +207,131 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
         }
+
+        /**
+        * @depends testListViewCreateUpdateDelete
+        */
+        public function testSearch()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+            $manager = User::getByUsername('smith45');
+
+            UserTestHelper::createBasicUser('First');
+            UserTestHelper::createBasicUser('Second');
+            UserTestHelper::createBasicUser('Third');
+            UserTestHelper::createBasicUser('Forth');
+            UserTestHelper::createBasicUserWithManager('Fifth', $manager);
+
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                    'username' => '',
+                ),
+                'sort' => 'username',
+            );
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(8, $response['data']['total']);
+            $this->assertEquals('fifth', $response['data']['array'][0]['username']);
+            $this->assertEquals('first', $response['data']['array'][1]['username']);
+            $this->assertEquals('forth', $response['data']['array'][2]['username']);
+
+            // Second page
+            $searchParams['pagination']['page'] = 2;
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(8, $response['data']['total']);
+            $this->assertEquals('second', $response['data']['array'][0]['username']);
+            $this->assertEquals('smith45', $response['data']['array'][1]['username']);
+            $this->assertEquals('steven', $response['data']['array'][2]['username']);
+
+            // Search by name
+            $searchParams['pagination']['page'] = 1;
+            $searchParams['search']['username'] = 'first';
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']['array']));
+            $this->assertEquals(1, $response['data']['total']);
+            $this->assertEquals('first', $response['data']['array'][0]['username']);
+
+            // No results
+            $searchParams['pagination']['page'] = 1;
+            $searchParams['search']['username'] = 'first2';
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(0, $response['data']['total']);
+            $this->assertFalse(isset($response['data']['array']));
+
+            // Search by name desc.
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                     'username' => '',
+                ),
+                'sort' => 'username.desc',
+            );
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(8, $response['data']['total']);
+            $this->assertEquals('third', $response['data']['array'][0]['username']);
+            $this->assertEquals('super', $response['data']['array'][1]['username']);
+            $this->assertEquals('steven', $response['data']['array'][2]['username']);
+
+            // Second page
+            $searchParams['pagination']['page'] = 2;
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(8, $response['data']['total']);
+            $this->assertEquals('smith45', $response['data']['array'][0]['username']);
+            $this->assertEquals('second', $response['data']['array'][1]['username']);
+            $this->assertEquals('forth', $response['data']['array'][2]['username']);
+
+            // Search by custom fields, order by name desc
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                    'manager'   => array( 'id' => $manager->id),
+                ),
+                'sort' => 'username',
+            );
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']['array']));
+            $this->assertEquals(1, $response['data']['total']);
+            $this->assertEquals('fifth', $response['data']['array'][0]['username']);
+        }
     }
 ?>
