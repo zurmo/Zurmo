@@ -114,7 +114,7 @@
                 'a' => '0',
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
-            $this->assertEquals(array('a' => null), $newArray);
+            $this->assertEquals(array('a' => '0'), $newArray);
         }
 
         public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()

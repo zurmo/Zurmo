@@ -220,6 +220,21 @@
         }
 
         /**
+         * Override to properly get validators for an attribute when they are on the model.
+         * Todo: Factor in scenario for model attributes.
+         * (non-PHPdoc)
+         * @see CModel::getValidators()
+         */
+        public function getValidators($attribute=null)
+        {
+            if($attribute != null && !property_exists($this, $attribute))
+            {
+                return $this->model->getValidators($attribute);
+            }
+            return parent::getValidators($attribute);
+        }
+
+        /**
          * Override and set to true if you need to ignore the required validator.
          */
         protected static function shouldIgnoreRequiredValidator()

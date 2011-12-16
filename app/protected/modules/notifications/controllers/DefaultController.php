@@ -26,6 +26,65 @@
 
     class NotificationsDefaultController extends ZurmoBaseController
     {
+        public function actionUserList()
+        {
+            $message              = new NotificationMessage();
+            $message->textContent = 'sam yang (test many chars chopped)' . mt_rand(5,1000);
+            $message->htmlContent = 'html sam yang' . mt_rand(5,1000);
+            $message->save();
 
+            $notification = new Notification();
+            $notification->type                = 'Simple';
+            $notification->owner               = Yii::app()->user->userModel;
+            $notification->isRead              = false;
+            $notification->notificationMessage = $message;
+            $notification->save();
+
+
+            $pageSize     = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                            'listPageSize', get_class($this->getModule()));
+            $notification = new Notification(false);
+            $searchAttributes = array(
+                'owner'    => array('id' => Yii::app()->user->userModel->id),
+                'isRead'   => '0',
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $notification,
+                Yii::app()->user->userModel->id,
+                $searchAttributes
+            );
+            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
+                $metadataAdapter,
+                'Notification',
+                'RedBeanModelDataProvider',
+                'createdDateTime',
+                true,
+                $pageSize
+            );
+
+
+            $titleBarAndListView = new TitleBarAndListView(
+                                        $this->getId(),
+                                        $this->getModule()->getId(),
+                                        $notification,
+                                        'Notifications',
+                                        $dataProvider,
+                                        'NotificationsForUserListView',
+                                        NotificationsModule::getModuleLabelByTypeAndLanguage('Plural'));
+            $view = new NotificationsPageView($this, $titleBarAndListView);
+            echo $view->render();
+        }
+
+        public function actionDetails($id)
+        {
+            $account = Account::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($account);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($account), $account);
+            $detailsAndRelationsView = $this->makeDetailsAndRelationsView($account, 'AccountsModule',
+                                                                          'AccountDetailsAndRelationsView',
+                                                                          Yii::app()->request->getRequestUri());
+            $view = new AccountsPageView($this, $detailsAndRelationsView);
+            echo $view->render();
+        }
     }
 ?>

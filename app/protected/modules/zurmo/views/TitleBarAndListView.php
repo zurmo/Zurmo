@@ -24,23 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    class TitleBarAndListView extends GridView
     {
-        public static function getDefaultMetadata()
+        public function __construct(
+            $controllerId,
+            $moduleId,
+            RedBeanModel $listModel,
+            $moduleName,
+            CDataProvider $dataProvider,
+            $listViewClassName,
+            $title,
+            $selectedIds = array(),
+            $selectAll = false
+            )
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            assert('is_string($moduleName)');
+            assert('is_string($listViewClassName)');
+            assert('is_string($title)');
+            assert('is_array($selectedIds)');
+            assert('is_bool($selectAll)');
+            parent::__construct(2, 1);
+            $moduleClassName = $moduleName . 'Module';
+            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
+            $shortcutsMenu = new DropDownShortcutsMenuView(
+                $controllerId,
+                $moduleId,
+                $menuItems
             );
-            return $metadata;
+            $this->setView(new TitleBarView($title, Yii::t('Default', 'Home'), 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new $listViewClassName($controllerId, $moduleId, get_class($listModel), $dataProvider, $selectedIds, $selectAll), 1, 0);
+        }
+
+        public function isUniqueToAPage()
+        {
+            return true;
         }
     }
 ?>
