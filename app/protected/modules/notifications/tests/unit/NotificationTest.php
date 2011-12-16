@@ -33,6 +33,35 @@
             UserTestHelper::createBasicUser('billy');
         }
 
+        public function testGetUnreadCountByUser()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $this->assertEquals(0, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+            $notification         = new Notification();
+            $notification->type   = 'Simple';
+            $notification->owner  = Yii::app()->user->userModel;
+            $notification->isRead = false;
+            $this->assertTrue($notification->save());
+            $this->assertEquals(1, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+            $this->assertEquals(0, $notification->isRead);
+            $notification->isRead = true;
+            $this->assertTrue($notification->save());
+            $notificationId = $notification->id;
+            $notification->forget();
+
+            //Retrieve again.
+            $notification = Notification::getById($notificationId);
+            $this->assertEquals('Simple', $notification->type);
+            $this->assertEquals(1, $notification->isRead);
+            $this->assertEquals(0, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+
+            $notification->delete();
+            $this->assertEquals(0, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+        }
+
+        /**
+         * @depends testGetUnreadCountByUser
+         */
         public function testNotification()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -105,7 +134,7 @@
 
             //Now add another super notification, but not simple.
             $notification         = new Notification();
-            $notification->type   = 'Simple2';
+            $notification->type   = 'Simple2Test';
             $notification->isRead = true;
             $notification->owner  = $super;
             $this->assertTrue($notification->save());
@@ -168,7 +197,7 @@
             $this->assertTrue($message->save());
 
             $notification = new Notification();
-            $notification->type                = 'SimpleY';
+            $notification->type                = 'SimpleYTest';
             $notification->owner               = $billy;
             $notification->isRead              = false;
             $notification->notificationMessage = $message;
@@ -176,7 +205,7 @@
 
             //And Billy can create a notification for super
             $notification = new Notification();
-            $notification->type                = 'SimpleX';
+            $notification->type                = 'SimpleZTest';
             $notification->owner               = $super;
             $notification->isRead              = false;
             $notification->notificationMessage = $message;
@@ -188,10 +217,10 @@
             $mesage = NotificationMessage::getById($messageId);
 
             $this->assertEquals(2, $message->notifications->count());
-            $this->assertTrue($message->notifications[0]->type == 'SimpleX' ||
-                              $message->notifications[0]->type == 'SimpleY');
-            $this->assertTrue($message->notifications[1]->type == 'SimpleX' ||
-                              $message->notifications[1]->type == 'SimpleY');
+            $this->assertTrue($message->notifications[0]->type == 'SimpleYTest' ||
+                              $message->notifications[0]->type == 'SimpleZTest');
+            $this->assertTrue($message->notifications[1]->type == 'SimpleYTest' ||
+                              $message->notifications[1]->type == 'SimpleZTest');
 
             /** - Add back in if it is possible to get the NotificationMessages to Notifications as RedBeanModel::OWNED
              * //Currently it is not working and cause $this->assertEquals(2, $message->notifications->count());

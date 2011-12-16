@@ -24,39 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    class NotificationTestHelper
     {
-        protected function renderContent()
+        public static function createNotificationByContentAndTypeForOwner($content, $owner, $type = 'Simple')
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
+            //And Billy can create a notification for super
+            $notification         = new Notification();
+            $notification->type   = $type;
+            $notification->owner  = $owner;
+            $notification->isRead = false;
+            $saved = $notification->save();
+            assert($saved);
 
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
-        }
-
-        protected function renderNotificationsLinkContent()
-        {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '</li><span class="notifications-link">' . $content . '</span></li>';
+            //Same with a message.
+            $message              = new NotificationMessage();
+            $message->textContent = 'text' . $content;
+            $message->htmlContent = 'html' . $content;
+            $saved = $message->save();
+            assert($saved);
         }
     }
 ?>

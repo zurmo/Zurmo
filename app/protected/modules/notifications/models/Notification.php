@@ -35,7 +35,6 @@
             {
                 return null;
             }
-
             $notificationRulesClassName = $this->type . 'NotificationRules';
             return $notificationRulesClassName::getDisplayName();
         }
@@ -70,6 +69,30 @@
                 ),
             );
             $searchAttributeData['structure'] = '1 and 2 and 3';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Notification');
+            $where = RedBeanModelDataProvider::makeWhere('Notification', $searchAttributeData, $joinTablesAdapter);
+            $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
+            return count($models);
+        }
+
+        public static function getUnreadCountByUser(User $user)
+        {
+            assert('$user->id > 0');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'owner',
+                    'relatedAttributeName' => 'id',
+                    'operatorType'         => 'equals',
+                    'value'                => $user->id,
+                ),
+                2 => array(
+                    'attributeName'        => 'isRead',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
+                ),
+            );
+            $searchAttributeData['structure'] = '1 and 2';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Notification');
             $where = RedBeanModelDataProvider::makeWhere('Notification', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
