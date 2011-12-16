@@ -45,6 +45,14 @@
         protected $critical    = false;
 
         /**
+         * @returns Translated label that describes this rule type.
+         */
+        public static function getDisplayName()
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
          * @return true/false whether to allow multiple notifications by type for a single owner to be
          * created.
          */

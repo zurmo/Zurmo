@@ -25,39 +25,40 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * Displays the html/text content from the related NotificationMessage
+     *
      */
-    class StuckJobsNotificationRules extends NotificationRules
+    class MessageForNotificationElement extends Element
     {
-        public static function getDisplayName()
+        protected function renderEditable()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
+            throw NotSupportedException();
         }
 
-        public static function getType()
+        protected function renderControlEditable()
         {
-            return 'StuckJobs';
-        }
-
-        public function isCritical()
-        {
-            return true;
+            throw NotSupportedException();
         }
 
         /**
-         * Any user who has access to the scheduler module is added to receive a
-         * notification.
+         * Renders the attribute from the model.
+         * @return The element's content.
          */
-        protected function loadUsers()
+        protected function renderControlNonEditable()
         {
-            foreach(User::getAll() as $user)
+            assert('$this->model instanceof Notification');
+            if($this->model->notificationMessage->id > 0)
             {
-                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
-                    Right::ALLOW)
+                $content = null;
+                if($this->model->notificationMessage->htmlContent != null)
                 {
-                    $this->addUser($user);
+                    $content = $this->model->notificationMessage->htmlContent;
                 }
+                elseif($this->model->notificationMessage->textContent != null)
+                {
+                    $content = $this->model->notificationMessage->textContent;
+                }
+                return Yii::app()->format->text($content);
             }
         }
     }

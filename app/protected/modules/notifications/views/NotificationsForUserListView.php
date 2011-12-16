@@ -24,8 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class NotificationsForUserListView extends SecuredListView
+    class NotificationsForUserListView extends ListView
     {
+       /**
+        * Override to set rows as not being selectable.
+        */
+       public function __construct(
+            $controllerId,
+            $moduleId,
+            $modelClassName,
+            $dataProvider,
+            $selectedIds,
+            $selectAll,
+            $gridIdSuffix = null
+        )
+        {
+            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, $selectedIds, $selectAll,
+                                $gridIdSuffix);
+            $this->rowsAreSelectable = false;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
@@ -37,7 +55,16 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'type', 'type' => 'Text', 'isLink' => true),
+                                                array('attributeName' => 'type', 'type' => 'Notification', 'isLink' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'createdDateTime', 'type' => 'DateTime'),
                                             ),
                                         ),
                                     )
@@ -49,6 +76,16 @@
 
             );
             return $metadata;
+        }
+
+        /**
+         * Override so the edit link does not show.
+         * (non-PHPdoc)
+         * @see SecuredListView::getCGridViewLastColumn()
+         */
+        protected function getCGridViewLastColumn()
+        {
+            return array();
         }
     }
 ?>

@@ -29,6 +29,17 @@
      */
     class Notification extends Item
     {
+        public function __toString()
+        {
+            if ($this->type == null)
+            {
+                return null;
+            }
+
+            $notificationRulesClassName = $this->type . 'NotificationRules';
+            return $notificationRulesClassName::getDisplayName();
+        }
+
         /**
          * Given a type and a user, find out how many existing unread notifications exist for that user
          * and that type.

@@ -24,41 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
-     */
-    class StuckJobsNotificationRules extends NotificationRules
+    class TitleBarAndDetailsView extends GridView
     {
-        public static function getDisplayName()
+        public function __construct($controllerId, $moduleId, RedBeanModel $model, $moduleName)
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
-        }
-
-        public static function getType()
-        {
-            return 'StuckJobs';
-        }
-
-        public function isCritical()
-        {
-            return true;
-        }
-
-        /**
-         * Any user who has access to the scheduler module is added to receive a
-         * notification.
-         */
-        protected function loadUsers()
-        {
-            foreach(User::getAll() as $user)
+            parent::__construct(2, 1);
+            $moduleClassName = $moduleName . 'Module';
+            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
+            $shortcutsMenu = new DropDownShortcutsMenuView(
+                $controllerId,
+                $moduleId,
+                $menuItems
+            );
+            $description = strval($model);
+            if (strlen($description) > 100)
             {
-                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
-                    Right::ALLOW)
-                {
-                    $this->addUser($user);
-                }
+                $description = substr($description, 0, 100) . '...';
             }
+            $titleBarView = new TitleBarView (  $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
+                                                $description, 1, $shortcutsMenu->render());
+            $this->setView($titleBarView, 0, 0);
+            $editViewClassName = get_class($model) . 'DetailsView';
+            $this->setView(new $editViewClassName($controllerId, $moduleId, $model), 1, 0);
         }
     }
 ?>

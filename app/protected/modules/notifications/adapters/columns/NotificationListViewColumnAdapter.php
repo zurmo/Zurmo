@@ -24,40 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
-     */
-    class StuckJobsNotificationRules extends NotificationRules
+    class NotificationListViewColumnAdapter extends TextListViewColumnAdapter
     {
-        public static function getDisplayName()
+        public function renderGridViewData()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
-        }
-
-        public static function getType()
-        {
-            return 'StuckJobs';
-        }
-
-        public function isCritical()
-        {
-            return true;
-        }
-
-        /**
-         * Any user who has access to the scheduler module is added to receive a
-         * notification.
-         */
-        protected function loadUsers()
-        {
-            foreach(User::getAll() as $user)
+            if ($this->getIsLink())
             {
-                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
-                    Right::ALLOW)
-                {
-                    $this->addUser($user);
-                }
+                return array(
+                    'name'   => 'type',
+                    'header' => Yii::t('Default', 'Notification'),
+                    'value'  => $this->view->getLinkString('$data'),
+                    'type'   => 'raw',
+                );
+            }
+            else
+            {
+                return array(
+                    'name'   => 'type',
+                    'header' => Yii::t('Default', 'Notification'),
+                    'value'  => 'strval($data)'
+                );
             }
         }
     }

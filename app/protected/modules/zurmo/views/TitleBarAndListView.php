@@ -35,7 +35,8 @@
             $listViewClassName,
             $title,
             $selectedIds = array(),
-            $selectAll = false
+            $selectAll = false,
+            $description = null
             )
         {
             assert('is_string($controllerId)');
@@ -45,7 +46,12 @@
             assert('is_string($title)');
             assert('is_array($selectedIds)');
             assert('is_bool($selectAll)');
+            assert('is_string($description) || $description == null');
             parent::__construct(2, 1);
+            if($description == null)
+            {
+                $description = Yii::t('Default', 'Home');
+            }
             $moduleClassName = $moduleName . 'Module';
             $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
             $shortcutsMenu = new DropDownShortcutsMenuView(
@@ -53,7 +59,7 @@
                 $moduleId,
                 $menuItems
             );
-            $this->setView(new TitleBarView($title, Yii::t('Default', 'Home'), 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new TitleBarView($title, $description, 1, $shortcutsMenu->render()), 0, 0);
             $this->setView(new $listViewClassName($controllerId, $moduleId, get_class($listModel), $dataProvider, $selectedIds, $selectAll), 1, 0);
         }
 

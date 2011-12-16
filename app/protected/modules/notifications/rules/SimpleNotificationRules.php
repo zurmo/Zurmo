@@ -29,6 +29,11 @@
      */
     class SimpleNotificationRules extends NotificationRules
     {
+        public static function getDisplayName()
+        {
+            return Yii::t('Default', 'A simple notification');
+        }
+
         public static function getType()
         {
             return 'Simple';
