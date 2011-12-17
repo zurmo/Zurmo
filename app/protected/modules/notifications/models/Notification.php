@@ -36,7 +36,14 @@
                 return null;
             }
             $notificationRulesClassName = $this->type . 'NotificationRules';
-            return $notificationRulesClassName::getDisplayName();
+            if(@class_exists($notificationRulesClassName))
+            {
+                return $notificationRulesClassName::getDisplayName();
+            }
+            else
+            {
+                return Yii::t('Default', '(Unnamed)');
+            }
         }
 
         /**
@@ -124,6 +131,9 @@
                 ),
                 'defaultSortAttribute' => null,
                 'noAudit' => array(
+                    'type',
+                    'isRead',
+                    'owner'
                 )
             );
             return $metadata;
