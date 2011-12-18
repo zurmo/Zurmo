@@ -357,7 +357,7 @@
                     ),
                 ),
             );
-            $this->assertEquals(15, count($data));
+            $this->assertEquals(16, count($data));
             $this->assertEquals($compareData['AccountsModule'], $data['AccountsModule']);
             $this->assertEquals($compareData['ContactsModule'], $data['ContactsModule']);
             $this->assertEquals($compareData['LeadsModule'],    $data['LeadsModule']);
@@ -603,7 +603,7 @@
                     ),
                 ),
             );
-            $this->assertEquals(15, count($data));
+            $this->assertEquals(16, count($data));
             $this->assertEquals($compareData['AccountsModule'], $form->data['AccountsModule']);
             $this->assertEquals($compareData['ContactsModule'], $form->data['ContactsModule']);
             $this->assertEquals($compareData['LeadsModule'],    $form->data['LeadsModule']);
@@ -877,7 +877,7 @@
                     ),
                 ),
             );
-            $this->assertEquals(15, count($data));
+            $this->assertEquals(16, count($data));
             $this->assertEquals($compareData['AccountsModule'], $form->data['AccountsModule']);
             $this->assertEquals($compareData['ContactsModule'], $form->data['ContactsModule']);
             $this->assertEquals($compareData['LeadsModule'],    $form->data['LeadsModule']);
@@ -1135,7 +1135,7 @@
                 ),
             );
             $data = PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
-            $this->assertEquals(15, count($data));
+            $this->assertEquals(16, count($data));
             $this->assertEquals($compareData['AccountsModule'], $data['AccountsModule']);
             $this->assertEquals($compareData['ContactsModule'], $data['ContactsModule']);
             $this->assertEquals($compareData['LeadsModule'],    $data['LeadsModule']);
