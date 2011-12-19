@@ -25,21 +25,22 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * A helper class for working with Jobs.
      */
-    class StuckJobsNotificationRules extends JobsManagerAccessNotificationRules
+    class JobsUtil
     {
-        protected $critical    = true;
-
-        public static function getDisplayName()
+        public static function resolveStringContentByType($type)
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
-        }
-
-        public static function getType()
-        {
-            return 'StuckJobs';
+            assert('$type != null && is_string($type)');
+            $jobClassName = $type . 'Job';
+            if(@class_exists($jobClassName))
+            {
+                return $jobClassName::getDisplayName();
+            }
+            else
+            {
+                return Yii::t('Default', '(Unnamed)');
+            }
         }
     }
 ?>

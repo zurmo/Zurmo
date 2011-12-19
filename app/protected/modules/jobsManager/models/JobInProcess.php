@@ -25,21 +25,43 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * Models of currently running jobs
      */
-    class StuckJobsNotificationRules extends JobsManagerAccessNotificationRules
+    class JobInProcess extends Item
     {
-        protected $critical    = true;
-
-        public static function getDisplayName()
+        public function __toString()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
+            if ($this->type == null)
+            {
+                return null;
+            }
+            return JobUtil::resolveStringContentByType($this->type);
         }
 
-        public static function getType()
+        public static function getDefaultMetadata()
         {
-            return 'StuckJobs';
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'type',
+
+                ),
+                'rules' => array(
+                    array('type', 'required'),
+                    array('type', 'type', 'type' => 'string'),
+                    array('type', 'length',  'min'  => 3, 'max' => 64),
+                ),
+                'defaultSortAttribute' => 'createdDateTime',
+                'noAudit' => array(
+                    'type',
+                )
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
         }
     }
 ?>

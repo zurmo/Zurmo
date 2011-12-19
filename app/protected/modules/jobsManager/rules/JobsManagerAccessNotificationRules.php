@@ -25,21 +25,25 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * Base class for notifications that are notifying users who can access the job manager, where
+     * the notification would be sent to all of those users.
      */
-    class StuckJobsNotificationRules extends JobsManagerAccessNotificationRules
+    abstract class JobsManagerAccessNotificationRules extends NotificationRules
     {
-        protected $critical    = true;
-
-        public static function getDisplayName()
+        /**
+         * Any user who has access to the scheduler module is added to receive a
+         * notification.
+         */
+        protected function loadUsers()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
-        }
-
-        public static function getType()
-        {
-            return 'StuckJobs';
+            foreach(User::getAll() as $user)
+            {
+                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
+                    Right::ALLOW)
+                {
+                    $this->addUser($user);
+                }
+            }
         }
     }
 ?>

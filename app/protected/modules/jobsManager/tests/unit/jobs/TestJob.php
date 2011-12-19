@@ -25,21 +25,38 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * A job for making unit tests regarding the Job Manager.
      */
-    class StuckJobsNotificationRules extends JobsManagerAccessNotificationRules
+    class TestJob extends BaseJob
     {
-        protected $critical    = true;
+        public $causeFailure = false;
+        public $testValue    = 'aTestValue';
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
+           return Yii::t('Default', 'Test Job');
         }
 
         public static function getType()
         {
-            return 'StuckJobs';
+            return 'Test';
+        }
+
+        /**
+         * A test job. This test job will update the config table with a datetime stamp.
+         * (non-PHPdoc)
+         * @see BaseJob::run()
+         */
+        public function run()
+        {
+            ZurmoConfigurationUtil::setByModuleName('JobsManagerModule', 'test', $this->testValue);
+            if($causeFailure)
+            {
+                $this->message = 'The test job failed';
+                return false;
+            }
+            return true;
         }
     }
+
 ?>

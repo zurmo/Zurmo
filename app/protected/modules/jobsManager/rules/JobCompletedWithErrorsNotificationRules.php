@@ -25,21 +25,18 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * A  NotificationRules to manage when the monitor job itself are detected as being 'stuck'.
      */
-    class StuckJobsNotificationRules extends JobsManagerAccessNotificationRules
+    class JobCompletedWithErrorsNotificationRules extends JobsManagerAccessNotificationRules
     {
-        protected $critical    = true;
-
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
+            return Yii::t('Default', 'A job was completed with errors.');
         }
 
         public static function getType()
         {
-            return 'StuckJobs';
+            return 'JobCompletedWithErrors';
         }
     }
 ?>
