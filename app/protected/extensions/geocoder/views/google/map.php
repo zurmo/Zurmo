@@ -27,15 +27,12 @@ Yii::app()->getClientScript()->registerScriptFile('http://maps.google.com/maps?f
 // Translate any special types
 if (isset($options['mapTypeId']))
 	$options['mapTypeId'] = 'google.maps.MapTypeId.'.$options['mapTypeId'];
-    
-if (isset($options['query']))
-	$query = $options['query'];
 ?>
-map = new GMap2(parent.document.getElementById("<?php echo $container_id; ?>"));
+map = new GMap2(document.getElementById("<?php echo $container_id; ?>"));
 var latlng = new GLatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
 map.setCenter(latlng, 15);
 map.setUIToDefault();
 map.setMapType(G_NORMAL_MAP);
 var marker = new GMarker(latlng);
 map.addOverlay(marker);
-GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml('<h3>Title</h3>Adress<br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + point.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});
+GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml('<h3>Address</h3><?php echo $query; ?><br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + point.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});

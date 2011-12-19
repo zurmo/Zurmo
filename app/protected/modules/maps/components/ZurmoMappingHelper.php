@@ -29,15 +29,30 @@
      */
     class ZurmoMappingHelper extends MappingHelper
     {
-        public function getMappingLinkContentForElement($latitude,$longitude)
+        public function getMappingLinkContentForElement($mapData)
         {
-            return Yii::app()->createUrl('/maps/default/RenderAddressMapView', array_merge($_GET, array('latitude'=>$latitude, 
-                                                                                                        'longitude'=>$longitude)));
+            return GoogleMappingUtil::renderGeoCoderMap(self::getGeoCodeApi(),$mapData);
         }
 
-        public static function renderAddressMap()
+        /**
+         * @return rendered content from view as string.
+         */
+        public static function renderModalMapView(CController $controller, 
+                                                  $modalMapAddressViewData,
+                                                  $pageTitle = null,
+                                                  $stateMetadataAdapterClassName = null)
         {
-            return GoogleMappingUtil::renderGeoCoderMap(self::getGeoCodeApi());
+            $modalMapAddressRenderView = AddressGoogleMapModalView::renderModalMapWithAddressMarking($modalMapAddressViewData);
+            $view = new ModalView($controller,
+                                  $modalMapAddressRenderView,
+                                  'modalContainer',
+                                  $pageTitle);
+            echo $view->render();
+        }
+
+        public static function getModalMapUrl($addressData = array())
+        {
+            return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET,$addressData));
         }
 
         public static function getGeoCodes($address)

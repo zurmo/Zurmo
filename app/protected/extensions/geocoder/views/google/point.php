@@ -24,6 +24,6 @@
 var point = new google.maps.LatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
 var marker = new google.maps.Marker({
 	position: point,
-	map: gmap,
+	map: map,
 	title: "<?php echo $query; ?>"
 });

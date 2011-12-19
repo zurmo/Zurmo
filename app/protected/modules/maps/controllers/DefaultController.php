@@ -75,9 +75,13 @@
 
         public function actionRenderAddressMapView()
         {
-            echo "<div id='map_canvas' style='width: 500px; height: 300px'></div>";
-            ZurmoMappingHelper::renderAddressMap();
+            $modalMapAddressData = array('query'=>$_GET['query'], 
+                                          'latitude'=>$_GET['latitude'], 
+                                          'longitude'=>$_GET['longitude']);
 
+            echo ZurmoMappingHelper::renderModalMapView($this, $modalMapAddressData, 
+                                                        Yii::t('Default', 'Address Location on Map',
+                                                        LabelUtil::getTranslationParamsForAllModules()));
         }
     }
 ?>

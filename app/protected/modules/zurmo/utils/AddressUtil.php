@@ -30,13 +30,13 @@
      */
     class AddressUtil
     {
-        public static function updateChangedAddress()
+        public static function updateChangedAddress($page = 500)
         {
-            $addressCollection = Address::getSubset();
+            $addressCollection = Address::getSubset(null, 0, $page);
             foreach ($addressCollection as $addressCollectionRow)
             {
                 $address = strval($addressCollectionRow);
-                if ($addressCollectionRow->invalid == 1 || $address == '')
+                if ($addressCollectionRow->invalid == 1 || $address == '(None)')
                 {
                     continue;
                 }

@@ -29,7 +29,7 @@
      * Collection includes street1, street2,
      * city, state, postal code, and country.
      */
-    class AddressElement extends ModelElement
+    class AddressElement extends Element
     {
         /**
          * Renders the noneditable address content.
@@ -41,6 +41,7 @@
         {
             assert('$this->model->{$this->attribute} instanceof Address');
             $addressModel = $this->model->{$this->attribute};
+            $address      = strval($addressModel);
             $id           = $addressModel->id;
             $street1      = $addressModel->street1;
             $street2      = $addressModel->street2;
@@ -50,6 +51,7 @@
             $country      = $addressModel->country;
             $latitude     = $addressModel->latitude;
             $longitude    = $addressModel->longitude;
+            $invalid      = $addressModel->invalid;
             $content = null;
             if (!empty($street1))
             {
@@ -79,16 +81,9 @@
             {
                 $content .= Yii::app()->format->text($country);
             }
-            if ($latitude != 0 || $longitude != 0)
+            if ($invalid != 1 && $address != '(None)')
             {
-                $cs = Yii::app()->getClientScript();
-                $cs->registerScriptFile(
-                    Yii::app()->getAssetManager()->publish(
-                        Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
-                        ),
-                    CClientScript::POS_END
-                );
-                $content .= $this->renderMapLink($latitude,$longitude);
+                $content .= $this->renderMapLink($addressModel);
             }
             return $content;
         }
@@ -129,13 +124,21 @@
          * popup.
          * @return The element's content as a string.
          */
-        protected function renderMapLink($latitude,$longitude)
+        protected function renderMapLink($addressModel)
         {
-            $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement($latitude,$longitude);
-            $id = $this->getIdForSelectLink();
+            $cs = Yii::app()->getClientScript();
+                $cs->registerScriptFile(
+                    Yii::app()->getAssetManager()->publish(
+                        Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
+                        ),
+                    CClientScript::POS_END
+                );
+            $mapRenderUrl = ZurmoMappingHelper::getModalMapUrl(array('query'=>strval($addressModel), 
+                                                                     'latitude'=>$addressModel->latitude, 
+                                                                     'longitude'=>$addressModel->longitude));
+            $id = $this->getIdForMapLink();
             $content  = '<span>';
-            $content .= CHtml::ajaxLink(Yii::t('Default', 'view map'),
-                Yii::app()->createUrl($mapRenderUrl), array(
+            $content .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(
                     'onclick' => '$("#modalContainer").dialog("open"); return false;',
                     'update' => '#modalContainer',
                     'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
@@ -143,27 +146,27 @@
                     ),
                     array(
                     'id' => $id,
-                    'style' => $this->getSelectLinkStartingStyle(),
+                    'style' => $this->getMapLinkStartingStyle(),
                     )
             );
             $content .= '</span>';
             return $content;
         }
         
-        protected function getIdForSelectLink()
+        protected function getIdForMapLink()
         {
             return $this->getEditableInputId($this->attribute, 'MapLink');
         }
 
-        protected function getSelectLinkStartingStyle()
+        protected function getMapLinkStartingStyle()
         {
             if ($this->getDisabledValue() == 'disabled')
             {
-                return 'display:';
+                return 'display:none';
             }
             else
             {
-                return 'display:';
+                return null;
             }
         }
 
