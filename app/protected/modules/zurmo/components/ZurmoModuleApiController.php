@@ -245,5 +245,30 @@
             }
             return $outputArray;
         }
+
+        /**
+         * Instead of saving from post, we are saving from the API data.
+         * @see attemptToSaveModelFromPost
+         */
+        protected function attemptToSaveModelFromData($data, $model, $redirectUrlParams = null, $redirect = true)
+        {
+            assert('is_array($data)');
+            assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
+            $savedSucessfully   = false;
+            $modelToStringValue = null;
+            //$postVariableName   = get_class($model);
+           //if (isset($data[$postVariableName]))        //dont need this since our $data array can be exactly that sub array
+           if(isset($data))
+            {
+               // $data = $data[$postVariableName];
+                $model            = ZurmoControllerUtil::
+                                    saveModelFromSanitizedData($data, $model, $savedSucessfully, $modelToStringValue);
+            }
+            if ($savedSucessfully && $redirect)
+            {
+                $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
+            }
+            return $model;
+        }
     }
 ?>
