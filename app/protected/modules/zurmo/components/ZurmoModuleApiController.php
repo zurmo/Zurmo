@@ -58,14 +58,21 @@
                 }
 
 
-                if (isset($filterParams['search']))
+                if (isset($filterParams['search']) && isset($searchFormClassName))
                 {
                     $_GET[$searchFormClassName] = $filterParams['search'];
                 }
 
                 $stateMetadataAdapterClassName = null;
                 $model= new $modelClassName(false);
-                $searchForm = new $searchFormClassName($model);
+                if (isset($searchFormClassName))
+                {
+                    $searchForm = new $searchFormClassName($model);
+                }
+                else
+                {
+                    $searchForm = null;
+                }
 
                 $dataProvider = $this->makeRedBeanDataProviderFromGet(
                     $searchForm,
@@ -123,6 +130,90 @@
                 $outputArray['status'] = 'SUCCESS';
                 $outputArray['data']   = $data;
                 $outputArray['message'] = '';
+            }
+            catch (Exception $e)
+            {
+                $outputArray['data'] = null;
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
+            }
+            return $outputArray;
+        }
+
+        public function create($modelClassName, $data)
+        {
+            try
+            {
+                foreach($data as $k=>$v){
+                    $_POST[$modelClassName][$k] = $v;
+                }
+                $model = $this->attemptToSaveModelFromPost(new $modelClassName, null, false);
+
+                $id = $model->id;
+                $model->forget();
+                unset($model);
+                $outputArray = array();
+                if (isset($id))
+                {
+                    $model = $modelClassName::getById($id);
+                    $util  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $util->getData();
+
+                    $outputArray['status']  = 'SUCCESS';
+                    $outputArray['data']    = $data;
+                    $outputArray['message'] = '';
+                }
+                else
+                {
+                    $outputArray['data'] = null;
+                    $outputArray['status'] = 'FAILURE';
+                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                }
+            }
+            catch (Exception $e)
+            {
+                $outputArray['data'] = null;
+                $outputArray['status'] = 'FAILURE';
+                $outputArray['message'] = $e->getMessage();
+            }
+            return $outputArray;
+        }
+
+        public function update($modelClassName, $id, $data)
+        {
+            try
+            {
+                foreach($data as $k=>$v){
+                    $_POST[$modelClassName][$k] = $v;
+                }
+
+                $model = $modelClassName::getById($id);
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
+                if ($isAllowed === false)
+                {
+                    throw new Exception('This action is not allowed.');
+                }
+
+                $model = $this->attemptToSaveModelFromPost($model, null, false);
+
+                $id = $model->id;
+                $outputArray = array();
+                if (isset($id))
+                {
+                    $model = $modelClassName::getById($id);
+                    $util  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $util->getData();
+
+                    $outputArray['status']  = 'SUCCESS';
+                    $outputArray['data']    = $data;
+                    $outputArray['message'] = '';
+                }
+                else
+                {
+                    $outputArray['data'] = null;
+                    $outputArray['status'] = 'FAILURE';
+                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                }
             }
             catch (Exception $e)
             {

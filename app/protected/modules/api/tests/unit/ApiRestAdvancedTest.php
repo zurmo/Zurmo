@@ -174,13 +174,13 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']));
-            foreach ($response['data'] as $key => $value)
+            $this->assertEquals(1, count($response['data']['array']));
+            foreach ($response['data']['array'] as $key => $value)
             {
-                unset($response['data'][$key]['createdDateTime']);
-                unset($response['data'][$key]['modifiedDateTime']);
+                unset($response['data']['array'][$key]['createdDateTime']);
+                unset($response['data']['array'][$key]['modifiedDateTime']);
             }
-            $this->assertEquals(array($compareData), $response['data']);
+            $this->assertEquals(array($compareData), $response['data']['array']);
 
             //Test Update
             $compareData['lastName'] = 'Bob4';

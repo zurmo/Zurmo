@@ -144,6 +144,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $sessionId
             );
+
             // Test update
             $data['firstName']                = "John";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'PUT', $headers, array('data' => $data));

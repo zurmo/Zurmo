@@ -120,7 +120,7 @@
             if ($requestData['controllerName'] != null)
             {
                 $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
-                $res = $baseController->create($params['data']);
+                $res = $baseController->create($requestData['modelName'], $params['data']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;
@@ -159,7 +159,7 @@
             if ($requestData['controllerName'] != null)
             {
                 $baseController = new $requestData['controllerName']($requestData['controllerName'], 'api');
-                $res = $baseController->update($params['id'], $params['data']);
+                $res = $baseController->update($requestData['modelName'], $params['id'], $params['data']);
                 if($res['status'] == 'SUCCESS')
                 {
                     $status = ApiResponse::STATUS_SUCCESS;

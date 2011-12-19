@@ -392,7 +392,7 @@
          * Check if form is posted. If form is posted attempt to save. If save is complete, confirm the current
          * user can still read the model.  If not, then redirect the user to the index action for the module.
          */
-        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
+        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null, $redirect = true)
         {
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
             $savedSucessfully   = false;
@@ -404,7 +404,7 @@
                 $model            = ZurmoControllerUtil::
                                     saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             }
-            if ($savedSucessfully)
+            if ($savedSucessfully && $redirect)
             {
                 $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
             }

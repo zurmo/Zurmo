@@ -64,102 +64,22 @@
             return $outputArray;
         }
 
-        public function create($data)
+        public function create($modelClassName, $data)
         {
             try
             {
-                $model= new User();
-
-                if (isset($data['firstName']))
-                {
-                    $model->firstName            = $data['firstName'];
+                foreach($data as $k=>$v){
+                    $_POST[$modelClassName][$k] = $v;
                 }
-                if (isset($data['lastName']))
-                {
-                    $model->lastName     = $data['lastName'];
-                }
-                if (isset($data['jobTitle']))
-                {
-                    $model->jobTitle       = $data['jobTitle'];
-                }
-                if (isset($data['department']))
-                {
-                    $model->department       = $data['department'];
-
-                }
-                if (isset($data['officePhone']))
-                {
-                    $model->officePhone         = $data['officePhone'];
-                }
-                if (isset($data['mobilePhone']))
-                {
-                    $model->mobilePhone   = $data['mobilePhone'];
-                }
-                if (isset($data['officeFax']))
-                {
-                    $model->officeFax     = $data['officeFax'];
-                }
-
-                if (isset($data['username']))
-                {
-                    $model->username     = $data['username'];
-                }
-                if (isset($data['password']) && $data['password'] != '')
-                {
-                    $model->hash     = md5($data['username']);
-                }
-                if (isset($data['language']))
-                {
-                    $model->language     = $data['language'];
-                }
-                if (isset($data['timeZone']))
-                {
-                    $model->timeZone     = $data['timeZone'];
-                }
-
-                if (isset($data['title']))
-                {
-                    $model->title->value        = $data['title']['value'];
-                }
-                if (isset($data['primaryEmail']))
-                {
-                    $email = new Email();
-                    foreach ($data['primaryEmail'] as $key => $value)
-                    {
-                        $email->{$key}  = $value;
-                    }
-                    $model->primaryEmail = $email;
-                }
-
-                if (isset($data['primaryAddress']))
-                {
-                    $address = new Address();
-                    foreach ($data['primaryAddress'] as $key => $value)
-                    {
-                        $address->{$key}  = $value;
-                    }
-                    $model->primaryAddress = $address;
-                }
-
-                if (isset($data['currency']))
-                {
-                    //$currency    = Currency::getById($data['currency']['id']);
-                    //$model->currency = $currency;
-                }
-                if (isset($data['manager']))
-                {
-                    $manager = User::getById($data['manager']['id']);
-                    $model->manager        = $manager;
-                }
-
-                $saved = $model->save();
+                $model = $this->attemptToSaveModelFromPost(new $modelClassName, null, false);
                 $id = $model->id;
+
                 $model->forget();
                 unset($model);
-                $outputArray = array();;
-                if ($saved)
+                $outputArray = array();
+                if (isset($id))
                 {
-                    $model = User::getById($id);
+                    $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
                     $outputArray['status']  = 'SUCCESS';
@@ -183,177 +103,28 @@
             return $outputArray;
         }
 
-        public function update($id, $data)
+        public function update($modelClassName, $id, $data)
         {
             try
             {
-                $model = User::getById($id);
+                foreach($data as $k => $v){
+                    $_POST[$modelClassName][$k] = $v;
+                }
+
+                $model = $modelClassName::getById($id);
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
                 if ($isAllowed === false || !$this->resolveCanCurrentUserAccessAction($id))
                 {
                     throw new Exception('This action is not allowed.');
                 }
 
-                if (isset($data['firstName']))
-                {
-                    $model->firstName            = $data['firstName'];
-                }
-                else
-                {
-                    $model->firstName = null;
-                }
+                $model = $this->attemptToSaveModelFromPost($model, null, false);
+                $id = $model->id;
 
-                if (isset($data['lastName']))
-                {
-                    $model->lastName     = $data['lastName'];
-                }
-                else
-                {
-                    $model->lastName = null;
-                }
-
-                if (isset($data['jobTitle']))
-                {
-                    $model->jobTitle       = $data['jobTitle'];
-                }else
-                {
-                    $model->jobTitle = null;
-                }
-
-                if (isset($data['department']))
-                {
-                    $model->department       = $data['department'];
-                }
-                else
-                {
-                    $model->department = null;
-                }
-
-                if (isset($data['officePhone']))
-                {
-                    $model->officePhone         = $data['officePhone'];
-                }
-                else
-                {
-                    $model->officePhone = null;
-                }
-
-                if (isset($data['mobilePhone']))
-                {
-                    $model->mobilePhone   = $data['mobilePhone'];
-                }
-                else
-                {
-                    $model->mobilePhone = null;
-                }
-
-                if (isset($data['officeFax']))
-                {
-                    $model->officeFax     = $data['officeFax'];
-                }
-                else
-                {
-                    $model->officeFax = null;
-                }
-
-                if (isset($data['username']))
-                {
-                    $model->username     = $data['username'];
-                }
-                else
-                {
-                    $model->username = null;
-                }
-
-                if (isset($data['password']) && $data['password'] != '')
-                {
-                    $model->hash     = md5($data['username']);
-                }
-
-
-                if (isset($data['language']))
-                {
-                    $model->language     = $data['language'];
-                }
-                else
-                {
-                    $model->language = null;
-                }
-
-                if (isset($data['timeZone']))
-                {
-                    $model->timeZone     = $data['timeZone'];
-                }
-                else
-                {
-                    $model->timeZone = null;
-                }
-
-
-                if (isset($data['title']))
-                {
-                    $model->title->value        = $data['title']['value'];
-                }
-                else
-                {
-                    $model->title = null;
-                }
-
-                if (isset($data['primaryEmail']))
-                {
-                    $email = new Email();
-                    foreach ($data['primaryEmail'] as $key => $value)
-                    {
-                        $email->{$key}  = $value;
-                    }
-                    $model->primaryEmail = $email;
-                }
-                else
-                {
-                    $model->primaryEmail = null;
-                }
-
-
-                if (isset($data['primaryAddress']))
-                {
-                    $address = new Address();
-                    foreach ($data['primaryAddress'] as $key => $value)
-                    {
-                        $address->{$key}  = $value;
-                    }
-                    $model->primaryAddress = $address;
-                }
-                else
-                {
-                    $model->primaryAddress = null;
-                }
-
-
-                if (isset($data['currency']))
-                {
-                    //$currency    = Currency::getById($data['currency']['id']);
-                    //$model->currency = $currency;
-                }
-                else
-                {
-                    $model->currency = null;
-                }
-
-                if (isset($data['manager']))
-                {
-                    $manager = User::getById($data['manager']['id']);
-                    $model->manager        = $manager;
-                }
-                else
-                {
-                    $model->manager = null;
-                }
-
-                $saved = $model->save();
                 $outputArray = array();
-                if ($saved)
+                if (isset($id))
                 {
-                    $model = User::getById($id);
+                    $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
