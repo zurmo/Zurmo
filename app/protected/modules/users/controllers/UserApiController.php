@@ -88,8 +88,6 @@
             }
             catch (Exception $e)
             {
-                print_r($e);
-                exit;
                 $message = $e->getMessage();
                 $output = $this->generateOutput('FAILURE', $message, null);
             }
@@ -136,7 +134,7 @@
         {
             try
             {
-                $model = User::getById($id);
+                $model = $modelClassName::getById($id);
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
                 if ($isAllowed === false || !$this->resolveCanCurrentUserAccessAction($id))
                 {
@@ -150,7 +148,7 @@
                 $message = $e->getMessage();
                 $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         protected function resolveCanCurrentUserAccessAction($userId)

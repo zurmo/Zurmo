@@ -70,8 +70,6 @@
             $currency    = $currencies[0];
             $this->assertEquals('USD', $currency->code);
 
-
-
             $manager = new User();
             $manager->username     = 'smith45';
             $manager->title->value = 'Mr.';
@@ -104,7 +102,6 @@
             );
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'POST', $headers, array('data' => $data));
-            print_r($response);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -126,7 +123,6 @@
             unset($response['data']['primaryAddress']['longitude']);
             unset($response['data']['primaryAddress']['latitude']);
             unset($response['data']['title']['id']);
-            unset($response['data']['currency']);
             $this->assertEquals(ksort($data), ksort($response['data']));
             $id = $response['data']['id'];
 
@@ -165,7 +161,6 @@
             unset($response['data']['primaryAddress']['longitude']);
             unset($response['data']['primaryAddress']['latitude']);
             unset($response['data']['title']['id']);
-            unset($response['data']['currency']);
 
             $this->assertEquals(ksort($data), ksort($response['data']));
 

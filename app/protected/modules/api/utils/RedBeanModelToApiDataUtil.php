@@ -43,7 +43,7 @@
             $data['id'] = $this->model->id;
             foreach($this->model->getAttributes() as $attributeName => $notUsed)
             {
-                $type             = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
+                $type             = ModelAttributeToMixedApiTypeUtil::getType($this->model, $attributeName);
                 $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
                 if($type != null && @class_exists($adapterClassName) &&
                    !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
