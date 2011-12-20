@@ -24,42 +24,48 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Special class to isolate the autoBuildDatabase method and test that the rows are the correct
-     * count before and after running this method.  AutoBuildDatabase is used both on installation
-     * but also during an upgrade or manually  to update the database schema based on any detected
-     * changes.
-     */
-    class AutoBuildDatabaseTest extends BaseTest
+    class NotificationRulesTest extends BaseTest
     {
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+            UserTestHelper::createBasicUser('billy');
         }
 
-        public function testAutoBuildDatabase()
+        public function testAllowDuplicates()
         {
-            $unfreezeWhenDone     = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $unfreezeWhenDone = true;
-            }
-            $super                      = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-            $messageLogger              = new MessageLogger();
-            $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            InstallUtil::autoBuildDatabase($messageLogger);
-            $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            //Todo: fix the autobuild so there are no lingering rows. Currently the 58 extra rows
-            //are comprised of the following:
-            //audit_log (54), activity_items (3), contact_Opportunity, (1) _group__user (1)
-            $this->assertEquals($beforeRowCount, ($afterRowCount - 62));
-            if($unfreezeWhenDone)
-            {
-                RedBeanDatabase::freeze();
-            }
+            $rules = new SimpleNotificationRules();
+            $this->assertFalse($rules->allowDuplicates());
+        }
+
+        public function testSetGetIsCritical()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertFalse($rules->isCritical());
+            $rules->setCritical(true);
+            $this->assertTrue($rules->isCritical());
+            $rules->setCritical(false);
+            $this->assertFalse($rules->isCritical());
+        }
+
+        public function testGetType()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertEquals('Simple', $rules->getType());
+        }
+
+        public function addAndGetUsers()
+        {
+            $rules = new SimpleNotificationRules();
+            $this->assertEquals(0, $rules->getUsers());
+            $rules->addUser(User::getByUsername('billy'));
+            $this->assertEquals(1, $rules->getUsers());
+            //Try to add same user again.
+            $rules->addUser(User::getByUsername('billy'));
+            $this->assertEquals(1, $rules->getUsers());
+            $rules->addUser(User::getByUsername('super'));
+            $this->assertEquals(2, $rules->getUsers());
         }
     }
 ?>

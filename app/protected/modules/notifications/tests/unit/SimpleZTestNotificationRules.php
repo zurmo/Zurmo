@@ -24,23 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    /**
+     * A simple NotificationRules class for testing.
+     */
+    class SimpleZTestNotificationRules extends NotificationRules
     {
-        public static function getDefaultMetadata()
+        public static function getDisplayName()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+            return Yii::t('Default', 'A simple notification');
+        }
+
+        public static function getType()
+        {
+            return 'Simple';
         }
     }
 ?>

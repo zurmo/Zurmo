@@ -99,10 +99,18 @@
                 {
                     if ($operatorType == null)
                     {
+
                         $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeName);
                     }
                     $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                         $this->model, $attributeName, $value);
+                    $mixedType    = ModelAttributeToMixedTypeUtil::getType(
+                                        $this->model, $attributeName);
+                    static::
+                    resolveBooleanFalseValueAndOperatorTypeForAdaptedMetadataClause($mixedType,
+                                                                                    $value,
+                                                                                    $operatorType);
+
                     $adaptedMetadataClauses[($clauseCount)] = array(
                         'attributeName' => $attributeName,
                         'operatorType'  => $operatorType,
@@ -130,8 +138,15 @@
                         $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                             $this->model, $attributeName);
                     }
-                    $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
+                    $value     = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                         $this->model, $attributeName, $value['value']);
+
+                    $mixedType = ModelAttributeToMixedTypeUtil::getType(
+                                        $this->model, $attributeName);
+                    static::
+                    resolveBooleanFalseValueAndOperatorTypeForAdaptedMetadataClause($mixedType,
+                                                                                    $value,
+                                                                                    $operatorType);
                     $adaptedMetadataClauses[($clauseCount)] = array(
                         'attributeName' => $attributeName,
                         'operatorType'  => $operatorType,
@@ -173,9 +188,17 @@
                                 $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                                 $this->model->$attributeName, $relatedAttributeName);
                             }
-                            $relatedValue = ModelAttributeToCastTypeUtil::resolveValueForCast(
-                                            $this->model->$attributeName, $relatedAttributeName, $relatedValue);
-
+                            $relatedValue  = ModelAttributeToCastTypeUtil::resolveValueForCast(
+                                                $this->model->$attributeName, $relatedAttributeName, $relatedValue);
+                            if($this->model->$attributeName instanceof RedBeanModel)
+                            {
+                                $mixedType = ModelAttributeToMixedTypeUtil::getType(
+                                                    $this->model->$attributeName, $relatedAttributeName);
+                                static::
+                                resolveBooleanFalseValueAndOperatorTypeForAdaptedMetadataClause($mixedType,
+                                                                                                $relatedValue,
+                                                                                                $operatorType);
+                            }
                             $adaptedMetadataClauses[($clauseCount)] = array(
                                 'attributeName'        => $attributeName,
                                 'relatedAttributeName' => $relatedAttributeName,
@@ -346,6 +369,18 @@
             else
             {
                 $structure .= $clause;
+            }
+        }
+
+        protected static function resolveBooleanFalseValueAndOperatorTypeForAdaptedMetadataClause($type, & $value,
+                                                                                                  & $operatorType)
+        {
+            assert('is_string($type)');
+            assert('is_string($operatorType)');
+            if($type == 'CheckBox' && ($value == '0' || !$value))
+            {
+                $operatorType = 'doesNotEqual';
+                $value        = (bool)1;
             }
         }
     }

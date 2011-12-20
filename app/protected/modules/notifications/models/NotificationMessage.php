@@ -24,23 +24,43 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    /**
+     * A class for creating notification messages. A message can then have zero or more
+     * notifications attached to it.
+     */
+    class NotificationMessage extends Item
     {
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'bool',
+                    'textContent',
+                    'htmlContent',
                 ),
                 'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
+                    'notifications' => array(RedBeanModel::HAS_MANY, 'Notification'),
                 ),
                 'rules' => array(
-                    array('bool', 'boolean'),
+                    array('textContent',   'type',    'type' => 'string'),
+                    array('htmlContent',   'type',    'type' => 'string'),
+                ),
+                'elements' => array(
+                    'textContent'     => 'TextArea',
+                    'htmlContent'     => 'TextArea',
+                ),
+                'defaultSortAttribute' => null,
+                'noAudit' => array(
+                    'textContent',
+                    'htmlContent',
                 )
             );
             return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
         }
     }
 ?>

@@ -24,23 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    class NotificationsModule extends Module
     {
-        public static function getDefaultMetadata()
+        public function getDependencies()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+           return array('zurmo');
+        }
+
+        public function getRootModelNames()
+        {
+            return array('Notification', 'NotificationMessage');
         }
     }
 ?>

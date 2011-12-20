@@ -69,6 +69,6 @@
     $common_config['components']['request']['class']                  = 'application.tests.HttpRequestForTesting';
     $common_config['components']['request']['enableCsrfValidation']   = false; //todo: get this working, since for production this is true.
     $common_config['components']['request']['enableCookieValidation'] = false;
-
+    $common_config['components']['emailHelper']['class']              = 'application.tests.EmailHelperForTesting';
     return $common_config;
 ?>

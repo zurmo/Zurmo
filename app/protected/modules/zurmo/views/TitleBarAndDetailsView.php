@@ -24,23 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    class TitleBarAndDetailsView extends GridView
     {
-        public static function getDefaultMetadata()
+        public function __construct($controllerId, $moduleId, RedBeanModel $model, $moduleName)
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
+            parent::__construct(2, 1);
+            $moduleClassName = $moduleName . 'Module';
+            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
+            $shortcutsMenu = new DropDownShortcutsMenuView(
+                $controllerId,
+                $moduleId,
+                $menuItems
             );
-            return $metadata;
+            $description = strval($model);
+            if (strlen($description) > 100)
+            {
+                $description = substr($description, 0, 100) . '...';
+            }
+            $titleBarView = new TitleBarView (  $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
+                                                $description, 1, $shortcutsMenu->render());
+            $this->setView($titleBarView, 0, 0);
+            $editViewClassName = get_class($model) . 'DetailsView';
+            $this->setView(new $editViewClassName($controllerId, $moduleId, $model), 1, 0);
         }
     }
 ?>

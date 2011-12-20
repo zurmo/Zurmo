@@ -196,6 +196,23 @@ Process view classes
     cursor: pointer;
 }
 
+.notifications-link
+{
+    font-size:75%;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.notifications-link a
+{
+    text-decoration:underline;
+}
+
+.notifications-link-unread
+{
+    color: red;
+}
+
 .global-search
 {
   width: 250px;

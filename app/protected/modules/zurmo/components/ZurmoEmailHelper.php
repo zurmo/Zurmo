@@ -24,23 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    /**
+     * Component for working with outbound and inbound email transport
+     */
+    class ZurmoEmailHelper extends CApplicationComponent
     {
-        public static function getDefaultMetadata()
+        /**
+         * Send an email message using outbound email transport
+         * @param EmailMessage $email
+         */
+        public function send(EmailMessage $email)
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+
         }
     }
 ?>

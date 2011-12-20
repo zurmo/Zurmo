@@ -24,23 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    /**
+     * Override class is used specifically by the
+     * testing framework to handle testing of inbound and outbound email.
+     */
+    class EmailHelperForTesting extends ZurmoEmailHelper
     {
-        public static function getDefaultMetadata()
+        protected $sentEmailMessages = array();
+
+        public function send(EmailMessage $emailMessage)
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+            $this->sentEmailMessages[] = $emailMessage;
+        }
+
+        public function removeAllSent()
+        {
+            $this->sentEmailMessages = array();
+        }
+
+        public function getSentEmailMessages()
+        {
+            return $this->sentEmailMessages;
         }
     }
 ?>

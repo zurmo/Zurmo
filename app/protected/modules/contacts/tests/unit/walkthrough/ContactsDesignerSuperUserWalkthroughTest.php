@@ -551,7 +551,7 @@
                                         'text'               => 'This is a test Text',
                                         'textarea'           => 'This is a test TextArea',
                                         'url'                => 'http://wwww.abc.com',
-                                        'checkbox'           => array('value'  =>  '0'),
+                                        'checkbox'           => array('value'  =>  '1'),
                                         'currency'           => array('value'  =>  45),
                                         'picklist'           => array('value'  =>  'a'),
                                         'radio'              => array('value'  =>  'd'),

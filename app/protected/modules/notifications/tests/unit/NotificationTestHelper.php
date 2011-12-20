@@ -24,23 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    class NotificationTestHelper
     {
-        public static function getDefaultMetadata()
+        public static function createNotificationByContentAndTypeForOwner($content, $owner, $type = 'Simple')
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+            //And Billy can create a notification for super
+            $notification         = new Notification();
+            $notification->type   = $type;
+            $notification->owner  = $owner;
+            $notification->isRead = false;
+            $saved = $notification->save();
+            assert($saved);
+
+            //Same with a message.
+            $message              = new NotificationMessage();
+            $message->textContent = 'text' . $content;
+            $message->htmlContent = 'html' . $content;
+            $saved = $message->save();
+            assert($saved);
         }
     }
 ?>

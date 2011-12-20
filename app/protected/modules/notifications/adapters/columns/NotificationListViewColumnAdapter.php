@@ -24,23 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TestBooleanAttributeModel extends RedBeanModel
+    class NotificationListViewColumnAdapter extends TextListViewColumnAdapter
     {
-        public static function getDefaultMetadata()
+        public function renderGridViewData()
         {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'bool',
-                ),
-                'relations' => array(
-                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
-                ),
-                'rules' => array(
-                    array('bool', 'boolean'),
-                )
-            );
-            return $metadata;
+            if ($this->getIsLink())
+            {
+                return array(
+                    'name'   => 'type',
+                    'header' => Yii::t('Default', 'Notification'),
+                    'value'  => $this->view->getLinkString('$data'),
+                    'type'   => 'raw',
+                );
+            }
+            else
+            {
+                return array(
+                    'name'   => 'type',
+                    'header' => Yii::t('Default', 'Notification'),
+                    'value'  => 'strval($data)'
+                );
+            }
         }
     }
 ?>

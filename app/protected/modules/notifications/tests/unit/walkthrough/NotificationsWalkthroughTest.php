@@ -25,41 +25,42 @@
      ********************************************************************************/
 
     /**
-     * Special class to isolate the autoBuildDatabase method and test that the rows are the correct
-     * count before and after running this method.  AutoBuildDatabase is used both on installation
-     * but also during an upgrade or manually  to update the database schema based on any detected
-     * changes.
+     * Notifications Module User Walkthrough.
      */
-    class AutoBuildDatabaseTest extends BaseTest
+    class NotificationsWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            NotificationTestHelper::createNotificationByContentAndTypeForOwner('message1', $super);
         }
 
-        public function testAutoBuildDatabase()
+        public function testSuperUserAllDefaultControllerActions()
         {
-            $unfreezeWhenDone     = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $unfreezeWhenDone = true;
-            }
-            $super                      = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-            $messageLogger              = new MessageLogger();
-            $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            InstallUtil::autoBuildDatabase($messageLogger);
-            $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            //Todo: fix the autobuild so there are no lingering rows. Currently the 58 extra rows
-            //are comprised of the following:
-            //audit_log (54), activity_items (3), contact_Opportunity, (1) _group__user (1)
-            $this->assertEquals($beforeRowCount, ($afterRowCount - 62));
-            if($unfreezeWhenDone)
-            {
-                RedBeanDatabase::freeze();
-            }
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $notifications = Notification::getAll();
+            $this->assertEquals(1, count($notifications));
+            $this->assertEquals(0, $notifications[0]->isRead);
+
+            //Test all default controller actions that do not require any POST/GET variables to be passed.
+            //This does not include portlet controller actions.
+            $this->runControllerWithNoExceptionsAndGetContent('notifications/default');
+            $this->runControllerWithNoExceptionsAndGetContent('notifications/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('notifications/default/userList');
+
+            //Test going to the detailview and the notification is now marked as read
+            $this->setGetArray(array('id' => $notifications[0]->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('notifications/default/details');
+
+            //The notification should now show as read.
+            $notifications = Notification::getAll();
+            $this->assertEquals(1, count($notifications));
+            $this->assertEquals(1, $notifications[0]->isRead);
         }
     }
 ?>

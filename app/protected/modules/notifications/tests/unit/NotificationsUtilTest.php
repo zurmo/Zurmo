@@ -24,42 +24,58 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Special class to isolate the autoBuildDatabase method and test that the rows are the correct
-     * count before and after running this method.  AutoBuildDatabase is used both on installation
-     * but also during an upgrade or manually  to update the database schema based on any detected
-     * changes.
-     */
-    class AutoBuildDatabaseTest extends BaseTest
+    class NotificationsUtilTest extends BaseTest
     {
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+            UserTestHelper::createBasicUser('billy');
         }
 
-        public function testAutoBuildDatabase()
+        public function setup()
         {
-            $unfreezeWhenDone     = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $unfreezeWhenDone = true;
-            }
+            parent::setup();
+            Yii::app()->emailHelper->removeAllSent();
+        }
+
+
+        public function teardown()
+        {
+            parent::setup();
+            Yii::app()->emailHelper->removeAllSent();
+        }
+
+        public function testSubmitNonCritical()
+        {
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $messageLogger              = new MessageLogger();
-            $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            InstallUtil::autoBuildDatabase($messageLogger);
-            $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            //Todo: fix the autobuild so there are no lingering rows. Currently the 58 extra rows
-            //are comprised of the following:
-            //audit_log (54), activity_items (3), contact_Opportunity, (1) _group__user (1)
-            $this->assertEquals($beforeRowCount, ($afterRowCount - 62));
-            if($unfreezeWhenDone)
-            {
-                RedBeanDatabase::freeze();
-            }
+            $billy                      = User::getByUsername('billy');
+            $notifications              = Notification::getAll();
+            $this->assertEquals(0, count($notifications));
+            $message                    = new NotificationMessage();
+            $message->textContent       = 'text content';
+            $message->htmlContent       = 'html content';
+            $rules                      = new SimpleNotificationRules();
+            $rules->addUser($super);
+            $rules->addUser($billy);
+            NotificationsUtil::submit($message, $rules);
+            $messagesSent               = Yii::app()->emailHelper->getSentEmailMessages();
+            $this->assertEquals(0, count($messagesSent));
+            $notifications              = Notification::getAll();
+            $this->assertEquals(2, count($notifications));
+        }
+
+        public function testSubmitCritical()
+        {
+            //todo:
+            //setCritical($critical);
+        }
+
+        public function testSubmittingDuplicateNotifications()
+        {
+            //todo:
+            //dont forget to deal with unread vs. read count issues.
         }
     }
 ?>
