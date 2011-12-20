@@ -73,31 +73,27 @@
 
                 $model->forget();
                 unset($model);
-                $outputArray = array();
                 if (isset($id))
                 {
                     $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
-                    $outputArray['status']  = 'SUCCESS';
-                    $outputArray['data']    = $data;
-                    $outputArray['message'] = '';
-
+                    $output = $this->generateOutput('SUCCESS', '', $data);
                 }
                 else
                 {
-                    $outputArray['data'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                    $message = Yii::t('Default', 'Model could not be saved.');
+                    $output = $this->generateOutput('FAILURE', $message, null);
                 }
             }
             catch (Exception $e)
             {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                print_r($e);
+                exit;
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         public function update($modelClassName, $id, $data)
@@ -114,31 +110,26 @@
                 $model = $this->attemptToSaveModelFromData($model, $data, null, false);
                 $id = $model->id;
 
-                $outputArray = array();
                 if (isset($id))
                 {
                     $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
-                    $outputArray['status']  = 'SUCCESS';
-                    $outputArray['data']    = $data;
-                    $outputArray['message'] = '';
+                    $output = $this->generateOutput('SUCCESS', '', $data);
                 }
                 else
                 {
-                    $outputArray['data'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                    $message = Yii::t('Default', 'Model could not be saved.');
+                    $output = $this->generateOutput('FAILURE', $message, null);
                 }
             }
             catch (Exception $e)
             {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         public function delete($modelClassName, $id)
@@ -152,13 +143,12 @@
                     throw new Exception('This action is not allowed.');
                 }
                 $model->delete();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['message'] = '';
+                $output = $this->generateOutput('SUCCESS', '');
             }
             catch (Exception $e)
             {
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
             return $outputArray;
         }

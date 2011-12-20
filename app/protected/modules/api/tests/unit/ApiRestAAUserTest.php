@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestUserTest extends ApiRestTest
+    class ApiRestAAUserTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {
@@ -105,6 +105,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'POST', $headers, array('data' => $data));
             print_r($response);
+            exit;
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
