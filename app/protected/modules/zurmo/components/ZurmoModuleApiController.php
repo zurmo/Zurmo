@@ -82,35 +82,31 @@
                     $stateMetadataAdapterClassName
                 );
                 $totalItems = $dataProvider->getTotalItemCount();
-                $outputArray = array();
-                $outputArray['data']['total'] = $totalItems;
-
+                $data = array();
+                $data['total'] = $totalItems;
                 if ($totalItems > 0)
                 {
-
-                    $outputArray['status'] = 'SUCCESS';
-                    $outputArray['message'] = '';
-
-                    $data = $dataProvider->getData();
-                    foreach ($data as $model)
+                    $formattedData = $dataProvider->getData();
+                    foreach ($formattedData as $model)
                     {
                         $util  = new RedBeanModelToApiDataUtil($model);
-                        $outputArray['data']['array'][] = $util->getData();
+                        $data['array'][] = $util->getData();
                     }
+                    $output = $this->generateOutput('SUCCESS', '', $data);
                 }
                 else
                 {
-                    $outputArray['data']['array'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Error');
+                    $data['array'] = null;
+                    $message = Yii::t('Default', 'Error');
+                    $output = $this->generateOutput('FAILURE', $message, $data);
                 }
             }
             catch (Exception $e)
             {
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         public function getById($modelClassName, $id)
@@ -124,19 +120,15 @@
                     throw new Exception('This action is not allowed.');
                 }
                 $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();
-                $outputArray = array();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['data']   = $data;
-                $outputArray['message'] = '';
+                $data  = $util->getData();;
+                $output = $this->generateOutput('SUCCESS', '', $data);
             }
             catch (Exception $e)
             {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         public function create($modelClassName, $data)
@@ -147,31 +139,26 @@
                 $id = $model->id;
                 $model->forget();
                 unset($model);
-                $outputArray = array();
                 if (isset($id))
                 {
                     $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
-                    $outputArray['status']  = 'SUCCESS';
-                    $outputArray['data']    = $data;
-                    $outputArray['message'] = '';
+                    $output = $this->generateOutput('SUCCESS', '', $data);
                 }
                 else
                 {
-                    $outputArray['data'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                    $message = Yii::t('Default', 'Model could not be saved.');
+                    $output = $this->generateOutput('FAILURE', $message, null);
                 }
             }
             catch (Exception $e)
             {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         public function update($modelClassName, $id, $data)
@@ -188,31 +175,26 @@
                 $model = $this->attemptToSaveModelFromData($model, $data, null, false);
 
                 $id = $model->id;
-                $outputArray = array();
                 if (isset($id))
                 {
                     $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
                     $data  = $util->getData();
 
-                    $outputArray['status']  = 'SUCCESS';
-                    $outputArray['data']    = $data;
-                    $outputArray['message'] = '';
+                    $output = $this->generateOutput('SUCCESS', '', $data);
                 }
                 else
                 {
-                    $outputArray['data'] = null;
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Model could not be saved.');
+                    $message = Yii::t('Default', 'Model could not be saved.');
+                    $output = $this->generateOutput('FAILURE', $message, null);
                 }
             }
             catch (Exception $e)
             {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         public function delete($modelClassName, $id)
@@ -226,15 +208,14 @@
                     throw new Exception('This action is not allowed.');
                 }
                 $model->delete();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['message'] = '';
+                $output = $this->generateOutput('SUCCESS', '');
             }
             catch (Exception $e)
             {
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
             }
-            return $outputArray;
+            return $output;
         }
 
         /**
@@ -258,6 +239,26 @@
                 $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
             }
             return $model;
+        }
+
+        /**
+         *
+         * Enter description here ...
+         * @param string $status
+         * @param string $message
+         * @param array || boolean $data
+         */
+        protected function generateOutput($status, $message, $data=null)
+        {
+            assert('is_string($status) && $status !=""');
+            assert('is_string($message)');
+
+            $output = array();
+            $output['data'] = $data;
+            $output['status'] = $status;
+            $output['message'] = $message;
+
+            return $output;
         }
     }
 ?>
