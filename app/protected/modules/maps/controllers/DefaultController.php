@@ -79,7 +79,7 @@
                                           'latitude'=>$_GET['latitude'], 
                                           'longitude'=>$_GET['longitude']);
 
-            echo ZurmoMappingHelper::renderModalMapView($this, $modalMapAddressData, 
+            echo ZurmoMappingHelper::setAjaxModeAndRenderMapModalView($this, $modalMapAddressData, 
                                                         Yii::t('Default', 'Address Location on Map',
                                                         LabelUtil::getTranslationParamsForAllModules()));
         }

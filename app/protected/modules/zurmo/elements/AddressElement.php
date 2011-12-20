@@ -126,13 +126,16 @@
          */
         protected function renderMapLink($addressModel)
         {
+            // Register the api javascript
+            
             $cs = Yii::app()->getClientScript();
-                $cs->registerScriptFile(
-                    Yii::app()->getAssetManager()->publish(
-                        Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
-                        ),
-                    CClientScript::POS_END
-                );
+            $cs->registerScriptFile('http://maps.google.com/maps?file=api&v=2&sensor=false');
+            $cs->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
+                    ),
+                CClientScript::POS_END
+            );
             $mapRenderUrl = ZurmoMappingHelper::getModalMapUrl(array('query'=>strval($addressModel), 
                                                                      'latitude'=>$addressModel->latitude, 
                                                                      'longitude'=>$addressModel->longitude));

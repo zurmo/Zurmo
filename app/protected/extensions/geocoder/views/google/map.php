@@ -20,19 +20,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-// Register the api javascript
-Yii::app()->getClientScript()->registerScriptFile('http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false');
-
-// Translate any special types
-if (isset($options['mapTypeId']))
-	$options['mapTypeId'] = 'google.maps.MapTypeId.'.$options['mapTypeId'];
 ?>
 map = new GMap2(document.getElementById("<?php echo $container_id; ?>"));
 var latlng = new GLatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
 map.setCenter(latlng, 15);
 map.setUIToDefault();
 map.setMapType(G_NORMAL_MAP);
-var marker = new GMarker(latlng);
-map.addOverlay(marker);
-GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml('<h3>Address</h3><?php echo $query; ?><br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + point.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});

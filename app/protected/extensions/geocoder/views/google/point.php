@@ -21,9 +21,6 @@
  * THE SOFTWARE.
  */
 ?>
-var point = new google.maps.LatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
-var marker = new google.maps.Marker({
-	position: point,
-	map: map,
-	title: "<?php echo $query; ?>"
-});
+var marker = new GMarker(latlng);
+map.addOverlay(marker);
+GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml('<?php echo $query; ?><br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + latlng.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});

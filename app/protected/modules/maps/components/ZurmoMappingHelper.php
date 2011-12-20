@@ -34,20 +34,39 @@
             return GoogleMappingUtil::renderGeoCoderMap(self::getGeoCodeApi(),$mapData);
         }
 
+        public static function setAjaxModeAndRenderMapModalView(CController $controller, $modalMapAddressData,
+                                                 $pageTitle = null,
+                                                 $stateMetadataAdapterClassName = null)
+        {
+            Yii::app()->getClientScript()->setToAjaxMode();
+            return self::renderModalMapView($controller, $modalMapAddressData, $pageTitle,
+                                               $stateMetadataAdapterClassName);
+        }
+
         /**
          * @return rendered content from view as string.
          */
         public static function renderModalMapView(CController $controller, 
-                                                  $modalMapAddressViewData,
+                                                  $modalMapAddressData,
                                                   $pageTitle = null,
                                                   $stateMetadataAdapterClassName = null)
         {
-            $modalMapAddressRenderView = AddressGoogleMapModalView::renderModalMapWithAddressMarking($modalMapAddressViewData);
+            $userId = Yii::app()->user->userModel->id;
+            $modelClassName = $controller->getModule()->getPrimaryModelName();
+            $model = new $modelClassName(false);
+            $className = 'AddressGoogleMapModalView';
+            $renderAndMapModalView = new $className(
+                $controller->getId(),
+                $controller->getModule()->getId(),
+                $modalMapAddressData,
+                'modal'
+            );
+
             $view = new ModalView($controller,
-                                  $modalMapAddressRenderView,
+                                  $renderAndMapModalView,
                                   'modalContainer',
                                   $pageTitle);
-            echo $view->render();
+            return $view->render();
         }
 
         public static function getModalMapUrl($addressData = array())

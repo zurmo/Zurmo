@@ -147,8 +147,8 @@
 
                 if ($isAddressChanged)
                 {
-                    $this->latitude     = 0.0;
-                    $this->longitude    = 0.0;
+                    $this->latitude     = null;
+                    $this->longitude    = null;
                     $this->invalid      = false;
                 }
                 return true;

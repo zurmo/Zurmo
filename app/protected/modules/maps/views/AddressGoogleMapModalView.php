@@ -24,13 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AddressGoogleMapModalView extends MetadataView
+    class AddressGoogleMapModalView extends GridView
     {
-        public static function renderModalMapWithAddressMarking($modalMapAddressData)
+        public function __construct($controllerId, $moduleId, $modalMapDataProvider, $gridIdSuffix = null)
         {
-            $content  = "<div id='map_canvas' style='height:300px width:400px'></div>";
-            $content .=  Yii::app()->mappingHelper->getMappingLinkContentForElement($modalMapAddressData);
-            return $content;
+            Yii::app()->mappingHelper->getMappingLinkContentForElement($modalMapDataProvider);
+        }
+
+        public function isUniqueToAPage()
+        {
+            return true;
         }
     }
 ?>
