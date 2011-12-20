@@ -30,16 +30,36 @@
      */
     class AddressUtil
     {
-        public static function updateChangedAddress($page = 500)
+        public static function updateChangedAddress($count = 500)
         {
-            $addressCollection = Address::getSubset(null, 0, $page);
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'latitude',
+                    'operatorType'         => 'isnull',
+                    'value'                => null,
+                ),
+                2 => array(
+                    'attributeName'        => 'longitude',
+                    'operatorType'         => 'isnull',
+                    'value'                => null,
+                ),
+                3 => array(
+                    'attributeName'        => 'invalid',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
+                ),
+            );
+
+            $searchAttributeData['structure'] = '1 and 2 and 3';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Address');
+            $where = RedBeanModelDataProvider::makeWhere('Address', $searchAttributeData, $joinTablesAdapter);
+            //$addressCollection = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
+            $addressCollection = Address::getSubset(null, null, $count);
+
             foreach ($addressCollection as $addressCollectionRow)
             {
                 $address = strval($addressCollectionRow);
-                if ($addressCollectionRow->invalid == 1 || $address == '(None)')
-                {
-                    continue;
-                }
 
                 try
                 {

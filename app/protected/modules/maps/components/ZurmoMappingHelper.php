@@ -51,9 +51,6 @@
                                                   $pageTitle = null,
                                                   $stateMetadataAdapterClassName = null)
         {
-            $userId = Yii::app()->user->userModel->id;
-            $modelClassName = $controller->getModule()->getPrimaryModelName();
-            $model = new $modelClassName(false);
             $className = 'AddressGoogleMapModalView';
             $renderAndMapModalView = new $className(
                 $controller->getId(),

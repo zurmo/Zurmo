@@ -45,8 +45,8 @@
             $account->billingAddress->state         = $address['state'];
             $account->billingAddress->postalCode    = $address['postalCode'];
             $account->billingAddress->country       = $address['country'];
-            $account->billingAddress->latitude      = 0.0;
-            $account->billingAddress->longitude     = 0.0;
+            $account->billingAddress->latitude      = null;
+            $account->billingAddress->longitude     = null;
             $account->billingAddress->invalid       = false;
             $account->save();
             return $account;

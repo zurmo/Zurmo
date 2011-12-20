@@ -34,7 +34,7 @@
         public static function renderGeoCoderMap($apiKey,$mapData)
         {
             self::getGeoResult($apiKey,$mapData);
-            self::$geoCodeResult->renderMap('modalContainer');
+            self::$geoCodeResult->renderMap('map_canvas');
         }
         
         private static function getGeoResult($apiKey,$mapData)

@@ -23,4 +23,4 @@
 ?>
 var marker = new GMarker(latlng);
 map.addOverlay(marker);
-GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml('<?php echo $query; ?><br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + latlng.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});
+GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml(address+'<br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + latlng.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});

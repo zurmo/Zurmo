@@ -26,3 +26,4 @@ var latlng = new GLatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
 map.setCenter(latlng, 15);
 map.setUIToDefault();
 map.setMapType(G_NORMAL_MAP);
+var address = '<?php echo $query; ?>';

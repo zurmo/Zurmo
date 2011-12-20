@@ -28,6 +28,7 @@
     {
         public function __construct($controllerId, $moduleId, $modalMapDataProvider, $gridIdSuffix = null)
         {
+            echo "<div id='map_canvas' style='height:420px;width:670px;'></div>";
             Yii::app()->mappingHelper->getMappingLinkContentForElement($modalMapDataProvider);
         }
 
