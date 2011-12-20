@@ -51,15 +51,13 @@
             }
             $readyToUseData                    = ExplicitReadWriteModelPermissionsUtil::
                                                  removeIfExistsFromPostData($sanitizedData);
-             /** moved up into post method, since this is specific to post.
-            $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
-                                                 $model, $readyToUsePostData);
-            **/
+
             $sanitizedOwnerData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
                                                  $readyToUseData, 'owner');
             $sanitizedDataWithoutOwner     = PostUtil::
                                                  removeElementFromPostDataForSavingModel($readyToUseData, 'owner');
             $model->setAttributes($sanitizedDataWithoutOwner);
+
             if ($model->validate())
             {
                 $modelToStringValue = strval($model);
@@ -85,6 +83,11 @@
                     }
                     $savedSucessfully = true;
                 }
+            }
+            else
+            {
+print_r($model->getErrors());
+exit;
             }
             return $model;
         }

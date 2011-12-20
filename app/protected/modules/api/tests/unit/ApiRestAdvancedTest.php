@@ -227,11 +227,16 @@
             $testItem->save();
             $util  = new RedBeanModelToApiDataUtil($testItem);
             $data  = $util->getData();
+
             $testItem->delete();
             $testItem->forget();
             unset($testItem);
 
 
+            unset($data['createdDateTime']);
+            unset($data['modifiedDateTime']);
+            unset($data['createdByUser']);
+            unset($data['modifiedByUser']);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
 

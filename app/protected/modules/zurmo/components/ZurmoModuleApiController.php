@@ -81,7 +81,6 @@
                     Yii::app()->user->userModel->id,
                     $stateMetadataAdapterClassName
                 );
-
                 $totalItems = $dataProvider->getTotalItemCount();
                 $outputArray = array();
                 $outputArray['data']['total'] = $totalItems;
@@ -144,11 +143,7 @@
         {
             try
             {
-                foreach($data as $k=>$v){
-                    $_POST[$modelClassName][$k] = $v;
-                }
-                $model = $this->attemptToSaveModelFromPost(new $modelClassName, null, false);
-
+                $model = $this->attemptToSaveModelFromData(new $modelClassName, $data, null, false);
                 $id = $model->id;
                 $model->forget();
                 unset($model);
@@ -183,10 +178,6 @@
         {
             try
             {
-                foreach($data as $k=>$v){
-                    $_POST[$modelClassName][$k] = $v;
-                }
-
                 $model = $modelClassName::getById($id);
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
                 if ($isAllowed === false)
@@ -194,7 +185,7 @@
                     throw new Exception('This action is not allowed.');
                 }
 
-                $model = $this->attemptToSaveModelFromPost($model, null, false);
+                $model = $this->attemptToSaveModelFromData($model, $data, null, false);
 
                 $id = $model->id;
                 $outputArray = array();
@@ -250,17 +241,15 @@
          * Instead of saving from post, we are saving from the API data.
          * @see attemptToSaveModelFromPost
          */
-        protected function attemptToSaveModelFromData($data, $model, $redirectUrlParams = null, $redirect = true)
+        protected function attemptToSaveModelFromData($model, $data, $redirectUrlParams = null, $redirect = true)
         {
             assert('is_array($data)');
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
             $savedSucessfully   = false;
             $modelToStringValue = null;
-            //$postVariableName   = get_class($model);
-           //if (isset($data[$postVariableName]))        //dont need this since our $data array can be exactly that sub array
-           if(isset($data))
+
+            if (isset($data))
             {
-               // $data = $data[$postVariableName];
                 $model            = ZurmoControllerUtil::
                                     saveModelFromSanitizedData($data, $model, $savedSucessfully, $modelToStringValue);
             }

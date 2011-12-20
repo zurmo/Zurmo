@@ -28,7 +28,7 @@
      * Helper class for handling POST
      * arrays.
      */
-    class PostUtil
+    class PostUtil extends DataUtil
     {
         public static function sanitizePostForSavingMassEdit($postVariableName)
         {
@@ -48,45 +48,7 @@
          */
         public static function sanitizePostByDesignerTypeForSavingModel($model, $postData)
         {
-            assert('$model instanceof RedBeanModel || $model instanceof ModelForm');
-            assert('is_array($postData)');
-            foreach ($postData as $attributeName => $value)
-            {
-                if ($value !== null)
-                {
-                    if (!is_array($value))
-                    {
-                        if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
-                        {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
-                            if ($designerType == 'Date')
-                            {
-                                $postData[$attributeName] = DateTimeUtil::resolveValueForDateDBFormatted($value);
-                            }
-                            if ($designerType == 'DateTime' && !empty($value))
-                            {
-                                $postData[$attributeName] = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero($value);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
-                        {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
-                            if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
-                                $value['firstDate'] != null)
-                            {
-                                $postData[$attributeName]['firstDate'] = DateTimeUtil::
-                                                                         resolveValueForDateDBFormatted(
-                                                                         $value['firstDate']);
-                            }
-                        }
-                    }
-                }
-            }
+            $postData = DataUtil::sanitizeDataByDesignerTypeForSavingModel($model, $postData);
             return $postData;
         }
 
@@ -98,13 +60,7 @@
          */
         public static function sanitizePostDataToJustHavingElementForSavingModel($sanitizedPostData, $elementName)
         {
-            assert('is_array($sanitizedPostData)');
-            assert('is_string($elementName) || is_int($elementName)');
-            if (!isset($sanitizedPostData[$elementName]))
-            {
-                return null;
-            }
-            return array($elementName => $sanitizedPostData[$elementName]);
+            return DataUtil::sanitizeDataToJustHavingElementForSavingModel($sanitizedPostData, $elementName);
         }
 
         /**
@@ -114,13 +70,7 @@
          */
         public static function removeElementFromPostDataForSavingModel($sanitizedPostData, $elementName)
         {
-            assert('is_array($sanitizedPostData)');
-            assert('is_string($elementName) || is_int($elementName)');
-            if (isset($sanitizedPostData[$elementName]))
-            {
-                unset($sanitizedPostData[$elementName]);
-            }
-            return $sanitizedPostData;
+            return DataUtil::removeElementFromDataForSavingModel($sanitizedPostData, $elementName);
         }
     }
 ?>

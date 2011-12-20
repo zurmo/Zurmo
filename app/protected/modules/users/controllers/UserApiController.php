@@ -68,10 +68,7 @@
         {
             try
             {
-                foreach($data as $k=>$v){
-                    $_POST[$modelClassName][$k] = $v;
-                }
-                $model = $this->attemptToSaveModelFromPost(new $modelClassName, null, false);
+                $model = $this->attemptToSaveModelFromData(new $modelClassName, $data, null, false);
                 $id = $model->id;
 
                 $model->forget();
@@ -107,10 +104,6 @@
         {
             try
             {
-                foreach($data as $k => $v){
-                    $_POST[$modelClassName][$k] = $v;
-                }
-
                 $model = $modelClassName::getById($id);
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
                 if ($isAllowed === false || !$this->resolveCanCurrentUserAccessAction($id))
@@ -118,7 +111,7 @@
                     throw new Exception('This action is not allowed.');
                 }
 
-                $model = $this->attemptToSaveModelFromPost($model, null, false);
+                $model = $this->attemptToSaveModelFromData($model, $data, null, false);
                 $id = $model->id;
 
                 $outputArray = array();
