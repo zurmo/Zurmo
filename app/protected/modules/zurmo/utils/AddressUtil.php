@@ -36,12 +36,12 @@
             $searchAttributeData['clauses'] = array(
                 1 => array(
                     'attributeName'        => 'latitude',
-                    'operatorType'         => 'isnull',
+                    'operatorType'         => 'isNull',
                     'value'                => null,
                 ),
                 2 => array(
                     'attributeName'        => 'longitude',
-                    'operatorType'         => 'isnull',
+                    'operatorType'         => 'isNull',
                     'value'                => null,
                 ),
                 3 => array(
@@ -51,11 +51,11 @@
                 ),
             );
 
-            $searchAttributeData['structure'] = '1 and 2 and 3';
+            //$searchAttributeData['structure'] = '1 and 2 and 3';
+            $searchAttributeData['structure'] = '(`address`.`latitude` is null) and (`address`.`longitude` is null) and 3';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Address');
             $where = RedBeanModelDataProvider::makeWhere('Address', $searchAttributeData, $joinTablesAdapter);
-            //$addressCollection = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
-            $addressCollection = Address::getSubset(null, null, $count);
+            $addressCollection = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
 
             foreach ($addressCollection as $addressCollectionRow)
             {

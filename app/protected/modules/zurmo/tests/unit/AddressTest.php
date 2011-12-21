@@ -74,7 +74,8 @@
 
         public function testAddressFetchLatitudeAndLongitude()
         {
-            Yii::app()->user->userModel = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
 
             $address = array();
             $address['street1']       = "123 Knob Street";
@@ -83,7 +84,7 @@
             $address['state']         = 'Illinois';
             $address['postalCode']    = '60606';
             $address['country']       = 'USA';
-            $account1                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
+            $account1                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
             $accountId1               = $account1->id;
             unset($account1);
 
@@ -94,7 +95,7 @@
             $address['state']         = 'California';
             $address['postalCode']    = '94043';
             $address['country']       = 'USA';
-            $account2                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
+            $account2                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
             $accountId2               = $account2->id;
             unset($account2);
 
@@ -105,7 +106,7 @@
             $address['state']         = 'NY';
             $address['postalCode']    = '10001';
             $address['country']       = 'USA';
-            $account3                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
+            $account3                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
             $accountId3               = $account3->id;
             unset($account3);
 
@@ -116,7 +117,7 @@
             $address['state']         = 'WI';
             $address['postalCode']    = '53219';
             $address['country']       = '';
-            $account4                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address);
+            $account4                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
             $accountId4               = $account4->id;
             unset($account4);
 
@@ -154,7 +155,7 @@
             $this->assertEquals(0,
                                 $account4->billingAddress->invalid);
 
-            AddressUtil::updateChangedAddress();
+            AddressUtil::updateChangedAddress(2);
 
             $account3 = Account::getById($accountId3);
             $this->assertEquals('40.7274969',
@@ -172,9 +173,14 @@
             $this->assertEquals(0,
                                 $account4->billingAddress->invalid);
 
+            //Test for Modified address lat / long set to null and flag to flase.
             $account1 = Account::getById($accountId1);
-            $account1->billingAddress->street2       = '';
-            $account1->save();
+            $account1->billingAddress->street1       = 'xxxxxx';
+            $account1->billingAddress->city          = 'xxxxxx';
+            $account1->billingAddress->state         = 'xxxxxx';
+            $account1->billingAddress->postalCode    = '00000';
+            $account1->billingAddress->country       = '';
+            $this->assertTrue($account1->save(false));
 
             $account1 = Account::getById($accountId1);
             $this->assertEquals(null,
@@ -184,15 +190,8 @@
             $this->assertEquals(0,
                                 $account1->billingAddress->invalid);
 
-            $account1 = Account::getById($accountId1);
-            $account1->billingAddress->street1       = 'xxxxxx';
-            $account1->billingAddress->city          = 'xxxxxx';
-            $account1->billingAddress->state         = 'xxxxxx';
-            $account1->billingAddress->postalCode    = '00000';
-            $account1->billingAddress->country       = '';
-            $account1->save();
-
-            AddressUtil::updateChangedAddress();
+            //Test for Invalid address and set invalid flag to true.
+            AddressUtil::updateChangedAddress(2);
 
             $account1 = Account::getById($accountId1);
             $this->assertEquals(null,
@@ -209,9 +208,17 @@
             $account1->billingAddress->state         = 'Illinois';
             $account1->billingAddress->postalCode    = '60606';
             $account1->billingAddress->country       = 'USA';
-            $account1->save();
+            $this->assertTrue($account1->save());
 
-            AddressUtil::updateChangedAddress();
+            $account1 = Account::getById($accountId1);
+            $this->assertEquals(null,
+                                $account1->billingAddress->latitude);
+            $this->assertEquals(null,
+                                $account1->billingAddress->longitude);
+            $this->assertEquals(0,
+                                $account1->billingAddress->invalid);
+
+            AddressUtil::updateChangedAddress(2);
 
             $account1 = Account::getById($accountId1);
             $this->assertEquals('42.1153153',

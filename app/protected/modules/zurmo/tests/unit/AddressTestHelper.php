@@ -26,9 +26,10 @@
 
     class AddressTestHelper
     {
-        public static function createTestAccountsWithBillingAddressAndGetAccount($address)
+        public static function createTestAccountsWithBillingAddressAndGetAccount($address,$owner)
         {
             $account                                = new Account();
+            $account->owner                         = $owner;
             $account->name                          = "Account";
             $account->officePhone                   = rand(10000000, 90000000);
             $account->officeFax                     = rand(10000000, 90000000);
