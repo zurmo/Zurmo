@@ -120,14 +120,13 @@
         }
 
          /**
-         * Render a select link. This link calls a modal
+         * Render a map link. This link calls a modal
          * popup.
          * @return The element's content as a string.
          */
         protected function renderMapLink($addressModel)
         {
             // Register the api javascript
-            
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile('http://maps.google.com/maps?file=api&v=2&sensor=false');
             $cs->registerScriptFile(

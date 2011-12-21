@@ -40,15 +40,10 @@
             $account->primaryEmail->emailAddress    = "info@account.com";
             $account->primaryEmail->optOut          = false;
             $account->primaryEmail->isInvalid       = false;
-            $account->billingAddress->street1       = $address['street1'];
-            $account->billingAddress->street2       = $address['street2'];
-            $account->billingAddress->city          = $address['city'];
-            $account->billingAddress->state         = $address['state'];
-            $account->billingAddress->postalCode    = $address['postalCode'];
-            $account->billingAddress->country       = $address['country'];
-            $account->billingAddress->latitude      = null;
-            $account->billingAddress->longitude     = null;
-            $account->billingAddress->invalid       = false;
+            foreach($address as $key=>$value)
+            {
+                $account->billingAddress->$key      = $value;
+            }
             $account->save();
             return $account;
         }

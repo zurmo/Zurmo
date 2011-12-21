@@ -32,32 +32,9 @@
     {
         public static function updateChangedAddress($count = 500)
         {
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'latitude',
-                    'operatorType'         => 'isNull',
-                    'value'                => null,
-                ),
-                2 => array(
-                    'attributeName'        => 'longitude',
-                    'operatorType'         => 'isNull',
-                    'value'                => null,
-                ),
-                3 => array(
-                    'attributeName'        => 'invalid',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1,
-                ),
-            );
+            $changedAddressCollection = self::fetchChangedAddressCollection($count);
 
-            //$searchAttributeData['structure'] = '1 and 2 and 3';
-            $searchAttributeData['structure'] = '(`address`.`latitude` is null) and (`address`.`longitude` is null) and 3';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Address');
-            $where = RedBeanModelDataProvider::makeWhere('Address', $searchAttributeData, $joinTablesAdapter);
-            $addressCollection = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
-
-            foreach ($addressCollection as $addressCollectionRow)
+            foreach ($changedAddressCollection as $addressCollectionRow)
             {
                 $address = strval($addressCollectionRow);
 
@@ -82,6 +59,45 @@
                 }
                 $addressCollectionRow->unrestrictedSave(false);
             }
+        }
+
+        public static function fetchChangedAddressCollection($count)
+        {
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'latitude',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
+                ),
+                2 => array(
+                    'attributeName'        => 'latitude',
+                    'operatorType'         => 'equals',
+                    'value'                => '',
+                ),
+                3 => array(
+                    'attributeName'        => 'longitude',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
+                ),
+                4 => array(
+                    'attributeName'        => 'longitude',
+                    'operatorType'         => 'equals',
+                    'value'                => '',
+                ),
+                5 => array(
+                    'attributeName'        => 'invalid',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
+                ),
+            );
+
+            //$searchAttributeData['structure'] = '(1 or 2) and (3 or 4) and 5';
+            $searchAttributeData['structure'] = '((`address`.`latitude` is null) or 2) and ((`address`.`longitude` is null) or 4) and 5';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Address');
+            $where = RedBeanModelDataProvider::makeWhere('Address', $searchAttributeData, $joinTablesAdapter);
+            $addressCollection = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
+            return $addressCollection;
         }
 
         public static function fetchGeocodeForAddress($address)

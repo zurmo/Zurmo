@@ -78,8 +78,8 @@
             Yii::app()->user->userModel = $super;
 
             $address = array();
-            $address['street1']       = "123 Knob Street";
-            $address['street2']       = "Apartment 4b";
+            $address['street1']       = '123 Knob Street';
+            $address['street2']       = 'Apartment 4b';
             $address['city']          = 'Chicago';
             $address['state']         = 'Illinois';
             $address['postalCode']    = '60606';
@@ -89,8 +89,8 @@
             unset($account1);
 
             $address = array();
-            $address['street1']       = "1600 Amphitheatre Parkway";
-            $address['street2']       = "";
+            $address['street1']       = '1600 Amphitheatre Parkway';
+            $address['street2']       = '';
             $address['city']          = 'Mountain View';
             $address['state']         = 'California';
             $address['postalCode']    = '94043';
@@ -100,8 +100,8 @@
             unset($account2);
 
             $address = array();
-            $address['street1']       = "36826 East Oak Road";
-            $address['street2']       = "";
+            $address['street1']       = '36826 East Oak Road';
+            $address['street2']       = '';
             $address['city']          = 'New York';
             $address['state']         = 'NY';
             $address['postalCode']    = '10001';
@@ -111,8 +111,8 @@
             unset($account3);
 
             $address = array();
-            $address['street1']       = "24948 West Thomas Trail";
-            $address['street2']       = "";
+            $address['street1']       = '24948 West Thomas Trail';
+            $address['street2']       = '';
             $address['city']          = 'Milwaukee';
             $address['state']         = 'WI';
             $address['postalCode']    = '53219';
@@ -120,6 +120,15 @@
             $account4                 = AddressTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
             $accountId4               = $account4->id;
             unset($account4);
+
+            //Check lat/long and invalid values after address creation.
+            $account1 = Account::getById($accountId1);
+            $this->assertEquals(null,
+                                $account1->billingAddress->latitude);
+            $this->assertEquals(null,
+                                $account1->billingAddress->longitude);
+            $this->assertEquals(0,
+                                $account1->billingAddress->invalid);
 
             AddressUtil::updateChangedAddress(2);
 
@@ -173,7 +182,7 @@
             $this->assertEquals(0,
                                 $account4->billingAddress->invalid);
 
-            //Test for Modified address lat / long set to null and flag to flase.
+            //Check after Modifying address lat / long set to null and flag to flase.
             $account1 = Account::getById($accountId1);
             $account1->billingAddress->street1       = 'xxxxxx';
             $account1->billingAddress->city          = 'xxxxxx';
@@ -202,8 +211,8 @@
                                 $account1->billingAddress->invalid);
 
             $account1 = Account::getById($accountId1);
-            $account1->billingAddress->street1       = "123 Knob Street";
-            $account1->billingAddress->street2       = "Apartment 4b";
+            $account1->billingAddress->street1       = '123 Knob Street';
+            $account1->billingAddress->street2       = 'Apartment 4b';
             $account1->billingAddress->city          = 'Chicago';
             $account1->billingAddress->state         = 'Illinois';
             $account1->billingAddress->postalCode    = '60606';
