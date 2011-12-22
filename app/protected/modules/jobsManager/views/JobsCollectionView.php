@@ -136,7 +136,7 @@
             $content .= '<td>[chn-log] ' . CHtml::encode($this->monitorJobData['label']) . '</td>';
             $content .= '<td>' . CHtml::encode($this->monitorJobData['lastCompletedRunContent']) . '</td>';
             $content .= '<td>' . CHtml::encode($this->monitorJobData['statusContent']) . '</td>';
-            $content .= '<td>' . self::resolveActionContentByStatus($this->monitorJobData['status']) . '</td>';
+            $content .= '<td>' . $this->resolveActionContentByStatus('Monitor', $this->monitorJobData['status']) . '</td>';
             $content .= '</tr>';
 
             $content .= '</tbody>';
@@ -169,12 +169,16 @@
             return $content;
         }
 
-        protected static function resolveActionContentByStatus($status)
+        protected function resolveActionContentByStatus($type, $status)
         {
+            assert('is_string($type)');
             assert('is_int($status)');
             if($status == JobsToJobsCollectionViewUtil::STATUS_IN_PROCESS_STUCK)
             {
-                return 'todoclear';
+                $params = array('type' => $type);
+                $route   = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/resetJob/', $params);
+                $content = CHtml::link(Yii::t('Default', 'Reset'), $route);
+                return $content;
             }
             return null;
         }
