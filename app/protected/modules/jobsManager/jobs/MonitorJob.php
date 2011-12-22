@@ -29,6 +29,9 @@
      */
     class MonitorJob extends BaseJob
     {
+        /**
+         * @returns Translated label that describes this job type.
+         */
         public static function getDisplayName()
         {
            return Yii::t('Default', 'Monitor Job');
@@ -55,7 +58,7 @@
             $jobsInProcess = static::getNonMonitorJobsInProcessModels();
             foreach($jobsInProcess as $jobInProcess)
             {
-                if(JobManagerUtil::isJobInProcessOverThreashold($jobInProcess, $type))
+                if(JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $type))
                 {
                     $message                    = new NotificationMessage();
                     $message->textContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
@@ -70,7 +73,7 @@
                 $message->textContent        = Yii::t('Default', 'Job completed with errors.');
                 $rules                       = new JobCompletedWithErrorsNotificationRules();
                 NotificationsUtil::submit($message, $rules);
-                $jobLog->isProcessed = true;
+                $jobLog->isProcessed         = true;
                 $jobLog->save();
             }
             return true;
@@ -89,7 +92,7 @@
             $searchAttributeData['structure'] = '1';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobInProcess');
             $where = RedBeanModelDataProvider::makeWhere('JobInProcess', $searchAttributeData, $joinTablesAdapter);
-            return self::getSubset($joinTablesAdapter, null, null, $where, null);
+            return JobInProcess::getSubset($joinTablesAdapter, null, null, $where, null);
         }
 
         protected static function getNonMonitorJobLogsWithErrorStatus()
@@ -107,15 +110,15 @@
                     'value'                => JobLog::STATUS_COMPLETE_WITH_ERROR,
                 ),
                 3 => array(
-                    'attributeName'        => 'processed',
-                    'operatorType'         => 'equals',
-                    'value'                => (bool)0,
+                    'attributeName'        => 'isProcessed',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
                 ),
             );
             $searchAttributeData['structure'] = '1 and 2 and 3';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
             $where = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
-            return self::getSubset($joinTablesAdapter, null, null, $where, null);
+            return JobLog::getSubset($joinTablesAdapter, null, null, $where, null);
         }
     }
 

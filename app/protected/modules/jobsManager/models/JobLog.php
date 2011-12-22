@@ -29,8 +29,16 @@
      */
     class JobLog extends Item
     {
+        /**
+         * Utilized by the status attribute to define the status as complete without an error.
+         * @var integer
+         */
         const STATUS_COMPLETE_WITHOUT_ERROR = 1;
 
+        /**
+         * Utilized by the status attribute to define the status as complet with an error.
+         * @var integer
+         */
         const STATUS_COMPLETE_WITH_ERROR    = 2;
 
         public function __toString()
@@ -39,7 +47,7 @@
             {
                 return null;
             }
-            return JobUtil::resolveStringContentByType($this->type);
+            return JobsUtil::resolveStringContentByType($this->type);
         }
 
         public static function getDefaultMetadata()
@@ -67,7 +75,7 @@
                     array('startDateTime',  'type', 'type' => 'datetime'),
                     array('endDateTime',    'type', 'type' => 'datetime'),
                     array('isProcessed',    'boolean'),
-                    array('isProcessed',    'validateIsReadIsSet'),
+                    array('isProcessed',    'validateIsProcessedIsSet'),
                 ),
                 'defaultSortAttribute' => 'type',
                 'noAudit' => array(
@@ -86,6 +94,10 @@
             return $metadata;
         }
 
+        /**
+         * Because isProcessed is a boolean attribute, disallow if the value is not specified. We do
+         * not want NULL values in the database for this attribute.
+         */
         public function validateIsProcessedIsSet()
         {
             if($this->isProcessed == null)

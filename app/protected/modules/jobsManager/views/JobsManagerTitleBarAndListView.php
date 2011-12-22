@@ -24,56 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Base class for making Jobs.  Jobs can be run on a scheduled basis.  An example job would be a job
-     * that removes old import tables.
-     */
-    abstract class BaseJob
+    class JobsManagerTitleBarAndListView extends GridView
     {
-        /**
-         * Populated when the job runs if needed.
-         * @var string
-         */
-        protected $errorMessage;
-
-        /**
-         * After a Job is instantiated, the run method is called to execute the job.
-         */
-        abstract public function run();
-
-        /**
-         * @returns Translated label that describes this job type.
-         */
-        public static function getDisplayName()
+        public function __construct(
+            $controllerId,
+            $moduleId,
+            $monitorJobData,
+            $jobsData,
+            $messageBoxContent = null)
         {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * @return The type of the NotificationRules
-         */
-        public static function getType()
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * @returns error message string otherwise returns null if not populated.
-         */
-        public function getErrorMessage()
-        {
-            return $this->errorMessage;
-        }
-
-        /**
-         * @returns the threshold for how long a job is allowed to run. This is the 'threshold'. If a job
-         * is running longer than the threshold, the monitor job might take action on it since it would be
-         * considered 'stuck'.
-         */
-        public static function getRunTimeThresholdInSeconds()
-        {
-            return 60;
+            parent::__construct(2, 1);
+            $this->setView(new TitleBarView (Yii::t('Default', 'Jobs Manager: Home')), 0, 0);
+            $this->setView(new JobsCollectionView($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent), 1, 0);
         }
     }
-
 ?>

@@ -273,6 +273,7 @@
         $common_config['import'][] = "application.modules.$moduleName.forms.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.forms.attributes.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.interfaces.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.jobs.*";                      // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.models.*";                    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.modules.*";                   // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.*";                     // Not Coding Standard

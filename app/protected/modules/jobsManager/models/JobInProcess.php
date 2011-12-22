@@ -25,17 +25,34 @@
      ********************************************************************************/
 
     /**
-     * Models of currently running jobs
+     * A model to store information about jobs that are currently running.
      */
     class JobInProcess extends Item
     {
+        public static function getByType($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => $type,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobInProcess');
+            $where = RedBeanModelDataProvider::makeWhere('JobInProcess', $searchAttributeData, $joinTablesAdapter);
+            return self::getSubset($joinTablesAdapter, null, null, $where, null);
+        }
+
         public function __toString()
         {
             if ($this->type == null)
             {
                 return null;
             }
-            return JobUtil::resolveStringContentByType($this->type);
+            return JobsUtil::resolveStringContentByType($this->type);
         }
 
         public static function getDefaultMetadata()

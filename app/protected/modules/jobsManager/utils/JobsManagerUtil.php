@@ -27,8 +27,15 @@
     /**
      * A helper class for running normal jobs or the monitor job.
      */
-    class JobManagerUtil
+    class JobsManagerUtil
     {
+        /**
+         * @see JobManagerCommand.  This method is called from the JobManagerCommand which is a commandline
+         * tool to run jobs.  Based on the 'type' specified this method will call to run the monitor or a
+         * regular non-monitor job.
+         * @param string $type
+         * @param timeLimit $timeLimit
+         */
         public static function runFromJobManagerCommand($type, $timeLimit)
         {
             assert('is_string($type)');
@@ -52,12 +59,16 @@
             $messageStreamer->add(Yii::t('Default', 'Ending job type: {type}', array('{type}' => $type)));
         }
 
+        /**
+         * Run the monitor job.
+         */
         public static function runMonitorJob()
         {
-            try
+            $jobsInProcess = JobInProcess::getByType('Monitor');
+            if(count($jobsInProcess) != 0)
             {
-                $jobInProcess = JobInProcess::getByType('Monitor');
-                if(static::isJobInProcessOverThreashold($runningJob, 'Monitor'))
+                $jobInProcess = $jobsInProcess[0];
+                if(static::isJobInProcessOverThreashold($jobInProcess, 'Monitor'))
                 {
                     $message                    = new NotificationMessage();
                     $message->textContent       = MonitorJob::getStuckStringContent();
@@ -65,14 +76,13 @@
                     NotificationsUtil::submit($message, $rules);
                 }
             }
-            catch(NotFoundException $e)
+            else
             {
-                $jobInProcess            = new JobInProcess();
+                $jobInProcess          = new JobInProcess();
                 $jobInProcess->type    = 'Monitor';
                 $jobInProcess->save();
                 $startDateTime         = $jobInProcess->createdDateTime;
                 $job                   = new MonitorJob();
-                $job                   = new $jobClassName();
                 $ranSuccessfully       = $job->run();
                 $jobInProcess->delete();
                 $jobLog                = new JobLog();
@@ -92,14 +102,14 @@
             }
         }
 
+        /**
+         * Given a 'type' of job, run the job.  This is for non-monitor jobs only.
+         * @param string $type
+         */
         public static function runNonMonitorJob($type)
         {
             assert('is_string($type) && $type != "Monitor"');
-            try
-            {
-                $jobInProcess = JobInProcess::getByType($type);
-            }
-            catch(NotFoundException $e)
+            if(count(JobInProcess::getByType($type)) == 0)
             {
                 $jobInProcess            = new JobInProcess();
                 $jobInProcess->type    = $type;
@@ -128,13 +138,22 @@
             }
         }
 
-        public static function isJobInProcessOverThreashold($jobInProcess, $type)
+        /**
+         * Given a model of a jobInProcess and the 'type' of job, determine if the job has been running too
+         * long.  Jobs have defined maximum run times that they are allowed to be in process.
+         * @param JobInProcess $jobInProcess
+         * @param string $type
+         * @return true/false - true if the job is over the allowed amount of time to run for.
+         */
+        public static function isJobInProcessOverThreashold(JobInProcess $jobInProcess, $type)
         {
+            assert('is_string($type) && $type != ""');
+
             $createdTimeStamp  = DateTimeUtil::convertDbFormatDateTimeToTimestamp($jobInProcess->createdDateTime);
             $nowTimeStamp      = time();
             $jobClassName      = $type . 'Job';
             $thresholdSeconds  = $jobClassName::getRunTimeThresholdInSeconds();
-            if($nowTimeStamp - $createdTimeStamp > $thresholdSeconds)
+            if(($nowTimeStamp - $createdTimeStamp) > $thresholdSeconds)
             {
                 return true;
             }
