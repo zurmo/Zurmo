@@ -41,11 +41,18 @@
 
             $id = $jobInProcess->id;
 
-            $jobsInProcess = JobInProcess::getByType('SomethingElse');
-            $this->assertEquals(0, count($jobsInProcess));
-            $jobsInProcess = JobInProcess::getByType('Monitor');
-            $this->assertEquals(1, count($jobsInProcess));
-            $this->assertEquals($id, $jobsInProcess[0]->id);
+            try
+            {
+                $jobInProcess = JobInProcess::getByType('SomethingElse');
+                $this->fail();
+            }
+            catch(NotFoundException $e)
+            {
+                //nothing. passes.
+            }
+            $jobInProcess = JobInProcess::getByType('Monitor');
+            $this->assertEquals(1, count($jobInProcess));
+            $this->assertEquals($id, $jobsInProcess->id);
             $jobInProcess->delete();
             $this->assertEquals(0, count(JobInProcess::getAll()));
         }

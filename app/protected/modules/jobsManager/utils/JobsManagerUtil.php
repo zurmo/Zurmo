@@ -64,10 +64,9 @@
          */
         public static function runMonitorJob()
         {
-            $jobsInProcess = JobInProcess::getByType('Monitor');
-            if(count($jobsInProcess) != 0)
+            try
             {
-                $jobInProcess = $jobsInProcess[0];
+                $jobInProcess = JobInProcess::getByType('Monitor');
                 if(static::isJobInProcessOverThreashold($jobInProcess, 'Monitor'))
                 {
                     $message                    = new NotificationMessage();
@@ -76,7 +75,7 @@
                     NotificationsUtil::submit($message, $rules);
                 }
             }
-            else
+            catch(NotFoundException $e)
             {
                 $jobInProcess          = new JobInProcess();
                 $jobInProcess->type    = 'Monitor';
@@ -109,7 +108,11 @@
         public static function runNonMonitorJob($type)
         {
             assert('is_string($type) && $type != "Monitor"');
-            if(count(JobInProcess::getByType($type)) == 0)
+            try
+            {
+                $jobInProcess = JobInProcess::getByType($type);
+            }
+            catch(NotFoundException $e)
             {
                 $jobInProcess            = new JobInProcess();
                 $jobInProcess->type    = $type;

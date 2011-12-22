@@ -26,6 +26,12 @@
 
     class JobsToJobsCollectionViewUtil
     {
+        const STATUS_NOT_RUNNING         = 1;
+
+        const STATUS_IN_PROCESS_STUCK    = 2;
+
+        const STATUS_IN_PROCESS          = 3;
+
         public static function getNonMonitorJobsData()
         {
             $jobsData       = array();
@@ -54,12 +60,115 @@
 
         public static function getMonitorJobData()
         {
+            return self::getJobDataByType('Monitor');
+
+        }
+
+        protected static function getJobDataByType($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $lastCompletedJobLog                = self::getLastCompletedJobLogByType($type);
+            $jobInProcess                       = self::getIfJobIsInProcessOtherwiseReturnNullByType($type);
             $jobData = array();
             $jobData['label']                   = MonitorJob::getDisplayName();
-            $jobData['lastCompletedRunContent'] = 'x';
-            $jobData['statusContent']			= 'y';
-            $jobData['status']					= 'z';
+            $jobData['lastCompletedRunContent'] = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
+            $jobData['statusContent']			= self::makeStatusContentByJobLog($lastCompletedJobLog, $jobInProcess);
+            $jobData['status']					= self::resolveStatusByJobLog($lastCompletedJobLog, $jobInProcess);
             return $jobData;
+        }
+
+        protected static function getIfJobIsInProcessOtherwiseReturnNullByType($type)
+        {
+            assert('is_string($type) && $type != ""');
+            try
+            {
+                $jobInProcess = JobInProcess::getByType($type);
+            }
+            catch(NotFoundException $e)
+            {
+                $jobInProcess = null;
+            }
+            return $jobInProcess;
+        }
+
+        protected function makeLastCompletedRunContentByJobLog($jobLog)
+        {
+            assert('$jobLog instanceof JobLog || $jobLog == null');
+            if($jobLog == null)
+            {
+                return Yii::t('Default', 'Never');
+            }
+            $content = Yii::app()->dateFormatter->formatDateTime($jobLog->createdDateTime, 'short', 'short');
+            if($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
+            {
+                $content .= '&#160;' . Yii::t('Default', '[with errors]');
+            }
+            return $content;
+        }
+
+        protected function makeStatusContentByJobLog($jobLog, $jobInProcess)
+        {
+            assert('$jobLog instanceof JobLog || $jobLog == null');
+            assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
+            if($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
+            {
+                return Yii::t('Default', 'In Process (Stuck)');
+            }
+            elseif($jobInProcess != null)
+            {
+                return Yii::t('Default', 'In Process {startedPointContent}',
+                       array('{startedPointContent}', 'aaa')); //todo: can use what we do in notes.
+            }
+            else
+            {
+                return Yii::t('Default', 'Not Running');
+            }
+        }
+
+        protected function resolveStatusByJobLog($jobLog, $jobInProcess)
+        {
+            assert('$jobLog instanceof JobLog || $jobLog == null');
+            assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
+            if($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
+            {
+                return self::STATUS_IN_PROCESS_STUCK;
+            }
+            elseif($jobInProcess != null)
+            {
+                return self::STATUS_IN_PROCESS;
+            }
+            else
+            {
+                return self::STATUS_NOT_RUNNING;
+            }
+        }
+
+        protected static function getLastCompletedJobLogByType($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => $type,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
+            $sort   = RedBeanModelDataProvider::
+                      resolveSortAttributeColumnName('JobLog', $joinTablesAdapter, 'createdDateTime');
+            $where  = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
+            $models = JobLog::getSubset($joinTablesAdapter, null, 1, $where, $sort . ' desc');
+            if(count($models) > 1)
+            {
+                throw new NotSupportedException();
+            }
+            if(count($models) == 0)
+            {
+                return null;
+            }
+            return $models[0];
         }
     }
 ?>

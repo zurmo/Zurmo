@@ -42,8 +42,17 @@
             );
             $searchAttributeData['structure'] = '1';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobInProcess');
-            $where = RedBeanModelDataProvider::makeWhere('JobInProcess', $searchAttributeData, $joinTablesAdapter);
-            return self::getSubset($joinTablesAdapter, null, null, $where, null);
+            $where  = RedBeanModelDataProvider::makeWhere('JobInProcess', $searchAttributeData, $joinTablesAdapter);
+            $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
+            if(count($models) > 1)
+            {
+                throw new NotSupportedException();
+            }
+            if(count($models) == 0)
+            {
+                throw new NotFoundException();
+            }
+            return $models[0];
         }
 
         public function __toString()

@@ -133,9 +133,9 @@
             $content .= '</tr>';
 
             $content .= '<tr>';
-            $content .= '<td>[chn-log] ' . $this->monitorJobData['label'] . '</td>';
-            $content .= '<td>' . $this->monitorJobData['lastCompletedRunContent'] . '</td>';
-            $content .= '<td>' . $this->monitorJobData['statusContent'] . '</td>';
+            $content .= '<td>[chn-log] ' . CHtml::encode($this->monitorJobData['label']) . '</td>';
+            $content .= '<td>' . CHtml::encode($this->monitorJobData['lastCompletedRunContent']) . '</td>';
+            $content .= '<td>' . CHtml::encode($this->monitorJobData['statusContent']) . '</td>';
             $content .= '<td>&#160;</td>';
             $content .= '</tr>';
 
