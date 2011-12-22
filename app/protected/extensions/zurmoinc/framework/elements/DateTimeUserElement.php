@@ -52,7 +52,9 @@
             {
                 return Yii::t('Default', 'Unknown');
             }
-            $content = CHtml::encode(Yii::app()->dateFormatter->formatDateTime($this->model->{$dateTimeAttributeName}, 'short', 'short'));
+            $content = CHtml::encode(
+                        DateTimeUtil::
+                        convertDbFormattedDateTimeToLocaleFormattedDisplay($this->model->{$dateTimeAttributeName}));
 
             if ($this->model->{$userModelName}->id > 0)
             {

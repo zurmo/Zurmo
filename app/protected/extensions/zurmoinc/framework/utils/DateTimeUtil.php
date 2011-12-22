@@ -132,14 +132,22 @@
         public static function convertTimestampToDbFormatDateTime($timestamp)
         {
             assert('is_int($timestamp)');
-            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateTimeFormat(),
+            $timeZone = date_default_timezone_get();
+            date_default_timezone_set('GMT');
+            $result = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateTimeFormat(),
                                                      $timestamp);
+            date_default_timezone_set($timeZone);
+            return $result;
         }
 
         public static function convertDbFormatDateTimeToTimestamp($dbFormatDateTime)
         {
             assert('is_string($dbFormatDateTime)');
-            return strtotime($dbFormatDateTime);
+            $timeZone = date_default_timezone_get();
+            date_default_timezone_set('GMT');
+            $result = strtotime($dbFormatDateTime);
+            date_default_timezone_set($timeZone);
+            return $result;
         }
 
         public static function convertTimestampToDisplayFormat($timestamp,
