@@ -28,19 +28,18 @@
     {
         public function attach($owner)
         {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
+
             if (Yii::app()->isApplicationInstalled())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
             }
-
+            // ToDo: Check if this must be on top!!
             if(Yii::app()->apiRequest->isApiRequest())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
             }
-
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
-
 
             if(!Yii::app()->apiRequest->isApiRequest())
             {
