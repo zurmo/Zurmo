@@ -24,16 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * 
-     */
     class ZurmoMappingHelper extends MappingHelper
     {
+        /**
+         * @return rendered map content.
+         */
         public function getMappingLinkContentForElement($mapData)
         {
             return GoogleMappingUtil::renderGeoCoderMap(self::getGeoCodeApi(),$mapData);
         }
 
+        /**
+         * @return rendered modal map view.
+         */
         public static function setAjaxModeAndRenderMapModalView(CController $controller, $modalMapAddressData,
                                                  $pageTitle = null,
                                                  $stateMetadataAdapterClassName = null)
@@ -66,16 +69,25 @@
             return $view->render();
         }
 
+        /**
+         * @return modal map render url.
+         */
         public static function getModalMapUrl($addressData = array())
         {
             return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET,$addressData));
         }
 
+        /**
+         * @return lat / long array.
+         */
         public static function getGeoCodes($address)
         {
             return GoogleGeoCodeUtil::getLatitudeLongitude(self::getGeoCodeApi(), $address);
         }
 
+        /**
+         * @return Geocode Api Key.
+         */
         public static function getGeoCodeApi()
         {
             if (null != $apiKey = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey'))

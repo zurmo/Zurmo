@@ -47,5 +47,16 @@
             $account->save();
             return $account;
         }
+
+        public static function updateTestAccountsWithBillingAddress($accountid, $address, $owner)
+        {
+            $account                                = Account::getById($accountid);
+            $account->owner                         = $owner;
+            foreach($address as $key=>$value)
+            {
+                $account->billingAddress->$key      = $value;
+            }
+            $account->save();
+        }
     }
 ?>

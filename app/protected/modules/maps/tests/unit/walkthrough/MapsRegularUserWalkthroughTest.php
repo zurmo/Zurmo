@@ -39,5 +39,105 @@
             AccountTestHelper::createAccountByNameForOwner('superAccount2', $super);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
         }
+
+        public function testRegularUserAllControllerActionsNoElevation()
+        {
+            $super                      = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $superAccount               = AccountTestHelper::createAccountByNameForOwner('accountOwnedBySuper', $super);
+
+            //Create address array for the account owned by super user.
+            $address = array('street1'      =>'1600 Amphitheatre Parkway', 
+                             'street2'      =>'', 
+                             'city'         =>'Mountain View', 
+                             'state'        =>'California',
+                             'postalCode'   =>'94043',
+                             'country'      =>'USA');
+
+            //Assign Address to the user account.
+            AddressTestHelper::updateTestAccountsWithBillingAddress($superAccount->id, $address, $super);
+
+            //Fetch Latitute and Longitude values for address and save in Address.
+            AddressUtil::updateChangedAddress();
+
+            $accounts                   = Account::getByName('accountOwnedBySuper');
+            $this->assertEquals(1, count($accounts));
+
+            $this->assertEquals('37.4211444',   $accounts[0]->billingAddress->latitude);
+            $this->assertEquals('-122.0853032', $accounts[0]->billingAddress->longitude);
+            $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
+
+            $queryAddress = strval($accounts[0]->billingAddress);
+            $this->setGetArray(array('query'                   => $queryAddress,
+                                     'latitude'                => $accounts[0]->billingAddress->latitude,
+                                     'longitude'               => $accounts[0]->billingAddress->longitude));
+
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+
+            //Now test account details portlet controller actions
+            $this->setGetArray(array('id' => $superAccount->id));
+            $this->resetPostArray();
+            $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
+
+            $content = $this->runControllerShouldResultInAccessFailureAndGetContent('maps/default/renderAddressMapView');
+            $this->assertTrue(strpos($content,'Access Failure') > 0);
+        }
+
+        /**
+        * @depends testRegularUserAllControllerActionsNoElevation
+        */
+        public function testRegularUserControllerActionsWithElevationToAccessAndCreate()
+        {
+            $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+
+            //Now test peon with elevated rights to accounts
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $this->assertTrue($nobody->save());
+
+            //create the account as nobody user as the owner
+            $account = AccountTestHelper::createAccountByNameForOwner('accountOwnedByNobody', $nobody);
+
+            //Test whether the nobody user is able to view the account that he created
+            $this->setGetArray(array('id' => $account->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
+
+            //Now test peon with elevated rights to notes
+            $nobody->setRight('MapsModule', MapsModule::RIGHT_ACCESS_MAPS);
+            $nobody->setRight('MapsModule', MapsModule::RIGHT_CREATE_MAPS);
+            $nobody->setRight('MapsModule', MapsModule::RIGHT_DELETE_MAPS);
+            $this->assertTrue($nobody->save());
+
+            //Test nobody with elevated rights.
+            Yii::app()->user->userModel = User::getByUsername('nobody');
+
+            //Create address array for the super account id.
+            $address = array('street1'      =>'1600 Amphitheatre Parkway', 
+                             'street2'      =>'', 
+                             'city'         =>'Mountain View', 
+                             'state'        =>'California',
+                             'postalCode'   =>'94043',
+                             'country'      =>'USA');
+
+            //Assign Address to the super user account.
+            AddressTestHelper::updateTestAccountsWithBillingAddress($account->id, $address, $nobody);
+
+            //Fetch Latitute and Longitude values for address and save in Address.
+            AddressUtil::updateChangedAddress();
+
+            $accounts                   = Account::getByName('accountOwnedByNobody');
+            $this->assertEquals(1, count($accounts));
+
+            $this->assertEquals('37.4211444',   $accounts[0]->billingAddress->latitude);
+            $this->assertEquals('-122.0853032', $accounts[0]->billingAddress->longitude);
+            $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
+
+            $queryAddress = strval($accounts[0]->billingAddress);
+            $this->setGetArray(array('query'                   => $queryAddress,
+                                     'latitude'                => $accounts[0]->billingAddress->latitude,
+                                     'longitude'               => $accounts[0]->billingAddress->longitude));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('maps/default/renderAddressMapView');
+            $this->assertTrue(strpos($content,'GMap') > 0);
+        }
     }
 ?>
