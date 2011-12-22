@@ -38,11 +38,18 @@
             {
                 $address = strval($addressCollectionRow);
 
-                try
+                if($address != '(None)')
                 {
-                    $latitudeLongitudeCordinates     = self::fetchGeocodeForAddress($address);
+                    try
+                    {
+                        $latitudeLongitudeCordinates     = self::fetchGeocodeForAddress($address);
+                    }
+                    catch (GeoCode_Exception $e)
+                    {
+                        $latitudeLongitudeCordinates     = null;
+                    }
                 }
-                catch (GeoCode_Exception $e)
+                else
                 {
                     $latitudeLongitudeCordinates     = null;
                 }
