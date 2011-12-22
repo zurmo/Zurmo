@@ -26,7 +26,7 @@
 
     class AddressTestHelper
     {
-        public static function createTestAccountsWithBillingAddressAndGetAccount($address,$owner)
+        public static function createTestAccountsWithBillingAddressAndGetAccount($address, $owner)
         {
             $account                                = new Account();
             $account->owner                         = $owner;
@@ -40,7 +40,7 @@
             $account->primaryEmail->emailAddress    = "info@account.com";
             $account->primaryEmail->optOut          = false;
             $account->primaryEmail->isInvalid       = false;
-            foreach($address as $key=>$value)
+            foreach ($address as $key=>$value)
             {
                 $account->billingAddress->$key      = $value;
             }
@@ -52,7 +52,7 @@
         {
             $account                                = Account::getById($accountid);
             $account->owner                         = $owner;
-            foreach($address as $key=>$value)
+            foreach ($address as $key=>$value)
             {
                 $account->billingAddress->$key      = $value;
             }

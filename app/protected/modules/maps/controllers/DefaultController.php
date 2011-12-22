@@ -30,10 +30,10 @@
         {
             return array(
                 array(
-                    ZurmoBaseController::RIGHTS_FILTER_PATH,
-                    'moduleClassName' => 'MapsModule',
-                    'rightName' => MapsModule::RIGHT_ACCESS_MAPS,
-               ),
+                      ZurmoBaseController::RIGHTS_FILTER_PATH,
+                      'moduleClassName'   => 'MapsModule',
+                      'rightName'         => MapsModule::RIGHT_ACCESS_MAPS,
+                ),
             );
         }
 
@@ -44,11 +44,10 @@
 
         public function actionConfigurationView()
         {
-            $configurationForm = new MapsConfigurationForm();
-
+            $configurationForm          = new MapsConfigurationForm();
             $configurationForm->apiKey  = ZurmoMappingHelper::getGeoCodeApi();
 
-            $postVariableName  = get_class($configurationForm);
+            $postVariableName           = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {
                 $configurationForm->setAttributes($_POST[$postVariableName]);
@@ -56,7 +55,7 @@
                 {
                     ZurmoConfigurationUtil::setByModuleName('MapsModule', 'googleMapApiKey', $configurationForm->apiKey);
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'Maps configuration saved successfully.')
+                                                Yii::t('Default', 'Maps configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('maps/default/configurationView'));
                 }
@@ -75,9 +74,9 @@
 
         public function actionRenderAddressMapView()
         {
-            $modalMapAddressData = array('query'=>$_GET['query'], 
-                                          'latitude'=>$_GET['latitude'], 
-                                          'longitude'=>$_GET['longitude']);
+            $modalMapAddressData = array('query'        =>$_GET['query'], 
+                                          'latitude'    =>$_GET['latitude'], 
+                                          'longitude'   =>$_GET['longitude']);
 
             echo ZurmoMappingHelper::setAjaxModeAndRenderMapModalView($this, $modalMapAddressData, 
                                                         Yii::t('Default', 'Address Location on Map',

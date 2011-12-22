@@ -45,7 +45,7 @@
 
         public static function getUntranslatedRightsLabels()
         {
-            $labels                              = array();
+            $labels                          = array();
             $labels[self::RIGHT_CREATE_MAPS] = 'Create MapsModulePluralLabel';
             $labels[self::RIGHT_DELETE_MAPS] = 'Delete MapsModulePluralLabel';
             $labels[self::RIGHT_ACCESS_MAPS] = 'Access MapsModulePluralLabel Tab';

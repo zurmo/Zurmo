@@ -38,8 +38,8 @@
          * @return rendered modal map view.
          */
         public static function setAjaxModeAndRenderMapModalView(CController $controller, $modalMapAddressData,
-                                                 $pageTitle = null,
-                                                 $stateMetadataAdapterClassName = null)
+                                                                $pageTitle = null,
+                                                                $stateMetadataAdapterClassName = null)
         {
             Yii::app()->getClientScript()->setToAjaxMode();
             return self::renderModalMapView($controller, $modalMapAddressData, $pageTitle,

@@ -28,13 +28,13 @@
     {
         private static $geoCodeResult;
         
-        public static function renderGeoCoderMap($apiKey,$mapData)
+        public static function renderGeoCoderMap($apiKey, $mapData)
         {
             self::getGeoResult($apiKey,$mapData);
             self::$geoCodeResult->renderMap('map_canvas');
         }
         
-        private static function getGeoResult($apiKey,$mapData)
+        private static function getGeoResult($apiKey, $mapData)
         {
             if (!isset(self::$geoCodeResult))
             {
@@ -43,14 +43,14 @@
                 $geoCoder->setApiKey($apiKey);
                 $geoCoder->setApiDriver('Google');
                 $geoCoder->init();
-                if($mapData['latitude'] == '' && $mapData['longitude'] == '')
+                if ($mapData['latitude'] == '' && $mapData['longitude'] == '')
                 {
                     self::$geoCodeResult = $geoCoder->query($mapData['query']);
                 }
                 else
                 {
                     $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
-                    self::$geoCodeResult = new GeoCode_Result($geoCodeDriver,$mapData);
+                    self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $mapData);
                 }
             }
         }

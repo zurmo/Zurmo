@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Form to all editing and viewing of global configuration values in the user interface.
+     * Form to all editing and viewing of global configuration for google api key values in the user interface.
      */
     class MapsConfigurationForm extends ConfigurationForm
     {
@@ -34,15 +34,15 @@
         public function rules()
         {
             return array(
-                array('apiKey',          'required'),
-                array('apiKey',          'type',      'type' => 'text'),
+                array('apiKey', 'required'),
+                array('apiKey', 'type',      'type' => 'text'),
             );
         }
 
         public function attributeLabels()
         {
             return array(
-                'apiKey'           => Yii::t('Default', 'Google Map API Key'),
+                'apiKey' => Yii::t('Default', 'Google Map API Key'),
             );
         }
     }

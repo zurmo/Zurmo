@@ -42,16 +42,16 @@
                 {
                     try
                     {
-                        $latitudeLongitudeCordinates     = self::fetchGeocodeForAddress($address);
+                        $latitudeLongitudeCordinates    = self::fetchGeocodeForAddress($address);
                     }
                     catch (GeoCode_Exception $e)
                     {
-                        $latitudeLongitudeCordinates     = null;
+                        $latitudeLongitudeCordinates    = null;
                     }
                 }
                 else
                 {
-                    $latitudeLongitudeCordinates     = null;
+                    $latitudeLongitudeCordinates        = null;
                 }
 
                 if ($latitudeLongitudeCordinates != null)
@@ -100,10 +100,12 @@
             );
 
             //$searchAttributeData['structure'] = '(1 or 2) and (3 or 4) and 5';
-            $searchAttributeData['structure'] = '((`address`.`latitude` is null) or 2) and ((`address`.`longitude` is null) or 4) and 5';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Address');
-            $where = RedBeanModelDataProvider::makeWhere('Address', $searchAttributeData, $joinTablesAdapter);
-            $addressCollection = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
+            $searchAttributeData['structure']   = '((`address`.`latitude` is null) or 2) and ((`address`.`longitude` is null) or 4) and 5';
+            $joinTablesAdapter                  = new RedBeanModelJoinTablesQueryAdapter('Address');
+            $where                              = RedBeanModelDataProvider::makeWhere('Address',
+                                                                                      $searchAttributeData,
+                                                                                      $joinTablesAdapter);
+            $addressCollection                  = Address::getSubset($joinTablesAdapter, null, $count, $where, null);
             return $addressCollection;
         }
 
