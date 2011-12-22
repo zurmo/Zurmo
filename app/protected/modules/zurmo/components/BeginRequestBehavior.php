@@ -28,6 +28,11 @@
     {
         public function attach($owner)
         {
+            if (Yii::app()->isApplicationInstalled())
+            {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+            }
+
             if(Yii::app()->apiRequest->isApiRequest())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
@@ -35,6 +40,7 @@
 
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
+
 
             if(!Yii::app()->apiRequest->isApiRequest())
             {
@@ -55,7 +61,7 @@
 
             if (Yii::app()->isApplicationInstalled())
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+                //$owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
@@ -242,7 +248,7 @@
             }
             else
             {
-                throw new NotSupportedException();
+               throw new NotSupportedException();
             }
         }
 

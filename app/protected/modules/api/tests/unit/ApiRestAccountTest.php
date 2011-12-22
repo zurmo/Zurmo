@@ -358,5 +358,29 @@
             $this->assertEquals('Forth Account', $response['data']['array'][0]['name']);
             $this->assertEquals('Fifth Account', $response['data']['array'][1]['name']);
         }
+
+        /**
+        * @depends testSearch
+        */
+        public function testReadWriteDeletePrivileges()
+        {
+
+        }
+
+        /**
+        * @depends testListViewCreateUpdateDelete
+        */
+        public function testEditAccountWithIncompleteData()
+        {
+
+        }
+
+        /**
+        * @depends testListViewCreateUpdateDelete
+        */
+        public function testEditAccountWIthIncorrectDataType()
+        {
+
+        }
     }
 ?>

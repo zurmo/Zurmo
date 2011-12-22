@@ -142,10 +142,18 @@
                 'sanitizePost'   => false, //off for now
                 'sanitizeCookie' => false, //off for now
             ),
-            'session'=>array(
-                'class'=>'CHttpSession',
-                'autoStart' => false,
+            //'session'=>array(
+            //    'class'=>'CHttpSession',
+            //    'autoStart' => false,
+            //),
+
+            'session' => array(
+                'class' => 'application.modules.zurmo.components.ZurmoDbHttpSession',
+                'compareIpAddress'=>true,
+                'compareUserAgent'=>false,
+                'compareIpBlocks'=>0
             ),
+
             'themeManager' => array(
                 'basePath' => INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes',
             ),
