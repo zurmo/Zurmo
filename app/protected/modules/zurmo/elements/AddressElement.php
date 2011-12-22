@@ -41,7 +41,6 @@
         {
             assert('$this->model->{$this->attribute} instanceof Address');
             $addressModel = $this->model->{$this->attribute};
-            $address      = strval($addressModel);
             $id           = $addressModel->id;
             $street1      = $addressModel->street1;
             $street2      = $addressModel->street2;
@@ -81,7 +80,7 @@
             {
                 $content .= Yii::app()->format->text($country);
             }
-            if ($invalid != 1 && $address != '(None)')
+            if ($invalid != 1 && $addressModel->makeAddress() != '')
             {
                 $content .= $this->renderMapLink($addressModel);
             }
@@ -135,9 +134,10 @@
                     ),
                 CClientScript::POS_END
             );
-            $mapRenderUrl = ZurmoMappingHelper::getModalMapUrl(array('query'=>strval($addressModel), 
-                                                                     'latitude'=>$addressModel->latitude, 
-                                                                     'longitude'=>$addressModel->longitude));
+            $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement(array(
+                                                                                'query' =>$addressModel->makeAddress(), 
+                                                                                'latitude' =>$addressModel->latitude, 
+                                                                                'longitude'=>$addressModel->longitude));
             $id = $this->getIdForMapLink();
             $content  = '<span>';
             $content .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(

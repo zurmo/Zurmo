@@ -28,40 +28,42 @@
      * Class to fetch GeoCode for Addresses and update the latitude and longitude for the corresponding addresses.
      *
      */
-    class AddressUtil
+    class AddressMappingUtil
     {
         public static function updateChangedAddress($count = 500)
         {
+            assert('is_int($count)');
             $changedAddresses = self::fetchChangedAddressCollection($count);
-            foreach ($changedAddressCollection as $address)
+            foreach ($changedAddresses as $address)
             {
                 if($address->makeAddress() != '')
                 {
                     try
                     {
-                        $latitudeLongitudeCordinates    = self::fetchGeocodeForAddress($address->makeAddress());
+                        assert('is_string($address->makeAddress())');
+                        $latitudeLongitudeCoordinates    = self::fetchGeocodeForAddress($address->makeAddress());
                     }
                     catch (GeoCode_Exception $e)
                     {
-                        $latitudeLongitudeCordinates    = null;
+                        $latitudeLongitudeCoordinates    = null;
                     }
                 }
                 else
                 {
-                    $latitudeLongitudeCordinates        = null;
+                    $latitudeLongitudeCoordinates        = null;
                 }
 
-                if ($latitudeLongitudeCordinates != null)
+                if ($latitudeLongitudeCoordinates != null)
                 {
-                    $addressCollectionRow->latitude     = (double)$latitudeLongitudeCordinates['latitude'];
-                    $addressCollectionRow->longitude    = (double)$latitudeLongitudeCordinates['longitude'];
-                    $addressCollectionRow->invalid      = false;
+                    $address->latitude     = (double)$latitudeLongitudeCoordinates['latitude'];
+                    $address->longitude    = (double)$latitudeLongitudeCoordinates['longitude'];
+                    $address->invalid      = false;
                 }
                 else
                 {
-                    $addressCollectionRow->invalid      = true;
+                    $address->invalid      = true;
                 }
-                $addressCollectionRow->unrestrictedSave(false);
+                $address->unrestrictedSave(false);
             }
         }
 

@@ -54,10 +54,10 @@
                              'country'      =>'USA');
 
             //Assign Address to the user account.
-            AddressTestHelper::updateTestAccountsWithBillingAddress($superAccount->id, $address, $super);
+            AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($superAccount->id, $address, $super);
 
             //Fetch Latitute and Longitude values for address and save in Address.
-            AddressUtil::updateChangedAddress();
+            AddressMappingUtil::updateChangedAddress();
 
             $accounts                   = Account::getByName('accountOwnedBySuper');
             $this->assertEquals(1, count($accounts));
@@ -119,10 +119,10 @@
                              'country'      =>'USA');
 
             //Assign Address to the super user account.
-            AddressTestHelper::updateTestAccountsWithBillingAddress($account->id, $address, $nobody);
+            AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($account->id, $address, $nobody);
 
             //Fetch Latitute and Longitude values for address and save in Address.
-            AddressUtil::updateChangedAddress();
+            AddressMappingUtil::updateChangedAddress();
 
             $accounts                   = Account::getByName('accountOwnedByNobody');
             $this->assertEquals(1, count($accounts));

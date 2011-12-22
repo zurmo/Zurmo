@@ -78,9 +78,35 @@
                                           'latitude'    =>$_GET['latitude'], 
                                           'longitude'   =>$_GET['longitude']);
 
-            echo ZurmoMappingHelper::setAjaxModeAndRenderMapModalView($this, $modalMapAddressData, 
-                                                        Yii::t('Default', 'Address Location on Map',
-                                                        LabelUtil::getTranslationParamsForAllModules()));
+            //Set ajax mode for modal map render view
+            Yii::app()->getClientScript()->setToAjaxMode();
+
+            echo $this->renderModalMapView($this, $modalMapAddressData, 
+                                           Yii::t('Default', 'Address Location on Map',
+                                           LabelUtil::getTranslationParamsForAllModules()));
+        }
+
+        /**
+         * @return rendered content from view as string.
+         */
+        public function renderModalMapView(CController $controller, 
+                                                  $modalMapAddressData,
+                                                  $pageTitle = null,
+                                                  $stateMetadataAdapterClassName = null)
+        {
+
+            $renderAndMapModalView = new AddressGoogleMapModalView(
+                $controller->getId(),
+                $controller->getModule()->getId(),
+                $modalMapAddressData,
+                'modal'
+            );
+
+            $view = new ModalView($controller,
+                                  $renderAndMapModalView,
+                                  'modalContainer',
+                                  $pageTitle);
+            return $view->render();
         }
     }
 ?>

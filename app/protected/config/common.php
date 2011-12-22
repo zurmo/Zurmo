@@ -116,6 +116,9 @@
                     ),
                 ),
             ),
+            'mappingHelper' => array(
+                'class' => 'application.modules.maps.components.ZurmoMappingHelper',
+            ),
             'pagination' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoPaginationHelper',
                 'listPageSize'             => 10,
@@ -141,9 +144,6 @@
             'timeZoneHelper' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoTimeZoneHelper',
                 'timeZone'             => 'America/Chicago',
-            ),
-            'mappingHelper' => array(
-                'class' => 'application.modules.maps.components.ZurmoMappingHelper',
             ),
             'request' => array(
                 'enableCsrfValidation' => true,

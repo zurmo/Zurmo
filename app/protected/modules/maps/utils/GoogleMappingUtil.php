@@ -28,29 +28,33 @@
     {
         private static $geoCodeResult;
         
-        public static function renderGeoCoderMap($apiKey, $mapData)
+        public static function renderMapByGeoCodeData($apiKey, $geoCodeQueryData)
         {
-            self::getGeoResult($apiKey,$mapData);
+            assert('is_string($apiKey)');
+            assert('is_array($geoCodeQueryData)');
+            self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
             self::$geoCodeResult->renderMap('map_canvas');
         }
         
-        private static function getGeoResult($apiKey, $mapData)
+        private static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
         {
             if (!isset(self::$geoCodeResult))
             {
+                assert('is_string($apiKey)');
+                assert('is_array($geoCodeQueryData)');
                 Yii::import('application.extensions.geocoder.*');
                 $geoCoder = new GeoCoder;
                 $geoCoder->setApiKey($apiKey);
                 $geoCoder->setApiDriver('Google');
                 $geoCoder->init();
-                if ($mapData['latitude'] == '' && $mapData['longitude'] == '')
+                if ($geoCodeQueryData['latitude'] == '' && $geoCodeQueryData['longitude'] == '')
                 {
-                    self::$geoCodeResult = $geoCoder->query($mapData['query']);
+                    self::$geoCodeResult = $geoCoder->query($geoCodeQueryData['query']);
                 }
                 else
                 {
                     $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
-                    self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $mapData);
+                    self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
                 }
             }
         }

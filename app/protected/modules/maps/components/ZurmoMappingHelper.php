@@ -27,62 +27,30 @@
     class ZurmoMappingHelper extends MappingHelper
     {
         /**
-         * @return rendered map content.
-         */
-        public function getMappingLinkContentForElement($mapData)
-        {
-            return GoogleMappingUtil::renderGeoCoderMap(self::getGeoCodeApi(),$mapData);
-        }
-
-        /**
-         * @return rendered modal map view.
-         */
-        public static function setAjaxModeAndRenderMapModalView(CController $controller, $modalMapAddressData,
-                                                                $pageTitle = null,
-                                                                $stateMetadataAdapterClassName = null)
-        {
-            Yii::app()->getClientScript()->setToAjaxMode();
-            return self::renderModalMapView($controller, $modalMapAddressData, $pageTitle,
-                                               $stateMetadataAdapterClassName);
-        }
-
-        /**
-         * @return rendered content from view as string.
-         */
-        public static function renderModalMapView(CController $controller, 
-                                                  $modalMapAddressData,
-                                                  $pageTitle = null,
-                                                  $stateMetadataAdapterClassName = null)
-        {
-            $className = 'AddressGoogleMapModalView';
-            $renderAndMapModalView = new $className(
-                $controller->getId(),
-                $controller->getModule()->getId(),
-                $modalMapAddressData,
-                'modal'
-            );
-
-            $view = new ModalView($controller,
-                                  $renderAndMapModalView,
-                                  'modalContainer',
-                                  $pageTitle);
-            return $view->render();
-        }
-
-        /**
          * @return modal map render url.
          */
-        public static function getModalMapUrl($addressData = array())
+        public function getMappingLinkContentForElement($addressData = array())
         {
+            assert('is_array($addressData)');
             return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET,$addressData));
+        }
+
+        /**
+         * @return rendered map content.
+         */
+        public static function getRenderedMapContentForView($geoCodeQueryData)
+        {
+            assert('is_array($geoCodeQueryData)');
+            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(),$geoCodeQueryData);
         }
 
         /**
          * @return lat / long array.
          */
-        public static function getGeoCodes($address)
+        public static function getGeoCodes($addressString)
         {
-            return GoogleGeoCodeUtil::getLatitudeLongitude(self::getGeoCodeApi(), $address);
+            assert('is_string($addressString)');
+            return GoogleGeoCodeUtil::getLatitudeLongitude(self::getGeoCodeApi(), $addressString);
         }
 
         /**
@@ -96,7 +64,7 @@
             }
             else
             {
-                return '';
+                return null;
             }
         }
     }

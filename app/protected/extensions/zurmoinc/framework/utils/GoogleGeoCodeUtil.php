@@ -31,10 +31,12 @@
     {
         private static $geoCoder;
 
-        public static function getLatitudeLongitude($apiKey, $address)
+        public static function getLatitudeLongitude($apiKey, $addressString)
         {
+            assert('is_string($apiKey)');
+            assert('is_string($addressString)');
             self::getGeoCoder($apiKey);
-            $geoCodeGoogleCodeObj   = self::$geoCoder->query($address);
+            $geoCodeGoogleCodeObj   = self::$geoCoder->query($addressString);
             $latitude               = $geoCodeGoogleCodeObj->__get('latitude');
             $longitude              = $geoCodeGoogleCodeObj->__get('longitude');
             return array('latitude' => $latitude, 'longitude' => $longitude);
@@ -44,6 +46,7 @@
         {
             if (!isset(self::$geoCoder))
             {
+                assert('is_string($apiKey)');
                 Yii::import('application.extensions.geocoder.*');
                 self::$geoCoder = new GeoCoder;
                 self::$geoCoder->setApiKey($apiKey);

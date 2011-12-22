@@ -35,7 +35,7 @@
         {
             return array(
                 array('apiKey', 'required'),
-                array('apiKey', 'type',      'type' => 'text'),
+                array('apiKey', 'type', 'type' => 'text'),
             );
         }
 

@@ -29,6 +29,6 @@
      */
     abstract class MappingHelper extends CApplicationComponent
     {
-        abstract public function getMappingLinkContentForElement($mapData);
+        abstract public function getMappingLinkContentForElement($addressData = array());
     }
 ?>
