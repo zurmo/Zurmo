@@ -91,7 +91,7 @@
             return $jobInProcess;
         }
 
-        protected function makeLastCompletedRunContentByJobLog($jobLog)
+        protected static function makeLastCompletedRunContentByJobLog($jobLog)
         {
             assert('$jobLog instanceof JobLog || $jobLog == null');
             if($jobLog == null)
@@ -106,7 +106,7 @@
             return $content;
         }
 
-        protected function makeStatusContentByJobLog($jobLog, $jobInProcess)
+        protected static function makeStatusContentByJobLog($jobLog, $jobInProcess)
         {
             assert('$jobLog instanceof JobLog || $jobLog == null');
             assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
@@ -116,8 +116,9 @@
             }
             elseif($jobInProcess != null)
             {
-                return Yii::t('Default', 'In Process {startedPointContent}',
-                       array('{startedPointContent}', 'aaa')); //todo: can use what we do in notes.
+                $startedDateTimeContent = Yii::app()->dateFormatter->formatDateTime($jobLog->createdDateTime, 'short', 'short');
+                return Yii::t('Default', 'In Process [Started: {startedDateTime}]',
+                       array('{startedDateTime}', $startedDateTimeContent));
             }
             else
             {
@@ -125,7 +126,7 @@
             }
         }
 
-        protected function resolveStatusByJobLog($jobLog, $jobInProcess)
+        protected static function resolveStatusByJobLog($jobLog, $jobInProcess)
         {
             assert('$jobLog instanceof JobLog || $jobLog == null');
             assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');

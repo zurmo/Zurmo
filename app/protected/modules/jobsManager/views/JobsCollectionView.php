@@ -136,7 +136,7 @@
             $content .= '<td>[chn-log] ' . CHtml::encode($this->monitorJobData['label']) . '</td>';
             $content .= '<td>' . CHtml::encode($this->monitorJobData['lastCompletedRunContent']) . '</td>';
             $content .= '<td>' . CHtml::encode($this->monitorJobData['statusContent']) . '</td>';
-            $content .= '<td>&#160;</td>';
+            $content .= '<td>' . self::resolveActionContentByStatus($this->monitorJobData['status']) . '</td>';
             $content .= '</tr>';
 
             $content .= '</tbody>';
@@ -167,6 +167,16 @@
             $qtip = new QTip();
             $qtip->addQTip("#active-languages-tooltip");
             return $content;
+        }
+
+        protected static function resolveActionContentByStatus($status)
+        {
+            assert('is_int($status)');
+            if($status == JobsToJobsCollectionViewUtil::STATUS_IN_PROCESS_STUCK)
+            {
+                return 'todoclear';
+            }
+            return null;
         }
     }
 ?>
