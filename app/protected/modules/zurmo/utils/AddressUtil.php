@@ -26,23 +26,20 @@
 
     /**
      * Class to fetch GeoCode for Addresses and update the latitude and longitude for the corresponding addresses.
-     * 
+     *
      */
     class AddressUtil
     {
         public static function updateChangedAddress($count = 500)
         {
-            $changedAddressCollection = self::fetchChangedAddressCollection($count);
-
-            foreach ($changedAddressCollection as $addressCollectionRow)
+            $changedAddresses = self::fetchChangedAddressCollection($count);
+            foreach ($changedAddressCollection as $address)
             {
-                $address = strval($addressCollectionRow);
-
-                if($address != '(None)')
+                if($address->makeAddress() != '')
                 {
                     try
                     {
-                        $latitudeLongitudeCordinates    = self::fetchGeocodeForAddress($address);
+                        $latitudeLongitudeCordinates    = self::fetchGeocodeForAddress($address->makeAddress());
                     }
                     catch (GeoCode_Exception $e)
                     {
@@ -109,9 +106,10 @@
             return $addressCollection;
         }
 
-        public static function fetchGeocodeForAddress($address)
+        public static function fetchGeocodeForAddress($addressString)
         {
-            return ZurmoMappingHelper::getGeoCodes($address);
+            assert('is_string($addressString)');
+            return Yii::app()->mappingHelper->getGeoCodes($addressString);
         }
     }
 ?>
