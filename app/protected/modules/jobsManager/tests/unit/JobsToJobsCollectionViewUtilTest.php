@@ -24,15 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class JobLogStatusListViewColumnAdapter extends TextListViewColumnAdapter
+    class JobsToJobsCollectionViewUtilTest extends BaseTest
     {
-        public function renderGridViewData()
+        public static function setUpBeforeClass()
         {
-            return array(
-                'name'  => 'status',
-                'value' => 'call_user_func("JobLogViewUtil::renderStatusAndMessageListContent", $data)',
-                'type'  => 'raw',
-            );
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function testGetMonitorJobData()
+        {
+            $data = JobsToJobsCollectionViewUtil::getMonitorJobData();
+            $this->assertEquals('Monitor Job', $data['label']);
+        }
+
+        public function testGetNonMonitorJobsData()
+        {
+            $jobsData = JobsToJobsCollectionViewUtil::getNonMonitorJobsData();
+            $this->assertTrue(count($jobsData) > 1);
+            $this->assertTrue(!isset($jobsData['Monitor']));
+            $this->assertTrue(isset($jobsData['ImportTempTableCleanup']));
+            $this->assertTrue(isset($jobsData['CurrencyRatesUpdate']));
         }
     }
 ?>

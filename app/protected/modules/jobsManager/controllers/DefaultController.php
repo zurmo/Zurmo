@@ -61,7 +61,6 @@
                             $messageBoxContent);
             $view = new ZurmoConfigurationPageView($this, $view);
             echo $view->render();
-            Yii::app()->end(0, false);
         }
 
         public function actionResetJob($type)
@@ -70,7 +69,12 @@
             $jobClassName = $type . 'Job';
             try
             {
-                $jobInProcess = JobInProcess::getByType($type);
+                $jobInProcess      = JobInProcess::getByType($type);
+                $jobInProcess->delete();
+                $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
+                                     Yii::t('Default', 'The job {jobName} has been reset.',
+                                         array('{jobName}' => $jobClassName::getDisplayName())));
+                $this->processListAction($messageBoxContent);
             }
             catch(NotFoundException $e)
             {
@@ -79,11 +83,7 @@
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }
-            $jobInProcess->delete();
-            $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                 Yii::t('Default', 'The job {jobName} has been reset.',
-                                         array('{jobName}' => $jobClassName::getDisplayName())));
-            $this->processListAction($messageBoxContent);
+
         }
 
         public function actionJobLogsModalList($type)

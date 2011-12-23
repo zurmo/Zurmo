@@ -40,7 +40,7 @@
             $this->assertEquals(0, count(JobInProcess::getAll()));
             $this->assertEquals(0, count(JobLog::getAll()));
 
-            JobsManagerUtil::runNonMonitorJob('Test');
+            JobsManagerUtil::runNonMonitorJob('Test', new MessageLogger());
             $this->assertEquals(0, count(JobInProcess::getAll()));
             $jobLogs = JobLog::getAll();
             $this->assertEquals(1, count($jobLogs));
@@ -49,7 +49,7 @@
             $this->assertEquals(0, $jobLogs[0]->isProcessed);
 
             //Now test a job that always fails
-            JobsManagerUtil::runNonMonitorJob('TestAlwaysFails');
+            JobsManagerUtil::runNonMonitorJob('TestAlwaysFails', new MessageLogger());
             $this->assertEquals(0, count(JobInProcess::getAll()));
             $jobLogs = JobLog::getAll();
             $this->assertEquals(2, count($jobLogs));
@@ -86,11 +86,11 @@
         public function testRunMonitorJob()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
-            JobsManagerUtil::runNonMonitorJob('Test');
+            JobsManagerUtil::runNonMonitorJob('Test', new MessageLogger());
             $jobLogs = JobLog::getAll();
             $this->assertEquals(1, count($jobLogs));
             $this->assertEquals(0, $jobLogs[1]->isProcessed);
-            JobsManagerUtil::runMonitorJob();
+            JobsManagerUtil::runMonitorJob(new MessageLogger());
             $jobLogs = JobLog::getAll();
             $this->assertEquals(1, count($jobLogs));
             $this->assertEquals(1, $jobLogs[1]->isProcessed);

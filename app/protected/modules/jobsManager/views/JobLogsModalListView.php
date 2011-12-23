@@ -44,9 +44,6 @@
         {
             $metadata = array(
                 'global' => array(
-                    'derivedAttributeTypes' => array(
-                        'AuditEvent',
-                    ),
                     'panels' => array(
                         array(
                             'rows' => array(

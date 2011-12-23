@@ -37,14 +37,14 @@
 
         protected $monitorJobData;
 
-        protected $jobsData;
+        protected $jobsData = array();
 
         public function __construct($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($monitorJobData)');
-            assert('is_array($jobsData)');
+            assert('is_array($jobsData) && count($jobsData) > 0');
             assert('$messageBoxContent == null || is_string($messageBoxContent)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
@@ -103,7 +103,7 @@
 
         protected function renderJobLayout($jobsData, $jobLabelHeaderContent)
         {
-            assert('is_array($jobsData');
+            assert('is_array($jobsData)');
             assert('is_string($jobLabelHeaderContent)');
             $content  = '<table>';
             $content .= '<colgroup>';

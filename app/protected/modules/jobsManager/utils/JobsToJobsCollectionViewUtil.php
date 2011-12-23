@@ -24,14 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * A utility for getting information about jobs and putting into an array of data that is useful
+     * for the JobsCollectionView.
+     */
     class JobsToJobsCollectionViewUtil
     {
+        /**
+         * Indicates a job is not currently In Process
+         */
         const STATUS_NOT_RUNNING         = 1;
 
+        /**
+         * Indicates a job is currently In Process and stuck based on it lasting longer than the
+         * threshold.
+         */
         const STATUS_IN_PROCESS_STUCK    = 2;
 
+        /**
+         * Indicates a job is currently In Process
+         */
         const STATUS_IN_PROCESS          = 3;
 
+        /**
+         * @return array of data for the Monitor job.  Includes information such as the display label,
+         * whether it is running or not, and the last completion time.
+         */
+        public static function getMonitorJobData()
+        {
+            return self::getJobDataByType('Monitor');
+
+        }
+
+        /**
+         * @return array of data for jobs that are not the monitor job.  Includes information such as the display label,
+         * whether it is running or not, and the last completion time.
+         */
         public static function getNonMonitorJobsData()
         {
             $jobsData       = array();
@@ -50,12 +78,6 @@
                 }
             }
             return $jobsData;
-        }
-
-        public static function getMonitorJobData()
-        {
-            return self::getJobDataByType('Monitor');
-
         }
 
         protected static function getJobDataByType($type)

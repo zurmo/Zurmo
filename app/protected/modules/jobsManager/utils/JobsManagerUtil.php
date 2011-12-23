@@ -48,13 +48,14 @@
                                   array('{seconds}' => $timeLimit)));
             echo "\n";
             $messageStreamer->add(Yii::t('Default', 'Starting job type: {type}', array('{type}' => $type)));
+            $messageLogger = new MessageLogger($messageStreamer);
             if($type == 'Monitor')
             {
-                static::runMonitorJob();
+                static::runMonitorJob($messageLogger);
             }
             else
             {
-                static::runNonMonitorJob($type);
+                static::runNonMonitorJob($type, $messageLogger);
             }
             $messageStreamer->add(Yii::t('Default', 'Ending job type: {type}', array('{type}' => $type)));
         }
@@ -62,13 +63,15 @@
         /**
          * Run the monitor job.
          */
-        public static function runMonitorJob()
+        public static function runMonitorJob(MessageLogger $messageLogger)
         {
             try
             {
                 $jobInProcess = JobInProcess::getByType('Monitor');
+                $messageLogger->addInfoMessage("Existing monitor job detected");
                 if(static::isJobInProcessOverThreashold($jobInProcess, 'Monitor'))
                 {
+                    $messageLogger->addInfoMessage("Existing monitor job is stuck");
                     $message                    = new NotificationMessage();
                     $message->textContent       = MonitorJob::getStuckStringContent();
                     $rules                      = new StuckMonitorJobNotificationRules();
@@ -90,10 +93,12 @@
                 $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                 if($ranSuccessfully)
                 {
+                    $messageLogger->addInfoMessage("Monitor Job completed successfully");
                     $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
                 }
                 else
                 {
+                    $messageLogger->addInfoMessage("Monitor Job completed with errors");
                     $jobLog->status        = JobLog::STATUS_COMPLETE_WITH_ERROR;
                 }
                 $jobLog->isProcessed = false;
@@ -105,12 +110,13 @@
          * Given a 'type' of job, run the job.  This is for non-monitor jobs only.
          * @param string $type
          */
-        public static function runNonMonitorJob($type)
+        public static function runNonMonitorJob($type, MessageLogger $messageLogger)
         {
             assert('is_string($type) && $type != "Monitor"');
             try
             {
                 $jobInProcess = JobInProcess::getByType($type);
+                $messageLogger->addInfoMessage("Existing job detected");
             }
             catch(NotFoundException $e)
             {
@@ -129,10 +135,12 @@
                 $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                 if($ranSuccessfully)
                 {
+                    $messageLogger->addInfoMessage("Job completed successfully");
                     $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
                 }
                 else
                 {
+                    $messageLogger->addInfoMessage("Job completed with errors");
                     $jobLog->status        = JobLog::STATUS_COMPLETE_WITH_ERROR;
                     $jobLog->message       = $errorMessage;
                 }
