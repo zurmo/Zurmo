@@ -24,28 +24,50 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Mapping helper class used to fetch map data and map redering 
+     * using mapping util and geocode util.
+     */
     class ZurmoMappingHelper extends MappingHelper
     {
         /**
+         * Creates the url link for map link.
+         * @param $addressData - geocoder query data.
          * @return modal map render url.
          */
-        public function getMappingLinkContentForElement($addressData = array())
+        public function getMappingLinkContentForElement($mapRenderData)
         {
             assert('is_array($addressData)');
-            return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET,$addressData));
+            return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET,$mapRenderData));
         }
 
         /**
+         * Gets the rendered map content for the map view.
+         * @param $geoCodeQueryData - geocoder query data.
          * @return rendered map content.
          */
-        public static function getRenderedMapContentForView($geoCodeQueryData)
+        public static function renderMapContentForModalView($geoCodeQueryData)
         {
             assert('is_array($geoCodeQueryData)');
             return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(),$geoCodeQueryData);
         }
 
         /**
-         * @return lat / long array.
+         * Register the required api javascript files.
+         */
+        public static function registerMapScriptFiles()
+        {
+            $mapScriptFiles = GoogleMappingUtil::getMapScriptFiles();
+            foreach ($mapScriptFiles as $scriptFile)
+            {
+                Yii::app()->getClientScript()->registerScriptFile($scriptFile, CClientScript::POS_END);
+            }
+        }
+
+        /**
+         * Gets the geocode coordinate data for address.
+         * @param $addressString - geocoder query data.
+         * @return - lat / long array.
          */
         public static function getGeoCodes($addressString)
         {
@@ -54,7 +76,8 @@
         }
 
         /**
-         * @return Geocode Api Key.
+         * Gets the geocode api key from the cofig table.
+         * @return - geocode Api Key.
          */
         public static function getGeoCodeApi()
         {

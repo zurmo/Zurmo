@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Maps default controller for configuration view and modal map view.
+     */
     class MapsDefaultController extends ZurmoModuleController
     {
         public function filters()
@@ -42,10 +45,13 @@
             $this->actionConfigurationView();
         }
 
+        /**
+         * Admin configuration action for entering the google map api key.
+         */
         public function actionConfigurationView()
         {
             $configurationForm          = new MapsConfigurationForm();
-            $configurationForm->apiKey  = ZurmoMappingHelper::getGeoCodeApi();
+            $configurationForm->apiKey  = Yii::app()->mappingHelper->getGeoCodeApi();
 
             $postVariableName           = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
@@ -72,11 +78,14 @@
             echo $view->render();
         }
 
-        public function actionRenderAddressMapView()
+        /**
+         * Render modal view for rendering map.
+         */
+        public function actionRenderAddressMapView($addressString, $latitude, $longitude)
         {
-            $modalMapAddressData = array('query'        =>$_GET['query'], 
-                                          'latitude'    =>$_GET['latitude'], 
-                                          'longitude'   =>$_GET['longitude']);
+            $modalMapAddressData = array('query'     => $addressString,
+                                         'latitude'  => $latitude,
+                                         'longitude' => $longitude);
 
             //Set ajax mode for modal map render view
             Yii::app()->getClientScript()->setToAjaxMode();
@@ -87,6 +96,7 @@
         }
 
         /**
+         * Map modal view for map popup..
          * @return rendered content from view as string.
          */
         public function renderModalMapView(CController $controller, 

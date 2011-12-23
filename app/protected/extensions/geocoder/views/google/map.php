@@ -20,6 +20,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+/**
+ * This view file renders the map in the given container and centers map to the
+ * required latitude longitude coordinates. It also sets the map UI to default 
+ * settings and map type to normal google map.
+ */
 ?>
 map = new GMap2(document.getElementById("<?php echo $container_id; ?>"));
 var latlng = new GLatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);

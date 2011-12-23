@@ -25,10 +25,13 @@
      ********************************************************************************/
 
     /**
-     * 
+     * The methods of this class are compulsorily implimented in its child class.
      */
     abstract class MappingHelper extends CApplicationComponent
     {
-        abstract public function getMappingLinkContentForElement($addressData = array());
+        /**
+         * Implimented in the zurmomappinghelper class
+         */
+        abstract public function getMappingLinkContentForElement($mapRenderData);
     }
 ?>

@@ -125,9 +125,10 @@
          */
         protected function renderMapLink($addressModel)
         {
-            // Register the api javascript
+            // Register the api javascript files
+            Yii::app()->mappingHelper->registerMapScriptFiles();
+
             $cs = Yii::app()->getClientScript();
-            $cs->registerScriptFile('http://maps.google.com/maps?file=api&v=2&sensor=false');
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
@@ -135,9 +136,9 @@
                 CClientScript::POS_END
             );
             $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement(array(
-                                                                                'query' =>$addressModel->makeAddress(), 
-                                                                                'latitude' =>$addressModel->latitude, 
-                                                                                'longitude'=>$addressModel->longitude));
+                                                                         'addressString' =>$addressModel->makeAddress(), 
+                                                                         'latitude'      =>$addressModel->latitude, 
+                                                                         'longitude'     =>$addressModel->longitude));
             $id = $this->getIdForMapLink();
             $content  = '<span>';
             $content .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(

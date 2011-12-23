@@ -48,7 +48,9 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'apiKey', 'type' => 'text'),
+                                                array('attributeName' => 'apiKey',
+                                                      'type' => 'Text',
+                                                      'htmlOptions' => array('size' => 120)),
                                              ),
                                         ),
                                     )

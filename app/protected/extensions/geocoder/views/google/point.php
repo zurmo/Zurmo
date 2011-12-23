@@ -20,6 +20,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+ /**
+ * This view file adds a marker to the centered map to the required lat / long
+ * coordinates. It also adds a event listener on click of which address is displayed
+ * in the info window.
+ */
 ?>
 var marker = new GMarker(latlng);
 map.addOverlay(marker);

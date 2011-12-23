@@ -24,23 +24,34 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * MappingUtil class to handle map rendering given the query data.
+     */
     class GoogleMappingUtil
     {
         private static $geoCodeResult;
-        
+
+        /**
+         * Render map into specified container using result geocoder object.
+         * @param $apiKey           - google map api key.
+         * @param $geoCodeQueryData - required query data in the form of array.
+         */
         public static function renderMapByGeoCodeData($apiKey, $geoCodeQueryData)
         {
-            assert('is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
             self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
             self::$geoCodeResult->renderMap('map_canvas');
         }
-        
+
+        /**
+         * Get the geocode result object from the geocoder object.
+         * @param $apiKey           - google map api key.
+         * @param $geoCodeQueryData - required query data in the form of array.
+         */
         private static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
         {
             if (!isset(self::$geoCodeResult))
             {
-                assert('is_string($apiKey)');
                 assert('is_array($geoCodeQueryData)');
                 Yii::import('application.extensions.geocoder.*');
                 $geoCoder = new GeoCoder;
@@ -57,6 +68,15 @@
                     self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
                 }
             }
+        }
+
+        /**
+         * Return the required api script files.
+         * @return - array required api javascripts.
+         */
+        public static function getMapScriptFiles()
+        {
+            return array('http://maps.google.com/maps?file=api&v=2&sensor=false');
         }
     }
 ?>

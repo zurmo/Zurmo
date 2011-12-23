@@ -25,11 +25,14 @@
      ********************************************************************************/
 
     /**
-     * Class to fetch GeoCode for Addresses and update the latitude and longitude for the corresponding addresses.
-     *
+     * Class to fetch geocode for addresses and update the latitude and longitude for the corresponding addresses.
      */
     class AddressMappingUtil
     {
+        /**
+         * Gets lat/long values for changed address and saves to address model.
+         * @param $count - number of changed address to update per function call.
+         */
         public static function updateChangedAddress($count = 500)
         {
             assert('is_int($count)');
@@ -38,9 +41,9 @@
             {
                 if($address->makeAddress() != '')
                 {
+                    assert('is_string($address->makeAddress())');
                     try
                     {
-                        assert('is_string($address->makeAddress())');
                         $latitudeLongitudeCoordinates    = self::fetchGeocodeForAddress($address->makeAddress());
                     }
                     catch (GeoCode_Exception $e)
@@ -55,6 +58,7 @@
 
                 if ($latitudeLongitudeCoordinates != null)
                 {
+                    assert('is_array($latitudeLongitudeCoordinates)');
                     $address->latitude     = (double)$latitudeLongitudeCoordinates['latitude'];
                     $address->longitude    = (double)$latitudeLongitudeCoordinates['longitude'];
                     $address->invalid      = false;
@@ -67,8 +71,14 @@
             }
         }
 
+        /**
+         * Gets a subset of changed address object.
+         * @param $count - number of changed address to fetch.
+         * @return       - address collection object.
+         */
         public static function fetchChangedAddressCollection($count)
         {
+            assert('is_int($count)');
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
                 1 => array(
@@ -108,6 +118,11 @@
             return $addressCollection;
         }
 
+        /**
+         * Gets the lat/long coordinates for address string.
+         * @param $addressString - address string for geocode query.
+         * @return               - array lat/long coordinates.
+         */
         public static function fetchGeocodeForAddress($addressString)
         {
             assert('is_string($addressString)');

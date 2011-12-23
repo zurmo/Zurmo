@@ -25,15 +25,20 @@
      ********************************************************************************/
 
     /**
-     * Util to handle geocoding using the google API
+     * Util class to handle geocoding using the google api key.
      */
     class GoogleGeoCodeUtil
     {
         private static $geoCoder;
 
+        /**
+         * Get the resultset from the geocode object.
+         * @param $apiKey        - google map api key.
+         * @param $addressString - address string for the geocoder request.
+         * @return               - array containing lat / long values.
+         */
         public static function getLatitudeLongitude($apiKey, $addressString)
         {
-            assert('is_string($apiKey)');
             assert('is_string($addressString)');
             self::getGeoCoder($apiKey);
             $geoCodeGoogleCodeObj   = self::$geoCoder->query($addressString);
@@ -42,11 +47,14 @@
             return array('latitude' => $latitude, 'longitude' => $longitude);
         }
 
+        /**
+         * Sets the geocoder object, and sets the key and driver for api.
+         * @param $apiKey        - google map api key.
+         */
         private static function getGeoCoder($apiKey)
         {
             if (!isset(self::$geoCoder))
             {
-                assert('is_string($apiKey)');
                 Yii::import('application.extensions.geocoder.*');
                 self::$geoCoder = new GeoCoder;
                 self::$geoCoder->setApiKey($apiKey);

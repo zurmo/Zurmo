@@ -24,4 +24,3 @@
 var marker = new YMarker(new YGeoPoint(<?php echo $latitude; ?>, <?php echo $longitude; ?>));
 marker.addAutoExpand("<?php echo $query ?>");
 ymap.addOverlay(marker);
-

@@ -239,7 +239,6 @@
                 $this->api_driver = $driver;
                 return true;
             }
-
             return false;
         }
 

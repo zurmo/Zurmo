@@ -127,6 +127,13 @@
             return $metadata;
         }
 
+        /**
+         * Address model when edited and saved beforeSave method is called
+         * before saving the changes to database to check if specific address 
+         * fields have changed.If the address is changed we set lat/long to 
+         * null and invalid flag to false and then saved else saved directly.
+         * in this way we can figure out which address were modified.
+         */
         protected function beforeSave()
         {
             if (parent::beforeSave())

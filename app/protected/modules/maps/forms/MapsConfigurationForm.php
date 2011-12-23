@@ -31,14 +31,20 @@
     {
         public $apiKey;
 
+        /**
+         * Rules for api key element in configuration.
+         */
         public function rules()
         {
             return array(
                 array('apiKey', 'required'),
-                array('apiKey', 'type', 'type' => 'text'),
+                array('apiKey', 'type', 'type' => 'Text'),
             );
         }
 
+        /**
+         * Attribute label name in configuration view.
+         */
         public function attributeLabels()
         {
             return array(
