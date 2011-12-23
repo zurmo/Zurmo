@@ -52,6 +52,7 @@
 
         public function run()
         {
+            Yii::app()->currencyHelper->checkAndUpdateCurrencyRates(true);
             return true;
         }
     }

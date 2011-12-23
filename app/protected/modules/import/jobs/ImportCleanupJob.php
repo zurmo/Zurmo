@@ -25,16 +25,16 @@
      ********************************************************************************/
 
     /**
-     * A job for removing old import temp tables after the imports are complete.
+     * A job for removing old import models after the imports are complete.
      */
-    class ImportTempTableCleanupJob extends BaseJob
+    class ImportCleanupJob extends BaseJob
     {
         /**
          * @returns Translated label that describes this job type.
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Import Temp Table Cleanup Job');
+           return Yii::t('Default', 'Import Cleanup Job');
         }
 
         /**
@@ -42,16 +42,39 @@
          */
         public static function getType()
         {
-            return 'ImportTempTableCleanup';
+            return 'ImportCleanup';
         }
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once a day, early in the morning.');
+            return Yii::t('Default', 'Once a week, early in the morning.');
         }
 
+        /**
+         * Return all imports where the modifiedDateTime was more than 1 week ago.  Then
+         * delete the imports.
+         * (non-PHPdoc)
+         * @see BaseJob::run()
+         */
         public function run()
         {
+            $oneWeekAgoTimeStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'modifiedDateTime',
+                    'operatorType'         => 'lessThan',
+                    'value'                => $oneWeekAgoTimeStamp,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
+            $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
+            $importModels = Import::getSubset($joinTablesAdapter, null, null, $where, null);
+            foreach($importModels as $import)
+            {
+                $import->delete();
+            }
             return true;
         }
     }

@@ -92,5 +92,12 @@
             }
             return 'importtable' . $this->id;
         }
+
+        protected function beforeDelete()
+        {
+            parent::beforeDelete();
+            $sql = 'Drop table if exists ' . $this->getTempTableName();
+            R::exec($sql);
+        }
     }
 ?>
