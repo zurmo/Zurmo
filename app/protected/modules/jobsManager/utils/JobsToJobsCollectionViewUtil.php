@@ -98,7 +98,8 @@
             {
                 return Yii::t('Default', 'Never');
             }
-            $content = Yii::app()->dateFormatter->formatDateTime($jobLog->createdDateTime, 'short', 'short');
+            $content = DateTimeUtil::
+                           convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
             if($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
                 $content .= '&#160;' . Yii::t('Default', '[with errors]');
@@ -116,9 +117,10 @@
             }
             elseif($jobInProcess != null)
             {
-                $startedDateTimeContent = Yii::app()->dateFormatter->formatDateTime($jobLog->createdDateTime, 'short', 'short');
+                $startedDateTimeContent = DateTimeUtil::
+                                          convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
                 return Yii::t('Default', 'In Process [Started: {startedDateTime}]',
-                       array('{startedDateTime}', $startedDateTimeContent));
+                       array('{startedDateTime}' => $startedDateTimeContent));
             }
             else
             {

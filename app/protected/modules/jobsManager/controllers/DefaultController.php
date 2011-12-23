@@ -48,9 +48,11 @@
 
         public function actionList()
         {
-            $redirectUrlParams = array('/zurmo/' . $this->getId() . '/List');
-            //$messageBoxContent = $this->attemptToUpdateActiveLanguagesFromPostAndGetMessageBoxContent();
-            $messageBoxContent = null;
+            $this->processListAction();
+        }
+
+        protected function processListAction($messageBoxContent = null)
+        {
             $view = new JobsManagerTitleBarAndListView(
                             $this->getId(),
                             $this->getModule()->getId(),
@@ -59,25 +61,64 @@
                             $messageBoxContent);
             $view = new ZurmoConfigurationPageView($this, $view);
             echo $view->render();
+            Yii::app()->end(0, false);
         }
 
-        protected function attemptToUpdateActiveLanguagesFromPostAndGetMessageBoxContent()
+        public function actionResetJob($type)
         {
-            if (isset($_POST['LanguageCollection']))
+            assert('is_string($type) && $type != ""');
+            $jobClassName = $type . 'Job';
+            try
             {
-                $languageCollectionActiveData = $_POST['LanguageCollection'];
-                $activeLanguages = array();
-                foreach ($languageCollectionActiveData as $language => $languageData)
-                {
-                    if ($languageData['active'])
-                    {
-                        $activeLanguages[] = $language;
-                    }
-                }
-                Yii::app()->languageHelper->setActiveLanguages($activeLanguages);
-                return HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                       Yii::t('Default', 'Changes to active languages changed successfully.'));
+                $jobInProcess = JobInProcess::getByType($type);
             }
+            catch(NotFoundException $e)
+            {
+                $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
+                                 Yii::t('Default', 'The job {jobName} was not found to be stuck and therefore was not reset.',
+                                         array('{jobName}' => $jobClassName::getDisplayName())));
+                $this->processListAction($messageBoxContent);
+            }
+            $jobInProcess->delete();
+            $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
+                                 Yii::t('Default', 'The job {jobName} has been reset.',
+                                         array('{jobName}' => $jobClassName::getDisplayName())));
+            $this->processListAction($messageBoxContent);
+        }
+
+        public function actionJobLogsModalList($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $jobClassName = $type . 'Job';
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => $type,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $pageSize     = Yii::app()->pagination->resolveActiveForCurrentUserByType('subListPageSize');
+            $dataProvider = new RedBeanModelDataProvider( 'JobLog', 'startDateTime', true,
+                                                                $searchAttributeData, array(
+                                                                    'pagination' => array(
+                                                                        'pageSize' => $pageSize,
+                                                                    )
+                                                                ));
+            Yii::app()->getClientScript()->setToAjaxMode();
+            $jobLogsListView = new JobLogsModalListView(
+                                    $this->getId(),
+                                    $this->getModule()->getId(),
+                                    'JobLog',
+                                    $dataProvider,
+                                    'modal');
+            $view = new ModalView($this,
+                            $jobLogsListView,
+                            'modalContainer',
+                            Yii::t('Default', 'Job Log for {jobDisplayName}',
+                                   array('{jobDisplayName}' => $jobClassName::getDisplayName())));
+            echo $view->render();
         }
     }
 ?>

@@ -122,18 +122,18 @@
         {
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:50%" /><col style="width:20%" /><col style="width:20%" />';
+            $content .= '<col style="width:40%" /><col style="width:20%" /><col style="width:30%" />';
             $content .= '<col style="width:10%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>&#160;</th>';
+            $content .= '<tr><th>' . self::renderMonitorJobHeaderContent() . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Last Completed Run') . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Status') . '</th>';
             $content .= '<th>&#160;</th>';
             $content .= '</tr>';
-
             $content .= '<tr>';
-            $content .= '<td>[chn-log] ' . CHtml::encode($this->monitorJobData['label']) . '</td>';
+            $content .= '<td>' . $this->renderViewJobLogLinkContenet('Monitor');
+            $content .=          '&#160;' . CHtml::encode($this->monitorJobData['label']) . '</td>';
             $content .= '<td>' . CHtml::encode($this->monitorJobData['lastCompletedRunContent']) . '</td>';
             $content .= '<td>' . CHtml::encode($this->monitorJobData['statusContent']) . '</td>';
             $content .= '<td>' . $this->resolveActionContentByStatus('Monitor', $this->monitorJobData['status']) . '</td>';
@@ -158,20 +158,20 @@
             return true;
         }
 
-        protected static function renderActiveHeaderContent()
+        protected static function renderMonitorJobHeaderContent()
         {
-            $title       = Yii::t('Default', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
-            $content     = Yii::t('Default', 'Active') . '&#160;';
-            $content    .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= Yii::t('Default', 'What is this?') . '</span>';
+            $title       = Yii::t('Default', 'The Monitor Job runs constantly making sure all jobs are running properly.');
+            $content     = '<span id="active-monitor-job-tooltip" class="tooltip" title="' . $title . '">';
+            $content    .= Yii::t('Default', 'What is the Monitor Job?') . '</span>';
+            Yii::import('application.extensions.qtip.QTip');
             $qtip = new QTip();
-            $qtip->addQTip("#active-languages-tooltip");
+            $qtip->addQTip("#active-monitor-job-tooltip");
             return $content;
         }
 
         protected function resolveActionContentByStatus($type, $status)
         {
-            assert('is_string($type)');
+            assert('is_string($type) && $type != ""');
             assert('is_int($status)');
             if($status == JobsToJobsCollectionViewUtil::STATUS_IN_PROCESS_STUCK)
             {
@@ -181,6 +181,20 @@
                 return $content;
             }
             return null;
+        }
+
+        public function renderViewJobLogLinkContenet($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
+                                           array('type' => $type));
+            $label = Yii::t('Default', 'Job Log');
+            return CHtml::ajaxLink($label, $route,
+                array(
+                    'onclick' => '$("#modalContainer").dialog("open"); return false;',
+                    'update' => '#modalContainer',
+                )
+            );
         }
     }
 ?>
