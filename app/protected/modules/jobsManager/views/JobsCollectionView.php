@@ -83,10 +83,15 @@
           */
         protected function renderFormLayout(ZurmoActiveForm $form)
         {
-            $content = $this->renderMonitorJobLayout();
+            $content  = '<div class="horizontal-line"></div>' . "\n";
+            $content .= $this->renderMonitorJobLayout();
             $content .= '<br/>';
             $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
             $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
+            $content .= '<br/>';
+            $content .= $this->renderSuggestedFrequencyContent();
+            $content .= '<br/>';
+            $content .= $this->renderHelpContent();
             return $content;
         }
 
@@ -165,7 +170,7 @@
             return null;
         }
 
-        public function renderViewJobLogLinkContent($type)
+        protected function renderViewJobLogLinkContent($type)
         {
             assert('is_string($type) && $type != ""');
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
@@ -177,6 +182,45 @@
                     'update' => '#modalContainer',
                 )
             );
+        }
+
+        protected function renderSuggestedFrequencyContent()
+        {
+            $content  = '<h3>' . Yii::t('Default', 'How often should I run each Job?') . '</h3>';
+            $content .= '<table>';
+            $content .= '<colgroup>';
+            $content .= '<col style="width:40%" /><col style="width:60%" />';
+            $content .= '</colgroup>';
+            $content .= '<tbody>';
+            $content .= '<tr><th>' . Yii::t('Default', 'Job Name') . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Recommmended Frequency') . '</th>';
+            $content .= '</tr>';
+
+            $content .= '<tr>';
+            $content .= '<td>' . CHtml::encode($this->monitorJobData['label']) . '</td>';
+            $content .= '<td>' . CHtml::encode($this->monitorJobData['recommendedFrequencyContent']) . '</td>';
+            $content .= '</tr>';
+
+            foreach($this->jobsData as $type => $jobData)
+            {
+                $content .= '<tr>';
+                $content .= '<td>' . CHtml::encode($jobData['label']) . '</td>';
+                $content .= '<td>' . CHtml::encode($jobData['recommendedFrequencyContent']) . '</td>';
+                $content .= '</tr>';
+            }
+            $content .= '</tbody>';
+            $content .= '</table>';
+            return $content;
+        }
+
+        protected static function renderHelpContent()
+        {
+            $clickHereLink = CHtml::link(Yii::t('Default', 'Click Here'), 'http://www.zurmo.org/links/jobsManagerHelp.php');
+            $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
+            $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',
+                               array('{ClickHereLink}' => $clickHereLink));
+            $content .= '<br/><br/>';
+            return $content;
         }
     }
 ?>

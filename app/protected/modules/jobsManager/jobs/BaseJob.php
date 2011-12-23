@@ -58,6 +58,14 @@
         }
 
         /**
+         * @return string content specifying how often this job should be run as a scheduled task.
+         */
+        public static function getRecommendedRunFrequencyContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
          * @returns error message string otherwise returns null if not populated.
          */
         public function getErrorMessage()

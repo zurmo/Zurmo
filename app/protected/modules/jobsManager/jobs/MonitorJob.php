@@ -45,6 +45,11 @@
             return 'Monitor';
         }
 
+        public static function getRecommendedRunFrequencyContent()
+        {
+            return Yii::t('Default', 'Every 5 minutes');
+        }
+
         /**
          * @returns translated string to use when communicating that the monitor is stuck.
          */

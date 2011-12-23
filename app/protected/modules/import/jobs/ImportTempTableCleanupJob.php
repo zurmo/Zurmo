@@ -45,6 +45,11 @@
             return 'ImportTempTableCleanup';
         }
 
+        public static function getRecommendedRunFrequencyContent()
+        {
+            return Yii::t('Default', 'Once a day, early in the morning.');
+        }
+
         public function run()
         {
             return true;

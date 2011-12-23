@@ -61,14 +61,15 @@
         protected static function getJobDataByType($type)
         {
             assert('is_string($type) && $type != ""');
-            $jobClassName                       = $type . 'Job';
-            $lastCompletedJobLog                = self::getLastCompletedJobLogByType($type);
-            $jobInProcess                       = self::getIfJobIsInProcessOtherwiseReturnNullByType($type);
+            $jobClassName                           = $type . 'Job';
+            $lastCompletedJobLog                    = self::getLastCompletedJobLogByType($type);
+            $jobInProcess                           = self::getIfJobIsInProcessOtherwiseReturnNullByType($type);
             $jobData = array();
-            $jobData['label']                   = $jobClassName::getDisplayName();
-            $jobData['lastCompletedRunContent'] = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
-            $jobData['statusContent']			= self::makeStatusContentByJobLog($lastCompletedJobLog, $jobInProcess);
-            $jobData['status']					= self::resolveStatusByJobLog($lastCompletedJobLog, $jobInProcess);
+            $jobData['label']                       = $jobClassName::getDisplayName();
+            $jobData['lastCompletedRunContent']     = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
+            $jobData['statusContent']			    = self::makeStatusContentByJobLog($lastCompletedJobLog, $jobInProcess);
+            $jobData['status']					    = self::resolveStatusByJobLog($lastCompletedJobLog, $jobInProcess);
+            $jobData['recommendedFrequencyContent'] = $jobClassName::getRecommendedRunFrequencyContent();
             return $jobData;
         }
 
