@@ -63,7 +63,7 @@
             $jobsInProcess = static::getNonMonitorJobsInProcessModels();
             foreach($jobsInProcess as $jobInProcess)
             {
-                if(JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $type))
+                if(JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
                 {
                     $message                    = new NotificationMessage();
                     $message->textContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
