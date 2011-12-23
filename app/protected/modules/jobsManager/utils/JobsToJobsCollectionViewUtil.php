@@ -38,20 +38,14 @@
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
-                $jobsClassNames = $module::getAllClassNamesByPathFolder('rules');
+                $jobsClassNames = $module::getAllClassNamesByPathFolder('jobs');
                 foreach ($jobsClassNames as $jobClassName)
                 {
                     $classToEvaluate     = new ReflectionClass($jobClassName);
                     if (is_subclass_of($jobClassName, 'BaseJob') && !$classToEvaluate->isAbstract() &&
                         $jobClassName != 'MonitorJob')
                     {
-
-                        $jobsData[$jobClassName::getType()] =
-                            array('label' => $jobClassName::getDisplayName(),
-                                  'lastCompletedRunContent' => 'x',
-                                  'statusContent'			=> 'y',
-                                  'status'					=> 'z',
-                         );
+                        $jobsData[$jobClassName::getType()] = self::getJobDataByType($jobClassName::getType());
                     }
                 }
             }
@@ -67,10 +61,11 @@
         protected static function getJobDataByType($type)
         {
             assert('is_string($type) && $type != ""');
+            $jobClassName                       = $type . 'Job';
             $lastCompletedJobLog                = self::getLastCompletedJobLogByType($type);
             $jobInProcess                       = self::getIfJobIsInProcessOtherwiseReturnNullByType($type);
             $jobData = array();
-            $jobData['label']                   = MonitorJob::getDisplayName();
+            $jobData['label']                   = $jobClassName::getDisplayName();
             $jobData['lastCompletedRunContent'] = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
             $jobData['statusContent']			= self::makeStatusContentByJobLog($lastCompletedJobLog, $jobInProcess);
             $jobData['status']					= self::resolveStatusByJobLog($lastCompletedJobLog, $jobInProcess);

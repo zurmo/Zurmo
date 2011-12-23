@@ -84,61 +84,43 @@
         protected function renderFormLayout(ZurmoActiveForm $form)
         {
             $content = $this->renderMonitorJobLayout();
-            $content .= '<br/><br/>';
-            $content .= 'need some sort of header that says regular jobs';
-            //$content .= $this->renderNonMonitorJobsLayout();
-            return $content;
-            $content  = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:30%" /><col style="width:70%" />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Language') . '</th>';
-            $content .= '</tr>';
-
-            //todo: detect if jobsData has 0 count and show a different message like no jobs detected
-
-            foreach ($this->jobsData as $type => $jobData)
-            {
-                assert('is_string($jobData["label"])');
-                assert('is_string($jobData["lastCompletedRunContent"])');
-                assert('is_string($jobData["statusContent"])');
-                assert('is_string($jobData["status"])');
-                $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
-                $content .= '<tr>';
-                $content .= '<td>x</td>';
-                $content .= '<td>' . $this->jobData['label'] . '</td>';
-                //todo: based on this: $jobData["status"], we should resolve to display action.
-                //todo: also need to display modal link for logs.
-                $content .= '</tr>';
-            }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '<br/>';
+            $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
+            $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
             return $content;
         }
 
-        public function renderMonitorJobLayout()
+        protected function renderMonitorJobLayout()
         {
+            return $this->renderJobLayout(array('Monitor' => $this->monitorJobData),
+                                          self::renderMonitorJobHeaderContent());
+        }
+
+        protected function renderJobLayout($jobsData, $jobLabelHeaderContent)
+        {
+            assert('is_array($jobsData');
+            assert('is_string($jobLabelHeaderContent)');
             $content  = '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:40%" /><col style="width:20%" /><col style="width:30%" />';
             $content .= '<col style="width:10%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . self::renderMonitorJobHeaderContent() . '</th>';
+            $content .= '<tr><th>' . $jobLabelHeaderContent . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Last Completed Run') . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Status') . '</th>';
             $content .= '<th>&#160;</th>';
             $content .= '</tr>';
-            $content .= '<tr>';
-            $content .= '<td>' . $this->renderViewJobLogLinkContenet('Monitor');
-            $content .=          '&#160;' . CHtml::encode($this->monitorJobData['label']) . '</td>';
-            $content .= '<td>' . CHtml::encode($this->monitorJobData['lastCompletedRunContent']) . '</td>';
-            $content .= '<td>' . CHtml::encode($this->monitorJobData['statusContent']) . '</td>';
-            $content .= '<td>' . $this->resolveActionContentByStatus('Monitor', $this->monitorJobData['status']) . '</td>';
-            $content .= '</tr>';
-
+            foreach($jobsData as $type => $jobData)
+            {
+                $content .= '<tr>';
+                $content .= '<td>' . $this->renderViewJobLogLinkContent($type);
+                $content .=          '&#160;' . CHtml::encode($jobData['label']) . '</td>';
+                $content .= '<td>' . CHtml::encode($jobData['lastCompletedRunContent']) . '</td>';
+                $content .= '<td>' . CHtml::encode($jobData['statusContent']) . '</td>';
+                $content .= '<td>' . $this->resolveActionContentByStatus($type, $jobData['status']) . '</td>';
+                $content .= '</tr>';
+            }
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
@@ -183,7 +165,7 @@
             return null;
         }
 
-        public function renderViewJobLogLinkContenet($type)
+        public function renderViewJobLogLinkContent($type)
         {
             assert('is_string($type) && $type != ""');
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
