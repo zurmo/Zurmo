@@ -724,6 +724,7 @@
          */
         public static function runAutoBuildFromUpdateSchemaCommand()
         {
+            ForgetAllCacheUtil::forgetAllCaches();
             $unfreezeWhenDone     = false;
             if (RedBeanDatabase::isFrozen())
             {

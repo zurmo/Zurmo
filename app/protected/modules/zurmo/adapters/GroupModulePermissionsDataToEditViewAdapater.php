@@ -56,6 +56,7 @@
                 'AccountsModule',
                 'ContactsModule',
                 'MeetingsModule',
+                'NotesModule',
                 'OpportunitiesModule',
                 'TasksModule'
             );

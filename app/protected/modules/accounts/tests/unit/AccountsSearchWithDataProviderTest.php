@@ -115,5 +115,30 @@
             $dataProvider = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data = $dataProvider->getData();
         }
+
+        /**
+         * @depends testSearchMemberOfAndMembers
+         */
+        public function testSearchByCustomFieldWithEscapedContent()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //Searching with a custom field that is not blank should not produce any errors.
+            //The data returned should be no accounts.
+            $fakePostData        = array('name'         => null,
+                                         'officePhone'  => null,
+                                         'industry'     => array('value' => "Ban'king"),
+                                         'officeFax'    => null);
+            $account             = new Account(false);
+            $searchForm          = new AccountsSearchForm($account);
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $fakePostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+
+            //Run search and make sure the data returned matches how many total accounts are available.
+            $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
+            $data                = $dataProvider->getData();
+            $this->assertEquals(0, count($data));
+        }
     }
 ?>

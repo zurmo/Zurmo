@@ -248,7 +248,7 @@
                     'attributeName'        => 'ks',
                     'relatedAttributeName' => 'kMember',
                     'operatorType'         => 'oneOf',
-                    'value'                => array('d', 'e', 'f')
+                    'value'                => array('d', "e'd", 'f')
             );
             $searchAttributeDataForI['structure'] = '1';
             $modelClassNamesAndSearchAttributeData = array(
@@ -267,7 +267,7 @@
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= "left join {$quote}k{$quote} on {$quote}k{$quote}.{$quote}i_id{$quote} = ";
             $compareSubsetSql .= "{$quote}i{$quote}.{$quote}id{$quote} ";
-            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN(lower('d'),lower('e'),lower('f')))"; // Not Coding Standard
+            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN(lower('d'),lower('e\'d'),lower('f')))"; // Not Coding Standard
             $compareSubsetSql .= " and {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";

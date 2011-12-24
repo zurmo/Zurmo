@@ -33,6 +33,23 @@
             Yii::app()->setLanguage('en');
         }
 
+        public function testConvertTimestampToDbFormatDateTimeAndBackToTimeStamp()
+        {
+            $time = time();
+            $timeZone   = date_default_timezone_get();
+
+            date_default_timezone_set('GMT');
+            $gmtDbFormatDateTime = Yii::app()->dateFormatter->format(
+                                   DatabaseCompatibilityUtil::getDateTimeFormat(), $time);
+
+            date_default_timezone_set('America/New_York');
+            $dbFormatDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime($time);
+            $timeStamp        = DateTimeUtil::convertDbFormatDateTimeToTimestamp($dbFormatDateTime);
+            $this->assertEquals($gmtDbFormatDateTime, $dbFormatDateTime);
+            $this->assertEquals($time, $timeStamp);
+            date_default_timezone_set($timeZone);
+        }
+
         public function testGetLocaleFormats()
         {
             $language = Yii::app()->getLanguage();
@@ -134,6 +151,8 @@
 
         public function testConvertDbFormattedDateTimeToLocaleFormattedDisplay()
         {
+            $timeZone   = date_default_timezone_get();
+            date_default_timezone_set('GMT');
             $displayValue = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay('1980-06-03 00:00:00');
             $this->assertEquals('6/3/80 12:00 AM', $displayValue);
             //other locales
@@ -144,10 +163,13 @@
             //test null value returns null.
             $displayValue = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(null);
             $this->assertEquals(null, $displayValue);
+            date_default_timezone_set($timeZone);
         }
 
         public function testConvertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero()
         {
+            $timeZone   = date_default_timezone_get();
+            date_default_timezone_set('GMT');
             $dbValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('6/3/80 12:00 AM');
             $this->assertEquals('1980-06-03 00:00:00', $dbValue);
 
@@ -167,6 +189,7 @@
             //test null value returns null.
             $displayValue = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(null);
             $this->assertEquals(null, $displayValue);
+            date_default_timezone_set($timeZone);
         }
     }
 ?>

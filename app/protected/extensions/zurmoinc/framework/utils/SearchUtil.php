@@ -125,7 +125,7 @@
          */
         private static function changeEmptyValueToNull(&$value, $key)
         {
-            if (empty($value))
+            if (empty($value) && $value !== '0')
             {
                 $value = null;
             }
