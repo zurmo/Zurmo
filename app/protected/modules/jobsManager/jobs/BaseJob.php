@@ -25,21 +25,63 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
-     * job monitor.
+     * Base class for making Jobs.  Jobs can be run on a scheduled basis.  An example job would be a job
+     * that removes old import tables.
      */
-    class StuckJobsNotificationRules extends JobsManagerAccessNotificationRules
+    abstract class BaseJob
     {
-        protected $critical    = true;
+        /**
+         * Populated when the job runs if needed.
+         * @var string
+         */
+        protected $errorMessage;
 
+        /**
+         * After a Job is instantiated, the run method is called to execute the job.
+         */
+        abstract public function run();
+
+        /**
+         * @returns Translated label that describes this job type.
+         */
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
+            throw new NotImplementedException();
         }
 
+        /**
+         * @return The type of the NotificationRules
+         */
         public static function getType()
         {
-            return 'StuckJobs';
+            throw new NotImplementedException();
+        }
+
+        /**
+         * @return string content specifying how often this job should be run as a scheduled task.
+         */
+        public static function getRecommendedRunFrequencyContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
+         * @returns error message string otherwise returns null if not populated.
+         */
+        public function getErrorMessage()
+        {
+            return $this->errorMessage;
+        }
+
+        /**
+         * @returns the threshold for how long a job is allowed to run. This is the 'threshold'. If a job
+         * is running longer than the threshold, the monitor job might take action on it since it would be
+         * considered 'stuck'.
+         */
+        public static function getRunTimeThresholdInSeconds()
+        {
+            return 60;
         }
     }
+
 ?>

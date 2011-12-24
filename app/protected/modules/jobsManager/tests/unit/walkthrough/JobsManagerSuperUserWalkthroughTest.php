@@ -25,12 +25,12 @@
      ********************************************************************************/
 
     /**
-     * Language user interface actions.
+     * Jobs Manager user interface actions.
      * Walkthrough for the super user of all possible controller actions.
      * Since this is a super user, he should have access to all controller actions
      * without any exceptions being thrown.
      */
-    class LanguageSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
+    class JobsManagerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -46,51 +46,33 @@
 
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             //This does not include portlet controller actions.
-            $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/language');
-            $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/language/configurationList');
+            $this->runControllerWithNoExceptionsAndGetContent     ('jobsManager/default/');
+            $this->runControllerWithNoExceptionsAndGetContent     ('jobsManager/default/list');
         }
 
-        public function testSuperUserModifyActiveLanguagesInCollection()
+        public function testSuperUserResetStuckJobInProcess()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //Confirm only english is the active language.
-            $data = Yii::app()->languageHelper->getActiveLanguages();
-            $compareData = array(
-                'en',
-            );
-            $this->assertEquals($compareData, $data);
+            //Test when the job is not stuck
+            $this->setGetArray(array('type' => 'Monitor'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('jobsManager/default/resetJob');
+            $this->assertTrue(strpos($content, 'The job Monitor Job was not found to be stuck and therefore was not reset.') !== false);
 
-            //Make French and German language active.
-            $this->resetGetArray();
-            $this->setPostArray(array('LanguageCollection' => array(
-                'fr' => array('active' => '1'), 'de' => array('active' => '1'))));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !== false);
+            //Test when the job is stuck (Just having a jobInProcess is enough to trigger it.
+            $jobInProcess = new JobInProcess();
+            $jobInProcess->type = 'Monitor';
+            $this->assertTrue($jobInProcess->save());
+            $this->setGetArray(array('type' => 'Monitor'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('jobsManager/default/resetJob');
+            $this->assertTrue(strpos($content, 'The job Monitor Job has been reset.') !== false);
+        }
 
-            //Confirm the new languages are active
-            $data = Yii::app()->languageHelper->getActiveLanguages();
-            $compareData = array(
-                'fr',
-                'de',
-                'en',
-            );
-            $this->assertEquals($compareData, $data);
-
-            //Now inactivate the German language.
-            $this->resetGetArray();
-            $this->setPostArray(array('LanguageCollection' => array(
-                'fr' => array('active' => '1'), 'de' => array('active' => ''))));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !== false);
-
-            //Confirm the correct languages are active.
-            $data = Yii::app()->languageHelper->getActiveLanguages();
-            $compareData = array(
-                'fr',
-                'en',
-            );
-            $this->assertEquals($compareData, $data);
+        public function testSuperUserModalListByType()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $this->setGetArray(array('type' => 'Monitor'));
+            $this->runControllerWithNoExceptionsAndGetContent('jobsManager/default/jobLogsModalList');
         }
     }
 ?>

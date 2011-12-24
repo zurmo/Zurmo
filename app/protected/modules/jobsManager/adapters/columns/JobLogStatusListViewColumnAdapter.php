@@ -24,39 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    class JobLogStatusListViewColumnAdapter extends TextListViewColumnAdapter
     {
-        protected function renderContent()
+        public function renderGridViewData()
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
-
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
-        }
-
-        protected function renderNotificationsLinkContent()
-        {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
+            return array(
+                'name'  => 'status',
+                'value' => 'call_user_func("JobLogViewUtil::renderStatusAndMessageListContent", $data)',
+                'type'  => 'raw',
+            );
         }
     }
 ?>

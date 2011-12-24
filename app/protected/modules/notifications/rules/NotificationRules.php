@@ -42,6 +42,11 @@
          */
         protected $users       = array();
 
+        /**
+         * Defines whether a job is considered critical.  Critical jobs that fail will create
+         * email alerts immediately to certain users, usually admins.
+         * @var boolean
+         */
         protected $critical    = false;
 
         /**

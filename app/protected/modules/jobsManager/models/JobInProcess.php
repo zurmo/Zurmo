@@ -24,39 +24,44 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class Import extends Item
+    /**
+     * A model to store information about jobs that are currently running.
+     */
+    class JobInProcess extends Item
     {
+        public static function getByType($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => $type,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobInProcess');
+            $where  = RedBeanModelDataProvider::makeWhere('JobInProcess', $searchAttributeData, $joinTablesAdapter);
+            $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
+            if(count($models) > 1)
+            {
+                throw new NotSupportedException();
+            }
+            if(count($models) == 0)
+            {
+                throw new NotFoundException();
+            }
+            return $models[0];
+        }
+
         public function __toString()
         {
-            return Yii::t('Default', '(Unnamed)');
-        }
-
-        public static function getModuleClassName()
-        {
-            return 'ImportModule';
-        }
-
-        /**
-         * Returns the display name for the model class.
-         * @return dynamic label name based on module.
-         */
-        protected static function getLabel()
-        {
-            return 'ImportsModuleSingularLabel';
-        }
-
-        /**
-         * Returns the display name for plural of the model class.
-         * @return dynamic label name based on module.
-         */
-        protected static function getPluralLabel()
-        {
-            return 'ImportModulePluralLabel';
-        }
-
-        public static function canSaveMetadata()
-        {
-            return false;
+            if ($this->type == null)
+            {
+                return null;
+            }
+            return JobsUtil::resolveStringContentByType($this->type);
         }
 
         public static function getDefaultMetadata()
@@ -64,11 +69,17 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'serializedData',
+                    'type',
+
                 ),
                 'rules' => array(
-                    array('serializedData',  'required'),
-                    array('serializedData',  'type', 'type' => 'string'),
+                    array('type', 'required'),
+                    array('type', 'type', 'type' => 'string'),
+                    array('type', 'length',  'min'  => 3, 'max' => 64),
+                ),
+                'defaultSortAttribute' => 'createdDateTime',
+                'noAudit' => array(
+                    'type',
                 )
             );
             return $metadata;
@@ -77,27 +88,6 @@
         public static function isTypeDeletable()
         {
             return true;
-        }
-
-        /**
-         * Returns the string name of the temp table in the database used for the import data.
-         * @throws NotSupportedException
-         * @return Temporary table id if the import model has a valid id.
-         */
-        public function getTempTableName()
-        {
-            if ($this->id <= 0 )
-            {
-                throw new NotSupportedException();
-            }
-            return 'importtable' . $this->id;
-        }
-
-        protected function beforeDelete()
-        {
-            parent::beforeDelete();
-            $sql = 'Drop table if exists ' . $this->getTempTableName();
-            R::exec($sql);
         }
     }
 ?>

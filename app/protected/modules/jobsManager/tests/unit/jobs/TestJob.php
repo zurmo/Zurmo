@@ -24,39 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    /**
+     * A job for making unit tests regarding the Job Manager.
+     */
+    class TestJob extends BaseJob
     {
-        protected function renderContent()
-        {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
+        public $causeFailure = false;
+        public $testValue    = 'aTestValue';
 
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
+        public static function getDisplayName()
+        {
+           return Yii::t('Default', 'Test Job');
         }
 
-        protected function renderNotificationsLinkContent()
+        public static function getType()
         {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
+            return 'Test';
+        }
+
+        /**
+         * A test job. This test job will update the config table with a datetime stamp.
+         * (non-PHPdoc)
+         * @see BaseJob::run()
+         */
+        public function run()
+        {
+            ZurmoConfigurationUtil::setByModuleName('JobsManagerModule', 'test', $this->testValue);
+            if($this->causeFailure)
             {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
+                $this->errorMessage = 'The test job failed';
+                return false;
             }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
+            return true;
         }
     }
+
 ?>

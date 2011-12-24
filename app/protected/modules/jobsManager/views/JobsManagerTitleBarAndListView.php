@@ -24,39 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    class JobsManagerTitleBarAndListView extends GridView
     {
-        protected function renderContent()
+        public function __construct(
+            $controllerId,
+            $moduleId,
+            $monitorJobData,
+            $jobsData,
+            $messageBoxContent = null)
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
-
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
-        }
-
-        protected function renderNotificationsLinkContent()
-        {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
+            parent::__construct(2, 1);
+            $this->setView(new TitleBarView (Yii::t('Default', 'Jobs Manager: Home')), 0, 0);
+            $this->setView(new JobsCollectionView($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent), 1, 0);
         }
     }
 ?>

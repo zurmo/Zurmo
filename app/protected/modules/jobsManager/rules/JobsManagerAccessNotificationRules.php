@@ -24,39 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    /**
+     * Base class for notifications that are notifying users who can access the job manager, where
+     * the notification would be sent to all of those users.
+     */
+    abstract class JobsManagerAccessNotificationRules extends NotificationRules
     {
-        protected function renderContent()
+        /**
+         * Any user who has access to the scheduler module is added to receive a
+         * notification.
+         */
+        protected function loadUsers()
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
+            foreach(User::getAll() as $user)
             {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
+                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
+                    Right::ALLOW)
+                {
+                    $this->addUser($user);
+                }
             }
-
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
-        }
-
-        protected function renderNotificationsLinkContent()
-        {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
         }
     }
 ?>

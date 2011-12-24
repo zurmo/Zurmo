@@ -24,39 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    /**
+     * A  NotificationRules to manage when the monitor job itself are detected as being 'stuck'.
+     */
+    class StuckMonitorJobNotificationRules extends JobsManagerAccessNotificationRules
     {
-        protected function renderContent()
-        {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
+        protected $critical    = true;
 
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
+        public static function getDisplayName()
+        {
+            return Yii::t('Default', 'The monitor job is stuck.');
         }
 
-        protected function renderNotificationsLinkContent()
+        public static function getType()
         {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
+            return 'StuckMonitorJob';
         }
     }
 ?>

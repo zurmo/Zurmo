@@ -36,7 +36,6 @@
         {
             assert('$dataProvider instanceof RedBeanModelDataProvider');
             assert('$pageTitle == null || is_string($pageTitle)');
-            $userId = Yii::app()->user->userModel->id;
             $auditEventsListView = new AuditEventsModalListView(
                 $controller->getId(),
                 $controller->getModule()->getId(),

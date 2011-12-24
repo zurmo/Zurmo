@@ -24,39 +24,31 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    /**
+     * A helper class for rendering view information from a JobLog model.
+     */
+    class JobLogViewUtil
     {
-        protected function renderContent()
+        public static function renderStatusAndMessageListContent(JobLog $jobLog)
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
+            if($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
+                $content     = '<span id="active-monitor-job-tooltip-' .
+                               $jobLog->id . '" class="tooltip" title="' . $jobLog->message . '">';
+                $content    .= Yii::t('Default', 'Completed with Errors') . '</span>';
+                Yii::import('application.extensions.qtip.QTip');
+                $qtip        = new QTip();
+                $qtip->addQTip("#active-monitor-job-tooltip-' . $jobLog->id . '");
+                return $content;
             }
-
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
+            elseif($jobLog->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
             {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
+                return Yii::t('Default', 'Completed');
             }
-            $content .= '</ul></div>';
-            return $content;
-        }
-
-        protected function renderNotificationsLinkContent()
-        {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
+            else
             {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
+                throw new NotSupportedException();
             }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
         }
     }
 ?>

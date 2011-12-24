@@ -24,39 +24,37 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderLinksView extends View
+    /**
+     * A job for updating currency rates on a regular basis.
+     */
+    class CurrencyRatesUpdateJob extends BaseJob
     {
-        protected function renderContent()
+        /**
+         * @returns Translated label that describes this job type.
+         */
+        public static function getDisplayName()
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
-
-            $content  = '<div><ul>';
-            $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
-            return $content;
+           return Yii::t('Default', 'Currency Rates Update Job');
         }
 
-        protected function renderNotificationsLinkContent()
+        /**
+         * @return The type of the NotificationRules
+         */
+        public static function getType()
         {
-            $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
-            $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if($count > 0)
-            {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
+            return 'CurrencyRatesUpdate';
+        }
+
+        public static function getRecommendedRunFrequencyContent()
+        {
+            return Yii::t('Default', 'Once a day, early in the morning.');
+        }
+
+        public function run()
+        {
+            Yii::app()->currencyHelper->checkAndUpdateCurrencyRates(true);
+            return true;
         }
     }
+
 ?>

@@ -155,11 +155,12 @@
         /**
          * Check if the currency rate has been updated within the last 24 hours. If not, then perform a currency
          * update and update the lastAttemptedRateUpdateTimeStamp.
+         * @param boolean $forceCheck - If true, it will ignore the last time the check was made
          */
-        public function checkAndUpdateCurrencyRates()
+        public function checkAndUpdateCurrencyRates($forceCheck = false)
         {
             $metadata = Currency::getMetadata();
-            if ( $metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null ||
+            if ( $forceCheck || $metadata['Currency']['lastAttemptedRateUpdateTimeStamp'] == null ||
                 (time() - $metadata['Currency']['lastAttemptedRateUpdateTimeStamp']) > (24 * 60 * 60))
             {
                 //code and message or just code ? hmm.
