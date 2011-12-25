@@ -71,13 +71,16 @@
                     NotificationsUtil::submit($message, $rules);
                 }
             }
-            $jobLogs = static::getNonMonitorJobLogsWithErrorStatus();
+            $jobLogs = static::getNonMonitorJobLogsUnprocessed();
             foreach($jobLogs as $jobLog)
             {
-                $message                     = new NotificationMessage();
-                $message->textContent        = Yii::t('Default', 'Job completed with errors.');
-                $rules                       = new JobCompletedWithErrorsNotificationRules();
-                NotificationsUtil::submit($message, $rules);
+                if($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
+                {
+                    $message                     = new NotificationMessage();
+                    $message->textContent        = Yii::t('Default', 'Job completed with errors.');
+                    $rules                       = new JobCompletedWithErrorsNotificationRules();
+                    NotificationsUtil::submit($message, $rules);
+                }
                 $jobLog->isProcessed         = true;
                 $jobLog->save();
             }
@@ -100,7 +103,7 @@
             return JobInProcess::getSubset($joinTablesAdapter, null, null, $where, null);
         }
 
-        protected static function getNonMonitorJobLogsWithErrorStatus()
+        protected static function getNonMonitorJobLogsUnprocessed()
         {
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
@@ -110,17 +113,12 @@
                     'value'                => 'Monitor',
                 ),
                 2 => array(
-                    'attributeName'        => 'status',
-                    'operatorType'         => 'equals',
-                    'value'                => JobLog::STATUS_COMPLETE_WITH_ERROR,
-                ),
-                3 => array(
                     'attributeName'        => 'isProcessed',
                     'operatorType'         => 'doesNotEqual',
                     'value'                => (bool)1,
                 ),
             );
-            $searchAttributeData['structure'] = '1 and 2 and 3';
+            $searchAttributeData['structure'] = '1 and 2';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
             $where = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
             return JobLog::getSubset($joinTablesAdapter, null, null, $where, null);

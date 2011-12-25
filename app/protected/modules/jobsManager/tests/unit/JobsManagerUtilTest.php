@@ -86,14 +86,20 @@
         public function testRunMonitorJob()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
+            foreach(JobLog::getAll() as $jobLog)
+            {
+                $jobLog->delete();
+            }
             JobsManagerUtil::runNonMonitorJob('Test', new MessageLogger());
             $jobLogs = JobLog::getAll();
             $this->assertEquals(1, count($jobLogs));
-            $this->assertEquals(0, $jobLogs[1]->isProcessed);
+            $this->assertEquals(0, $jobLogs[0]->isProcessed);
+            $jobLogId = $jobLogs[0]->id;
             JobsManagerUtil::runMonitorJob(new MessageLogger());
             $jobLogs = JobLog::getAll();
-            $this->assertEquals(1, count($jobLogs));
-            $this->assertEquals(1, $jobLogs[1]->isProcessed);
+            $this->assertEquals(2, count($jobLogs));
+            $this->assertEquals($jobLogId, $jobLogs[0]->id);
+            $this->assertEquals(1, $jobLogs[0]->isProcessed);
         }
     }
 ?>

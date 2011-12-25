@@ -145,7 +145,7 @@
                     $jobLog->message       = $errorMessage;
                 }
                 $jobLog->isProcessed = false;
-                $jobLog->save();
+                $s =$jobLog->save();
             }
         }
 
