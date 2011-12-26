@@ -38,7 +38,7 @@
         {
             assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
-            assert('is_array($containerId)');
+            assert('is_string($containerId)');
             $geoCodeResult = self::getGeoCodeResultData($apiKey, $geoCodeQueryData);
             $geoCodeResult->renderMap($containerId);
         }
