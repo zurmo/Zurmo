@@ -85,8 +85,8 @@
             $id = $response['data']['id'];
 
             //Test update
-            $data['completed']         = 1;
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/task/' . $id, 'PUT', $headers, array('data' => $data));
+            $updateData['completed']         = 1;
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/task/' . $id, 'PUT', $headers, array('data' => $updateData));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -97,6 +97,7 @@
             // We need to unset some empty values from response and dates.
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
+            $data['completed'] = $updateData['completed'];
             $data['latestDateTime'] = $completedStamp;
             $this->assertEquals(ksort($data), ksort($response['data']));
 

@@ -97,8 +97,8 @@
             $id = $response['data']['id'];
 
             //Test update
-            $data['description']    = "Some new description";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'PUT', $headers, array('data' => $data));
+            $updateData['description']    = "Some new description";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'PUT', $headers, array('data' => $updateData));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -110,6 +110,7 @@
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
             unset($response['data']['category']['id']);
+            $data['description'] = $updateData['description'];
             $this->assertEquals(ksort($data), ksort($response['data']));
 
             //Test List

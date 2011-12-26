@@ -63,7 +63,7 @@
                     $_GET[$searchFormClassName] = $filterParams['search'];
                 }
 
-                $stateMetadataAdapterClassName = null;
+                //$stateMetadataAdapterClassName = null;
                 $model= new $modelClassName(false);
                 if (isset($searchFormClassName))
                 {
