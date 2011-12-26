@@ -225,6 +225,10 @@
             {
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
+            elseif($value === null)
+            {
+                return SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty($operatorType);
+            }
         }
 
         /**

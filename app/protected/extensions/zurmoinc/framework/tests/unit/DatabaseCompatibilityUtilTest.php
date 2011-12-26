@@ -251,5 +251,21 @@
                 $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', ''));
             }
         }
+
+        public function testGetOperatorAndValueWherePartForNullOrEmpty()
+        {
+            $queryPart = DatabaseCompatibilityUtil::getOperatorAndValueWherePart('isNull', null);
+            $compareQueryPart = "IS NULL"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+            $queryPart = DatabaseCompatibilityUtil::getOperatorAndValueWherePart('isNotNull', null);
+            $compareQueryPart = "IS NOT NULL"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+            $queryPart = DatabaseCompatibilityUtil::getOperatorAndValueWherePart('isEmpty', null);
+            $compareQueryPart = "= ''"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+            $queryPart = DatabaseCompatibilityUtil::getOperatorAndValueWherePart('isNotEmpty', null);
+            $compareQueryPart = "!= ''"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+        }
     }
 ?>
