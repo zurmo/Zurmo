@@ -43,7 +43,7 @@
             $jobsData = JobsToJobsCollectionViewUtil::getNonMonitorJobsData();
             $this->assertTrue(count($jobsData) > 1);
             $this->assertTrue(!isset($jobsData['Monitor']));
-            $this->assertTrue(isset($jobsData['ImportTempTableCleanup']));
+            $this->assertTrue(isset($jobsData['ImportCleanup']));
             $this->assertTrue(isset($jobsData['CurrencyRatesUpdate']));
         }
     }

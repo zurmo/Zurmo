@@ -52,7 +52,7 @@
             }
             $jobInProcess = JobInProcess::getByType('Monitor');
             $this->assertEquals(1, count($jobInProcess));
-            $this->assertEquals($id, $jobsInProcess->id);
+            $this->assertEquals($id, $jobInProcess->id);
             $jobInProcess->delete();
             $this->assertEquals(0, count(JobInProcess::getAll()));
         }

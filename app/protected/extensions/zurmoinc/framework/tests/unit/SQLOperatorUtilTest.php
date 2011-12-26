@@ -37,6 +37,10 @@
             $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue ('oneOf', null));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThanOrEqualTo', 'abc'));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('lessThanOrEqualTo', 'abc'));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isNull', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isNotNull', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isEmpty', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isNotEmpty', null));
         }
 
         public function testGetOperatorByType()
@@ -54,6 +58,22 @@
             $this->assertEquals($compareQueryPart, $queryPart);
         }
 
+        public function testResolveOperatorAndValueForNullOrEmpty()
+        {
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty('isNull');
+            $compareQueryPart = "IS NULL"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty('isNotNull');
+            $compareQueryPart = "IS NOT NULL"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty('isEmpty');
+            $compareQueryPart = "= ''"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+            $queryPart = SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty('isNotEmpty');
+            $compareQueryPart = "!= ''"; // Not Coding Standard
+            $this->assertEquals($compareQueryPart, $queryPart);
+        }
+
         /**
          * @expectedException NotSupportedException
          */
@@ -62,11 +82,52 @@
             SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array(array()));
         }
 
+        /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetOperatorByTypeForNullIsUnsupported()
+        {
+            SQLOperatorUtil::GetOperatorByType('isNull');
+        }
+
+        /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetOperatorByTypeForNotNullIsUnsupported()
+        {
+            SQLOperatorUtil::GetOperatorByType('isNotNull');
+        }
+
+        /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetOperatorByTypeForEmptyIsUnsupported()
+        {
+            SQLOperatorUtil::GetOperatorByType('isEmpty');
+        }
+
+        /**
+         * @expectedException NotSupportedException
+         */
+        public function testGetOperatorByTypeForNotEmptyIsUnsupported()
+        {
+            SQLOperatorUtil::GetOperatorByType('isNotEmpty');
+        }
+
         public function testResolveOperatorAndValueForOneOfWithEscapedContent()
         {
             $queryPart = SQLOperatorUtil::resolveOperatorAndValueForOneOf('oneOf', array('a', "b'd", 'c'));
             $compareQueryPart = "IN(lower('a'),lower('b\'d'),lower('c'))"; // Not Coding Standard
             $this->assertEquals($compareQueryPart, $queryPart);
+        }
+
+        public function testDoesOperatorTypeAllowNullValues()
+        {
+            $this->assertTrue(SQLOperatorUtil::doesOperatorTypeAllowNullValues('isNull'));
+            $this->assertTrue(SQLOperatorUtil::doesOperatorTypeAllowNullValues('isEmpty'));
+            $this->assertTrue(SQLOperatorUtil::doesOperatorTypeAllowNullValues('isNotNull'));
+            $this->assertTrue(SQLOperatorUtil::doesOperatorTypeAllowNullValues('isNotEmpty'));
+            $this->assertFalse(SQLOperatorUtil::doesOperatorTypeAllowNullValues('startsWith'));
         }
     }
 ?>

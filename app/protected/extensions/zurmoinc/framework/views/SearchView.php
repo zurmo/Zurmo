@@ -65,7 +65,7 @@
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'NoRequiredsActiveForm',
-                                                                array('id' => 'search-form', 'enableAjaxValidation' => false)
+                                                                array('id' => $this->getSearchFormId(), 'enableAjaxValidation' => false)
                                                             );
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
@@ -84,8 +84,8 @@
         protected function renderFormBottomPanel()
         {
             $searchButton = CHtml::submitButton(Yii::t('Default', 'Search'), array('name' => 'search'));
-            $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced Search'), '#', array('class' => 'more-search-link'));
-            $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear Search'), '#', array('class' => 'clear-search-link'));
+            $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced Search'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
+            $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear Search'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
@@ -94,29 +94,29 @@
                 CClientScript::POS_END
             );
             Yii::app()->clientScript->registerScript('search', "
-                $('.more-search-link').clearform(
+                $('#more-search-link" . $this->gridIdSuffix . "').clearform(
                     {
-                        form: '#search-form'
+                        form: '#" . $this->getSearchFormId() . "'
                     }
                 );
-                $('.clear-search-link').clearform(
+                $('#clear-search-link" . $this->gridIdSuffix . "').clearform(
                     {
-                        form: '#search-form'
+                        form: '#" . $this->getSearchFormId() . "'
                     }
                 );
-                $('.more-search-link').click( function()
+                $('#more-search-link" . $this->gridIdSuffix . "').click( function()
                     {
                         $('.search-view-1').toggle();
                         return false;
                     }
                 );
-                $('.clear-search-link').click( function()
+                $('#clear-search-link" . $this->gridIdSuffix . "').click( function()
                     {
-                        $('#search-form').submit();
+                        $(this).closest('form').submit();
                         return false;
                     }
                 );
-                $('#search-form').submit(function()
+                $('#" . $this->getSearchFormId() . "').submit(function()
                     {
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectedIds').val(null);
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectAll').val(null);
@@ -311,6 +311,11 @@
         public static function getDesignerRulesType()
         {
             return 'SearchView';
+        }
+
+        protected function getSearchFormId()
+        {
+            return 'search-form' . $this->gridIdSuffix;
         }
     }
 ?>
