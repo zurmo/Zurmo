@@ -56,7 +56,7 @@
                 $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
             }
             $content  .= "<a href=\"$link\">$label</a>";
-            return '</li><span class="notifications-link">' . $content . '</span></li>';
+            return '<li><span class="notifications-link">' . $content . '</span></li>';
         }
     }
 ?>

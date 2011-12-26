@@ -96,7 +96,9 @@
 
         protected static function sendEmail(Notification $notification)
         {
-            throw new NotImplementedException();
+            return; //Remove once Email is implemented.
+            //Fix up MonitorJobTest since we can now test this properly.
+            //throw new NotImplementedException();
             $adapter        = new NotificationMessageToEmailMessageAdapter($notification->message);
             $emailMessage   = new EmailMessage();
             $emailMessage->subject = static::getEmailSubject();

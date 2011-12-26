@@ -103,10 +103,14 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-1.0.0-rc3.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/fusionChart/jquery.fusioncharts.js',
 
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/elements/assets/Modal.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/views/assets/FormUtils.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/views/assets/ListViewUtils.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/rssReader/jquery.zrssfeed.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/juiportlets/JuiPortlets.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/jnotify/jquery.jnotify.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/designer/Designer.js',
+
+
                     )
                 )
             ),
@@ -302,6 +306,7 @@
         $common_config['import'][] = "application.modules.$moduleName.forms.*";                     // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.forms.attributes.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.interfaces.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.jobs.*";                      // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.models.*";                    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.modules.*";                   // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.*";                     // Not Coding Standard
