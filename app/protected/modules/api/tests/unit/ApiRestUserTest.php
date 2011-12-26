@@ -330,5 +330,63 @@
             $this->assertEquals(1, $response['data']['total']);
             $this->assertEquals('fifth', $response['data']['array'][0]['username']);
         }
+
+        public function testEditUserWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $user = UserTestHelper::createBasicUser('PeterSmith');
+
+            // Provide data without required fields.
+            $data['username']         = "";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(2, count($response['errors']));
+
+            $id = $user->id;
+            $data = array();
+            $data['username']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditUserWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $user = UserTestHelper::createBasicUser('JosephSmith');
+
+            // Provide data with wrong type.
+            $data['language']         = "AAAA";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(3, count($response['errors']));
+
+            $id = $user->id;
+            $data = array();
+            $data['language']         = "AAAAA";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

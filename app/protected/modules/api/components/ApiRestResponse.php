@@ -33,7 +33,7 @@
          * @param array $data
          * @param string $error
          */
-        public static function generateOutput($format, $status, $data = null, $message = null)
+        public static function generateOutput($format, $status, $data = null, $message = null, $errors = null)
         {
 
             if ($format == ApiRequest::JSON_FORMAT)
@@ -47,6 +47,10 @@
                 if (isset($data) && count($data))
                 {
                     $output['data'] = $data;
+                }
+                if (isset($errors) && count($errors))
+                {
+                    $output['errors'] = $errors;
                 }
                 echo json_encode($output);
             }

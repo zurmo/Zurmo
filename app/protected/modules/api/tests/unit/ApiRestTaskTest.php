@@ -309,5 +309,63 @@
             $this->assertEquals('First Task', $response['data']['array'][1]['name']);
             $this->assertEquals('Fifth Task', $response['data']['array'][2]['name']);
         }
+
+        public function testEditTaskWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $task = TaskTestHelper::createTaskByNameForOwner('New Task', $super);
+
+            // Provide data without required fields.
+            $data['name']         = "";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/task', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+
+            $id = $task->id;
+            $data = array();
+            $data['name']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/task/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditTaskWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $task = TaskTestHelper::createTaskByNameForOwner('Newest Task', $super);
+
+            // Provide data with wrong type.
+            $data['dueDateTime']         = "A";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/task', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(2, count($response['errors']));
+
+            $id = $task->id;
+            $data = array();
+            $data['dueDateTime']         = "A";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/task/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

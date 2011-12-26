@@ -321,5 +321,63 @@
             $this->assertEquals(1, $response['data']['total']);
             $this->assertEquals('Forth Opportunity', $response['data']['array'][0]['name']);
         }
+
+        public function testEditOpportunityWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                        'Accept: application/json',
+                        'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('New Opportunity', $super);
+
+            // Provide data without required fields.
+            $data['companyName']         = "Test 123";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/opportunity', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(4, count($response['errors']));
+
+            $id = $opportunity->id;
+            $data = array();
+            $data['name']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/opportunity/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditOpportunityWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                        'Accept: application/json',
+                        'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('Newest Opportunity', $super);
+
+            // Provide data with wrong type.
+            $data['probability']         = "A";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/opportunity', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(5, count($response['errors']));
+
+            $id = $opportunity->id;
+            $data = array();
+            $data['probability']         = "A";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/opportunity/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

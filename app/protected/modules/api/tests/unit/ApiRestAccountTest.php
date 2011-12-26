@@ -358,5 +358,68 @@
             $this->assertEquals('Forth Account', $response['data']['array'][0]['name']);
             $this->assertEquals('Fifth Account', $response['data']['array'][1]['name']);
         }
+
+        public function testEditAccountWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                                                'Accept: application/json',
+                                                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('New Account', 'Customer', 'Automotive', $super);
+
+            // Provide data without required field
+            $data['officePhone']         = "6438238";
+            $data['officeFax']           = "6565465436";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            $accounts = Account::getByName('New Account');
+            $this->assertEquals(1, count($accounts));
+            $id = $accounts[0]->id;
+            $data = array();
+            $data['name']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditAccountWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                                                                    'Accept: application/json',
+                                                                    'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('Newest Account', 'Customer', 'Automotive', $super);
+
+            // Provide data with wrong type.
+            $data['name']         = "AAA";
+            $data['employees']           = "SS";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+
+            $accounts = Account::getByName('Newest Account');
+            $this->assertEquals(1, count($accounts));
+            $id = $accounts[0]->id;
+            $data = array();
+            $data['employees']                = 'DD';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

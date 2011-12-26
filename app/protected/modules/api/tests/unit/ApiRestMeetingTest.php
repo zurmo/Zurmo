@@ -286,5 +286,63 @@
             $this->assertEquals('Second Meeting', $response['data']['array'][1]['name']);
             $this->assertEquals('First Meeting', $response['data']['array'][2]['name']);
         }
+
+        public function testEditMeetingWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                        'Accept: application/json',
+                        'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $meeting = MeetingTestHelper::createMeetingByNameForOwner('New Meeting', $super);
+
+            // Provide data without required fields.
+            $data['location']         = "Test 123";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(2, count($response['errors']));
+
+            $id = $meeting->id;
+            $data = array();
+            $data['name']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditMeetingWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                        'Accept: application/json',
+                        'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $meeting = MeetingTestHelper::createMeetingByNameForOwner('Newest Meeting', $super);
+
+            // Provide data with wrong type.
+            $data['startDateTime']         = "A";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(2, count($response['errors']));
+
+            $id = $meeting->id;
+            $data = array();
+            $data['startDateTime']         = "A";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/meeting/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

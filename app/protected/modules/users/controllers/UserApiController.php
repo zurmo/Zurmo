@@ -71,9 +71,7 @@
                 $model = $this->attemptToSaveModelFromData(new $modelClassName, $data, null, false);
                 $id = $model->id;
 
-                $model->forget();
-                unset($model);
-                if (isset($id))
+                if (!count($model->getErrors()))
                 {
                     $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
@@ -82,8 +80,9 @@
                 }
                 else
                 {
+                    $errors = $model->getErrors();
                     $message = Yii::t('Default', 'Model could not be saved.');
-                    $output = $this->generateOutput('FAILURE', $message, null);
+                    $output = $this->generateOutput('FAILURE', $message, null, $errors);
                 }
             }
             catch (Exception $e)
@@ -108,7 +107,7 @@
                 $model = $this->attemptToSaveModelFromData($model, $data, null, false);
                 $id = $model->id;
 
-                if (isset($id))
+                if (!count($model->getErrors()))
                 {
                     $model = $modelClassName::getById($id);
                     $util  = new RedBeanModelToApiDataUtil($model);
@@ -118,8 +117,9 @@
                 }
                 else
                 {
+                    $errors = $model->getErrors();
                     $message = Yii::t('Default', 'Model could not be saved.');
-                    $output = $this->generateOutput('FAILURE', $message, null);
+                    $output = $this->generateOutput('FAILURE', $message, null, $errors);
                 }
             }
             catch (Exception $e)

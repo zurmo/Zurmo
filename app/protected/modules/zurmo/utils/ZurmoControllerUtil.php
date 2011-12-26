@@ -86,8 +86,6 @@
             }
             else
             {
-print_r($model->getErrors());
-exit;
             }
             return $model;
         }

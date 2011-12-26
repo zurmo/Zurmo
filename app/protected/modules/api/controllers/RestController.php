@@ -135,7 +135,8 @@
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     $status,
                                                     $res['data'],
-                                                    $res['message']);
+                                                    $res['message'],
+                                                    $res['errors']);
                 }
                 else
                 {
@@ -174,7 +175,8 @@
                     ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                     $status,
                                                     $res['data'],
-                                                    $res['message']);
+                                                    $res['message'],
+                                                    $res['errors']);
                 }
                 else
                 {

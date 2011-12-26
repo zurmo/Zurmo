@@ -386,5 +386,63 @@
             $this->assertEquals('Forth Contact', $response['data']['array'][0]['firstName']);
             $this->assertEquals('Fifth Contact', $response['data']['array'][1]['firstName']);
         }
+
+        public function testEditContactWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $contact = ContactTestHelper::createContactByNameForOwner('New Contact', $super);
+
+            // Provide data without required fields.
+            $data['companyName']         = "Test 123";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(2, count($response['errors']));
+
+            $id = $contact->id;
+            $data = array();
+            $data['lastName']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditContactWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $contact = ContactTestHelper::createContactByNameForOwner('Newest Contact', $super);
+
+            // Provide data with wrong type.
+            $data['companyName']         = "A";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(3, count($response['errors']));
+
+            $id = $contact->id;
+            $data = array();
+            $data['companyName']         = "A";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

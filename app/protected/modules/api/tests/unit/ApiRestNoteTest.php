@@ -303,5 +303,63 @@
             $this->assertEquals('First Note', $response['data']['array'][1]['description']);
             $this->assertEquals('Fifth Note', $response['data']['array'][2]['description']);
         }
+
+        public function testEditNoteWithIncompleteData()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                                'Accept: application/json',
+                                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $note = NoteTestHelper::createNoteByNameForOwner('New Note', $super);
+
+            // Provide data without required fields.
+            $data['description']         = "";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+
+            $id = $note->id;
+            $data = array();
+            $data['description']                = '';
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
+
+        public function testEditNoteWIthIncorrectDataType()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $sessionId = $this->login();
+            $headers = array(
+                                'Accept: application/json',
+                                'ZURMO_SESSION_ID: ' . $sessionId
+            );
+
+            $note = NoteTestHelper::createNoteByNameForOwner('Newest Note', $super);
+
+            // Provide data with wrong type.
+            $data['occurredOnDateTime']         = "A";
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(2, count($response['errors']));
+
+            $id = $note->id;
+            $data = array();
+            $data['occurredOnDateTime']         = "A";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(1, count($response['errors']));
+        }
     }
 ?>

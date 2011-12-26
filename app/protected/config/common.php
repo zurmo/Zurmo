@@ -143,7 +143,7 @@
                 'sanitizeCookie' => false, //off for now
             ),
             'session'=>array(
-                'class'=>'CHttpSession',
+                'class'=>'application.modules.zurmo.components.ZurmoSession',
                 'autoStart' => false,
             ),
             'themeManager' => array(
