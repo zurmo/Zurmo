@@ -43,10 +43,11 @@
 
             $saved = $notAllowedUser->save();
 
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $super = User::getByUsername('super');
@@ -130,16 +131,19 @@
             $newUser = User::getByUsername('diggy011');
             $newUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
             $saved = $newUser->save();
-            $sessionId = $this->login('diggy011', 'diggy011');
+            $authenticationData = $this->login('diggy011', 'diggy011');
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
-            $sessionId = $this->login();
+
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             // Test update
@@ -171,10 +175,11 @@
             $this->assertEquals(4, count($response['data']['array']));
 
             // Test with unprivileged user to view, edit and delete account.
-            $sessionId = $this->login('steven', 'steven');
+            $authenticationData = $this->login('steven', 'steven');
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/user/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -189,10 +194,11 @@
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
             // Test with privileged user
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             // Test Delete
@@ -212,10 +218,11 @@
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             $manager = User::getByUsername('smith45');
 
@@ -335,10 +342,11 @@
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $user = UserTestHelper::createBasicUser('PeterSmith');
@@ -364,10 +372,11 @@
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $user = UserTestHelper::createBasicUser('JosephSmith');

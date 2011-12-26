@@ -43,9 +43,9 @@
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
             $response = json_decode($response, true);
-
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertTrue(isset($response['data']['sessionId']) && is_string($response['data']['sessionId']));
+            $this->assertTrue(isset($response['data']['token']) && is_string($response['data']['token']));
             //ToDo: Check if session exist
             //$this->sessionId = $response['data']['sessionId'];
         }
@@ -55,10 +55,11 @@
         */
         public function testListViewCreateUpdateDelete()
         {
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             //Test Create
             $data = array('name' => 'new name');
@@ -106,10 +107,11 @@
         */
         public function testLogout()
         {
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
-                            'Accept: application/json',
-                            'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/logout', 'GET', $headers);
             $response = json_decode($response, true);

@@ -37,10 +37,11 @@
         public function testList()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $super = User::getByUsername('super');

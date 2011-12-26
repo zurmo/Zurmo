@@ -82,6 +82,8 @@
             {
                 Yii::app()->user->login($identity);
                 $data['sessionId'] = Yii::app()->getSession()->getSessionID();
+                $data['token'] = Yii::app()->session['token'];
+                $session = Yii::app()->getSession();
                 ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
                                                 ApiResponse::STATUS_SUCCESS,
                                                 $data);

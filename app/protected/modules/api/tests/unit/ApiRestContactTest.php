@@ -41,10 +41,11 @@
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
             $saved = $notAllowedUser->save();
 
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $super = User::getByUsername('super');
@@ -225,10 +226,11 @@
             $this->assertEquals(array($data), $response['data']['array']);
 
             // Test with unprivileged user to view, edit and delete account.
-            $sessionId = $this->login('steven', 'steven');
+            $authenticationData = $this->login('steven', 'steven');
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/contact/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -243,10 +245,11 @@
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
             // Test with privileged user
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             //Test Delete
@@ -266,10 +269,11 @@
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             //Setup test data owned by the super user.
             $account  = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
@@ -391,10 +395,11 @@
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $contact = ContactTestHelper::createContactByNameForOwner('New Contact', $super);
@@ -420,10 +425,11 @@
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $contact = ContactTestHelper::createContactByNameForOwner('Newest Contact', $super);

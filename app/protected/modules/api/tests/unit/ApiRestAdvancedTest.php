@@ -57,10 +57,11 @@
         public function testListViewCreateUpdateDeleteWithRelatedModels()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $sessionId
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             $super = User::getByUsername('super');
@@ -302,10 +303,11 @@
         */
         public function testGetCustomFieldData()
         {
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
 
             //Fill some data
@@ -338,10 +340,11 @@
         */
         public function testLogout()
         {
-            $sessionId = $this->login();
+            $authenticationData = $this->login();
             $headers = array(
-                            'Accept: application/json',
-                            'ZURMO_SESSION_ID: ' . $sessionId
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/logout', 'GET', $headers);
             $response = json_decode($response, true);

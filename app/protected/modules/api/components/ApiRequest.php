@@ -121,6 +121,18 @@
             }
         }
 
+        public function getSessionToken()
+        {
+            if(isset($_SERVER['HTTP_ZURMO_TOKEN']))
+            {
+                return $_SERVER['HTTP_ZURMO_TOKEN'];
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public function getUsername()
         {
             if(isset($_SERVER['HTTP_ZURMO_AUTH_USERNAME']))

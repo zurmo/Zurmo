@@ -24,25 +24,12 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestTest extends ApiBaseTest
+    class ZurmoSession extends CHttpSession
     {
-        protected function login($username = 'super', $password = 'super')
+        public static function createSessionToken($sessionId, $userPass)
         {
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_AUTH_USERNAME: ' . $username,
-                'ZURMO_AUTH_PASSWORD: ' . $password
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
-            $response = json_decode($response, true);
-            if ($response['status'] == ApiRestResponse::STATUS_SUCCESS)
-            {
-                return $response['data'];
-            }
-            else
-            {
-                return false;
-            }
+            $token = md5($sessionId . $userPass);
+            return $token;
         }
     }
 ?>

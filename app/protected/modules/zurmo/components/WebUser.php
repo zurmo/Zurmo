@@ -102,8 +102,23 @@
                 if ($sessionId = Yii::app()->apiRequest->getSessionId())
                 {
                     Yii::app()->session->setSessionID($sessionId);
+                    Yii::app()->session->open();
+                    $session = Yii::app()->getSession();
+                    if ($session['token'] != Yii::app()->apiRequest->getSessionToken() || $session['token'] == '')
+                    {
+                        Yii::app()->session->clear();
+                        Yii::app()->session->destroy();
+                    }
                 }
-                Yii::app()->session->open();
+                else
+                {
+                    Yii::app()->session->open();
+                    $sessionId = Yii::app()->session->getSessionID();
+                    $userPassword = Yii::app()->apiRequest->getPassword();
+                    $token = ZurmoSession::createSessionToken($sessionId, $userPassword);
+                    $session = Yii::app()->getSession();
+                    $session['token'] = $token;
+                }
             }
             else
             {
