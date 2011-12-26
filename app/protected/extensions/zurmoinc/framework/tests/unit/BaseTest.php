@@ -62,6 +62,7 @@
             Yii::app()->user->clearStates(); //reset session.
             Yii::app()->language        = Yii::app()->getConfigLanguageValue();
             Yii::app()->timeZoneHelper->setTimeZone(Yii::app()->getConfigTimeZoneValue());
+            Yii::app()->timeZoneHelper->load(); //resets timezone
             Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
         }
 
