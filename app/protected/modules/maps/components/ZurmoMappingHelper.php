@@ -46,10 +46,10 @@
          * @param $geoCodeQueryData - geocoder query data.
          * @return rendered map content.
          */
-        public static function renderMapContentForModalView($geoCodeQueryData)
+        public static function renderMapContentForModalView($geoCodeQueryData, $containerId)
         {
             assert('is_array($geoCodeQueryData)');
-            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(), $geoCodeQueryData);
+            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(), $geoCodeQueryData, $containerId);
         }
 
         /**

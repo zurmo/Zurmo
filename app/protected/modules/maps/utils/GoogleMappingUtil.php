@@ -34,12 +34,13 @@
          * @param $apiKey           - google map api key.
          * @param $geoCodeQueryData - required query data in the form of array.
          */
-        public static function renderMapByGeoCodeData($apiKey, $geoCodeQueryData)
+        public static function renderMapByGeoCodeData($apiKey, $geoCodeQueryData, $containerId)
         {
             assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
+            assert('is_array($containerId)');
             $geoCodeResult = self::getGeoCodeResultData($apiKey, $geoCodeQueryData);
-            $geoCodeResult->renderMap('AddressGoogleMapModalView');
+            $geoCodeResult->renderMap($containerId);
         }
 
         /**
