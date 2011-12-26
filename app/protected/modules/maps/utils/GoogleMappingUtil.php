@@ -29,8 +29,6 @@
      */
     class GoogleMappingUtil
     {
-        private static $geoCodeResult;
-
         /**
          * Render map into specified container using result geocoder object.
          * @param $apiKey           - google map api key.
@@ -38,30 +36,21 @@
          */
         public static function renderMapByGeoCodeData($apiKey, $geoCodeQueryData)
         {
+            assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
-            self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
-            self::$geoCodeResult->renderMap('AddressGoogleMapModalView');
-        }
-
-        /**
-         * Get geocoder result object for test case.
-         * @param $apiKey - google map api key.
-         * @return        - geocode result object.
-         */
-        public static function renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData)
-        {
-            assert('is_array($geoCodeQueryData)');
-            self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
-            return self::$geoCodeResult;
+            $geoCodeResult = self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
+            $geoCodeResult->renderMap('AddressGoogleMapModalView');
         }
 
         /**
          * Get the geocode result object from the geocoder object.
          * @param $apiKey           - google map api key.
          * @param $geoCodeQueryData - required query data in the form of array.
+         * @return                  - geocoder result object.
          */
-        private static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
+        public static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
         {
+            assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
             Yii::import('application.extensions.geocoder.*');
             $geoCoder = new GeoCoder;
@@ -70,12 +59,12 @@
             $geoCoder->init();
             if ($geoCodeQueryData['latitude'] == '' && $geoCodeQueryData['longitude'] == '')
             {
-                self::$geoCodeResult = $geoCoder->query($geoCodeQueryData['query']);
+                return $geoCoder->query($geoCodeQueryData['query']);
             }
             else
             {
                 $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
-                self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
+                return new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
             }
         }
 

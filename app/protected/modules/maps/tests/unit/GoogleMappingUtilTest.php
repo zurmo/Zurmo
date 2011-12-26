@@ -129,19 +129,19 @@
 
             $apiKey = Yii::app()->params['testGoogleGeoCodeApiKey'];
 
-            $geoCodeResulObj1 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData1);
-            $geoCodeResulObj2 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData2);
-            $geoCodeResulObj3 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData3);
-            $geoCodeResulObj4 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData4);
+            $geoCodeResultObj1 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData1);
+            $geoCodeResultObj2 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData2);
+            $geoCodeResultObj3 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData3);
+            $geoCodeResultObj4 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData4);
 
-            $this->assertEquals('42.1153153',   $geoCodeResulObj1->__get('latitude'));
-            $this->assertEquals('-87.9763703',  $geoCodeResulObj1->__get('longitude'));
-            $this->assertEquals('37.4211444',   $geoCodeResulObj2->__get('latitude'));
-            $this->assertEquals('-122.0853032', $geoCodeResulObj2->__get('longitude'));
-            $this->assertEquals('40.7274969',   $geoCodeResulObj3->__get('latitude'));
-            $this->assertEquals('-73.9601597',  $geoCodeResulObj3->__get('longitude'));
-            $this->assertEquals('43.06132',     $geoCodeResulObj4->__get('latitude'));
-            $this->assertEquals('-87.8880352',  $geoCodeResulObj4->__get('longitude'));
+            $this->assertEquals('42.1153153',   $geoCodeResultObj1->latitude);
+            $this->assertEquals('-87.9763703',  $geoCodeResultObj1->longitude);
+            $this->assertEquals('37.4211444',   $geoCodeResultObj2->latitude);
+            $this->assertEquals('-122.0853032', $geoCodeResultObj2->longitude);
+            $this->assertEquals('40.7274969',   $geoCodeResultObj3->latitude);
+            $this->assertEquals('-73.9601597',  $geoCodeResultObj3->longitude);
+            $this->assertEquals('43.06132',     $geoCodeResultObj4->latitude);
+            $this->assertEquals('-87.8880352',  $geoCodeResultObj4->longitude);
         }
     }
 ?>
