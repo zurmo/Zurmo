@@ -119,7 +119,7 @@
             $data['industry']['value']   = $industryValues[2];
             $data['source']['value']     = $sourceValues[1];
             $data['title']['value']      = $titles[3];
-            $data['state']['id']         = $contactStates[1]->id;
+            $data['state']['id']         = ContactsUtil::getStartingState()->id;
             $data['account']['id']       = $account->id;
 
             $data['primaryEmail']        = $primaryEmail;
