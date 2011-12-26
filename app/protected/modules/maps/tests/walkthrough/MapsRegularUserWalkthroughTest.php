@@ -20,7 +20,7 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
+     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207, 
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
@@ -46,12 +46,12 @@
             $superAccount = AccountTestHelper::createAccountByNameForOwner('accountOwnedBySuper', $super);
 
             //Create address array for the account owned by super user.
-            $address = array('street1'   =>'1600 Amphitheatre Parkway', 
-                             'street2'   =>'', 
-                             'city'      =>'Mountain View', 
-                             'state'     =>'California',
-                             'postalCode'=>'94043',
-                             'country'   =>'USA'
+            $address = array('street1'    => '1600 Amphitheatre Parkway', 
+                             'street2'    => '',
+                             'city'       => 'Mountain View',
+                             'state'      => 'California',
+                             'postalCode' => '94043',
+                             'country'    => 'USA'
                        );
 
             //Assign Address to the user account.
@@ -68,9 +68,9 @@
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
             $queryAddress = strval($accounts[0]->billingAddress);
-            $this->setGetArray(array('query'    =>$queryAddress,
-                                     'latitude' =>$accounts[0]->billingAddress->latitude,
-                                     'longitude'=>$accounts[0]->billingAddress->longitude));
+            $this->setGetArray(array('query'     => $queryAddress,
+                                     'latitude'  => $accounts[0]->billingAddress->latitude,
+                                     'longitude' => $accounts[0]->billingAddress->longitude));
 
             Yii::app()->user->userModel = User::getByUsername('nobody');
 
@@ -80,7 +80,7 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('accounts/default/details');
 
             $content = $this->runControllerShouldResultInAccessFailureAndGetContent('maps/default/renderAddressMapView');
-            $this->assertTrue(strpos($content,'Access Failure') > 0);
+            $this->assertTrue(strpos($content, 'Access Failure') > 0);
         }
 
         /**
@@ -112,12 +112,12 @@
             Yii::app()->user->userModel = User::getByUsername('nobody');
 
             //Create address array for the super account id.
-            $address = array('street1'   =>'1600 Amphitheatre Parkway', 
-                             'street2'   =>'', 
-                             'city'      =>'Mountain View', 
-                             'state'     =>'California',
-                             'postalCode'=>'94043',
-                             'country'   =>'USA');
+            $address = array('street1'    => '1600 Amphitheatre Parkway', 
+                             'street2'    => '', 
+                             'city'       => 'Mountain View', 
+                             'state'      => 'California', 
+                             'postalCode' => '94043', 
+                             'country'    => 'USA');
 
             //Assign Address to the super user account.
             AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($account->id, $address, $nobody);
@@ -133,12 +133,12 @@
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
             $queryAddress = strval($accounts[0]->billingAddress);
-            $this->setGetArray(array('query'    =>$queryAddress,
-                                     'latitude' =>$accounts[0]->billingAddress->latitude,
-                                     'longitude'=>$accounts[0]->billingAddress->longitude));
+            $this->setGetArray(array('query'     => $queryAddress,
+                                     'latitude'  => $accounts[0]->billingAddress->latitude,
+                                     'longitude' => $accounts[0]->billingAddress->longitude));
 
             $content = $this->runControllerWithNoExceptionsAndGetContent('maps/default/renderAddressMapView');
-            $this->assertTrue(strpos($content,'GMap')>0);
+            $this->assertTrue(strpos($content, 'GMap') > 0);
         }
     }
 ?>

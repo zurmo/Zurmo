@@ -38,7 +38,7 @@
         {
             assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
-            $geoCodeResult = self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
+            $geoCodeResult = self::getGeoCodeResultData($apiKey, $geoCodeQueryData);
             $geoCodeResult->renderMap('AddressGoogleMapModalView');
         }
 
@@ -68,13 +68,9 @@
             }
         }
 
-        /**
-         * Return the required api script files.
-         * @return - array required api javascripts.
-         */
         public static function getMapScriptFiles()
         {
-            return array('http://maps.google.com/maps?file=api&v=2&sensor=false');
+            return array('http://maps.google.com/maps?file = api&v = 2&sensor = false');
         }
     }
 ?>

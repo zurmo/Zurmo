@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Mapping helper class used to fetch map data and map redering 
+     * Mapping helper class used to fetch map data and map redering
      * using mapping util and geocode util.
      */
     class ZurmoMappingHelper extends MappingHelper
@@ -67,7 +67,7 @@
         /**
          * Gets the geocode coordinate data for address.
          * @param $addressString - geocoder query data.
-         * @return - lat / long array.
+         * @return               - lat / long array.
          */
         public static function getGeoCodes($addressString)
         {
