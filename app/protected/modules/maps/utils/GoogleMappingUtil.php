@@ -70,7 +70,7 @@
 
         public static function getMapScriptFiles()
         {
-            return array('http://maps.google.com/maps?file = api&v = 2&sensor = false');
+            return array('http://maps.google.com/maps?file=api&v=2&sensor=false');
         }
     }
 ?>

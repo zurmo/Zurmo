@@ -82,7 +82,7 @@
             }
             if ($invalid != 1 && $addressModel->makeAddress() != '')
             {
-                $content .= $this->renderMapLink($addressModel);
+                $content .= '&#160;'.$this->renderMapLink($addressModel);
             }
             return $content;
         }

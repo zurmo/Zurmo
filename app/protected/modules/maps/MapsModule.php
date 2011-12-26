@@ -26,9 +26,7 @@
 
     class MapsModule extends SecurableModule
     {
-        const RIGHT_CREATE_MAPS = 'Create Maps';
-        const RIGHT_DELETE_MAPS = 'Delete Maps';
-        const RIGHT_ACCESS_MAPS = 'Access Maps Tab';
+        const RIGHT_ACCESS_MAPS_ADMINISTRATION = 'Access To The Administrative Key';
 
         public function getDependencies()
         {
@@ -46,9 +44,7 @@
         public static function getUntranslatedRightsLabels()
         {
             $labels                          = array();
-            $labels[self::RIGHT_CREATE_MAPS] = 'Create MapsModulePluralLabel';
-            $labels[self::RIGHT_DELETE_MAPS] = 'Delete MapsModulePluralLabel';
-            $labels[self::RIGHT_ACCESS_MAPS] = 'Access MapsModulePluralLabel Tab';
+            $labels[self::RIGHT_ACCESS_MAPS_ADMINISTRATION] = 'Access MapsModulePluralLabel Administrative Key';
             return $labels;
         }
 
@@ -62,7 +58,7 @@
                         'titleLabel'       => 'Maps',
                         'descriptionLabel' => 'Manage Map Configuration',
                         'route'            => '/maps/default/configurationView',
-                        'right'            => self::RIGHT_ACCESS_MAPS,
+                        'right'            => self::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                     ),
                 ),
             );
@@ -76,17 +72,7 @@
 
         public static function getAccessRight()
         {
-            return self::RIGHT_ACCESS_MAPS;
-        }
-
-        public static function getCreateRight()
-        {
-            return self::RIGHT_CREATE_MAPS;
-        }
-
-        public static function getDeleteRight()
-        {
-            return self::RIGHT_DELETE_MAPS;
+            return self::RIGHT_ACCESS_MAPS_ADMINISTRATION;
         }
     }
 ?>

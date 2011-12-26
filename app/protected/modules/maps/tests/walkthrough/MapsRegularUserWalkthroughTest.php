@@ -103,9 +103,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
 
             //Now test peon with elevated rights to notes
-            $nobody->setRight('MapsModule', MapsModule::RIGHT_ACCESS_MAPS);
-            $nobody->setRight('MapsModule', MapsModule::RIGHT_CREATE_MAPS);
-            $nobody->setRight('MapsModule', MapsModule::RIGHT_DELETE_MAPS);
+            $nobody->setRight('MapsModule', MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION);
             $this->assertTrue($nobody->save());
 
             //Test nobody with elevated rights.

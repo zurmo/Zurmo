@@ -35,7 +35,7 @@
                 array(
                       ZurmoBaseController::RIGHTS_FILTER_PATH,
                       'moduleClassName'   => 'MapsModule',
-                      'rightName'         => MapsModule::RIGHT_ACCESS_MAPS,
+                      'rightName'         => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                 ),
             );
         }
