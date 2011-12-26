@@ -52,9 +52,8 @@
 
         public function run()
         {
-            AddressMappingUtil::updateChangedAddress();
+            AddressMappingUtil::updateChangedAddresses();
             return true;
         }
     }
-
 ?>

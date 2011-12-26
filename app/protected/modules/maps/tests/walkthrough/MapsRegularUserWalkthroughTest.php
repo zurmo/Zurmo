@@ -58,7 +58,7 @@
             AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($superAccount->id, $address, $super);
 
             //Fetch Latitute and Longitude values for address and save in Address.
-            AddressMappingUtil::updateChangedAddress();
+            AddressMappingUtil::updateChangedAddresses();
 
             $accounts = Account::getByName('accountOwnedBySuper');
             $this->assertEquals(1, count($accounts));
@@ -123,7 +123,7 @@
             AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($account->id, $address, $nobody);
 
             //Fetch Latitute and Longitude values for address and save in Address.
-            AddressMappingUtil::updateChangedAddress();
+            AddressMappingUtil::updateChangedAddresses();
 
             $accounts = Account::getByName('accountOwnedByNobody');
             $this->assertEquals(1, count($accounts));

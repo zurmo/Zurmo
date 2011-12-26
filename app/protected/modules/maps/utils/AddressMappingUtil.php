@@ -33,7 +33,7 @@
          * Gets lat/long values for changed address and saves to address model.
          * @param $count - number of changed address to update per function call.
          */
-        public static function updateChangedAddress($count = 500)
+        public static function updateChangedAddresses($count = 500)
         {
             assert('is_int($count)');
             $changedAddresses = self::fetchChangedAddressCollection($count);
@@ -108,8 +108,7 @@
                 ),
             );
 
-            //$searchAttributeData['structure'] = '(1 or 2) and (3 or 4) and 5';
-            $searchAttributeData['structure']   = '((`address`.`latitude` is null) or 2) and ((`address`.`longitude` is null) or 4) and 5';
+            $searchAttributeData['structure']   = '(1 or 2) and (3 or 4) and 5';
             $joinTablesAdapter                  = new RedBeanModelJoinTablesQueryAdapter('Address');
             $where                              = RedBeanModelDataProvider::makeWhere('Address',
                                                                                       $searchAttributeData,

@@ -87,7 +87,7 @@
             $accountId4            = $account4->id;
             unset($account4);
 
-            AddressMappingUtil::updateChangedAddress(2);
+            AddressMappingUtil::updateChangedAddresses(2);
 
             $account1 = Account::getById($accountId1);
             $this->assertEquals('42.1153153' , $account1->billingAddress->latitude);
