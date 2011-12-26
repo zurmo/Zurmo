@@ -27,7 +27,8 @@
  * settings and map type to normal google map.
  */
 ?>
-map = new GMap2(document.getElementById("<?php echo $container_id; ?>"));
+document.getElementById("<?php echo $container_id; ?>").innerHTML="<div id='map_canvas' style='height:420px;width:670px;'></div>";
+map = new GMap2(document.getElementById("map_canvas"));
 var latlng = new GLatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
 map.setCenter(latlng, 15);
 map.setUIToDefault();

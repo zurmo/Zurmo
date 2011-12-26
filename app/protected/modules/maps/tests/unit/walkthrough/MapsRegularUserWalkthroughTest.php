@@ -42,16 +42,17 @@
 
         public function testRegularUserAllControllerActionsNoElevation()
         {
-            $super                      = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $superAccount               = AccountTestHelper::createAccountByNameForOwner('accountOwnedBySuper', $super);
+            $super        = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $superAccount = AccountTestHelper::createAccountByNameForOwner('accountOwnedBySuper', $super);
 
             //Create address array for the account owned by super user.
-            $address = array('street1'      =>'1600 Amphitheatre Parkway', 
-                             'street2'      =>'', 
-                             'city'         =>'Mountain View', 
-                             'state'        =>'California',
-                             'postalCode'   =>'94043',
-                             'country'      =>'USA');
+            $address = array('street1'   =>'1600 Amphitheatre Parkway', 
+                             'street2'   =>'', 
+                             'city'      =>'Mountain View', 
+                             'state'     =>'California',
+                             'postalCode'=>'94043',
+                             'country'   =>'USA'
+                       );
 
             //Assign Address to the user account.
             AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($superAccount->id, $address, $super);
@@ -59,7 +60,7 @@
             //Fetch Latitute and Longitude values for address and save in Address.
             AddressMappingUtil::updateChangedAddress();
 
-            $accounts                   = Account::getByName('accountOwnedBySuper');
+            $accounts = Account::getByName('accountOwnedBySuper');
             $this->assertEquals(1, count($accounts));
 
             $this->assertEquals('37.4211444',   $accounts[0]->billingAddress->latitude);
@@ -67,9 +68,9 @@
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
             $queryAddress = strval($accounts[0]->billingAddress);
-            $this->setGetArray(array('query'                   => $queryAddress,
-                                     'latitude'                => $accounts[0]->billingAddress->latitude,
-                                     'longitude'               => $accounts[0]->billingAddress->longitude));
+            $this->setGetArray(array('query'    =>$queryAddress,
+                                     'latitude' =>$accounts[0]->billingAddress->latitude,
+                                     'longitude'=>$accounts[0]->billingAddress->longitude));
 
             Yii::app()->user->userModel = User::getByUsername('nobody');
 
@@ -111,12 +112,12 @@
             Yii::app()->user->userModel = User::getByUsername('nobody');
 
             //Create address array for the super account id.
-            $address = array('street1'      =>'1600 Amphitheatre Parkway', 
-                             'street2'      =>'', 
-                             'city'         =>'Mountain View', 
-                             'state'        =>'California',
-                             'postalCode'   =>'94043',
-                             'country'      =>'USA');
+            $address = array('street1'   =>'1600 Amphitheatre Parkway', 
+                             'street2'   =>'', 
+                             'city'      =>'Mountain View', 
+                             'state'     =>'California',
+                             'postalCode'=>'94043',
+                             'country'   =>'USA');
 
             //Assign Address to the super user account.
             AddressGeoCodeTestHelper::updateTestAccountsWithBillingAddress($account->id, $address, $nobody);
@@ -124,7 +125,7 @@
             //Fetch Latitute and Longitude values for address and save in Address.
             AddressMappingUtil::updateChangedAddress();
 
-            $accounts                   = Account::getByName('accountOwnedByNobody');
+            $accounts = Account::getByName('accountOwnedByNobody');
             $this->assertEquals(1, count($accounts));
 
             $this->assertEquals('37.4211444',   $accounts[0]->billingAddress->latitude);
@@ -132,12 +133,12 @@
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
             $queryAddress = strval($accounts[0]->billingAddress);
-            $this->setGetArray(array('query'                   => $queryAddress,
-                                     'latitude'                => $accounts[0]->billingAddress->latitude,
-                                     'longitude'               => $accounts[0]->billingAddress->longitude));
+            $this->setGetArray(array('query'    =>$queryAddress,
+                                     'latitude' =>$accounts[0]->billingAddress->latitude,
+                                     'longitude'=>$accounts[0]->billingAddress->longitude));
 
             $content = $this->runControllerWithNoExceptionsAndGetContent('maps/default/renderAddressMapView');
-            $this->assertTrue(strpos($content,'GMap') > 0);
+            $this->assertTrue(strpos($content,'GMap')>0);
         }
     }
 ?>

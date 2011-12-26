@@ -60,7 +60,6 @@
 
         /**
          * Handle the autoloading functionality for this extension
-         *
          * @param mixed $class_name
          */
         public static function autoload($class_name)
@@ -84,7 +83,6 @@
 
         /**
          * Get the path to a class file inside our system
-         *
          * @param string $class
          * @return mixed the path or FALSE on failure
          */
@@ -148,7 +146,6 @@
         /**
          * Send a query to the geocode API
          * See {@link GeoCode_Parser::process} for more information on the return value
-         *
          * @param mixed $query
          * @return GeoCode_Result
          */
@@ -163,7 +160,6 @@
 
         /**
          * Change the api driver string
-         *
          * @param string $driver
          */
         public function setApiDriver($driver)
@@ -183,7 +179,6 @@
 
         /**
          * Get the api driver string
-         *
          * @return string
          */
         public function getApiDriver()
@@ -193,7 +188,6 @@
 
         /**
          * Set the API key for this system
-         *
          * @param mixed $key
          */
         public function setApiKey($key)
@@ -206,7 +200,6 @@
 
         /**
          * Get the api key
-         *
          * @return string
          */
         public function getApiKey()
@@ -216,7 +209,6 @@
 
         /**
          * Set the driver for the GeoCode requests
-         *
          * @param string $driver
          * @return boolean
          */
@@ -245,7 +237,6 @@
         /**
          * Magic call method. If the method is not accessible in the class,
          * then we check if it exists on the driver.
-         *
          * @param string $name
          * @param array $parameters
          * @return mixed
@@ -262,7 +253,6 @@
         /**
          * Magic get method. If a get<Name> method exists, then it is called.
          * Otherwise, sent to parent
-         *
          * @param string $name
          * @return mixed
          */
@@ -275,7 +265,6 @@
         /**
          * Magic set method. If a set<Name> method exists, then it is called.
          * Otherwise, pass to the parent
-         *
          * @param string $name
          * @param mixed $value
          */
@@ -287,7 +276,6 @@
 
         /**
          * Magic isset function. Checks if an attribute is set
-         *
          * @param string $name
          * @return boolean
          */
@@ -299,7 +287,6 @@
 
         /**
          * Magic unset function. Removes a given attribute
-         *
          * @param string $name
          */
         public function __unset($name)

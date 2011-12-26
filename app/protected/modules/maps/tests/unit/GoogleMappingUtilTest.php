@@ -42,55 +42,55 @@
             Yii::app()->user->userModel = $super;
 
             $address = array();
-            $address['street1']       = '123 Knob Street';
-            $address['street2']       = 'Apartment 4b';
-            $address['city']          = 'Chicago';
-            $address['state']         = 'Illinois';
-            $address['postalCode']    = '60606';
-            $address['country']       = 'USA';
-            $account1                 = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
-            $accountId1               = $account1->id;
+            $address['street1']    = '123 Knob Street';
+            $address['street2']    = 'Apartment 4b';
+            $address['city']       = 'Chicago';
+            $address['state']      = 'Illinois';
+            $address['postalCode'] = '60606';
+            $address['country']    = 'USA';
+            $account1              = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address, $super);
+            $accountId1            = $account1->id;
             unset($account1);
 
             $address = array();
-            $address['street1']       = '1600 Amphitheatre Parkway';
-            $address['street2']       = '';
-            $address['city']          = 'Mountain View';
-            $address['state']         = 'California';
-            $address['postalCode']    = '94043';
-            $address['country']       = 'USA';
-            $account2                 = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
-            $accountId2               = $account2->id;
+            $address['street1']    = '1600 Amphitheatre Parkway';
+            $address['street2']    = '';
+            $address['city']       = 'Mountain View';
+            $address['state']      = 'California';
+            $address['postalCode'] = '94043';
+            $address['country']    = 'USA';
+            $account2              = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address, $super);
+            $accountId2            = $account2->id;
             unset($account2);
 
             $address = array();
-            $address['street1']       = '36826 East Oak Road';
-            $address['street2']       = '';
-            $address['city']          = 'New York';
-            $address['state']         = 'NY';
-            $address['postalCode']    = '10001';
-            $address['country']       = 'USA';
-            $account3                 = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
-            $accountId3               = $account3->id;
+            $address['street1']    = '36826 East Oak Road';
+            $address['street2']    = '';
+            $address['city']       = 'New York';
+            $address['state']      = 'NY';
+            $address['postalCode'] = '10001';
+            $address['country']    = 'USA';
+            $account3              = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address, $super);
+            $accountId3            = $account3->id;
             unset($account3);
 
             $address = array();
-            $address['street1']       = '24948 West Thomas Trail';
-            $address['street2']       = '';
-            $address['city']          = 'Milwaukee';
-            $address['state']         = 'WI';
-            $address['postalCode']    = '53219';
-            $address['country']       = '';
-            $account4                 = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address,$super);
-            $accountId4               = $account4->id;
+            $address['street1']    = '24948 West Thomas Trail';
+            $address['street2']    = '';
+            $address['city']       = 'Milwaukee';
+            $address['state']      = 'WI';
+            $address['postalCode'] = '53219';
+            $address['country']    = '';
+            $account4              = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address, $super);
+            $accountId4            = $account4->id;
             unset($account4);
 
             AddressMappingUtil::updateChangedAddress(2);
 
             $account1 = Account::getById($accountId1);
-            $this->assertEquals('42.1153153' ,  $account1->billingAddress->latitude);
-            $this->assertEquals('-87.9763703',  $account1->billingAddress->longitude);
-            $this->assertEquals(0,              $account1->billingAddress->invalid);
+            $this->assertEquals('42.1153153' , $account1->billingAddress->latitude);
+            $this->assertEquals('-87.9763703', $account1->billingAddress->longitude);
+            $this->assertEquals(0,             $account1->billingAddress->invalid);
 
             $account2 = Account::getById($accountId2);
             $this->assertEquals('37.4211444',   $account2->billingAddress->latitude);
@@ -98,14 +98,14 @@
             $this->assertEquals(0,              $account1->billingAddress->invalid);
 
             $account3 = Account::getById($accountId3);
-            $this->assertEquals(null,           $account3->billingAddress->latitude);
-            $this->assertEquals(null,           $account3->billingAddress->longitude);
-            $this->assertEquals(0,              $account3->billingAddress->invalid);
+            $this->assertEquals(null, $account3->billingAddress->latitude);
+            $this->assertEquals(null, $account3->billingAddress->longitude);
+            $this->assertEquals(0,    $account3->billingAddress->invalid);
 
             $account4 = Account::getById($accountId4);
-            $this->assertEquals(null,           $account4->billingAddress->latitude);
-            $this->assertEquals(null,           $account4->billingAddress->longitude);
-            $this->assertEquals(0,              $account4->billingAddress->invalid);
+            $this->assertEquals(null, $account4->billingAddress->latitude);
+            $this->assertEquals(null, $account4->billingAddress->longitude);
+            $this->assertEquals(0,    $account4->billingAddress->invalid);
 
             $account1          = Account::getById($accountId1);
             $geoCodeQueryData1 = array('query'    =>$account1->billingAddress->makeAddress(),
@@ -129,19 +129,19 @@
 
             $apiKey = Yii::app()->params['testGoogleGeoCodeApiKey'];
 
-            $geoCodeRenderedMap1 = GoogleMappingUtil::renderMapByGeoCodeData($apiKey, $geoCodeQueryData1);
-            $geoCodeRenderedMap2 = GoogleMappingUtil::renderMapByGeoCodeData($apiKey, $geoCodeQueryData2);
-            $geoCodeRenderedMap3 = GoogleMappingUtil::renderMapByGeoCodeData($apiKey, $geoCodeQueryData3);
-            $geoCodeRenderedMap4 = GoogleMappingUtil::renderMapByGeoCodeData($apiKey, $geoCodeQueryData4);
-            
-            /*$this->assertEquals('42.1153153',   $geoCodeResulObj1->__get('latitude'));
+            $geoCodeResulObj1 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData1);
+            $geoCodeResulObj2 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData2);
+            $geoCodeResulObj3 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData3);
+            $geoCodeResulObj4 = GoogleMappingUtil::renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData4);
+
+            $this->assertEquals('42.1153153',   $geoCodeResulObj1->__get('latitude'));
             $this->assertEquals('-87.9763703',  $geoCodeResulObj1->__get('longitude'));
             $this->assertEquals('37.4211444',   $geoCodeResulObj2->__get('latitude'));
             $this->assertEquals('-122.0853032', $geoCodeResulObj2->__get('longitude'));
             $this->assertEquals('40.7274969',   $geoCodeResulObj3->__get('latitude'));
             $this->assertEquals('-73.9601597',  $geoCodeResulObj3->__get('longitude'));
             $this->assertEquals('43.06132',     $geoCodeResulObj4->__get('latitude'));
-            $this->assertEquals('-87.8880352',  $geoCodeResulObj4->__get('longitude'));*/
+            $this->assertEquals('-87.8880352',  $geoCodeResulObj4->__get('longitude'));
         }
     }
 ?>

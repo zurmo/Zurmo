@@ -40,7 +40,19 @@
         {
             assert('is_array($geoCodeQueryData)');
             self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
-            self::$geoCodeResult->renderMap('map_canvas');
+            self::$geoCodeResult->renderMap('AddressGoogleMapModalView');
+        }
+
+        /**
+         * Get geocoder result object for test case.
+         * @param $apiKey - google map api key.
+         * @return        - geocode result object.
+         */
+        public static function renderMapByGeoCodeDataForTest($apiKey, $geoCodeQueryData)
+        {
+            assert('is_array($geoCodeQueryData)');
+            self::getGeoCodeResultData($apiKey,$geoCodeQueryData);
+            return self::$geoCodeResult;
         }
 
         /**
@@ -50,23 +62,20 @@
          */
         private static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
         {
-            if (!isset(self::$geoCodeResult))
+            assert('is_array($geoCodeQueryData)');
+            Yii::import('application.extensions.geocoder.*');
+            $geoCoder = new GeoCoder;
+            $geoCoder->setApiKey($apiKey);
+            $geoCoder->setApiDriver('Google');
+            $geoCoder->init();
+            if ($geoCodeQueryData['latitude'] == '' && $geoCodeQueryData['longitude'] == '')
             {
-                assert('is_array($geoCodeQueryData)');
-                Yii::import('application.extensions.geocoder.*');
-                $geoCoder = new GeoCoder;
-                $geoCoder->setApiKey($apiKey);
-                $geoCoder->setApiDriver('Google');
-                $geoCoder->init();
-                if ($geoCodeQueryData['latitude'] == '' && $geoCodeQueryData['longitude'] == '')
-                {
-                    self::$geoCodeResult = $geoCoder->query($geoCodeQueryData['query']);
-                }
-                else
-                {
-                    $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
-                    self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
-                }
+                self::$geoCodeResult = $geoCoder->query($geoCodeQueryData['query']);
+            }
+            else
+            {
+                $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
+                self::$geoCodeResult = new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
             }
         }
 

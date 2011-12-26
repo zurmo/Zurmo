@@ -38,7 +38,7 @@
         public function getMappingLinkContentForElement($mapRenderData)
         {
             assert('is_array($addressData)');
-            return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET,$mapRenderData));
+            return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET, $mapRenderData));
         }
 
         /**
@@ -49,7 +49,7 @@
         public static function renderMapContentForModalView($geoCodeQueryData)
         {
             assert('is_array($geoCodeQueryData)');
-            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(),$geoCodeQueryData);
+            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(), $geoCodeQueryData);
         }
 
         /**

@@ -90,7 +90,7 @@
             //Set ajax mode for modal map render view
             Yii::app()->getClientScript()->setToAjaxMode();
 
-            echo $this->renderModalMapView($this, $modalMapAddressData, 
+            echo $this->renderModalMapView($this, $modalMapAddressData,
                                            Yii::t('Default', 'Address Location on Map',
                                            LabelUtil::getTranslationParamsForAllModules()));
         }
@@ -99,18 +99,16 @@
          * Map modal view for map popup..
          * @return rendered content from view as string.
          */
-        public function renderModalMapView(CController $controller, 
-                                                  $modalMapAddressData,
-                                                  $pageTitle = null,
-                                                  $stateMetadataAdapterClassName = null)
+        public function renderModalMapView(CController $controller,
+                                           $modalMapAddressData,
+                                           $pageTitle = null,
+                                           $stateMetadataAdapterClassName = null)
         {
-
-            $renderAndMapModalView = new AddressGoogleMapModalView(
-                $controller->getId(),
-                $controller->getModule()->getId(),
-                $modalMapAddressData,
-                'modal'
-            );
+            $renderAndMapModalView = new AddressGoogleMapModalView($controller->getId(),
+                                                                   $controller->getModule()->getId(),
+                                                                   $modalMapAddressData,
+                                                                   'modal'
+                                         );
 
             $view = new ModalView($controller,
                                   $renderAndMapModalView,

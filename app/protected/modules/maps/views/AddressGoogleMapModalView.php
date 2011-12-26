@@ -31,7 +31,7 @@
     {
         public function __construct($controllerId, $moduleId, $modalMapDataProvider, $gridIdSuffix = null)
         {
-            echo "<div id='map_canvas' style='height:420px;width:670px;'></div>";
+            //Call for rendering the map content in modal view.
             Yii::app()->mappingHelper->renderMapContentForModalView($modalMapDataProvider);
         }
 

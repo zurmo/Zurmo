@@ -39,7 +39,7 @@
             $changedAddresses = self::fetchChangedAddressCollection($count);
             foreach ($changedAddresses as $address)
             {
-                if($address->makeAddress() != '')
+                if ($address->makeAddress() != '')
                 {
                     assert('is_string($address->makeAddress())');
                     try

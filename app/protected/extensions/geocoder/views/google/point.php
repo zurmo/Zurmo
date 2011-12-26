@@ -23,8 +23,8 @@
 
  /**
  * This view file adds a marker to the centered map to the required lat / long
- * coordinates. It also adds a event listener on click of which address is displayed
- * in the info window.
+ * coordinates. It also adds a event listener on click of which address
+ * is displayed in the info window.
  */
 ?>
 var marker = new GMarker(latlng);
