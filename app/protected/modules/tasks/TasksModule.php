@@ -89,5 +89,10 @@
         {
             return 'TasksDemoDataMaker';
         }
+
+        public static function hasPermissions()
+        {
+            return true;
+        }
     }
 ?>

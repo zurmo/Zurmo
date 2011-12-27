@@ -67,6 +67,7 @@ EOD;
         try
         {
             Yii::app()->user->userModel = User::getByUsername($args[0]);
+            Yii::app()->timeZoneHelper->load();
         }
         catch (NotFoundException $e)
         {

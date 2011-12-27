@@ -124,5 +124,10 @@
         {
             return 'AccountsSearchForm';
         }
+
+        public static function hasPermissions()
+        {
+            return true;
+        }
     }
 ?>

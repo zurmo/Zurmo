@@ -111,5 +111,68 @@
             $menu = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
             $this->assertEquals(4, count($menu));
         }
+
+        public function testResolveMenuItemsForLanguageLocalizationIsRecursive()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $metadata                                 = AccountsModule::getMetadata();
+            $backupMetadata                           = $metadata;
+            $metadata['global']['shortcutsMenuItems'] = array(
+                array(
+                    'label' => 'AccountsModulePluralLabel',
+                    'url'   => array('/accounts/default'),
+                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                    'items' => array(
+                        array(
+                            'label' => 'AccountsModulePluralLabel',
+                            'url'   => array('/accounts/default'),
+                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                            'items' => array(
+                                array(
+                                    'label' => 'AccountsModulePluralLabel',
+                                    'url'   => array('/accounts/default'),
+                                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                                ),
+                            ),
+                        ),
+                        array(
+                            'label' => 'AccountsModulePluralLabel',
+                            'url'   => array('/accounts/default'),
+                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                        ),
+                    ),
+                ),
+            );
+            AccountsModule::setMetadata($metadata);
+            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('AccountsModule');
+            $compareData = array(
+                array(
+                    'label' => 'Accounts',
+                    'url'   => array('/accounts/default'),
+                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                    'items' => array(
+                        array(
+                            'label' => 'Accounts',
+                            'url'   => array('/accounts/default'),
+                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                            'items' => array(
+                                array(
+                                    'label' => 'Accounts',
+                                    'url'   => array('/accounts/default'),
+                                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                                ),
+                            ),
+                        ),
+                        array(
+                            'label' => 'Accounts',
+                            'url'   => array('/accounts/default'),
+                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                        ),
+                    ),
+                ),
+            );
+            $this->assertEquals($compareData, $menuItems);
+            AccountsModule::setMetadata($backupMetadata);
+        }
     }
 ?>

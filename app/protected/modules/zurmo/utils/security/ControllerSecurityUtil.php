@@ -60,11 +60,7 @@
             {
                 return;
             }
-            elseif (Yii::app()->apiRequest->isApiRequest())
-            {
-                return false;
-            }
-            ControllerSecurityUtil::renderAccessFailureView($fromAjax);
+            static::processAccessFailure($fromAjax);
             Yii::app()->end(0, false);
         }
 
@@ -80,11 +76,7 @@
             {
                 return;
             }
-            elseif (Yii::app()->apiRequest->isApiRequest())
-            {
-                return false;
-            }
-            ControllerSecurityUtil::renderAccessFailureView($fromAjax);
+            static::processAccessFailure($fromAjax);
             Yii::app()->end(0, false);
         }
 
@@ -100,11 +92,7 @@
             {
                 return;
             }
-            elseif (Yii::app()->apiRequest->isApiRequest())
-            {
-                return false;
-            }
-            ControllerSecurityUtil::renderAccessFailureView($fromAjax);
+            static::processAccessFailure($fromAjax);
             Yii::app()->end(0, false);
         }
 
@@ -122,7 +110,7 @@
             {
                 return;
             }
-            ControllerSecurityUtil::renderAccessFailureView($fromAjax);
+            static::processAccessFailure($fromAjax);
             Yii::app()->end(0, false);
         }
 
@@ -133,8 +121,13 @@
             {
                 return;
             }
-            ControllerSecurityUtil::renderAccessFailureView($fromAjax);
+            static::processAccessFailure($fromAjax);
             Yii::app()->end(0, false);
+        }
+
+        protected static function processAccessFailure($fromAjax = false, $nonAjaxFailureMessageContent = null)
+        {
+            static::renderAccessFailureView($fromAjax, $nonAjaxFailureMessageContent);
         }
 
         protected static function renderAccessFailureView($fromAjax = false, $nonAjaxFailureMessageContent = null)

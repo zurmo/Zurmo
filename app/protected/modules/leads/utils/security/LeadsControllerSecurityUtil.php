@@ -66,7 +66,7 @@
             {
                 return;
             }
-            static::renderAccessFailureView(false, $scenarioSpecificContent);
+            static::processAccessFailure(false, $scenarioSpecificContent);
             Yii::app()->end(0, false);
         }
     }

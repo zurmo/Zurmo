@@ -94,5 +94,10 @@
         {
             return 'MeetingsDemoDataMaker';
         }
+
+        public static function hasPermissions()
+        {
+            return true;
+        }
     }
 ?>

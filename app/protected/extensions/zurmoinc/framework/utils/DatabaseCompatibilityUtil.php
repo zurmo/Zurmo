@@ -225,6 +225,10 @@
             {
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
+            elseif($value === null)
+            {
+                return SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty($operatorType);
+            }
         }
 
         /**
@@ -267,6 +271,11 @@
                         $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
                         $counter++;
                     }
+                }
+                else
+                {
+                    throw new BulkInsertFailedException(
+                              Yii::t('Default', 'Bulk insert failed. There was a row with an incorrect column quantity'));
                 }
             }
             if ($counter > 0)

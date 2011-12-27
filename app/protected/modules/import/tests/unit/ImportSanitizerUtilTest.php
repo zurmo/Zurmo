@@ -29,8 +29,9 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
-
+            $super                      = SecurityTestHelper::createSuperAdmin();
+            Yii::app()->user->userModel = $super;
+            Yii::app()->timeZoneHelper->load();
             $values = array(
                 'Test1',
                 'Test2',
@@ -42,6 +43,52 @@
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
             assert($saved); // Not Coding Standard
+            Currency::getAll(); //forces base currency to be created.
+
+        }
+
+        public function testCurrencySanitizationUsingNumberSanitizerUtil()
+        {
+            $currency = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Test a pure number as the value
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = ImportMappingUtil::makeCurrencyColumnMappingData('currencyValue', $currency);
+            $sanitizerUtilTypes        = CurrencyValueAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '500.34',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('500.34', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test with dollar signs. Should strip out dollar signs
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = ImportMappingUtil::makeCurrencyColumnMappingData('currencyValue', $currency);
+            $sanitizerUtilTypes        = CurrencyValueAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '$500.34',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('500.34', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
+
+            //Test with commmas. Should strip out commas
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = ImportMappingUtil::makeCurrencyColumnMappingData('currencyValue', $currency);
+            $sanitizerUtilTypes        = CurrencyValueAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '15,500.34',
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('15500.34', $sanitizedValue);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
         }
 
         public function testSanitizeValueBySanitizerTypesForBooleanTypeThatIsNotRequired()
@@ -515,6 +562,31 @@
             $compareMessage = 'ImportModelTestItem - Drop Down Pick list value specified is missing from existing pick list, ' .
                               'has a specified mapping value, but the mapping value is not a valid value.';
             $this->assertEquals($compareMessage, $messages[0]);
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $values = unserialize($customFieldData->serializedData);
+            $this->assertEquals(6, count($values));
+
+            //Test using no value, and relying on the defaultValue to populate
+            $importInstructionsData = array('DropDown' =>
+                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE  => array(),
+                                            DropDownSanitizerUtil::MAP_MISSING_VALUES => array()));
+            $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
+            $this->assertEquals(6, count(unserialize($customFieldData->serializedData)));
+            $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
+            $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
+                                               'DefaultValueDropDownModelAttributeMappingRuleForm' =>
+                                               array('defaultValue' => 'Test1')),
+                                               'importInstructionsData' => $importInstructionsData);
+            $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
+            $sanitizedValue            = ImportSanitizerUtil::
+                                         sanitizeValueBySanitizerTypes(
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', null,
+                                         $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertEquals('Test1', $sanitizedValue->value);
+            $this->assertTrue($sanitizedValue instanceof OwnedCustomField);
+            $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
+            $messages = $importSanitizeResultsUtil->getMessages();
+            $this->assertEquals(0, count($messages));
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $values = unserialize($customFieldData->serializedData);
             $this->assertEquals(6, count($values));

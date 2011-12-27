@@ -87,5 +87,10 @@
         {
             return 'NotesDemoDataMaker';
         }
+
+        public static function hasPermissions()
+        {
+            return true;
+        }
     }
 ?>
