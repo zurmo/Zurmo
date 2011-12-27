@@ -29,6 +29,7 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
+            $super                      = SecurityTestHelper::createSuperAdmin();
             Yii::app()->user->userModel = $super;
             Yii::app()->timeZoneHelper->load();
         }
