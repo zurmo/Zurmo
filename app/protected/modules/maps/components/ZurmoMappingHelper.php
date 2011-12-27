@@ -47,9 +47,10 @@
          * @param string $containerId      - containerid for map rendering.
          * @return rendered map content.
          */
-        public static function renderMapContentForModalView($geoCodeQueryData, $containerId)
+        public static function renderMapContentForView($geoCodeQueryData, $containerId)
         {
             assert('is_array($geoCodeQueryData)');
+            assert('is_string($containerId)');
             return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(), $geoCodeQueryData, $containerId);
         }
 

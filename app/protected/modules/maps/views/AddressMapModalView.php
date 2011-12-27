@@ -27,27 +27,41 @@
     /**
      * Google map render view.
      */
-    class AddressMapModalView extends GridView
+    class AddressMapModalView extends View
     {
-        private $containedQuery;
+        protected $geoCodeQueryData;
 
-        public function __construct($controllerId, $moduleId, $modalMapDataProvider, $gridIdSuffix = null)
+        protected $containerIdSuffix;
+
+        public function __construct($controllerId, $moduleId, $geoCodeQueryData, $containerIdSuffix = null)
         {
-            $this->containedQuery = $modalMapDataProvider;
+            assert('is_array($geoCodeQueryData)');
+            assert('$containerIdSuffix == null || is_string($containerIdSuffix)');
+            $this->geoCodeQueryData  = $geoCodeQueryData;
+            $this->containerIdSuffix = $containerIdSuffix;
         }
 
-        public function render()
+        public function renderContent()
         {
-            //Create container for address map view.
-            echo "<div id='map_canvas' style='height:420px;width:670px;'></div>";
+            $mapCanvasContainerId = $this->getMapCanvasContainerId();
+            $cClipWidget          = new CClipWidget();
+            $cClipWidget->beginClip("Map");
+            echo "<div id='" . $mapCanvasContainerId . "' style='height:420px;width:670px;'></div>";
+            Yii::app()->mappingHelper->renderMapContentForView($this->geoCodeQueryData, $mapCanvasContainerId);
+            $cClipWidget->endClip();
+            return $cClipWidget->getController()->clips['Map'];
 
-            //Call for rendering the map content in modal view.
-            Yii::app()->mappingHelper->renderMapContentForModalView($this->containedQuery, 'map_canvas');
+
         }
 
         public function isUniqueToAPage()
         {
             return true;
+        }
+
+        public function getMapCanvasContainerId()
+        {
+            return 'map-canvas' . $this->containerIdSuffix;
         }
     }
 ?>
