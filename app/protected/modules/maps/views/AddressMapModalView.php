@@ -31,9 +31,10 @@
     {
         private $containedQuery;
 
-        public function __construct($controllerId, $moduleId, $modalMapDataProvider, $gridIdSuffix = null)
+        public function __construct($controllerId, $moduleId, $modalMapAddressData, $gridIdSuffix = null)
         {
-            $this->containedQuery = $modalMapDataProvider;
+            assert('is_array($modalMapAddressData)');
+            $this->containedQuery = $modalMapAddressData;
         }
 
         public function render()
