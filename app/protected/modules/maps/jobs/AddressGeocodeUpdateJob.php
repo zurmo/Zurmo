@@ -25,45 +25,35 @@
      ********************************************************************************/
 
     /**
-     * A model owned by a SecurableItem in the sense that it is
-     * included in a relation with RedBeanModel::OWNED - its lifetime
-     * is controlled by the owning model. SecurableItems are secured
-     * and auditable and so the related models that they own are secured
-     * and auditable.
+     * A job for updating address geocode information for new or changed addresses.
      */
-    class OwnedModel extends RedBeanModel
+    class AddressGeocodeUpdateJob extends BaseJob
     {
-        // On changing a member value the original value
-        // is saved (ie: on change it again the original
-        // value is not overwritten) so that on save the
-        // changes can be written to the audit log.
-        public $originalAttributeValues = array();
-
-        public function __set($attributeName, $value)
+        /**
+         * @returns Translated label that describes this job type.
+         */
+        public static function getDisplayName()
         {
-            AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
-            parent::__set($attributeName, $value);
+           return Yii::t('Default', 'Address Geocode Update Job');
         }
 
-        public function save($runValidation = true, array $attributeNames = null)
+        /**
+         * @return The type of the NotificationRules
+         */
+        public static function getType()
         {
-            AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
-            return parent::save($runValidation, $attributeNames);
+            return 'AddressGeocodeUpdate';
         }
 
-        public function unrestrictedSave($runValidation = true, array $attributeNames = null)
+        public static function getRecommendedRunFrequencyContent()
         {
-            return parent::save($runValidation, $attributeNames);
+            return Yii::t('Default', 'Every 30 minutes.');
         }
 
-        public function forgetOriginalAttributeValues()
+        public function run()
         {
-            $this->unrestrictedSet('originalAttributeValues', array());
-        }
-
-        public static function isTypeDeletable()
-        {
-            return false;
+            AddressMappingUtil::updateChangedAddresses();
+            return true;
         }
     }
 ?>

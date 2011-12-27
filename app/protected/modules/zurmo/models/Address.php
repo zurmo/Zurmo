@@ -76,6 +76,11 @@
             return $this->longitude;
         }
 
+        public function getInvalid()
+        {
+            return $this->invalid;
+        }
+
         protected static function getPluralLabel()
         {
             return 'Addresses';
@@ -95,6 +100,7 @@
                     'longitude',
                     // Todo: make these relations.
                     'country',
+                    'invalid',
                 ),
                 'rules' => array(
                     array('street1',    'type',      'type'      => 'string'),
@@ -115,9 +121,49 @@
                     array('longitude',  'type',      'type'      => 'float'),
                     array('longitude',  'length',    'max'       => 10),
                     array('longitude',  'numerical', 'precision' => 6),
+                    array('invalid',    'boolean'),
                 ),
             );
             return $metadata;
+        }
+
+        /**
+         * Address model when edited and saved beforeSave method is called
+         * before saving the changes to database to check if specific address 
+         * fields have changed.If the address is changed we set lat/long to 
+         * null and invalid flag to false and then saved else saved directly.
+         * in this way we can figure out which address were modified.
+         */
+        protected function beforeSave()
+        {
+            if (parent::beforeSave())
+            {
+                $isAddressChanged   = false;
+                $addressCheckFields = array('street1','street2','city','state','country','postalCode');
+                foreach ($addressCheckFields as $addressField)
+                {
+                    if (array_key_exists($addressField, $this->originalAttributeValues))
+                    {
+                        if ($this->$addressField != $this->originalAttributeValues[$addressField])
+                        {
+                            $isAddressChanged = true;
+                            break;
+                        }
+                    }
+                }
+
+                if ($isAddressChanged)
+                {
+                    $this->latitude     = null;
+                    $this->longitude    = null;
+                    $this->invalid      = false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static function isTypeDeletable()

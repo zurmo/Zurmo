@@ -24,46 +24,55 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A model owned by a SecurableItem in the sense that it is
-     * included in a relation with RedBeanModel::OWNED - its lifetime
-     * is controlled by the owning model. SecurableItems are secured
-     * and auditable and so the related models that they own are secured
-     * and auditable.
-     */
-    class OwnedModel extends RedBeanModel
+    class MapsModule extends SecurableModule
     {
-        // On changing a member value the original value
-        // is saved (ie: on change it again the original
-        // value is not overwritten) so that on save the
-        // changes can be written to the audit log.
-        public $originalAttributeValues = array();
+        const RIGHT_ACCESS_MAPS_ADMINISTRATION = 'Access To The Administrative Key';
 
-        public function __set($attributeName, $value)
+        public function getDependencies()
         {
-            AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
-            parent::__set($attributeName, $value);
+            return array(
+                'configuration',
+                'zurmo',
+            );
         }
 
-        public function save($runValidation = true, array $attributeNames = null)
+        public function getRootModelNames()
         {
-            AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
-            return parent::save($runValidation, $attributeNames);
+            return array('Address');
         }
 
-        public function unrestrictedSave($runValidation = true, array $attributeNames = null)
+        public static function getUntranslatedRightsLabels()
         {
-            return parent::save($runValidation, $attributeNames);
+            $labels                          = array();
+            $labels[self::RIGHT_ACCESS_MAPS_ADMINISTRATION] = 'Access MapsModulePluralLabel Administrative Key';
+            return $labels;
         }
 
-        public function forgetOriginalAttributeValues()
+        public static function getDefaultMetadata()
         {
-            $this->unrestrictedSet('originalAttributeValues', array());
+            $metadata = array();
+            $metadata['global'] = array(
+                'configureMenuItems' => array(
+                    array(
+                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Maps',
+                        'descriptionLabel' => 'Manage Map Configuration',
+                        'route'            => '/maps/default/configurationView',
+                        'right'            => self::RIGHT_ACCESS_MAPS_ADMINISTRATION,
+                    ),
+                ),
+            );
+            return $metadata;
         }
 
-        public static function isTypeDeletable()
+        public static function getPrimaryModelName()
         {
-            return false;
+            return 'Address';
+        }
+
+        public static function getAccessRight()
+        {
+            return self::RIGHT_ACCESS_MAPS_ADMINISTRATION;
         }
     }
 ?>

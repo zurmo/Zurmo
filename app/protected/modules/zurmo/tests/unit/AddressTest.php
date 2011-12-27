@@ -26,6 +26,12 @@
 
     class AddressTest extends BaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
         public function testStringify()
         {
             $address = new Address();

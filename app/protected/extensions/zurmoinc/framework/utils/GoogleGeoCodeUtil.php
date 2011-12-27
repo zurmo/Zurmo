@@ -25,45 +25,42 @@
      ********************************************************************************/
 
     /**
-     * A model owned by a SecurableItem in the sense that it is
-     * included in a relation with RedBeanModel::OWNED - its lifetime
-     * is controlled by the owning model. SecurableItems are secured
-     * and auditable and so the related models that they own are secured
-     * and auditable.
+     * Util class to handle geocoding using the google api key.
      */
-    class OwnedModel extends RedBeanModel
+    class GoogleGeoCodeUtil
     {
-        // On changing a member value the original value
-        // is saved (ie: on change it again the original
-        // value is not overwritten) so that on save the
-        // changes can be written to the audit log.
-        public $originalAttributeValues = array();
+        private static $geoCoder;
 
-        public function __set($attributeName, $value)
+        /**
+         * Get the resultset from the geocode object.
+         * @param $apiKey        - google map api key.
+         * @param $addressString - address string for the geocoder request.
+         * @return               - array containing lat / long values.
+         */
+        public static function getLatitudeLongitude($apiKey, $addressString)
         {
-            AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
-            parent::__set($attributeName, $value);
+            assert('is_string($addressString)');
+            self::getGeoCoder($apiKey);
+            $geoCodeGoogleCodeObj   = self::$geoCoder->query($addressString);
+            $latitude               = $geoCodeGoogleCodeObj->__get('latitude');
+            $longitude              = $geoCodeGoogleCodeObj->__get('longitude');
+            return array('latitude' => $latitude, 'longitude' => $longitude);
         }
 
-        public function save($runValidation = true, array $attributeNames = null)
+        /**
+         * Sets the geocoder object, and sets the key and driver for api.
+         * @param $apiKey        - google map api key.
+         */
+        private static function getGeoCoder($apiKey)
         {
-            AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
-            return parent::save($runValidation, $attributeNames);
-        }
-
-        public function unrestrictedSave($runValidation = true, array $attributeNames = null)
-        {
-            return parent::save($runValidation, $attributeNames);
-        }
-
-        public function forgetOriginalAttributeValues()
-        {
-            $this->unrestrictedSet('originalAttributeValues', array());
-        }
-
-        public static function isTypeDeletable()
-        {
-            return false;
+            if (!isset(self::$geoCoder))
+            {
+                Yii::import('application.extensions.geocoder.*');
+                self::$geoCoder = new GeoCoder;
+                self::$geoCoder->setApiKey($apiKey);
+                self::$geoCoder->setApiDriver('Google');
+                self::$geoCoder->init();
+            }
         }
     }
 ?>

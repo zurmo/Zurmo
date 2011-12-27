@@ -25,45 +25,31 @@
      ********************************************************************************/
 
     /**
-     * A model owned by a SecurableItem in the sense that it is
-     * included in a relation with RedBeanModel::OWNED - its lifetime
-     * is controlled by the owning model. SecurableItems are secured
-     * and auditable and so the related models that they own are secured
-     * and auditable.
+     * Form to all editing and viewing of global configuration for google api key values in the user interface.
      */
-    class OwnedModel extends RedBeanModel
+    class MapsConfigurationForm extends ConfigurationForm
     {
-        // On changing a member value the original value
-        // is saved (ie: on change it again the original
-        // value is not overwritten) so that on save the
-        // changes can be written to the audit log.
-        public $originalAttributeValues = array();
+        public $apiKey;
 
-        public function __set($attributeName, $value)
+        /**
+         * Rules for api key element in configuration.
+         */
+        public function rules()
         {
-            AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
-            parent::__set($attributeName, $value);
+            return array(
+                array('apiKey', 'required'),
+                array('apiKey', 'type', 'type' => 'Text'),
+            );
         }
 
-        public function save($runValidation = true, array $attributeNames = null)
+        /**
+         * Attribute label name in configuration view.
+         */
+        public function attributeLabels()
         {
-            AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
-            return parent::save($runValidation, $attributeNames);
-        }
-
-        public function unrestrictedSave($runValidation = true, array $attributeNames = null)
-        {
-            return parent::save($runValidation, $attributeNames);
-        }
-
-        public function forgetOriginalAttributeValues()
-        {
-            $this->unrestrictedSet('originalAttributeValues', array());
-        }
-
-        public static function isTypeDeletable()
-        {
-            return false;
+            return array(
+                'apiKey' => Yii::t('Default', 'Google Map API Key'),
+            );
         }
     }
 ?>

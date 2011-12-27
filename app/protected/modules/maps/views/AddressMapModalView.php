@@ -25,45 +25,41 @@
      ********************************************************************************/
 
     /**
-     * A model owned by a SecurableItem in the sense that it is
-     * included in a relation with RedBeanModel::OWNED - its lifetime
-     * is controlled by the owning model. SecurableItems are secured
-     * and auditable and so the related models that they own are secured
-     * and auditable.
+     * Google map render view.
      */
-    class OwnedModel extends RedBeanModel
+    class AddressMapModalView extends View
     {
-        // On changing a member value the original value
-        // is saved (ie: on change it again the original
-        // value is not overwritten) so that on save the
-        // changes can be written to the audit log.
-        public $originalAttributeValues = array();
+        protected $geoCodeQueryData;
 
-        public function __set($attributeName, $value)
+        protected $containerIdSuffix;
+
+        public function __construct($controllerId, $moduleId, $geoCodeQueryData, $containerIdSuffix = null)
         {
-            AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
-            parent::__set($attributeName, $value);
+            assert('is_array($geoCodeQueryData)');
+            assert('$containerIdSuffix == null || is_string($containerIdSuffix)');
+            $this->geoCodeQueryData  = $geoCodeQueryData;
+            $this->containerIdSuffix = $containerIdSuffix;
         }
 
-        public function save($runValidation = true, array $attributeNames = null)
+        public function renderContent()
         {
-            AuditUtil::throwNotSupportedExceptionIfNotCalledFromAnItem();
-            return parent::save($runValidation, $attributeNames);
+            $mapCanvasContainerId = $this->getMapCanvasContainerId();
+            $cClipWidget          = new CClipWidget();
+            $cClipWidget->beginClip("Map");
+            echo "<div id='" . $mapCanvasContainerId . "' style='height:420px;width:670px;'></div>";
+            Yii::app()->mappingHelper->renderMapContentForView($this->geoCodeQueryData, $mapCanvasContainerId);
+            $cClipWidget->endClip();
+            return $cClipWidget->getController()->clips['Map'];
         }
 
-        public function unrestrictedSave($runValidation = true, array $attributeNames = null)
+        public function isUniqueToAPage()
         {
-            return parent::save($runValidation, $attributeNames);
+            return true;
         }
 
-        public function forgetOriginalAttributeValues()
+        public function getMapCanvasContainerId()
         {
-            $this->unrestrictedSet('originalAttributeValues', array());
-        }
-
-        public static function isTypeDeletable()
-        {
-            return false;
+            return 'map-canvas' . $this->containerIdSuffix;
         }
     }
 ?>
