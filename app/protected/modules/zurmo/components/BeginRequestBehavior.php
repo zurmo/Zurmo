@@ -168,7 +168,9 @@
             {
                 $allowedGuestUserUrls = array (
                     Yii::app()->createUrl('api/rest/login'),
+                    Yii::app()->createUrl('api/rest/notLoggedError'),
                     Yii::app()->createUrl('api/soap/quote'),
+                    Yii::app()->createUrl('api/rest/logout'),
                 );
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;
@@ -182,9 +184,12 @@
 
                 if (!$isUrlAllowedToGuests)
                 {
-                    //To-Do: Send message to user that he must be logged in order to access this action
-                    echo "Login required";
+                    //To-Do: Send response correctly, via controller!!!
+                    echo Yii::t('Default', 'Login required');
                     exit;
+                    // Code below is not working
+                    $url = Yii::app()->createUrl('api/rest/notLoggedError');
+                    Yii::app()->request->redirect($url);
                 }
             }
         }
@@ -248,9 +253,19 @@
 
         public function handleLoadLanguage($event)
         {
-            if (isset($_GET['lang']) && $_GET['lang'] != null)
+            if(!Yii::app()->apiRequest->isApiRequest())
             {
-                Yii::app()->languageHelper->setActive($_GET['lang']);
+                if (isset($_GET['lang']) && $_GET['lang'] != null)
+                {
+                    Yii::app()->languageHelper->setActive($_GET['lang']);
+                }
+            }
+            else
+            {
+                if ($lang = Yii::app()->apiRequest->getLanguage())
+                {
+                    Yii::app()->languageHelper->setActive($lang);
+                }
             }
             Yii::app()->languageHelper->load();
         }

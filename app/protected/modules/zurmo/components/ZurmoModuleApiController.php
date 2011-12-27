@@ -117,7 +117,7 @@
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
                 if ($isAllowed === false)
                 {
-                    throw new Exception('This action is not allowed.');
+                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
                 $util  = new RedBeanModelToApiDataUtil($model);
                 $data  = $util->getData();;
@@ -169,7 +169,7 @@
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
                 if ($isAllowed === false)
                 {
-                    throw new Exception('This action is not allowed.');
+                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
 
                 $model = $this->attemptToSaveModelFromData($model, $data, null, false);
@@ -206,7 +206,7 @@
                 $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
                 if ($isAllowed === false)
                 {
-                    throw new Exception('This action is not allowed.');
+                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
                 $model->delete();
                 $output = $this->generateOutput('SUCCESS', '');

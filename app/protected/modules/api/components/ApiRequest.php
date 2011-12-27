@@ -157,6 +157,18 @@
             }
         }
 
+        public function getLanguage()
+        {
+            if(isset($_SERVER['HTTP_ZURMO_LANG']))
+            {
+                return $_SERVER['HTTP_ZURMO_LANG'];
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public function parseParams()
         {
             if ($this->getRequestType() == self::REST)
