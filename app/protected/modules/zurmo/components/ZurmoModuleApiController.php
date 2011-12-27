@@ -36,13 +36,16 @@
             try
             {
                 $model = $modelClassName::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-                if ($isAllowed === false)
+                try
+                {
+                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+                }
+                catch(SecurityException $e)
                 {
                     throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
-                $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();
+                $util   = new RedBeanModelToApiDataUtil($model);
+                $data   = $util->getData();
                 $output = $this->generateOutput('SUCCESS', '', $data);
             }
             catch (Exception $e)
@@ -135,8 +138,12 @@
             try
             {
                 $model = $modelClassName::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-                if ($isAllowed === false)
+
+                try
+                {
+                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+                }
+                catch(SecurityException $e)
                 {
                     throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
@@ -187,12 +194,14 @@
             try
             {
                 $model = $modelClassName::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
-                if ($isAllowed === false)
+                try
+                {
+                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
+                }
+                catch(SecurityException $e)
                 {
                     throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
-
                 $model = $this->attemptToSaveModelFromData($model, $data, null, false);
 
                 $id = $model->id;
@@ -224,8 +233,11 @@
             try
             {
                 $model = $modelClassName::getById($id);
-                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
-                if ($isAllowed === false)
+                try
+                {
+                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
+                }
+                catch(SecurityException $e)
                 {
                     throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
                 }
