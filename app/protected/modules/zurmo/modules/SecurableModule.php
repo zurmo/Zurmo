@@ -199,5 +199,13 @@
         {
             return static::getModuleLabelByTypeAndLanguage('Plural');
         }
+
+        /**
+         * Override and set to true if the module has a model that utilizes permissions.
+         */
+        public static function hasPermissions()
+        {
+            return false;
+        }
     }
 ?>

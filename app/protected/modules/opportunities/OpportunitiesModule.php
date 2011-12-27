@@ -132,5 +132,10 @@
         {
             return 'OpportunitiesSearchForm';
         }
+
+        public static function hasPermissions()
+        {
+            return true;
+        }
     }
 ?>

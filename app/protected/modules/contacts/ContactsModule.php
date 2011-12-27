@@ -186,5 +186,10 @@
         {
             return 'ContactsSearchForm';
         }
+
+        public static function hasPermissions()
+        {
+            return true;
+        }
     }
 ?>
