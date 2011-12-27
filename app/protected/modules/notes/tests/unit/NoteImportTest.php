@@ -29,7 +29,8 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
+            Yii::app()->user->userModel = $super;
+            Yii::app()->timeZoneHelper->load();
         }
 
         public function testSimpleUserImportWhereAllRowsSucceed()
