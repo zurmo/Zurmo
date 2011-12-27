@@ -108,6 +108,8 @@
             $data['shippingAddress']     = $shippingAddress;
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'POST', $headers, array('data' => $data));
+            print_r($response);
+            exit;
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 

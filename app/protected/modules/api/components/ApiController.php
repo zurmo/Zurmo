@@ -144,46 +144,46 @@
                     $data['searchFormName'] = null;
                     break;
                 case 'account':
-                    $data['controllerName'] = 'AccountApiController';
+                    $data['controllerName'] = 'AccountsDefaultApiController';
                     $data['searchFormName'] = 'AccountsSearchForm';
                     break;
                 case 'contact':
-                    $data['controllerName'] = 'ContactApiController';
+                    $data['controllerName'] = 'ContactsDefaultApiController';
                     $data['searchFormName'] = 'ContactsSearchForm';
                     $data['stateMetadataAdapterClassName'] = 'ContactsStateMetadataAdapter';
                     break;
                 case 'lead':
-                    $data['controllerName'] = 'LeadApiController';
+                    $data['controllerName'] = 'LeadsDefaultApiController';
                     $data['searchFormName'] = 'LeadsSearchForm';
                     $data['stateMetadataAdapterClassName'] = 'LeadsStateMetadataAdapter';
                     $data['modelName'] = 'Contact';
                     break;
                 case 'meeting':
-                    $data['controllerName'] = 'MeetingApiController';
+                    $data['controllerName'] = 'MeetingsDefaultApiController';
                     $data['searchFormName'] = 'MeetingsSearchForm';
                    break;
                 case 'note':
-                    $data['controllerName'] = 'NoteApiController';
+                    $data['controllerName'] = 'NotesDefaultApiController';
                     $data['searchFormName'] = null;
                     break;
                 case 'opportunity':
-                    $data['controllerName'] = 'OpportunityApiController';
+                    $data['controllerName'] = 'OpportunitiesDefaultApiController';
                     $data['searchFormName'] = 'OpportunitiesSearchForm';
                     break;
                 case 'task':
-                    $data['controllerName'] = 'TaskApiController';
+                    $data['controllerName'] = 'TasksDefaultApiController';
                     $data['searchFormName'] = 'TasksSearchForm';
                     break;
                 case 'user':
-                    $data['controllerName'] = 'UserApiController';
+                    $data['controllerName'] = 'UsersDefaultApiController';
                     $data['searchFormName'] = 'UsersSearchForm';
                     break;
                 case 'group':
-                    $data['controllerName'] = 'GroupApiController';
+                    $data['controllerName'] = 'GroupsDefaultApiController';
                     $data['searchFormName'] = null;
                     break;
                 case 'role':
-                    $data['controllerName'] = 'RoleApiController';
+                    $data['controllerName'] = 'RolesDefaultApiController';
                     $data['searchFormName'] = null;
                     break;
                 case 'currency':

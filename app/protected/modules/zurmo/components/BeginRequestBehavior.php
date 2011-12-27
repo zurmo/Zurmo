@@ -168,7 +168,6 @@
             {
                 $allowedGuestUserUrls = array (
                     Yii::app()->createUrl('api/rest/login'),
-                    Yii::app()->createUrl('api/rest/notLoggedError'),
                     Yii::app()->createUrl('api/soap/quote'),
                     Yii::app()->createUrl('api/rest/logout'),
                 );
