@@ -67,10 +67,10 @@
             $this->assertEquals('-122.0853032', $accounts[0]->billingAddress->longitude);
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
-            $queryAddress = strval($accounts[0]->billingAddress);
-            $this->setGetArray(array('query'     => $queryAddress,
-                                     'latitude'  => $accounts[0]->billingAddress->latitude,
-                                     'longitude' => $accounts[0]->billingAddress->longitude));
+            $addressString = $accounts[0]->billingAddress->makeAddress();;
+            $this->setGetArray(array('addressString' => $addressString,
+                                     'latitude'      => $accounts[0]->billingAddress->latitude,
+                                     'longitude'     => $accounts[0]->billingAddress->longitude));
 
             Yii::app()->user->userModel = User::getByUsername('nobody');
 
@@ -130,10 +130,10 @@
             $this->assertEquals('-122.0853032', $accounts[0]->billingAddress->longitude);
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
-            $queryAddress = strval($accounts[0]->billingAddress);
-            $this->setGetArray(array('query'     => $queryAddress,
-                                     'latitude'  => $accounts[0]->billingAddress->latitude,
-                                     'longitude' => $accounts[0]->billingAddress->longitude));
+            $addressString = $accounts[0]->billingAddress->makeAddress();
+            $this->setGetArray(array('addressString' => $addressString,
+                                     'latitude'      => $accounts[0]->billingAddress->latitude,
+                                     'longitude'     => $accounts[0]->billingAddress->longitude));
 
             $content = $this->runControllerWithNoExceptionsAndGetContent('maps/default/renderAddressMapView');
             $this->assertTrue(strpos($content, 'GMap') > 0);

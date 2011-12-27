@@ -50,8 +50,6 @@
             Yii::app()->mappingHelper->renderMapContentForView($this->geoCodeQueryData, $mapCanvasContainerId);
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['Map'];
-
-
         }
 
         public function isUniqueToAPage()
