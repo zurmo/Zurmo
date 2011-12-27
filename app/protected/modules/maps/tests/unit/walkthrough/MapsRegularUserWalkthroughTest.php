@@ -67,7 +67,7 @@
             $this->assertEquals('-122.0853032', $accounts[0]->billingAddress->longitude);
             $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
 
-            $addressString = $accounts[0]->billingAddress->makeAddress();;
+            $addressString = $accounts[0]->billingAddress->makeAddress();
             $this->setGetArray(array('addressString' => $addressString,
                                      'latitude'      => $accounts[0]->billingAddress->latitude,
                                      'longitude'     => $accounts[0]->billingAddress->longitude));
