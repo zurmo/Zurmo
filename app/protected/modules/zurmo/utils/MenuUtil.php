@@ -142,15 +142,9 @@
                 {
                     if (!empty($menuItem['items']))
                     {
-                        $resolvedNestedItems = array();
-                        foreach ($menuItem['items'] as $nestedIndex => $nestedMenuItem)
-                        {
-                            if (self::doesUserHaveRightToViewMenuItem($moduleClassName, $nestedMenuItem, $user))
-                            {
-                                $resolvedNestedItems[] = $nestedMenuItem;
-                            }
-                            assert('!isset($nestedMenuItem["items"])');
-                        }
+                        $resolvedNestedItems = self::resolveModuleMenuForAccess($moduleClassName,
+                                                                                $menuItem['items'],
+                                                                                $user);
                         if (count($resolvedNestedItems) > 0)
                         {
                             $menuItem['items'] = $resolvedNestedItems;
@@ -222,14 +216,9 @@
                 }
                 if (isset($item['items']))
                 {
-                    foreach ($item['items'] as $subItemKey => $subItem)
-                    {
-                        foreach ($labelElements as $labelElement)
-                        {
-                        $menuItems[$itemKey]['items'][$subItemKey][$labelElement] =
-                            Yii::t( 'Default', $item['items'][$subItemKey][$labelElement], $translationParams);
-                        }
-                    }
+                    $menuItems[$itemKey]['items'] = self::resolveMenuItemsForLanguageLocalization($item['items'],
+                                                                                                  $moduleClassName,
+                                                                                                  $labelElements);
                 }
             }
             return $menuItems;
