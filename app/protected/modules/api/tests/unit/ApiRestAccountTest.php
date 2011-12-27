@@ -31,6 +31,27 @@
             $this->assertTrue(strlen($this->serverUrl) > 0);
         }
 
+        public function testGetAccount()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            $authenticationData = $this->login();
+            $headers = array(
+                        'Accept: application/json',
+                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                        'ZURMO_TOKEN: ' . $authenticationData['token'],
+                        'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $account = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
+print_r($headers);
+exit;
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read' . $account->id, 'GET', $headers);
+            print_r($response);
+            exit;
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+        }
+
         /**
         * @depends testApiServerUrl
         */
@@ -46,6 +67,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $super = User::getByUsername('super');
@@ -108,8 +130,6 @@
             $data['shippingAddress']     = $shippingAddress;
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account', 'POST', $headers, array('data' => $data));
-            print_r($response);
-            exit;
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -209,6 +229,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -228,6 +249,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/account/' . $id, 'DELETE', $headers);
@@ -251,6 +273,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
             AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('Second Account', 'Customer', 'Automotive', $super);
@@ -374,6 +397,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('New Account', 'Customer', 'Automotive', $super);
@@ -406,6 +430,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('Newest Account', 'Customer', 'Automotive', $super);

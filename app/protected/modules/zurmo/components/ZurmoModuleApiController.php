@@ -31,6 +31,27 @@
      */
     abstract class ZurmoModuleApiController extends ZurmoModuleController
     {
+        protected function processRead()
+        {
+            try
+            {
+                $model = $modelClassName::getById($id);
+                $isAllowed = ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+                if ($isAllowed === false)
+                {
+                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
+                }
+                $util  = new RedBeanModelToApiDataUtil($model);
+                $data  = $util->getData();
+                $output = $this->generateOutput('SUCCESS', '', $data);
+            }
+            catch (Exception $e)
+            {
+                $message = $e->getMessage();
+                $output = $this->generateOutput('FAILURE', $message, null);
+            }
+            return $output;
+        }
         public function getAll($modelClassName, $searchFormClassName, $stateMetadataAdapterClassName)
         {
             try

@@ -24,13 +24,22 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AccountsApiController extends ZurmoModuleApiController
+    class ZurmoApiHelper extends CApplicationComponent
     {
-        public function actionRead()
+
+        public function getRequestParams()
         {
-            $params = Yii::app()->apiHelper->getRequestParams();
-            $result    =  $this->processRead(); //this would contain the code you have in getById
-            Yii::app()->apiHelper->sendResponse($result);	//the result should probably always have ‘status’, ‘message’, ‘data’, and ‘errors’, actually the $result could be a class called something. Then in the method sendResponse , we can check if $something->isStatusSuccess() and do your fork based on error/success
+            $params = ApiRestRequest::getParamsFromRequest();
+            return $params;
+        }
+
+        public function sendResponse($result)
+        {
+            ApiRestResponse::generateOutput('json',
+                                            $result['status'],
+                                            $result['data'],
+                                            $result['message'],
+                                            $result['errors']);
         }
     }
 ?>
