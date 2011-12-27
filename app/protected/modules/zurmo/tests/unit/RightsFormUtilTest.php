@@ -153,6 +153,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'NotesModule' => array(
                     'RIGHT_CREATE_NOTES'   => array(
                         'displayName' => NotesModule::RIGHT_CREATE_NOTES,
@@ -461,6 +469,14 @@
                     ),
                     'RIGHT_CONVERT_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CONVERT_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -775,6 +791,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'NotesModule' => array(
                     'RIGHT_CREATE_NOTES'   => array(
                         'displayName' => NotesModule::RIGHT_CREATE_NOTES,
@@ -1078,6 +1102,14 @@
                     ),
                     'RIGHT_CONVERT_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CONVERT_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

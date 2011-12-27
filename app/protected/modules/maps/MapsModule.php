@@ -26,7 +26,7 @@
 
     class MapsModule extends SecurableModule
     {
-        const RIGHT_ACCESS_MAPS_ADMINISTRATION = 'Access To The Administrative Key';
+        const RIGHT_ACCESS_MAPS_ADMINISTRATION = 'Access Maps Administration';
 
         public function getDependencies()
         {
@@ -43,8 +43,8 @@
 
         public static function getUntranslatedRightsLabels()
         {
-            $labels                          = array();
-            $labels[self::RIGHT_ACCESS_MAPS_ADMINISTRATION] = 'Access MapsModulePluralLabel Administrative Key';
+            $labels                                         = array();
+            $labels[self::RIGHT_ACCESS_MAPS_ADMINISTRATION] = 'Access Maps Administration';
             return $labels;
         }
 

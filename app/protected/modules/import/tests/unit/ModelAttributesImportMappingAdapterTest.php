@@ -285,6 +285,14 @@
                     'attributeImportRulesType' => 'Text',
                     'isRequired' => false,
                   ),
+              'primaryAddress__invalid' =>
+                  array (
+                    'attributeLabel' => 'Primary Address - Invalid',
+                    'attributeName' => 'primaryAddress',
+                    'relationAttributeName' => 'invalid',
+                    'attributeImportRulesType' => 'CheckBox',
+                    'isRequired' => false,
+                  ),
               'primaryAddress__latitude' =>
                   array (
                     'attributeLabel' => 'Primary Address - Latitude',
