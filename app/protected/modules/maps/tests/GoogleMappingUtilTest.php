@@ -38,7 +38,7 @@
             }
         }
 
-        public function testGeoCodeResultDataAndRenderMapByGeoCodeData()
+        public function testGeoCodeResultData()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;

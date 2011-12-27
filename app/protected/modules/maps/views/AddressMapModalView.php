@@ -29,9 +29,20 @@
      */
     class AddressMapModalView extends GridView
     {
+        private $containedQuery;
+
         public function __construct($controllerId, $moduleId, $modalMapDataProvider, $gridIdSuffix = null)
         {
+            $this->containedQuery = $modalMapDataProvider;
+        }
+
+        public function render()
+        {
+            //Create container for address map view.
             echo "<div id='map_canvas' style='height:420px;width:670px;'></div>";
+
+            //Call for rendering the map content in modal view.
+            Yii::app()->mappingHelper->renderMapContentForModalView($this->containedQuery, 'map_canvas');
         }
 
         public function isUniqueToAPage()

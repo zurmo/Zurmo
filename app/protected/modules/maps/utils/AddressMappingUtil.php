@@ -31,7 +31,7 @@
     {
         /**
          * Gets lat/long values for changed address and saves to address model.
-         * @param $count - number of changed address to update per function call.
+         * @param int $count - number of changed address to update per function call.
          */
         public static function updateChangedAddresses($count = 500)
         {
@@ -73,8 +73,8 @@
 
         /**
          * Gets a subset of changed address object.
-         * @param $count - number of changed address to fetch.
-         * @return       - address collection object.
+         * @param int $count - number of changed address to fetch.
+         * @return object - address collection object.
          */
         public static function fetchChangedAddressCollection($count)
         {
@@ -88,8 +88,8 @@
                 ),
                 2 => array(
                     'attributeName'        => 'latitude',
-                    'operatorType'         => 'equals',
-                    'value'                => '',
+                    'operatorType'         => 'isEmpty',
+                    'value'                => null,
                 ),
                 3 => array(
                     'attributeName'        => 'longitude',
@@ -98,8 +98,8 @@
                 ),
                 4 => array(
                     'attributeName'        => 'longitude',
-                    'operatorType'         => 'equals',
-                    'value'                => '',
+                    'operatorType'         => 'isEmpty',
+                    'value'                => null,
                 ),
                 5 => array(
                     'attributeName'        => 'invalid',
@@ -119,8 +119,8 @@
 
         /**
          * Gets the lat/long coordinates for address string.
-         * @param $addressString - address string for geocode query.
-         * @return               - array lat/long coordinates.
+         * @param string $addressString - address string for geocode query.
+         * @return array lat/long coordinates.
          */
         public static function fetchGeocodeForAddress($addressString)
         {

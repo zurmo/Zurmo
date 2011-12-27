@@ -110,9 +110,6 @@
                                                              'modal'
                                          );
 
-            //Call for rendering the map content in modal view.
-            Yii::app()->mappingHelper->renderMapContentForModalView($modalMapAddressData, 'map_canvas');
-
             $view = new ModalView($controller,
                                   $renderAndMapModalView,
                                   'modalContainer',

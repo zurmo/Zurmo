@@ -32,8 +32,8 @@
     {
         /**
          * Creates the url link for map link.
-         * @param $addressData - geocoder query data.
-         * @return modal map render url.
+         * @param array $mapRenderData - geocoder query data.
+         * @return string modal map render url.
          */
         public function getMappingLinkContentForElement($mapRenderData)
         {
@@ -43,7 +43,8 @@
 
         /**
          * Gets the rendered map content for the map view.
-         * @param $geoCodeQueryData - geocoder query data.
+         * @param array  $geoCodeQueryData - geocoder query data.
+         * @param string $containerId      - containerid for map rendering.
          * @return rendered map content.
          */
         public static function renderMapContentForModalView($geoCodeQueryData, $containerId)
@@ -66,8 +67,8 @@
 
         /**
          * Gets the geocode coordinate data for address.
-         * @param $addressString - geocoder query data.
-         * @return               - lat / long array.
+         * @param string $addressString - geocoder query data.
+         * @return - lat / long array.
          */
         public static function getGeoCodes($addressString)
         {
@@ -77,7 +78,7 @@
 
         /**
          * Gets the geocode api key from the cofig table.
-         * @return - geocode Api Key.
+         * @return string $apiKey or null - geocode Api Key.
          */
         public static function getGeoCodeApi()
         {

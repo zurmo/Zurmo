@@ -31,8 +31,9 @@
     {
         /**
          * Render map into specified container using result geocoder object.
-         * @param $apiKey           - google map api key.
-         * @param $geoCodeQueryData - required query data in the form of array.
+         * @param string $apiKey           - google map api key.
+         * @param array  $geoCodeQueryData - required query data in the form of array.
+         * @param string $containerId      - containerid to render the map.
          */
         public static function renderMapByGeoCodeData($apiKey, $geoCodeQueryData, $containerId)
         {
@@ -45,9 +46,9 @@
 
         /**
          * Get the geocode result object from the geocoder object.
-         * @param $apiKey           - google map api key.
-         * @param $geoCodeQueryData - required query data in the form of array.
-         * @return                  - geocoder result object.
+         * @param string $apiKey           - google map api key.
+         * @param array  $geoCodeQueryData - required query data in the form of array.
+         * @return object                  - geocoder result object.
          */
         public static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
         {
@@ -69,6 +70,10 @@
             }
         }
 
+        /**
+         * Get the geocoder api javascripts urls.
+         * @return array - geocoder api javascript urls.
+         */
         public static function getMapScriptFiles()
         {
             return array('http://maps.google.com/maps?file=api&v=2&sensor=false');
