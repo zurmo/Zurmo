@@ -59,13 +59,16 @@
             $geoCoder->setApiKey($apiKey);
             $geoCoder->setApiDriver('Google');
             $geoCoder->init();
+            $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), $apiKey);
             if ($geoCodeQueryData['latitude'] == '' && $geoCodeQueryData['longitude'] == '')
             {
-                return $geoCoder->query($geoCodeQueryData['query']);
+                $geoCodeResult                 = $geoCoder->query($geoCodeQueryData['query']);
+                $geoCodeQueryData['latitude']  = $geoCodeResult->latitude;
+                $geoCodeQueryData['longitude'] = $geoCodeResult->longitude;
+                return new ZurmoGeoCodeResult($geoCodeDriver, $geoCodeQueryData);
             }
             else
             {
-                $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
                 return new ZurmoGeoCodeResult($geoCodeDriver, $geoCodeQueryData);
             }
         }
