@@ -31,7 +31,8 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if(!isset($params['id']))
             {
-                //throw SomeException that is caught by the filter apiRequest
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
             }
             $params['id'] = intval($params['id']);
             $result    =  $this->processRead($params['id']);
