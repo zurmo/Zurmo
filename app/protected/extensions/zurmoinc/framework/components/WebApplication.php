@@ -88,6 +88,12 @@
                 {
                     $controllerID .= '/';
                 }
+                // To-Do: Fix line below
+                if (strpos($route, '/api/') !== false)
+                {
+                    $id = 'api';
+                }
+
                 $baseClassName = ucfirst($id) . 'Controller';
                 //this assumes owner is the module, which i am not sure is always true...
                 if ($this->isOwnerTheController($owner))

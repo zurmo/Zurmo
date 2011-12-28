@@ -29,8 +29,12 @@
         public function actionRead()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            $result    =  $this->processRead(); //this would contain the code you have in getById
-            Yii::app()->apiHelper->sendResponse($result);	//the result should probably always have ‘status’, ‘message’, ‘data’, and ‘errors’, actually the $result could be a class called something. Then in the method sendResponse , we can check if $something->isStatusSuccess() and do your fork based on error/success
+            if(!isset($params['id']))
+            {
+                //throw SomeException that is caught by the filter apiRequest
+            }
+            $result    =  $this->processRead($params['id']); //this would contain the code you have in getById
+            Yii::app()->apiHelper->sendResponse($result);    //the result should probably always have ‘status’, ‘message’, ‘data’, and ‘errors’, actually the $result could be a class called something. Then in the method sendResponse , we can check if $something->isStatusSuccess() and do your fork based on error/success
         }
     }
 ?>

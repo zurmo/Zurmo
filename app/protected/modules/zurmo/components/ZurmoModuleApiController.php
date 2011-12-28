@@ -31,19 +31,38 @@
      */
     abstract class ZurmoModuleApiController extends ZurmoModuleController
     {
-        protected function processRead()
+        protected function getModelName()
         {
+            return $this->getModule()->getPrimaryModelName();
+        }
+
+        protected function processRead($id)
+        {
+            assert('is_int($id)');
+            $modelClassName = $this->getModelName();
+
             try
             {
                 $model = $modelClassName::getById($id);
-                try
-                {
-                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-                }
-                catch(SecurityException $e)
-                {
-                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
-                }
+            }
+            catch (NotFoundException $e)
+            {
+                //now we should throw another exception, the one that is handled by the filterApiRequest.
+                $message = Yii::t('Default', 'The id specified was invalid');
+                //throw new SomeException($message);
+            }
+
+            try
+            {
+                ApiControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+            }
+            catch(SecurityException $e)
+            {
+                throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
+            }
+
+            try
+            {
                 $util   = new RedBeanModelToApiDataUtil($model);
                 $data   = $util->getData();
                 $output = $this->generateOutput('SUCCESS', '', $data);
@@ -55,6 +74,7 @@
             }
             return $output;
         }
+
         public function getAll($modelClassName, $searchFormClassName, $stateMetadataAdapterClassName)
         {
             try

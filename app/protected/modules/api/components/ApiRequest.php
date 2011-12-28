@@ -31,7 +31,6 @@
         const JSON_FORMAT    = 'json';
         const XML_FORMAT     = 'xml';
 
-        protected $requestType;
         protected $paramsFormat;
 
         /**
@@ -66,16 +65,6 @@
             $this->params = $params;
         }
 
-        public function getRequestType()
-        {
-            return $this->requestType;
-        }
-
-        public function setRequestType($requestType)
-        {
-            $this->requestType = $requestType;
-        }
-
         public function getParamsFormat()
         {
             return $this->paramsFormat;
@@ -84,23 +73,6 @@
         public function setParamsFormat($paramsFormat)
         {
             $this->paramsFormat = $paramsFormat;
-        }
-
-        protected function parseRequestType()
-        {
-            $reqestedUrl = Yii::app()->getRequest()->getUrl();
-            if (ZurmoUrlManager::getPositionOfPathInUrl('api/rest') === 0)
-            {
-                $this->requestType = self::REST;
-            }
-            elseif (ZurmoUrlManager::getPositionOfPathInUrl('api/soap') === 0)
-            {
-                $this->requestType = self::SOAP;
-            }
-            else
-            {
-                $this->requestType = false;
-            }
         }
 
         protected function parseParamsFormat()
@@ -169,6 +141,29 @@
             }
         }
 
+        public function getRequestType()
+        {
+            if(isset($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']))
+            {
+                if (strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'rest')
+                {
+                    return self::REST;
+                }
+                elseif(strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'SOAP')
+                {
+                    return self::SOAP;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public function parseParams()
         {
             if ($this->getRequestType() == self::REST)
@@ -180,7 +175,7 @@
                 $params = ApiSoapRequest::getParamsFromRequest();
             }
             else {
-                echo "Invalid request";
+                echo Yii::t('Default', "Invalid request");
                 Yii::app()->end();
             }
             $this->setParams($params);
@@ -188,7 +183,8 @@
 
         public function isApiRequest()
         {
-            if (ZurmoUrlManager::getPositionOfPathInUrl('api/') === 0)
+            $url = Yii::app()->getRequest()->getUrl();
+            if (strpos($url, '/api/') !== false)
             {
                 return true;
             }

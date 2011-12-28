@@ -42,12 +42,10 @@
                         'ZURMO_TOKEN: ' . $authenticationData['token'],
                         'ZURMO_API_REQUEST_TYPE: REST',
             );
+
             $account = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
-print_r($headers);
-exit;
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read' . $account->id, 'GET', $headers);
-            print_r($response);
-            exit;
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/id/' . $account->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
         }
