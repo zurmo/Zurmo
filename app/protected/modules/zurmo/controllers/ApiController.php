@@ -37,7 +37,6 @@
                 $data['token'] = Yii::app()->session['token'];
                 $session = Yii::app()->getSession();
                 $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
-                assert('$result instanceof ApiResult');
                 Yii::app()->apiHelper->sendResponse($result);
             }
             else
@@ -53,7 +52,6 @@
             if (Yii::app()->user->isGuest)
             {
                 $result = new ApiResult(ApiResponse::STATUS_SUCCESS, null, null, null);
-                assert('$result instanceof ApiResult');
                 Yii::app()->apiHelper->sendResponse($result);
             }
             else

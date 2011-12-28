@@ -34,9 +34,7 @@
                 $message = Yii::t('Default', 'The id specified was invalid.');
                 throw new ApiException($message);
             }
-            $params['id'] = intval($params['id']);
-            $result    =  $this->processRead($params['id']);
-            assert('$result instanceof ApiResult');
+            $result    =  $this->processRead((int)$params['id']);
             Yii::app()->apiHelper->sendResponse($result);
         }
     }

@@ -78,15 +78,14 @@
             }
             catch(SecurityException $e)
             {
-                $message = Yii::t('Default', 'This action is not allowed.');
+                $message = $e->getMessage();
                 throw new ApiException($message);
             }
 
             try
             {
-                $util   = new RedBeanModelToApiDataUtil($model);
-                $data   = $util->getData();
-
+                $redBeanModelToApiDataUtil   = new RedBeanModelToApiDataUtil($model);
+                $data   = $redBeanModelToApiDataUtil->getData();
                 $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
             }
             catch (Exception $e)

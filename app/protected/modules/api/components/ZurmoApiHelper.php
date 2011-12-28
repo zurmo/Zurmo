@@ -33,7 +33,7 @@
             return $params;
         }
 
-        public function sendResponse($result)
+        public function sendResponse(ApiResult $result)
         {
             ApiRestResponse::generateOutput('json',
                                             $result);
