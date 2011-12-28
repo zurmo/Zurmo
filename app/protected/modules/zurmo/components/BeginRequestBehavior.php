@@ -168,9 +168,8 @@
             if (Yii::app()->user->isGuest)
             {
                 $allowedGuestUserUrls = array (
-                    Yii::app()->createUrl('api/rest/login'),
-                    Yii::app()->createUrl('api/soap/quote'),
-                    Yii::app()->createUrl('api/rest/logout'),
+                    Yii::app()->createUrl('zurmo/api/login'),
+                    Yii::app()->createUrl('zurmo/api/logout'),
                 );
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;

@@ -51,7 +51,6 @@
 
         public function init()
         {
-            $this->parseRequestType();
             $this->parseParamsFormat();
         }
 

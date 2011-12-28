@@ -33,8 +33,9 @@
                 'ZURMO_AUTH_USERNAME: ' . $username,
                 'ZURMO_AUTH_PASSWORD: ' . $password
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/login', 'POST', $headers);
             $response = json_decode($response, true);
+
             if ($response['status'] == ApiRestResponse::STATUS_SUCCESS)
             {
                 return $response['data'];

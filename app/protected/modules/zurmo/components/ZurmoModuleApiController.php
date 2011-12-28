@@ -41,6 +41,7 @@
             assert('is_int($id)');
             $modelClassName = $this->getModelName();
 
+            $test = Account::getById($id);
             try
             {
                 $model = $modelClassName::getById($id);
