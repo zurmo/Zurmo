@@ -24,34 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestResponse extends ApiResponse
+    class ApiResult
     {
-        /**
-         * Generate service output, in xml or json format
-         * @param string $format
-         * @param string $status
-         * @param array $data
-         * @param string $error
-         */
-        public static function generateOutput($format, $result)
+        public $status;
+        public $data = array();
+        public $message = null;
+        public $errors = null;
+
+        public function __construct($status, $data, $message = null, $errors = null)
         {
-            assert('$result instanceof ApiResult');
-            if ($format == ApiRequest::JSON_FORMAT)
+            $this->status   = $status;
+            $this->data     = $data;
+            $this->message  = $message;
+            $this->errors   = $errors;
+        }
+
+        public function isStatusSuccess()
+        {
+            if (isset($this->status) && $this->status == ApiResponse::STATUS_SUCCESS)
             {
-                $output = $result->convertToArray();
-                echo json_encode($output);
-            }
-            elseif ($format == ApiRequest::XML_FORMAT)
-            {
-                $xml = new SimpleXMLElement('<root/>');
-                array_walk_recursive($data, array($xml, 'addChild'));
-                echo $xml->asXML();
+                return true;
             }
             else
             {
-                echo "Invalid format";
-                exit;
+                return false;
             }
+        }
+
+        public function convertToArray()
+        {
+            $res = array(
+                'status'  => $this->status,
+                'data'    => $this->data,
+                'message' => $this->message,
+                'errors'  => $this->errors,
+            );
+            return $res;
         }
     }
 ?>

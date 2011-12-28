@@ -47,10 +47,7 @@
             }
             catch(ApiException $e)
             {
-                $result['status']   = 'FAILURE';
-                $result['data']     = null;
-                $result['errors']   = null;
-                $result['message']  = $e->getMessage();
+                $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $e->getMessage(), null);
                 Yii::app()->apiHelper->sendResponse($result);
             }
         }
@@ -71,8 +68,7 @@
             }
             catch (NotFoundException $e)
             {
-                //now we should throw another exception, the one that is handled by the filterApiRequest.
-                $message = Yii::t('Default', 'The id specified was invalid');
+                $message = Yii::t('Default', 'The id specified was invalid.');
                 throw new ApiException($message);
             }
 
@@ -82,21 +78,23 @@
             }
             catch(SecurityException $e)
             {
-                throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
+                $message = Yii::t('Default', 'This action is not allowed.');
+                throw new ApiException($message);
             }
 
             try
             {
                 $util   = new RedBeanModelToApiDataUtil($model);
                 $data   = $util->getData();
-                $output = $this->generateOutput('SUCCESS', '', $data);
+
+                $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
             }
             catch (Exception $e)
             {
                 $message = $e->getMessage();
-                $output = $this->generateOutput('FAILURE', $message, null);
+                throw new ApiException($message);
             }
-            return $output;
+            return $result;
         }
 
         public function getAll($modelClassName, $searchFormClassName, $stateMetadataAdapterClassName)
@@ -131,7 +129,6 @@
                     $_GET[$searchFormClassName] = $filterParams['search'];
                 }
 
-                //$stateMetadataAdapterClassName = null;
                 $model= new $modelClassName(false);
                 if (isset($searchFormClassName))
                 {

@@ -36,10 +36,7 @@
         public function sendResponse($result)
         {
             ApiRestResponse::generateOutput('json',
-                                            $result['status'],
-                                            $result['data'],
-                                            $result['message'],
-                                            $result['errors']);
+                                            $result);
         }
     }
 ?>

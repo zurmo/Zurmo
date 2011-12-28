@@ -34,8 +34,9 @@
                 //throw SomeException that is caught by the filter apiRequest
             }
             $params['id'] = intval($params['id']);
-            $result    =  $this->processRead($params['id']); //this would contain the code you have in getById
-            Yii::app()->apiHelper->sendResponse($result);    //the result should probably always have ‘status’, ‘message’, ‘data’, and ‘errors’, actually the $result could be a class called something. Then in the method sendResponse , we can check if $something->isStatusSuccess() and do your fork based on error/success
+            $result    =  $this->processRead($params['id']);
+            assert('$result instanceof ApiResult');
+            Yii::app()->apiHelper->sendResponse($result);
         }
     }
 ?>

@@ -36,17 +36,14 @@
                 $data['sessionId'] = Yii::app()->getSession()->getSessionID();
                 $data['token'] = Yii::app()->session['token'];
                 $session = Yii::app()->getSession();
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiResponse::STATUS_SUCCESS,
-                                                $data);
+                $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
+                assert('$result instanceof ApiResult');
+                Yii::app()->apiHelper->sendResponse($result);
             }
             else
             {
-                $error = Yii::t('Default', 'Invalid username or password.');
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiResponse::STATUS_FAILURE,
-                                                null,
-                                                $error);
+                $message = Yii::t('Default', 'Invalid username or password.');
+                throw new ApiException($message);
             }
         }
 
@@ -55,16 +52,14 @@
             Yii::app()->user->logout();
             if (Yii::app()->user->isGuest)
             {
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiResponse::STATUS_SUCCESS);
+                $result = new ApiResult(ApiResponse::STATUS_SUCCESS, null, null, null);
+                assert('$result instanceof ApiResult');
+                Yii::app()->apiHelper->sendResponse($result);
             }
             else
             {
-                $error = Yii::t('Default', 'Error. User is not logged out.');
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiResponse::STATUS_FAILURE,
-                                                null,
-                                                $error);
+                $message = Yii::t('Default', 'User is not logged out.');
+                throw new ApiException($message);
             }
         }
 
@@ -72,10 +67,7 @@
         {
             if ($error = Yii::app()->errorHandler->error)
             {
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                                                ApiResponse::STATUS_FAILURE,
-                                                null,
-                                                $error);
+                throw new ApiException($error);
             }
         }
     }
