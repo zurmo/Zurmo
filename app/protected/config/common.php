@@ -47,7 +47,7 @@
                 'class' => 'application.modules.api.components.ApiRequest',
             ),
             'apiHelper' => array(
-                'class' => 'application.modules.zurmo.components.ZurmoApiHelper',
+                'class' => 'application.modules.api.components.ZurmoApiHelper',
             ),
             'browser' => array(
                 'class'          => 'application.extensions.zurmoinc.framework.components.Browser',

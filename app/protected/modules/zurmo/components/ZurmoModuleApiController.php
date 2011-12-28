@@ -31,6 +31,30 @@
      */
     abstract class ZurmoModuleApiController extends ZurmoModuleController
     {
+        public function filters()
+        {
+            $filters = array(
+                'apiRequest'
+            );
+            return array_merge($filters, parent::filters());
+        }
+
+        public function filterApiRequest($filterChain)
+        {
+            try
+            {
+                $filterChain->run();
+            }
+            catch(ApiException $e)
+            {
+                $result['status']   = 'FAILURE';
+                $result['data']     = null;
+                $result['errors']   = null;
+                $result['message']  = $e->getMessage();
+                Yii::app()->apiHelper->sendResponse($result);
+            }
+        }
+
         protected function getModelName()
         {
             return $this->getModule()->getPrimaryModelName();
@@ -41,7 +65,6 @@
             assert('is_int($id)');
             $modelClassName = $this->getModelName();
 
-            $test = Account::getById($id);
             try
             {
                 $model = $modelClassName::getById($id);
@@ -50,7 +73,7 @@
             {
                 //now we should throw another exception, the one that is handled by the filterApiRequest.
                 $message = Yii::t('Default', 'The id specified was invalid');
-                //throw new SomeException($message);
+                throw new ApiException($message);
             }
 
             try
