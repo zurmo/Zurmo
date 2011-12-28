@@ -20,7 +20,7 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207, 
+     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
@@ -38,6 +38,7 @@
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
             AccountTestHelper::createAccountByNameForOwner('superAccount2', $super);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
+            AddressGeoCodeTestHelper::createAndRemoveAccountWithAddress($super);
         }
 
         public function testRegularUserAllControllerActionsNoElevation()
@@ -46,7 +47,7 @@
             $superAccount = AccountTestHelper::createAccountByNameForOwner('accountOwnedBySuper', $super);
 
             //Create address array for the account owned by super user.
-            $address = array('street1'    => '1600 Amphitheatre Parkway', 
+            $address = array('street1'    => '1600 Amphitheatre Parkway',
                              'street2'    => '',
                              'city'       => 'Mountain View',
                              'state'      => 'California',
@@ -110,11 +111,11 @@
             Yii::app()->user->userModel = User::getByUsername('nobody');
 
             //Create address array for the super account id.
-            $address = array('street1'    => '1600 Amphitheatre Parkway', 
-                             'street2'    => '', 
-                             'city'       => 'Mountain View', 
-                             'state'      => 'California', 
-                             'postalCode' => '94043', 
+            $address = array('street1'    => '1600 Amphitheatre Parkway',
+                             'street2'    => '',
+                             'city'       => 'Mountain View',
+                             'state'      => 'California',
+                             'postalCode' => '94043',
                              'country'    => 'USA');
 
             //Assign Address to the super user account.

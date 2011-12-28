@@ -20,7 +20,7 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207, 
+     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
@@ -29,13 +29,15 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
+            $super = SecurityTestHelper::createSuperAdmin();
             if (Yii::app()->params['testGoogleGeoCodeApiKey'] != null)
             {
-                ZurmoConfigurationUtil::setByModuleName('MapsModule', 
-                                                        'googleMapApiKey', 
+                ZurmoConfigurationUtil::setByModuleName('MapsModule',
+                                                        'googleMapApiKey',
                                                         Yii::app()->params['testGoogleGeoCodeApiKey']);
             }
+            Yii::app()->user->userModel = $super;
+            AddressGeoCodeTestHelper::createAndRemoveAccountWithAddress($super);
         }
 
         public function testGeoCodeResultData()
@@ -110,23 +112,23 @@
             $this->assertEquals(0,    $account4->billingAddress->invalid);
 
             $account1          = Account::getById($accountId1);
-            $geoCodeQueryData1 = array('query'     => $account1->billingAddress->makeAddress(), 
-                                       'latitude'  => $account1->billingAddress->latitude, 
+            $geoCodeQueryData1 = array('query'     => $account1->billingAddress->makeAddress(),
+                                       'latitude'  => $account1->billingAddress->latitude,
                                        'longitude' => $account1->billingAddress->longitude);
 
             $account2          = Account::getById($accountId2);
-            $geoCodeQueryData2 = array('query'     => $account2->billingAddress->makeAddress(), 
-                                       'latitude'  => $account2->billingAddress->latitude, 
+            $geoCodeQueryData2 = array('query'     => $account2->billingAddress->makeAddress(),
+                                       'latitude'  => $account2->billingAddress->latitude,
                                        'longitude' => $account2->billingAddress->longitude);
 
             $account3          = Account::getById($accountId3);
-            $geoCodeQueryData3 = array('query'     => $account3->billingAddress->makeAddress(), 
-                                       'latitude'  => $account3->billingAddress->latitude, 
+            $geoCodeQueryData3 = array('query'     => $account3->billingAddress->makeAddress(),
+                                       'latitude'  => $account3->billingAddress->latitude,
                                        'longitude' => $account3->billingAddress->longitude);
 
             $account4          = Account::getById($accountId4);
-            $geoCodeQueryData4 = array('query'     => $account4->billingAddress->makeAddress(), 
-                                       'latitude'  => $account4->billingAddress->latitude, 
+            $geoCodeQueryData4 = array('query'     => $account4->billingAddress->makeAddress(),
+                                       'latitude'  => $account4->billingAddress->latitude,
                                        'longitude' => $account4->billingAddress->longitude);
 
             $apiKey = Yii::app()->params['testGoogleGeoCodeApiKey'];
