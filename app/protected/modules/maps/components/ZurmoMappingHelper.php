@@ -38,7 +38,7 @@
         public function resolveMappingLinkUrl($queryParams)
         {
             assert('is_array($queryParams)');
-            return Yii::app()->createUrl('maps/default/renderAddressMapView/', $queryParams);
+            return Yii::app()->createUrl('maps/default/mapAndPoint/', $queryParams);
         }
 
         /**
@@ -51,19 +51,7 @@
         {
             assert('is_array($geoCodeQueryData)');
             assert('is_string($containerId)');
-            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApi(), $geoCodeQueryData, $containerId);
-        }
-
-        /**
-         * Register the required api javascript files.
-         */
-        public static function registerMapScriptFiles()
-        {
-            $mapScriptFiles = GoogleMappingUtil::getMapScriptFiles();
-            foreach ($mapScriptFiles as $scriptFile)
-            {
-                Yii::app()->getClientScript()->registerScriptFile($scriptFile, CClientScript::POS_END);
-            }
+            return GoogleMappingUtil::renderMapByGeoCodeData(self::getGeoCodeApiKey(), $geoCodeQueryData, $containerId);
         }
 
         /**
@@ -71,17 +59,17 @@
          * @param string $addressString - geocoder query data.
          * @return - lat / long array.
          */
-        public static function getGeoCodes($addressString)
+        public static function getGeoCodesByAddressString($addressString)
         {
             assert('is_string($addressString)');
-            return GoogleGeoCodeUtil::getLatitudeLongitude(self::getGeoCodeApi(), $addressString);
+            return GoogleGeoCodeUtil::getLatitudeLongitude(self::getGeoCodeApiKey(), $addressString);
         }
 
         /**
          * Gets the geocode api key from the cofig table.
          * @return string $apiKey or null - geocode Api Key.
          */
-        public static function getGeoCodeApi()
+        public static function getGeoCodeApiKey()
         {
             if (null != $apiKey = ZurmoConfigurationUtil::getByModuleName('MapsModule', 'googleMapApiKey'))
             {

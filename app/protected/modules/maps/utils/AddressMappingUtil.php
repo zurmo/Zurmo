@@ -125,7 +125,7 @@
         public static function fetchGeocodeForAddress($addressString)
         {
             assert('is_string($addressString)');
-            return Yii::app()->mappingHelper->getGeoCodes($addressString);
+            return Yii::app()->mappingHelper->getGeoCodesByAddressString($addressString);
         }
     }
 ?>

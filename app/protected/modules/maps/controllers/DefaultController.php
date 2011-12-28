@@ -33,7 +33,7 @@
         {
             return array(
                 array(
-                      ZurmoBaseController::RIGHTS_FILTER_PATH,
+                      ZurmoBaseController::RIGHTS_FILTER_PATH . ' + index, ConfigurationView',
                       'moduleClassName'   => 'MapsModule',
                       'rightName'         => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                 ),
@@ -51,7 +51,7 @@
         public function actionConfigurationView()
         {
             $configurationForm          = new MapsConfigurationForm();
-            $configurationForm->apiKey  = Yii::app()->mappingHelper->getGeoCodeApi();
+            $configurationForm->apiKey  = Yii::app()->mappingHelper->getGeoCodeApiKey();
 
             $postVariableName           = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
@@ -81,7 +81,7 @@
         /**
          * Render modal view for rendering map.
          */
-        public function actionRenderAddressMapView($addressString, $latitude, $longitude)
+        public function actionMapAndPoint($addressString, $latitude, $longitude)
         {
             $modalMapAddressData = array('query'     => $addressString,
                                          'latitude'  => $latitude,
@@ -99,7 +99,7 @@
          * Map modal view for map popup..
          * @return rendered content from view as string.
          */
-        public function renderModalMapView(CController $controller,
+        protected function renderModalMapView(CController $controller,
                                            $modalMapAddressData,
                                            $pageTitle = null,
                                            $stateMetadataAdapterClassName = null)

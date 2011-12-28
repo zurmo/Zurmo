@@ -126,7 +126,6 @@
         protected function renderMapLink($addressModel)
         {
             assert('$addressModel instanceof Address');
-            Yii::app()->mappingHelper->registerMapScriptFiles();
             Yii::app()->getClientScript()->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'

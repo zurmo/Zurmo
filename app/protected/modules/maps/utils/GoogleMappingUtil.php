@@ -41,7 +41,7 @@
             assert('is_array($geoCodeQueryData)');
             assert('is_string($containerId)');
             $geoCodeResult = self::getGeoCodeResultData($apiKey, $geoCodeQueryData);
-            $geoCodeResult->renderMap($containerId);
+            $geoCodeResult->renderMapAndPoint($containerId, $apiKey);
         }
 
         /**
@@ -66,17 +66,8 @@
             else
             {
                 $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), '');
-                return new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
+                return new ZurmoGeoCodeResult($geoCodeDriver, $geoCodeQueryData);
             }
-        }
-
-        /**
-         * Get the geocoder api javascripts urls.
-         * @return array - geocoder api javascript urls.
-         */
-        public static function getMapScriptFiles()
-        {
-            return array('http://maps.google.com/maps?file=api&v=2&sensor=false');
         }
     }
 ?>
