@@ -133,10 +133,10 @@
 
             $apiKey = Yii::app()->params['testGoogleGeoCodeApiKey'];
 
-            $geoCodeResultObj1 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData1);
-            $geoCodeResultObj2 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData2);
-            $geoCodeResultObj3 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData3);
-            $geoCodeResultObj4 = GoogleMappingUtil::getGeoCodeResultData($apiKey, $geoCodeQueryData4);
+            $geoCodeResultObj1 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData1);
+            $geoCodeResultObj2 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData2);
+            $geoCodeResultObj3 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData3);
+            $geoCodeResultObj4 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData4);
 
             $this->assertEquals('42.1153153',   $geoCodeResultObj1->latitude);
             $this->assertEquals('-87.9763703',  $geoCodeResultObj1->longitude);

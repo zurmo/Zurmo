@@ -40,8 +40,8 @@
             assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
             assert('is_string($containerId)');
-            $geoCodeResult = self::getGeoCodeResultData($apiKey, $geoCodeQueryData);
-            $geoCodeResult->renderMapAndPoint($containerId, $apiKey);
+            $geoCodeResult = self::getGeoCodeResultByData($apiKey, $geoCodeQueryData);
+            static::renderMapAndPoint($containerId, $apiKey, $geoCodeResult->latitude, $geoCodeResult->longitude);
         }
 
         /**
@@ -50,7 +50,7 @@
          * @param array  $geoCodeQueryData - required query data in the form of array.
          * @return object                  - geocoder result object.
          */
-        public static function getGeoCodeResultData($apiKey, $geoCodeQueryData)
+        public static function getGeoCodeResultByData($apiKey, $geoCodeQueryData)
         {
             assert('$apiKey == null || is_string($apiKey)');
             assert('is_array($geoCodeQueryData)');
@@ -60,17 +60,43 @@
             $geoCoder->setApiDriver('Google');
             $geoCoder->init();
             $geoCodeDriver = GeoCode_Driver::factory($geoCoder->getApiDriver(), $apiKey);
-            if ($geoCodeQueryData['latitude'] == '' && $geoCodeQueryData['longitude'] == '')
+            if ($geoCodeQueryData['latitude'] == null && $geoCodeQueryData['longitude'] == null)
             {
                 $geoCodeResult                 = $geoCoder->query($geoCodeQueryData['query']);
                 $geoCodeQueryData['latitude']  = $geoCodeResult->latitude;
                 $geoCodeQueryData['longitude'] = $geoCodeResult->longitude;
-                return new ZurmoGeoCodeResult($geoCodeDriver, $geoCodeQueryData);
+                return new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
             }
             else
             {
-                return new ZurmoGeoCodeResult($geoCodeDriver, $geoCodeQueryData);
+                return new GeoCode_Result($geoCodeDriver, $geoCodeQueryData);
             }
+        }
+
+        protected static function renderMapAndPoint($containerId, $apiKey, $latitude, $longitude)
+        {
+            assert('is_string($containerId)');
+            assert('is_string($apiKey) || $apiKey == null');
+            assert('is_numeric($latitude) || $latitude == null');
+            assert('is_numeric($longitude) || $longitude == null');
+            $mapScript = "
+            function plotMap() {
+                var latlng = new google.maps.LatLng($latitude, $longitude);
+                var myOptions = {
+                    zoom: 14,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                  }
+                var map = new google.maps.Map(document.getElementById('$containerId'), myOptions);
+
+                var marker = new google.maps.Marker({
+                  position: latlng,
+                  map: map
+                });
+            }";
+            // Register the javascripts
+            Yii::app()->getClientScript()->registerScriptFile('http://maps.googleapis.com/maps/api/js?key=' . $apiKey . '&sensor=false&callback=plotMap');
+            Yii::app()->getClientScript()->registerScript("GoogleMapScript". $containerId, $mapScript, CClientScript::POS_READY);
         }
     }
 ?>
