@@ -32,6 +32,6 @@
         /**
          * Implimented in the zurmomappinghelper class
          */
-        abstract public function getMappingLinkContentForElement($mapRenderData);
+        abstract public function resolveMappingLinkUrl($queryParams);
     }
 ?>

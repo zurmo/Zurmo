@@ -32,13 +32,13 @@
     {
         /**
          * Creates the url link for map link.
-         * @param array $mapRenderData - geocoder query data.
+         * @param  array $queryParams - Query params to be utilized by action in map controller
          * @return string modal map render url.
          */
-        public function getMappingLinkContentForElement($mapRenderData)
+        public function resolveMappingLinkUrl($queryParams)
         {
-            assert('is_array($addressData)');
-            return Yii::app()->createUrl('maps/default/renderAddressMapView/', array_merge($_GET, $mapRenderData));
+            assert('is_array($queryParams)');
+            return Yii::app()->createUrl('maps/default/renderAddressMapView/', $queryParams);
         }
 
         /**

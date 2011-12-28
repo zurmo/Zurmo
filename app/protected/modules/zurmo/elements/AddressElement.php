@@ -125,52 +125,30 @@
          */
         protected function renderMapLink($addressModel)
         {
-            // Register the api javascript files
+            assert('$addressModel instanceof Address');
             Yii::app()->mappingHelper->registerMapScriptFiles();
-
-            $cs = Yii::app()->getClientScript();
-            $cs->registerScriptFile(
+            Yii::app()->getClientScript()->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
                     ),
                 CClientScript::POS_END
             );
-            $mapRenderUrl = Yii::app()->mappingHelper->getMappingLinkContentForElement(array(
-                                                                         'addressString' =>$addressModel->makeAddress(), 
-                                                                         'latitude'      =>$addressModel->latitude, 
+            $mapRenderUrl = Yii::app()->mappingHelper->resolveMappingLinkUrl(array(
+                                                                         'addressString' =>$addressModel->makeAddress(),
+                                                                         'latitude'      =>$addressModel->latitude,
                                                                          'longitude'     =>$addressModel->longitude));
-            $id = $this->getIdForMapLink();
-            $content  = '<span>';
-            $content .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(
-                    'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                    'update' => '#modalContainer',
-                    'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
-                    'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
-                    ),
-                    array(
-                    'id' => $id,
-                    'style' => $this->getMapLinkStartingStyle(),
-                    )
+            $id           = $this->getEditableInputId($this->attribute, 'MapLink');
+            $content      = '<span>';
+            $content     .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(
+                                'onclick' => '$("#modalContainer").dialog("open"); return false;',
+                                'update' => '#modalContainer',
+                                'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
+                                'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
+                                ),
+                                array('id' => $id)
             );
-            $content .= '</span>';
+            $content     .= '</span>';
             return $content;
-        }
-        
-        protected function getIdForMapLink()
-        {
-            return $this->getEditableInputId($this->attribute, 'MapLink');
-        }
-
-        protected function getMapLinkStartingStyle()
-        {
-            if ($this->getDisabledValue() == 'disabled')
-            {
-                return 'display:none';
-            }
-            else
-            {
-                return null;
-            }
         }
 
         protected function renderError()
