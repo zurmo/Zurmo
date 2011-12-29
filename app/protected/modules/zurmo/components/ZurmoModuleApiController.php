@@ -52,6 +52,66 @@
             }
         }
 
+        public function actionRead()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if(!isset($params['id']))
+            {
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
+            }
+            $result    =  $this->processRead((int)$params['id']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        public function actionList()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            //if(!isset($params['data']))
+            //{
+            //    $message = Yii::t('Default', 'Data are empty.');
+            //    throw new ApiException($message);
+            //}
+            $result    =  $this->processList($params);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        public function actionCreate()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if(!isset($params['data']))
+            {
+                $message = Yii::t('Default', 'Data are empty.');
+                throw new ApiException($message);
+            }
+            $result    =  $this->processCreate($params['data']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        public function actionUpdate()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if(!isset($params['id']))
+            {
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
+            }
+            $result    =  $this->processUpdate((int)$params['id'], $params['data']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        public function actionDelete()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if(!isset($params['id']))
+            {
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
+            }
+            $result    =  $this->processDelete((int)$params['id']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
         protected function getModelName()
         {
             return $this->getModule()->getPrimaryModelName();
@@ -96,8 +156,21 @@
             return $result;
         }
 
-        public function getAll($modelClassName, $searchFormClassName, $stateMetadataAdapterClassName)
+        protected function getStateMetadataAdapterClassName()
         {
+            return null;
+        }
+
+        protected function getSearchFormClassName()
+        {
+            return null;
+        }
+
+        protected function processList()
+        {
+            $modelClassName = $this->getModelName();
+            $searchFormClassName = $this->getSearchFormClassName();
+
             try
             {
                 $filterParams = array();
@@ -105,8 +178,8 @@
                 {
                     parse_str($_GET['filter'], $filterParams);
                 }
-
                 $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
+
                 if (isset($filterParams['pagination']['pageSize']))
                 {
                     $pageSize = $filterParams['pagination']['pageSize'];
@@ -137,14 +210,16 @@
                 {
                     $searchForm = null;
                 }
+                $stateMetadataAdapterClassName = $this->getStateMetadataAdapterClassName();
 
                 $dataProvider = $this->makeRedBeanDataProviderFromGet(
-                    $searchForm,
-                    $modelClassName,
-                    $pageSize,
-                    Yii::app()->user->userModel->id,
-                    $stateMetadataAdapterClassName
-                );
+                                    $searchForm,
+                                    $modelClassName,
+                                    $pageSize,
+                                    Yii::app()->user->userModel->id,
+                                    $stateMetadataAdapterClassName
+                                );
+
                 $totalItems = $dataProvider->getTotalItemCount();
                 $data = array();
                 $data['total'] = $totalItems;
@@ -153,54 +228,27 @@
                     $formattedData = $dataProvider->getData();
                     foreach ($formattedData as $model)
                     {
-                        $util  = new RedBeanModelToApiDataUtil($model);
-                        $data['array'][] = $util->getData();
+                        $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($model);
+                        $data['array'][] = $redBeanModelToApiDataUtil->getData();
                     }
-                    $output = $this->generateOutput('SUCCESS', '', $data);
+                    $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
                 }
                 else
                 {
-                    $data['array'] = null;
-                    $message = Yii::t('Default', 'Error');
-                    $output = $this->generateOutput('FAILURE', $message, $data);
+                    $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
                 }
             }
             catch (Exception $e)
             {
                 $message = $e->getMessage();
-                $output = $this->generateOutput('FAILURE', $message, null);
+                throw new ApiException($message);
             }
-            return $output;
+            return $result;
         }
 
-        public function getById($modelClassName, $id)
+        protected function processCreate($data)
         {
-            try
-            {
-                $model = $modelClassName::getById($id);
-
-                try
-                {
-                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-                }
-                catch(SecurityException $e)
-                {
-                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
-                }
-                $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();;
-                $output = $this->generateOutput('SUCCESS', '', $data);
-            }
-            catch (Exception $e)
-            {
-                $message = $e->getMessage();
-                $output = $this->generateOutput('FAILURE', $message, null);
-            }
-            return $output;
-        }
-
-        public function create($modelClassName, $data)
-        {
+            $modelClassName = $this->getModelName();
             try
             {
                 $model = $this->attemptToSaveModelFromData(new $modelClassName, $data, null, false);
@@ -209,87 +257,118 @@
                 if (!count($model->getErrors()))
                 {
                     $model = $modelClassName::getById($id);
-                    $util  = new RedBeanModelToApiDataUtil($model);
-                    $data  = $util->getData();
-
-                    $output = $this->generateOutput('SUCCESS', '', $data);
+                    $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $redBeanModelToApiDataUtil->getData();
+                    $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
                 }
                 else
                 {
                     $errors = $model->getErrors();
-                    $message = Yii::t('Default', 'Model could not be saved.');
-                    $output = $this->generateOutput('FAILURE', $message, null, $errors);
+                    $message = Yii::t('Default', 'Model was not created.');
+                    // To-Do: How to pass $errors and $message to exception
+                    //throw new ApiException($message);
+                    $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, $errors);
                 }
             }
             catch (Exception $e)
             {
                 $message = $e->getMessage();
-                $output = $this->generateOutput('FAILURE', $message, null);
+                throw new ApiException($message);
             }
-            return $output;
+            return $result;
         }
 
-        public function update($modelClassName, $id, $data)
+
+
+        protected function processUpdate($id, $data)
         {
+            assert('is_int($id)');
+            $modelClassName = $this->getModelName();
+
             try
             {
                 $model = $modelClassName::getById($id);
-                try
-                {
-                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
-                }
-                catch(SecurityException $e)
-                {
-                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
-                }
-                $model = $this->attemptToSaveModelFromData($model, $data, null, false);
+            }
+            catch (NotFoundException $e)
+            {
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
+            }
 
+            try
+            {
+                ApiControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
+            }
+            catch(SecurityException $e)
+            {
+                $message = $e->getMessage();
+                throw new ApiException($message);
+            }
+
+            try
+            {
+                $model = $this->attemptToSaveModelFromData($model, $data, null, false);
                 $id = $model->id;
                 if (!count($model->getErrors()))
                 {
                     $model = $modelClassName::getById($id);
-                    $util  = new RedBeanModelToApiDataUtil($model);
-                    $data  = $util->getData();
-
-                    $output = $this->generateOutput('SUCCESS', '', $data);
+                    $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($model);
+                    $data  = $redBeanModelToApiDataUtil->getData();
+                    $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
                 }
                 else
                 {
                     $errors = $model->getErrors();
-                    $message = Yii::t('Default', 'Model could not be saved.');
-                    $output = $this->generateOutput('FAILURE', $message, null, $errors);
+                    $message = Yii::t('Default', 'Model was not updated.');
+                    // To-Do: How to pass $errors and $message to exception
+                    //throw new ApiException($message);
+                    $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, $errors);
                 }
             }
             catch (Exception $e)
             {
                 $message = $e->getMessage();
-                $output = $this->generateOutput('FAILURE', $message, null);
+                throw new ApiException($message);
             }
-            return $output;
+            return $result;
         }
 
-        public function delete($modelClassName, $id)
+        protected function processDelete($id)
         {
+            assert('is_int($id)');
+            $modelClassName = $this->getModelName();
+
             try
             {
                 $model = $modelClassName::getById($id);
-                try
-                {
-                    ApiControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
-                }
-                catch(SecurityException $e)
-                {
-                    throw new NotSupportedException(Yii::t('Default', 'This action is not allowed.'));
-                }
+            }
+            catch (NotFoundException $e)
+            {
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
+            }
+
+            try
+            {
+                ApiControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
+            }
+            catch(SecurityException $e)
+            {
+                $message = $e->getMessage();
+                throw new ApiException($message);
+            }
+
+            try
+            {
                 $model->delete();
-                $output = $this->generateOutput('SUCCESS', '');
+                $result = new ApiResult(ApiResponse::STATUS_SUCCESS, null);
             }
             catch (Exception $e)
             {
                 $message = $e->getMessage();
-                $output = $this->generateOutput('FAILURE', $message, null);
+                throw new ApiException($message);
             }
-            return $output;
+            return $result;
         }
 
         /**

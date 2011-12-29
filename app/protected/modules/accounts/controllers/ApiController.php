@@ -26,16 +26,9 @@
 
     class AccountsApiController extends ZurmoModuleApiController
     {
-        public function actionRead()
+        protected function getSearchFormClassName()
         {
-            $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
-            {
-                $message = Yii::t('Default', 'The id specified was invalid.');
-                throw new ApiException($message);
-            }
-            $result    =  $this->processRead((int)$params['id']);
-            Yii::app()->apiHelper->sendResponse($result);
+            return 'AccountsSearchForm';
         }
     }
 ?>

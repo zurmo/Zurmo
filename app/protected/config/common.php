@@ -169,17 +169,12 @@
                 'caseSensitive' => true,
                 'showScriptName' => true,
                 'rules'=>array(
-                    // REST patterns
-                    //array('api/rest/login',  'pattern'=>'api/rest/login',                'verb'=>'POST'),
-                    //array('api/rest/logout', 'pattern'=>'api/rest/logout',               'verb'=>'GET'),
-                    //array('api/rest/listCustomData', 'pattern'=>'api/rest/customData',       'verb'=>'GET'),
-                    //array('api/rest/customData', 'pattern'=>'api/rest/customData/<model:\w+>', 'verb'=>'GET'),
-                    //array('api/rest/list',   'pattern'=>'api/rest/<model:\w+>',          'verb'=>'GET'),
-                    //array('api/rest/view',   'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
-                    //array('api/rest/list',   'pattern'=>'api/rest/<model:\w+>/*',          'verb'=>'GET'),
-                    //array('api/rest/update', 'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
-                    //array('api/rest/delete', 'pattern'=>'api/rest/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
-                    //array('api/rest/create', 'pattern'=>'api/rest/<model:\w+>',          'verb'=>'POST'),
+                    // API patterns
+                    array('<module>/api/read',   'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'GET'),
+                    array('<module>/api/list',   'pattern'=>'<module:\w+>/api/*',          'verb'=>'GET'),
+                    array('<module>/api/update', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'PUT'),
+                    array('<module>/api/delete', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'DELETE'),
+                    array('<module>/api/create', 'pattern'=>'<module:\w+>/api/',          'verb'=>'POST'),
                     '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
                 )
             ),
