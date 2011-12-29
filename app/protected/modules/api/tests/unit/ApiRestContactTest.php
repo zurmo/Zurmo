@@ -345,7 +345,6 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-            echo "jj";
         }
 
         /**
