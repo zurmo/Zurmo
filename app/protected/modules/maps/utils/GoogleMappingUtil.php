@@ -93,9 +93,16 @@
                   position: latlng,
                   map: map
                 });
-            }";
+            }
+            function loadGoogleMap() {
+              var script = document.createElement('script');
+              script.type = 'text/javascript';
+              script.src = 'http://maps.googleapis.com/maps/api/js?key=" . $apiKey . "&sensor=false&callback=plotMap';
+              document.body.appendChild(script);
+            }
+            window.onload = loadGoogleMap;
+            ";
             // Register the javascripts
-            Yii::app()->getClientScript()->registerScriptFile('http://maps.googleapis.com/maps/api/js?key=' . $apiKey . '&sensor=false&callback=plotMap');
             Yii::app()->getClientScript()->registerScript("GoogleMapScript". $containerId, $mapScript, CClientScript::POS_READY);
         }
     }
