@@ -100,7 +100,7 @@
               script.src = 'http://maps.googleapis.com/maps/api/js?key=" . $apiKey . "&sensor=false&callback=plotMap';
               document.body.appendChild(script);
             }
-            window.onload = loadGoogleMap;
+            $(document).ready(loadGoogleMap);
             ";
             // Register the javascripts
             Yii::app()->getClientScript()->registerScript("GoogleMapScript". $containerId, $mapScript, CClientScript::POS_READY);
