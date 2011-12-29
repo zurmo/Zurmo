@@ -46,11 +46,13 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
             $account = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($account);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/' . $account->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals($account->name, $response['data']['name']);
+            $this->assertEquals($compareData, $response['data']);
         }
 
         /**
@@ -79,7 +81,7 @@
             $this->assertEquals('The id specified was invalid.', $response['message']);
         }
 
-        public function testCreate()
+        public function testCreateAccount()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
@@ -191,9 +193,9 @@
         }
 
         /**
-        * @depends testCreate
+        * @depends testCreateAccount
         */
-        public function testUpdate(){
+        public function testUpdateAccount(){
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -233,9 +235,9 @@
         }
 
         /**
-        * @depends testUpdate
+        * @depends testUpdateAccount
         */
-        public function testList()
+        public function testListAccounts()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
@@ -261,9 +263,9 @@
         }
 
         /**
-        * @depends testList
+        * @depends testListAccounts
         */
-        public function testUnprivilegedUserViewUpdateDelete()
+        public function testUnprivilegedUserViewUpdateDeleteAcounts()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
@@ -317,7 +319,7 @@
         /**
         * @depends testUnprivilegedUserViewUpdateDelete
         */
-        public function testSearch()
+        public function testSearchAccounts()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
