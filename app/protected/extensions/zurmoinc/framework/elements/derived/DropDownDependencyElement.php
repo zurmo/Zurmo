@@ -61,19 +61,116 @@
          */
         protected function renderControlEditable()
         {
-            $attributes = $this->dropDownDependencyDerivedAttributeMetadata->getUsedAttributeNames();
-            $content    = "<table> \n";
-            foreach($attributes as $attribute)
+
+            $unserializedMetadata  = unserialize($this->dropDownDependencyDerivedAttributeMetadata->serializedMetadata);
+            $onChangeScript        = null;
+            $dependencyData        = array();
+            $attributes            = $this->dropDownDependencyDerivedAttributeMetadata->getUsedAttributeNames();
+            $content               = "<table> \n";
+            $parentInputId         = null;
+            $parentAttributeLabel  = null;
+            foreach($attributes as $position => $attribute)
             {
                 $element                    = new DropDownElement($this->model,
                                                                   $attribute,
                                                                   $this->form,
                                                                   array('addBlank' => true));
+
                 $element->editableTemplate  = $this->getEditableTemplate();
                 $content                   .= $element->render();
+                $inputId                    = $element->getIdForSelectInput();
+                $onChangeScript .= "$('#" . $inputId . "').change(function()
+                {
+                    " . $this->getDependencyManagerResolveScriptCall() . "
+                }
+                );";
+                $dependencyData[]         = $this->resolveDependencyData($inputId,
+                                                                         $parentInputId,
+                                                                         $unserializedMetadata['mappingData'],
+                                                                         $position,
+                                                                         $this->model->{$attribute}->value,
+                                                                         $parentAttributeLabel);
+                $parentInputId            = $inputId;
+                $parentAttributeLabel     = $this->model->getAttributeLabel($attribute);
             }
             $content   .= "</table> \n";
+            $this->resolveScriptContent($onChangeScript, $dependencyData);
             return $content;
+        }
+
+        protected static function resolveDependencyData($inputId, $parentInputId, $mappingData, $position,
+                                                        $existingValue, $parentAttributeLabel)
+        {
+            assert('is_string($inputId)');
+            assert('$parentInputId == null || is_string($parentInputId)');
+            assert('is_array($mappingData)');
+            assert('is_int($position)');
+            assert('$existingValue == null || is_string($existingValue)');
+            assert('is_string($parentAttributeLabel) || $parentAttributeLabel == null');
+            $dependencyData = array();
+            $dependencyData['inputId']              = $inputId;
+            $dependencyData['parentInputId']        = $parentInputId;
+            $dependencyData['valueToAlwaysShow']    = $existingValue;
+            if($parentAttributeLabel != null)
+            {
+                $dependencyData['notReadyToSelectText'] = Yii::t('Default', 'First select the {attributeLabel}',
+                                                                 array('{attributeLabel}' => $parentAttributeLabel));
+            }
+            else
+            {
+                $dependencyData['notReadyToSelectText'] = null;
+            }
+            if(isset($mappingData[$position]['valuesToParentValues']))
+            {
+                $dependencyData['valuesToParentValues'] = $mappingData[$position]['valuesToParentValues'];
+            }
+            else
+            {
+                $dependencyData['valuesToParentValues'] = null;
+            }
+            return $dependencyData;
+        }
+
+        protected function resolveScriptContent($onChangeScript, $dependencyData)
+        {
+            assert('is_string($onChangeScript)');
+            assert('is_array($dependencyData)');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/DropDownDependencyManager.js'
+                    ),
+                CClientScript::POS_END
+            );
+            $managerObjectName = $this->getDependencyManagerScriptObjectName();
+            $suffix            = $this->getDependencyManagerScriptSuffix();
+            $script = "
+                var " . $managerObjectName . " = new DropDownDependencyManager('" . CJSON::encode($dependencyData) . "');
+                " . $this->getDependencyManagerResolveScriptCall() . ";";
+            Yii::app()->clientScript->registerScript(
+                'dropDownDependencyManager' . $suffix,
+                $script,
+                CClientScript::POS_END
+            );
+            Yii::app()->clientScript->registerScript(
+                'dropDownDependencyOnChange' . $suffix,
+                $onChangeScript,
+                CClientScript::POS_END
+            );
+        }
+
+        protected function getDependencyManagerScriptObjectName()
+        {
+            return 'DependencyManager' . $this->getDependencyManagerScriptSuffix();
+        }
+
+        protected function getDependencyManagerScriptSuffix()
+        {
+            return $this->dropDownDependencyDerivedAttributeMetadata->name;
+        }
+
+        protected function getDependencyManagerResolveScriptCall()
+        {
+            return $this->getDependencyManagerScriptObjectName() . ".resolveOptions()";
         }
 
         /**

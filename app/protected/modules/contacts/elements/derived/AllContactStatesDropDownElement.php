@@ -37,7 +37,7 @@
          * The example usage is in the designer tool -> Contacts -> fields -> status -> edit.
          * @see DropDownElement::getIdForSelectInput()
          */
-        protected function getIdForSelectInput()
+        public function getIdForSelectInput()
         {
             return $this->getEditableInputId($this->attribute);
         }
