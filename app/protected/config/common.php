@@ -169,7 +169,7 @@
                 'caseSensitive' => true,
                 'showScriptName' => true,
                 'rules'=>array(
-                    // API patterns
+                    // API REST patterns
                     array('<module>/api/read',   'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'GET'),
                     array('<module>/api/list',   'pattern'=>'<module:\w+>/api/*',          'verb'=>'GET'),
                     array('<module>/api/update', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'PUT'),
