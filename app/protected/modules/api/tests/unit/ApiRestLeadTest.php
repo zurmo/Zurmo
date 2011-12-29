@@ -534,8 +534,6 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
-            echo "aa";
-            exit;
         }
     }
 ?>
