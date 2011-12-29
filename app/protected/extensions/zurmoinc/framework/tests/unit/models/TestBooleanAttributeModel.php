@@ -33,6 +33,9 @@
                 'members' => array(
                     'bool',
                 ),
+                'relations' => array(
+                    'a'  => array(RedBeanModel::HAS_ONE, 'A'),
+                ),
                 'rules' => array(
                     array('bool', 'boolean'),
                 )

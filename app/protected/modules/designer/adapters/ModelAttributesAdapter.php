@@ -170,7 +170,14 @@
                 }
                 if ($attributeForm instanceof MaxLengthAttributeForm)
                 {
-                    $maxLength = (int)$attributeForm->maxLength;
+                    if($attributeForm->maxLength != null)
+                    {
+                        $maxLength = (int)$attributeForm->maxLength;
+                    }
+                    else
+                    {
+                        $maxLength = null;
+                    }
                 }
                 else
                 {
@@ -178,8 +185,23 @@
                 }
                 if ($attributeForm instanceof MinMaxValueAttributeForm)
                 {
-                    $minValue = (int)$attributeForm->minValue;
-                    $maxValue = (int)$attributeForm->maxValue;
+                    if($attributeForm->minValue != null)
+                    {
+                        $minValue = (int)$attributeForm->minValue;
+                    }
+                    else
+                    {
+                        $minValue = null;
+                    }
+                    if($attributeForm->maxValue != null)
+                    {
+                        $maxValue = (int)$attributeForm->maxValue;
+                    }
+                    else
+                    {
+                        $maxValue = null;
+                    }
+
                 }
                 else
                 {
@@ -246,7 +268,7 @@
         public function isStandardAttributeRequiredByDefault($attributeName)
         {
             assert('is_string($attributeName)');
-            if(!$this->isStandardAttribute($attributeName))
+            if (!$this->isStandardAttribute($attributeName))
             {
                 throw new NotSupportedException();
             }
@@ -258,7 +280,7 @@
                 {
                     assert('isset($validatorMetadata[0])');
                     assert('isset($validatorMetadata[1])');
-                    if($validatorMetadata[0] == $attributeName && $validatorMetadata[1] == 'required')
+                    if ($validatorMetadata[0] == $attributeName && $validatorMetadata[1] == 'required')
                     {
                         return true;
                     }

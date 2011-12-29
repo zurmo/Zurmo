@@ -128,7 +128,8 @@
                     $model        = $modelClassName::getById($attributeValueData['id']);
                     $makeNewModel = false;
                 }
-                elseif ($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
+                elseif (isset($attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME]) &&
+                        $attributeValueData[ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME] != null)
                 {
                     $externalSystemId = $attributeValueData
                                         [ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME];
@@ -144,7 +145,8 @@
             foreach ($mappingData as $columnName => $columnMappingData)
             {
                 if ($columnMappingData['attributeIndexOrDerivedType'] != null &&
-                    $columnMappingData['attributeIndexOrDerivedType'] != 'owner')
+                    $columnMappingData['attributeIndexOrDerivedType'] != 'owner' &&
+                    $idColumnName != $columnName)
                 {
                     static::sanitizeValueAndPopulateModel($rowBean, $importRules, $model, $columnName, $modelClassName,
                                                           $columnMappingData, $importSanitizeResultsUtil,
@@ -156,7 +158,8 @@
             foreach ($mappingData as $columnName => $columnMappingData)
             {
                 if ($columnMappingData['attributeIndexOrDerivedType'] != null &&
-                    $columnMappingData['attributeIndexOrDerivedType'] == 'owner')
+                    $columnMappingData['attributeIndexOrDerivedType'] == 'owner' &&
+                    $idColumnName != $columnName)
                 {
                     static::sanitizeValueAndPopulateModel($rowBean, $importRules, $model, $columnName, $modelClassName,
                                                           $columnMappingData, $importSanitizeResultsUtil,
@@ -381,7 +384,11 @@
                                                                                  $importSanitizeResultsUtil);
             foreach ($attributeValueData as $attributeName => $value)
             {
-                if ($model->isAttribute($attributeName))
+                if( $model->$attributeName instanceof RedBeanManyToManyRelatedModels)
+                {
+                    static::resolveValueThatIsManyModelsRelationToAttribute($model, $attributeName, $value);
+                }
+                elseif ($model->isAttribute($attributeName))
                 {
                     static::resolveReadOnlyAndSetValueToAttribute($model, $attributeName, $value);
                 }
@@ -439,7 +446,7 @@
                                   ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             assert('is_array($afterSaveActionsData)');
-            assert('$attributeImportRules instanceof AfterSaveActionDerivedAttributeImportRules');
+            assert('$attributeImportRules instanceof AfterSaveActionNonDerivedAttributeImportRules');
             assert('is_array($columnMappingData)');
             $attributeValueData   = $attributeImportRules->resolveValueForImport($valueReadyToSanitize,
                                                                                  $columnMappingData,
@@ -486,6 +493,17 @@
                 $model->isAllowedToSetReadOnlyAttribute($attributeName)))
             {
                 $model->$attributeName = $value;
+            }
+        }
+
+        protected static function resolveValueThatIsManyModelsRelationToAttribute($model, $attributeName, $value)
+        {
+            assert('is_string($attributeName)');
+            assert('$model->$attributeName instanceof RedBeanManyToManyRelatedModels');
+            assert('$value == null || $value instanceof RedBeanModel');
+            if ($value != null && !$model->$attributeName->contains($value))
+            {
+                $model->$attributeName->add($value);
             }
         }
 

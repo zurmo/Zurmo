@@ -59,7 +59,7 @@
         public function handleTidyCheck($event)
         {
             $tidyServiceHelper = new TidyServiceHelper();
-            if(!$tidyServiceHelper->runCheckAndGetIfSuccessful())
+            if (!$tidyServiceHelper->runCheckAndGetIfSuccessful())
             {
                 echo $tidyServiceHelper->getMessage() . "<br/>";
                 echo 'http://php.net/manual/en/book.tidy.php';

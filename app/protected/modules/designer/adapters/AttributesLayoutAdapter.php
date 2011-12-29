@@ -246,15 +246,14 @@
          */
         public function getEffectivePlacedAttributes()
         {
-
             $placedAttributes = $this->getAttributesInPlace();
-            foreach($this->getDerivedAttributesInPlace() as $derivedAttributeType)
+            foreach ($this->getDerivedAttributesInPlace() as $derivedAttributeType)
             {
                 $elementClassName = $derivedAttributeType . 'Element';
                 $attributesUsed = $elementClassName::getModelAttributeNames();
-                foreach($attributesUsed as $attribute)
+                foreach ($attributesUsed as $attribute)
                 {
-                    if(!in_array($attribute, $placedAttributes))
+                    if (!in_array($attribute, $placedAttributes))
                     {
                         $placedAttributes[] = $attribute;
                     }

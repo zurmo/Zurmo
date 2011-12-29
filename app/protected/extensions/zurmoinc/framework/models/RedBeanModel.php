@@ -187,7 +187,7 @@
          * @param $joinTablesAdapter null or instance of joinTablesAdapter.
          * @param $offset The zero based index of the first model to be returned.
          * @param $count The number of models to be returned.
-         * @param $where TODO
+         * @param $where
          * @param $orderBy - sql string. Example 'a desc' or 'a.b desc'.  Currently only supports non-related attributes
          * @param $modelClassName Pass only when getting it at runtime gets the wrong name.
          * @return An array of models of the type of the extending model.

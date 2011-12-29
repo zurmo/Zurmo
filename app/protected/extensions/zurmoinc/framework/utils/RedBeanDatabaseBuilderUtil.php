@@ -127,6 +127,7 @@
                     {
                         $messageLogger->addInfoMessage(get_class($model) . " Deleted Already (Owned).");
                     }
+                    AuditEvent::deleteAllByModel($model);
                     unset(self::$modelClassNamesToSampleModels[$modelClassName]);
                 }
                 catch (NotSupportedException $e)

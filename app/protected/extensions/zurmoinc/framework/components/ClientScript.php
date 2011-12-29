@@ -54,7 +54,7 @@
 
         public function isAjaxMode()
         {
-            return $this->shouldRenderCoreScripts;
+            return !$this->shouldRenderCoreScripts;
         }
 
         public function renderCoreScripts()
@@ -62,6 +62,50 @@
             if ($this->shouldRenderCoreScripts)
             {
                 parent::renderCoreScripts();
+            }
+        }
+
+        /**
+         * Method override to call @see removeAllPageLoadedScriptFilesWhenRenderingInAjaxMode
+         * (non-PHPdoc)
+         * @see CClientScript::render()
+         */
+        public function render(& $output)
+        {
+            if($this->isAjaxMode())
+            {
+                $this->removeAllPageLoadedScriptFilesWhenRenderingInAjaxMode();
+            }
+            parent::render($output);
+        }
+
+        /**
+         * When the page is loading in ajax mode, it is assumed certain script files have always
+         * been loaded by the main page.  These need to therefore be removed from the scriptFiles
+         * array.
+         */
+        protected function removeAllPageLoadedScriptFilesWhenRenderingInAjaxMode()
+        {
+            $filesToRemove = PageView::getScriptFilesThatLoadOnAllPages();
+            if(isset($this->scriptFiles[self::POS_BEGIN]))
+            {
+                foreach($this->scriptFiles[self::POS_BEGIN] as $key => $scriptFile)
+                {
+                    if(in_array($scriptFile, $filesToRemove))
+                    {
+                        unset($this->scriptFiles[self::POS_BEGIN][$key]);
+                    }
+                }
+            }
+            if(isset($this->scriptFiles[self::POS_END]))
+            {
+                foreach($this->scriptFiles[self::POS_END] as $key => $scriptFile)
+                {
+                    if(in_array($scriptFile, $filesToRemove))
+                    {
+                        unset($this->scriptFiles[self::POS_END][$key]);
+                    }
+                }
             }
         }
     }

@@ -51,6 +51,7 @@
             {
                 $startTime = microtime(true);
             }
+            static::registerAllPagesScriptFiles();
             $content = $this->renderXHtmlStart()     .
                        $this->renderXHtmlHead()      .
                        $this->renderXHtmlBodyStart() .
@@ -334,6 +335,29 @@
                 $performanceMessage .= 'Count: ' . $count . '&#160;&#160;&#160;Query: ' . $query . "</br>";
             }
             return $performanceMessage;
+        }
+
+        /**
+         * Register into clientScript->scriptFiles any scripts that should load on all pages
+         * @see getScriptFilesThatLoadOnAllPages
+         */
+        public static function registerAllPagesScriptFiles()
+        {
+            Yii::app()->clientScript->registerCoreScript('jquery');
+            Yii::app()->clientScript->registerCoreScript('jquery.ui');
+            $ziiWidgetAssetPath = Yii::getPathOfAlias('zii.widgets.assets');
+            $baseScriptUrl      = Yii::app()->getAssetManager()->publish($ziiWidgetAssetPath) . '/gridview';
+            Yii::app()->clientScript->registerScriptFile($baseScriptUrl . '/jquery.yiigridview.js', CClientScript::POS_END);
+        }
+
+        /**
+         * @return array of script files that are loaded on all pages @see registerAllPagesScriptFiles
+         */
+        public static function getScriptFilesThatLoadOnAllPages()
+        {
+            $ziiWidgetAssetPath = Yii::getPathOfAlias('zii.widgets.assets');
+            $baseScriptUrl      = Yii::app()->getAssetManager()->publish($ziiWidgetAssetPath) . '/gridview';
+            return array($baseScriptUrl . '/jquery.yiigridview.js');
         }
     }
 ?>

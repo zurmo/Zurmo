@@ -34,8 +34,102 @@
             Yii::app()->user->userModel = $super;
         }
 
+        public function testAdaptingBooleanValues()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //Test with blank values for boolean on model and on related model.
+            //Will treat as '0'. Normally you would sanitize $searchAttributes so that this
+            //would be removed before passing into the adapter.
+            $searchAttributes = array(
+                'bool'	 	 => '',
+                'a'          => array('a' => ''),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestBooleanAttributeModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'bool',
+                    'operatorType'  => 'doesNotEqual',
+                    'value'         => (bool)1,
+                ),
+                2 => array(
+                    'attributeName'		   => 'a',
+                    'relatedAttributeName' => 'a',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
+                ),
+            );
+            $compareStructure = '1 and 2';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+
+            //Now test with populated as '0'
+            $searchAttributes = array(
+                'bool'	 	 => '0',
+                'a'          => array('a' => '0'),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestBooleanAttributeModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'bool',
+                    'operatorType'  => 'doesNotEqual',
+                    'value'         => (bool)1,
+                ),
+                2 => array(
+                    'attributeName'		   => 'a',
+                    'relatedAttributeName' => 'a',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => (bool)1,
+                ),
+            );
+            $compareStructure = '1 and 2';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+
+            //Now test with populated as '1'
+            $searchAttributes = array(
+                'bool'	 	 => '1',
+                'a'          => array('a' => '1'),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestBooleanAttributeModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'bool',
+                    'operatorType'  => 'equals',
+                    'value'         => (bool)1,
+                ),
+                2 => array(
+                    'attributeName'		   => 'a',
+                    'relatedAttributeName' => 'a',
+                    'operatorType'         => 'equals',
+                    'value'                => (bool)1,
+                ),
+            );
+            $compareStructure = '1 and 2';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
         public function testGetAdaptedMetadata()
         {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
             $searchAttributes = array(
                 'name'          => 'Vomitorio Corp',
                 'officePhone'   => '5',

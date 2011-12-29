@@ -52,13 +52,18 @@
          */
         public static function getAdministrableModuleClassNames()
         {
-            return array(
-                'AccountsModule',
-                'ContactsModule',
-                'MeetingsModule',
-                'OpportunitiesModule',
-                'TasksModule'
-            );
+            $moduleClassNames = array();
+            $modules = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                $classToEvaluate     = new ReflectionClass($module);
+                if (is_subclass_of($module, 'SecurableModule') && !$classToEvaluate->isAbstract() &&
+                    $module::hasPermissions())
+                {
+                    $moduleClassNames[] = get_class($module);
+                }
+            }
+            return $moduleClassNames;
         }
     }
 ?>

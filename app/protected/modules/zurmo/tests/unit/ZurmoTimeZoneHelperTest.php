@@ -98,5 +98,26 @@
             $timeZoneHelper->setGlobalValue('America/New_York');
             $this->assertEquals('America/New_York', $timeZoneHelper->getGlobalValue());
         }
+
+        public function testSettingCreatedAndModifiedDateTimeInItem()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $tz   = date_default_timezone_get();
+            $time = time();
+            date_default_timezone_set('America/New_York');
+            $account        = new Account();
+            $account->name  = 'test';
+            $account->owner = Yii::app()->user->userModel;
+            $this->assertTrue($account->save());
+
+            //Test to make sure the createdDateTime is actually GMT
+            date_default_timezone_set('GMT');
+            $createdTimeStamp  = strtotime( $account->createdDateTime);
+            $modifiedTimeStamp = strtotime( $account->modifiedDateTime);
+            date_default_timezone_set('America/New_York');
+            $this->assertWithinTolerance($time, $createdTimeStamp, 2);
+            $this->assertWithinTolerance($time, $modifiedTimeStamp, 2);
+            date_default_timezone_set($tz);
+        }
     }
 ?>

@@ -58,7 +58,7 @@
             {
                 try
                 {
-                    $customField = new OwnedCustomField();
+                    $customField        = new OwnedCustomField();
                     $customField->value = $mappingRuleData['defaultValue'];
                     $customField->data  = CustomFieldDataModelUtil::
                                           getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);

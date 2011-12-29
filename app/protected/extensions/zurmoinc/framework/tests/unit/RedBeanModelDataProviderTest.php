@@ -168,6 +168,133 @@
        /**
          * @depends testSearchByTwoMultipleValuesCustomField
          */
+        public function testNullOrEmptyOperatorsInWhereClause()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //I has many ls.
+            $i = new I();
+            $i->iMember = 'abc';
+            $this->assertTrue($i->save());
+
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
+                )
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NULL)";
+            $this->assertEquals($compareWhere, $where);
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+
+            //Test is not null
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'isNotNull',
+                    'value'                => null,
+                )
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NOT NULL)";
+            $this->assertEquals($compareWhere, $where);
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+
+            //Test is empty
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'isEmpty',
+                    'value'                => null,
+                )
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} = '')";
+            $this->assertEquals($compareWhere, $where);
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+
+            //Test is not empty
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'isNotEmpty',
+                    'value'                => null,
+                )
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} != '')";
+            $this->assertEquals($compareWhere, $where);
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+        }
+
+        public function testEscapedSingleQuoteInWhereClause()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //I has many ls.
+            $i = new I();
+            $l = new L();
+            $l->lMember = 'def';
+            $this->assertTrue($l->save());
+            $i->iMember = 'abc';
+            $i->ls->add($l);
+            $this->assertTrue($i->save());
+
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'ls',
+                    'relatedAttributeName' => 'lMember',
+                    'operatorType'         => 'equals',
+                    'value'                => "some'value",
+                )
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}l{$quote}.{$quote}lmember{$quote} = lower('some\'value'))";
+            $this->assertEquals($compareWhere, $where);
+
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+        }
+
+        /**
+         * @depends testEscapedSingleQuoteInWhereClause
+         */
         public function testSearchByRelationId()
         {
             $quote        = DatabaseCompatibilityUtil::getQuote();

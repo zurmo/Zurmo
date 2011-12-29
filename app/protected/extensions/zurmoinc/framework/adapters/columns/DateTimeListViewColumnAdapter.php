@@ -30,7 +30,7 @@
         {
             return array(
                 'name'  => $this->attribute,
-                'value' => 'Yii::app()->dateFormatter->formatDateTime($data->' . $this->attribute . ', "short")',
+                'value' => 'DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($data->' . $this->attribute . ')',
                 'type'  => 'raw',
             );
         }

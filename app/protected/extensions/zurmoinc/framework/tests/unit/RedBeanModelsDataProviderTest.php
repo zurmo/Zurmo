@@ -248,7 +248,7 @@
                     'attributeName'        => 'ks',
                     'relatedAttributeName' => 'kMember',
                     'operatorType'         => 'oneOf',
-                    'value'                => array('d', 'e', 'f')
+                    'value'                => array('d', "e'd", 'f')
             );
             $searchAttributeDataForI['structure'] = '1';
             $modelClassNamesAndSearchAttributeData = array(

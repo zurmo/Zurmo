@@ -67,6 +67,11 @@
             R::exec("drop table $tableName;");
         }
 
+        public static function escape($value)
+        {
+            return R::$adapter->escape($value);
+        }
+
         /**
          * Returns an array of table names from the database.
          */
@@ -217,6 +222,10 @@
             {
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
+            elseif($value === null)
+            {
+                return SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty($operatorType);
+            }
         }
 
         public static function resolveToLowerForStringComparison($operatorType, $value)
@@ -256,20 +265,28 @@
             $counter = 0;
             foreach ($rowsOfColumnValues as $row)
             {
-                if ($counter == 0)
+                if(count($row) == count($columnNames))
                 {
-                    $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
-                }
-                if ($counter == $bulkQuantity)
-                {
-                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
-                    R::exec($sql);
-                    $counter = 0;
+                    if ($counter == 0)
+                    {
+                        $sql = "INSERT INTO " . self::quoteString($tableName) . "(" . implode(',', $columnNames) . ") VALUES "; // Not Coding Standard
+                    }
+                    if ($counter == $bulkQuantity)
+                    {
+                        $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "')"; // Not Coding Standard
+                        R::exec($sql);
+                        $counter = 0;
+                    }
+                    else
+                    {
+                        $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
+                        $counter++;
+                    }
                 }
                 else
                 {
-                    $sql .= "('" . implode("','", array_map('mysql_escape_string', $row)). "'),"; // Not Coding Standard
-                    $counter++;
+                    throw new BulkInsertFailedException(
+                              Yii::t('Default', 'Bulk insert failed. There was a row with an incorrect column quantity'));
                 }
             }
             if ($counter > 0)
@@ -714,6 +731,33 @@
                     }
                     return $result;
             }
+        }
+
+        public static function getDatabaseNameFromConnectionString()
+        {
+            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
+            return $matches[2];
+        }
+
+        public static function getTableRowsCountTotal()
+        {
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            $databaseName = self::getDatabaseNameFromConnectionString();
+            $sql       = "show tables";
+            $totalCount = 0;
+            $rows       = R::getAll($sql);
+            $columnName = 'Tables_in_' . $databaseName;
+            foreach($rows as $row)
+            {
+                $tableName  = $row[$columnName];
+                $tableSql   = "select count(*) count from " . $tableName;
+                $row        = R::getRow($tableSql);
+                $totalCount = $totalCount + $row['count'];
+            }
+            return $totalCount;
         }
     }
 ?>

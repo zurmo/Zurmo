@@ -49,13 +49,22 @@
         public static function checkWebServer(array $minimumRequiredVersions, /* out */ &$actualVersion)
         {
             $matches = array();
-            if (preg_match('/([^\/]+)\/(\d+\.\d+(.\d+))?/', $_SERVER['SERVER_SOFTWARE'], $matches)) // Not Coding Standard
-            {
-                $serverName    = strtolower($matches[1]);
-                $actualVersion =            $matches[2];
-                if (array_key_exists($serverName, $minimumRequiredVersions))
-                {
-                    return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
+            $serverName = $_SERVER['SERVER_SOFTWARE'];
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
+                if (preg_match('/([^\/]+)\/(\d+\.\d)?/', $_SERVER['SERVER_SOFTWARE'], $matches)) { // Not Coding Standard
+                    $serverName = strtolower($matches[1]);
+                    $actualVersion = $matches[2];
+                    if (array_key_exists($serverName, $minimumRequiredVersions)) {
+                        return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
+                    }
+                }
+            } else if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
+                if (preg_match('/([^\/]+)\/(\d+\.\d+(.\d+))?/', $_SERVER['SERVER_SOFTWARE'], $matches)) { // Not Coding Standard
+                    $serverName = strtolower($matches[1]);
+                    $actualVersion = $matches[2];
+                    if (array_key_exists($serverName, $minimumRequiredVersions)) {
+                        return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
+                    }
                 }
             }
             return false;
@@ -707,6 +716,32 @@
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
+        }
+
+        /**
+         * From the command line, run the autobuild method which will effectively update
+         * the database schema.
+         */
+        public static function runAutoBuildFromUpdateSchemaCommand()
+        {
+            ForgetAllCacheUtil::forgetAllCaches();
+            $unfreezeWhenDone     = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $unfreezeWhenDone = true;
+            }
+            $template        = "{message}\n";
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
+            $messageLogger = new MessageLogger($messageStreamer);
+            self::autoBuildDatabase($messageLogger);
+            $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
+            if($unfreezeWhenDone)
+            {
+                RedBeanDatabase::freeze();
+            }
         }
     }
 ?>

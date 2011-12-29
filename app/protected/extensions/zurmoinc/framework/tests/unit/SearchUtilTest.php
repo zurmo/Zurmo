@@ -114,7 +114,7 @@
                 'a' => '0',
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
-            $this->assertEquals(array('a' => null), $newArray);
+            $this->assertEquals(array('a' => '0'), $newArray);
         }
 
         public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()
@@ -168,16 +168,16 @@
             $model = new ASearchFormTestModel(new A(false));
             $searchAttributes = array(
                 'differentOperatorB' => array('value' => 'thiswillstay'),
-                'a'				     => array('value' => 'thiswillgo'),
+                'a'                  => array('value' => 'thiswillgo'),
                 'differentOperatorB' => 'something',
-                'name'				 => array('value' => 'thiswillstay'),
+                'name'               => array('value' => 'thiswillstay'),
             );
             $adaptedSearchAttributes = SearchUtil::adaptSearchAttributesToSetInRedBeanModel($searchAttributes, $model);
             $compareData = array(
                 'differentOperatorB' => array('value' => 'thiswillstay'),
-                'a'				     => 'thiswillgo',
+                'a'                  => 'thiswillgo',
                 'differentOperatorB' => 'something',
-                'name'				 => array('value' => 'thiswillstay'),
+                'name'               => array('value' => 'thiswillstay'),
             );
             $this->assertEquals($compareData, $adaptedSearchAttributes);
         }

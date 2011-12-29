@@ -119,6 +119,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'JobsManagerModule' => array(
+                    'RIGHT_ACCESS_JOBSMANAGER'   => array(
+                        'displayName' => JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
@@ -140,6 +148,14 @@
                     ),
                     'RIGHT_CONVERT_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CONVERT_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -424,6 +440,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'JobsManagerModule' => array(
+                    'RIGHT_ACCESS_JOBSMANAGER'   => array(
+                        'displayName' => JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
@@ -445,6 +469,14 @@
                     ),
                     'RIGHT_CONVERT_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CONVERT_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -725,6 +757,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'JobsManagerModule' => array(
+                    'RIGHT_ACCESS_JOBSMANAGER'   => array(
+                        'displayName' => JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
@@ -746,6 +786,14 @@
                     ),
                     'RIGHT_CONVERT_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CONVERT_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -1025,6 +1073,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'JobsManagerModule' => array(
+                    'RIGHT_ACCESS_JOBSMANAGER'   => array(
+                        'displayName' => JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'LeadsModule' => array(
                     'RIGHT_CREATE_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CREATE_LEADS,
@@ -1046,6 +1102,14 @@
                     ),
                     'RIGHT_CONVERT_LEADS'   => array(
                         'displayName' => LeadsModule::RIGHT_CONVERT_LEADS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MapsModule' => array(
+                    'RIGHT_ACCESS_MAPS_ADMINISTRATION'   => array(
+                        'displayName' => MapsModule::RIGHT_ACCESS_MAPS_ADMINISTRATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

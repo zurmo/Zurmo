@@ -177,5 +177,33 @@
             );
             return $metadata;
         }
+
+        public static function deleteAllByModel(RedBeanModel $model)
+        {
+            if($model instanceof Item)
+            {
+                $searchAttributeData = array();
+                $searchAttributeData['clauses'] = array(
+                    1 => array(
+                        'attributeName'        => 'modelClassName',
+                        'operatorType'         => 'equals',
+                        'value'                => get_class($model),
+                    ),
+                    2 => array(
+                        'attributeName'        => 'modelId',
+                        'operatorType'         => 'equals',
+                        'value'                => $model->id,
+                    ),
+                );
+                $searchAttributeData['structure'] = '1 and 2';
+                $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('AuditEvent');
+                $where             = RedBeanModelDataProvider::makeWhere('AuditEvent', $searchAttributeData, $joinTablesAdapter);
+                $auditEvents       = self::getSubset($joinTablesAdapter, null, null, $where, null);
+                foreach($auditEvents as $event)
+                {
+                    $event->delete();
+                }
+            }
+        }
     }
 ?>

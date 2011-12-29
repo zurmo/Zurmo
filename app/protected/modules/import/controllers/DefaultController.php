@@ -493,13 +493,22 @@
                     if ($fileHandle !== false)
                     {
                         $tempTableName = $import->getTempTableName();
-                        if (!ImportDatabaseUtil::
-                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
-                                                                      $importWizardForm->rowColumnDelimiter,
-                                                                      $importWizardForm->rowColumnEnclosure))
+                        try
                         {
-                            throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
+                            $tableCreated = ImportDatabaseUtil::
+                                            makeDatabaseTableByFileHandleAndTableName($fileHandle, $tempTableName,
+                                                                                      $importWizardForm->rowColumnDelimiter,
+                                                                                      $importWizardForm->rowColumnEnclosure);
+                            if (!$tableCreated)
+                            {
+                                throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
+                            }
                         }
+                        catch(BulkInsertFailedException $e)
+                        {
+                            throw new FailedFileUploadException($e->getMessage());
+                        }
+
                         $fileUploadData = array(
                             'name' => $uploadedFile->getName(),
                             'type' => $uploadedFile->getType(),

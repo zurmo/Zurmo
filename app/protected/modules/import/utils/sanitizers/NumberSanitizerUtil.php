@@ -64,24 +64,26 @@
             {
                 return $value;
             }
-            $model    = new $modelClassName(false);
-            $type     = ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
-            $validator = new RedBeanModelNumberValidator();
+            $sanitizedValue = str_replace('$', '', $value);
+            $sanitizedValue = str_replace(',', '', $sanitizedValue);
+            $model          = new $modelClassName(false);
+            $type           = ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
+            $validator      = new RedBeanModelNumberValidator();
             if ($validator->integerOnly === true)
             {
-                if (!preg_match($validator->integerPattern, $value))
+                if (!preg_match($validator->integerPattern, $sanitizedValue))
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid integer format.'));
                 }
             }
             else
             {
-                if (!preg_match($validator->numberPattern, $value))
+                if (!preg_match($validator->numberPattern, $sanitizedValue))
                 {
                     throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid number format.'));
                 }
             }
-            return $value;
+            return $sanitizedValue;
         }
     }
 ?>

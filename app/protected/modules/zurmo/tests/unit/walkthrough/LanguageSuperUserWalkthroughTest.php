@@ -50,7 +50,7 @@
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/language/configurationList');
         }
 
-        public function testSuperUserModifyActiveCurrenciesInCollection()
+        public function testSuperUserModifyActiveLanguagesInCollection()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 

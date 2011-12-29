@@ -165,6 +165,18 @@
             );
         }
 
+        protected function makeTitleBarAndDetailsView($model, $titleBarAndDetailsViewClassName = 'TitleBarAndDetailsView')
+        {
+            assert('$model != null');
+            assert('$titleBarAndDetailsViewClassName != null && is_string($titleBarAndDetailsViewClassName)');
+            return new $titleBarAndDetailsViewClassName(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $model,
+                $this->getModule()->getPluralCamelCasedName()
+            );
+        }
+
         protected function resolveActiveAttributesFromMassEditPost()
         {
             if (isset($_POST['MassEdit']))

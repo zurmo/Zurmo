@@ -248,7 +248,10 @@
             {
                 foreach ($scriptsPathsByPosition as $position => $scriptPath)
                 {
-                    $this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
+                    if (strpos($scriptPath, 'http') === false)
+                    {
+                        $this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
+                    }
                 }
             }
         }

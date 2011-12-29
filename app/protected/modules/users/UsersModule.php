@@ -135,7 +135,6 @@
                             ),
                         ),
                     ),
-
                 ),
                 'designerMenuItems' => array(
                     'showFieldsLink' => false,

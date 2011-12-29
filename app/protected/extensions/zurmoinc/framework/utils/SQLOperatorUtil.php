@@ -52,6 +52,10 @@
                 return in_array($operatorType, array('greaterThan', 'lessThan', 'equals', 'doesNotEqual',
                                                      'greaterThanOrEqualTo', 'lessThanOrEqualTo'));
             }
+            elseif ($value === null)
+            {
+                return in_array($operatorType, array('isNull', 'isNotNull', 'isEmpty', 'isNotEmpty'));
+            }
             return false;
         }
 
@@ -154,11 +158,11 @@
                 {
                     if ($ignoreStringToLower)
                     {
-                        $inPart .= "'" . $theValue . "'";
+                        $inPart .= "'" . DatabaseCompatibilityUtil::escape($theValue) . "'";
                     }
                     else
                     {
-                        $inPart .= "'" . $theValue . "'";
+                        $inPart .= "'" . DatabaseCompatibilityUtil::escape($theValue) . "'";
                     }
                 }
                 elseif (is_numeric($theValue))
@@ -181,6 +185,27 @@
             return 'IN(' . $inPart . ')';
         }
 
+        public static function resolveOperatorAndValueForNullOrEmpty($operatorType)
+        {
+            assert('in_array($operatorType, array("isNull", "isNotNull", "isEmpty", "isNotEmpty"))');
+            if($operatorType == 'isNull')
+            {
+                return 'IS NULL';
+            }
+            elseif($operatorType == 'isNotNull')
+            {
+                return 'IS NOT NULL';
+            }
+            elseif($operatorType == 'isEmpty')
+            {
+                return "= ''";
+            }
+            else
+            {
+                return "!= ''";
+            }
+        }
+
         /**
          * @return boolean
          */
@@ -196,7 +221,25 @@
                 'lessThanOrEqualTo',
                 'greaterThan',
                 'lessThan',
-                'oneOf')))
+                'oneOf',
+                'isNull',
+                'isNotNull',
+                'isEmpty',
+                'isNotEmpty')))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static function doesOperatorTypeAllowNullValues($type)
+        {
+            assert('is_string($type)');
+            if (in_array($type, array(
+                'isNull',
+                'isNotNull',
+                'isEmpty',
+                'isNotEmpty')))
             {
                 return true;
             }

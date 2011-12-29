@@ -80,7 +80,9 @@
         {
             if ($this->model->{$this->attribute} != null)
             {
-                $content = Yii::app()->dateFormatter->formatDateTime($this->model->{$this->attribute}, 'short', 'short');
+                $content = DateTimeUtil::
+                           convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                               $this->model->{$this->attribute});
                 return CHtml::encode($content);
             }
         }

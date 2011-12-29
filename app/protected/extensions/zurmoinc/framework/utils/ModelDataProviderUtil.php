@@ -536,7 +536,8 @@
             assert('is_string($tableAliasName)');
             assert('is_string($columnName)');
             $quote = DatabaseCompatibilityUtil::getQuote();
-            if (is_string($value) || (is_array($value) && count($value) > 0) || $value !== null)
+            if (is_string($value) || (is_array($value) && count($value) > 0) || $value !== null  ||
+                ($value === null && SQLOperatorUtil::doesOperatorTypeAllowNullValues($operatorType)))
             {
                 $where[$whereKey] = "($quote$tableAliasName$quote.$quote$columnName$quote " . // Not Coding Standard
                                 DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType,
