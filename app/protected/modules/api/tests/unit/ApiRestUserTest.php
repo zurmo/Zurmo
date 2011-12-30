@@ -211,9 +211,6 @@
                                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $contacts = Contact::getByName('Michael Smith');
-            $this->assertEquals(1, count($contacts));
-
             $user = User::getByUsername('diggy011');
 
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($user);
@@ -221,7 +218,6 @@
 
             $data['firstName']                = "John";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'PUT', $headers, array('data' => $data));
-
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -231,11 +227,8 @@
             $compareData['firstName'] = "John";
             ksort($compareData);
             ksort($response['data']);
-            print_r($compareData);
-            print_r($response['data']);
             $this->assertEquals($compareData, $response['data']);
-echo "aa";
-exit;
+
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
@@ -263,7 +256,7 @@ exit;
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(4, count($response['data']['array']));
+            $this->assertEquals(3, count($response['data']['array']));
         }
 
 
@@ -285,8 +278,7 @@ exit;
                                     'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $contacts = Contact::getByName('Michael Smith');
-            $this->assertEquals(1, count($contacts));
+            $user = User::getByUsername('diggy011');
 
             // To-Do: Uncomment after fix security not to print view
             /*
@@ -297,15 +289,15 @@ exit;
             'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
             'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $users[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $users[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $users[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             */
@@ -319,191 +311,11 @@ exit;
                     );
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $users[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $users[0]->id, 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-        }
-
-        /**
-        * @depends testApiServerUrl
-        */
-        public function testListViewCreateUpdateDelete()
-        {
-            Yii::app()->user->userModel        = User::getByUsername('super');
-            $notAllowedUser = UserTestHelper::createBasicUser('Steven');
-            $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
-            $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS, Right::DENY);
-
-            $saved = $notAllowedUser->save();
-
-            $authenticationData = $this->login();
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
-
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-
-            $titles = array('Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Swami');
-            $customFieldData = CustomFieldData::getByName('Titles');
-            $customFieldData->serializedData = serialize($titles);
-            $this->assertTrue($customFieldData->save());
-
-            $primaryEmail['emailAddress']   = "a@example.com";
-            $primaryEmail['optOut']         = 1;
-
-            $primaryAddress['street1']      = '129 Noodle Boulevard';
-            $primaryAddress['street2']      = 'Apartment 6000A';
-            $primaryAddress['city']         = 'Noodleville';
-            $primaryAddress['postalCode']   = '23453';
-            $primaryAddress['country']      = 'The Good Old US of A';
-
-            $currencies                 = Currency::getAll();
-            $currency    = $currencies[0];
-            $this->assertEquals('USD', $currency->code);
-
-            $manager = new User();
-            $manager->username     = 'smith45';
-            $manager->title->value = 'Mr.';
-            $manager->firstName    = 'Super';
-            $manager->lastName     = 'User';
-            $manager->setPassword('smith45');
-            $saved = $manager->save();
-            $this->assertTrue($saved);
-
-            $data['firstName']           = "Michael";
-            $data['lastName']            = "Smith";
-            $data['jobTitle']            = "President";
-            $data['department']          = "Sales";
-            $data['officePhone']         = "653-235-7824";
-            $data['mobilePhone']         = "653-235-7821";
-            $data['officeFax']           = "653-235-7834";
-            $data['username']            = "diggy011";
-            $data['password']            = "diggy011";
-            $data['language']            = "en";
-            $data['timeZone']            = "America/Chicago";
-
-            $data['title']['value']      = $titles[3];
-            $data['manager']['id']       = $manager->id;
-
-            $data['primaryEmail']        = $primaryEmail;
-            $data['primaryAddress']      = $primaryAddress;
-
-            $data['currency']       = array(
-                'id' => $currency->id
-            );
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/', 'POST', $headers, array('data' => $data));
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-
-            $data['createdByUser']    = array(
-                'id' => $super->id,
-                'username' => 'super'
-            );
-            $data['modifiedByUser'] = array(
-                'id' => $super->id,
-                'username' => 'super'
-            );
-
-            // We need to unset some empty values from response.
-            unset($response['data']['createdDateTime']);
-            unset($response['data']['modifiedDateTime']);
-            unset($response['data']['primaryEmail']['id'] );
-            unset($response['data']['primaryAddress']['id']);
-            unset($response['data']['primaryAddress']['state']);
-            unset($response['data']['primaryAddress']['longitude']);
-            unset($response['data']['primaryAddress']['latitude']);
-            unset($response['data']['title']['id']);
-            $this->assertEquals(ksort($data), ksort($response['data']));
-            $id = $response['data']['id'];
-
-            // Check if new user can log in
-            $newUser = User::getByUsername('diggy011');
-            $newUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
-            $saved = $newUser->save();
-            $authenticationData = $this->login('diggy011', 'diggy011');
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
-
-
-            $authenticationData = $this->login();
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
-
-            // Test update
-            $data['firstName']                = "John";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'PUT', $headers, array('data' => $data));
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-
-            // We need to unset some empty values from response and dates.
-            unset($response['data']['createdDateTime']);
-            unset($response['data']['modifiedDateTime']);
-            unset($response['data']['primaryEmail']['id'] );
-            unset($response['data']['primaryAddress']['id']);
-            unset($response['data']['primaryAddress']['state']);
-            unset($response['data']['primaryAddress']['longitude']);
-            unset($response['data']['primaryAddress']['latitude']);
-            unset($response['data']['title']['id']);
-
-            $this->assertEquals(ksort($data), ksort($response['data']));
-
-            // Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api', 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(4, count($response['data']['array']));
-
-            // Test with unprivileged user to view, edit and delete account.
-            $authenticationData = $this->login('steven', 'steven');
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'PUT', $headers, array('data' => $data));
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'DELETE', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-
-            // Test with privileged user
-            $authenticationData = $this->login();
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
-
-            // Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'DELETE', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
         }
