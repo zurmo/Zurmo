@@ -30,11 +30,11 @@
     // DON'T MAKE A MESS!
     return array(
         'Access LeadsModulePluralLabel Tab'
-            => '??',
+            => 'Acceso ai LeadsModulePluralLabel',
         'AccountsModuleSingularLabel Optional'
-            => '??',
+            => 'AccountsModuleSingularLabel opzionale',
         'AccountsModuleSingularLabel Required'
-            => '??',
+            => 'AccountsModuleSingularLabel obbligatorio',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => '??',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator.'
