@@ -38,39 +38,39 @@
         'A date/time field'
             => 'Un campo data/hora',
         'A decimal field'
-            => '??',
+            => 'Un campo decimale',
         'A description box'
-            => '??',
+            => 'Un camp memo',
         'A field that contains a URL'
-            => '??',
+            => 'Un campo che contiene un URL',
         'A field with this name is already used.'
-            => '??',
+            => 'Un campo con questo nome esiste già.',
         'A phone field'
-            => '??',
+            => 'Un campo telefono',
         'A pick list that can have multiple selections'
-            => '??',
+            => 'Un campo picklist che puede avere molti selezioni',
         'A pick list with specific values to select from'
-            => '??',
+            => 'Un pick list con valori specifice da scegliere',
         'A radio button pick list'
-            => '??',
+            => 'Un campo radio button',
         'A text field'
-            => '??',
+            => 'Un campo di testo',
         'Access Designer Tool'
-            => '??',
+            => 'Acceso al Designer',
         'Address fields'
-            => '??',
+            => 'Campi Indirizzi',
         'All panels visible'
-            => '??',
+            => 'Tutti los pannellos visibile',
         'All required fields must be placed in this layout.'
-            => '??',
+            => 'Tutti i campi richiesti devono essere collocati nel layout.',
         'An integer field'
-            => '??',
+            => 'Un campo intero',
         'Check Box'
-            => '??',
+            => 'Check box',
         'Create Field'
-            => '??',
+            => 'Crea un campo',
         'Custom Fields'
-            => '??',
+            => 'Campi personalizzati',
         'Decimal'
             => 'Decimale',
         'Designer'
@@ -80,33 +80,31 @@
         'Designer Tool'
             => 'Designer',
         'Detail and Edit View'
-            => '??',
+            => 'Vista de dettaglio e modifica',
         'Details View'
-            => '??',
+            => 'Vista dettaglio',
         'Display Name'
-            => '??',
+            => 'Etichetta campo',
         'Each item must be uniquely named'
-            => '??',
+            => 'Ogni valore deve aver un nome unico',
         'Edit Field'
-            => '??',
+            => 'Modifica campo',
         'Edit Layout'
-            => '??',
+            => 'Modifica il layout',
         'Edit View'
-            => '??',
+            => 'Vista modifica',
         'Email address fields'
-            => '??',
+            => 'Campi dell\'indirizzo e-mail',
         'Email Address Information'
-            => '??',
+            => 'Informazioni dell\'indirizzo email',
         'Field'
-            => '??',
+            => 'Campo',
         'Field Name'
-            => '??',
+            => 'Nome del campo',
         'Field Type'
-            => '??',
+            => 'Tipo del campo',
         'Fields'
-            => '??',
-        'Fields'
-            => '??',
+            => 'Campi',
         'First character must be a lower case letter'
             => '??',
         'First panel visible, then `show more` link'
