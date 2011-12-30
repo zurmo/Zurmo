@@ -17,44 +17,14 @@
     <td></td>
 </tr>
 <tr>
-	<td>storeGlobal</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+    <td>storeGlobal</td>
+    <td>javascript{Math.floor(Math.random()*11000)}</td>
+    <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default/create</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>Accounts: (Unnamed)</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>Account_name</td>
-	<td>my account ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>my account ${randomSuffix}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>index.php?r=leads/default</td>
-	<td></td>
+    <td>open</td>
+    <td>index.php?r=accounts/default/create</td>
+    <td></td>
 </tr>
 <tr>
     <td>waitForPageToLoad</td>
@@ -62,274 +32,304 @@
     <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[1]/a/span</td>
-	<td></td>
+    <td>waitForTextPresent</td>
+    <td>Accounts: (Unnamed)</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Leads: (Unnamed)</td>
-	<td></td>
+    <td>type</td>
+    <td>Account_name</td>
+    <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_firstName</td>
-	<td>Silly</td>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_lastName</td>
-	<td>Sally ${randomSuffix}</td>
+    <td>waitForTextPresent</td>
+    <td>my account ${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Contact_state_id</td>
-	<td>label=In Progress</td>
+    <td>open</td>
+    <td>index.php?r=leads/default</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_jobTitle</td>
-	<td>President</td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Contact_source_value</td>
-	<td>label=Inbound Call</td>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[1]/a/span</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_companyName</td>
-	<td>Rabbit Technology</td>
+    <td>waitForTextPresent</td>
+    <td>Leads: (Unnamed)</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_officePhone</td>
-	<td>456-777-6655</td>
+    <td>type</td>
+    <td>Contact_firstName</td>
+    <td>Silly</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_mobilePhone</td>
-	<td>888999888</td>
+    <td>type</td>
+    <td>Contact_lastName</td>
+    <td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Contact_owner_SelectLink</td>
-	<td></td>
+    <td>select</td>
+    <td>Contact_state_id</td>
+    <td>label=In Progress</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>User Search</td>
-	<td></td>
+    <td>type</td>
+    <td>Contact_jobTitle</td>
+    <td>President</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>User[firstName]</td>
-	<td>Sam</td>
+    <td>select</td>
+    <td>Contact_source_value</td>
+    <td>label=Inbound Call</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>User[lastName]</td>
-	<td>Smith</td>
+    <td>type</td>
+    <td>Contact_companyName</td>
+    <td>Rabbit Technology</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+    <td>type</td>
+    <td>Contact_officePhone</td>
+    <td>456-777-6655</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result(s).</td>
-	<td></td>
+    <td>type</td>
+    <td>Contact_mobilePhone</td>
+    <td>888999888</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Sam Smith</td>
-	<td></td>
+    <td>click</td>
+    <td>Contact_owner_SelectLink</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Sam Smith</td>
-	<td></td>
+    <td>waitForTextPresent</td>
+    <td>User Search</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>Contact_owner_name</td>
-	<td>Sam Smith</td>
+    <td>type</td>
+    <td>User[firstName]</td>
+    <td>Sam</td>
 </tr>
 <tr>
-	<td>assertNotValue</td>
-	<td>Contact_owner_id</td>
-	<td></td>
+    <td>type</td>
+    <td>User[lastName]</td>
+    <td>Smith</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryAddress_street1</td>
-	<td>123 Main Street</td>
+    <td>click</td>
+    <td>search</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryAddress_street2</td>
-	<td>Suite 500</td>
+    <td>waitForTextPresent</td>
+    <td>Displaying 1-1 of 1 result(s).</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryAddress_city</td>
-	<td>Chicago</td>
+    <td>waitForTextPresent</td>
+    <td>Sam Smith</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryAddress_state</td>
-	<td>IL</td>
+    <td>click</td>
+    <td>link=Sam Smith</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryAddress_postalCode</td>
-	<td>60614</td>
+    <td>waitForValue</td>
+    <td>Contact_owner_name</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryAddress_country</td>
-	<td>USA</td>
+    <td>assertNotValue</td>
+    <td>Contact_owner_id</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_secondaryAddress_street1</td>
-	<td>456 Bee Street</td>
+    <td>type</td>
+    <td>Contact_primaryAddress_street1</td>
+    <td>123 Main Street</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_secondaryAddress_street2</td>
-	<td>Suite 400</td>
+    <td>type</td>
+    <td>Contact_primaryAddress_street2</td>
+    <td>Suite 500</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_secondaryAddress_city</td>
-	<td>Gary</td>
+    <td>type</td>
+    <td>Contact_primaryAddress_city</td>
+    <td>Chicago</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_secondaryAddress_state</td>
-	<td>Indiana</td>
+    <td>type</td>
+    <td>Contact_primaryAddress_state</td>
+    <td>IL</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_secondaryAddress_postalCode</td>
-	<td>67898</td>
+    <td>type</td>
+    <td>Contact_primaryAddress_postalCode</td>
+    <td>60614</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_secondaryAddress_country</td>
-	<td>USA</td>
+    <td>type</td>
+    <td>Contact_primaryAddress_country</td>
+    <td>USA</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Contact_industry_value</td>
-	<td>label=Financial Services</td>
+    <td>type</td>
+    <td>Contact_secondaryAddress_street1</td>
+    <td>456 Bee Street</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_website</td>
-	<td>http://www.rabbit.com</td>
+    <td>type</td>
+    <td>Contact_secondaryAddress_street2</td>
+    <td>Suite 400</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_description</td>
-	<td>test</td>
+    <td>type</td>
+    <td>Contact_secondaryAddress_city</td>
+    <td>Gary</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Contact_title_value</td>
-	<td>label=Mrs.</td>
+    <td>type</td>
+    <td>Contact_secondaryAddress_state</td>
+    <td>Indiana</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_officeFax</td>
-	<td>5679076543</td>
+    <td>type</td>
+    <td>Contact_secondaryAddress_postalCode</td>
+    <td>67898</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Contact_primaryEmail_emailAddress</td>
-	<td>sally@rabbit.com</td>
+    <td>type</td>
+    <td>Contact_secondaryAddress_country</td>
+    <td>USA</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+    <td>select</td>
+    <td>Contact_industry_value</td>
+    <td>label=Financial Services</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Silly Sally ${randomSuffix}</td>
+    <td>type</td>
+    <td>Contact_website</td>
+    <td>http://www.rabbit.com</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mrs. Silly Sally ${randomSuffix}</td>	
+    <td>type</td>
+    <td>Contact_description</td>
+    <td>test</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
-	<td>In Progress</td>
+    <td>select</td>
+    <td>Contact_title_value</td>
+    <td>label=Mrs.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
-	<td>Rabbit Technology</td>
+    <td>type</td>
+    <td>Contact_officeFax</td>
+    <td>5679076543</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
-	<td>456-777-6655</td>
+    <td>type</td>
+    <td>Contact_primaryEmail_emailAddress</td>
+    <td>sally@rabbit.com</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
-	<td>888999888</td>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[5]/td[2]</td>
-	<td>5679076543</td>
+    <td>waitForText</td>
+    <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
+    <td>exact:Leads: Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>compareText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[2]</td>
-	<td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA</td>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+    <td>Mrs. Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=exact:http://www.rabbit.com</td>
-	<td>exact:http://www.rabbit.com</td>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+    <td>In Progress</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[8]/td[1]</td>
-	<td>Financial Services</td>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+    <td>Rabbit Technology</td>
 </tr>
 <tr>
-	<td>compareText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[1]</td>
-	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA</td>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
+    <td>456-777-6655</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=sally@rabbit.com</td>
-	<td>sally@rabbit.com</td>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
+    <td>888999888</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Sam Smith</td>
-	<td>Sam Smith</td>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[5]/td[2]</td>
+    <td>5679076543</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
-	<td>Inbound Call</td>
+    <td>compareText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[2]</td>
+    <td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA map</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[9]/td</td>
-	<td>test</td>
+    <td>assertText</td>
+    <td>link=exact:http://www.rabbit.com</td>
+    <td>exact:http://www.rabbit.com</td>
+</tr>
+<tr>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[8]/td[1]</td>
+    <td>Financial Services</td>
+</tr>
+<tr>
+    <td>compareText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[1]</td>
+    <td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA map</td>
+</tr>
+<tr>
+    <td>assertText</td>
+    <td>link=sally@rabbit.com</td>
+    <td>sally@rabbit.com</td>
+</tr>
+<tr>
+    <td>assertText</td>
+    <td>link=Sam Smith</td>
+    <td>Sam Smith</td>
+</tr>
+<tr>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
+    <td>Inbound Call</td>
+</tr>
+<tr>
+    <td>assertText</td>
+    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[9]/td</td>
+    <td>test</td>
 </tr>
 </tbody></table>
 </body>
