@@ -30,13 +30,13 @@
     // DON'T MAKE A MESS!
     return array(
         'A check box'
-            => '??',
+            => 'Un checkbox',
         'A currency field'
-            => '??',
+            => 'Un campo di tipo Valuta',
         'A date field'
-            => '??',
+            => 'Un campo Data',
         'A date/time field'
-            => '??',
+            => 'Un campo data/hora',
         'A decimal field'
             => '??',
         'A description box'
@@ -72,13 +72,13 @@
         'Custom Fields'
             => '??',
         'Decimal'
-            => '??',
+            => 'Decimale',
         'Designer'
-            => '??',
+            => 'Designer',
         'Designer Home'
-            => '??',
+            => 'Designer',
         'Designer Tool'
-            => '??',
+            => 'Designer',
         'Detail and Edit View'
             => '??',
         'Details View'
