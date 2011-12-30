@@ -47,6 +47,8 @@
             => 'Einfache Suche',
         'Before'
             => 'Vor',
+        'Bulk insert failed. There was a row with an incorrect column quantity'
+            => 'Fehler bei der BULK INSERT-Operation. Eine Zeile enthält eine Reihe von schlechten Säulen',
         'by'
             => 'Von',
         'Cancel'

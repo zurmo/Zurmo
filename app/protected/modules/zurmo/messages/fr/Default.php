@@ -165,6 +165,8 @@
             => 'Devises',
         'Currency in use.'
             => 'Devise utiliséé.',
+        'Currency Rates Update Job'
+            => 'Met à jour les taux de devises',
         'Currency Value'
             => 'Valeur',
         'Customer'

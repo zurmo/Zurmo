@@ -165,6 +165,8 @@
             => '??',
         'Currency in use.'
             => '??',
+        'Currency Rates Update Job'
+            => '',
         'Currency Value'
             => '??',
         'Customer'

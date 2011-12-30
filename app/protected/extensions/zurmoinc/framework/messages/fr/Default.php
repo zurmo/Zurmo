@@ -47,6 +47,8 @@
             => 'Recherche simple',
         'Before'
             => 'Avant',
+        'Bulk insert failed. There was a row with an incorrect column quantity'
+            => 'Erreur avec l\'opération BULK INSERT.  Une ligne contient une mauvaise quantité de colonnes',
         'by'
             => 'par',
         'Cancel'
