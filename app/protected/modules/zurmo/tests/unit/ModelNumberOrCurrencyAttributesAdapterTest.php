@@ -24,40 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper class to work with calculated numbers.
-     */
-    class CalculatedNumberUtil
+    class ModelNumberOrCurrencyAttributesAdapterTest extends BaseTest
     {
-        /**
-         * Given a formula string and a model, calculate the number using the formula and values from the attributes
-         * on the model.
-         * @param string $formula
-         * @param RedBeanModel $model
-         * @return calculated value as number.
-         */
-        public static function calculateByFormulaAndModel($formula, RedBeanModel $model)
+        public static function setUpBeforeClass()
         {
-            assert('is_string($formula)');
-            //todo:
-            return 'todo';
+            parent::setUpBeforeClass();
+            $user = SecurityTestHelper::createSuperAdmin();
+            Yii::app()->user->userModel = $user;
         }
 
-        /**
-         * Given a formula string and a model, determine if the formula is correctly formed and is using valid
-         * attributes from the given model.
-         * @param string $formula
-         * @param RedBeanModel $model
-         * @return boolean true/false
-         */
-        public static function isFormulaValid($formula, RedBeanModel $model)
+        public function testGetAttributes()
         {
-            assert('is_string($formula)');
-            //todo:
-            //Test that all attributes specified in the formula are valid attributes on the model and number or
-            //currency attributes.
-            //Test that the operators + - / * and () are correctly formed.
+            $adapter     = new ModelNumberOrCurrencyAttributesAdapter(new TestOperatorTypeModel());
+            $attributes  = $adapter->getAttributes();
+            $this->assertEquals(2, count($attributes));
+            $this->assertTrue(isset($attributes['integerStandard']));
+            $this->assertTrue(isset($attributes['floatStandard']));
+
+            $adapter     = new ModelNumberOrCurrencyAttributesAdapter(new CurrencyValueTestItem());
+            $attributes  = $adapter->getAttributes();
+            $compareData = array();
+            $this->assertEquals(1, count($attributes));
+            $this->assertTrue(isset($attributes['amount']));
         }
     }
-
 ?>

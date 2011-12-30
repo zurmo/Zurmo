@@ -36,9 +36,16 @@
         protected function renderControlEditable()
         {
             $content  = parent::renderControlEditable();
-            $content  =  Yii::t('Default', 'How does this work?') . '<br/>' . $content;
-            $content .= '<br/>';
-            $content .= $this->renderAvailableAttributesContent();
+            $title        = Yii::t('Default', 'Create a math formula that is calculated from other fields.' .
+                                   ' Use the Formula Name from the Available Fields grid below to create your formula.' .
+                                   ' Example formula (field1 x field2) / field3');
+            $spanContent  = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">';
+            $spanContent .= Yii::t('Default', 'How does this work?') . '</span>';
+            $content      = $spanContent . '<br/>' . $content;
+            $content     .= '<br/>';
+            $content     .= $this->renderAvailableAttributesContent();
+            $qtip = new QTip();
+            $qtip->addQTip("#formula-tooltip");
             return $content;
         }
 

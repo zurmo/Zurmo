@@ -62,6 +62,7 @@
         public function rules()
         {
             return array_merge(parent::rules(), array(
+                array('formula',        'required'),
                 array('formula',        'validateFormula'),
             ));
         }
@@ -94,7 +95,8 @@
             assert('$this->modelClassName != null');
             $modelClassName = $this->modelClassName;
             $model          = new $modelClassName(false);
-            if(!CalculatedNumberUtil::isFormulaValid($this->{$attribute}, $model))
+            $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
+            if(!CalculatedNumberUtil::isFormulaValid($this->{$attribute}, $adapter))
             {
                 $this->addError('formula', Yii::t('Default', 'The formula is invalid.'));
             }
