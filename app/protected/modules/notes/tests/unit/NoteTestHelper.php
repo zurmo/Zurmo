@@ -32,7 +32,7 @@
             $note = new Note();
             $note->owner               = $owner;
             $note->occurredOnDateTime  = $occurredOnStamp;
-            $note->description         = 'my test description';
+            $note->description         = $name;
             $saved = $note->save();
             assert('$saved');
             return $note;

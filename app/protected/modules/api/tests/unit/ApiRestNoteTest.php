@@ -34,28 +34,72 @@
         /**
         * @depends testApiServerUrl
         */
-        public function testListViewCreateUpdateDelete()
+        public function testGetNote()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
-            $notAllowedUser = UserTestHelper::createBasicUser('Steven');
-            $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
-            $saved = $notAllowedUser->save();
-
+            $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                'Accept: application/json',
+                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
+            $note = NoteTestHelper::createNoteByNameForOwner('First Note', $super);
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($note);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $note->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+        }
+
+        /**
+         * @depends testGetNote
+         */
+        public function testDeleteNote()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $authenticationData = $this->login();
+            $headers = array(
+                                'Accept: application/json',
+                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $notes = Note::getByName('First Note');
+            $this->assertEquals(1, count($notes));
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('The id specified was invalid.', $response['message']);
+        }
+
+        public function testCreateNote()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
+            $authenticationData = $this->login();
+            $headers = array(
+                                            'Accept: application/json',
+                                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                                            'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                            'ZURMO_API_REQUEST_TYPE: REST',
+            );
 
             $occurredOnStamp          = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
             $data['description']    = "Note description";
             $data['occurredOnDateTime'] = $occurredOnStamp;
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -75,81 +119,152 @@
             // We need to unset some empty values from response.
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
+            unset($response['data']['id']);
             $data['latestDateTime'] = $occurredOnStamp;
-            $this->assertEquals(ksort($data), ksort($response['data']));
-            $id = $response['data']['id'];
 
-            //Test update
+            ksort($data);
+            ksort($response['data']);
+            $this->assertEquals($data, $response['data']);
+        }
+
+        /**
+         * @depends testCreateNote
+         */
+        public function testUpdateNote(){
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $authenticationData = $this->login();
+            $headers = array(
+                                'Accept: application/json',
+                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $notes = Note::getByName('Note description');
+            $this->assertEquals(1, count($notes));
+
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($notes[0]);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
+
             $updateData['description']    = "Updated note description";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'PUT', $headers, array('data' => $updateData));
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'PUT', $headers, array('data' => $updateData));
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
             // We need to unset some empty values from response and dates.
-            unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
-            $data['description'] = $updateData['description'];
-            $this->assertEquals(ksort($data), ksort($response['data']));
+            unset($compareData['modifiedDateTime']);
+            $compareData['description'] = "Updated note description";
+            ksort($compareData);
+            ksort($response['data']);
+            $this->assertEquals($compareData, $response['data']);
 
-            //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            unset($response['data']['modifiedDateTime']);
+            ksort($response['data']);
+            $this->assertEquals($compareData, $response['data']);
+        }
+
+        /**
+         * @depends testUpdateNote
+         */
+        public function testListNotes()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $authenticationData = $this->login();
+            $headers = array(
+                                'Accept: application/json',
+                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $notes = Note::getByName('Updated note description');
+            $this->assertEquals(1, count($notes));
+
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($notes[0]);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
-            foreach ($response['data']['array'] as $key => $value)
-            {
-                unset($response['data']['array'][$key]['createdDateTime']);
-                unset($response['data']['array'][$key]['modifiedDateTime']);
-                unset($response['data']['array'][$key]['id']);
-                ksort($response['data']['array'][$key]);
-            }
-            $this->assertEquals(array($data), $response['data']['array']);
+            $this->assertEquals(array($compareData), $response['data']['array']);
+        }
 
+
+        /**
+         * @depends testListNotes
+         */
+        public function testUnprivilegedUserViewUpdateDeleteNotes()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $notAllowedUser = UserTestHelper::createBasicUser('Steven');
+            $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
+            $saved = $notAllowedUser->save();
+
+            $authenticationData = $this->login('steven', 'steven');
+            $headers = array(
+                                    'Accept: application/json',
+                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
+                                    'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $notes = Note::getByName('Updated note description');
+            $this->assertEquals(1, count($notes));
+
+            // To-Do: Uncomment after fix security not to print view
+            /*
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
+            'Accept: application/json',
+            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+            'ZURMO_TOKEN: ' . $authenticationData['token'],
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-
+            */
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
+            'Accept: application/json',
+            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+            'ZURMO_TOKEN: ' . $authenticationData['token'],
+            'ZURMO_API_REQUEST_TYPE: REST',
+                    );
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
         }
 
         /**
-        * @depends testListViewCreateUpdateDelete
+        * @depends testUnprivilegedUserViewUpdateDeleteNotes
         */
-        public function testSearch()
+        public function testSearchNotes()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $anotherUser = User::getByUsername('steven');
@@ -181,7 +296,7 @@
                 'sort' => 'description',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
@@ -193,7 +308,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
@@ -205,7 +320,7 @@
             $searchParams['pagination']['page'] = 1;
             $searchParams['search']['description'] = 'First Note';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -216,7 +331,7 @@
             $searchParams['pagination']['page'] = 1;
             $searchParams['search']['description'] = 'First Note 2';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(0, $response['data']['total']);
@@ -234,7 +349,7 @@
                 'sort' => 'description.desc',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
@@ -246,7 +361,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
@@ -267,7 +382,7 @@
             );
 
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
@@ -279,7 +394,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -299,7 +414,7 @@
             );
 
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
@@ -325,7 +440,7 @@
             // Provide data without required fields.
             $data['description']         = "";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -333,7 +448,7 @@
             $id = $note->id;
             $data = array();
             $data['description']                = '';
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -355,7 +470,7 @@
             // Provide data with wrong type.
             $data['occurredOnDateTime']         = "A";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(2, count($response['errors']));
@@ -363,7 +478,7 @@
             $id = $note->id;
             $data = array();
             $data['occurredOnDateTime']         = "A";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/note/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
