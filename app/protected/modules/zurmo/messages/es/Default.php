@@ -165,6 +165,8 @@
             => 'Configuración de divisas',
         'Currency in use.'
             => 'Divisa en uso',
+        'Currency Rates Update Job'
+            => 'Actualiza el tipo de cambio',
         'Currency Value'
             => 'Valor de divisa',
         'Customer'

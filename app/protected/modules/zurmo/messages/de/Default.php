@@ -165,6 +165,8 @@
             => 'Währung Konfiguration',
         'Currency in use.'
             => 'Währung in Verwendung',
+        'Currency Rates Update Job'
+            => 'Wechselkurs Aktualisierungen',
         'Currency Value'
             => 'Wert der Währung',
         'Customer'

@@ -47,6 +47,8 @@
             => 'Ricerca',
         'Before'
             => 'Prima',
+        'Bulk insert failed. There was a row with an incorrect column quantity'
+            => '',
         'by'
             => 'da',
         'Cancel'
