@@ -175,6 +175,8 @@
                     array('<module>/api/update', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'PUT'),
                     array('<module>/api/delete', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'DELETE'),
                     array('<module>/api/create', 'pattern'=>'<module:\w+>/api/',          'verb'=>'POST'),
+                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/<id:\d+>', 'verb'=>'GET'),
+                    array('zurmo/<model>Api/list',   'pattern'=>'zurmo/<model:\w+>/api/*',          'verb'=>'GET'),
                     '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
                 )
             ),

@@ -24,82 +24,29 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class CurrencyApiController extends ZurmoModuleApiController
+    class ZurmoCurrencyApiController extends ZurmoModuleApiController
     {
-        public function getAll()
+        public function actionCreate()
         {
-            try
-            {
-                $data = Currency::getAll();
-
-                $outputArray = array();
-                if (count($data))
-                {
-                    $outputArray['status'] = 'SUCCESS';
-                    $outputArray['message'] = '';
-                    foreach ($data as $k => $model)
-                    {
-                        $util  = new RedBeanModelToApiDataUtil($model);
-                        $outputArray['data'][] = $util->getData();
-                    }
-                }
-                else
-                {
-                    $outputArray['status'] = 'FAILURE';
-                    $outputArray['message'] = Yii::t('Default', 'Error');
-                }
-            }
-            catch (Exception $e)
-            {
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
+            $message = Yii::t('Default', 'Action not supported.');
+            throw new ApiException($message);
         }
 
-        public function getById($id)
+        public function actionUpdate()
         {
-            try
-            {
-                $model = Currency::getById($id);
-                $util  = new RedBeanModelToApiDataUtil($model);
-                $data  = $util->getData();
-                $outputArray = array();
-                $outputArray['status'] = 'SUCCESS';
-                $outputArray['data']   = $data;
-                $outputArray['message'] = '';
-            }
-            catch (Exception $e)
-            {
-                $outputArray['data'] = null;
-                $outputArray['status'] = 'FAILURE';
-                $outputArray['message'] = $e->getMessage();
-            }
-            return $outputArray;
+            $message = Yii::t('Default', 'Action not supported.');
+            throw new ApiException($message);
         }
 
-        public function create($data)
+        public function actionDelete()
         {
-            $outputArray = array();
-            $outputArray['status'] = 'FAILURE';
-            $outputArray['message'] = "Invalid action";
-            return $outputArray;
+            $message = Yii::t('Default', 'Action not supported.');
+            throw new ApiException($message);
         }
 
-        public function update($id, $data)
+        protected function getModelName()
         {
-            $outputArray = array();
-            $outputArray['status'] = 'FAILURE';
-            $outputArray['message'] = "Invalid action";
-            return $outputArray;
-        }
-
-        public function delete($id)
-        {
-            $outputArray = array();
-            $outputArray['status'] = 'FAILURE';
-            $outputArray['message'] = "Invalid action";
-            return $outputArray;
+            return 'Currency';
         }
     }
 ?>

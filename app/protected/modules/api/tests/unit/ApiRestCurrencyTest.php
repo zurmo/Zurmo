@@ -34,7 +34,33 @@
         /**
         * @depends testApiServerUrl
         */
-        public function testList()
+        public function testGetCurrency()
+        {
+            Yii::app()->user->userModel        = User::getByUsername('super');
+            $authenticationData = $this->login();
+            $headers = array(
+                        'Accept: application/json',
+                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                        'ZURMO_TOKEN: ' . $authenticationData['token'],
+            );
+
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $currencies                 = Currency::getAll();
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($currencies[0]);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/' . $compareData['id'], 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+        }
+
+        /**
+        * @depends testApiServerUrl
+        */
+        public function testListCurrencies()
         {
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
@@ -48,15 +74,16 @@
             Yii::app()->user->userModel = $super;
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/currency', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']));
-            foreach ($response['data'] as $key => $value)
+            $this->assertEquals(1, count($response['data']['array']));
+            foreach ($response['data']['array'] as $key => $value)
             {
-                unset($response['data'][$key]['id']);
-                ksort($response['data'][$key]);
+                unset($response['data']['array'][$key]['id']);
+                ksort($response['data']['array'][$key]);
             }
+
             $currencies                 = Currency::getAll();
             $compareData = array();
             foreach ($currencies as $key => $value)
@@ -66,8 +93,7 @@
                 $compareData[$key]['active'] = $value->active;
                 ksort($compareData[$key]);
             }
-
-            $this->assertEquals($compareData, $response['data']);
+            $this->assertEquals($compareData, $response['data']['array']);
         }
     }
 ?>
