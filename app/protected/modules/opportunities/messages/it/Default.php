@@ -48,7 +48,7 @@
         'Negotiating'
             => '??',
         'Opportunities'
-            => '??',
+            => 'Opportunità',
         'Opportunities By Lead Source'
             => '??',
         'Opportunities By Sales Stage'
@@ -64,7 +64,7 @@
         'OpportunitiesModuleSingularLabel Search'
             => 'OpportunitiesModuleSingularLabel ??',
         'Opportunity'
-            => '??',
+            => 'Opportunità',
         'Probability'
             => '??',
         'Prospecting'

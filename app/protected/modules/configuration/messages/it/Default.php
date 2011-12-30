@@ -30,10 +30,10 @@
     // DON'T MAKE A MESS!
     return array(
         'Administration'
-            => '??',
+            => 'Amministrazione',
         'Configuration'
-            => '??',
+            => 'Configurazione',
         'General'
-            => '??',
+            => 'Generale',
     );
 ?>

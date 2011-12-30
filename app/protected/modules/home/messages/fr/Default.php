@@ -38,7 +38,7 @@
         '2 Columns Right Strong'
             => 'Droite',
         'Access Dashboards'
-            => 'Accès au Tableaux de bord',
+            => 'Accès aux Tableaux de bord',
         'Add Portlet'
             => 'Ajouter un portlet',
         'Are you sure want to delete this dashboard?'
