@@ -58,8 +58,7 @@
                     {
                         if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
                         {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
+                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
                             if ($designerType == 'Date')
                             {
                                 $postData[$attributeName] = DateTimeUtil::resolveValueForDateDBFormatted($value);
@@ -83,6 +82,23 @@
                                                                          resolveValueForDateDBFormatted(
                                                                          $value['firstDate']);
                             }
+                        }
+                        elseif($model->isAttribute($attributeName) &&
+                               isset($value['values']) &&
+                               is_string($value['values']))
+                        {
+                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+                            if ($designerType == 'TagCloud')
+                            {
+                                if($postData[$attributeName]['values'] == '')
+                                {
+                                    $postData[$attributeName]['values'] = array();
+                                }
+                                else
+                                {
+                                    $postData[$attributeName]['values'] = explode(',', $postData[$attributeName]['values']);
+                                }
+                             }
                         }
                     }
                 }

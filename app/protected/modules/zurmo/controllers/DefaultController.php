@@ -148,5 +148,20 @@
                                    getGlobalSearchResultsByPartialTerm($term, $pageSize, Yii::app()->user->userModel);
             echo CJSON::encode($autoCompleteResults);
         }
+
+        /**
+         * Given a name of a customFieldData object and a term to search on return a JSON encoded
+         * array of autocomplete search results.
+         * @param string $name - Name of CustomFieldData
+         * @param string $term - term to search on
+         */
+        public function actionAutoCompleteCustomFieldData($name, $term)
+        {
+            assert('is_string($name)');
+            assert('is_string($term)');
+            $autoCompleteResults = ModelAutoCompleteUtil::getCustomFieldDataByPartialName(
+                                       $name, $term);
+            echo CJSON::encode($autoCompleteResults);
+        }
     }
 ?>

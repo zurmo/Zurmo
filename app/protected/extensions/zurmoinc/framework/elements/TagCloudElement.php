@@ -26,5 +26,81 @@
 
     class TagCloudElement extends MultiSelectDropDownElement
     {
+        protected function renderControlEditable()
+        {
+            $multipleValuesCustomField = $this->model->{$this->attribute};
+            assert('$multipleValuesCustomField instanceof MultipleValuesCustomField');
+            $dataAndLabels = CustomFieldDataUtil::
+                             getDataIndexedByDataAndTranslatedLabelsByLanguage(
+                             $multipleValuesCustomField->data, Yii::app()->language);
+
+            $dataToValuesString = static::getDataToValuesString($multipleValuesCustomField->values);
+            $dataLabels         = static::getJsonEncodedLabelsByDataAndLabels($multipleValuesCustomField->values,
+                                    $dataAndLabels);
+            $idForInput         = $this->getIdForSelectInput();
+            $themeUrl           = Yii::app()->baseUrl . '/themes';
+            $theme               = Yii::app()->theme->name;
+            Yii::app()->clientScript->registerCssFile($themeUrl . '/' . $theme . '/css/jquery-tagsinput.css');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/TagsInput.js'
+                    ),
+                CClientScript::POS_END
+            );
+            $autoCompleteUrl = Yii::app()->createUrl('zurmo/default/autoCompleteCustomFieldData/',
+                                                     array('name' => $this->model->{$this->attribute}->data->name));
+            $script = "$('#" . $idForInput . "').tagsInput({
+                autocomplete_url:'" . $autoCompleteUrl . "',
+                jsonLabels: '" . $dataLabels . "',
+                defaultText: '" . Yii::t('Default', 'Type to find a tag') . "'
+            });";
+            Yii::app()->clientScript->registerScript(
+                'tagCloud' . $idForInput,
+                $script,
+                CClientScript::POS_END
+            );
+
+            $htmlOptions  = array(
+                'id'       => $idForInput,
+                'disabled' => $this->getDisabledValue(),
+            );
+            $content      = CHtml::textField($this->getNameForSelectInput(),
+                                             $dataToValuesString,
+                                             $htmlOptions);
+            return $content;
+        }
+
+        protected static function getDataToValuesString(RedBeanOneToManyRelatedModels $customFieldValues)
+        {
+            $s = '';
+            foreach($customFieldValues as $customFieldValue)
+            {
+                if($customFieldValue->value != null)
+                {
+                    if($s != null)
+                    {
+                        $s .= ', ';
+                    }
+                    $s .= $customFieldValue->value;
+                }
+            }
+            return $s;
+        }
+
+        protected static function getJsonEncodedLabelsByDataAndLabels(RedBeanOneToManyRelatedModels $customFieldValues,
+                                                                      $dataAndLabels)
+        {
+            assert('is_array($dataAndLabels)');
+            $labels = array();
+            foreach($customFieldValues as $customFieldValue)
+            {
+                if($customFieldValue->value != null)
+                {
+                    $labels[] = $dataAndLabels[$customFieldValue->value];
+                }
+            }
+            return CJSON::encode($labels);
+        }
+
     }
 ?>
