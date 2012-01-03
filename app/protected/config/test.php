@@ -54,6 +54,17 @@
                 'user' => array(
                     'class' => 'TestWebUser',
                 ),
+                'urlManager' => array (
+                     'rules'=>array(
+                        // API REST patterns
+                        array('api/<model>Api/read',   'pattern'=>'api/<model:\w+>/api/<id:\d+>', 'verb'=>'GET'),
+                        array('api/<model>Api/list',   'pattern'=>'api/<model:\w+>/api/*',          'verb'=>'GET'),
+                        array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/<id:\d+>', 'verb'=>'PUT'),
+                        array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/<id:\d+>', 'verb'=>'DELETE'),
+                        array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/',          'verb'=>'POST'),
+                        '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
+                    )
+                ),
             ),
         )
     );
