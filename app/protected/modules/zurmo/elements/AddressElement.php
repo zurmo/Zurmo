@@ -41,12 +41,16 @@
         {
             assert('$this->model->{$this->attribute} instanceof Address');
             $addressModel = $this->model->{$this->attribute};
+            $id           = $addressModel->id;
             $street1      = $addressModel->street1;
             $street2      = $addressModel->street2;
             $city         = $addressModel->city;
             $state        = $addressModel->state;
             $postalCode   = $addressModel->postalCode;
             $country      = $addressModel->country;
+            $latitude     = $addressModel->latitude;
+            $longitude    = $addressModel->longitude;
+            $invalid      = $addressModel->invalid;
             $content = null;
             if (!empty($street1))
             {
@@ -75,6 +79,10 @@
             if (!empty($country))
             {
                 $content .= Yii::app()->format->text($country);
+            }
+            if ($invalid != 1 && $addressModel->makeAddress() != '')
+            {
+                $content .= '&#160;'.$this->renderMapLink($addressModel);
             }
             return $content;
         }
@@ -108,6 +116,38 @@
             $textField   = $form->textField($model, $attribute, $htmlOptions);
             $error       = $form->error    ($model, $attribute);
             return $label . "<br/>\n" . $textField . $error;
+        }
+
+         /**
+         * Render a map link. This link calls a modal
+         * popup.
+         * @return The element's content as a string.
+         */
+        protected function renderMapLink($addressModel)
+        {
+            assert('$addressModel instanceof Address');
+            Yii::app()->getClientScript()->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
+                    ),
+                CClientScript::POS_END
+            );
+            $mapRenderUrl = Yii::app()->mappingHelper->resolveMappingLinkUrl(array(
+                                                                         'addressString' =>$addressModel->makeAddress(),
+                                                                         'latitude'      =>$addressModel->latitude,
+                                                                         'longitude'     =>$addressModel->longitude));
+            $id           = $this->getEditableInputId($this->attribute, 'MapLink');
+            $content      = '<span>';
+            $content     .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(
+                                'onclick' => '$("#modalContainer").dialog("open"); return false;',
+                                'update' => '#modalContainer',
+                                'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
+                                'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
+                                ),
+                                array('id' => $id)
+            );
+            $content     .= '</span>';
+            return $content;
         }
 
         protected function renderError()

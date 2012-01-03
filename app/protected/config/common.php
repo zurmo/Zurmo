@@ -129,6 +129,9 @@
                     ),
                 ),
             ),
+            'mappingHelper' => array(
+                'class' => 'application.modules.maps.components.ZurmoMappingHelper',
+            ),
             'pagination' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoPaginationHelper',
                 'listPageSize'             => 10,
@@ -263,6 +266,7 @@
                 ),
             ),
             'users',
+            'maps',
         ),
 
         'params' => array(

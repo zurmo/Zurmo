@@ -30,26 +30,26 @@
     // DON'T MAKE A MESS!
     return array(
         'Activities'
-            => '??',
+            => 'Attività',
         'Activity Items'
-            => '??',
+            => 'Elementi di attività',
         'All Activities'
-            => '??',
+            => 'Tutte le attività',
         'Latest Date Time'
-            => '??',
+            => 'Ultima dato/hora',
         'No Activities found.'
-            => '??',
+            => 'Nessuna attività trovato.',
         'Related'
-            => '??',
+            => 'Collegato',
         'Related to'
-            => '??',
+            => 'Collegato a',
         'Roll Up Off'
-            => '??',
+            => 'Roll Up spento',
         'Roll Up On'
-            => '??',
+            => 'Roll Up acceso',
         'Show more'
-            => '??',
+            => 'Ulteriori informazioni',
         'Summary'
-            => '??',
+            => 'Sommario',
     );
 ?>
