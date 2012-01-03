@@ -41,11 +41,11 @@
                 'ZURMO_AUTH_USERNAME: super',
                 'ZURMO_AUTH_PASSWORD: super'
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/login', 'POST', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/login/', 'POST', $headers);
             $response = json_decode($response, true);
-
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertTrue(isset($response['data']['sessionId']) && is_string($response['data']['sessionId']));
+            $this->assertTrue(isset($response['data']['token']) && is_string($response['data']['token']));
             //ToDo: Check if session exist
             //$this->sessionId = $response['data']['sessionId'];
         }
@@ -164,7 +164,7 @@
             $this->assertEquals($compareData, $data);
 
             //Test View
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['createdDateTime']);
@@ -172,7 +172,7 @@
             $this->assertEquals($compareData, $response['data']);
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -185,11 +185,11 @@
 
             //Test Update
             $compareData['lastName'] = 'Bob4';
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'PUT', $headers, array('data' => $compareData));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $id, 'PUT', $headers, array('data' => $compareData));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             //Don't compare dates.
             unset($response['data']['createdDateTime']);
@@ -198,11 +198,11 @@
             $this->assertEquals($compareData, $response['data']);
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
 
@@ -238,7 +238,7 @@
             unset($data['modifiedDateTime']);
             unset($data['createdByUser']);
             unset($data['modifiedByUser']);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
 
             $compareData = array(
@@ -289,7 +289,7 @@
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/apiTestModelItem/' . $response['data']['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $response['data']['id'], 'GET', $headers);
             $response = json_decode($response, true);
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
@@ -345,8 +345,9 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/logout', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/logout', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
         }

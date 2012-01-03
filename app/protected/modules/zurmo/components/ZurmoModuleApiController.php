@@ -81,7 +81,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if(!isset($params['data']))
             {
-                $message = Yii::t('Default', 'Data are empty.');
+                $message = Yii::t('Default', 'Please provide data.');
                 throw new ApiException($message);
             }
             $result    =  $this->processCreate($params['data']);
