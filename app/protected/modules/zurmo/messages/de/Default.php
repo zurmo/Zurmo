@@ -315,6 +315,8 @@
             => 'Verwaltung der Rollen',
         'Manufacturing'
             => 'Herstellung',
+        'map'
+            => 'karte',
         'Member'
             => 'Mitglied',
         'Member Of'
@@ -359,12 +361,18 @@
             => 'Nicht eingestellt',
         'Not Set - Ad-hoc / Owner'
             => 'Nicht eingestellt - Ad-hoc / Owner',
+        'Notifications'
+            => 'Benachrichtigungen',
         'Office Fax'
             => 'Büro Fax',
         'Office Phone'
             => 'Bürotelefon',
         'Oh no!'
             => 'Ach nein!',
+        'Once a day, early in the morning.'
+            => 'Einmal am Tag, früh am Morgen.',
+        'Once a week, early in the morning.'
+            => 'Einmal in der Woche, früh am Morgen.',
         'Only Items I Own'
             => 'Nur meine Objekte',
         'Opt Out'
@@ -547,6 +555,8 @@
             => 'Ihre Yii-Version ist currentVersion und sollte acceptableVersion',
         'ZurmoCRM'
             => 'ZurmoCRM',
+        '{count} unread'
+            => '{count} ungelesene',
         '{url} (installed with Yii)'
             => '{url} (installed with Yii)',
         '{url} (version {version} is installed)'

@@ -43,6 +43,8 @@
             => 'Alle erforderlichen Felder müssen zugeordnet oder hinzugefügt werden: {attributesLabelContent}',
         'Analyzing the import data...'
             => 'Analyse von Importdaten',
+        'Clear Import tables'
+            => 'Bereinigen der Steuertabellen',
         'Congratulations! Your import is complete.  Below is a summary of the results.'
             => 'Herzlichen Glückwunsch! Ihr Import abgeschlossen ist. Unten finden Sie eine Zusammenfassung der Ergebnisse.',
         'Default Name'
