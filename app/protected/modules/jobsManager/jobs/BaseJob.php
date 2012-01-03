@@ -37,6 +37,11 @@
         protected $errorMessage;
 
         /**
+         * @var mixed null or instance of MessageLogger
+         */
+        private $messageLogger;
+
+        /**
          * After a Job is instantiated, the run method is called to execute the job.
          */
         abstract public function run();
@@ -81,6 +86,20 @@
         public static function getRunTimeThresholdInSeconds()
         {
             return 60;
+        }
+
+        public function setMessageLogger(MessageLogger $messageLogger)
+        {
+            $this->messageLogger = $messageLogger;
+        }
+
+        public function getMessageLogger()
+        {
+            if($this->messageLogger == null)
+            {
+                $this->messageLogger = new MessageLogger();
+            }
+            return $this->messageLogger;
         }
     }
 

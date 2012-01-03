@@ -12,204 +12,204 @@
 <tr><td rowspan="1" colspan="3">ConvertCreateAccount</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+    <td>setSpeed</td>
+    <td>1000</td>
+    <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=leads/default</td>
-	<td></td>
+    <td>open</td>
+    <td>index.php?r=leads/default</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[2]/a/span</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[2]/a/span</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>LeadsSearchForm_fullName</td>
-	<td>Sally ${randomSuffix}</td>
+    <td>type</td>
+    <td>LeadsSearchForm_fullName</td>
+    <td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+    <td>click</td>
+    <td>search</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+    <td>waitForTextPresent</td>
+    <td>Displaying 1-1 of 1 result</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>link=Silly Sally ${randomSuffix}</td>
-	<td>Silly Sally ${randomSuffix}</td>
+    <td>waitForText</td>
+    <td>link=Silly Sally ${randomSuffix}</td>
+    <td>Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>setSpeed</td>
-	<td>5000</td>
-	<td></td>
+    <td>setSpeed</td>
+    <td>5000</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Silly Sally ${randomSuffix}</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>link=Silly Sally ${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Leads: Silly Sally ${randomSuffix}</td>
+    <td>assertText</td>
+    <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
+    <td>exact:Leads: Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Convert</td>
-	<td></td>
+    <td>click</td>
+    <td>link=Convert</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Select Account</td>
-	<td></td>
+    <td>click</td>
+    <td>link=Select Account</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Skip Account</td>
-	<td></td>
+    <td>click</td>
+    <td>link=Skip Account</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='account-skip-title']/a[1]</td>
-	<td></td>
+    <td>click</td>
+    <td>//div[@id='account-skip-title']/a[1]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Account_name</td>
-	<td></td>
+    <td>type</td>
+    <td>Account_name</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//form[@id='edit-form']/input</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//form[@id='edit-form']/input</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Name cannot be blank.</td>
-	<td></td>
+    <td>waitForTextPresent</td>
+    <td>Name cannot be blank.</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Select Account</td>
-	<td></td>
+    <td>click</td>
+    <td>link=Select Account</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Complete Conversion']</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//input[@value='Complete Conversion']</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//form[@id='select-account-form']/table/tbody/tr/td/div</td>
-	<td>Account Name cannot be blank.</td>
+    <td>assertText</td>
+    <td>//form[@id='select-account-form']/table/tbody/tr/td/div</td>
+    <td>Account Name cannot be blank.</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[contains(text(),'Create Account')]</td>
-	<td></td>
+    <td>click</td>
+    <td>//a[contains(text(),'Create Account')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Account_name</td>
-	<td>my account ${randomSuffix}</td>
+    <td>type</td>
+    <td>Account_name</td>
+    <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//form[@id='edit-form']/input</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//form[@id='edit-form']/input</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='FlashMessageBar']/div/div/span[2]</td>
-	<td>Lead successfully converted.</td>
+    <td>waitForText</td>
+    <td>//div[@id='FlashMessageBar']/div/div/span[2]</td>
+    <td>Lead successfully converted.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=my account ${randomSuffix}</td>
-	<td>my account ${randomSuffix}</td>
+    <td>assertText</td>
+    <td>link=my account ${randomSuffix}</td>
+    <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
-	<td>Qualified</td>
+    <td>assertText</td>
+    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+    <td>Qualified</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=my account ${randomSuffix}</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>link=my account ${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-	<td>exact:Accounts: my account ${randomSuffix}</td>
+    <td>assertText</td>
+    <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
+    <td>exact:Accounts: my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>my account ${randomSuffix}</td>
+    <td>assertText</td>
+    <td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+    <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Sam Smith</td>
-	<td>Sam Smith</td>
+    <td>assertText</td>
+    <td>link=Sam Smith</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
-	<td>Financial Services</td>
+    <td>assertText</td>
+    <td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
+    <td>Financial Services</td>
 </tr>
 <tr>
-	<td>compareText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[6]/td[1]</td>
-	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA</td>
+    <td>compareText</td>
+    <td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[6]/td[1]</td>
+    <td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA map</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
-	<td>456-777-6655</td>
+    <td>assertText</td>
+    <td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+    <td>456-777-6655</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
-	<td>5679076543</td>
+    <td>assertText</td>
+    <td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+    <td>5679076543</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=exact:http://www.rabbit.com</td>
-	<td>exact:http://www.rabbit.com</td>
+    <td>assertText</td>
+    <td>link=exact:http://www.rabbit.com</td>
+    <td>exact:http://www.rabbit.com</td>
 </tr>
 <tr>
-	<td>compareText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[6]/td[2]</td>
-	<td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA</td>
+    <td>compareText</td>
+    <td>//div[@id='AccountEditAndDetailsView']/table/tbody/tr[6]/td[2]</td>
+    <td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA map</td>
 </tr>
 </tbody></table>
 </body>
