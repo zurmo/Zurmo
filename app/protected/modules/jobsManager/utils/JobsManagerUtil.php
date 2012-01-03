@@ -85,6 +85,7 @@
                 $jobInProcess->save();
                 $startDateTime         = $jobInProcess->createdDateTime;
                 $job                   = new MonitorJob();
+                $job->setMessageLogger($messageLogger);
                 $ranSuccessfully       = $job->run();
                 $jobInProcess->delete();
                 $jobLog                = new JobLog();
@@ -126,6 +127,7 @@
                 $startDateTime         = $jobInProcess->createdDateTime;
                 $jobClassName          = $type . 'Job';
                 $job                   = new $jobClassName();
+                $job->setMessageLogger($messageLogger);
                 $ranSuccessfully       = $job->run();
                 $errorMessage          = $job->getErrorMessage();
                 $jobInProcess->delete();
