@@ -48,7 +48,7 @@
         'A phone field'
             => 'Un campo telefono',
         'A pick list that can have multiple selections'
-            => 'Un campo picklist che puede avere molti selezioni',
+            => 'Un campo pick list che puede avere molti selezioni',
         'A pick list with specific values to select from'
             => 'Un pick list con valori specifice da scegliere',
         'A radio button pick list'
@@ -80,9 +80,9 @@
         'Designer Tool'
             => 'Designer',
         'Detail and Edit View'
-            => 'Vista de dettaglio e modifica',
+            => 'Layouts de dettaglio e modifica',
         'Details View'
-            => 'Vista dettaglio',
+            => 'Layout dettaglio',
         'Display Name'
             => 'Etichetta campo',
         'Each item must be uniquely named'
@@ -92,7 +92,7 @@
         'Edit Layout'
             => 'Modifica il layout',
         'Edit View'
-            => 'Vista modifica',
+            => 'Layout modifica',
         'Email address fields'
             => 'Campi dell\'indirizzo e-mail',
         'Email Address Information'
@@ -106,80 +106,80 @@
         'Fields'
             => 'Campi',
         'First character must be a lower case letter'
-            => '??',
+            => 'Il primo carattere deve essere una lettera minuscola',
         'First panel visible, then `show more` link'
-            => '??',
+            => 'Primo pannello visible, dopo un link "visto di piu"',
         'General'
-            => '??',
+            => 'Generale',
         'General Edit'
-            => '??',
+            => 'Modifica generale',
         'Invalid panel configuration type'
-            => '??',
+            => 'Configurazione del pannello non valida',
         'Layout saved successfully.'
-            => '??',
+            => 'Layout salvato con successo',
         'Layouts'
-            => '??',
+            => 'Layouts',
         'Manage module fields, layouts, and labels.'
-            => '??',
+            => 'Gestione dei campi, layouts e etichette.',
         'Mass Edit View'
-            => '??',
+            => 'Layout aggiornamento globale',
         'Maximum Length'
-            => '??',
+            => 'Lunghezza massima',
         'Maximum Value'
-            => '??',
+            => 'Valore massimo',
         'Maximum Value must be larger than the minimum value'
-            => '??',
+            => 'Il valore massimo dovrebbe essere più grande che il valore minimo',
         'Menus'
-            => '??',
+            => 'Menu',
         'Minimum Value'
-            => '??',
+            => 'Valore minimo',
         'Module'
-            => '??',
+            => 'Modulo',
         'Modules'
-            => '??',
+            => 'Moduli',
         'Multi-Select Pick List'
-            => '??',
+            => 'Pick list multiselezione',
         'Name must not contain spaces or special characters'
-            => '??',
+            => 'Nome non deve contenere spazi o carattere speciali',
         'Panels are tabbed'
-            => '??',
+            => 'I pannelli sono tabulati',
         'Panels Configuration'
-            => '??',
+            => 'Configurazione dei pannelli',
         'Phone'
-            => '??',
+            => 'Telefono',
         'Pick List'
-            => '??',
+            => 'Pick List',
         'Pick List Value Translations'
-            => '??',
+            => 'Traduzioni dei valori del pick list',
         'Pick List Values'
-            => '??',
+            => 'Valori del pick list',
         'Popup List View'
-            => '??',
+            => 'Vista elenco popup',
         'Popup Search View'
-            => '??',
+            => 'Ricerca popup',
         'Precision'
-            => '??',
+            => 'Precisione ',
         'Radio Pick List'
-            => '??',
+            => 'Pick list del botton radio',
         'Related List View'
-            => '??',
+            => 'Vista de lista relativo',
         'Required Field'
-            => '??',
+            => 'Campo obbligatorio',
         'Save Layout'
-            => '??',
+            => 'Salva',
         'Search View'
-            => '??',
+            => 'Vista ricerca',
         'Text'
-            => '??',
+            => 'Testo',
         'Text Area'
-            => '??',
+            => 'Textarea',
         'There was an error processing your request.'
-            => '??',
+            => 'C\'era un errore durante l\'elaborazione della vostra richiesta.',
         'Track Audit Log'
-            => '??',
+            => 'Audit questo campo',
         'URL'
-            => '??',
+            => 'URL',
         'You must have at least one panel in order to save a layout.'
-            => '??',
+            => 'Dovrebbe avere almeno uno pannello per salvare un layout.',
     );
 ?>

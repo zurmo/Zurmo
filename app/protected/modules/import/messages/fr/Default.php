@@ -43,6 +43,8 @@
             => 'Les champs obligatoires doivent êtres définis: {attributesLabelContent}',
         'Analyzing the import data...'
             => 'Veuillez patienter pendant l\'analyse de vos données.',
+        'Clear Import tables'
+            => 'Nettoyer les tables d\'import',
         'Congratulations! Your import is complete.  Below is a summary of the results.'
             => 'Félicitations!  Votre import est complet.  Voici un sommaire des résultats.',
         'Default Name'

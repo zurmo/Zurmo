@@ -149,6 +149,8 @@
             => '??',
         'Memcache port number. Default is 11211'
             => '??',
+        'Microsoft-IIS'
+            => 'Microsoft-IIS',
         'minimum requirement is:'
             => '??',
         'Minimum version required:'
@@ -191,6 +193,8 @@
             => '??',
         'RedBean file is patched correctly'
             => '??',
+        'Schema update complete.'
+            => '??',
         'Service Status Partially Known'
             => '??',
         'Setting up default data.'
@@ -203,6 +207,8 @@
         'SOAP is not installed.'
             => '??',
         'Starting database schema creation.'
+            => '??',
+        'Starting schema update process.'
             => '??',
         'Starting to load demo data.'
             => '??',

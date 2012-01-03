@@ -154,6 +154,8 @@
             => 'Memcache número de port',
         'Memcache port number. Default is 11211'
             => 'Memcache número de port. Predeterminado es 11211',
+        'Microsoft-IIS'
+            => 'Microsoft-IIS',
         'minimum requirement is:'
             => 'requisito mínimo es:',
         'Minimum version required:'
@@ -196,6 +198,8 @@
             => 'Archivo de RedBean falta el parche.',
         'RedBean file is patched correctly'
             => 'Archivo de RedBean está correctamente parcheado',
+        'Schema update complete.'
+            => 'Esquema de actualización realizada.',
         'Service Status Partially Known'
             => 'Estado del servicio parcialmente conocido',
         'Setting up default data.'
@@ -210,6 +214,8 @@
             => 'SOAP no está instalado.',
         'Starting database schema creation.'
             => 'Creación de esquemas de bases de datos.',
+        'Starting schema update process.'
+            => 'Esquema de actualización comenzó.',
         'Starting to load demo data.'
             => 'Creación la base de datos de demostración',
         'The database name specified does not exist or the user specified does not have access.'

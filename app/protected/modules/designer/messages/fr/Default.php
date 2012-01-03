@@ -142,7 +142,7 @@
         'Name must not contain spaces or special characters'
             => 'Le nom ne doit pas contenir d\'espace ni de caractères spéciaux',
         'Panels are tabbed'
-            => 'Onglets',
+            => 'Les onglets sont tabulés',
         'Panels Configuration'
             => 'Configuration des panneaux',
         'Phone'
