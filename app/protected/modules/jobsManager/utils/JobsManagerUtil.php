@@ -36,10 +36,13 @@
          * @param string $type
          * @param timeLimit $timeLimit
          */
-        public static function runFromJobManagerCommand($type, $timeLimit)
+        public static function runFromJobManagerCommand($type, $timeLimit, $messageLoggerClassName)
         {
             assert('is_string($type)');
             assert('is_int($timeLimit)');
+            assert('is_string($messageLoggerClassName) && (
+                    is_subclass_of($messageLoggerClassName, "MessageLogger") ||
+                    $messageLoggerClassName == "MessageLogger")');
             set_time_limit($timeLimit);
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
@@ -48,7 +51,7 @@
                                   array('{seconds}' => $timeLimit)));
             echo "\n";
             $messageStreamer->add(Yii::t('Default', 'Starting job type: {type}', array('{type}' => $type)));
-            $messageLogger = new MessageLogger($messageStreamer);
+            $messageLogger = new $messageLoggerClassName($messageStreamer);
             if($type == 'Monitor')
             {
                 static::runMonitorJob($messageLogger);

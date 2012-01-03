@@ -33,12 +33,12 @@
         {
             if($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
-                $content     = '<span id="active-monitor-job-tooltip-' .
+                $content     = '<span id="active-nonmonitor-job-tooltip-' .
                                $jobLog->id . '" class="tooltip" title="' . $jobLog->message . '">';
                 $content    .= Yii::t('Default', 'Completed with Errors') . '</span>';
                 Yii::import('application.extensions.qtip.QTip');
                 $qtip        = new QTip();
-                $qtip->addQTip("#active-monitor-job-tooltip-' . $jobLog->id . '");
+                $qtip->addQTip("#active-nonmonitor-job-tooltip-" . $jobLog->id);
                 return $content;
             }
             elseif($jobLog->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
