@@ -93,7 +93,6 @@
             );
 
             $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
 
             $industryValues = array(
                 'Automotive',

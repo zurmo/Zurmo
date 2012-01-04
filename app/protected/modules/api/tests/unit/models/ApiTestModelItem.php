@@ -26,6 +26,12 @@
 
     class ApiTestModelItem extends OwnedSecurableItem
     {
+        public static function getByName($name)
+        {
+            assert('is_string($name) && $name != ""');
+            return self::getSubset(null, null, null, "firstName = '$name'");
+        }
+
         protected function untranslatedAttributeLabels()
         {
             return array_merge(parent::untranslatedAttributeLabels(),
