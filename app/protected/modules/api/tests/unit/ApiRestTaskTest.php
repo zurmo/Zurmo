@@ -385,7 +385,7 @@
                     'pageSize' => 3,
                 ),
                 'search' => array(
-                    'owner'   => array( 'id' => 1),
+                    'owner'   => array( 'id' => $super->id),
                 ),
                 'sort' => 'name.desc',
             );
@@ -394,8 +394,8 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']['array']));
             $this->assertEquals(4, $response['data']['total']);
+            $this->assertEquals(3, count($response['data']['array']));
             $this->assertEquals('Third Task', $response['data']['array'][0]['name']);
             $this->assertEquals('Second Task', $response['data']['array'][1]['name']);
             $this->assertEquals('First Task', $response['data']['array'][2]['name']);

@@ -464,7 +464,7 @@
                 ),
                 'search' => array(
                     'account' => array( 'id' => $account2->id),
-                    'owner'   => array( 'id' => 1),
+                    'owner'   => array( 'id' => $super->id),
                 ),
                 'sort' => 'firstName.desc',
             );
@@ -472,8 +472,8 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals(2, $response['data']['total']);
+            $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals('Forth Lead', $response['data']['array'][0]['firstName']);
             $this->assertEquals('Fifth Lead', $response['data']['array'][1]['firstName']);
         }
