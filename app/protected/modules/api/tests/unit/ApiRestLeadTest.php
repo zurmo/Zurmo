@@ -40,10 +40,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $this->assertTrue(ContactsModule::loadStartingData());
             $lead = LeadTestHelper::createLeadbyNameForOwner('First', $super);
@@ -65,10 +65,10 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $leads = Contact::getByName('First Firstson');
@@ -91,26 +91,26 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                            'Accept: application/json',
-                                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                            'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $industryValues = array(
-                        'Automotive',
-                        'Adult Entertainment',
-                        'Financial Services',
-                        'Mercenaries & Armaments',
+                'Automotive',
+                'Adult Entertainment',
+                'Financial Services',
+                'Mercenaries & Armaments',
             );
             $industryFieldData = CustomFieldData::getByName('Industries');
             $industryFieldData->serializedData = serialize($industryValues);
             $this->assertTrue($industryFieldData->save());
 
             $sourceValues = array(
-                        'Word of Mouth',
-                        'Outbound',
-                        'Trade Show',
+                'Word of Mouth',
+                'Outbound',
+                'Trade Show',
             );
             $sourceFieldData = CustomFieldData::getByName('LeadSources');
             $sourceFieldData->serializedData = serialize($sourceValues);
@@ -177,16 +177,16 @@
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
             $data['owner'] = array(
-                        'id' => $super->id,
-                        'username' => 'super'
+                'id' => $super->id,
+                'username' => 'super'
             );
             $data['createdByUser']    = array(
-                        'id' => $super->id,
-                        'username' => 'super'
+                'id' => $super->id,
+                'username' => 'super'
             );
             $data['modifiedByUser'] = array(
-                        'id' => $super->id,
-                        'username' => 'super'
+                'id' => $super->id,
+                'username' => 'super'
             );
 
             // We need to unset some empty values from response.
@@ -225,10 +225,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $leads = Contact::getByName('Michael Smith');
@@ -269,10 +269,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $leads = Contact::getByName('Michael Smith');
@@ -300,10 +300,10 @@
 
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                                    'Accept: application/json',
-                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                    'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $leads = Contact::getByName('Michael Smith');
@@ -314,9 +314,10 @@
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/' . $leads[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -333,11 +334,11 @@
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
-            'ZURMO_API_REQUEST_TYPE: REST',
-                    );
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
 
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/' . $leads[0]->id, 'DELETE', $headers);
@@ -361,6 +362,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             //Setup test data owned by the super user.
             $account  = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
@@ -487,6 +489,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $lead = LeadTestHelper::createLeadbyNameForOwner('New Lead', $super);
@@ -517,13 +520,13 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $lead = LeadTestHelper::createLeadbyNameForOwner('Newest Lead', $super);
 
             // Provide data with wrong type.
             $data['companyName']         = "A";
-
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);

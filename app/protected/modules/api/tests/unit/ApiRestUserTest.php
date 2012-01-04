@@ -40,10 +40,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $user = UserTestHelper::createBasicUser('PeterSmith');
@@ -65,10 +65,10 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $user = User::getByUsername('petersmith');
@@ -90,10 +90,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                            'Accept: application/json',
-                                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                            'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $titles = array('Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Swami');
@@ -186,6 +186,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
 
@@ -194,6 +195,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
         }
 
@@ -206,10 +208,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $user = User::getByUsername('diggy011');
@@ -248,10 +250,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/', 'GET', $headers);
@@ -273,10 +275,10 @@
 
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                                    'Accept: application/json',
-                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                    'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $user = User::getByUsername('diggy011');
@@ -286,9 +288,10 @@
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -305,11 +308,11 @@
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
-            'ZURMO_API_REQUEST_TYPE: REST',
-                    );
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
 
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/' . $user->id, 'DELETE', $headers);
@@ -333,6 +336,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $manager = User::getByUsername('smith45');
 
@@ -457,6 +461,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $user = UserTestHelper::createBasicUser('PeterSmith');
@@ -487,6 +492,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $user = UserTestHelper::createBasicUser('JosephSmith');

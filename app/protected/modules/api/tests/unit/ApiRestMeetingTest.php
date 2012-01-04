@@ -40,10 +40,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $meeting = MeetingTestHelper::createMeetingByNameForOwner('First Meeting', $super);
 
@@ -64,10 +64,10 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $meetings = Meeting::getByName('First Meeting');
@@ -90,10 +90,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                            'Accept: application/json',
-                                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                            'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $categories = array(
@@ -154,10 +154,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $meetings = Meeting::getByName('Michael Meeting');
@@ -199,10 +199,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $meetings = Meeting::getByName('Michael Meeting');
@@ -230,10 +230,10 @@
 
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                                    'Accept: application/json',
-                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                    'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $meetings = Meeting::getByName('Michael Meeting');
@@ -244,9 +244,10 @@
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/' . $meetings[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -263,11 +264,11 @@
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
-            'ZURMO_API_REQUEST_TYPE: REST',
-                    );
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
 
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/' . $meetings[0]->id, 'DELETE', $headers);
@@ -294,6 +295,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             MeetingTestHelper::createMeetingByNameForOwner('First Meeting', $super);
             MeetingTestHelper::createMeetingByNameForOwner('Second Meeting', $super);
@@ -417,6 +419,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $meeting = MeetingTestHelper::createMeetingByNameForOwner('New Meeting', $super);
@@ -447,6 +450,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $meeting = MeetingTestHelper::createMeetingByNameForOwner('Newest Meeting', $super);

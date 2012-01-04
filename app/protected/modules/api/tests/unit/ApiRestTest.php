@@ -31,7 +31,8 @@
             $headers = array(
                 'Accept: application/json',
                 'ZURMO_AUTH_USERNAME: ' . $username,
-                'ZURMO_AUTH_PASSWORD: ' . $password
+                'ZURMO_AUTH_PASSWORD: ' . $password,
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/login', 'POST', $headers);
             $response = json_decode($response, true);

@@ -40,10 +40,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $this->assertTrue(ContactsModule::loadStartingData());
             $contact = ContactTestHelper::createContactByNameForOwner('First', $super);
@@ -65,10 +65,10 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $contacts = Contact::getByName('First Firstson');
@@ -91,10 +91,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                    'Accept: application/json',
-                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                    'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $industryValues = array(
@@ -225,10 +225,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $contacts = Contact::getByName('Michael Smith');
@@ -269,10 +269,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $contacts = Contact::getByName('Michael Smith');
@@ -300,10 +300,10 @@
 
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                            'Accept: application/json',
-                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                            'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $contacts = Contact::getByName('Michael Smith');
@@ -317,6 +317,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);

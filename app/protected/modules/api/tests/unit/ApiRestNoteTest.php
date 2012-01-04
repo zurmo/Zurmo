@@ -40,10 +40,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $note = NoteTestHelper::createNoteByNameForOwner('First Note', $super);
@@ -64,10 +64,10 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $notes = Note::getByName('First Note');
@@ -89,10 +89,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                            'Accept: application/json',
-                                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                            'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $occurredOnStamp          = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
@@ -136,10 +136,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $notes = Note::getByName('Note description');
@@ -180,10 +180,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                                'Accept: application/json',
-                                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $notes = Note::getByName('Updated note description');
@@ -212,10 +212,10 @@
 
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                                    'Accept: application/json',
-                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                    'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $notes = Note::getByName('Updated note description');
@@ -226,9 +226,10 @@
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -245,11 +246,11 @@
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(
-            'Accept: application/json',
-            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-            'ZURMO_TOKEN: ' . $authenticationData['token'],
-            'ZURMO_API_REQUEST_TYPE: REST',
-                    );
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
 
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/' . $notes[0]->id, 'DELETE', $headers);
@@ -275,6 +276,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $firstAccount = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
             $secondAccount = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('Second Account', 'Customer', 'Automotive', $super);
@@ -433,6 +435,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $note = NoteTestHelper::createNoteByNameForOwner('New Note', $super);
@@ -463,6 +466,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $note = NoteTestHelper::createNoteByNameForOwner('Newest Note', $super);

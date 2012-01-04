@@ -40,10 +40,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $task = TaskTestHelper::createTaskByNameForOwner('First Task', $super);
 
@@ -64,10 +64,10 @@
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $tasks = Task::getByName('First Task');
@@ -90,10 +90,10 @@
             $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
-                                    'Accept: application/json',
-                                    'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                                    'ZURMO_TOKEN: ' . $authenticationData['token'],
-                                    'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $dueStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time()  + 10000);
@@ -143,10 +143,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $tasks = Task::getByName('Check bills');
@@ -190,10 +190,10 @@
 
             $authenticationData = $this->login();
             $headers = array(
-                        'Accept: application/json',
-                        'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                        'ZURMO_TOKEN: ' . $authenticationData['token'],
-                        'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $tasks = Task::getByName('Check bills');
@@ -221,10 +221,10 @@
 
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
-                            'Accept: application/json',
-                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                            'ZURMO_API_REQUEST_TYPE: REST',
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $tasks = Task::getByName('Check bills');
@@ -238,6 +238,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
@@ -284,6 +285,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $firstAccount = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
             $secondAccount = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('Second Account', 'Customer', 'Automotive', $super);
@@ -442,6 +444,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $task = TaskTestHelper::createTaskByNameForOwner('New Task', $super);
@@ -472,6 +475,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $task = TaskTestHelper::createTaskByNameForOwner('Newest Task', $super);

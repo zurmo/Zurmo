@@ -42,20 +42,16 @@
 
             switch($method)
             {
-
                 case 'GET':
                     break;
-
                 case 'POST':
                     curl_setopt($handle, CURLOPT_POST, true);
                     curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
                     break;
-
                 case 'PUT':
                     curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
                     curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
                     break;
-
                 case 'DELETE':
                     curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'DELETE');
                     break;

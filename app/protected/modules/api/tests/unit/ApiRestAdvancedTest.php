@@ -39,7 +39,8 @@
             $headers = array(
                 'Accept: application/json',
                 'ZURMO_AUTH_USERNAME: super',
-                'ZURMO_AUTH_PASSWORD: super'
+                'ZURMO_AUTH_PASSWORD: super',
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/login/', 'POST', $headers);
             $response = json_decode($response, true);
@@ -47,7 +48,6 @@
             $this->assertTrue(isset($response['data']['sessionId']) && is_string($response['data']['sessionId']));
             $this->assertTrue(isset($response['data']['token']) && is_string($response['data']['token']));
             //ToDo: Check if session exist
-            //$this->sessionId = $response['data']['sessionId'];
         }
 
 
@@ -62,6 +62,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $super = User::getByUsername('super');
