@@ -178,11 +178,13 @@
             unset($response['data']['billingAddress']['state']);
             unset($response['data']['billingAddress']['longitude']);
             unset($response['data']['billingAddress']['latitude']);
+            unset($response['data']['billingAddress']['invalid']);
 
             unset($response['data']['shippingAddress']['id']);
             unset($response['data']['shippingAddress']['state']);
             unset($response['data']['shippingAddress']['longitude']);
             unset($response['data']['shippingAddress']['latitude']);
+            unset($response['data']['shippingAddress']['invalid']);
             unset($response['data']['industry']['id']);
             unset($response['data']['type']['id']);
             unset($response['data']['id']);
@@ -317,7 +319,7 @@
         }
 
         /**
-        * @depends testUnprivilegedUserViewUpdateDelete
+        * @depends testUnprivilegedUserViewUpdateDeleteAcounts
         */
         public function testSearchAccounts()
         {

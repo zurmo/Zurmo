@@ -301,43 +301,6 @@
         /**
         * @depends testApiServerUrl
         */
-        public function testGetCustomFieldData()
-        {
-            $authenticationData = $this->login();
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-            );
-
-            //Fill some data
-            $values = array(
-                'Automotive',
-                'Adult Entertainment',
-                'Financial Services',
-                'Mercenaries & Armaments',
-            );
-            $industryFieldData = CustomFieldData::getByName('Industries');
-            $industryFieldData->serializedData = serialize($values);
-            $this->assertTrue($industryFieldData->save());
-
-            $values = array(
-                'Prospect',
-                'Customer',
-                'Vendor',
-            );
-            $typeFieldData = CustomFieldData::getByName('AccountTypes');
-            $typeFieldData->serializedData = serialize($values);
-            $this->assertTrue($typeFieldData->save());
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/customData', 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-        }
-
-        /**
-        * @depends testApiServerUrl
-        */
         public function testLogout()
         {
             $authenticationData = $this->login();

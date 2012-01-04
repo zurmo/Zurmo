@@ -167,6 +167,7 @@
             unset($response['data']['primaryAddress']['state']);
             unset($response['data']['primaryAddress']['longitude']);
             unset($response['data']['primaryAddress']['latitude']);
+            unset($response['data']['primaryAddress']['invalid']);
             unset($response['data']['title']['id']);
             unset($response['data']['id']);
             unset($response['data']['password']);

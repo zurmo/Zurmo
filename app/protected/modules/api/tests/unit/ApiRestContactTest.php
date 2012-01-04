@@ -199,11 +199,13 @@
             unset($response['data']['primaryAddress']['state']);
             unset($response['data']['primaryAddress']['longitude']);
             unset($response['data']['primaryAddress']['latitude']);
+            unset($response['data']['primaryAddress']['invalid']);
 
             unset($response['data']['secondaryAddress']['id']);
             unset($response['data']['secondaryAddress']['state']);
             unset($response['data']['secondaryAddress']['longitude']);
             unset($response['data']['secondaryAddress']['latitude']);
+            unset($response['data']['secondaryAddress']['invalid']);
             unset($response['data']['industry']['id']);
             unset($response['data']['source']['id']);
             unset($response['data']['title']['id']);
