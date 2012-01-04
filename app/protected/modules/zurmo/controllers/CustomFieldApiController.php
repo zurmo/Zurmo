@@ -26,7 +26,7 @@
 
     class ZurmoCustomFieldApiController extends ZurmoModuleApiController
     {
-        public function actionList()
+        protected function processList()
         {
             $industryFieldData = CustomFieldData::getByName('Industries');
             $typeFieldData = CustomFieldData::getByName('AccountTypes');
@@ -45,44 +45,53 @@
 
             $status = ApiResponse::STATUS_SUCCESS;
             $data = array(
-                        'Industries'        => $industryFieldData,
-                        'AccountTypes'      => $typeFieldData,
-                        'LeadSources'       => $sourceFieldData,
-                        'MeetingCategories' => $meetingFieldData,
-                        'SalesStages'       => $stageFieldData,
-                        'Titles'            => $titleFieldData,
+                'Industries'        => $industryFieldData,
+                'AccountTypes'      => $typeFieldData,
+                'LeadSources'       => $sourceFieldData,
+                'MeetingCategories' => $meetingFieldData,
+                'SalesStages'       => $stageFieldData,
+                'Titles'            => $titleFieldData,
             );
+            $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
+            return $result;
         }
 
         public function actionRead()
         {
-            $model = $_GET['model'];
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if(!isset($params['id']))
+            {
+                $message = Yii::t('Default', 'The id specified was invalid.');
+                throw new ApiException($message);
+            }
+            $result    =  $this->processRead($params['id']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
 
-            $customFieldData = CustomFieldData::getByName($model);
+        protected function processRead($id)
+        {
+            assert('is_string($id)');
+            try{
+                $customFieldData = CustomFieldData::getByName($id);
+            }
+            catch (NotFoundException $e)
+            {
+                $message = Yii::t('Default', 'Specified custom field name was invalid.');
+                throw new ApiException($message);
+            }
+
             $customFieldData    = unserialize($customFieldData->serializedData);
 
             if(count($customFieldData) > 0)
             {
-                $status = ApiResponse::STATUS_SUCCESS;
-                $data = $customFieldData;
+                $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $customFieldData, null, null);
             }
             else
             {
-                $status = ApiResponse::STATUS_FAILURE;
-                $data = null;
+                $message = Yii::t('Default', 'Custom field values are empty.');
+                throw new ApiException($message);
             }
-
-            if(Yii::app()->apiRequest->getRequestType() == ApiRequest::REST)
-            {
-                ApiRestResponse::generateOutput(Yii::app()->apiRequest->getParamsFormat(),
-                $status,
-                $data,
-                null);
-            }
-            else
-            {
-                //error
-            }
+            return $result;
         }
 
         public function actionCreate()
@@ -101,11 +110,6 @@
         {
             $message = Yii::t('Default', 'Action not supported.');
             throw new ApiException($message);
-        }
-
-        protected function getModelName()
-        {
-            return 'Currency';
         }
     }
 ?>

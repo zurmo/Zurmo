@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestCustomFieldTest extends ApiRestTest
+    class ApiRestAACustomFieldTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {
@@ -42,23 +42,21 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-
             $industryValues = array(
-                            'Automotive',
-                            'Adult Entertainment',
-                            'Financial Services',
-                            'Mercenaries & Armaments',
+                'Automotive',
+                'Adult Entertainment',
+                'Financial Services',
+                'Mercenaries & Armaments',
             );
             $industryFieldData = CustomFieldData::getByName('Industries');
             $industryFieldData->serializedData = serialize($industryValues);
             $this->assertTrue($industryFieldData->save());
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/customData', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
 
@@ -71,14 +69,6 @@
                 ksort($industryValues);
             }
             $this->assertEquals($industryValues, $response['data']['Industries']);
-
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/customData/Industries', 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
-
-            ksort($response['data']);
-            $this->assertEquals($industryValues, $response['data']);
-
         }
 
         /**
@@ -91,19 +81,10 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             //Fill some data
-            $values = array(
-                'Automotive',
-                'Adult Entertainment',
-                'Financial Services',
-                'Mercenaries & Armaments',
-            );
-            $industryFieldData = CustomFieldData::getByName('Industries');
-            $industryFieldData->serializedData = serialize($values);
-            $this->assertTrue($industryFieldData->save());
-
             $values = array(
                 'Prospect',
                 'Customer',
@@ -113,7 +94,7 @@
             $typeFieldData->serializedData = serialize($values);
             $this->assertTrue($typeFieldData->save());
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/rest/customData', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/AccountTypes', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
         }
