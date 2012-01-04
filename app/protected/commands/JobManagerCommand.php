@@ -33,7 +33,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc jobManager <username> <jobType> [runTimeInSeconds]
+      zurmoc jobManager <username> <jobType> [runTimeInSeconds] [messageLoggerClassName]
 
     DESCRIPTION
       This command runs a specific job as specified by the jobType parameter. If you want to run the monitor job
@@ -45,7 +45,7 @@
 
      Optional Parameters:
      * runTimeInSeconds: how many seconds to let this script run, if not specified will default to 5 minutes.
-
+     * messageLoggerClassName: which messageLogger class to use. Defaults to MessageLogger
 EOD;
     }
 
@@ -77,7 +77,6 @@ EOD;
         {
             $this->usageError('The specified username does not exist.');
         }
-
         if (!is_string($args[1]))
         {
             $this->usageError('The specified job type to run is invalid.');
@@ -98,8 +97,16 @@ EOD;
         {
             $timeLimit = 300;
         }
+        if (isset($args[3]))
+        {
+            $messageLoggerClassName = $args[3];
+        }
+        else
+        {
+            $messageLoggerClassName = 'MessageLogger';
+        }
         echo "\n";
-        JobsManagerUtil::runFromJobManagerCommand($args[1], $timeLimit);
+        JobsManagerUtil::runFromJobManagerCommand($args[1], $timeLimit, $messageLoggerClassName);
     }
 }
 ?>
