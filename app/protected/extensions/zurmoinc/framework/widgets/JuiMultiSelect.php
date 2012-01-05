@@ -32,16 +32,40 @@
      */
     class JuiMultiSelect extends CJuiWidget
     {
+        /**
+         * Array of the value as the key, and the label as the value in the pairing.
+         * @var array
+         */
         public $dataAndLabels = array();
 
+        /**
+         * Which value if any is already selected.
+         * @var string
+         */
         public $selectedValue;
 
+        /**
+         * Array of options to pass to the multiselect upon initialization.
+         * @var array
+         */
         public $options       = array();
 
+        /**
+         * The multiple select input name
+         * @var unknown_type
+         */
         public $inputName;
 
+        /**
+         * The multiple select input id
+         * @var string
+         */
         public $inputId;
 
+        /**
+         * Base Url of application.  Utilized to help determine the path to the theme folder.
+         * @var string
+         */
         private $baseUrl;
 
             /**
@@ -71,7 +95,7 @@
         }
 
         /**
-         * Run the widget.
+         * Run the widget.  Renders the widget content and echos it out.
          */
         public function run()
         {
@@ -97,7 +121,7 @@
             Yii::app()->getClientScript()->registerScriptFile($this->baseUrl . '/juiMultiSelect/jquery.multiselect.js');
         }
 
-        public function registerCssFile()
+        protected function registerCssFile()
         {
             Yii::app()->getClientScript()->registerCssFile($this->themeUrl . '/' . $this->theme . '/css/jquery-multiselect.css');
         }
