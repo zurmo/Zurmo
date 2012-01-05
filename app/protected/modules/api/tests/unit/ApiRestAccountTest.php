@@ -272,7 +272,7 @@
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
             $saved = $notAllowedUser->save();
-
+            $this->assertTrue($saved);
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
@@ -284,8 +284,9 @@
 
             $accounts = Account::getByName('My Company 2');
             $this->assertEquals(1, count($accounts));
-            // To-Do: Uncomment after fix security not to print view
-/*
+            $data['name']                = "My Company 3";
+
+            // Check first if user doesn't have rights.
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/' . $accounts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
@@ -297,7 +298,26 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-*/
+
+            //now check if user have rights, but no permissions.
+            $notAllowedUser->setRight('AccountsModule', AccountsModule::getAccessRight());
+            $notAllowedUser->setRight('AccountsModule', AccountsModule::getCreateRight());
+            $notAllowedUser->setRight('AccountsModule', AccountsModule::getDeleteRight());
+            $saved = $notAllowedUser->save();
+            $this->assertTrue($saved);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/' . $accounts[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(

@@ -308,9 +308,7 @@
 
             $contacts = Contact::getByName('Michael Smith');
             $this->assertEquals(1, count($contacts));
-
-            // To-Do: Uncomment after fix security not to print view
-/*
+            $data['department']                = "Support";
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
@@ -330,7 +328,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-*/
+
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(

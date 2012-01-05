@@ -37,23 +37,23 @@
             if (is_subclass_of($moduleClassName, 'SecurableModule'))
             {
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH,
+                        self::getRightsFilterPath(),
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getAccessRight(),
                 );
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + create, createFromRelation, inlineCreateSave',
+                        self::getRightsFilterPath() . ' + create, createFromRelation, inlineCreateSave',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + delete',
+                        self::getRightsFilterPath() . ' + delete',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getDeleteRight(),
                 );
             }
             $filters[] = array(
-                ZurmoBaseController::RIGHTS_FILTER_PATH . ' + massEdit, massEditProgressSave',
+                self::getRightsFilterPath() . ' + massEdit, massEditProgressSave',
                 'moduleClassName' => 'ZurmoModule',
                 'rightName' => ZurmoModule::RIGHT_BULK_WRITE,
             );
@@ -63,6 +63,11 @@
         public function __construct($id, $module = null)
         {
             parent::__construct($id, $module);
+        }
+
+        public static function getRightsFilterPath()
+        {
+            return static::RIGHTS_FILTER_PATH;
         }
 
         protected function makeSearchFilterListView(

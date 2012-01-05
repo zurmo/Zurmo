@@ -28,35 +28,12 @@
      * Filter used by controllers to ascertain whether
      * the current user has allow on a certain right
      */
-    class RightsControllerFilter extends CFilter
+    class ApiRightsControllerFilter extends RightsControllerFilter
     {
-        public $moduleClassName;
-
-        public $rightName;
-
-        protected function preFilter($filterChain)
-        {
-            if (RightsUtil::doesUserHaveAllowByRightName(
-                    $this->moduleClassName,
-                    $this->rightName,
-                    Yii::app()->user->userModel))
-            {
-                return true;
-            }
-            static::processAccessFailure();
-            Yii::app()->end(0, false);
-        }
-
-        protected static function processAccessFailure()
-        {
-            static::renderAccessFailureView();
-        }
-
         protected static function renderAccessFailureView()
         {
-            $messageView = new AccessFailureView();
-            $view        = new AccessFailurePageView($messageView);
-            echo $view->render();
+            $message = Yii::t('Default', 'You do not have rights to this action');
+            throw new SecurityException($message);
         }
     }
 ?>

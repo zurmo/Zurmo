@@ -31,6 +31,8 @@
      */
     abstract class ZurmoModuleApiController extends ZurmoModuleController
     {
+        const RIGHTS_FILTER_PATH = 'application.modules.api.utils.ApiRightsControllerFilter';
+
         public function filters()
         {
             $filters = array(
@@ -45,7 +47,7 @@
             {
                 $filterChain->run();
             }
-            catch(ApiException $e)
+            catch(Exception $e)
             {
                 $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $e->getMessage(), null);
                 Yii::app()->apiHelper->sendResponse($result);

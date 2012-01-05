@@ -266,8 +266,8 @@
 
             $opportunities = Opportunity::getByName('Michael');
             $this->assertEquals(1, count($opportunities));
-            // To-Do: Uncomment after fix security not to print view
-/*
+            $data['probability']                = "20";
+
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
@@ -279,7 +279,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-*/
+
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(

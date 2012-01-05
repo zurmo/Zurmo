@@ -229,9 +229,8 @@
 
             $tasks = Task::getByName('Check bills');
             $this->assertEquals(1, count($tasks));
+            $data['completed']         = 1;
 
-            // To-Do: Uncomment after fix security not to print view
-/*
             // Test with unprivileged user to view, edit and delete account.
             $authenticationData = $this->login('steven', 'steven');
             $headers = array(
@@ -251,7 +250,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
-*/
+
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(

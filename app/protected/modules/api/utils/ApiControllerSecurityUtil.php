@@ -26,9 +26,10 @@
 
     class ApiControllerSecurityUtil extends ControllerSecurityUtil
     {
-        protected static function processAccessFailure($fromAjax = false, $nonAjaxFailureMessageContent = null)
+        protected static function renderAccessFailureView($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
-            throw new SecurityException();
+            $message = Yii::t('Default', 'You do not have access to this action');
+            throw new SecurityException($message);
         }
     }
 
