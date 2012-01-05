@@ -142,10 +142,12 @@
 
         public function actionGlobalSearchAutoComplete($term)
         {
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+            $scopeData = GlobalSearchUtil::resolveGlobalSearchScopeFromGetData($_GET);
+            $pageSize  = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                             'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ModelAutoCompleteUtil::
-                                   getGlobalSearchResultsByPartialTerm($term, $pageSize, Yii::app()->user->userModel);
+                                   getGlobalSearchResultsByPartialTerm($term, $pageSize, Yii::app()->user->userModel,
+                                                                       $scopeData);
             echo CJSON::encode($autoCompleteResults);
         }
     }
