@@ -194,7 +194,7 @@
         'The user id specified did not match any existing records.'
             => 'La valeur du champ ID ne correspond pas ou est introuvable.',
         'The username specified did not match any existing records.'
-            => 'La valeur du champ Resp. du compte  ne correspond pas ou est introuvable.',
+            => 'La valeur du champ Resp. du compte ne correspond pas ou est introuvable.',
         'There was an error processing this import.'
             => 'Une erreur est survenue lors de l\'importation du fichier.',
         'This id is required and was not specified.'

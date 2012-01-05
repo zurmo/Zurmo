@@ -210,7 +210,7 @@
         'You can only map each field once.'
             => 'Sólo se puede asignar cada campo una vez.',
         'You do not have permission to create/update this record and/or its related record.'
-            => 'No tiene permiso para actualizar este registro y / o su registro relacionado.',
+            => 'No tiene permiso para actualizar este registro y/o su registro relacionado.',
         'You must map at least one of your import columns.'
             => 'Debe asignar al menos una de las columnas.',
         'Zurmo Field'

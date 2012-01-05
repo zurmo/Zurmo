@@ -48,6 +48,6 @@
         'Occurred On'
             => 'Date',
         'The NotesModulePluralLabel form cannot be displayed.'
-            => 'Le formulaires des NotesModulePluralLabel être affiché.',
+            => 'Le formulaire des NotesModulePluralLabel être affiché.',
     );
 ?>

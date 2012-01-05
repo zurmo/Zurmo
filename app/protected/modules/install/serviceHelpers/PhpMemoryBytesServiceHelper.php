@@ -38,12 +38,12 @@
                                                                        $actualMemoryBytes);
             if ($memoryBytesPassed)
             {
-                $this->message = Yii::t('Default', 'PHP Memory setting meets minimum requirement.');
+                $this->message = Yii::t('Default', 'PHP memory_limit meets minimum requirement.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'PHP Memory setting is:') . ' ';
+                $this->message  = Yii::t('Default', 'PHP memory_limit is:') . ' ';
                 $this->message .= round($actualMemoryBytes / 1024000) . 'M ';
                 $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumMemoryRequireBytes / 1024000) . 'M';
