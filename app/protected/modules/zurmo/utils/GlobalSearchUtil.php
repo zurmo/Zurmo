@@ -74,7 +74,7 @@
         protected static function getGlobalSearchScopingCacheIdentifier(User $user)
         {
             assert('$user->id > 0');
-            return 'GlobalSearchScopingModuleNamesAndLabels' . $user . Yii::app()->language;
+            return 'GlobalSearchScopingModuleNamesAndLabels' . $user->id . Yii::app()->language;
         }
 
         /**

@@ -97,7 +97,7 @@
          * @param integer $pageSize
          * @param User    $user
          */
-        public static function getGlobalSearchResultsByPartialTerm($partialTerm, $pageSize, User $user, $scopeData)
+        public static function getGlobalSearchResultsByPartialTerm($partialTerm, $pageSize, User $user, $scopeData = null)
         {
             assert('is_string($partialTerm)');
             assert('is_int($pageSize)');

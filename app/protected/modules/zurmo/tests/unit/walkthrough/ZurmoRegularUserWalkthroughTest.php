@@ -41,6 +41,18 @@
             parent::setUpBeforeClass();
         }
 
+        public function testGlobalSearchAppearsOrDoesntDependingOnAccessRights()
+        {
+            $nobody          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
+            $content         = $this->runControllerWithNoExceptionsAndGetContent('home/default');
+            $this->assertTrue(strpos($content, 'globalSearchInput') === false);
+            //Now add accounts access, the global search should show up.
+            $nobody->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $this->assertTrue($nobody->save()); // Not Coding Standard
+            $content         = $this->runControllerWithNoExceptionsAndGetContent('home/default');
+            $this->assertFalse(strpos($content, 'globalSearchInput') === false);
+        }
+
         public function testRegularUserAllControllerActions()
         {
             //Now test all portlet controller actions
