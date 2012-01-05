@@ -32,6 +32,7 @@
 
         public static function getParamsFromRequest()
         {
+            throw new NotSupportedException();
             //$params = ApiXmlParser::toArray($xml);
         }
     }
