@@ -37,7 +37,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/login', 'POST', $headers);
             $response = json_decode($response, true);
 
-            if ($response['status'] == ApiRestResponse::STATUS_SUCCESS)
+            if ($response['status'] == ApiResponse::STATUS_SUCCESS)
             {
                 return $response['data'];
             }

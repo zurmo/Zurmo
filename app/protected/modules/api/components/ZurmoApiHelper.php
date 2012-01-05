@@ -26,17 +26,58 @@
 
     class ZurmoApiHelper extends CApplicationComponent
     {
+        public function init()
+        {
+            parent::init();
+        }
 
         public function getRequestParams()
         {
-            $params = ApiRestRequest::getParamsFromRequest();
+            $requestClassName = $this->getRequestClassName();
+            $params = $requestClassName::getParamsFromRequest();
             return $params;
         }
 
         public function sendResponse(ApiResult $result)
         {
-            ApiRestResponse::generateOutput('json',
-                                            $result);
+            $responseClassName = $this->getResponseClassName();
+            $responseClassName::generateOutput($result);
+        }
+
+        public function getRequestClassName()
+        {
+            $requestType = Yii::app()->apiRequest->getRequestType();
+            if ($requestType == ApiRequest::REST)
+            {
+                return 'ApiRestRequest';
+            }
+            elseif($requestType == ApiRequest::SOAP)
+            {
+                return 'ApiSoapRequest';
+            }
+            else
+            {
+                $message = Yii::t('Default', 'Invalid request type.');
+                throw new ApiException($message);
+            }
+        }
+
+        public function getResponseClassName()
+        {
+            $responseType = Yii::app()->apiRequest->getResponseFormat();
+            if ($responseType == ApiRequest::JSON_FORMAT)
+            {
+                return 'ApiJsonResponse';
+            }
+            elseif($responseType == ApiRequest::XML_FORMAT)
+            {
+                return 'ApiXmlResponse';
+            }
+            else
+            {
+                $message = Yii::t('Default', 'Invalid response type.');
+                throw new ApiException($message);
+            }
         }
     }
 ?>

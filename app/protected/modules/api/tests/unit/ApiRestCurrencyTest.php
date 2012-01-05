@@ -42,6 +42,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $super = User::getByUsername('super');
@@ -53,7 +54,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
         }
 
@@ -68,6 +69,7 @@
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
             );
 
             $super = User::getByUsername('super');
@@ -76,7 +78,7 @@
             //Test List
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/', 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
             foreach ($response['data']['array'] as $key => $value)
             {

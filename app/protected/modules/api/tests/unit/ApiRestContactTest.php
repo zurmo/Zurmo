@@ -53,7 +53,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contact->id, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
         }
 
@@ -77,11 +77,11 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'DELETE', $headers);
 
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('The id specified was invalid.', $response['message']);
         }
 
@@ -174,7 +174,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             $data['owner'] = array(
                 'id' => $super->id,
@@ -241,7 +241,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'PUT', $headers, array('data' => $data));
 
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             // We need to unset some empty values from response and dates.
             unset($response['data']['modifiedDateTime']);
@@ -253,7 +253,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
@@ -282,7 +282,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' , 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
             $this->assertEquals(array($compareData), $response['data']['array']);
         }
@@ -319,15 +319,15 @@
             );
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
 
             // Test with privileged user
             $authenticationData = $this->login();
@@ -341,11 +341,11 @@
             //Test Delete
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $contacts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
         }
 
         /**
@@ -385,7 +385,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
             $this->assertEquals('Fifth Contact', $response['data']['array'][0]['firstName']);
@@ -397,7 +397,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
             $this->assertEquals('Second Contact', $response['data']['array'][0]['firstName']);
@@ -409,7 +409,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
             $this->assertEquals(1, $response['data']['total']);
             $this->assertEquals('First Contact', $response['data']['array'][0]['firstName']);
@@ -420,7 +420,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(0, $response['data']['total']);
             $this->assertFalse(isset($response['data']['array']));
 
@@ -438,7 +438,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
             $this->assertEquals('Third Contact', $response['data']['array'][0]['firstName']);
@@ -450,7 +450,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals(5, $response['data']['total']);
             $this->assertEquals('First Contact', $response['data']['array'][0]['firstName']);
@@ -471,7 +471,7 @@
             $searchParamsQuery = http_build_query($searchParams);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, $response['data']['total']);
             $this->assertEquals(2, count($response['data']['array']));
             $this->assertEquals('Forth Contact', $response['data']['array'][0]['firstName']);
@@ -497,7 +497,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(2, count($response['errors']));
 
             $id = $contact->id;
@@ -505,7 +505,7 @@
             $data['lastName']                = '';
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
         }
 
@@ -528,7 +528,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(3, count($response['errors']));
 
             $id = $contact->id;
@@ -536,7 +536,7 @@
             $data['companyName']         = "A";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
         }
     }

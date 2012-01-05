@@ -58,7 +58,7 @@
             //Test List
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/', 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             foreach ($response['data'] as $key => $value)
             {
@@ -96,7 +96,7 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/AccountTypes', 'GET', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiRestResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
         }
     }
 ?>

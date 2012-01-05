@@ -24,34 +24,18 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestResponse extends ApiResponse
+    class ApiXmlResponse extends ApiResponse
     {
         /**
-         * Generate service output, in xml or json format
-         * @param string $format
-         * @param string $status
-         * @param array $data
-         * @param string $error
-         */
-        public static function generateOutput($format, $result)
+        * Generate service output json format
+        * @param ApiResult $result
+        */
+        public static function generateOutput($result)
         {
             assert('$result instanceof ApiResult');
-            if ($format == ApiRequest::JSON_FORMAT)
-            {
-                $output = $result->convertToArray();
-                echo json_encode($output);
-            }
-            elseif ($format == ApiRequest::XML_FORMAT)
-            {
-                $xml = new SimpleXMLElement('<root/>');
-                array_walk_recursive($data, array($xml, 'addChild'));
-                echo $xml->asXML();
-            }
-            else
-            {
-                echo "Invalid format";
-                exit;
-            }
+            throw new NotSupportedException();
+            //$data = $result->convertToArray();
+            //$xml = ApiXmlParser::arrayToXml($data);
         }
     }
 ?>

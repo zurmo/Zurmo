@@ -51,7 +51,7 @@
 
         public function init()
         {
-            $this->parseParamsFormat();
+            $this->parseResponseFormat();
         }
 
         public function getParams()
@@ -64,17 +64,17 @@
             $this->params = $params;
         }
 
-        public function getParamsFormat()
+        public function getResponseFormat()
         {
             return $this->paramsFormat;
         }
 
-        public function setParamsFormat($paramsFormat)
+        public function setResponseFormat($paramsFormat)
         {
             $this->paramsFormat = $paramsFormat;
         }
 
-        protected function parseParamsFormat()
+        protected function parseResponseFormat()
         {
             //ToDo:This produce warnings, when running unit tests, because $_SERVER['HTTP_ACCEPT'] is not defined in cli environment
             @$this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], self::JSON_FORMAT)) ? self::JSON_FORMAT : self::XML_FORMAT;
@@ -148,13 +148,9 @@
                 {
                     return self::REST;
                 }
-                elseif(strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'SOAP')
+                elseif(strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'soap')
                 {
                     return self::SOAP;
-                }
-                else
-                {
-                    return false;
                 }
             }
             else
