@@ -103,7 +103,8 @@
 
         public function actionAbout()
         {
-            $view = new AboutPageView($this);
+            $view = new AboutPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, new AboutView()));
             echo $view->render();
         }
 
@@ -131,7 +132,8 @@
                                     'Edit',
                                     Yii::t('Default', 'Global Configuration')
             );
-            $view = new ZurmoConfigurationPageView($this, $titleBarAndEditView);
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 

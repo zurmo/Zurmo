@@ -59,7 +59,8 @@
                             JobsToJobsCollectionViewUtil::getMonitorJobData(),
                             JobsToJobsCollectionViewUtil::getNonMonitorJobsData(),
                             $messageBoxContent);
-            $view = new ZurmoConfigurationPageView($this, $view);
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $view));
             echo $view->render();
         }
 

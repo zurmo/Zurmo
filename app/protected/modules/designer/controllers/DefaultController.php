@@ -32,7 +32,8 @@
                         $this->getId(),
                         $this->getModule()->getId()
             );
-            $view = new DesignerPageView($this, $canvasView, null);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, null));
             echo $view->render();
         }
 
@@ -49,7 +50,8 @@
                         $module,
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -87,7 +89,8 @@
                             $breadcrumbLinks
                 );
             }
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -112,7 +115,8 @@
                         $modelClassName,
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -158,7 +162,8 @@
                         $attributeForm,
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -193,7 +198,8 @@
                         $attributeForm,
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -263,7 +269,8 @@
                         $editableViewsCollection,
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -335,7 +342,8 @@
                         $attributesLayoutAdapter->makeDesignerLayoutAttributes(),
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 
@@ -366,7 +374,8 @@
                         $moduleForm,
                         $breadcrumbLinks
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(DesignerDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
             echo $view->render();
         }
 

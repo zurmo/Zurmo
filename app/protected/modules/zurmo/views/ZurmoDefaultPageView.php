@@ -24,11 +24,14 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class LeadsPageView extends ZurmoDefaultPageView
+    /**
+     * Base class for module page views.  Constructs the ZurmoDefaultView.
+     */
+    abstract class ZurmoDefaultPageView extends ZurmoPageView
     {
-        protected function getSubtitle()
+        public function __construct(View $view)
         {
-            return Yii::t('Default', 'LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            parent::__construct(new ZurmoDefaultView($view));
         }
     }
 ?>

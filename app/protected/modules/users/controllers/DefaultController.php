@@ -68,7 +68,8 @@
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
-            $view = new UsersPageView($this, $searchFilterListView);
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
         }
 
@@ -85,7 +86,8 @@
             $detailsAndRelationsView = new UserDetailsAndRelationsView($this->getId(),
                                                                        $this->getModule()->getId(),
                                                                        $user, $params);
-            $view = new UsersPageView($this, $detailsAndRelationsView);
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
         }
 
@@ -98,12 +100,11 @@
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('createUser');
             $this->attemptToValidateAjaxFromPost($userPasswordForm, 'UserPasswordForm');
-            $view = new UsersPageView($this,
-                $this->makeTitleBarAndEditView(
-                    $this->attemptToSaveModelFromPost($userPasswordForm),
-                    'UserTitleBarAndCreateView'
-                )
-            );
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditView(
+                                                $this->attemptToSaveModelFromPost($userPasswordForm),
+                                                    'UserTitleBarAndCreateView')));
             echo $view->render();
         }
 
@@ -130,12 +131,11 @@
             {
                 $redirectUrlParams = null;
             }
-            $view = new UsersPageView($this,
-                $this->makeTitleBarAndEditView(
-                    $this->attemptToSaveModelFromPost($user, $redirectUrlParams),
-                    'TitleBarAndEditView'
-                )
-            );
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditView(
+                                                $this->attemptToSaveModelFromPost($user, $redirectUrlParams),
+                                                    'TitleBarAndEditView')));
             echo $view->render();
         }
 
@@ -147,12 +147,11 @@
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('changePassword');
             $this->attemptToValidateAjaxFromPost($userPasswordForm, 'UserPasswordForm');
-            $view = new UsersPageView($this,
-                $this->makeTitleBarAndEditView(
-                    $this->attemptToSaveModelFromPost($userPasswordForm),
-                    'UserTitleBarAndChangePasswordView'
-                )
-            );
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditView(
+                                                $this->attemptToSaveModelFromPost($userPasswordForm),
+                                                'UserTitleBarAndChangePasswordView')));
             echo $view->render();
         }
 
@@ -242,7 +241,8 @@
                 $selectedRecordCount,
                 UsersModule::getModuleLabelByTypeAndLanguage('Plural')
             );
-            $view = new UsersPageView($this, $titleBarAndMassEditView);
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
             echo $view->render();
         }
 
@@ -321,7 +321,8 @@
                 $policiesViewMetadata,
                 $groupMembershipViewData
             );
-            $view = new UsersPageView($this, $securityDetailsView);
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $securityDetailsView));
             echo $view->render();
         }
 
@@ -356,7 +357,8 @@
                                     $user,
                                     $configurationForm
             );
-            $view = new UsersPageView($this, $titleBarAndEditView);
+            $view = new UsersPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 

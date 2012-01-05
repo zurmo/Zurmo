@@ -64,7 +64,8 @@
                                         array(),
                                         false,
                                         Yii::t('Default', 'Unread'));
-            $view = new NotificationsPageView($this, $titleBarAndListView);
+            $view = new NotificationsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndListView));
             echo $view->render();
         }
 
@@ -77,8 +78,9 @@
                 $notification->save();
             }
             static::resolveCanCurrentUserAccessDetailsAction($notification->owner->id);
-            $view = new NotificationsPageView($this,
-                $this->makeTitleBarAndDetailsView($notification));
+            $view = new NotificationsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndDetailsView($notification)));
             echo $view->render();
         }
 

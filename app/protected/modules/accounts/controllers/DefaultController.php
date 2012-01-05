@@ -62,7 +62,8 @@
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
-            $view = new AccountsPageView($this, $searchFilterListView);
+            $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
         }
 
@@ -74,7 +75,8 @@
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($account, 'AccountsModule',
                                                                           'AccountDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
-            $view = new AccountsPageView($this, $detailsAndRelationsView);
+            $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
         }
 
@@ -82,7 +84,8 @@
         {
             $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost(new Account()), 'Edit');
-            $view = new AccountsPageView($this, $titleBarAndEditView);
+            $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -90,10 +93,10 @@
         {
             $account = Account::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($account);
-            $view = new AccountsPageView($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                            $this->attemptToSaveModelFromPost($account, $redirectUrl), 'Edit')
-            );
+            $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditAndDetailsView(
+                                                 $this->attemptToSaveModelFromPost($account, $redirectUrl), 'Edit')));
             echo $view->render();
         }
 
@@ -139,7 +142,8 @@
                 $selectedRecordCount,
                 AccountsModule::getModuleLabelByTypeAndLanguage('Plural')
             );
-            $view = new AccountsPageView($this, $titleBarAndMassEditView);
+            $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
             echo $view->render();
         }
 

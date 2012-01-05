@@ -66,7 +66,8 @@
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
-            $view = new LeadsPageView($this, $searchFilterListView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
         }
 
@@ -85,7 +86,8 @@
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
                                                                               Yii::app()->request->getRequestUri());
-                $view = new LeadsPageView($this, $detailsAndRelationsView);
+                $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
                 echo $view->render();
             }
         }
@@ -96,7 +98,8 @@
                     $this->attemptToSaveModelFromPost(new Contact()), 'Edit',
                     'LeadTitleBarAndEditAndDetailsView'
             );
-            $view = new LeadsPageView($this, $titleBarAndEditView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -111,12 +114,11 @@
             }
             else
             {
-                $view = new LeadsPageView($this,
-                    $this->makeTitleBarAndEditAndDetailsView(
-                        $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
-                        'LeadTitleBarAndEditAndDetailsView'
-                    )
-                );
+                $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditAndDetailsView(
+                                                $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
+                                                            'LeadTitleBarAndEditAndDetailsView')));
                 echo $view->render();
             }
         }
@@ -164,7 +166,8 @@
                 $selectedRecordCount,
                 Yii::t('Default', 'Leads')
             );
-            $view = new LeadsPageView($this, $titleBarAndMassEditView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
             echo $view->render();
         }
 
@@ -255,7 +258,8 @@
                 $convertToAccountSetting,
                 $userCanCreateAccount
             );
-            $view = new LeadsPageView($this, $convertView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this, $convertView));
             echo $view->render();
         }
 

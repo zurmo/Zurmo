@@ -65,7 +65,8 @@
             $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit');
             $pageViewClassName = $this->getPageViewClassName();
-            $view = new $pageViewClassName($this, $titleBarAndEditView);
+            $view = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                             makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -76,8 +77,9 @@
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($activity);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($activity), $activity);
             $pageViewClassName = $this->getPageViewClassName();
-            $view = new $pageViewClassName($this,
-                $this->makeTitleBarAndEditAndDetailsView($activity, 'Details'));
+            $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditAndDetailsView($activity, 'Details')));
             echo $view->render();
         }
 
@@ -87,9 +89,10 @@
             $activity          = $modelClassName::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($activity);
             $pageViewClassName = $this->getPageViewClassName();
-            $view = new $pageViewClassName($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit'));
+            $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditAndDetailsView(
+                                                $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit')));
             echo $view->render();
         }
 

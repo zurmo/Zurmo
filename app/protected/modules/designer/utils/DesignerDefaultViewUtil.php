@@ -24,11 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class LeadsPageView extends ZurmoDefaultPageView
+    /**
+     * Helper class for constructing the default view used by the DesignerPageView.
+     */
+    class DesignerDefaultViewUtil
     {
-        protected function getSubtitle()
+        /**
+         * Given a controller, contained view and an $activeNodeModuleClassName, construct the gridview
+         * used by the designer page view.
+         * @param CController $controller
+         * @param View $containedView
+         * @param mixed $activeNodeModuleClassName (null or string)
+         */
+        public static function makeStandardViewForCurrentUser(CController $controller, View $containedView, $activeNodeModuleClassName)
         {
-            return Yii::t('Default', 'LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            assert('is_string($activeNodeModuleClassName) || $activeNodeModuleClassName == null');
+            $gridView    = new GridView(1, 2);
+            $gridView->setView(new TreeMenuView($controller->getId(), $controller->getModule()->getId(), $activeNodeModuleClassName), 0, 0);
+            $gridView->setView($containedView, 0, 1);
+            return ZurmoDefaultViewUtil::makeStandardViewForCurrentUser($controller, $gridView);
         }
     }
-?>

@@ -83,7 +83,8 @@
                 $wrapperView  = new SequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
                 $gridView->setView($titleBarView, 0, 0);
                 $gridView->setView($wrapperView, 1, 0);
-                $view        = new ZurmoConfigurationPageView($this, $gridView);
+                $view         = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $gridView));
             }
             else
             {

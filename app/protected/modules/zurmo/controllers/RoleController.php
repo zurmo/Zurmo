@@ -48,7 +48,8 @@
                 $this->getModule()->getId(),
                 Role::getAll('name')
             );
-            $view = new RolesPageView($this, $titleAndTreeView);
+            $view = new RolesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleAndTreeView));
             echo $view->render();
         }
 
@@ -66,7 +67,8 @@
                 RolesModule::getPluralCamelCasedName(),
                 'Edit'
             );
-            $view = new RolesPageView($this, $titleBarAndEditView);
+            $view = new RolesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -79,7 +81,8 @@
                 RolesModule::getPluralCamelCasedName(),
                 'Edit'
             );
-            $view = new RolesPageView($this, $titleBarAndEditView);
+            $view = new RolesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 

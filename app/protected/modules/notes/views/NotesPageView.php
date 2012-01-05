@@ -24,13 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class NotesPageView extends ZurmoPageView
+    class NotesPageView extends ZurmoDefaultPageView
     {
-        public function __construct(CController $controller, View $view)
-        {
-            parent::__construct(new ZurmoDefaultView($controller, $view));
-        }
-
         protected function getSubtitle()
         {
             return Yii::t('Default', 'NotesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());

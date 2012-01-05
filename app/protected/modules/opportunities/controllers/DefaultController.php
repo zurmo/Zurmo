@@ -62,7 +62,8 @@
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
-            $view = new OpportunitiesPageView($this, $searchFilterListView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
         }
 
@@ -74,7 +75,8 @@
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($opportunity, 'OpportunitiesModule',
                                                                           'OpportunityDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
-            $view = new OpportunitiesPageView($this, $detailsAndRelationsView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
         }
 
@@ -104,7 +106,8 @@
         {
             $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($opportunity, $redirectUrl), 'Edit');
-            $view = new OpportunitiesPageView($this, $titleBarAndEditView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -112,9 +115,11 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($opportunity);
-            $view = new OpportunitiesPageView($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($opportunity, $redirectUrl), 'Edit'));
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeTitleBarAndEditAndDetailsView(
+                                                        $this->attemptToSaveModelFromPost($opportunity, $redirectUrl),
+                                                        'Edit')));
             echo $view->render();
         }
 
@@ -160,7 +165,8 @@
                 $selectedRecordCount,
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural')
             );
-            $view = new OpportunitiesPageView($this, $titleBarAndMassEditView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
             echo $view->render();
         }
 

@@ -45,7 +45,8 @@
         public function actionWelcome()
         {
             $welcomeView = new InstallWelcomeView($this->getId(), $this->getModule()->getId());
-            $view = new InstallPageView($this, $welcomeView);
+            $view = new InstallPageView(ZurmoDefaultViewUtil::
+                                       makeStandardViewForCurrentUser($this, $welcomeView));
             echo $view->render();
         }
 
@@ -54,7 +55,8 @@
             $serviceCheckResultsDataForDisplay = CheckServicesUtil::checkServicesAndGetResultsDataForDisplay();
             $checkServicesView = new InstallCheckServicesView($this->getId(), $this->getModule()->getId(),
                                                               $serviceCheckResultsDataForDisplay);
-            $view = new InstallPageView($this, $checkServicesView);
+            $view = new InstallPageView(ZurmoDefaultViewUtil::
+                                       makeStandardViewForCurrentUser($this, $checkServicesView));
             echo $view->render();
         }
 
@@ -81,7 +83,8 @@
                 }
             }
             $settingsView = new InstallSettingsView($this->getId(), $this->getModule()->getId(), $form);
-            $view = new InstallPageView($this, $settingsView);
+            $view = new InstallPageView(ZurmoDefaultViewUtil::
+                                       makeStandardViewForCurrentUser($this, $settingsView));
             echo $view->render();
         }
 
@@ -94,7 +97,8 @@
             {
                 $checkServicesView = new InstallAdditionalCheckServicesView($this->getId(), $this->getModule()->getId(),
                                                                            $serviceCheckResultsDataForDisplay);
-                $view = new InstallPageView($this, $checkServicesView);
+                $view = new InstallPageView(ZurmoDefaultViewUtil::
+                                            makeStandardViewForCurrentUser($this, $checkServicesView));
                 echo $view->render();
                 Yii::app()->end(0, false);
             }
@@ -119,7 +123,8 @@
         {
             assert('$form instanceof InstallSettingsForm');
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
-            $view = new InstallPageView($this, $nextView);
+                $view = new InstallPageView(ZurmoDefaultViewUtil::
+                                            makeStandardViewForCurrentUser($this, $nextView));
             echo $view->render();
 
             $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
@@ -146,7 +151,8 @@
             InstallUtil::freezeDatabase();
             Yii::app()->user->userModel = User::getByUsername('super');
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
-            $view = new InstallPageView($this, $nextView);
+            $view = new InstallPageView(ZurmoDefaultViewUtil::
+                                            makeStandardViewForCurrentUser($this, $nextView));
             echo $view->render();
             $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);

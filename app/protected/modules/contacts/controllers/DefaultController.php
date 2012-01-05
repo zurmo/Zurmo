@@ -63,7 +63,8 @@
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
-            $view = new ContactsPageView($this, $searchFilterListView);
+            $view = new ContactsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
         }
 
@@ -75,7 +76,8 @@
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'ContactsModule',
                                                                           'ContactDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
-            $view = new ContactsPageView($this, $detailsAndRelationsView);
+            $view = new ContactsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
         }
 
@@ -97,7 +99,8 @@
         {
             $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit');
-            $view = new ContactsPageView($this, $titleBarAndEditView);
+            $view = new ContactsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -105,11 +108,10 @@
         {
             $contact = Contact::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
-            $view = new ContactsPageView($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                            $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit'
-                )
-            );
+            $view    = new ContactsPageView(ZurmoDefaultViewUtil::
+                                            makeStandardViewForCurrentUser($this,
+                                                $this->makeTitleBarAndEditAndDetailsView(
+                                                    $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit')));
             echo $view->render();
         }
 
@@ -156,7 +158,8 @@
                 $selectedRecordCount,
                 ContactsModule::getModuleLabelByTypeAndLanguage('Plural')
             );
-            $view = new ContactsPageView($this, $titleBarAndMassEditView);
+            $view = new ContactsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
             echo $view->render();
         }
 
