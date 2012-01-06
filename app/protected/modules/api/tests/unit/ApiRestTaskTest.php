@@ -418,7 +418,7 @@
                     'pageSize' => 3,
                 ),
                 'search' => array(
-                    'activityItems'   => array( 'id' => $firstAccount->id),
+                    'activityItems'   => array('id' => $firstAccount->getClassId('Item')),
                 ),
                 'sort' => 'name.desc',
             );

@@ -276,7 +276,7 @@
         protected static function getAvailablePageSizeNames()
         {
             return array('listPageSize', 'subListPageSize', 'modalListPageSize', 'massEditProgressPageSize',
-                         'autoCompleteListPageSize', 'importPageSize', 'dashboardListPageSize');
+                         'autoCompleteListPageSize', 'importPageSize', 'dashboardListPageSize','apiListPageSize');
         }
     }
 ?>

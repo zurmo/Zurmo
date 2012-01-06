@@ -409,7 +409,7 @@
                     'pageSize' => 3,
                 ),
                 'search' => array(
-                    'activityItems'   => array( 'id' => $firstAccount->id),// TO DO: search by activity item
+                    'activityItems'   => array('id' => $firstAccount->getClassId('Item')),
                 ),
                 'sort' => 'name.desc',
             );

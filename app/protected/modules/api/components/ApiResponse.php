@@ -28,7 +28,7 @@
     {
         const STATUS_SUCCESS           = 'SUCCESS';
         const STATUS_FAILURE           = 'FAILURE';
-        public static function generateOutput($data, $format)
+        public static function generateOutput($result)
         {
             throw new NotImplementedException();
         }

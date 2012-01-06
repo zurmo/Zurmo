@@ -168,7 +168,7 @@
             return null;
         }
 
-        protected function processList()
+        protected function processList($params)
         {
             $modelClassName = $this->getModelName();
             $searchFormClassName = $this->getSearchFormClassName();
@@ -176,9 +176,9 @@
             try
             {
                 $filterParams = array();
-                if (isset($_GET['filter']) && $_GET['filter'] != '')
+                if (isset($params['filter']) && $params['filter'] != '')
                 {
-                    parse_str($_GET['filter'], $filterParams);
+                    parse_str($params['filter'], $filterParams);
                 }
                 $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
 
@@ -396,25 +396,6 @@
             return $model;
         }
 
-        /**
-         *
-         * Enter description here ...
-         * @param string $status
-         * @param string $message
-         * @param array || boolean $data
-         */
-        protected function generateOutput($status, $message, $data=null, $errors = null)
-        {
-            assert('is_string($status) && $status !=""');
-            assert('is_string($message)');
 
-            $output = array();
-            $output['data'] = $data;
-            $output['status'] = $status;
-            $output['message'] = $message;
-            $output['errors'] = $errors;
-
-            return $output;
-        }
     }
 ?>

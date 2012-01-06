@@ -32,8 +32,10 @@
         */
         public static function generateOutput($result)
         {
+            return;
             assert('$result instanceof ApiResult');
             throw new NotSupportedException();
+            return;
             //$data = $result->convertToArray();
             //$xml = ApiXmlParser::arrayToXml($data);
         }

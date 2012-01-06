@@ -44,7 +44,7 @@
             $responseClassName::generateOutput($result);
         }
 
-        public function getRequestClassName()
+        protected function getRequestClassName()
         {
             $requestType = Yii::app()->apiRequest->getRequestType();
             if ($requestType == ApiRequest::REST)
@@ -62,7 +62,7 @@
             }
         }
 
-        public function getResponseClassName()
+        protected function getResponseClassName()
         {
             $responseType = Yii::app()->apiRequest->getResponseFormat();
             if ($responseType == ApiRequest::JSON_FORMAT)

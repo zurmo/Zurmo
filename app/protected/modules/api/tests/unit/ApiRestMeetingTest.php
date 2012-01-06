@@ -295,11 +295,14 @@
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
-            MeetingTestHelper::createMeetingByNameForOwner('First Meeting', $super);
-            MeetingTestHelper::createMeetingByNameForOwner('Second Meeting', $super);
-            MeetingTestHelper::createMeetingByNameForOwner('Third Meeting', $super);
-            MeetingTestHelper::createMeetingByNameForOwner('Forth Meeting', $anotherUser);
-            MeetingTestHelper::createMeetingByNameForOwner('Fifth Meeting', $super);
+            $firstAccount = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('First Account', 'Customer', 'Automotive', $super);
+            $secondAccount = AccountTestHelper::createAccountByNameTypeAndIndustryForOwner('Second Account', 'Customer', 'Automotive', $super);
+
+            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('First Meeting', $super, $firstAccount);
+            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('Second Meeting', $super, $firstAccount);
+            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('Third Meeting', $super, $secondAccount);
+            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('Forth Meeting', $anotherUser, $secondAccount);
+            MeetingTestHelper::createMeetingWithOwnerAndRelatedAccount('Fifth Meeting', $super, $firstAccount);
 
             $searchParams = array(
                 'pagination' => array(
@@ -406,6 +409,28 @@
             $this->assertEquals('Third Meeting', $response['data']['array'][0]['name']);
             $this->assertEquals('Second Meeting', $response['data']['array'][1]['name']);
             $this->assertEquals('First Meeting', $response['data']['array'][2]['name']);
+
+            // Search by account, order by name desc
+            $searchParams = array(
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 3,
+                ),
+                'search' => array(
+                    'activityItems'   => array('id' => $firstAccount->getClassId('Item')),
+                ),
+                'sort' => 'name.desc',
+            );
+
+            $searchParamsQuery = http_build_query($searchParams);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(3, count($response['data']['array']));
+            $this->assertEquals(3, $response['data']['total']);
+            $this->assertEquals('Second Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals('First Meeting', $response['data']['array'][1]['name']);
+            $this->assertEquals('Fifth Meeting', $response['data']['array'][2]['name']);
         }
 
         public function testEditMeetingWithIncompleteData()

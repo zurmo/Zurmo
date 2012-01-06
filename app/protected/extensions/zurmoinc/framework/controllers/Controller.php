@@ -81,6 +81,7 @@
                 $userId,
                 $sanitizedSearchAttributes
             );
+
             return RedBeanModelDataProviderUtil::makeDataProvider(
                 $metadataAdapter,
                 $listModelClassName,
