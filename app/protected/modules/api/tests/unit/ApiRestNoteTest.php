@@ -379,7 +379,7 @@
                 'search' => array(
                     'owner'   => array( 'id' => 1),
                 ),
-                'sort' => 'name.desc',
+                'sort' => 'description.desc',
             );
 
             $searchParamsQuery = http_build_query($searchParams);
@@ -411,7 +411,7 @@
                 'search' => array(
                     'activityItems'   => array('id' => $firstAccount->getClassId('Item')),
                 ),
-                'sort' => 'name.desc',
+                'sort' => 'description.desc',
             );
 
             $searchParamsQuery = http_build_query($searchParams);
