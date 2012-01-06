@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestCurrencyTest extends ApiRestTest
+    class ApiRestRoleTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {
@@ -34,10 +34,10 @@
         /**
         * @depends testApiServerUrl
         */
-        public function testGetCurrency()
+        public function testGetRole()
         {
             $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
+            Yii::app()->user->userModel        = $super;
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -46,20 +46,27 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $currencies                 = Currency::getAll();
-            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($currencies[0]);
+            $role = new Role();
+            $role->name = 'myRole';
+            $role->validate();
+            $saved = $role->save();
+            $this->assertTrue($saved);
+
+            $roles                 = Role::getAll();
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($roles[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
+
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
         }
 
         /**
-        * @depends testApiServerUrl
+        * @depends testGetRole
         */
-        public function testListCurrencies()
+        public function testListRoles()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
@@ -71,20 +78,21 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $currencies                 = Currency::getAll();
+            $roles                 = Role::getAll();
             $compareData = array();
-            foreach ($currencies as $currency)
+            foreach ($roles as $role)
             {
-                $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($currency);
+                $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($role);
                 $compareData[] = $redBeanModelToApiDataUtil->getData();
             }
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(count($currencies), count($response['data']['array']));
+            $this->assertEquals(count($roles), count($response['data']['array']));
             $this->assertEquals($compareData, $response['data']['array']);
+
         }
     }
 ?>
