@@ -32,7 +32,7 @@
     {
         protected static function renderAccessFailureView()
         {
-            $message = Yii::t('Default', 'You do not have rights to this action');
+            $message = Yii::t('Default', 'You do not have rights for this action.');
             throw new SecurityException($message);
         }
     }

@@ -28,7 +28,7 @@
     {
         protected static function renderAccessFailureView($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
-            $message = Yii::t('Default', 'You do not have access to this action');
+            $message = Yii::t('Default', 'You do not have permissions for this action.');
             throw new SecurityException($message);
         }
     }

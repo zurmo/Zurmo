@@ -271,14 +271,39 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have rights for this action.', $response['message']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have rights for this action.', $response['message']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have rights for this action.', $response['message']);
+
+            //now check if user have rights, but no permissions.
+            $notAllowedUser->setRight('OpportunitiesModule', OpportunitiesModule::getAccessRight());
+            $notAllowedUser->setRight('OpportunitiesModule', OpportunitiesModule::getCreateRight());
+            $notAllowedUser->setRight('OpportunitiesModule', OpportunitiesModule::getDeleteRight());
+            $saved = $notAllowedUser->save();
+            $this->assertTrue($saved);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/' . $opportunities[0]->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
             // Test with privileged user
             $authenticationData = $this->login();
