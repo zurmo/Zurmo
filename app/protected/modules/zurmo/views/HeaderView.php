@@ -28,11 +28,17 @@
     {
         private $verticalGridView;
 
-        public function __construct()
+        public function __construct($menuMetadata, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl)
         {
-            $this->verticalGridView  = new GridView(2, 1);
-            $this->verticalGridView->setView(new HeaderLinksView(),    0, 0);
-            $this->verticalGridView->setView(new GlobalSearchAndRecentlyViewedView(),    1, 0);
+            assert('is_array($menuMetadata)');
+            assert('is_string($notificationsUrl)');
+            assert('is_array($moduleNamesAndLabels)');
+            assert('is_string($sourceUrl)');
+            $this->verticalGridView   = new GridView(2, 1);
+            $this->verticalGridView->setView(
+                                        new HeaderLinksView($menuMetadata, $notificationsUrl),    0, 0);
+            $this->verticalGridView->setView(
+                                        new GlobalSearchAndRecentlyViewedView($moduleNamesAndLabels, $sourceUrl),1, 0);
         }
 
         protected function renderContent()

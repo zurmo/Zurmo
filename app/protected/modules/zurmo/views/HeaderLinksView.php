@@ -26,10 +26,21 @@
 
     class HeaderLinksView extends View
     {
+        protected $menuMetadata;
+
+        protected $notificationsUrl;
+
+        public function __construct($menuMetadata, $notificationsUrl)
+        {
+            assert('is_array($menuMetadata)');
+            assert('is_string($notificationsUrl)');
+            $this->menuMetadata     = $menuMetadata;
+            $this->notificationsUrl = $notificationsUrl;
+        }
+
         protected function renderContent()
         {
-            $metadata = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
-            foreach ($metadata as $menuItem)
+            foreach ($this->menuMetadata as $menuItem)
             {
                 $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
             }
@@ -48,7 +59,7 @@
         protected function renderNotificationsLinkContent()
         {
             $label    = Yii::t('Default', 'Notifications');
-            $link     = Yii::app()->createUrl('notifications/default');
+            $link     = $this->notificationsUrl;
             $content  = null;
             $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
             if($count > 0)

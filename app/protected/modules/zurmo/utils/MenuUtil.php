@@ -29,6 +29,29 @@
      */
     class MenuUtil
     {
+        public static function resolveByCacheAndGetVisibleAndOrderedTabMenuByCurrentUser()
+        {
+            try
+            {
+                $items = GeneralCache::getEntry(self::getMenuViewItemsCacheIdentifier());
+            }
+            catch (NotFoundException $e)
+            {
+                $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
+                GeneralCache::cacheEntry(self::getMenuViewItemsCacheIdentifier(), $items);
+            }
+            return $items;
+        }
+
+        /**
+         * The menu view items cache identifier is a combination of the language and current user.
+         * This ensures if the user or language changes, that it properly retrieves the cache.
+         */
+        protected static function getMenuViewItemsCacheIdentifier()
+        {
+            return 'MenuViewItems' . Yii::app()->user->userModel->id . Yii::app()->language;
+        }
+
         /**
          * Get the tab menu items ordered and only
          * the visible tabs based on the effective user setting for tab

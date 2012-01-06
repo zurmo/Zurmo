@@ -29,6 +29,18 @@
      */
     class GlobalSearchAndRecentlyViewedView extends View
     {
+        protected $moduleNamesAndLabelsAndAll;
+
+        protected $sourceUrl;
+
+        public function __construct($moduleNamesAndLabelsAndAll, $sourceUrl)
+        {
+            assert('is_array($moduleNamesAndLabelsAndAll)');
+            assert('is_string($sourceUrl)');
+            $this->moduleNamesAndLabelsAndAll = $moduleNamesAndLabelsAndAll;
+            $this->sourceUrl            = $sourceUrl;
+        }
+
         protected function renderContent()
         {
             $content  = '<div><div style="float:right;">' . $this->renderRecentlyViewedContent() . '</div>';
@@ -61,14 +73,11 @@
 
         protected function renderGlobalSearchContent()
         {
-            $moduleNamesAndLabels = GlobalSearchUtil::
-                                    getGlobalSearchScopingModuleNamesAndLabelsDataByUser(Yii::app()->user->userModel);
-            if(count($moduleNamesAndLabels) == 0)
+            if(count($this->moduleNamesAndLabelsAndAll) == 1)
             {
                 return null;
             }
-            $sourceUrl               = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
-            $content                 = $this->renderGlobalSearchScopingInputContent($moduleNamesAndLabels, $sourceUrl);
+            $content                 = $this->renderGlobalSearchScopingInputContent();
             $hintMessage             = Yii::t('Default', 'Search by name, phone, or e-mail');
             $htmlOptions             = array('class'   => 'global-search global-search-hint',
                                              'onfocus' => '$(this).removeClass("global-search-hint"); $(this).val("");',
@@ -79,7 +88,7 @@
                 'name'        => 'globalSearchInput',
                 'id'          => 'globalSearchInput',
                 'value'       => $hintMessage,
-                'source'      => $sourceUrl,
+                'source'      => $this->sourceUrl,
                 'htmlOptions' => $htmlOptions,
                 'options'     => array('select' => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
                                                    '{window.location = ui.item.href;} return false;}')
@@ -97,16 +106,13 @@
             return $content;
         }
 
-        protected function renderGlobalSearchScopingInputContent($moduleNamesAndLabels, $sourceUrl)
+        protected function renderGlobalSearchScopingInputContent()
         {
-            assert('is_array($moduleNamesAndLabels)');
-            assert('is_string($sourceUrl)');
             $imagePath            = Yii::app()->baseUrl . '/themes/default/images/searchIcon.gif';
-            GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption($moduleNamesAndLabels);
             $cClipWidget   = new CClipWidget();
             $cClipWidget->beginClip("JuiMultiSelect");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.JuiMultiSelect', array(
-                'dataAndLabels'  => $moduleNamesAndLabels,
+                'dataAndLabels'  => $this->moduleNamesAndLabelsAndAll,
                 'selectedValue'  => 'All',
                 'inputId'        => 'globalSearchScope',
                 'inputName'      => 'globalSearchScope',
@@ -151,7 +157,7 @@
                             }
                         });
                         $("#globalSearchInput").bind("focus", function(event, ui){
-                            $("#globalSearchInput").autocomplete("option", "source", "' . $sourceUrl . '&" + $.param($("#globalSearchScope").serializeArray()));
+                            $("#globalSearchInput").autocomplete("option", "source", "' . $this->sourceUrl . '&" + $.param($("#globalSearchScope").serializeArray()));
                         });
                        ';
             /// End Not Coding Standard

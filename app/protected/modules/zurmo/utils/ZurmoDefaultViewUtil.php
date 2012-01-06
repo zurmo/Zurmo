@@ -50,14 +50,38 @@
             return $verticalGridView;
         }
 
+        /**
+         * Given a contained view, construct the gridview
+         * used by the zurmo page view for errors.
+         * @param View $containedView
+         */
+        public static function makeErrorViewForCurrentUser(View $containedView)
+        {
+            $horizontalGridView = new GridView(1, 1);
+            $horizontalGridView->setView($containedView, 0, 0);
+            $verticalGridView   = new GridView(4, 1);
+            $verticalGridView->setView(static::makeHeaderView(),                    0, 0);
+            $verticalGridView->setView(static::makeMenuView(),                      1, 0);
+            $verticalGridView->setView($horizontalGridView,                         3, 0);
+            $verticalGridView->setView(static::makeFooterView(),                    5, 0);
+            return $verticalGridView;
+        }
+
         protected static function makeHeaderView()
         {
-            return new HeaderView();
+            $menuMetadata         = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
+            $notificationsUrl     = Yii::app()->createUrl('notifications/default');
+            $moduleNamesAndLabels = GlobalSearchUtil::
+                                    getGlobalSearchScopingModuleNamesAndLabelsDataByUser(Yii::app()->user->userModel);
+            $sourceUrl            = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
+            GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption($moduleNamesAndLabels);
+            return new HeaderView($menuMetadata, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);
         }
 
         protected static function makeMenuView()
         {
-            return new MenuView();
+            $items = MenuUtil::resolveByCacheAndGetVisibleAndOrderedTabMenuByCurrentUser();
+            return new MenuView($items);
         }
 
         protected static function makeFlashMessageView(CController $controller)
