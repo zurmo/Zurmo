@@ -50,7 +50,9 @@
             $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
                                   array('{seconds}' => $timeLimit)));
             echo "\n";
-            $messageStreamer->add(Yii::t('Default', 'Starting job type: {type}', array('{type}' => $type)));
+            $messageStreamer->add(Yii::t('Default', '{dateTimeString} Starting job type: {type}',
+                                  array('{type}' => $type,
+                                         '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
             $messageLogger = new $messageLoggerClassName($messageStreamer);
             if($type == 'Monitor')
             {
@@ -60,7 +62,9 @@
             {
                 static::runNonMonitorJob($type, $messageLogger);
             }
-            $messageStreamer->add(Yii::t('Default', 'Ending job type: {type}', array('{type}' => $type)));
+            $messageStreamer->add(Yii::t('Default', '{dateTimeString} Ending job type: {type}',
+                                  array('{type}' => $type,
+                                         '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
         }
 
         /**
@@ -174,6 +178,14 @@
                 return true;
             }
             return false;
+        }
+
+        protected static function getLocalizedDateTimeTimeZoneString()
+        {
+            $content = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                                        DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+            $content .= ' ' . Yii::app()->user->userModel->timeZone;
+            return $content;
         }
     }
 ?>
