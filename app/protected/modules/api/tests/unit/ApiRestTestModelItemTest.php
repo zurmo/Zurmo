@@ -275,5 +275,23 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
         }
+
+        /**
+        * @depends testApiServerUrl
+        */
+        public function testNotAllowedGuestAction()
+        {
+            $authenticationData = $this->login('st','st');
+            $headers = array(
+                            'Accept: application/json',
+                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                            'ZURMO_TOKEN: ' . $authenticationData['token'],
+                            'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/1', 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('Login required.', $response['message']);
+        }
     }
 ?>

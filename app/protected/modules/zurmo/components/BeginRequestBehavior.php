@@ -183,12 +183,10 @@
 
                 if (!$isUrlAllowedToGuests)
                 {
-                    //To-Do: Send response correctly, via controller!!!
-                    echo Yii::t('Default', 'Login required');
+                    $message = Yii::t('Default', 'Login required.');
+                    $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, null);
+                    Yii::app()->apiHelper->sendResponse($result);
                     exit;
-                    // Code below is not working
-                    $url = Yii::app()->createUrl('api/rest/notLoggedError');
-                    Yii::app()->request->redirect($url);
                 }
             }
         }
