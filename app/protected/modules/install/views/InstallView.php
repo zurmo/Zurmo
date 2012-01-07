@@ -27,11 +27,9 @@
     class InstallView extends View
     {
         private $verticalGridView;
-        protected $controller;
 
-        public function __construct($controller, View $view)
+        public function __construct(View $view)
         {
-            $this->controller = $controller;
             $horizontalGridView = new GridView(1, 1);
             $horizontalGridView->setView($view, 0, 0);
             $this->verticalGridView  = new GridView(1, 1);

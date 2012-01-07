@@ -24,8 +24,13 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class InstallPageView extends ZurmoDefaultPageView
+    class InstallPageView extends ZurmoPageView
     {
+        public function __construct(View $view)
+        {
+            parent::__construct(new InstallView($view));
+        }
+
         protected function getSubtitle()
         {
             return Yii::t('Default', 'Zurmo Installation');
