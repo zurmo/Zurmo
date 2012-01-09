@@ -95,7 +95,7 @@
                 $rowContent = null;
                 if ($this->rows > 1)
                 {
-                    $rowContent .= "<div>\n";
+                    //$rowContent .= "<div>\n";
                 }
                 $totalColumnsWidth = null;
                 for ($column = 0; $column < $this->columns; $column++)
@@ -125,18 +125,18 @@
                         {
                             $style = '';
                         }
-                        $columnContent .= "<div$style>\n";
+                      //  $columnContent .= "<div$style>\n";
                     }
                     $columnContent .= $this->containedViews[$row][$column]->render();
                     if ($this->columns > 1)
                     {
-                        $columnContent .= "</div>\n";
+                       // $columnContent .= "</div>\n";
                     }
                     $rowContent .= $columnContent;
                 }
                 if ($this->rows > 1)
                 {
-                    $rowContent .= "</div>\n";
+                  //  $rowContent .= "</div>\n";
                 }
                 $content .= $rowContent;
             }
