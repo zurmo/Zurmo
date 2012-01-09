@@ -42,7 +42,7 @@
             $aVerticalGridView->setCssClasses(
                 array('TestingExtraClassDefinition', 'alsoTestingExtraClassDefinition'));
             $aVerticalGridView->setView(static::makeMenuView(), 0, 0);
-            $aVerticalGridView->setView(static::makeMenuView(), 1, 0); //change to RecentlyViewed...
+            $aVerticalGridView->setView(static::makeRecentlyViewedView(), 1, 0);
 
             $horizontalGridView = new GridView(1, 2);
             $horizontalGridView->setView($aVerticalGridView, 0, 0);
@@ -90,6 +90,11 @@
         {
             $items = MenuUtil::resolveByCacheAndGetVisibleAndOrderedTabMenuByCurrentUser();
             return new MenuView($items);
+        }
+
+        protected static function makeRecentlyViewedView()
+        {
+            return new RecentlyViewedView();
         }
 
         protected static function makeFlashMessageView(CController $controller)

@@ -31,7 +31,7 @@
     {
         /**
          * Get the content for displaying recently viewed information via an ajax call.
-         * @see GlobalSearchAndRecentlyViewedView
+         * @see RecentlyViewedView
          * @param User $user
          */
         public static function getRecentlyViewedAjaxContentByUser(User $user, $count)
