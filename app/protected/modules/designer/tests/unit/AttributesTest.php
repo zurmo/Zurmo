@@ -678,7 +678,96 @@
          */
         public function testSetAndGetMultiSelectDropDownAttribute()
         {
-            //todo:
+            $values = array(
+                'Reading',
+                'Writing',
+                'Singing',
+                'Surfing',
+            );
+            $labels = array('fr' => array('Reading fr', 'Writing fr', 'Singing fr', 'Surfing fr'),
+                            'de' => array('Reading de', 'Writing de', 'Singing de', 'Surfing de'),
+            );
+            $hobbiesFieldData = CustomFieldData::getByName('Hobbies');
+            $hobbiesFieldData->serializedData = serialize($values);
+            $this->assertTrue($hobbiesFieldData->save());
+
+            $attributeForm = new MultiSelectDropDownAttributeForm();
+            $attributeForm->attributeName    = 'testHobbies';
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Hobbies 2 de',
+                'en' => 'Test Hobbies 2 en',
+                'es' => 'Test Hobbies 2 es',
+                'fr' => 'Test Hobbies 2 fr',
+                'it' => 'Test Hobbies 2 it',
+            );
+            $attributeForm->isAudited             = true;
+            $attributeForm->isRequired            = true;
+            $attributeForm->defaultValueOrder     = 1;
+            $attributeForm->customFieldDataData   = $values;
+            $attributeForm->customFieldDataName   = 'Hobbies';
+            $attributeForm->customFieldDataLabels = $labels;
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $account = new Account();
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'testHobbies');
+            $this->assertEquals('MultiSelectDropDown', $attributeForm->getAttributeTypeName());
+            $this->assertEquals('testHobbies',         $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Hobbies 2 de',
+                'en' => 'Test Hobbies 2 en',
+                'es' => 'Test Hobbies 2 es',
+                'fr' => 'Test Hobbies 2 fr',
+                'it' => 'Test Hobbies 2 it',
+            );
+            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+            $this->assertEquals(true,             $attributeForm->isAudited);
+            $this->assertEquals(true,             $attributeForm->isRequired);
+            $this->assertEquals('A380',           $attributeForm->defaultValue);
+            $this->assertEquals(1,                $attributeForm->defaultValueOrder);
+            $this->assertEquals('Hobbies',        $attributeForm->customFieldDataName);
+            $this->assertEquals($values,          $attributeForm->customFieldDataData);
+            $this->assertEquals($labels,          $attributeForm->customFieldDataLabels);
+
+            //Test that validation on completely new picklists works correctly and is inline with the rules from
+            //the CustomFieldData model.
+            $attributeForm = new MultiSelectDropDownAttributeForm();
+            $attributeForm->attributeName       = 's';    //name to short. test that this fails.
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Hobbies 3 de',
+                'en' => 'Test Hobbies 3 en',
+                'es' => 'Test Hobbies 3 es',
+                'fr' => 'Test Hobbies 3 fr',
+                'it' => 'Test Hobbies 3 it',
+            );
+            $attributeForm->isAudited           = true;
+            $attributeForm->isRequired          = true;
+            $attributeForm->defaultValueOrder   = 1;
+            $attributeForm->customFieldDataData = array('a', 'b', 'c');
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            $this->assertFalse($attributeForm->validate());
+            $attributeForm->attributeName       = 'camelcased';
+            $this->assertTrue($attributeForm->validate());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
         }
 
         /**

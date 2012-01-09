@@ -31,7 +31,7 @@
     {
         public function setAttributeMetadataFromForm(AttributeForm $attributeForm)
         {
-            assert('$attributeForm instanceof DropDownAttributeForm');
+            assert('$attributeForm instanceof MultiSelectDropDownAttributeForm');
             $modelClassName    = get_class($this->model);
             $attributeName     = $attributeForm->attributeName;
             $attributeLabels   = $attributeForm->attributeLabels;
