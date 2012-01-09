@@ -141,8 +141,8 @@
             => 'Configurazine',
         'Convert'
             => 'Converti',
-        'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
-            => 'Copyright &#169; Zurmo Inc., 2011. Tutti i diritti riservati.',
+        'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
+            => 'Copyright &#169; Zurmo Inc., 2012. Tutti i diritti riservati.',
         'Country'
             => 'Paese',
         'Create Group'
@@ -165,7 +165,7 @@
             => 'Configurazione di valuta',
         'Currency in use.'
             => 'Valuta in uso.',
-        's Update Job'
+        'Currency Rates Update Job'
             => 'Job corso delle valute',
         'Currency Value'
             => 'Valore',

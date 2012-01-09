@@ -45,8 +45,6 @@
             => 'Abgeschlossen mit Fehlern',
         'End Date Time'
             => 'Datum/Zeit durchgeführt',
-        'Ending job type: {type}'
-            => 'Stornierung Job: {type}',
         'Every 5 minutes'
             => 'Jeder 5 Minuten',
         'How often should I run each Job?'
@@ -93,8 +91,6 @@
             => 'Script wird am meisten für {seconds} Sekunden laufen lassen.',
         'Start Date Time'
             => 'Datum/Zeit gestartet',
-        'Starting job type: {type}'
-            => 'Beginn der Job {type}',
         'The job {jobName} has been reset.'
             => 'Die Aufgabe {jobName} wurde zurückgesetzt.',
         'The job {jobName} was not found to be stuck and therefore was not reset.'
@@ -109,5 +105,9 @@
             => 'Welche Monitor Job?',
         '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows'
             => '{ClickHereLink} für Hilfe zur Einrichtung eines cron unter Linux oder einem geplanten Task in Windows',
+        '{dateTimeString} Ending job type: {type}'
+            => '{dateTimeString} Stornierung Job: {type}',
+        '{dateTimeString} Starting job type: {type}'
+            => '{dateTimeString} Beginn der Job {type}',
     );
 ?>

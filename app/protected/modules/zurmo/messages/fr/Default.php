@@ -141,8 +141,8 @@
             => 'Configuration',
         'Convert'
             => 'Convertir',
-        'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
-            => 'Copyright &#169; Zurmo Inc., 2011. Tous droits réservés.',
+        'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
+            => 'Copyright &#169; Zurmo Inc., 2012. Tous droits réservés.',
         'Country'
             => 'Pays',
         'Create Group'

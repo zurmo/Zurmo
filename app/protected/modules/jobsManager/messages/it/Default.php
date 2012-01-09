@@ -45,8 +45,6 @@
             => 'Job terminato con errori',
         'End Date Time'
             => 'Data/ora di fina',
-        'Ending job type: {type}'
-            => 'Terminazione del job: {type}',
         'Every 5 minutes'
             => 'Ogni 5 minuti',
         'How often should I run each Job?'
@@ -93,8 +91,7 @@
             => 'Tempo massimo di esecuzione dello script: {seconds} seconde.',
         'Start Date Time'
             => 'Data/ora di inizio',
-        'Starting job type: {type}'
-            => 'Comincia lo job: {type}',
+
         'The job {jobName} has been reset.'
             => 'Il job {jobName} ha ricominciato.',
         'The job {jobName} was not found to be stuck and therefore was not reset.'
@@ -109,5 +106,9 @@
             => 'Qual è il monitoraggio dei jobs?',
         '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows'
             => '{ClickHereLink} per sapere come configurare cron per Linux o una attività pianificata per Windows.',
+        '{dateTimeString} Ending job type: {type}'
+            => '{dateTimeString} Terminazione del job: {type}',
+        '{dateTimeString} Starting job type: {type}'
+            => '{dateTimeString} Comincia lo job: {type}',
     );
 ?>

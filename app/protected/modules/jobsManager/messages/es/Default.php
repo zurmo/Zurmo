@@ -45,8 +45,6 @@
             => 'Finalizado con errores',
         'End Date Time'
             => 'Fecha/hora realizada',
-        'Ending job type: {type}'
-            => 'Cancelación de trabajo: {type}',
         'Every 5 minutes'
             => 'Cada 5 minutos',
         'How often should I run each Job?'
@@ -93,8 +91,6 @@
             => 'Máximo de ejecución del script: {seconds} segundos.',
         'Start Date Time'
             => 'Fecha/hora comenzó',
-        'Starting job type: {type}'
-            => 'Lanzamiento de la tarea: {type}',
         'The job {jobName} has been reset.'
             => 'El trabajo {jobName} se ha reiniciado.',
         'The job {jobName} was not found to be stuck and therefore was not reset.'
@@ -109,5 +105,9 @@
             => '¿Qué sistema de seguimiento de tareas?',
         '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows'
             => '{ClickHereLink} para obtener información sobre cómo instalar el cron de Linux o una tarea programada en Windows.',
+        '{dateTimeString} Ending job type: {type}'
+            => '{dateTimeString} Cancelación de trabajo: {type}',
+        '{dateTimeString} Starting job type: {type}'
+            => '{dateTimeString} Lanzamiento de la tarea: {type}',
     );
 ?>
