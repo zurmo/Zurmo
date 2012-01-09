@@ -41,6 +41,12 @@
         const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = true;
 
         /**
+         * Extra classes defined to add to the div style for the view.
+         * @var array
+         */
+        protected $cssClasses = array();
+
+        /**
          * Tells View that it can render the extending class' divs with
          * and id matching their name. Must be overridden to return
          * false in extending classes that can be rendered multiple times
@@ -95,7 +101,7 @@
             {
                 $id = '';
             }
-            $classes = join(' ', $classes);
+            $classes = join(' ', array_merge($this->getCssClasses(), $classes));
             if ($classes != '')
             {
                 $classes = " class=\"$classes\"";
@@ -115,5 +121,15 @@
          * Renders the view content.
          */
         protected abstract function renderContent();
+
+        public function setCssClasses(array $classes)
+        {
+            $this->cssClasses = $classes;
+        }
+
+        public function getCssClasses()
+        {
+            return $this->cssClasses;
+        }
     }
 ?>
