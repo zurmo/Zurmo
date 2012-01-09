@@ -38,15 +38,21 @@
          */
         public static function makeStandardViewForCurrentUser(CController $controller, View $containedView)
         {
-            $horizontalGridView = new GridView(1, 1);
-            $horizontalGridView->setView($containedView, 0, 0);
-            $verticalGridView   = new GridView(6, 1);
+            $aVerticalGridView   = new GridView(2, 1);
+            $aVerticalGridView->setView(static::makeMenuView(), 0, 0);
+            $aVerticalGridView->setView(static::makeMenuView(), 1, 0); //change to RecentlyViewed...
+
+            $horizontalGridView = new GridView(1, 2);
+            $horizontalGridView->setView($aVerticalGridView, 0, 0);
+            $horizontalGridView->setView($containedView, 0, 1);
+
+            $verticalGridView   = new GridView(5, 1);
             $verticalGridView->setView(static::makeHeaderView(),                    0, 0);
-            $verticalGridView->setView(static::makeMenuView(),                      1, 0);
-            $verticalGridView->setView(static::makeFlashMessageView($controller),   2, 0);
-            $verticalGridView->setView($horizontalGridView,                         3, 0);
-            $verticalGridView->setView(static::makeModalContainerView(),            4, 0);
-            $verticalGridView->setView(static::makeFooterView(),                    5, 0);
+            //$verticalGridView->setView(static::makeMenuView(),                      1, 0);
+            $verticalGridView->setView(static::makeFlashMessageView($controller),   1, 0);
+            $verticalGridView->setView($horizontalGridView,                         2, 0);
+            $verticalGridView->setView(static::makeModalContainerView(),            3, 0);
+            $verticalGridView->setView(static::makeFooterView(),                    4, 0);
             return $verticalGridView;
         }
 
