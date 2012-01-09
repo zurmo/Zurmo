@@ -121,7 +121,7 @@
             unset($data['modifiedDateTime']);
             unset($data['createdByUser']);
             unset($data['modifiedByUser']);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
 
             $id = $response['data']['id'];
@@ -160,7 +160,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($testModels[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
@@ -188,7 +188,7 @@
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
             $data = array('firstName' => 'Bob6');
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             unset($response['data']['modifiedDateTime']);
             unset($compareData['modifiedDateTime']);
@@ -196,7 +196,7 @@
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             unset($response['data']['modifiedDateTime']);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
@@ -224,7 +224,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($testModels[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -250,11 +250,11 @@
             $testModels = ApiTestModelItem::getByName('Bob6');
             $this->assertEquals(1, count($testModels));
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $testModels[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/delete/' . $testModels[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/' . $testModels[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/read/' . $testModels[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
         }
@@ -274,24 +274,6 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/logout', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-        }
-
-        /**
-        * @depends testApiServerUrl
-        */
-        public function testNotAllowedGuestAction()
-        {
-            $authenticationData = $this->login('st','st');
-            $headers = array(
-                            'Accept: application/json',
-                            'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                            'ZURMO_TOKEN: ' . $authenticationData['token'],
-                            'ZURMO_API_REQUEST_TYPE: REST',
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/1', 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('Login required.', $response['message']);
         }
     }
 ?>

@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ApiRestTestModelItem2Test extends ApiRestTest
+    class ApiRestCustomModelActionTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {
@@ -34,27 +34,7 @@
         /**
         * @depends testApiServerUrl
         */
-        public function testLogin()
-        {
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_AUTH_USERNAME: super',
-                'ZURMO_AUTH_PASSWORD: super',
-                'ZURMO_API_REQUEST_TYPE: REST',
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/login/', 'POST', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertTrue(isset($response['data']['sessionId']) && is_string($response['data']['sessionId']));
-            $this->assertTrue(isset($response['data']['token']) && is_string($response['data']['token']));
-            //ToDo: Check if session exist
-            //$this->sessionId = $response['data']['sessionId'];
-        }
-
-        /**
-        * @depends testApiServerUrl
-        */
-        public function testCreate()
+        public function testCustomPostAction()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
@@ -69,7 +49,7 @@
             //Test Create
             $data = array('name' => 'new name');
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/create/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customPost/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertTrue(is_int($response['data']['id']));
@@ -96,9 +76,9 @@
         }
 
         /**
-        * @depends testCreate
+        * @depends testCustomPostAction
         */
-        public function testGet()
+        public function testCustomGetAction()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
@@ -115,16 +95,16 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($testModels[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/read/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customGet/?id=' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
         }
 
         /**
-        * @depends testGet
+        * @depends testCustomGetAction
         */
-        public function testUpdate()
+        public function testCustomUpdateAction()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
@@ -143,7 +123,7 @@
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
             $data = array('name' => 'new name 2');
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customUpdate/?id=' . $compareData['id'], 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             unset($response['data']['modifiedDateTime']);
             unset($compareData['modifiedDateTime']);
@@ -151,7 +131,7 @@
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/read/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customGet/?id=' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             unset($response['data']['modifiedDateTime']);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
@@ -160,9 +140,9 @@
         }
 
         /**
-        * @depends testUpdate
+        * @depends testCustomUpdateAction
         */
-        public function testList()
+        public function testCustomListAction()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
@@ -180,7 +160,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($testModels[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/list/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customList/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -188,9 +168,9 @@
         }
 
         /**
-        * @depends testList
+        * @depends testCustomListAction
         */
-        public function testDelete()
+        public function testCustomDeleteAction()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
@@ -207,30 +187,13 @@
             $this->assertEquals(1, count($testModels));
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/delete/' . $testModels[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customDelete/?id=' . $testModels[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/read/' . $testModels[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customGet/?id=' . $testModels[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-        }
-
-        /**
-        * @depends testApiServerUrl
-        */
-        public function testLogout()
-        {
-            $authenticationData = $this->login();
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                'ZURMO_API_REQUEST_TYPE: REST',
-            );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/api/logout', 'GET', $headers);
-            $response = json_decode($response, true);
-            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
         }
     }
 ?>

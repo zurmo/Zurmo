@@ -175,11 +175,13 @@
                     // API REST patterns
                     //Api REST test patterns
                     array('zurmo/api/logout',   'pattern'=>'zurmo/api/logout',          'verb'=>'GET'),
-                    array('api/<model>Api/read',   'pattern'=>'api/<model:\w+>/api/<id:\d+>', 'verb'=>'GET'),
-                    array('api/<model>Api/list',   'pattern'=>'api/<model:\w+>/api/*',          'verb'=>'GET'),
-                    array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/<id:\d+>', 'verb'=>'PUT'),
-                    array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/<id:\d+>', 'verb'=>'DELETE'),
-                    array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/',          'verb'=>'POST'),
+                    array('api/<model>Api/read',   'pattern'=>'api/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
+                    array('api/<model>Api/list',   'pattern'=>'api/<model:\w+>/api/list/*',          'verb'=>'GET'),
+                    array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
+                    array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
+                    array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/create/',          'verb'=>'POST'),
+
+                    array('api/<model>Api/<action>', 'pattern'=>'api/<model:\w+>/api/<action>/*'),
 
                     array('<module>/api/read',   'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'GET'),
                     array('<module>/api/list',   'pattern'=>'<module:\w+>/api/*',          'verb'=>'GET'),
