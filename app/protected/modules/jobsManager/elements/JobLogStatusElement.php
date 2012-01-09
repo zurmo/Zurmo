@@ -25,23 +25,34 @@
      ********************************************************************************/
 
     /**
-     * A  NotificationRules to manage when the monitor job itself are detected as being 'stuck'.
+     * Displays the job status
      */
-    class JobCompletedWithErrorsNotificationRules extends JobsManagerAccessNotificationRules
+    class JobLogStatusElement extends Element
     {
-        public static function getDisplayName()
+        protected function renderControlEditable()
         {
-            return Yii::t('Default', 'A job was completed with errors.');
+            throw new NotImplementedException();
         }
 
-        public static function getType()
+        /**
+         * Renders the attribute from the model.
+         * @return The element's content.
+         */
+        protected function renderControlNonEditable()
         {
-            return 'JobCompletedWithErrors';
-        }
-
-        public function allowDuplicates()
-        {
-            return true;
+            assert('$this->attribute == "status"');
+            if($this->model->{$this->attribute} == JobLog::STATUS_COMPLETE_WITH_ERROR)
+            {
+                return Yii::t('Default', 'Completed with Errors');
+            }
+            elseif($jobLog->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
+            {
+                return Yii::t('Default', 'Completed');
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 ?>

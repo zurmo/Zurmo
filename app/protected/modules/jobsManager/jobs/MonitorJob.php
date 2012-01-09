@@ -76,9 +76,12 @@
             {
                 if($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
                 {
-                    $message                     = new NotificationMessage();
-                    $message->textContent        = Yii::t('Default', 'Job completed with errors.');
-                    $rules                       = new JobCompletedWithErrorsNotificationRules();
+                    $message                      = new NotificationMessage();
+                    $message->htmlContent         = Yii::t('Default', 'Job completed with errors.');
+                    $url                          = Yii::app()->createAbsoluteUrl('jobsManager/default/jobLogDetails/',
+                                                                        array('id' => $jobLog->id));
+                    $message->htmlContent        .= "<br/>" . CHtml::link(Yii::t('Default', 'Click Here'), $url);
+                    $rules                        = new JobCompletedWithErrorsNotificationRules();
                     NotificationsUtil::submit($message, $rules);
                 }
                 $jobLog->isProcessed         = true;

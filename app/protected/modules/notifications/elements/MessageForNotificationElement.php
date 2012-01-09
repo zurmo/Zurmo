@@ -53,12 +53,13 @@
                 if($this->model->notificationMessage->htmlContent != null)
                 {
                     $content = $this->model->notificationMessage->htmlContent;
+                    return Yii::app()->format->raw($content);
                 }
                 elseif($this->model->notificationMessage->textContent != null)
                 {
                     $content = $this->model->notificationMessage->textContent;
+                    return Yii::app()->format->text($content);
                 }
-                return Yii::app()->format->text($content);
             }
         }
     }

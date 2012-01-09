@@ -80,7 +80,7 @@
             {
                 $content .= Yii::app()->format->text($country);
             }
-            if ($invalid != 1 && $addressModel->makeAddress() != '')
+            if (!$invalid && $addressModel->makeAddress() != '')
             {
                 $content .= '&#160;'.$this->renderMapLink($addressModel);
             }

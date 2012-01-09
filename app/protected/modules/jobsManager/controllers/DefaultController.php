@@ -59,7 +59,7 @@
                             JobsToJobsCollectionViewUtil::getMonitorJobData(),
                             JobsToJobsCollectionViewUtil::getNonMonitorJobsData(),
                             $messageBoxContent);
-            $view = new ZurmoConfigurationPageView($this, $view);
+            $view = new JobsManagerPageView($this, $view);
             echo $view->render();
         }
 
@@ -118,6 +118,14 @@
                             'modalContainer',
                             Yii::t('Default', 'Job Log for {jobDisplayName}',
                                    array('{jobDisplayName}' => $jobClassName::getDisplayName())));
+            echo $view->render();
+        }
+
+        public function actionJobLogDetails($id)
+        {
+            $jobLog = JobLog::getById(intval($id));
+            $view = new JobsManagerPageView($this,
+                $this->makeTitleBarAndDetailsView($jobLog));
             echo $view->render();
         }
     }

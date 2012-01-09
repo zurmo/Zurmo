@@ -31,7 +31,7 @@
     {
         public static function resolveValueDataIntoUsableValue($value)
         {
-            assert('$value == null || $value == true');
+            assert('$value == null || $value == true || $value == false');
             if ($value == true)
             {
                 return Yii::app()->user->userModel->id;

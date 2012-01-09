@@ -24,24 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * A  NotificationRules to manage when the monitor job itself are detected as being 'stuck'.
-     */
-    class JobCompletedWithErrorsNotificationRules extends JobsManagerAccessNotificationRules
+    class JobsManagerPageView extends ZurmoPageView
     {
-        public static function getDisplayName()
+        public function __construct(CController $controller, View $view)
         {
-            return Yii::t('Default', 'A job was completed with errors.');
+            parent::__construct(new ZurmoDefaultView($controller, $view));
         }
 
-        public static function getType()
+        protected function getSubtitle()
         {
-            return 'JobCompletedWithErrors';
-        }
-
-        public function allowDuplicates()
-        {
-            return true;
+            return Yii::t('Default', 'Jobs Manager', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>
