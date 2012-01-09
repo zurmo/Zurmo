@@ -743,5 +743,17 @@
                 RedBeanDatabase::freeze();
             }
         }
+
+        /**
+         * Check if the required runtime folders are present i.e. (assets , runtime and data)
+         * @returns true, if the required folders are present, or false if not installed.
+         */
+        public static function checkFolderExist($instanceRoot)
+        {
+            assert('is_dir($instanceRoot)');
+            return (file_exists("$instanceRoot/assets") && 
+                    file_exists("$instanceRoot/protected/data") && 
+                    file_exists("$instanceRoot/protected/runtime"));
+        }
     }
 ?>
