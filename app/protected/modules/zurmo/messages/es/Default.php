@@ -165,6 +165,8 @@
             => 'Configuración de divisas',
         'Currency in use.'
             => 'Divisa en uso',
+        'Currency Rates Update Job'
+            => 'Actualiza el tipo de cambio',
         'Currency Value'
             => 'Valor de divisa',
         'Customer'
@@ -313,6 +315,8 @@
             => 'Administrar roles',
         'Manufacturing'
             => 'Manufactura',
+        'map'
+            => 'mapa',
         'Member'
             => 'Miembro',
         'Member Of'
@@ -357,12 +361,18 @@
             => 'Predeterminado',
         'Not Set - Ad-hoc / Owner'
             => 'Predeterminado - Ad-hoc / Propietario',
+        'Notifications'
+            => 'Notificaciones',
         'Office Fax'
             => 'Fax de la oficina',
         'Office Phone'
             => 'Teléfono de la Oficina',
         'Oh no!'
             => 'Oh no!',
+        'Once a day, early in the morning.'
+            => 'Una vez al día, por la mañana temprano.',
+        'Once a week, early in the morning.'
+            => 'Una vez a la semana, por la mañana temprano.',
         'Only Items I Own'
             => 'Sólo mis elementos',
         'Opt Out'
@@ -545,6 +555,8 @@
             => 'Su versión de Yii es currentVersion y debe ser acceptableVersion',
         'ZurmoCRM'
             => 'ZurmoCRM',
+        '{count} unread'
+            => '{count} no leído(s)',
         '{url} (installed with Yii)'
             => '{url} (instalado con Yii)',
         '{url} (version {version} is installed)'

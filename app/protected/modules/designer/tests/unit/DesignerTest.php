@@ -440,7 +440,7 @@
                 'en' => 'Name',
                 'es' => 'Nombre',
                 'fr' => 'Nom',
-                'it' => '??',
+                'it' => 'Nome',
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
             $this->assertEquals(64,     $attributeForm->maxLength);

@@ -89,8 +89,8 @@
             $jobData = array();
             $jobData['label']                       = $jobClassName::getDisplayName();
             $jobData['lastCompletedRunContent']     = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
-            $jobData['statusContent']			    = self::makeStatusContentByJobLog($lastCompletedJobLog, $jobInProcess);
-            $jobData['status']					    = self::resolveStatusByJobLog($lastCompletedJobLog, $jobInProcess);
+            $jobData['statusContent']			    = self::makeStatusContentByJobInProcess($jobInProcess);
+            $jobData['status']					    = self::resolveStatusByJobInProcess($jobInProcess);
             $jobData['recommendedFrequencyContent'] = $jobClassName::getRecommendedRunFrequencyContent();
             return $jobData;
         }
@@ -120,14 +120,13 @@
                            convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
             if($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
-                $content .= '&#160;' . Yii::t('Default', '[with errors]');
+                $content .= ' ' . Yii::t('Default', '[with errors]');
             }
             return $content;
         }
 
-        protected static function makeStatusContentByJobLog($jobLog, $jobInProcess)
+        protected static function makeStatusContentByJobInProcess($jobInProcess)
         {
-            assert('$jobLog instanceof JobLog || $jobLog == null');
             assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
             if($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
             {
@@ -136,7 +135,7 @@
             elseif($jobInProcess != null)
             {
                 $startedDateTimeContent = DateTimeUtil::
-                                          convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
+                                          convertDbFormattedDateTimeToLocaleFormattedDisplay($jobInProcess->createdDateTime);
                 return Yii::t('Default', 'In Process [Started: {startedDateTime}]',
                        array('{startedDateTime}' => $startedDateTimeContent));
             }
@@ -146,9 +145,8 @@
             }
         }
 
-        protected static function resolveStatusByJobLog($jobLog, $jobInProcess)
+        protected static function resolveStatusByJobInProcess($jobInProcess)
         {
-            assert('$jobLog instanceof JobLog || $jobLog == null');
             assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
             if($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
             {

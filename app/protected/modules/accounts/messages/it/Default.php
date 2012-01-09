@@ -30,48 +30,48 @@
     // DON'T MAKE A MESS!
     return array(
         'Access AccountsModulePluralLabel Tab'
-            => '??',
+            => 'Acceso ai AccountsModulePluralLabel',
         'Account'
-            => '??',
+            => 'Azienda',
         'Accounts'
-            => '??',
+            => 'Aziende',
         'AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel',
         'AccountsModulePluralLabel For AccountsModuleSingularLabel'
-            => 'AccountsModulePluralLabel ?? AccountsModuleSingularLabel',
+            => 'AccountsModulePluralLabel per AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Id'
-            => 'AccountsModuleSingularLabel ??',
+            => 'AccountsModuleSingularLabel Id',
         'AccountsModuleSingularLabel Name'
-            => 'AccountsModuleSingularLabel ??',
+            => 'Nome AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Search'
-            => 'AccountsModuleSingularLabel ??',
+            => 'Ricerca AccountsModuleSingularLabel',
         'An account field'
-            => '??',
+            => 'Un campo di azienda',
         'Annual Revenue'
-            => '??',
+            => 'Fatturato Annuo',
         'Billing Address'
             => 'Indirizzo di Fatturazione',
         'Complete Conversion'
-            => '??',
+            => 'Converti',
         'Create AccountsModulePluralLabel'
-            => '?? AccountsModulePluralLabel',
+            => 'Crea AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
-            => '?? AccountsModuleSingularLabel',
+            => 'Nuovo AccountsModuleSingularLabel',
         'Delete AccountsModulePluralLabel'
-            => '?? AccountsModulePluralLabel',
+            => 'Elimina AccountsModulePluralLabel',
         'Employees'
-            => '??',
+            => 'Dipendenti',
         'My AccountsModulePluralLabel'
-            => '??',
+            => 'Le mie AccountsModulePluralLabel',
         'Parent AccountsModuleSingularLabel'
-            => '??',
+            => 'AccountsModuleSingularLabel Genetori',
         'Prospect'
-            => '??',
+            => 'Prospect',
         'Related AccountsModulePluralLabel'
-            => '?? AccountsModulePluralLabel',
+            => 'AccountsModulePluralLabel principale',
         'Vendor'
-            => '??',
+            => 'Fornitore',
     );
 ?>

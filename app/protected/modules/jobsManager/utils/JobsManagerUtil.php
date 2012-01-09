@@ -36,10 +36,13 @@
          * @param string $type
          * @param timeLimit $timeLimit
          */
-        public static function runFromJobManagerCommand($type, $timeLimit)
+        public static function runFromJobManagerCommand($type, $timeLimit, $messageLoggerClassName)
         {
             assert('is_string($type)');
             assert('is_int($timeLimit)');
+            assert('is_string($messageLoggerClassName) && (
+                    is_subclass_of($messageLoggerClassName, "MessageLogger") ||
+                    $messageLoggerClassName == "MessageLogger")');
             set_time_limit($timeLimit);
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
@@ -47,8 +50,10 @@
             $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
                                   array('{seconds}' => $timeLimit)));
             echo "\n";
-            $messageStreamer->add(Yii::t('Default', 'Starting job type: {type}', array('{type}' => $type)));
-            $messageLogger = new MessageLogger($messageStreamer);
+            $messageStreamer->add(Yii::t('Default', '{dateTimeString} Starting job type: {type}',
+                                  array('{type}' => $type,
+                                         '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
+            $messageLogger = new $messageLoggerClassName($messageStreamer);
             if($type == 'Monitor')
             {
                 static::runMonitorJob($messageLogger);
@@ -57,7 +62,9 @@
             {
                 static::runNonMonitorJob($type, $messageLogger);
             }
-            $messageStreamer->add(Yii::t('Default', 'Ending job type: {type}', array('{type}' => $type)));
+            $messageStreamer->add(Yii::t('Default', '{dateTimeString} Ending job type: {type}',
+                                  array('{type}' => $type,
+                                         '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
         }
 
         /**
@@ -85,6 +92,7 @@
                 $jobInProcess->save();
                 $startDateTime         = $jobInProcess->createdDateTime;
                 $job                   = new MonitorJob();
+                $job->setMessageLogger($messageLogger);
                 $ranSuccessfully       = $job->run();
                 $jobInProcess->delete();
                 $jobLog                = new JobLog();
@@ -126,6 +134,7 @@
                 $startDateTime         = $jobInProcess->createdDateTime;
                 $jobClassName          = $type . 'Job';
                 $job                   = new $jobClassName();
+                $job->setMessageLogger($messageLogger);
                 $ranSuccessfully       = $job->run();
                 $errorMessage          = $job->getErrorMessage();
                 $jobInProcess->delete();
@@ -169,6 +178,14 @@
                 return true;
             }
             return false;
+        }
+
+        protected static function getLocalizedDateTimeTimeZoneString()
+        {
+            $content = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                                        DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+            $content .= ' ' . Yii::app()->user->userModel->timeZone;
+            return $content;
         }
     }
 ?>

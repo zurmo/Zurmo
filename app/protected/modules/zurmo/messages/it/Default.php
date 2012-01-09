@@ -165,6 +165,8 @@
             => '??',
         'Currency in use.'
             => '??',
+        'Currency Rates Update Job'
+            => '',
         'Currency Value'
             => '??',
         'Customer'
@@ -313,6 +315,8 @@
             => '??',
         'Manufacturing'
             => '??',
+        'map'
+            => '??',
         'Member'
             => '??',
         'Member Of'
@@ -357,11 +361,17 @@
             => '??',
         'Not Set - Ad-hoc / Owner'
             => '??',
+        'Notifications'
+            => '??',
         'Office Fax'
             => '??',
         'Office Phone'
             => 'Telefono Ufficio',
         'Oh no!'
+            => '??',
+        'Once a day, early in the morning.'
+            => '??',
+        'Once a week, early in the morning.'
             => '??',
         'Only Items I Own'
             => '??',
@@ -522,7 +532,7 @@
         'Visit the <b>Zurmo Open Source Project</b> at {url}.'
             => '??',
         'Website'
-            => '??',
+            => 'Sito web',
         'Welcome'
             => '??',
         'What is this?'
@@ -544,6 +554,8 @@
         'Your Yii version is currentVersion and it should be acceptableVersion.'
             => '??',
         'ZurmoCRM'
+            => '??',
+        '{count} unread'
             => '??',
         '{url} (installed with Yii)'
             => '??',

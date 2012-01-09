@@ -77,7 +77,7 @@
         'Database is not in strict mode.'
             => 'La base de données n\'est pas au mode strict.',
         'Database max_allowed_packet size is:'
-            => 'Le max_allowed_packet de la base de données est:',
+            => 'La taille max_allowed_packet de la base de données est:',
         'Database max_allowed_packet size meets minimum requirement.'
             => 'La taille max_allowed_packet de la base de données répond aux exigences minimales.',
         'Database max_sp_recursion_depth size is:'
@@ -154,6 +154,8 @@
             => 'Memcache numéro du port',
         'Memcache port number. Default is 11211'
             => 'Memcache numéro du port.  Le défault est 11211.',
+        'Microsoft-IIS'
+            => 'Microsoft-IIS',
         'minimum requirement is:'
             => 'Exigence minimale:',
         'Minimum version required:'
@@ -166,26 +168,26 @@
             => 'RÉUSSI',
         'PHP'
             => 'PHP',
-        'PHP File Uploads is Off.  This should be on.'
-            => 'Le paramètre téléchargement de fichier PHP ne sont pas activés. Cette fonction doit être activée.',
-        'PHP File Uploads is on which is ok.'
-            => 'Le paramètre téléchargement de fichier PHP est activé.',
-        'PHP Memory setting is:'
-            => 'PHP limite de mémoire:',
-        'PHP Memory setting meets minimum requirement.'
-            => 'Le parametre PHP limite de mémoire répond aux exigences minimales.',
+        'PHP file_uploads is Off.  This should be on.'
+            => 'Le paramètre PHP file_uploads n\'est pas activé. Cette fonction doit être activée.',
+        'PHP file_uploads is on which is ok.'
+            => 'Le paramètre PHP file_uploads est activé.',
+        'PHP memory_limit is:'
+            => 'PHP memory_limit:',
+        'PHP memory_limit meets minimum requirement.'
+            => 'Le paramètre PHP memory_limit répond aux exigences minimales.',
         'PHP post_max_size meets minimum requirement.'
             => 'PHP post_max_size répond aux exigences minimales.',
         'PHP post_max_size setting is:'
             => 'La taille PHP post_max_size est:',
-        'PHP Timezone is not set.'
-            => 'Le fuseau horaire PHP n\'est pas configuré.',
-        'PHP Timezone is set.'
-            => 'Le fuseau horaire PHP est configuré.',
-        'PHP Upload size meets minimum requirement.'
-            => 'PHP limite de téléchargement répond aux exigences minimales.',
-        'PHP Upload size setting is:'
-            => 'PHP limite de téléchargement:',
+        'PHP date.timezone is not set.'
+            => 'Le paramètre PHP date.timezone n\'est pas configuré.',
+        'PHP date.timezone is set.'
+            => 'Le paramètre PHP date.timezone est configuré.',
+        'PHP upload_max_filesize value meets minimum requirement.'
+            => 'La valeur PHP upload_max_filesize répond aux exigences minimales.',
+        'PHP upload_max_filesize value setting is:'
+            => 'La valeur PHP upload_max_filesize est:',
         'Rebuilding Permissions.'
             => 'Reconstruction des permissions.',
         'Recheck System'
@@ -196,6 +198,8 @@
             => 'Le fichier RedBean manque le correctif.',
         'RedBean file is patched correctly'
             => 'Le fichier RedBean contient le correctif',
+        'Schema update complete.'
+            => 'Mise à jour du schéma effectuée.',
         'Service Status Partially Known'
             => 'Statut du service partiellement connue',
         'Setting up default data.'
@@ -210,6 +214,8 @@
             => 'SOAP n\'est pas installé.',
         'Starting database schema creation.'
             => 'Création de schémas de base de données.',
+        'Starting schema update process.'
+            => 'Mise à jour du schéma à commencé.',
         'Starting to load demo data.'
             => 'Création des données de démonstration.',
         'The database name specified does not exist or the user specified does not have access.'
@@ -244,8 +250,10 @@
         'This must be checked if you are specifying an existing database.'
             => 'AVERTISSEMENT - Si la base de données existe déjà, la base de données existante ' .
                'va être suprimée.  Cocher la boîte si vous spécifiez une base de données existante.',
-        'Welcome to Zurmo. Before getting started, we need some information on the database. You will need to know the following items before proceeding:'
-            => 'Bienvenue à Zurmo. Avant de commencer, vous devez obtenir les informations suivantes sure votre base de donnéés:',
+        'Welcome to Zurmo. Before getting started, we need some information on the database.' .
+        ' You will need to know the following items before proceeding:'
+            => 'Bienvenue à Zurmo. Avant de commencer, vous devez obtenir les informations suivantes ' .
+            ' sur votre base de donnéés:',
         'Writing Configuration File.'
             => 'Création du fichier de configuration.',
         'Yii'

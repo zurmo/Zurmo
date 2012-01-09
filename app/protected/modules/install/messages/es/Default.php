@@ -154,6 +154,8 @@
             => 'Memcache número de port',
         'Memcache port number. Default is 11211'
             => 'Memcache número de port. Predeterminado es 11211',
+        'Microsoft-IIS'
+            => 'Microsoft-IIS',
         'minimum requirement is:'
             => 'requisito mínimo es:',
         'Minimum version required:'
@@ -166,26 +168,26 @@
             => 'EXITOSA',
         'PHP'
             => 'PHP',
-        'PHP File Uploads is Off.  This should be on.'
-            => 'Carga de archivos PHP está deshabilitado. Este debe estar encendido.',
-        'PHP File Uploads is on which is ok.'
-            => 'Carga de archivos PHP está encendido. Esto está bien.',
-        'PHP Memory setting is:'
-            => 'Configuración de la memoria PHP es:',
-        'PHP Memory setting meets minimum requirement.'
-            => 'Configuración de la memoria PHP cumple con el requisito mínimo.',
+        'PHP file_uploads is Off.  This should be on.'
+            => 'PHP file_uploads está deshabilitado. Este debe estar encendido.',
+        'PHP file_uploads is on which is ok.'
+            => 'PHP file_uploads está encendido. Esto está bien.',
+        'PHP memory_limit is:'
+            => 'Configuración de memory_limit PHP es:',
+        'PHP memory_limit meets minimum requirement.'
+            => 'Configuración de memory_limit PHP cumple con el requisito mínimo.',
         'PHP post_max_size meets minimum requirement.'
             => 'PHP post_max_size cumple con el requisito mínimo.',
         'PHP post_max_size setting is:'
             => 'PHP configuración post_max_size es:',
-        'PHP Timezone is not set.'
-            => 'Zona horaria PHP no está configurado.',
-        'PHP Timezone is set.'
-            => 'Zona horaria PHP está configurado.',
-        'PHP Upload size meets minimum requirement.'
-            => 'Tamaño de carga PHP cumple con el requisito mínimo.',
-        'PHP Upload size setting is:'
-            => 'PHP límite de subida es:',
+        'PHP date.timezone is not set.'
+            => 'Configuración de date.timezone PHP no está configurado.',
+        'PHP date.timezone is set.'
+            => 'Configuración de date.timezone PHP está configurado.',
+        'PHP upload_max_filesize value meets minimum requirement.'
+            => 'PHP upload_max_filesize cumple con el requisito mínimo.',
+        'PHP upload_max_filesize value setting is:'
+            => 'PHP upload_max_filesize es:',
         'Rebuilding Permissions.'
             => 'Reconstruido de permissos',
         'Recheck System'
@@ -196,6 +198,8 @@
             => 'Archivo de RedBean falta el parche.',
         'RedBean file is patched correctly'
             => 'Archivo de RedBean está correctamente parcheado',
+        'Schema update complete.'
+            => 'Esquema de actualización realizada.',
         'Service Status Partially Known'
             => 'Estado del servicio parcialmente conocido',
         'Setting up default data.'
@@ -210,6 +214,8 @@
             => 'SOAP no está instalado.',
         'Starting database schema creation.'
             => 'Creación de esquemas de bases de datos.',
+        'Starting schema update process.'
+            => 'Esquema de actualización comenzó.',
         'Starting to load demo data.'
             => 'Creación la base de datos de demostración',
         'The database name specified does not exist or the user specified does not have access.'

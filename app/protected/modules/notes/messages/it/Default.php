@@ -30,17 +30,17 @@
     // DON'T MAKE A MESS!
     return array(
         'Access NotesModulePluralLabel'
-            => '??',
+            => 'Accesso NotesModulePluralLabel',
         'Add a NotesModuleSingularLabel about'
-            => '??',
+            => 'Aggiungi una NotesModuleSingularLabel su',
         'Create NotesModulePluralLabel'
-            => '??',
+            => 'Crea NotesModulePluralLabel',
         'Delete NotesModulePluralLabel'
-            => '??',
+            => 'Elimina NotesModulePluralLabel',
         'Note'
-            => '??',
+            => 'Nota',
         'Notes'
-            => '??',
+            => 'Note',
         'NotesModulePluralLabel'
             => 'NotesModulePluralLabel',
         'NotesModuleSingularLabel'
@@ -48,6 +48,6 @@
         'Occurred On'
             => '??',
         'The NotesModulePluralLabel form cannot be displayed.'
-            => '??',
+            => 'Non si può visualizzare il formulario di NotesModulePluralLabel.',
     );
 ?>

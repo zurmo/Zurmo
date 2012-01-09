@@ -165,6 +165,8 @@
             => 'Devises',
         'Currency in use.'
             => 'Devise utiliséé.',
+        'Currency Rates Update Job'
+            => 'Met à jour les taux de devises',
         'Currency Value'
             => 'Valeur',
         'Customer'
@@ -313,6 +315,8 @@
             => 'Gestion des rôles et hiérarchies',
         'Manufacturing'
             => 'Industriel',
+        'map'
+            => 'carte',
         'Member'
             => 'Filiale',
         'Member Of'
@@ -357,12 +361,18 @@
             => 'Défaut',
         'Not Set - Ad-hoc / Owner'
             => 'Défaut - de circonstance / resp. du compte',
+        'Notifications'
+            => 'Notifications',
         'Office Fax'
             => 'Fax de bureau',
         'Office Phone'
             => 'Téléphone de bureau',
         'Oh no!'
             => 'Zut!',
+        'Once a day, early in the morning.'
+            => 'Une fois par jour, tôt le matin.',
+        'Once a week, early in the morning.'
+            => 'Une fois par semaine, tôt le matin.',
         'Only Items I Own'
             => 'Seulement mes éléments',
         'Opt Out'
@@ -545,6 +555,8 @@
             => 'Votre version de Yii est currentVersion et doit être acceptableVersion.',
         'ZurmoCRM'
             => 'ZurmoCRM',
+        '{count} unread'
+            => '{count} non lu(s)',
         '{url} (installed with Yii)'
             => '{url} (installé avec Yii)',
         '{url} (version {version} is installed)'
