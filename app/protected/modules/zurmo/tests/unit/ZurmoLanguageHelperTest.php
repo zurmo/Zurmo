@@ -184,12 +184,11 @@
                                     'active' => true,
                                     'canInactivate' => false,
                                  ),
-                                 /* Enable once Italian is completed.
                                  'it' => array(
                                     'label' => 'Italian',
                                     'active' => false,
                                     'canInactivate' => true,
-                                 )*/);
+                                 ));
             $this->assertEquals($compareData, $data);
         }
 
