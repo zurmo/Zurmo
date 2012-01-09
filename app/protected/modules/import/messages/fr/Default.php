@@ -79,6 +79,8 @@
             => 'Id',
         'Import'
             => 'Importer',
+        'Import Cleanup Job'
+            => 'Suppression des tables d\'importation',
         'Import complete.  Rows processed: {rowsProcessed}'
             => 'L\'importation est terminée. Lignes traités: {rowsProcessed}',
         'Import data into Zurmo'

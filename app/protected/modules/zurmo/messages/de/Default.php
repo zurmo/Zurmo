@@ -125,9 +125,9 @@
             => 'Handelsdienstleistungen',
         'Cancel'
             => 'Abbrechen',
-        'Changes to active currencies changed successfully.'
+        'Changes to active currencies saved successfully.'
             => 'Änderungen an aktiven Währungen erfolgreich geändert.',
-        'Changes to active languages changed successfully.'
+        'Changes to active languages saved successfully.'
             => 'Änderungen an aktiven Sprachen erfolgreich geändert.',
         'Chart Type'
             => 'Diagrammtyp',

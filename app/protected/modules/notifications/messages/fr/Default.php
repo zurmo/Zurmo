@@ -29,5 +29,25 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A simple notification'
+            => 'Une simple notification',
+        'Html Content'
+            => 'Contenu HTML',
+        'Is Read'
+            => 'isRead',
+        'Is Read must be set as true or false, not null.'
+            => 'L\'attribut "isRead" ne peut être nul.',
+        'Notification'
+            => 'Notification',
+        'Notification Message'
+            => 'Message de notification',
+        'Notifications List'
+            => 'Liste de notifications',
+        'Text Content'
+            => 'Contenu du texte',
+        'Unread'
+            => 'Non lu',
+        'You have a new notification'
+            => 'Nouvelle notification',
     );
 ?>

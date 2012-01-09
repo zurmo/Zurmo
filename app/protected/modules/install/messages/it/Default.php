@@ -189,7 +189,7 @@
         'PHP upload_max_filesize value setting is:'
             => 'Il valore PHP upload_max_filesize è:',
         'Rebuilding Permissions.'
-            => 'Ricostruzione dei permessi.',
+            => 'Ricostruzione dei privilegi.',
         'Recheck System'
             => 'Re-controlla il sistema',
         'RedBean'
@@ -264,13 +264,13 @@
         'then do not specify the database admin username and password. Otherwise pick a ' .
         'database name that does not exist.'
             => 'Non avete specificato un database esistente.  Si volete utilizzare questo database, ' .
-               'non specificato il nome di utente di database o il password di database.  Altrimenti, ' .
+               'non specificato il nome di utente di database o la password di database.  Altrimenti, ' .
                'selezionate un nome di database che non esiste.',
         'You have specified an existing user. If you would like to use this user, then do ' .
         'not specify the database admin username and password. Otherwise pick a database ' .
         'username that does not exist.'
             => 'Avete specificato un nome di utente che esiste.  Si volete selezionare questo utente ' .
-               'non specificate il nome di utente di database or il password di database.  Altrimenti, ' .
+               'non specificate il nome di utente di database or la password di database.  Altrimenti, ' .
                'selezionate un nome di database che non esiste.',
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => 'Password amministrativa di Zurmo.  Il utente è `super`.  Si può cambiare questo più tardi.',

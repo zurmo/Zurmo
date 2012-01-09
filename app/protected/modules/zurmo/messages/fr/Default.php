@@ -125,9 +125,9 @@
             => 'Service de gestion',
         'Cancel'
             => 'Annuler',
-        'Changes to active currencies changed successfully.'
+        'Changes to active currencies saved successfully.'
             => 'Les changements de devises actives sont effectués.',
-        'Changes to active languages changed successfully.'
+        'Changes to active languages saved successfully.'
             => 'Les changements de langue actives sont effectués.',
         'Chart Type'
             => 'Type de graphique',

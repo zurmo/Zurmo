@@ -64,27 +64,27 @@
         'Manager'
             => 'Manager',
         'Minimum Password Length'
-            => 'Lunghezza minimale del password',
+            => 'Lunghezza minima della password',
         'Minimum Username Length'
-            => 'Lunghezza minimale del nome utente',
+            => 'Lunghezza minima del nome utente',
         'Password Expires'
-            => 'Scadenza password',
+            => 'Password scadenza',
         'Password Expiry Days'
-            => 'Giorni de scandenza del password',
+            => 'Giorni de scandenza delle password',
         'Profile'
             => 'Profile',
         'The password is too short. Minimum length is {minimumLength}.'
-            => 'Il password è troppo corto. La lunghezza minimale è {minimumLength} carattere.',
+            => 'La password è troppo corta. La lunghezza minima è {minimumLength} carattere.',
         'The password must have at least one lowercase letter'
-            => 'Il password deve avere almeno uno lettera minuscola.',
+            => 'La password deve avere almeno uno lettera minuscola.',
         'The password must have at least one number and one letter'
-            => 'Il password deve comprendere almeno un numero e una lettera.',
+            => 'La password deve comprendere almeno un numero e una lettera.',
         'The password must have at least one uppercase letter'
-            => 'Il password deve avere almeno uno lettera maiuscola. ',
+            => 'La password deve avere almeno uno lettera maiuscola. ',
         'The time zone is invalid.'
             => 'Il fuso oraria non è valido.',
         'The username is too short. Minimum length is {minimumLength}.'
-            => 'Il nome di utente è troppo corto.  La lunghezza minimale è {minimumLength} carattere.',
+            => 'Il nome di utente è troppo corto.  La lunghezza minima è {minimumLength} carattere.',
         'Time Zone'
             => 'Fuso orario',
         'User'
