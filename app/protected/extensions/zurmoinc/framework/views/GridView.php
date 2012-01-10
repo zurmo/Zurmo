@@ -119,7 +119,7 @@
                         }
                         if (count($styles) > 0)
                         {
-                            $style = ' style="' . join($styles, ' ') . '"';
+                           // $style = ' style="' . join($styles, ' ') . '"';
                         }
                         else
                         {

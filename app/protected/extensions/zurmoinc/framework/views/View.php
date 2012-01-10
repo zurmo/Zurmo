@@ -38,7 +38,7 @@
          * @see MenuView, TitleBarView for examples of views that set this
          * value to false.
          */
-        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = true;
+        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = false; //true
 
         /**
          * Extra classes defined to add to the div style for the view.
@@ -113,7 +113,10 @@
             }
             else
             {
-                return "<div $id$classes style=\"\">$content</div>";
+				$reflection = new ReflectionClass( $calledClass );
+				$classFile = $reflection->getFileName();
+                return "<!--Called in: $classFile--><div $id $classes>$content</div>";
+				
             }
         }
 

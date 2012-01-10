@@ -43,8 +43,7 @@
 
         protected function renderContent()
         {
-            $content  = '<div><div style="float:right;">' . $this->renderGlobalSearchContent() . '</div>';
-            $content .= '</div>&#160;';
+            $content  = '<div id="app-search">' . $this->renderGlobalSearchContent() . '</div>';
             return $content;
         }
 

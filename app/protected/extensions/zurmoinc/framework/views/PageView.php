@@ -237,10 +237,12 @@
                 }
             }
 
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/theme.css');
-
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/theme.css');
+			$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.css');
+			
+			
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
             {
                 $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');

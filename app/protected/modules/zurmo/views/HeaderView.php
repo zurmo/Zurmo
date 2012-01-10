@@ -35,10 +35,14 @@
             assert('is_array($moduleNamesAndLabels)');
             assert('is_string($sourceUrl)');
             $this->verticalGridView   = new GridView(2, 1);
-            $this->verticalGridView->setView(
-                                        new HeaderLinksView($menuMetadata, $notificationsUrl),    0, 0);
-            $this->verticalGridView->setView(
-                                        new GlobalSearchView($moduleNamesAndLabels, $sourceUrl),1, 0);
+			
+			$headerLinksView = new HeaderLinksView($menuMetadata, $notificationsUrl);
+			
+			$globalSearchView = new GlobalSearchView($moduleNamesAndLabels, $sourceUrl);
+			$globalSearchView->setCssClasses(array('clearfix'));
+			
+            $this->verticalGridView->setView($headerLinksView, 0, 0);
+            $this->verticalGridView->setView($globalSearchView, 1, 0);
         }
 
         protected function renderContent()
