@@ -459,8 +459,8 @@
             assert('is_string($memcacheHost) || $memcacheHost == null');
             assert('(is_int   ($memcachePort) && $memcachePort >= 1024) || $memcachePort == null');
             assert('is_string($language)     && $language     != ""');
-            assert('is_string($hostInfo)     && $hostInfo     != ""');
-            assert('is_string($scriptUrl)     && $scriptUrl     != ""');
+            //assert('is_string($hostInfo)     && $hostInfo     != ""');
+            //assert('is_string($scriptUrl)     && $scriptUrl     != ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
