@@ -55,6 +55,10 @@
 
         public $installDemoData = false;
 
+        public $hostInfo = '';
+
+        public $scriptUrl = '';
+
         public function rules()
         {
             return array(
@@ -63,6 +67,8 @@
                 array('databaseUsername',      'required'),
                 array('databasePassword',      'required'),
                 array('superUserPassword',     'required'),
+                array('hostInfo',              'required'),
+                array('scriptUrl',             'required'),
                 array('databaseHostname',      'type', 'type' => 'string'),
                 array('databaseAdminUsername', 'type', 'type' => 'string'),
                 array('databaseAdminPassword', 'type', 'type' => 'string'),
@@ -75,6 +81,8 @@
                 array('memcachePortNumber',    'numerical', 'min'  => 1024),
                 array('removeExistingData',    'boolean'),
                 array('installDemoData',       'boolean'),
+                array('hostInfo',              'type', 'type' => 'string'),
+                array('scriptUrl',             'type', 'type' => 'string'),
             );
         }
 
@@ -90,6 +98,22 @@
             return $this->memcacheAvailable;
         }
 
+        public function setHostInfoAndScriptUrl()
+        {
+            if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !='')
+            {
+                $this->hostInfo = 'http://' . $_SERVER['HTTP_HOST'];
+            }
+            elseif (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] != '')
+            {
+                $this->hostInfo = $_SERVER['SERVER_NAME'];
+            }
+
+            if (isset($_SERVER['PHP_SELF']))
+            {
+                $this->scriptUrl = $_SERVER['PHP_SELF'];
+            }
+        }
         /**
          * After the standard validation is completed, check the database connections.
          * @see CModel::afterValidate()

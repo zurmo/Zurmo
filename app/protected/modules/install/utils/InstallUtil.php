@@ -440,7 +440,8 @@
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
                                                   $memcacheHost = null, $memcachePort = null, $minifyScripts = true,
                                                   $language,
-                                                  $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
+                                                  $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php',
+                                                  $hostInfo, $scriptUrl)
         {
             assert('is_dir($instanceRoot)');
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -451,6 +452,8 @@
             assert('is_string($memcacheHost) || $memcacheHost == null');
             assert('(is_int   ($memcachePort) && $memcachePort >= 1024) || $memcachePort == null');
             assert('is_string($language)     && $language     != ""');
+            assert('is_string($hostInfo)     && $hostInfo     != ""');
+            assert('is_string($scriptUrl)     && $scriptUrl     != ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
@@ -503,6 +506,12 @@
                             array(
                                 'host'   => '$memcacheHost',
                                 'port'   => $memcachePort, ",
+                                     $contents);
+            $contents = preg_replace('/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'hostInfo\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
+                                     "\$instanceConfig['components']['request']['hostInfo']         = '$hostInfo';",
+                                     $contents);
+            $contents = preg_replace('/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'scriptUrl\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
+                                     "\$instanceConfig['components']['request']['scriptUrl']         = '$scriptUrl';",
                                      $contents);
             $contents = preg_replace('/\s+\/\/ REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.*?>/s', // Not Coding Standard
                                      "\n?>",
@@ -655,7 +664,9 @@
                                             true,
                                             Yii::app()->language,
                                             $perInstanceFilename,
-                                            $debugFilename);
+                                            $debugFilename,
+                                            $form->hostInfo,
+                                            $form->scriptUrl);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
