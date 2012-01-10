@@ -739,8 +739,8 @@
             $this->assertEquals($values,          $attributeForm->customFieldDataData);
             $this->assertEquals($labels,          $attributeForm->customFieldDataLabels);
 
-            //Test that validation on completely new picklists works correctly and is inline with the rules from
-            //the CustomFieldData model.
+            //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
+            //from the CustomFieldData model.
             $attributeForm = new MultiSelectDropDownAttributeForm();
             $attributeForm->attributeName       = 's';    //name to short. test that this fails.
             $attributeForm->attributeLabels  = array(
