@@ -71,7 +71,7 @@
         public function actionDetails($id)
         {
             $notification = Notification::getById(intval($id));
-            if(!$notification->isRead)
+            if (!$notification->isRead)
             {
                 $notification->isRead = true;
                 $notification->save();

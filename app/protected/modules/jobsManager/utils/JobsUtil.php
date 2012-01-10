@@ -39,7 +39,7 @@
         {
             assert('$type != null && is_string($type)');
             $jobClassName = $type . 'Job';
-            if(@class_exists($jobClassName))
+            if (@class_exists($jobClassName))
             {
                 return $jobClassName::getDisplayName();
             }

@@ -50,19 +50,26 @@
         {
             $matches = array();
             $serverName = $_SERVER['SERVER_SOFTWARE'];
-            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
-                if (preg_match('/([^\/]+)\/(\d+\.\d)?/', $_SERVER['SERVER_SOFTWARE'], $matches)) { // Not Coding Standard
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
+            {
+                if (preg_match('/([^\/]+)\/(\d+\.\d)?/', $_SERVER['SERVER_SOFTWARE'], $matches)) // Not Coding Standard
+                {
                     $serverName = strtolower($matches[1]);
                     $actualVersion = $matches[2];
-                    if (array_key_exists($serverName, $minimumRequiredVersions)) {
+                    if (array_key_exists($serverName, $minimumRequiredVersions))
+                    {
                         return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
                     }
                 }
-            } else if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
-                if (preg_match('/([^\/]+)\/(\d+\.\d+(.\d+))?/', $_SERVER['SERVER_SOFTWARE'], $matches)) { // Not Coding Standard
+            }
+            elseif (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0)
+            {
+                if (preg_match('/([^\/]+)\/(\d+\.\d+(.\d+))?/', $_SERVER['SERVER_SOFTWARE'], $matches)) // Not Coding Standard
+                {
                     $serverName = strtolower($matches[1]);
                     $actualVersion = $matches[2];
-                    if (array_key_exists($serverName, $minimumRequiredVersions)) {
+                    if (array_key_exists($serverName, $minimumRequiredVersions))
+                    {
                         return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
                     }
                 }
@@ -749,7 +756,7 @@
             $messageLogger = new MessageLogger($messageStreamer);
             self::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
-            if($unfreezeWhenDone)
+            if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();
             }

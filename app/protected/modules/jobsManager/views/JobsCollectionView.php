@@ -116,7 +116,7 @@
             $content .= '<th>' . Yii::t('Default', 'Status') . '</th>';
             $content .= '<th>&#160;</th>';
             $content .= '</tr>';
-            foreach($jobsData as $type => $jobData)
+            foreach ($jobsData as $type => $jobData)
             {
                 $content .= '<tr>';
                 $content .= '<td>' . $this->renderViewJobLogLinkContent($type);
@@ -160,7 +160,7 @@
         {
             assert('is_string($type) && $type != ""');
             assert('is_int($status)');
-            if($status == JobsToJobsCollectionViewUtil::STATUS_IN_PROCESS_STUCK)
+            if ($status == JobsToJobsCollectionViewUtil::STATUS_IN_PROCESS_STUCK)
             {
                 $params = array('type' => $type);
                 $route   = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/resetJob/', $params);
@@ -201,7 +201,7 @@
             $content .= '<td>' . CHtml::encode($this->monitorJobData['recommendedFrequencyContent']) . '</td>';
             $content .= '</tr>';
 
-            foreach($this->jobsData as $type => $jobData)
+            foreach ($this->jobsData as $type => $jobData)
             {
                 $content .= '<tr>';
                 $content .= '<td>' . CHtml::encode($jobData['label']) . '</td>';
