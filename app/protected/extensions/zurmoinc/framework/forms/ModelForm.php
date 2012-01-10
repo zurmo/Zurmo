@@ -225,9 +225,9 @@
          * (non-PHPdoc)
          * @see CModel::getValidators()
          */
-        public function getValidators($attribute=null)
+        public function getValidators($attribute = null)
         {
-            if($attribute != null && !property_exists($this, $attribute))
+            if ($attribute != null && !property_exists($this, $attribute))
             {
                 return $this->model->getValidators($attribute);
             }

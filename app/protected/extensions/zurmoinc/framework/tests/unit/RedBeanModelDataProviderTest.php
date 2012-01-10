@@ -190,7 +190,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NULL)";
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NULL)"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
             //Make sure the sql runs properly.
             $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
@@ -210,7 +210,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NOT NULL)";
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NOT NULL)"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
             //Make sure the sql runs properly.
             $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
