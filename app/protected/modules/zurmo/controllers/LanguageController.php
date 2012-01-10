@@ -74,7 +74,7 @@
                 }
                 Yii::app()->languageHelper->setActiveLanguages($activeLanguages);
                 return HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                       Yii::t('Default', 'Changes to active languages changed successfully.'));
+                                       Yii::t('Default', 'Changes to active languages saved successfully.'));
             }
         }
     }

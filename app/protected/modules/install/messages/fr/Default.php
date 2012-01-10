@@ -168,6 +168,10 @@
             => 'RÉUSSI',
         'PHP'
             => 'PHP',
+        'PHP date.timezone is not set.'
+            => 'Le paramètre PHP date.timezone n\'est pas configuré.',
+        'PHP date.timezone is set.'
+            => 'Le paramètre PHP date.timezone est configuré.',
         'PHP file_uploads is Off.  This should be on.'
             => 'Le paramètre PHP file_uploads n\'est pas activé. Cette fonction doit être activée.',
         'PHP file_uploads is on which is ok.'
@@ -180,14 +184,10 @@
             => 'PHP post_max_size répond aux exigences minimales.',
         'PHP post_max_size setting is:'
             => 'La taille PHP post_max_size est:',
-        'PHP date.timezone is not set.'
-            => 'Le paramètre PHP date.timezone n\'est pas configuré.',
-        'PHP date.timezone is set.'
-            => 'Le paramètre PHP date.timezone est configuré.',
+        'PHP upload_max_filesize value is:'
+            => 'La valeur PHP upload_max_filesize est:',
         'PHP upload_max_filesize value meets minimum requirement.'
             => 'La valeur PHP upload_max_filesize répond aux exigences minimales.',
-        'PHP upload_max_filesize value setting is:'
-            => 'La valeur PHP upload_max_filesize est:',
         'Rebuilding Permissions.'
             => 'Reconstruction des permissions.',
         'Recheck System'

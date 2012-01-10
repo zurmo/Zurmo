@@ -48,9 +48,9 @@
         '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
             => '<b>Zurmo</b> es un systema de <b>Customer Relationship Management</b> de <b>Zurmo Inc.</b>',
         '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
-            => '<b> Zurmo </ b> está licenciado bajo la licencia GPLv3. Usted puede leer la licencia <a href="http://www.zurmo.org/license">aquí</ a>.',
+            => '<b>Zurmo</ b> está licenciado bajo la licencia GPLv3. Usted puede leer la licencia <a href="http://www.zurmo.org/license">aquí</ a>.',
         '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
-            => '<b> Zurmo </ b> utiliza las siguientes herramientas de Open Source y frameworks:',
+            => '<b>Zurmo</ b> utiliza las siguientes herramientas de Open Source y frameworks:',
         'About'
             => 'Sobre',
         'Access Administration Tab'
@@ -125,9 +125,9 @@
             => 'Servicios de negocios',
         'Cancel'
             => 'Cancelar',
-        'Changes to active currencies changed successfully.'
+        'Changes to active currencies saved successfully.'
             => 'Divisas activas cambiado con éxito.',
-        'Changes to active languages changed successfully.'
+        'Changes to active languages saved successfully.'
             => 'Idiomas activos cambiado con éxito.',
         'Chart Type'
             => 'Tipo de gráfico',
@@ -141,8 +141,8 @@
             => 'Configuración',
         'Convert'
             => 'Convertir',
-        'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
-            => 'Copyright &#169; Zurmo Inc. de 2011. Todos los derechos reservados.',
+        'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
+            => 'Copyright &#169; Zurmo Inc. de 2012. Todos los derechos reservados.',
         'Country'
             => 'Pais',
         'Create Group'

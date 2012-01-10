@@ -50,6 +50,7 @@
                          'PhpUploadSize',
                          'PhpPostSize',
                          'FilePermissions',
+                         'InstanceFolders',
                          'APC',
                          'Soap',
                          'Tidy',

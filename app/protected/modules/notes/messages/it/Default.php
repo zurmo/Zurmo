@@ -46,7 +46,7 @@
         'NotesModuleSingularLabel'
             => 'NotesModuleSingularLabel',
         'Occurred On'
-            => '??',
+            => 'Avvenuto ',
         'The NotesModulePluralLabel form cannot be displayed.'
             => 'Non si può visualizzare il formulario di NotesModulePluralLabel.',
     );
