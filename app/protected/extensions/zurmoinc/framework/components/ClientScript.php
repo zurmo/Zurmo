@@ -72,7 +72,7 @@
          */
         public function render(& $output)
         {
-            if($this->isAjaxMode())
+            if ($this->isAjaxMode())
             {
                 $this->removeAllPageLoadedScriptFilesWhenRenderingInAjaxMode();
             }

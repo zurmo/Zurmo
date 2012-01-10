@@ -114,6 +114,7 @@
                 $this->scriptUrl = $_SERVER['PHP_SELF'];
             }
         }
+
         /**
          * After the standard validation is completed, check the database connections.
          * @see CModel::afterValidate()

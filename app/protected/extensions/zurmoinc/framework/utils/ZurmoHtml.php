@@ -117,7 +117,7 @@
                 $checked                =   !strcmp($value, $select);
                 $htmlOptions['value']   =   $value;
                 $htmlOptions['id']      =   $baseID . '_' . $id++;
-                $option                 =   self::radioButton($name,$checked, $htmlOptions);
+                $option                 =   self::radioButton($name, $checked, $htmlOptions);
                 $label                  =   self::label($label, $htmlOptions['id'], $labelOptions);
                 $selectOption           =   "";
                 if (isset($dataSelectOption[$value]))

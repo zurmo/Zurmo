@@ -81,14 +81,14 @@
                 }
                 else
                 {
-                    echo CHtml::hiddenField($name,$this->value, $this->htmlOptions);
+                    echo CHtml::hiddenField($name, $this->value, $this->htmlOptions);
                     $this->options['defaultDate'] = $this->value;
                 }
 
-                if (!isset($this->options['onSelect'])){
+                if (!isset($this->options['onSelect']))
+                {
                     $this->options['onSelect']="js:function( selectedDate ) { jQuery('#{$id}').val(selectedDate);}";
                 }
-
 
                 $id = $this->htmlOptions['id'] = $this->htmlOptions['id'].'_container';
                 $this->htmlOptions['name'] = $this->htmlOptions['name'].'_container';
@@ -110,7 +110,7 @@
             if (isset($this->defaultOptions))
             {
                 $this->registerScriptFile($this->i18nScriptFile);
-                $cs->registerScript(__CLASS__,     $this->defaultOptions!==null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':'');
+                $cs->registerScript(__CLASS__, $this->defaultOptions!==null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':''); // Not Coding Standard
             }
             $cs->registerScript(__CLASS__ . '#' . $id, $js);
         }
