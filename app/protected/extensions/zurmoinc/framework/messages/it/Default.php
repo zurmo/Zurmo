@@ -108,7 +108,7 @@
         'from'
             => 'de',
         'Full Name'
-            => 'Nome',
+            => 'Nome Completo',
         'Go to Details'
             => 'Dettagli',
         'Hour'

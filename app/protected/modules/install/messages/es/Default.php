@@ -168,26 +168,26 @@
             => 'EXITOSA',
         'PHP'
             => 'PHP',
-        'PHP File Uploads is Off.  This should be on.'
-            => 'Carga de archivos PHP está deshabilitado. Este debe estar encendido.',
-        'PHP File Uploads is on which is ok.'
-            => 'Carga de archivos PHP está encendido. Esto está bien.',
-        'PHP Memory setting is:'
-            => 'Configuración de la memoria PHP es:',
-        'PHP Memory setting meets minimum requirement.'
-            => 'Configuración de la memoria PHP cumple con el requisito mínimo.',
+        'PHP date.timezone is not set.'
+            => 'Configuración de date.timezone PHP no está configurado.',
+        'PHP date.timezone is set.'
+            => 'Configuración de date.timezone PHP está configurado.',
+        'PHP file_uploads is Off.  This should be on.'
+            => 'PHP file_uploads está deshabilitado. Este debe estar encendido.',
+        'PHP file_uploads is on which is ok.'
+            => 'PHP file_uploads está encendido. Esto está bien.',
+        'PHP memory_limit is:'
+            => 'Configuración de memory_limit PHP es:',
+        'PHP memory_limit meets minimum requirement.'
+            => 'Configuración de memory_limit PHP cumple con el requisito mínimo.',
         'PHP post_max_size meets minimum requirement.'
             => 'PHP post_max_size cumple con el requisito mínimo.',
         'PHP post_max_size setting is:'
             => 'PHP configuración post_max_size es:',
-        'PHP Timezone is not set.'
-            => 'Zona horaria PHP no está configurado.',
-        'PHP Timezone is set.'
-            => 'Zona horaria PHP está configurado.',
-        'PHP Upload size meets minimum requirement.'
-            => 'Tamaño de carga PHP cumple con el requisito mínimo.',
-        'PHP Upload size setting is:'
-            => 'PHP límite de subida es:',
+        'PHP upload_max_filesize value is:'
+            => 'PHP upload_max_filesize es:',
+        'PHP upload_max_filesize value meets minimum requirement.'
+            => 'PHP upload_max_filesize cumple con el requisito mínimo.',
         'Rebuilding Permissions.'
             => 'Reconstruido de permissos',
         'Recheck System'

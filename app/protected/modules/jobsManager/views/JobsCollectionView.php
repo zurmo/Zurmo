@@ -193,7 +193,7 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . Yii::t('Default', 'Job Name') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Recommmended Frequency') . '</th>';
+            $content .= '<th>' . Yii::t('Default', 'Recommended Frequency') . '</th>';
             $content .= '</tr>';
 
             $content .= '<tr>';

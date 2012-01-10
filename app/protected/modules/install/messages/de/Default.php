@@ -168,26 +168,26 @@
             => 'PASS',
         'PHP'
             => 'PHP',
-        'PHP File Uploads is Off.  This should be on.'
-            => 'PHP File Upload ist Aus. Dies sollte auf',
-        'PHP File Uploads is on which is ok.'
-            => 'PHP File Uploads ist auf. Und das ist okay',
-        'PHP Memory setting is:'
-            => 'PHP Memory-Einstellung ist:',
-        'PHP Memory setting meets minimum requirement.'
-            => 'PHP Memory-Einstellung erfüllt Mindestanforderung.',
+        'PHP date.timezone is not set.'
+            => 'PHP date.timezone ist nicht gesetzt.',
+        'PHP date.timezone is set.'
+            => 'PHP date.timezone ist gesetzt.',
+        'PHP file_uploads is Off.  This should be on.'
+            => 'PHP file_uploads ist Aus. Dies sollte auf',
+        'PHP file_uploads is on which is ok.'
+            => 'PHP file_uploads ist auf. Und das ist okay',
+        'PHP memory_limit is:'
+            => 'PHP memory_limit ist:',
+        'PHP memory_limit meets minimum requirement.'
+            => 'PHP memory_limit erfüllt Mindestanforderung.',
         'PHP post_max_size meets minimum requirement.'
             => 'PHP post_max_size erfüllt Mindestanforderung.',
         'PHP post_max_size setting is:'
             => 'PHP post_max_size Einstellung ist:',
-        'PHP Timezone is not set.'
-            => 'PHP Zeitzone ist nicht gesetzt.',
-        'PHP Timezone is set.'
-            => 'PHP Zeitzone ist gesetzt.',
-        'PHP Upload size meets minimum requirement.'
-            => 'PHP Upload Größe erfüllt Mindestanforderung.',
-        'PHP Upload size setting is:'
-            => 'PHP Upload Größe ist:',
+        'PHP upload_max_filesize value is:'
+            => 'PHP upload_max_filesize ist:',
+        'PHP upload_max_filesize value meets minimum requirement.'
+            => 'PHP upload_max_filesize erfüllt Mindestanforderung.',
         'Rebuilding Permissions.'
             => 'Rekonstruktion von Berechtigungen.',
         'Recheck System'

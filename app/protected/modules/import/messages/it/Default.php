@@ -79,6 +79,8 @@
             => 'ID',
         'Import'
             => 'Importa',
+        'Import Cleanup Job'
+            => 'Svuota le tabelle d\'importazione',
         'Import complete.  Rows processed: {rowsProcessed}'
             => 'Importazione completata.  Righe processato: {rowsProcessed}',
         'Import data into Zurmo'
@@ -172,58 +174,58 @@
         'Sample Row'
             => 'Anteprima dati',
         'Script will run at most for {seconds} seconds.'
-            => '??',
+            => 'La durata massima di esecuzione dello script è {seconds} seconde.',
         'Starting import for process: {processName}'
-            => '??',
+            => 'Comincia l\'importazione del processo: {processName}',
         'Starting import. Looking for processes.'
-            => '??',
+            => 'Comincia l\'importazione.  Ricerca dei processi.',
         'The file that has been uploaded only has a header row and no additional rows to import.'
-            => '??',
+            => 'File vuoto:  il file caricato non contiene dati.',
         'The file that was uploaded was not a csv.'
-            => '??',
+            => 'Il file caricato non è un CSV.',
         'The following field is mapped more than once. {message}'
-            => '??',
+            => 'Il campo seguente è mappato più di una volta: {message}',
         'The full name must contain a last name, which is required.'
-            => '??',
+            => 'Il nome completo deve contenere un cognome (obbligatorio).',
         'The id specified did not match any existing records.'
-            => '??',
+            => 'Il valore del campo ID specificato non esiste.',
         'The other id specified did not match any existing records.'
-            => '??',
+            => 'Il valore del campo altro ID non esiste',
         'The other user id specified did not match any existing records.'
-            => '??',
+            => 'Il valore del campo ID altro utente non esiste',
         'The user id specified did not match any existing records.'
-            => '??',
+            => 'Il valore del campo utente ID specificato non esiste.',
         'The username specified did not match any existing records.'
-            => '??',
+            => 'Il valore del campo nome utente specificato non esiste.',
         'There was an error processing this import.'
-            => '??',
+            => 'Errore durante l\'importazione.',
         'This id is required and was not specified.'
-            => '??',
+            => 'Il campo ID è richiesto e non era specificato.',
         'Type of Value'
-            => '??',
+            => 'Tipo di valore',
         'URL was too long.'
-            => '??',
+            => 'URL è troppo lungo.',
         'Value is too short.'
-            => '??',
+            => 'Valore è troppo corta',
         'Who can read and write the new {importRulesLabel}'
-            => '??',
+            => 'Chi autorizzato a leggere e scrivere {importRulesLabel}',
         'You can only map each field once.'
-            => '??',
+            => 'Si può mappare ogni campo solamente una volta.',
         'You do not have permission to create/update this record and/or its related record.'
-            => '??',
+            => 'Non avete permissione creare/aggiornare questo record e/o su record relativo.',
         'You must map at least one of your import columns.'
-            => '??',
+            => 'Prego di mappare almeno una colonna.',
         'Zurmo Field'
-            => '??',
+            => 'Campo Zurmo',
         'Zurmo Id'
-            => '??',
+            => 'ID Zurmo',
         'Zurmo Username'
-            => '??',
+            => 'Nome utente Zurmo',
         '{firstDate} or {secondDate}'
-            => '??',
+            => '{firstDate} o {secondDate}',
         '{modelLabel} id specified did not match any existing records.'
-            => '??',
+            => 'ID {modelLabel} specificato non esiste.',
         '{modelLabel} other id specified did not match any existing records.'
-            => '??',
+            => 'Altro ID {modelLabel} specificato non esiste.',
     );
 ?>
