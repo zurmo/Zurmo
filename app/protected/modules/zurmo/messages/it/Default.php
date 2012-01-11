@@ -489,9 +489,9 @@
             => 'Amministratore Super',
         'Technology'
             => 'Tecnologia',
-        'The  web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
+        'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => 'Il servizio di corsi delle valute indica che questo codice non è valido, anche se zurmo indica che è valido. Il tasso non fu aggiornato.',
-        'The  web service was unavailable. The rate could not be automatically updated.'
+        'The currency rate web service was unavailable. The rate could not be automatically updated.'
             => 'Il servizio di corsi delle valute non è disponibile. Il tasso non fu aggiornato.',
         'The currency was not removed because it is in use.'
             => 'La valuta non fu eliminata perché é in uso.',

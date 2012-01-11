@@ -224,6 +224,8 @@
             => 'Die debug.php config-Datei ist nicht beschreibbar',
         'The debug.php config file is writable.'
             => 'Die debug.php Konfigurationsdatei ist beschreibbar.',
+        'The instance folders are present and writable.'
+            =>'Die System-Dateien sind vorhanden und beschreibbar.',
         'The name of the database you want to run Zurmo in.'
             => 'Name der Datenbank für zurmo.',
         'The next step is to install the demo data.'
@@ -276,5 +278,9 @@
             => 'Zurmo administrative Passwort. Der Benutzername ist `super`. Sie können dieses später ändern.',
         'Zurmo Installation'
             => 'Zurmo Installation',
+        '{folderPath} is missing.'
+            => '{folderPath} fehlt',
+        '{folderPath} is not writable.'
+            => '{folderPath} ist nicht beschreibbar.',
     );
 ?>
