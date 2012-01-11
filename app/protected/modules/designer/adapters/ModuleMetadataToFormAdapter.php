@@ -60,6 +60,9 @@
                 $moduleForm->pluralModuleLabels[$language]   = $moduleClassName::getModuleLabelByTypeAndLanguage(
                                                                                     'PluralLowerCase',   $language);
             }
+
+            //todo:add the support for the collection (which includes what is selected, for global search if supported
+
             return $moduleForm;
         }
     }

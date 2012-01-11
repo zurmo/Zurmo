@@ -90,6 +90,7 @@
                     ),
                 ),
             );
+            //todo: add row if module supports global search..
             return $metadata;
         }
     }
