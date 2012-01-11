@@ -24,40 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        'Access TasksModulePluralLabel'
-            => 'Accesso TasksModulePluralLabel',
-        'Completed'
-            => 'Completato',
-        'Completed On'
-            => 'Data chiusura',
-        'Create TasksModulePluralLabel'
-            => 'Crea TasksModulePluralLabel',
-        'Delete TasksModulePluralLabel'
-            => 'Elimina TasksModulePluralLabel',
-        'Due On'
-            => 'Data scadenza',
-        'My Open TasksModulePluralLabel'
-            => 'I miei TasksModulePluralLabel aperti',
-        'Open TasksModulePluralLabel'
-            => 'TasksModulePluralLabel aperti',
-        'Task'
-            => 'Compito',
-        'Tasks'
-            => 'Compiti',
-        'TasksModulePluralLabel'
-            => 'TasksModulePluralLabel',
-        'TasksModulePluralLabel For AccountsModuleSingularLabel'
-            => 'TasksModulePluralLabel per AccountsModuleSingularLabel',
-        'TasksModulePluralLabel For ContactsModuleSingularLabel'
-            => 'TasksModulePluralLabel per ContactsModuleSingularLabel',
-        'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => 'TasksModulePluralLabel per OpportunitiesModuleSingularLabel?',
-        'TasksModuleSingularLabel'
-            => 'TasksModuleSingularLabel',
-    );
+    /**
+     * Displays the job type
+     */
+    class JobLogTypeElement extends Element
+    {
+        protected function renderControlEditable()
+        {
+            throw new NotImplementedException();
+        }
+
+        /**
+         * Renders the attribute from the model.
+         * @return The element's content.
+         */
+        protected function renderControlNonEditable()
+        {
+            assert('$this->attribute == "type"');
+            $jobType = $this->model->{$this->attribute};
+            $jobClassName = $jobType . 'Job';
+            return $jobClassName::getDisplayName();
+        }
+    }
 ?>

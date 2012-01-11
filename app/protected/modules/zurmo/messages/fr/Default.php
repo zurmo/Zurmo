@@ -125,9 +125,9 @@
             => 'Service de gestion',
         'Cancel'
             => 'Annuler',
-        'Changes to active currencies changed successfully.'
+        'Changes to active currencies saved successfully.'
             => 'Les changements de devises actives sont effectués.',
-        'Changes to active languages changed successfully.'
+        'Changes to active languages saved successfully.'
             => 'Les changements de langue actives sont effectués.',
         'Chart Type'
             => 'Type de graphique',
@@ -141,8 +141,8 @@
             => 'Configuration',
         'Convert'
             => 'Convertir',
-        'Copyright &#169; Zurmo Inc., 2011. All Rights reserved.'
-            => 'Copyright &#169; Zurmo Inc., 2011. Tous droits réservés.',
+        'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
+            => 'Copyright &#169; Zurmo Inc., 2012. Tous droits réservés.',
         'Country'
             => 'Pays',
         'Create Group'

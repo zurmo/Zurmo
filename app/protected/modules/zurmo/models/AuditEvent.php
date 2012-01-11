@@ -180,7 +180,7 @@
 
         public static function deleteAllByModel(RedBeanModel $model)
         {
-            if($model instanceof Item)
+            if ($model instanceof Item)
             {
                 $searchAttributeData = array();
                 $searchAttributeData['clauses'] = array(
@@ -199,7 +199,7 @@
                 $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('AuditEvent');
                 $where             = RedBeanModelDataProvider::makeWhere('AuditEvent', $searchAttributeData, $joinTablesAdapter);
                 $auditEvents       = self::getSubset($joinTablesAdapter, null, null, $where, null);
-                foreach($auditEvents as $event)
+                foreach ($auditEvents as $event)
                 {
                     $event->delete();
                 }

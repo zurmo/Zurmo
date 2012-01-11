@@ -30,70 +30,70 @@
     // DON'T MAKE A MESS!
     return array(
         'A user field'
-            => '??',
+            => 'Un campo utente',
         'Access Users Tab'
-            => '??',
+            => 'Accesso ai Utente',
         'Change Password'
-            => '??',
+            => 'Cambia Password',
         'Change User Passwords'
-            => '??',
+            => 'Cambia Password di Utente',
         'Confirm Password'
-            => '??',
+            => 'Conferma password',
         'Create User'
-            => '??',
+            => 'Nuovo Utente',
         'Create Users'
-            => '??',
+            => 'Crea Utente',
         'day(s)'
-            => '??',
+            => 'giorno/i',
         'Enforce Strong Passwords'
-            => '??',
+            => 'Attuare l\'uso di password forti',
         'Hash'
-            => '??',
+            => 'Hash',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
-            => '??',
+            => 'Gli utenti inatyivi no possono login nel web, mobile, o web API.  Il login per gli utente attivi è controllato per i diritti del grupo.',
         'Inherited Value:'
             => '??',
         'Login Via Mobile'
-            => '??',
+            => 'Login  mobile',
         'Login Via Web'
-            => '??',
+            => 'Login  web',
         'Login Via Web API'
-            => '??',
+            => 'Login Web API',
         'Manage Users'
-            => '??',
+            => 'Gestione degli Utenti',
         'Manager'
-            => '??',
+            => 'Manager',
         'Minimum Password Length'
-            => '??',
+            => 'Lunghezza minima della password',
         'Minimum Username Length'
-            => '??',
+            => 'Lunghezza minima del nome utente',
         'Password Expires'
-            => '??',
+            => 'Password scadenza',
         'Password Expiry Days'
-            => '??',
+            => 'Giorni de scandenza delle password',
         'Profile'
-            => '??',
+            => 'Profile',
         'The password is too short. Minimum length is {minimumLength}.'
-            => '??',
+            => 'La password è troppo corta. La lunghezza minima è {minimumLength} carattere.',
         'The password must have at least one lowercase letter'
-            => '??',
+            => 'La password deve avere almeno uno lettera minuscola.',
         'The password must have at least one number and one letter'
-            => '??',
+            => 'La password deve comprendere almeno un numero e una lettera.',
         'The password must have at least one uppercase letter'
-            => '??',
+            => 'La password deve avere almeno uno lettera maiuscola. ',
         'The time zone is invalid.'
-            => '??',
+            => 'Il fuso oraria non è valido.',
         'The username is too short. Minimum length is {minimumLength}.'
-            => '??',
+            => 'Il nome di utente è troppo corto.  La lunghezza minima è {minimumLength} carattere.',
         'Time Zone'
-            => '??',
+            => 'Fuso orario',
         'User'
-            => '??',
+            => 'Utente',
         'User configuration saved successfully.'
-            => '??',
+            => 'Configurazione salva con successo',
         'User Search'
-            => '??',
+            => 'Ricerca Utente',
         'Users'
-            => '??',
+            => 'Utenti',
     );
 ?>

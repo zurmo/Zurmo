@@ -26,6 +26,8 @@
 
     $basePath = realpath(dirname(__FILE__) . '/../../../');
 
+    require_once('../PhpUnitServiceUtil.php');
+
     if (is_file($basePath . '/protected/config/debugTest.php'))
     {
         require_once($basePath . '/protected/config/debugTest.php');
@@ -76,6 +78,7 @@
                      "  Note:\n"                                                                                            .
                      "\n"                                                                                                   ;
 
+            PhpUnitServiceUtil::checkVersion();
             if ($argv[0] != 'TestSuite.php')
             {
                 echo $usage;

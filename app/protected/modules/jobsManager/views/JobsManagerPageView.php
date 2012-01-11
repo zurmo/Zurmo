@@ -24,40 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        'Access TasksModulePluralLabel'
-            => 'Accesso TasksModulePluralLabel',
-        'Completed'
-            => 'Completato',
-        'Completed On'
-            => 'Data chiusura',
-        'Create TasksModulePluralLabel'
-            => 'Crea TasksModulePluralLabel',
-        'Delete TasksModulePluralLabel'
-            => 'Elimina TasksModulePluralLabel',
-        'Due On'
-            => 'Data scadenza',
-        'My Open TasksModulePluralLabel'
-            => 'I miei TasksModulePluralLabel aperti',
-        'Open TasksModulePluralLabel'
-            => 'TasksModulePluralLabel aperti',
-        'Task'
-            => 'Compito',
-        'Tasks'
-            => 'Compiti',
-        'TasksModulePluralLabel'
-            => 'TasksModulePluralLabel',
-        'TasksModulePluralLabel For AccountsModuleSingularLabel'
-            => 'TasksModulePluralLabel per AccountsModuleSingularLabel',
-        'TasksModulePluralLabel For ContactsModuleSingularLabel'
-            => 'TasksModulePluralLabel per ContactsModuleSingularLabel',
-        'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
-            => 'TasksModulePluralLabel per OpportunitiesModuleSingularLabel?',
-        'TasksModuleSingularLabel'
-            => 'TasksModuleSingularLabel',
-    );
+    class JobsManagerPageView extends ZurmoPageView
+    {
+        public function __construct(CController $controller, View $view)
+        {
+            parent::__construct(new ZurmoDefaultView($controller, $view));
+        }
+
+        protected function getSubtitle()
+        {
+            return Yii::t('Default', 'Jobs Manager', LabelUtil::getTranslationParamsForAllModules());
+        }
+    }
 ?>

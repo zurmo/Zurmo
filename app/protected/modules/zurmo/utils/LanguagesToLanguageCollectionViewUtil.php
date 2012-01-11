@@ -32,11 +32,6 @@
             $languagesData       = array();
             foreach (Yii::app()->languageHelper->getSupportedLanguagesData() as $language => $label)
             {
-                //Remove this exception for de/it once German and Italian are completed
-                if ($language == 'it')
-                {
-                    continue;
-                }
                 $languagesData[$language] = array('label'         => $label,
                                                  'active'        => in_array($language, $activeLanguages),
                                                  'canInactivate' =>

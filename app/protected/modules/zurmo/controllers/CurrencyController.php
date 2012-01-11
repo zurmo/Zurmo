@@ -143,7 +143,7 @@
                         assert('$saved');
                     }
                     return HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                           Yii::t('Default', 'Changes to active currencies changed successfully.'));
+                                           Yii::t('Default', 'Changes to active currencies saved successfully.'));
                 }
             }
         }
