@@ -459,8 +459,8 @@
             assert('is_string($memcacheHost) || $memcacheHost == null');
             assert('(is_int   ($memcachePort) && $memcachePort >= 1024) || $memcachePort == null');
             assert('is_string($language)     && $language     != ""');
-            //assert('is_string($hostInfo)     && $hostInfo     != ""');
-            //assert('is_string($scriptUrl)     && $scriptUrl     != ""');
+            assert('is_string($hostInfo)     || $hostInfo     == ""');
+            assert('is_string($scriptUrl)    || $scriptUrl    == ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
@@ -766,6 +766,32 @@
             if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();
+            }
+        }
+
+        public static function getDefaultHostInfo()
+        {
+            $hostInfo = "";
+            if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !='')
+            {
+                $hostInfo = 'http://' . $_SERVER['HTTP_HOST'];
+            }
+            elseif (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] != '')
+            {
+                $hostInfo = 'http://' . $_SERVER['SERVER_NAME'];
+            }
+            return $hostInfo;
+        }
+
+        public static function getDefaultScriptUrl()
+        {
+            if (isset($_SERVER['PHP_SELF']))
+            {
+                return $_SERVER['PHP_SELF'];
+            }
+            else
+            {
+                return '';
             }
         }
     }

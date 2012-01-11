@@ -96,23 +96,6 @@
             return $this->memcacheAvailable;
         }
 
-        public function setHostInfoAndScriptUrl()
-        {
-            if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !='')
-            {
-                $this->hostInfo = 'http://' . $_SERVER['HTTP_HOST'];
-            }
-            elseif (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] != '')
-            {
-                $this->hostInfo = $_SERVER['SERVER_NAME'];
-            }
-
-            if (isset($_SERVER['PHP_SELF']))
-            {
-                $this->scriptUrl = $_SERVER['PHP_SELF'];
-            }
-        }
-
         /**
          * After the standard validation is completed, check the database connections.
          * @see CModel::afterValidate()
