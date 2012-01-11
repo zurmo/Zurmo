@@ -212,6 +212,8 @@
             $adapter->setAttributeMetadataFromForm($attributeForm);
             if ($attributeForm->isRequired && !$wasRequired)
             {
+                $modelClassName = get_class($model);
+                $model          = new $modelClassName(); //Forces metadata to reload
                 if($model->isAttribute($attributeForm->attributeName))
                 {
                     RequiredAttributesValidViewUtil::
@@ -225,6 +227,8 @@
             }
             elseif (!$attributeForm->isRequired && $wasRequired)
             {
+                $modelClassName = get_class($model);
+                $model          = new $modelClassName(); //Forces metadata to reload
                 if($model->isAttribute($attributeForm->attributeName))
                 {
                     RequiredAttributesValidViewUtil::
