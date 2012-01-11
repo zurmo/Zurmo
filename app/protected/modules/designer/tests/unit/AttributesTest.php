@@ -1280,16 +1280,15 @@
             $account->testUrl3                   = 'http://www.zurmo.org';
             $account->playMyFavoriteSong->value  = 'song2'; // song 3
 
-            //Set one value to Multiselect list.
-            $customHobbyValue1 = new CustomFieldValue();
-            $customHobbyValue1->value = 'Writing';
+            //Set value to Multiselect list.
+            $customHobbyValue1           = new CustomFieldValue();
+            $customHobbyValue1->value    = 'Writing';
             $account->testHobbies->values->add($customHobbyValue1);
 
-            //Set one value to Tagcloud.
-            $customLanguageValue1 = new CustomFieldValue();
+            //Set value to Tagcloud.
+            $customLanguageValue1        = new CustomFieldValue();
             $customLanguageValue1->value = 'French';
             $account->testLanguages->values->add($customLanguageValue1);
-
 
             $saved = $account->save();
             $this->assertTrue($saved);
@@ -1297,7 +1296,6 @@
             $account->forget();
             unset($account);
             $account = Account::getById($accountId);
-            //$this->assertEquals(in_array('Reading', $account->testHobbies->values));
             $this->assertEquals(0,                           $account->testCheckBox2);
             $this->assertEquals(false,                       (bool)$account->testCheckBox2);
             $this->assertEquals(728.89,                      $account->testCurrency2->value);
@@ -1313,11 +1311,8 @@
             $this->assertEquals('some test text area stuff', $account->testTextArea2);
             $this->assertEquals('http://www.zurmo.com',      $account->testUrl2);
             $this->assertEquals('song2',                     $account->playMyFavoriteSong->value);
-
-            //Assert Hobbies value from the database.
-            $this->assertEquals('Writing',                   $account->testHobbies->values);
-            //Assert Language value from the database.
-            $this->assertEquals('French',                    $account->testLanguages->values);
+            $this->assertContains('Writing',                 $account->testHobbies->values);
+            $this->assertContains('French',                  $account->testLanguages->values);
 
             //Switch values around to cover for any default value pollution on the assertions above.
             $account->testCheckBox2              = 1;
@@ -1343,7 +1338,7 @@
             $customFieldValue2->value = 'Reading';
             $account->testHobbies->values->add($customFieldValue2);
 
-            //Set multiple value to Taglist list.
+            //Set multiple value to Tagcloud.
             $customLanguageValue1 = new CustomFieldValue();
             $customLanguageValue1->value = 'English';
             $account->testLanguages->values->add($customLanguageValue1);
@@ -1372,13 +1367,10 @@
             $this->assertEquals('some test text area stuff2', $account->testTextArea2);
             $this->assertEquals('http://www.zurmo.org',       $account->testUrl2);
             $this->assertEquals('song3',                      $account->playMyFavoriteSong->value);
-
-            //Assert Hobbies value from the database.
-            $this->assertEquals('Writing',                    $account->testHobbies->values);
-            $this->assertEquals('Reading',                    $account->testHobbies->values);
-            //Assert Language value from the database.
-            $this->assertEquals('English',                    $account->testLanguages->values);
-            $this->assertEquals('French',                     $account->testLanguages->values);
+            $this->assertContains('Writing',                  $account->testHobbies->values);
+            $this->assertContains('Reading',                  $account->testHobbies->values);
+            $this->assertContains('English',                  $account->testLanguages->values);
+            $this->assertContains('French',                   $account->testLanguages->values);
         }
 
         /**
