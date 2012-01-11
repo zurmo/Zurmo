@@ -28,8 +28,16 @@
     {
         public function actionLogin()
         {
-            $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
-            $identity->authenticate();
+            try
+            {
+                $identity = new UserIdentity(Yii::app()->apiRequest->getUsername(), Yii::app()->apiRequest->getPassword());
+                $identity->authenticate();
+            }
+            catch (Exception $e)
+            {
+                $message = Yii::t('Default', 'An error occur during login. Pleease try again.');
+                throw new ApiException($message);
+            }
             if ($identity->errorCode == UserIdentity::ERROR_NONE)
             {
                 Yii::app()->user->login($identity);
