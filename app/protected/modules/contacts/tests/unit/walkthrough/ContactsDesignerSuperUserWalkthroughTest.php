@@ -165,6 +165,7 @@
             $this->createDropDownCustomFieldByModule            ('ContactsModule', 'picklist');
             $this->createIntegerCustomFieldByModule             ('ContactsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('ContactsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('ContactsModule', 'tagcloud');
             $this->createPhoneCustomFieldByModule               ('ContactsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('ContactsModule', 'radio');
             $this->createTextCustomFieldByModule                ('ContactsModule', 'text');
@@ -442,6 +443,8 @@
                                 'datetime'                          =>  $datetime,
                                 'decimal'                           =>  '123',
                                 'picklist'                          =>  array('value' => 'a'),
+                                'multiselect'                       =>  array('values' => array('ff', 'rr')),
+                                'tagcloud'                          =>  array('values' => array('x', 'z')),
                                 'integer'                           =>  '12',
                                 'phone'                             =>  '259-784-2169',
                                 'radio'                             =>  array('value' => 'd'),
@@ -505,6 +508,10 @@
             $this->assertEquals($contact->text                           , 'This is a test Text');
             $this->assertEquals($contact->textarea                       , 'This is a test TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc.com');
+            $this->assertContains('ff'                                   , $contact->multiselect->values);
+            $this->assertContains('rr'                                   , $contact->multiselect->values);
+            $this->assertContains('x'                                    , $contact->tagcloud->values);
+            $this->assertContains('z'                                    , $contact->tagcloud->values);
         }
 
         /**
@@ -554,6 +561,8 @@
                                         'checkbox'           => array('value'  =>  '1'),
                                         'currency'           => array('value'  =>  45),
                                         'picklist'           => array('value'  =>  'a'),
+                                        'multiselect'        => array('values' =>  'gg'),
+                                        'tagcloud'           => array('values' =>  'w'),
                                         'radio'              => array('value'  =>  'd'),
                                         'date__Date'         => array('type'   =>  'Today'),
                                         'datetime__DateTime' => array('type'   =>  'Today')),
@@ -635,6 +644,8 @@
                             'datetime'                          =>  $datetime,
                             'decimal'                           =>  '12',
                             'picklist'                          =>  array('value' => 'b'),
+                            'multiselect'                       =>  array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          =>  array('values' =>  array('w', 'y')),
                             'integer'                           =>  '11',
                             'phone'                             =>  '259-784-2069',
                             'radio'                             =>  array('value' => 'e'),
@@ -696,6 +707,10 @@
             $this->assertEquals($contact->text                           , 'This is a test Edit Text');
             $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
+            $this->assertContains('gg'                                   , $contact->multiselect->values);
+            $this->assertContains('hh'                                   , $contact->multiselect->values);
+            $this->assertContains('w'                                    , $contact->tagcloud->values);
+            $this->assertContains('y'                                    , $contact->tagcloud->values);
         }
 
         /**

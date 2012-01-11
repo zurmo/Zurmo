@@ -250,7 +250,7 @@
                 {
                     if (strpos($scriptPath, 'http') === false)
                     {
-                        $this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
+                        //$this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
                     }
                 }
             }
@@ -354,9 +354,20 @@
                                     'isAudited'           => '1',
                                     'isRequired'          => '1',
                                     'customFieldDataData' => array(
-                                                'gg', 'hh', 'rr'
+                                                'ff', 'gg', 'hh', 'rr'
                                     ));
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'MultiSelectDropDown', $extraPostData);
+        }
+
+        protected function createTagCloudCustomFieldByModule($moduleClassName, $name)
+        {
+            $extraPostData = array( 'defaultValueOrder'   => '1',
+                                    'isAudited'           => '1',
+                                    'isRequired'          => '1',
+                                    'customFieldDataData' => array(
+                                                'w', 'x', 'y', 'z'
+                                    ));
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TagCloud', $extraPostData);
         }
 
         protected function createModuleEditBadValidationPostData()

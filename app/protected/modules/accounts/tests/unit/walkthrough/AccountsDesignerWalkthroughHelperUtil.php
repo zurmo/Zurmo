@@ -169,6 +169,13 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                         array(
@@ -247,6 +254,13 @@
                                         ),
                                         array(
                                             'element' => 'multiselect',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'tagcloud',
                                         ),
                                     )
                                 ),
@@ -603,6 +617,13 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -769,6 +790,13 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -833,6 +861,8 @@
                             'checkbox'              =>  array('value'  =>  '0'),
                             'currency'              =>  array('value'  =>  40),
                             'picklist'              =>  array('value'  =>  'b'),
+                            'multiselect'           =>  array('values' =>  'gg'),
+                            'tagcloud'              =>  array('values' =>  'w'),
                             'radio'                 =>  array('value'  =>  'e'),
                             'date__Date'            =>  array('type'   =>  'Today'),
                             'datetime__DateTime'    =>  array('type'   =>  'Today'));
