@@ -28,11 +28,10 @@
     {
         public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model)
         {
-            $this->controllerId = $controllerId;
-            $this->moduleId     = $moduleId;
-            $this->model        = $model;
-            $this->modelId      = null;
-            //todo: pass boolean if module supports globalSearch...
+            $this->controllerId          = $controllerId;
+            $this->moduleId              = $moduleId;
+            $this->model                 = $model;
+            $this->modelId               = null;
         }
 
         public function isUniqueToAPage()
@@ -91,7 +90,6 @@
                     ),
                 ),
             );
-            //todo: add row if module supports global search..
             return $metadata;
         }
     }

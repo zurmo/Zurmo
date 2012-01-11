@@ -24,7 +24,44 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactsModuleForm extends GlobalSearchEnabledModuleForm
+    /**
+     * Element for displaying the modules global search attributes.  This allows a user to select or unselect
+     * which attributes are used as part of the global search for this module.
+     */
+    class ModuleGlobalSearchAttributesElement extends Element
     {
+        protected function renderControlEditable()
+        {
+            assert('$this->model instanceof GlobalSearchEnabledModuleForm');
+            assert('$this->attribute == "globalSearchAttributeNames"');
+            $content = null;
+            $content .= $this->form->checkBoxList(
+                $this->model,
+                $this->attribute,
+                $this->getDropDownArray(),
+                $this->getEditableHtmlOptions()
+            );
+            return $content;
+        }
+
+        protected function getEditableHtmlOptions()
+        {
+            return array('template' => '<div class="multi-select-checkbox-input">{input}{label}</div>');
+        }
+
+        protected function renderLabel()
+        {
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function renderControlNonEditable()
+        {
+            throw new NotSupportedException();
+        }
+
+        protected function getDropDownArray()
+        {
+            return $this->model->availableGlobalSearchAttributeNames;
+        }
     }
 ?>

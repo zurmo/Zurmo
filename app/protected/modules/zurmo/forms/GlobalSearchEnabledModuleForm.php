@@ -24,7 +24,26 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactsModuleForm extends GlobalSearchEnabledModuleForm
+    /**
+     * Module form for modules that have global search enabled.
+     */
+    abstract class GlobalSearchEnabledModuleForm extends ModuleForm
     {
+        public $availableGlobalSearchAttributeNames = array();
+        public $globalSearchAttributeNames          = array();
+
+        public function rules()
+        {
+            return array_merge(parent::rules(), array(
+                array('globalSearchAttributeNames', 'safe'),
+            ));
+        }
+
+        public function attributeLabels()
+        {
+            return array_merge(parent::attributeLabels(), array(
+                'globalSearchAttributeNames'  => Yii::t('Default', 'Global Search Fields'),
+            ));
+        }
     }
 ?>

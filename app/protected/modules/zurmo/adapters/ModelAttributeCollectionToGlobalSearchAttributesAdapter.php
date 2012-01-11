@@ -24,7 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactsModuleForm extends GlobalSearchEnabledModuleForm
+    /**
+     * Given an attributesCollection, filter the collection to only attributes that are acceptable for a
+     * global search.  This is so the user in the user interface of the module settings, can pick which
+     * fields to add or remove from global search.
+     */
+    class ModelAttributeCollectionToGlobalSearchAttributesAdapter
     {
+        protected $attributes;
+
+        public function __construct(array $attributes)
+        {
+            $this->attributes = $attributes;
+        }
+
+        /**
+         * Based on the $attributes, return value/label pairings only for attributes that are acceptable to
+         * be picked as a global search attribute.
+         */
+        public function getValuesAndLabelsData()
+        {
+            $valuesAndLabels = array();
+            foreach($this->attributes as $attributeName => $data)
+            {
+                if(($data['elementType'] == 'Text' ||
+                   $data['elementType'] == 'Integer' ||
+                   $data['elementType'] == 'Decimal' ||
+                   $data['elementType'] == 'TextArea') && $attributeName != 'id')
+                {
+                    $valuesAndLabels[$attributeName] = $data['attributeLabel'];
+                }
+            }
+            asort($valuesAndLabels);
+            return $valuesAndLabels;
+        }
     }
 ?>

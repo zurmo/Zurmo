@@ -60,8 +60,18 @@
                 $moduleForm->pluralModuleLabels[$language]   = $moduleClassName::getModuleLabelByTypeAndLanguage(
                                                                                     'PluralLowerCase',   $language);
             }
-
-            //todo:add the support for the collection (which includes what is selected, for global search if supported
+            if($moduleForm instanceof GlobalSearchEnabledModuleForm)
+            {
+                $moduleClassName         = $this->moduleClassName;
+                $modelAttributesAdapter  = DesignerModelToViewUtil::
+                                           getModelAttributesAdapterByModelForViewClassName(
+                                               $moduleClassName::getGlobalSearchFormClassName(),
+                                               $moduleClassName::getPrimaryModelName());
+                $attributeCollection     = $modelAttributesAdapter->getAttributes();
+                $adapter                 = new ModelAttributeCollectionToGlobalSearchAttributesAdapter(
+                                                    $attributeCollection);
+                $moduleForm->availableGlobalSearchAttributeNames = $adapter->getValuesAndLabelsData();
+            }
 
             return $moduleForm;
         }
