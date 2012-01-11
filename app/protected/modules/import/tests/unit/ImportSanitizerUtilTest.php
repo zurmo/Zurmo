@@ -44,6 +44,7 @@
             $saved = $customFieldData->save();
             assert($saved); // Not Coding Standard
             Currency::getAll(); //forces base currency to be created.
+
         }
 
         public function testCurrencySanitizationUsingNumberSanitizerUtil()
@@ -82,7 +83,7 @@
             $sanitizerUtilTypes        = CurrencyValueAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
-                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '15,500.34', // Not Coding Standard
+                                         $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '15,500.34',
                                          $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('15500.34', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());

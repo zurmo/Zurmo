@@ -42,8 +42,6 @@
     $installed        = false; // Set to true by the installation process.
     $instanceConfig   = array(); //Set any parameters you want to have merged into configuration array.
                                  //@see CustomManagement
-    $instanceConfig['components']['request']['hostInfo'] = '';
-    $instanceConfig['components']['request']['scriptUrl'] = '';
 
     if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
     {

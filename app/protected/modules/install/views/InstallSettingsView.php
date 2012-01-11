@@ -238,27 +238,6 @@
                                         ),
                                     )
                                 ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'hostInfo', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Domain name where Zurmo will be installed on.'))
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'scriptUrl', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'The script url relative to path. ' .
-                                                      'where Zurmo will be installed.')),
-                                            ),
-                                        ),
-                                    )
-                                ),
                               ),
                         ),
                     ),

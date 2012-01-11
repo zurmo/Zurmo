@@ -188,15 +188,15 @@
         public static function resolveOperatorAndValueForNullOrEmpty($operatorType)
         {
             assert('in_array($operatorType, array("isNull", "isNotNull", "isEmpty", "isNotEmpty"))');
-            if ($operatorType == 'isNull')
+            if($operatorType == 'isNull')
             {
-                return 'IS NULL'; // Not Coding Standard
+                return 'IS NULL';
             }
-            elseif ($operatorType == 'isNotNull')
+            elseif($operatorType == 'isNotNull')
             {
-                return 'IS NOT NULL'; // Not Coding Standard
+                return 'IS NOT NULL';
             }
-            elseif ($operatorType == 'isEmpty')
+            elseif($operatorType == 'isEmpty')
             {
                 return "= ''";
             }

@@ -222,7 +222,7 @@
             {
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
-            elseif ($value === null)
+            elseif($value === null)
             {
                 return SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty($operatorType);
             }
@@ -265,7 +265,7 @@
             $counter = 0;
             foreach ($rowsOfColumnValues as $row)
             {
-                if (count($row) == count($columnNames))
+                if(count($row) == count($columnNames))
                 {
                     if ($counter == 0)
                     {
@@ -750,7 +750,7 @@
             $totalCount = 0;
             $rows       = R::getAll($sql);
             $columnName = 'Tables_in_' . $databaseName;
-            foreach ($rows as $row)
+            foreach($rows as $row)
             {
                 $tableName  = $row[$columnName];
                 $tableSql   = "select count(*) count from " . $tableName;

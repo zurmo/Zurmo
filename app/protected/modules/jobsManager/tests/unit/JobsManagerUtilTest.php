@@ -86,7 +86,7 @@
         public function testRunMonitorJob()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
-            foreach (JobLog::getAll() as $jobLog)
+            foreach(JobLog::getAll() as $jobLog)
             {
                 $jobLog->delete();
             }

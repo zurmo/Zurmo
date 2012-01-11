@@ -51,7 +51,7 @@
             $link     = Yii::app()->createUrl('notifications/default');
             $content  = null;
             $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            if ($count > 0)
+            if($count > 0)
             {
                 $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
             }

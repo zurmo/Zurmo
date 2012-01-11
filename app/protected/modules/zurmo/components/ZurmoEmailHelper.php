@@ -35,6 +35,7 @@
          */
         public function send(EmailMessage $email)
         {
+
         }
     }
 ?>

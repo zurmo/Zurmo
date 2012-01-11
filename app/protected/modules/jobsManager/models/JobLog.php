@@ -68,10 +68,10 @@
                     array('startDateTime',  'required'),
                     array('endDateTime',    'required'),
                     array('status',         'required'),
-                    array('type',           'type',   'type' => 'string'),
-                    array('type',           'length', 'min'  => 3, 'max' => 64),
+                    array('type',    		'type',   'type' => 'string'),
+                    array('type',    		'length', 'min'  => 3, 'max' => 64),
                     array('status',         'type',   'type' => 'integer'),
-                    array('message',        'type',   'type' => 'string'),
+                    array('message', 	    'type',   'type' => 'string'),
                     array('startDateTime',  'type', 'type' => 'datetime'),
                     array('endDateTime',    'type', 'type' => 'datetime'),
                     array('isProcessed',    'boolean'),
@@ -100,7 +100,7 @@
          */
         public function validateIsProcessedIsSet()
         {
-            if ($this->isProcessed == null)
+            if($this->isProcessed == null)
             {
                 $this->addError('isProcessed', Yii::t('Default', 'Is Processed must be set as true or false, not null.'));
             }

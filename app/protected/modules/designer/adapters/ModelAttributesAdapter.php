@@ -170,7 +170,7 @@
                 }
                 if ($attributeForm instanceof MaxLengthAttributeForm)
                 {
-                    if ($attributeForm->maxLength != null)
+                    if($attributeForm->maxLength != null)
                     {
                         $maxLength = (int)$attributeForm->maxLength;
                     }
@@ -185,7 +185,7 @@
                 }
                 if ($attributeForm instanceof MinMaxValueAttributeForm)
                 {
-                    if ($attributeForm->minValue != null)
+                    if($attributeForm->minValue != null)
                     {
                         $minValue = (int)$attributeForm->minValue;
                     }
@@ -193,7 +193,7 @@
                     {
                         $minValue = null;
                     }
-                    if ($attributeForm->maxValue != null)
+                    if($attributeForm->maxValue != null)
                     {
                         $maxValue = (int)$attributeForm->maxValue;
                     }
@@ -201,6 +201,7 @@
                     {
                         $maxValue = null;
                     }
+
                 }
                 else
                 {

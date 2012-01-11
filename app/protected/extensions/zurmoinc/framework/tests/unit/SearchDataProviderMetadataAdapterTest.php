@@ -42,7 +42,7 @@
             //Will treat as '0'. Normally you would sanitize $searchAttributes so that this
             //would be removed before passing into the adapter.
             $searchAttributes = array(
-                'bool'       => '',
+                'bool'	 	 => '',
                 'a'          => array('a' => ''),
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
@@ -58,7 +58,7 @@
                     'value'         => (bool)1,
                 ),
                 2 => array(
-                    'attributeName'        => 'a',
+                    'attributeName'		   => 'a',
                     'relatedAttributeName' => 'a',
                     'operatorType'         => 'doesNotEqual',
                     'value'                => (bool)1,
@@ -70,7 +70,7 @@
 
             //Now test with populated as '0'
             $searchAttributes = array(
-                'bool'       => '0',
+                'bool'	 	 => '0',
                 'a'          => array('a' => '0'),
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
@@ -86,7 +86,7 @@
                     'value'         => (bool)1,
                 ),
                 2 => array(
-                    'attributeName'        => 'a',
+                    'attributeName'		   => 'a',
                     'relatedAttributeName' => 'a',
                     'operatorType'         => 'doesNotEqual',
                     'value'                => (bool)1,
@@ -98,7 +98,7 @@
 
             //Now test with populated as '1'
             $searchAttributes = array(
-                'bool'       => '1',
+                'bool'	 	 => '1',
                 'a'          => array('a' => '1'),
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
@@ -114,7 +114,7 @@
                     'value'         => (bool)1,
                 ),
                 2 => array(
-                    'attributeName'        => 'a',
+                    'attributeName'		   => 'a',
                     'relatedAttributeName' => 'a',
                     'operatorType'         => 'equals',
                     'value'                => (bool)1,

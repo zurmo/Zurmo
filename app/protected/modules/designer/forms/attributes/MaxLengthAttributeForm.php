@@ -35,7 +35,7 @@
             {
                 $maxLength = StringValidatorHelper::
                                    getMaxLengthByModelAndAttributeName($model, $attributeName);
-                if ($maxLength !== null)
+                if($maxLength !== null)
                 {
                     $this->maxLength = $maxLength;
                 }

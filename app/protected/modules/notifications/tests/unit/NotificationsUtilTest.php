@@ -39,6 +39,7 @@
             Yii::app()->emailHelper->removeAllSent();
         }
 
+
         public function teardown()
         {
             parent::setup();

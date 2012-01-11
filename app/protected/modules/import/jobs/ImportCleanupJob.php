@@ -71,11 +71,12 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
             $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
             $importModels = Import::getSubset($joinTablesAdapter, null, null, $where, null);
-            foreach ($importModels as $import)
+            foreach($importModels as $import)
             {
                 $import->delete();
             }
             return true;
         }
     }
+
 ?>

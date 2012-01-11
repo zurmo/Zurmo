@@ -95,11 +95,12 @@
 
         public function getMessageLogger()
         {
-            if ($this->messageLogger == null)
+            if($this->messageLogger == null)
             {
                 $this->messageLogger = new MessageLogger();
             }
             return $this->messageLogger;
         }
     }
+
 ?>

@@ -76,13 +76,14 @@
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }
-            catch (NotFoundException $e)
+            catch(NotFoundException $e)
             {
                 $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
                                  Yii::t('Default', 'The job {jobName} was not found to be stuck and therefore was not reset.',
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }
+
         }
 
         public function actionJobLogsModalList($type)

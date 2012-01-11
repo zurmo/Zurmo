@@ -46,7 +46,7 @@
                 $jobInProcess = JobInProcess::getByType('SomethingElse');
                 $this->fail();
             }
-            catch (NotFoundException $e)
+            catch(NotFoundException $e)
             {
                 //nothing. passes.
             }

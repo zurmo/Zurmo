@@ -66,8 +66,6 @@
             {
                 $form->setMemcacheIsNotAvailable();
             }
-            $form->setHostInfoAndScriptUrl();
-
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'install-form')
             {
                 $this->actionValidateSettings($form);
