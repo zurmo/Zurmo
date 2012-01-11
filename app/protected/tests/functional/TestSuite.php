@@ -26,6 +26,8 @@
 
     $basePath = realpath(dirname(__FILE__) . '/../../../');
 
+    require_once('../PhpUnitVersionHelper.php');
+
     if (is_file($basePath . '/protected/config/debugTest.php'))
     {
         require_once($basePath . '/protected/config/debugTest.php');
