@@ -224,6 +224,8 @@
             => 'Il file di config depbug.php non è scrivibile.',
         'The debug.php config file is writable.'
             => 'Il file di config depbug.php è scrivibile',
+        'The instance folders are present and writable.'
+            =>'I cartelle di sistema sono presenti e scrivibili.',
         'The name of the database you want to run Zurmo in.'
             => 'Il nome del database per Zurmo.',
         'The next step is to install the demo data.'
@@ -276,5 +278,9 @@
             => 'Password amministrativa di Zurmo.  Il utente è `super`.  Si può cambiare questo più tardi.',
         'Zurmo Installation'
             => 'Installazione di Zurmo',
+        '{folderPath} is missing.'
+            => '{folderPath} mancante.',
+        '{folderPath} is not writable.'
+            => '{folderPath} non è scrivibile.',
     );
 ?>

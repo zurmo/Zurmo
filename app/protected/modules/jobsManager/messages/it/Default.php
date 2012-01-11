@@ -45,6 +45,8 @@
             => 'Job terminato con errori',
         'End Date Time'
             => 'Data/ora di fina',
+        'Error Log'
+            => 'Log di Errore',
         'Every 5 minutes'
             => 'Ogni 5 minuti',
         'How often should I run each Job?'
@@ -85,6 +87,8 @@
             => 'Frequenza raccomandata',
         'Reset'
             => 'Reset',
+        'Return to Job Manager'
+            => 'Ritorna al Gestione dei jobs',
         'Scheduled jobs are stuck'
             => 'Jobs pianificati hanno fallito',
         'Script will run at most for {seconds} seconds.'

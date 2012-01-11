@@ -58,16 +58,7 @@
                     {
                         if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
                         {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
-                            if ($designerType == 'Date')
-                            {
-                                $postData[$attributeName] = DateTimeUtil::resolveValueForDateDBFormatted($value);
-                            }
-                            if ($designerType == 'DateTime' && !empty($value))
-                            {
-                                $postData[$attributeName] = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero($value);
-                            }
+                            static::resolvePostDataValueForDesignerType($postData, $model, $attributeName, $value);
                         }
                     }
                     else
@@ -84,10 +75,42 @@
                                                                          $value['firstDate']);
                             }
                         }
+                        elseif ($model->isAttribute($attributeName) &&
+                                $model->isRelation($attributeName))
+                        {
+                            foreach($value as $relatedAttributeName => $relatedAttributeValue)
+                            {
+                                if( $model->{$attributeName}->isAttribute($relatedAttributeName) &&
+                                    $model->{$attributeName}->isAttributeSafe($relatedAttributeName))
+                                {
+                                    static::resolvePostDataValueForDesignerType($postData[$attributeName],
+                                                                                $model->{$attributeName},
+                                                                                $relatedAttributeName,
+                                                                                $relatedAttributeValue);
+                                }
+                            }
+                        }
+
                     }
                 }
             }
             return $postData;
+        }
+
+        protected static function resolvePostDataValueForDesignerType(& $postData, $model, $attributeName, $value)
+        {
+            assert('$model instanceof RedBeanModel || $model instanceof ModelForm');
+            assert('is_array($postData)');
+            assert('is_string($attributeName)');
+            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+            if ($designerType == 'Date')
+            {
+                $postData[$attributeName] = DateTimeUtil::resolveValueForDateDBFormatted($value);
+            }
+            if ($designerType == 'DateTime' && !empty($value))
+            {
+                $postData[$attributeName] = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero($value);
+            }
         }
 
         /**

@@ -45,6 +45,8 @@
             => 'Réalisé avec des erreurs',
         'End Date Time'
             => 'Date/heure réalisé?',
+        'Error Log'
+            => 'Log d\'Erreurs',
         'Every 5 minutes'
             => 'Chaque 5 minutes',
         'How often should I run each Job?'
@@ -85,6 +87,8 @@
             => 'Fréquence recommandée',
         'Reset'
             => 'Relance',
+        'Return to Job Manager'
+            => 'Retour aux Tâches système',
         'Scheduled jobs are stuck'
             => 'Les tâches planifiées ont échouées.',
         'Script will run at most for {seconds} seconds.'
