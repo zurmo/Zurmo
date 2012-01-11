@@ -39,7 +39,7 @@
         {
             global $argv, $freeze;
 
-            PhpUnitVersionHelperHelper::checkVersion();
+            PhpUnitVersionHelper::checkVersion();
             $usage = "\n"                                                                                                    .
                      "  Usage: phpunit [phpunit options] TestSuite.php <All|Framework|Misc|moduleName|TestClassName> [custom options]\n" .
                      "\n"                                                                                                    .

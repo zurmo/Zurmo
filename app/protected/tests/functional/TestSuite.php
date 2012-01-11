@@ -76,7 +76,7 @@
                      "  Note:\n"                                                                                            .
                      "\n"                                                                                                   ;
 
-            PhpUnitVersionHelperHelper::checkVersion();
+            PhpUnitVersionHelper::checkVersion();
             if ($argv[0] != 'TestSuite.php')
             {
                 echo $usage;
