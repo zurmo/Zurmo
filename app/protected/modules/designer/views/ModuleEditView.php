@@ -32,6 +32,7 @@
             $this->moduleId     = $moduleId;
             $this->model        = $model;
             $this->modelId      = null;
+            //todo: pass boolean if module supports globalSearch...
         }
 
         public function isUniqueToAPage()
