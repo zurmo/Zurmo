@@ -730,7 +730,7 @@
                 }
                 $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             }
-            // Send nootification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
+            // Send notification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
             $message                    = new NotificationMessage();
             $message->textContent       = Yii::t('Default', 'The system has detected that hostInfo or scriptUrl are not setup. Please open perInstance.php config file, and setup those two parametres.' );
             $rules                      = new HostInfoAndScriptUrlNotSetupNotificationRules();
