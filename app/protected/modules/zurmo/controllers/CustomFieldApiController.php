@@ -28,30 +28,12 @@
     {
         protected function processList()
         {
-            $industryFieldData = CustomFieldData::getByName('Industries');
-            $typeFieldData = CustomFieldData::getByName('AccountTypes');
-            $typeFieldData     = CustomFieldData::getByName('AccountTypes');
-            $sourceFieldData   = CustomFieldData::getByName('LeadSources');
-            $meetingFieldData  = CustomFieldData::getByName('MeetingCategories');
-            $stageFieldData    = CustomFieldData::getByName('SalesStages');
-            $titleFieldData    = CustomFieldData::getByName('Titles');
-
-            $industryFieldData = unserialize($industryFieldData->serializedData);
-            $typeFieldData     = unserialize($typeFieldData->serializedData);
-            $sourceFieldData   = unserialize($sourceFieldData->serializedData);
-            $meetingFieldData  = unserialize($meetingFieldData->serializedData);
-            $stageFieldData    = unserialize($stageFieldData->serializedData);
-            $titleFieldData    = unserialize($titleFieldData->serializedData);
-
-            $status = ApiResponse::STATUS_SUCCESS;
-            $data = array(
-                'Industries'        => $industryFieldData,
-                'AccountTypes'      => $typeFieldData,
-                'LeadSources'       => $sourceFieldData,
-                'MeetingCategories' => $meetingFieldData,
-                'SalesStages'       => $stageFieldData,
-                'Titles'            => $titleFieldData,
-            );
+            $customFieldDataItems = CustomFieldData::getAll();
+            $data = array();
+            foreach ($customFieldDataItems as $customFieldDataItem)
+            {
+                $data[$customFieldDataItem->name] = unserialize($customFieldDataItem->serializedData);
+            }
             $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
             return $result;
         }
