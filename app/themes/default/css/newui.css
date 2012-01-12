@@ -1,0 +1,193 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+html, body{
+	background:#DDDEDE;
+}
+body{
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:12px;
+	color:#545454;
+}
+h1, h2, h3, h4, h5, h6{
+	color:#262877;
+	text-shadow: rgba( 255, 255, 255, 0.8 ) 0 1px 0;
+}
+a:link, a:hover, a:active, a:visited{
+	text-decoration:none;
+	color:#545454;
+}
+a:hover{
+	color:#262877 !important;
+}
+
+
+
+/*
+.border-radius(@radius: 4px){
+	     -o-border-radius: @radius;
+	   -moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
+	        border-radius: @radius;
+	behavior: url({@url}PIE-1.0beta5/PIE.php);
+}
+
+.box-shadow{
+	     -o-box-shadow:  1px 1px 2px 1px #cccccc;
+	   -moz-box-shadow:  1px 1px 2px 1px #cccccc;
+	-webkit-box-shadow:  1px 1px 2px 1px #cccccc;
+	        box-shadow:  1px 1px 2px 1px #cccccc;
+	behavior: url({@url}PIE-1.0beta5/PIE.php);
+}
+*/
+/*HTML5*/
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+/*CLEARFIX*/
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	height: 1%;
+}
+*:first-child + html .clearfix {
+	min-height: 1px;
+}
+
+.PageView{
+	
+}
+/*Mast Head*/
+#HeaderLinksView{
+	background: url(../images/header-bar-1.png) left top repeat-x;
+	height:38px;
+}
+
+#HeaderLinksView ul{
+	list-style: none;
+	width:902px;
+	margin:0 auto;
+}
+
+#HeaderLinksView li{
+	float:right;
+	margin-left:20px;
+}
+#HeaderLinksView li a{
+	color:#fff;
+}
+
+
+#GlobalSearchView{
+	height:40px;
+	background: url(../images/header-bar-2.png) left top repeat-x;
+	-webkit-box-shadow:  0 0 10px 2px rgba(102, 102, 102, 0.5);
+}
+#app-search{
+	width:900px;
+	margin:0 auto;
+}
+
+#globalSearchInput{
+	margin-top:7px;
+	font-style:italic;
+	color:#999;
+	text-indent:10px;
+	line-height:23px;
+	height:23px;
+	width:300px;
+	border:1px solid #d5d4d4;
+	border-left:none;
+	background: url(../images/search-bar-gradient.png) left top repeat-x;
+}
+#globalSearchInput:focus{
+	outline: 0;
+	color:#545454;
+	font-style:normal;
+}
+
+.AppContainer{
+	width:900px;
+	margin:0 auto;
+	background:#fff url(../images/content-gradient.png) left top repeat-x;
+	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
+	-webkit-border-radius: 0 0 5px 5px;
+}
+/*Left Sidebar*/
+.AppNavigation{
+	width:170px;
+	float:left;
+	background: url(../images/sidebar-gradient.png) left top repeat-x;
+	border-right:1px solid #eee;
+	border-left:1px solid #eee;
+	height:100%;
+	display:block;
+}
+.AppNavigation ul{
+	/*margin-left:15px;*/
+}
+.AppNavigation li{
+	list-style:none;
+}
+#MenuView{
+	padding:20px 5px;
+	border-bottom: #ccc;
+}
+#MenuView .parent{
+	
+}
+#MenuView .parent > ul{
+	display:none;
+}
+#MenuView .parent > a{
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight:bold;
+	font-size:12px;
+	color:#555555;
+	text-decoration:none;
+	width:160px;
+	line-height: 33px;
+	text-indent:16px;
+	display:block;
+	-webkit-border-radius: 4px;
+	text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+}
+#MenuView .parent > a:hover{
+	color:#fff !important;
+	text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
+	background:#7cb830 url(../images/main-nav-selected.png) left top no-repeat;
+}
+#RecentlyViewedView{
+	width:170px;
+	float:left;
+	background: url(../images/recently-viewed-gradient.png) left top repeat-x;
+	border-right:1px solid #eee;
+	border-left:1px solid #eee;
+	border-top:1px solid #F9F9FA;
+	height:100%;
+	display:block;
+	min-height: 500px;
+}
+/*Content*/
+.AppContent{
+	width:688px;
+	padding:20px;
+	float:right;
+}
+/*Footer*/
+#FooterView{
+	width: 900px;
+	margin:0 auto;
+}
+.performance-info{
+	width: 900px;
+	margin:0 auto;
+}
