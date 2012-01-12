@@ -36,8 +36,8 @@
         */
         public function testGetTask()
         {
-            Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -50,7 +50,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($task);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $task->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $task->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
@@ -73,12 +73,12 @@
             $tasks = Task::getByName('First Task');
             $this->assertEquals(1, count($tasks));
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/delete/' . $tasks[0]->id, 'DELETE', $headers);
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('The id specified was invalid.', $response['message']);
@@ -86,8 +86,8 @@
 
         public function testCreateTask()
         {
-            Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -105,7 +105,7 @@
             $data['completed']         = 0;
             $data['description']       = "Task description";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
@@ -151,12 +151,12 @@
 
             $tasks = Task::getByName('Check bills');
             $this->assertEquals(1, count($tasks));
-
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($tasks[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
+            $tasks[0]->forget();
 
             $updateData['completed']         = 1;
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'PUT', $headers, array('data' => $updateData));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/update/' . $tasks[0]->id, 'PUT', $headers, array('data' => $updateData));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
@@ -171,7 +171,7 @@
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
@@ -201,7 +201,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($tasks[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' , 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -239,17 +239,17 @@
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights for this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights for this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights for this action.', $response['message']);
@@ -261,17 +261,17 @@
             $saved = $notAllowedUser->save();
             $this->assertTrue($saved);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/update/' . $tasks[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/delete/' . $tasks[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
@@ -286,11 +286,11 @@
             );
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/delete/' . $tasks[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $tasks[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
         }
@@ -300,10 +300,10 @@
         */
         public function testSearchTasks()
         {
-            Yii::app()->user->userModel        = User::getByUsername('super');
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
             $anotherUser = User::getByUsername('steven');
 
-            $super = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -331,7 +331,7 @@
                 'sort' => 'name',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
@@ -343,7 +343,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
@@ -355,7 +355,7 @@
             $searchParams['pagination']['page'] = 1;
             $searchParams['search']['name'] = 'First Task';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -366,7 +366,7 @@
             $searchParams['pagination']['page'] = 1;
             $searchParams['search']['name'] = 'First Task 2';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(0, $response['data']['total']);
@@ -384,7 +384,7 @@
                 'sort' => 'name.desc',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['array']));
@@ -396,7 +396,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['array']));
@@ -417,7 +417,7 @@
             );
 
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(4, $response['data']['total']);
@@ -429,7 +429,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['array']));
@@ -449,7 +449,7 @@
             );
 
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, $response['data']['total']);
@@ -461,8 +461,8 @@
 
         public function testEditTaskWithIncompleteData()
         {
-            Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -476,7 +476,7 @@
             // Provide data without required fields.
             $data['name']         = "";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -484,7 +484,7 @@
             $id = $task->id;
             $data = array();
             $data['name']                = '';
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -492,8 +492,8 @@
 
         public function testEditTaskWIthIncorrectDataType()
         {
-            Yii::app()->user->userModel        = User::getByUsername('super');
             $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -507,7 +507,7 @@
             // Provide data with wrong type.
             $data['dueDateTime']         = "A";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(2, count($response['errors']));
@@ -515,7 +515,7 @@
             $id = $task->id;
             $data = array();
             $data['dueDateTime']         = "A";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));

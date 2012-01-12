@@ -50,7 +50,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($currencies[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
@@ -80,7 +80,7 @@
             }
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(count($currencies), count($response['data']['array']));

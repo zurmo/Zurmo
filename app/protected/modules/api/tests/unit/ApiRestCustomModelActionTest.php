@@ -121,6 +121,7 @@
             $this->assertEquals(1, count($testModels));
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($testModels[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
+            $testModels[0]->forget();
 
             $data = array('name' => 'new name 2');
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/customUpdate/?id=' . $compareData['id'], 'PUT', $headers, array('data' => $data));

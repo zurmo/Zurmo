@@ -56,7 +56,7 @@
             $this->assertTrue($industryFieldData->save());
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
@@ -94,7 +94,7 @@
             $typeFieldData->serializedData = serialize($values);
             $this->assertTrue($typeFieldData->save());
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/AccountTypes', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/read/AccountTypes', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
         }

@@ -56,7 +56,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($roles[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
 
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
@@ -87,7 +87,7 @@
             }
 
             //Test List
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(count($roles), count($response['data']['array']));

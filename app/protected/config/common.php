@@ -180,18 +180,17 @@
                     array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
                     array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
                     array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/create/',          'verb'=>'POST'),
-
                     array('api/<model>Api/<action>', 'pattern'=>'api/<model:\w+>/api/<action>/*'),
 
-                    array('<module>/api/read',   'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'GET'),
-                    array('<module>/api/list',   'pattern'=>'<module:\w+>/api/*',          'verb'=>'GET'),
-                    array('<module>/api/update', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'PUT'),
-                    array('<module>/api/delete', 'pattern'=>'<module:\w+>/api/<id:\d+>', 'verb'=>'DELETE'),
-                    array('<module>/api/create', 'pattern'=>'<module:\w+>/api/',          'verb'=>'POST'),
+                    array('<module>/api/read',   'pattern'=>'<module:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
+                    array('<module>/api/list',   'pattern'=>'<module:\w+>/api/list/*',          'verb'=>'GET'),
+                    array('<module>/api/update', 'pattern'=>'<module:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
+                    array('<module>/api/delete', 'pattern'=>'<module:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
+                    array('<module>/api/create', 'pattern'=>'<module:\w+>/api/create/',          'verb'=>'POST'),
 
-                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/<id:\d+>', 'verb'=>'GET'),
-                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/<id:\w+>', 'verb'=>'GET'),
-                    array('zurmo/<model>Api/list',   'pattern'=>'zurmo/<model:\w+>/api/*',          'verb'=>'GET'),
+                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
+                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/read/<id:\w+>', 'verb'=>'GET'),
+                    array('zurmo/<model>Api/list',   'pattern'=>'zurmo/<model:\w+>/api/list/*',          'verb'=>'GET'),
                     '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
                 )
             ),

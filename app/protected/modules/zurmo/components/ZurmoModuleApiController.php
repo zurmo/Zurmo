@@ -69,11 +69,6 @@
         public function actionList()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            //if(!isset($params['data']))
-            //{
-            //    $message = Yii::t('Default', 'Data are empty.');
-            //    throw new ApiException($message);
-            //}
             $result    =  $this->processList($params);
             Yii::app()->apiHelper->sendResponse($result);
         }
