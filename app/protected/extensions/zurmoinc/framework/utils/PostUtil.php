@@ -78,9 +78,9 @@
                         elseif ($model->isAttribute($attributeName) &&
                                 $model->isRelation($attributeName))
                         {
-                            foreach($value as $relatedAttributeName => $relatedAttributeValue)
+                            foreach ($value as $relatedAttributeName => $relatedAttributeValue)
                             {
-                                if( $model->{$attributeName}->isAttribute($relatedAttributeName) &&
+                                if ($model->{$attributeName}->isAttribute($relatedAttributeName) &&
                                     $model->{$attributeName}->isAttributeSafe($relatedAttributeName))
                                 {
                                     static::resolvePostDataValueForDesignerType($postData[$attributeName],
@@ -90,7 +90,6 @@
                                 }
                             }
                         }
-
                     }
                 }
             }

@@ -30,7 +30,6 @@
     require_once('../testRoots.php');
     require_once('../bootstrap.php');
 
-
     $freeze = true; // TODO - figure out the correct was to pass information like this into tests.
 
     class TestSuite

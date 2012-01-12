@@ -225,7 +225,7 @@
         'The debug.php config file is writable.'
             => 'Die debug.php Konfigurationsdatei ist beschreibbar.',
         'The instance folders are present and writable.'
-            =>'Die System-Dateien sind vorhanden und beschreibbar.',
+            => 'Die System-Dateien sind vorhanden und beschreibbar.',
         'The name of the database you want to run Zurmo in.'
             => 'Name der Datenbank für zurmo.',
         'The next step is to install the demo data.'
