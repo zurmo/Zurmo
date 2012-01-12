@@ -150,6 +150,9 @@
             $data['secondaryEmail']      = $secondaryEmail;
             $data['billingAddress']      = $billingAddress;
             $data['shippingAddress']     = $shippingAddress;
+            $data['explicitReadWriteModelPermissions'] = array(
+                'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP
+            );
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
