@@ -167,6 +167,7 @@
             $this->createDropDownCustomFieldByModule            ('OpportunitiesModule', 'picklist');
             $this->createIntegerCustomFieldByModule             ('OpportunitiesModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('OpportunitiesModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('OpportunitiesModule', 'tagcloud');
             $this->createPhoneCustomFieldByModule               ('OpportunitiesModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('OpportunitiesModule', 'radio');
             $this->createTextCustomFieldByModule                ('OpportunitiesModule', 'text');
@@ -289,6 +290,8 @@
                             'datetime'                          => $datetime,
                             'decimal'                           => '123',
                             'picklist'                          => array('value' => 'a'),
+                            'multiselect'                       => array('values' => array('ff', 'rr')),
+                            'tagcloud'                          => array('values' => array('x', 'z')),
                             'integer'                           => '12',
                             'phone'                             => '259-784-2169',
                             'radio'                             => array('value' => 'd'),
@@ -331,6 +334,10 @@
             $this->assertEquals($opportunity->text                       , 'This is a test Text');
             $this->assertEquals($opportunity->textarea                   , 'This is a test TextArea');
             $this->assertEquals($opportunity->url                        , 'http://wwww.abc.com');
+            $this->assertContains('ff'                                   , $opportunity->multiselect->values);
+            $this->assertContains('rr'                                   , $opportunity->multiselect->values);
+            $this->assertContains('x'                                    , $opportunity->tagcloud->values);
+            $this->assertContains('z'                                    , $opportunity->tagcloud->values);
         }
 
         /**
@@ -368,6 +375,8 @@
                                                 'checkbox'           => array('value'  =>  '1'),
                                                 'currency'           => array('value'  =>  45),
                                                 'picklist'           => array('value'  =>  'a'),
+                                                'multiselect'        => array('values' =>  'ff'),
+                                                'tagcloud'           => array('values' =>  'x'),
                                                 'radio'              => array('value'  =>  'd'),
                                                 'date__Date'         => array('type'   =>  'Today'),
                                                 'datetime__DateTime' => array('type'   =>  'Today')),
@@ -423,6 +432,8 @@
                             'date'                              => $date,
                             'datetime'                          => $datetime,
                             'picklist'                          => array('value' => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array('w', 'y')),
                             'integer'                           => '11',
                             'phone'                             => '259-784-2069',
                             'radio'                             => array('value' => 'e'),
@@ -467,6 +478,10 @@
             $this->assertEquals($opportunity->url                        , 'http://wwww.abc-edit.com');
             $this->assertEquals($opportunity->date                       , $dateAssert);
             $this->assertEquals($opportunity->datetime                   , $datetimeAssert);
+            $this->assertContains('gg'                                   , $opportunity->multiselect->values);
+            $this->assertContains('hh'                                   , $opportunity->multiselect->values);
+            $this->assertContains('w'                                    , $opportunity->tagcloud->values);
+            $this->assertContains('y'                                    , $opportunity->tagcloud->values);
         }
 
         /**

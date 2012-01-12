@@ -112,6 +112,13 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                         array(
@@ -250,6 +257,13 @@
                                     array(
                                         array(
                                             'element' => 'multiselect',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'tagcloud',
                                         ),
                                     )
                                 ),
@@ -412,6 +426,13 @@
                                     array(
                                         array(
                                             'element' => 'multiselect',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'tagcloud',
                                         ),
                                     )
                                 ),

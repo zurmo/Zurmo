@@ -159,6 +159,7 @@
             $this->createDropDownCustomFieldByModule            ('MeetingsModule', 'picklist');
             $this->createIntegerCustomFieldByModule             ('MeetingsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('MeetingsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('MeetingsModule', 'tagcloud');
             $this->createPhoneCustomFieldByModule               ('MeetingsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('MeetingsModule', 'radio');
             $this->createTextCustomFieldByModule                ('MeetingsModule', 'text');
@@ -270,6 +271,8 @@
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
                                             'picklist'                          => array('value' => 'a'),
+                                            'multiselect'                       => array('values' => array('ff', 'rr')),
+                                            'tagcloud'                          => array('values' => array('x', 'z')),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
                                             'radio'                             => array('value' => 'd'),
@@ -313,6 +316,11 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc.com');
+            $this->assertContains('ff'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('rr'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('x'                                         , $meeting[0]->tagcloud->values);
+            $this->assertContains('z'                                         , $meeting[0]->tagcloud->values);
+            $this->assertContains('z'                                         , $meeting[0]->tagcloud->values);
         }
 
         /**
@@ -360,7 +368,9 @@
                                 'date'                              => $date,
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
-                                'picklist'                          => array('value' => 'b'),
+                                'picklist'                          => array('value'  => 'b'),
+                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          => array('values' =>  array('w', 'y')),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -405,6 +415,10 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('w'                                         , $meeting[0]->tagcloud->values);
+            $this->assertContains('y'                                         , $meeting[0]->tagcloud->values);
         }
 
         /**

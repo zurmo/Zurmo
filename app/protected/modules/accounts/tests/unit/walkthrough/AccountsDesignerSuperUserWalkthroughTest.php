@@ -377,7 +377,6 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
-
             $this->assertContains('ff'                                      , $account[0]->multiselect->values);
             $this->assertContains('rr'                                      , $account[0]->multiselect->values);
             $this->assertContains('x'                                       , $account[0]->tagcloud->values);

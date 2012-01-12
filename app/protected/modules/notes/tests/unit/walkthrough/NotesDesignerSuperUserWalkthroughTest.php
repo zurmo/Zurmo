@@ -152,6 +152,7 @@
             $this->createDropDownCustomFieldByModule            ('NotesModule', 'picklist');
             $this->createIntegerCustomFieldByModule             ('NotesModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('NotesModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('NotesModule', 'tagcloud');
             $this->createPhoneCustomFieldByModule               ('NotesModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('NotesModule', 'radio');
             $this->createTextCustomFieldByModule                ('NotesModule', 'text');
@@ -242,6 +243,8 @@
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
                                             'picklist'                          => array('value' => 'a'),
+                                            'multiselect'                       => array('values' => array('ff', 'rr')),
+                                            'tagcloud'                          => array('values' => array('x', 'z')),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
                                             'radio'                             => array('value' => 'd'),
@@ -282,6 +285,10 @@
             $this->assertEquals($note[0]->text                             , 'This is a test Text');
             $this->assertEquals($note[0]->textarea                         , 'This is a test TextArea');
             $this->assertEquals($note[0]->url                              , 'http://wwww.abc.com');
+            $this->assertContains('ff'                                     , $note[0]->multiselect->values);
+            $this->assertContains('rr'                                     , $note[0]->multiselect->values);
+            $this->assertContains('x'                                      , $note[0]->tagcloud->values);
+            $this->assertContains('z'                                      , $note[0]->tagcloud->values);
         }
 
         /**
@@ -323,6 +330,8 @@
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
                                 'picklist'                          => array('value' => 'b'),
+                                'multiselect'                       =>  array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          =>  array('values' =>  array('w', 'y')),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -363,6 +372,10 @@
             $this->assertEquals($note[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($note[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($note[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertContains('gg'                                     , $note[0]->multiselect->values);
+            $this->assertContains('hh'                                     , $note[0]->multiselect->values);
+            $this->assertContains('w'                                      , $note[0]->tagcloud->values);
+            $this->assertContains('y'                                      , $note[0]->tagcloud->values);
         }
 
         /**
