@@ -79,8 +79,8 @@
             }
             $content                 = $this->renderGlobalSearchScopingInputContent();
             $hintMessage             = Yii::t('Default', 'Search by name, phone, or e-mail');
-            $htmlOptions             = array('class'   => 'global-search global-search-hint',
-                                             'onfocus' => '$(this).removeClass("global-search-hint"); $(this).val("");',
+            $htmlOptions             = array('class'   => 'global-search input-hint',
+                                             'onfocus' => '$(this).removeClass("input-hint"); $(this).val("");',
                                              'onblur'  => '$(this).val("")');
             $cClipWidget             = new CClipWidget();
             $cClipWidget->beginClip('GlobalSearchElement');

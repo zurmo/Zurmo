@@ -25,47 +25,42 @@
      ********************************************************************************/
 
     /**
-     * Display the text area input box.
+     * Element to render an input text box and scoping multiple-select checkbox interface.  A mixed attribute
+     * search input allows a user to search multiple fields at the same time in a module.  This is similar to the
+     * global search mechanism but only for a specific module.
      */
-    class TextAreaElement extends Element
+    class AnyMixedAttributesSearchElement extends TextElement
     {
         /**
-         * Override from parent class in order to
-         * accomodate the 'wide' param option.
-         * @return The element's content.
+         * (non-PHPdoc)
+         * @see Element::getHtmlOptions()
          */
-        protected function renderEditable()
+        protected function getHtmlOptions()
         {
-            $data = array();
-            $data['label'] = $this->renderLabel();
-            $data['content'] = $this->renderControlEditable();
-            $data['error'] = $this->renderError();
-            echo 'sing'.ArrayUtil::getArrayValue($this->params, 'wide'). "\n";
-            $data['colspan'] = ArrayUtil::getArrayValue($this->params, 'wide') ? 3 : 1;
-            return $this->resolveContentTemplate($this->editableTemplate, $data);
+            $htmlOptions             = array('class'   => 'input-hint',
+                                             'onfocus' => '$(this).removeClass("input-hint"); $(this).val("");',
+                                             'onblur'  => '$(this).val("")',
+                                             'size'	   => 80,
+                                             'value'   => Yii::t('Default', 'Start typing to search'));
+            return array_merge(parent::getHtmlOptions(), $htmlOptions);
         }
 
         /**
-         * Render A text area with X rows and Y columns.
-         */
-        protected function renderControlEditable()
-        {
-            assert('empty($this->model->{$this->attribute}) || is_string($this->model->{$this->attribute}) || is_integer($this->model->{$this->attribute})');
-            $htmlOptions             = array();
-            $htmlOptions['id']       = $this->getEditableInputId();
-            $htmlOptions['name']     = $this->getEditableInputName();
-            $htmlOptions['rows']     = 6;
-            $htmlOptions['cols']     = 50;
-            return $this->form->textArea($this->model, $this->attribute, $htmlOptions);
-        }
-
-        /**
-         * Render the text area as a non-editable display
-         * @return The element's content.
+         * (non-PHPdoc)
+         * @see TextElement::renderControlNonEditable()
          */
         protected function renderControlNonEditable()
         {
-            return Yii::app()->format->ntext($this->model->{$this->attribute});
+            throw new NotSupportedException();
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see Element::renderLabel()
+         */
+        protected function renderLabel()
+        {
+            return null;
         }
     }
 ?>

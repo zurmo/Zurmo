@@ -38,9 +38,9 @@
          */
         public static function makeStandardViewForCurrentUser(CController $controller, View $containedView)
         {
-            $aVerticalGridView   = new GridView(2, 1);
+            $aVerticalGridView   = new GridView(1, 1);
             $aVerticalGridView->setView(static::makeMenuView(), 0, 0);
-            $aVerticalGridView->setView(static::makeMenuView(), 1, 0); //change to RecentlyViewed...
+            //$aVerticalGridView->setView(static::makeMenuView(), 1, 0); //change to RecentlyViewed...
 
             $horizontalGridView = new GridView(1, 2);
             $horizontalGridView->setView($aVerticalGridView, 0, 0);

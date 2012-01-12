@@ -178,9 +178,10 @@
          */
         protected function renderFormLayout($form = null)
         {
-            $metadata = self::getMetadata();
-            $content  = '<table>';
-            $content .= TableUtil::getColGroupContent($this->getColumnCount($metadata['global']));
+            $metadata       = self::getMetadata();
+            $maxCellsPerRow = $this->getMaxCellsPerRow();
+            $content        = '<table>';
+            $content       .= TableUtil::getColGroupContent($this->getColumnCount($metadata['global']));
             assert('count($metadata["global"]["panels"]) == 2');
             foreach ($metadata['global']['panels'] as $key => $panel)
             {
@@ -199,6 +200,10 @@
                         {
                             foreach ($cell['elements'] as $elementInformation)
                             {
+                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow)
+                                {
+                                    $elementInformation['wide'] = true;
+                                }
                                 $elementclassname = $elementInformation['type'] . 'Element';
                                 $element = new $elementclassname($this->model, $elementInformation['attributeName'], $form, array_slice($elementInformation, 2));
                                 $content .= $element->render();
@@ -316,6 +321,14 @@
         protected function getSearchFormId()
         {
             return 'search-form' . $this->gridIdSuffix;
+        }
+
+        protected function getMaxCellsPerRow()
+        {
+            $designerRulesType = self::getDesignerRulesType();
+            $designerRulesClassName = $designerRulesType . 'DesignerRules';
+            $designerRules = new $designerRulesClassName();
+            return $designerRules->maxCellsPerRow();
         }
     }
 ?>

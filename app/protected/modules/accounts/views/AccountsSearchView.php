@@ -38,12 +38,8 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
                                             ),
                                         ),
                                     )
