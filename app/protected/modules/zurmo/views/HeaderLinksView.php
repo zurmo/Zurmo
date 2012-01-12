@@ -41,6 +41,7 @@
 
         protected function renderContent()
         {
+        	//TODO We need to change the order of the links
             foreach ($this->menuMetadata as $menuItem)
             {
                 $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
@@ -48,7 +49,7 @@
 
             $content  = '<ul>';
             $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
+            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <strong>' . Yii::app()->user->firstName . '</strong></li>';
             foreach ($links as $label => $link)
             {
                 $content .= "<li><a href=\"$link\">$label</a></li>";
