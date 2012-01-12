@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>Functesttagcloudfield</td>
+	<td>functesttagcloudfield_${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,17 +69,17 @@
 <tr>
 	<td>type</td>
 	<td>TagCloudAttributeForm_attributeName</td>
-	<td>functesttagcloudfield${randomSuffix}</td>
+	<td>functesttagcloudfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>TagCloudAttributeForm_attributeLabels_en</td>
-	<td>functesttagcloudfield${randomSuffix}</td>
+	<td>functesttagcloudfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>customFieldDataData_AddInput</td>
-	<td>testm1</td>
+	<td>test1</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -89,7 +89,7 @@
 <tr>
 	<td>type</td>
 	<td>customFieldDataData_AddInput</td>
-	<td>testm2</td>
+	<td>test2</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -99,7 +99,7 @@
 <tr>
 	<td>type</td>
 	<td>customFieldDataData_AddInput</td>
-	<td>testm3</td>
+	<td>test3</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -109,7 +109,37 @@
 <tr>
 	<td>select</td>
 	<td>TagCloudAttributeForm_defaultValueOrder</td>
-	<td>label=testm3</td>
+	<td>label=test3</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>TagCloudAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>TagCloudAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isAudited</td>
+	<td>on</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -119,7 +149,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: functesttagcloudfield${randomSuffix}</td>
+	<td>exact:Field: functesttagcloudfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -128,23 +158,128 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functesttagcloudfield${randomSuffix}</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//*[@id=&quot;TagCloudAttributeForm_isRequired&quot;]</td>
-	<td>off</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>functesttagcloudfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[7]/td</td>
-	<td>testm1\ntestm2<br /> testm3</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>functesttagcloudfield_${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[4]/td</td>
-	<td>testm3</td>
+	<td>test3</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>compareText</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>test1<br />test2<br />test3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+	<td>exact:Edit Field: functesttagcloudfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>customFieldDataData_AddInput</td>
+	<td>test4</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>TagCloudAttributeForm_defaultValueOrder</td>
+	<td>label=test4</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isAudited</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>TagCloudAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>TagCloudAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>TagCloudAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: functesttagcloudfield_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>test4</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>compareText</td>
+	<td>//div[@id='TagCloudAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>test1<br />test2<br />test3<br />test4</td>
 </tr>
 </tbody></table>
 </body>
