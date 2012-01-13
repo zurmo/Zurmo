@@ -107,7 +107,7 @@
         'Freezing database.'
             => 'Freezing la base de données.',
         'Host name where Zurmo will be installed.'
-            =>'Le nom de l\'hôte où Zurmo va être installé.',
+            => 'Le nom de l\'hôte où Zurmo va être installé.',
         'In all likelihood, these items were supplied to you by your Web Host. ' .
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -237,9 +237,9 @@
         'The perInstance.php config file is writable.'
             => 'Le fichier de configuration perInstance.php est inscriptible.',
         'The relative path where Zurmo will be installed.'
-            =>'Le chemin d\'accès relatif où Zurmo va être installé.',
+            => 'Le chemin d\'accès relatif où Zurmo va être installé.',
         'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
-            =>'Le système a détecté que hostInfo et/ou scriptUrl ne sont pas configurés. Veuillez ouvrir le fichier config perInstance.php et configurer les paramètres.',
+            => 'Le système a détecté que hostInfo et/ou scriptUrl ne sont pas configurés. Veuillez ouvrir le fichier config perInstance.php et configurer les paramètres.',
         'There was a problem creating the database Error code:'
             => 'Il y a eu un problème lors de la création de la base de données d\'erreurs',
         'There was a problem creating the user Error code:'
