@@ -32,7 +32,7 @@
         public static function saveModelFromPost($postData, $model, & $savedSucessfully, & $modelToStringValue)
         {
             $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
-                                                 $model, $readyToUsePostData);
+                                                 $model, $postData);
             return static::saveModelFromSanitizedData($sanitizedPostData, $model, $savedSucessfully, $modelToStringValue);
         }
 
