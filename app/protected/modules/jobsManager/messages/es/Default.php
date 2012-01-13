@@ -49,6 +49,8 @@
             => 'Registro de errores',
         'Every 5 minutes'
             => 'Cada 5 minutos',
+        'hostInfo or scriptUrl not set up'
+            => '??',
         'How often should I run each Job?'
             => 'Frecuencia de las tareas:recomendaciones',
         'How to Setup the Jobs to Run Automatically'

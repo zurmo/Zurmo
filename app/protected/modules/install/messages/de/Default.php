@@ -107,6 +107,8 @@
             => 'Demo-Daten fertig geladen',
         'Freezing database.'
             => 'Freezing Datenbank',
+        'Host name where Zurmo will be installed.'
+            =>'??',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -234,6 +236,10 @@
             => 'Die perInstance.php config-Datei ist nicht beschreibbar.',
         'The perInstance.php config file is writable.'
             => 'Die perInstance.php config-Datei ist beschreibbar.',
+        'The relative path where Zurmo will be installed.'
+            =>'??',
+        'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
+            =>'??',
         'There was a problem creating the database Error code:'
             => 'Es gab ein Problem beim Erstellen der Datenbank Fehlercode:',
         'There was a problem creating the user Error code:'

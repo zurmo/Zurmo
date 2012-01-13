@@ -49,6 +49,8 @@
             => 'Fehlerlog',
         'Every 5 minutes'
             => 'Jeder 5 Minuten',
+        'hostInfo or scriptUrl not set up'
+            => '??',
         'How often should I run each Job?'
             => 'Häufigkeit der Aufgaben: Empfehlungen',
         'How to Setup the Jobs to Run Automatically'

@@ -243,7 +243,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'hostInfo', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Host name where Zurmo will be installed on.'))
+                                                      'description' => Yii::t('Default', 'Host name where Zurmo will be installed.'))
                                             ),
                                         ),
                                     )

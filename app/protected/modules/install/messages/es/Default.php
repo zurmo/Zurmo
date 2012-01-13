@@ -106,6 +106,8 @@
             => 'Terminado de cargar datos de demostración.',
         'Freezing database.'
             => 'Freezing base de datos',
+        'Host name where Zurmo will be installed.'
+            =>'??',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -234,6 +236,10 @@
             => 'No se puede escribir ll archivo de configuración perInstance.php.',
         'The perInstance.php config file is writable.'
             => 'Se puede escribir ll archivo de configuración perInstance.php.',
+        'The relative path where Zurmo will be installed.'
+            =>'??',
+        'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
+            =>'??',
         'There was a problem creating the database Error code:'
             => 'Hubo un problema al crear la base de datos de errores',
         'There was a problem creating the user Error code:'

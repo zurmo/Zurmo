@@ -49,6 +49,8 @@
             => 'Log di Errore',
         'Every 5 minutes'
             => 'Ogni 5 minuti',
+        'hostInfo or scriptUrl not set up'
+            => 'hostInfo o scriptUrl non é configurato',
         'How often should I run each Job?'
             => 'Frequenza di esecuzione dei jobs',
         'How to Setup the Jobs to Run Automatically'
