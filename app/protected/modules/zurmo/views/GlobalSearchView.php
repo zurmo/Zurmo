@@ -100,9 +100,9 @@
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['JuiMultiSelect'];
             // Begin Not Coding Standard
-            $script = '$("#globalSearchScope").multiselect("getButton").width("25");
+            $script = '/*$("#globalSearchScope").multiselect("getButton").width("25");
                        $("#globalSearchScope").multiselect("getButton").html(\'<span>' .
-                            CHtml::image($imagePath, 'Search Icon') . '</span>\');
+                            CHtml::image($imagePath, 'Search Icon') . '</span>\');*/
                        $("#globalSearchScope").bind("multiselectclick", function(event, ui){
                             if($("#globalSearchScope").multiselect("widget").find(":checkbox:checked").length == 0)
                             {

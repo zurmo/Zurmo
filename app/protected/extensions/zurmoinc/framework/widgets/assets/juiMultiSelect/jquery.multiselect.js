@@ -49,8 +49,8 @@ $.widget("ech.multiselect", {
         this._isOpen = false; // assume no
 
         var
-            button = (this.button = $('<button type="button"><span class="ui-icon ui-icon-triangle-2-n-s"></span></button>'))
-                .addClass('ui-multiselect ui-widget ui-state-default ui-corner-all')
+            button = (this.button = $('<button type="button" id="global-search-loopa"></button>'))
+                //.addClass('ui-multiselect ui-widget ui-state-default ui-corner-all')
                 .addClass( o.classes )
                 .attr({ 'title':el.attr('title'), 'aria-haspopup':true, 'tabIndex':el.attr('tabIndex') })
                 .insertAfter( el ),
@@ -412,7 +412,7 @@ $.widget("ech.multiselect", {
         }
 
         // set widths
-        this.button.width( width );
+        //this.button.width( width );
     },
 
     // set menu width
@@ -424,7 +424,7 @@ $.widget("ech.multiselect", {
                 parseInt(m.css('border-right-width'),10)-
                 parseInt(m.css('border-left-width'),10);
 
-        m.width( width || this.button.outerWidth() );
+       // m.width( width || this.button.outerWidth() );
     },
 
     // move up or down within the menu
@@ -528,7 +528,7 @@ $.widget("ech.multiselect", {
         var $container = menu.find('ul:last'),
             effect = o.show,
             pos = button.position();
-
+		
         // figure out opening effects/speeds
         if( $.isArray(o.show) ){
             effect = o.show[0];
@@ -646,12 +646,12 @@ $.widget("ech.multiselect", {
                 menu.find('a.ui-multiselect-none span').eq(-1).text(value);
                 break;
             case 'height':
-                menu.find('ul:last').height( parseInt(value,10) );
+               // menu.find('ul:last').height( parseInt(value,10) );
                 break;
             case 'minWidth':
                 this.options[ key ] = parseInt(value,10);
-                this._setButtonWidth();
-                this._setMenuWidth();
+                //this._setButtonWidth();
+                //this._setMenuWidth();
                 break;
             case 'selectedText':
             case 'selectedList':

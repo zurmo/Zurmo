@@ -8,30 +8,30 @@
 }
 /* remove indents on ul/li */
 .juiportlet-widget-column1 {
-	margin: 0 20px 0 0;
-	padding: 0;
-	list-style: none;
-}
-.juiportlet-widget-column2 {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
+.juiportlet-widget-column2 {
+	padding: 0;
+	padding: 0;
+	list-style: none;
+}
 .juiportlet-column-split-even-2 {
-	/*width: 48%;*/
-	width:334px;
+	width: 50%;
+	/*width:334px;*/
 }
 .juiportlet-column-no-split {
-	width: 99%;
+	width: 100%;
 }
 .juiportlet-column-split-left-75 {
-	width: 74%;
+	width: 75%;
 }
 .juiportlet-column-split-right-25 {
-	width: 24%;
+	width: 25%;
 }
 .juiportlet-columns .juiportlet-widget {
-	margin: 20px 0px 0px 0px;
+	margin: 0px 20px 20px 0px;
 	padding: 0;
 	/*
 	-moz-border-radius: 4px;
@@ -50,7 +50,7 @@
 	width: 100%;
 	height: 40px;
 	line-height: 40px;
-	background: url(../images/portlet-header-gradient.png) left top repeat-x;
+	background: url(../images/portlet-header-gradient.png) left 1px repeat-x;
 }
 .juiportlet-columns .juiportlet-widget .juiportlet-widget-head h3 {
 	
@@ -60,57 +60,66 @@
 	/*
 	 background: #333 url(../images/juiportlets/widget-content-bg.png) repeat-x;
 	 */
-	padding: 2px;/*modified from 5px*/
+	/*padding: 0;modified from 5px*/
 	/*color: #DDD;*/
 	/*
 	-moz-border-radius-bottomleft: 2px;
 	-moz-border-radius-bottomright: 2px;
 	-webkit-border-bottom-left-radius: 2px;
 	-webkit-border-bottom-right-radius: 2px;
-	*/
+	
 	line-height: 1.2em;
 	overflow: hidden;
+	*/
 }
 /* End Columns section */
 
 .juiportlet-widget-head{
 	border-bottom:1px solid #CCC;
 	background:#fff;
+	cursor: move;
 }
 
 .juiportlet-widget-head a.remove {
 	float: right;
 	display: inline;
-	background: url(../images/juiportlets/buttons.gif) no-repeat -24px 0;
-	width: 14px;
-	height: 14px;
-	margin: 8px 4px 8px 0;
+	background: url(../images/portlet-trash.png) 0 50% no-repeat;
+	width: 13px;
+	height: 40px;
+	/*margin: 8px 4px 8px 0;*/
+	margin-right:8px;
 	text-indent: -9999em;
 	outline: none;
 }
 .juiportlet-widget-head a.edit {
 	float: right;
 	display: inline;
-	background: url(../images/juiportlets/buttons.gif) no-repeat;
-	width: 24px;
-	height: 14px;
+	background: url(../images/portlet-gear.png) 0 50% no-repeat;
+	width: 14px;
+	height: 40px;
 	text-indent: -9999em;
-	margin: 8px 4px 8px 4px;
+	margin-right:8px;
+	/*margin: 8px 4px 8px 4px;*/
 	outline: none;
 }
 .juiportlet-widget-head a.collapse {
 	float: left;
 	display: inline;
-	background: url(../images/juiportlets/buttons.gif) no-repeat -52px 0;
+	background: url(../images/portlet-minimize.png) 14px 50% no-repeat;
 	width: 14px;
-	height: 14px;
+	height: 40px;
 	text-indent: -9999em;
-	margin: 8px 0 8px 4px;
+	margin:0 8px;
 	outline: none;
 }
 .juiportlet-widget-placeholder {
 	border: 2px dashed #262877;
+	/*background: url(../images/gif.gif) 50% 50% no-repeat;*/
 }
+.juiportlet-widget-placeholder {
+	margin: 20px 20px 20px 2px;
+}
+/*
 .juiportlet-widget-column1 .juiportlet-widget-placeholder {
 	margin: 30px 2px 0 2px;
 }
@@ -122,4 +131,63 @@
 }
 .juiportlet-widget-column4 .juiportlet-widget-placeholder {
 	margin: 30px 2px 0 2px;
+}*/
+
+.juiportlet-widget-content{
+	padding:10px 0;
 }
+.juiportlet-widget-content li{
+	padding:10px 15px;
+	border-bottom:1px solid #dfdfdf;
+	list-style: none;
+}
+.juiportlet-widget-content li:last-child{
+	border-bottom:none;
+	padding-bottom:0;
+}
+.juiportlet-widget-content .summary,
+.juiportlet-widget-content .rssHeader{
+	padding:0 15px 10px 15px;
+}
+
+.juiportlet-widget-content table.items{
+	width:100%;
+	border-right:none;
+	border-left:none;
+	border-bottom:none;
+}
+.juiportlet-widget-content table.items tbody tr:last-child td{
+	border-bottom:none;
+	padding-bottom:0;
+}
+/*.juiportlet-widget-content table.items tr{
+}
+.juiportlet-widget-content table.items td,
+.juiportlet-widget-content table.items th{
+	border-right:none;
+	border-left:none;
+	padding:10px 0;
+}
+.juiportlet-widget-content table.items tbody,
+.juiportlet-widget-content table.items tbody tr:last-child,
+.juiportlet-widget-content table.items tbody tr:last-child td{
+	border-bottom: none;
+}
+
+.juiportlet-widget-content table.items thead tr th:first-child,
+.juiportlet-widget-content table.items tbody tr td:first-child{
+	padding-left:15px;
+}
+.juiportlet-widget-content table.items thead tr th:last-child,
+.juiportlet-widget-content table.items tbody tr td:last-child{
+	padding-right:15px;
+}
+.juiportlet-widget-content table.items th{
+	font-weight:bold !important;
+	height:35px;
+	line-height: 35px;
+	background: url(../images/table-items-header.png) left top repeat-x;
+	padding:0;
+}
+*/
+

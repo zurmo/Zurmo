@@ -8,7 +8,7 @@ html, body{
 }
 body{
 	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size:12px;
+	font-size:11px;
 	color:#545454;
 }
 h1, h2, h3, h4, h5, h6{
@@ -61,7 +61,8 @@ footer, header, hgroup, menu, nav, section {
 *:first-child + html .clearfix {
 	min-height: 1px;
 }
-
+.ZurmoDefaultPageView,
+.ZurmoPageView,
 .PageView{
 	
 }
@@ -73,8 +74,7 @@ footer, header, hgroup, menu, nav, section {
 
 #HeaderLinksView ul{
 	list-style: none;
-	width:902px;
-	margin:0 auto;
+	margin:0 40px 0 40px;
 }
 
 #HeaderLinksView li{
@@ -92,12 +92,10 @@ footer, header, hgroup, menu, nav, section {
 	-webkit-box-shadow:  0 0 10px 2px rgba(102, 102, 102, 0.5);
 }
 #app-search{
-	width:900px;
-	margin:0 auto;
+	margin:0 40px 0 40px;
 }
 
 #globalSearchInput{
-	margin-top:7px;
 	font-style:italic;
 	color:#999;
 	text-indent:10px;
@@ -106,6 +104,7 @@ footer, header, hgroup, menu, nav, section {
 	width:300px;
 	border:1px solid #d5d4d4;
 	border-left:none;
+	margin:7px 0 0 -3px;
 	background: url(../images/search-bar-gradient.png) left top repeat-x;
 }
 #globalSearchInput:focus{
@@ -113,10 +112,26 @@ footer, header, hgroup, menu, nav, section {
 	color:#545454;
 	font-style:normal;
 }
+#global-search-loopa{
+	padding:0;
+	margin:0;
+	position:relative;
+	top:8px;
+	height:25px;
+	line-height:23px;
+	width:40px;
+	border:1px solid #d5d4d4;
+	border-right:none;
+	background: url(../images/search-bar-loopa.png) left top no-repeat;
+}
+#globalSearchInput .ui-multiselect-menu{
+	min-width: 225px !important;
+}
 
 .AppContainer{
-	width:900px;
-	margin:0 auto;
+	min-width:900px;
+	height:100%;
+	margin:0 40px 0 40px;
 	background:#fff url(../images/content-gradient.png) left top repeat-x;
 	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
 	-webkit-border-radius: 0 0 5px 5px;
@@ -174,20 +189,82 @@ footer, header, hgroup, menu, nav, section {
 	border-top:1px solid #F9F9FA;
 	height:100%;
 	display:block;
-	min-height: 500px;
 }
 /*Content*/
 .AppContent{
-	width:688px;
-	padding:20px;
-	float:right;
+	padding:20px 20px 20px 20px;
+	margin-left:172px;
+	margin-bottom:20px;
+}
+#HomePageView .AppContent{ /*dashboard*/
+	padding-right:0;
 }
 /*Footer*/
 #FooterView{
-	width: 900px;
-	margin:0 auto;
+	margin:20px 40px;
 }
 .performance-info{
 	width: 900px;
 	margin:0 auto;
 }
+
+/*general table style*/
+table {/* tables still need 'cellspacing="0"' in the markup */
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	font-weight: normal;
+	text-align: left;
+}
+table.items{
+	border: 1px solid #DFDFDF;
+	border-collapse: collapse;
+	border-spacing: 1px;
+}
+table.items th, table.items td{
+	border: 1px solid #DFDFDF;
+	vertical-align:middle;
+	padding:2px;
+}
+table.items{
+	width:100%;
+	/*border-right:none;
+	border-left:none;
+	border-bottom:none;*/
+}
+table.items tr{}
+
+table.items td,
+table.items th{
+	border-right:none;
+	border-left:none;
+	padding:10px 0;
+}
+table.items tbody,
+table.items tbody tr:last-child,
+table.items tbody tr:last-child td{
+	border-bottom: none;
+}
+/*
+table.items tbody tr:last-child td{
+	border-bottom:none;
+	padding-bottom:0;
+}
+*/
+table.items thead tr th:first-child,
+table.items tbody tr td:first-child{
+	padding-left:15px;
+}
+table.items thead tr th:last-child,
+table.items tbody tr td:last-child{
+	padding-right:15px;
+}
+table.items th{
+	font-weight:bold !important;
+	height:35px;
+	line-height: 35px;
+	background: url(../images/table-items-header.png) left top repeat-x;
+	padding:0;
+}
+
