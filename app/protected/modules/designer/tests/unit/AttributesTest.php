@@ -870,6 +870,49 @@
         /**
          * @depends testSetAndGetTagCloudAttribute
          */
+        public function testSetAndGetCalculatedNumberAttribute()
+        {
+            $attributeName = 'testCalculatedValue';
+            $attributeForm = new CalculatedNumberAttributeForm();
+            $attributeForm->attributeName    = $attributeName;
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Calculated Value 2 de',
+                'en' => 'Test Calculated Value 2 en',
+                'es' => 'Test Calculated Value 2 es',
+                'fr' => 'Test Calculated Value 2 fr',
+                'it' => 'Test Calculated Value 2 it',
+            );
+            $attributeForm->formula          = 'testCurrency2 + testDecimal2';
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
+            $this->assertEquals('CalculatedNumber', $attributeForm->getAttributeTypeName());
+            $this->assertEquals($attributeName,     $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Calculated Value 2 de',
+                'en' => 'Test Calculated Value 2 en',
+                'es' => 'Test Calculated Value 2 es',
+                'fr' => 'Test Calculated Value 2 fr',
+                'it' => 'Test Calculated Value 2 it',
+            );
+            $this->assertEquals($compareAttributeLabels,        $attributeForm->attributeLabels);
+            $this->assertEquals('testCurrency2 + testDecimal2', $attributeForm->formula);
+        }
+
+        /**
+         * @depends testSetAndGetCalculatedNumberAttribute
+         */
         public function testSetAndGetPhoneAttribute()
         {
             $this->setAndGetPhoneAttribute('testPhone2', true);
@@ -1313,6 +1356,12 @@
             $this->assertEquals('song2',                     $account->playMyFavoriteSong->value);
             $this->assertContains('Writing',                 $account->testHobbies->values);
             $this->assertContains('French',                  $account->testLanguages->values);
+
+            $metadata              = CalculatedDerivedAttributeMetadata::
+                                     getByNameAndModelClassName('testCalculatedValue', 'Account');
+            $testCalculatedValue   = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account);
+
+            $this->assertEquals(774.56,                      (double)$testCalculatedValue);
 
             //Switch values around to cover for any default value pollution on the assertions above.
             $account->testCheckBox2              = 1;
