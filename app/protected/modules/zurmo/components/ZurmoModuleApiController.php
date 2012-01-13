@@ -217,16 +217,26 @@
                                     $stateMetadataAdapterClassName
                                 );
 
+                if (isset($filterParams['pagination']['page']) && intval($filterParams['pagination']['page']) > 0)
+                {
+                    $currentPage = intval($filterParams['pagination']['page']);
+                }
+                else
+                {
+                    $currentPage = 1;
+                }
+
                 $totalItems = $dataProvider->getTotalItemCount();
                 $data = array();
-                $data['total'] = $totalItems;
+                $data['totalCount'] = $totalItems;
+                $data['currentPage'] = $currentPage;
                 if ($totalItems > 0)
                 {
                     $formattedData = $dataProvider->getData();
                     foreach ($formattedData as $model)
                     {
                         $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($model);
-                        $data['array'][] = $redBeanModelToApiDataUtil->getData();
+                        $data['items'][] = $redBeanModelToApiDataUtil->getData();
                     }
                     $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
                 }

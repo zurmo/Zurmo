@@ -213,8 +213,10 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']['array']));
-            $this->assertEquals(array($compareData), $response['data']['array']);
+            $this->assertEquals(1, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals(array($compareData), $response['data']['items']);
         }
 
         /**
@@ -343,11 +345,12 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Fifth Meeting', $response['data']['array'][0]['name']);
-            $this->assertEquals('First Meeting', $response['data']['array'][1]['name']);
-            $this->assertEquals('Forth Meeting', $response['data']['array'][2]['name']);
+            $this->assertEquals(3, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Fifth Meeting', $response['data']['items'][0]['name']);
+            $this->assertEquals('First Meeting', $response['data']['items'][1]['name']);
+            $this->assertEquals('Forth Meeting', $response['data']['items'][2]['name']);
 
             // Second page
             $searchParams['pagination']['page'] = 2;
@@ -355,10 +358,11 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(2, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Second Meeting', $response['data']['array'][0]['name']);
-            $this->assertEquals('Third Meeting', $response['data']['array'][1]['name']);
+            $this->assertEquals(2, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(2, $response['data']['currentPage']);
+            $this->assertEquals('Second Meeting', $response['data']['items'][0]['name']);
+            $this->assertEquals('Third Meeting', $response['data']['items'][1]['name']);
 
             // Search by name
             $searchParams['pagination']['page'] = 1;
@@ -367,9 +371,10 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']['array']));
-            $this->assertEquals(1, $response['data']['total']);
-            $this->assertEquals('First Meeting', $response['data']['array'][0]['name']);
+            $this->assertEquals(1, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('First Meeting', $response['data']['items'][0]['name']);
 
             // No results
             $searchParams['pagination']['page'] = 1;
@@ -378,8 +383,8 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(0, $response['data']['total']);
-            $this->assertFalse(isset($response['data']['array']));
+            $this->assertEquals(0, $response['data']['totalCount']);
+            $this->assertFalse(isset($response['data']['items']));
 
             // Search by name desc.
             $searchParams = array(
@@ -396,11 +401,12 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Third Meeting', $response['data']['array'][0]['name']);
-            $this->assertEquals('Second Meeting', $response['data']['array'][1]['name']);
-            $this->assertEquals('Forth Meeting', $response['data']['array'][2]['name']);
+            $this->assertEquals(3, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Third Meeting', $response['data']['items'][0]['name']);
+            $this->assertEquals('Second Meeting', $response['data']['items'][1]['name']);
+            $this->assertEquals('Forth Meeting', $response['data']['items'][2]['name']);
 
             // Second page
             $searchParams['pagination']['page'] = 2;
@@ -408,10 +414,11 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(2, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('First Meeting', $response['data']['array'][0]['name']);
-            $this->assertEquals('Fifth Meeting', $response['data']['array'][1]['name']);
+            $this->assertEquals(2, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(2, $response['data']['currentPage']);
+            $this->assertEquals('First Meeting', $response['data']['items'][0]['name']);
+            $this->assertEquals('Fifth Meeting', $response['data']['items'][1]['name']);
 
             // Search by custom fields, order by name desc
             $searchParams = array(
@@ -429,11 +436,12 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(4, $response['data']['total']);
-            $this->assertEquals(3, count($response['data']['array']));
-            $this->assertEquals('Third Meeting', $response['data']['array'][0]['name']);
-            $this->assertEquals('Second Meeting', $response['data']['array'][1]['name']);
-            $this->assertEquals('First Meeting', $response['data']['array'][2]['name']);
+            $this->assertEquals(4, $response['data']['totalCount']);
+            $this->assertEquals(3, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Third Meeting', $response['data']['items'][0]['name']);
+            $this->assertEquals('Second Meeting', $response['data']['items'][1]['name']);
+            $this->assertEquals('First Meeting', $response['data']['items'][2]['name']);
 
             // Search by account, order by name desc
             $searchParams = array(
@@ -452,11 +460,12 @@
             $response = json_decode($response, true);
 
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, $response['data']['total']);
-            $this->assertEquals(3, count($response['data']['array']));
-            $this->assertEquals('Second Meeting', $response['data']['array'][0]['name']);
-            $this->assertEquals('First Meeting', $response['data']['array'][1]['name']);
-            $this->assertEquals('Fifth Meeting', $response['data']['array'][2]['name']);
+            $this->assertEquals(3, $response['data']['totalCount']);
+            $this->assertEquals(3, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Second Meeting', $response['data']['items'][0]['name']);
+            $this->assertEquals('First Meeting', $response['data']['items'][1]['name']);
+            $this->assertEquals('Fifth Meeting', $response['data']['items'][2]['name']);
         }
 
         public function testEditMeetingWithIncompleteData()

@@ -90,8 +90,10 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/role/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(count($roles), count($response['data']['array']));
-            $this->assertEquals($compareData, $response['data']['array']);
+            $this->assertEquals(count($roles), count($response['data']['items']));
+            $this->assertEquals(count($roles), $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals($compareData, $response['data']['items']);
 
         }
     }

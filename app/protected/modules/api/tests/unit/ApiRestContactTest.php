@@ -283,8 +283,10 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']['array']));
-            $this->assertEquals(array($compareData), $response['data']['array']);
+            $this->assertEquals(1, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals(1, $response['data']['totalCount']);
+            $this->assertEquals(array($compareData), $response['data']['items']);
         }
 
 
@@ -454,11 +456,12 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Fifth Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('First Contact', $response['data']['array'][1]['firstName']);
-            $this->assertEquals('Forth Contact', $response['data']['array'][2]['firstName']);
+            $this->assertEquals(3, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Fifth Contact', $response['data']['items'][0]['firstName']);
+            $this->assertEquals('First Contact', $response['data']['items'][1]['firstName']);
+            $this->assertEquals('Forth Contact', $response['data']['items'][2]['firstName']);
 
             // Second page
             $searchParams['pagination']['page'] = 2;
@@ -466,10 +469,11 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(2, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Second Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Third Contact', $response['data']['array'][1]['firstName']);
+            $this->assertEquals(2, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(2, $response['data']['currentPage']);
+            $this->assertEquals('Second Contact', $response['data']['items'][0]['firstName']);
+            $this->assertEquals('Third Contact', $response['data']['items'][1]['firstName']);
 
             // Search by name
             $searchParams['pagination']['page'] = 1;
@@ -478,9 +482,10 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']['array']));
-            $this->assertEquals(1, $response['data']['total']);
-            $this->assertEquals('First Contact', $response['data']['array'][0]['firstName']);
+            $this->assertEquals(1, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('First Contact', $response['data']['items'][0]['firstName']);
 
             // No results
             $searchParams['pagination']['page'] = 1;
@@ -489,8 +494,8 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(0, $response['data']['total']);
-            $this->assertFalse(isset($response['data']['array']));
+            $this->assertEquals(0, $response['data']['totalCount']);
+            $this->assertFalse(isset($response['data']['items']));
 
             // Search by name desc.
             $searchParams = array(
@@ -507,11 +512,12 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('Third Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Second Contact', $response['data']['array'][1]['firstName']);
-            $this->assertEquals('Forth Contact', $response['data']['array'][2]['firstName']);
+            $this->assertEquals(3, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Third Contact', $response['data']['items'][0]['firstName']);
+            $this->assertEquals('Second Contact', $response['data']['items'][1]['firstName']);
+            $this->assertEquals('Forth Contact', $response['data']['items'][2]['firstName']);
 
             // Second page
             $searchParams['pagination']['page'] = 2;
@@ -519,10 +525,11 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(2, count($response['data']['array']));
-            $this->assertEquals(5, $response['data']['total']);
-            $this->assertEquals('First Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Fifth Contact', $response['data']['array'][1]['firstName']);
+            $this->assertEquals(2, count($response['data']['items']));
+            $this->assertEquals(5, $response['data']['totalCount']);
+            $this->assertEquals(2, $response['data']['currentPage']);
+            $this->assertEquals('First Contact', $response['data']['items'][0]['firstName']);
+            $this->assertEquals('Fifth Contact', $response['data']['items'][1]['firstName']);
 
             // Search by custom fields, order by name desc
             $searchParams = array(
@@ -540,10 +547,11 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(2, $response['data']['total']);
-            $this->assertEquals(2, count($response['data']['array']));
-            $this->assertEquals('Forth Contact', $response['data']['array'][0]['firstName']);
-            $this->assertEquals('Fifth Contact', $response['data']['array'][1]['firstName']);
+            $this->assertEquals(2, $response['data']['totalCount']);
+            $this->assertEquals(2, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Forth Contact', $response['data']['items'][0]['firstName']);
+            $this->assertEquals('Fifth Contact', $response['data']['items'][1]['firstName']);
         }
 
         public function testEditContactWithIncompleteData()

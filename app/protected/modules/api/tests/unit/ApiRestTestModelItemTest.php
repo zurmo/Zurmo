@@ -228,8 +228,10 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(1, count($response['data']['array']));
-            $this->assertEquals(array($compareData), $response['data']['array']);
+            $this->assertEquals(1, count($response['data']['items']));
+            $this->assertEquals(1, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals(array($compareData), $response['data']['items']);
         }
 
         /**
