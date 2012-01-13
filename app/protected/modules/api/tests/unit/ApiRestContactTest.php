@@ -359,7 +359,7 @@
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
-            // Allow everyon group to read/write acontact
+            // Allow everyone group to read/write contact
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',

@@ -2410,10 +2410,10 @@
             if (is_array($attributeNames))
             {
                 $values2 = array();
-                $allModelAttributes = $this->attributeNames();
+                $allModelAttributeNames = $this->attributeNames();
                 foreach ($attributeNames as $attributeName)
                 {
-                    if (in_array($attributeName, $allModelAttributes))
+                    if (in_array($attributeName, $allModelAttributeNames))
                     {
                         $values2[$attributeName] = $this->$attributeName;
                     }

@@ -329,21 +329,6 @@
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/delete/' . $user->id, 'DELETE', $headers);
             $response = json_decode($response, true);
-            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
-
-            // Test with privileged user
-            $authenticationData = $this->login();
-            $headers = array(
-                'Accept: application/json',
-                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
-                'ZURMO_TOKEN: ' . $authenticationData['token'],
-                'ZURMO_API_REQUEST_TYPE: REST',
-            );
-
-            //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/delete/' . $user->id, 'DELETE', $headers);
-            $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/read/' . $user->id, 'GET', $headers);

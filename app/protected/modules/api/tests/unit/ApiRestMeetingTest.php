@@ -237,6 +237,9 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
+            $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $this->assertTrue($everyoneGroup->save());
+
             $meetings = Meeting::getByName('Michael Meeting');
             $this->assertEquals(1, count($meetings));
             $data['description']    = "Some new description 2";
@@ -280,6 +283,46 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/delete/' . $meetings[0]->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            // Allow everyone group to read/write meeting
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            unset($data);
+            $data['explicitReadWriteModelPermissions'] = array(
+                'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/update/' . $meetings[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            $authenticationData = $this->login('steven', 'steven');
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/read/' . $meetings[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            unset($data);
+            $data['description']    = "Some new description 3";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/update/' . $meetings[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals("Some new description 3", $response['data']['description']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/delete/' . $meetings[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
