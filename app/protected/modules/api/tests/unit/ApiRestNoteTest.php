@@ -409,7 +409,7 @@
                     'pageSize' => 3,
                 ),
                 'search' => array(
-                    'owner'   => array( 'id' => 1),
+                    'owner'   => array( 'id' => $super->id),
                 ),
                 'sort' => 'description.desc',
             );
