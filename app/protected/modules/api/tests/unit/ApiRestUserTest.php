@@ -281,6 +281,9 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
+            $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $this->assertTrue($everyoneGroup->save());
+
             $user = User::getByUsername('diggy011');
             $data['firstName']                = "Sam";
 
@@ -301,6 +304,26 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights for this action.', $response['message']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/delete/' . $user->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have rights for this action.', $response['message']);
+
+            //now check if user have rights, but no permissions.
+            $notAllowedUser->setRight('UsersModule', UsersModule::getAccessRight());
+            $notAllowedUser->setRight('UsersModule', UsersModule::getCreateRight());
+            $saved = $notAllowedUser->save();
+            $this->assertTrue($saved);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/read/' . $user->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/update/' . $user->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals('Sam', $response['data']['firstName']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/delete/' . $user->id, 'DELETE', $headers);
             $response = json_decode($response, true);

@@ -264,6 +264,9 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
+            $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $this->assertTrue($everyoneGroup->save());
+
             $opportunities = Opportunity::getByName('Michael');
             $this->assertEquals(1, count($opportunities));
             $data['probability']                = "20";
@@ -304,6 +307,47 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            // Update unprivileged user permissions
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            unset($data);
+            $data['explicitReadWriteModelPermissions'] = array(
+                'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/update/' . $opportunities[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            $authenticationData = $this->login('steven', 'steven');
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/read/' . $opportunities[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            unset($data);
+            $data['probability']                = "21";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/update/' . $opportunities[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals('21', $response['data']['probability']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/delete/' . $opportunities[0]->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
 
             // Test with privileged user
             $authenticationData = $this->login();

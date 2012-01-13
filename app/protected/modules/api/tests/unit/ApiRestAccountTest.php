@@ -87,6 +87,7 @@
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
+            ReadPermissionsOptimizationUtil::rebuild();
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -150,9 +151,6 @@
             $data['secondaryEmail']      = $secondaryEmail;
             $data['billingAddress']      = $billingAddress;
             $data['shippingAddress']     = $shippingAddress;
-            $data['explicitReadWriteModelPermissions'] = array(
-                'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP
-            );
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
@@ -170,7 +168,7 @@
                 'id' => $super->id,
                 'username' => 'super'
             );
-
+            unset($data['explicitReadWriteModelPermissions']);
             // We need to unset some empty values from response.
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
@@ -286,6 +284,8 @@
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
+            $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $this->assertTrue($everyoneGroup->save());
 
 
             $accounts = Account::getByName('My Company 2');
@@ -324,6 +324,46 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+            $this->assertEquals('You do not have permissions for this action.', $response['message']);
+
+            // Test with privileged user
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            unset($data);
+            $data['explicitReadWriteModelPermissions'] = array(
+                'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            $authenticationData = $this->login('steven', 'steven');
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $accounts[0]->id, 'GET', $headers);
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            unset($data);
+            $data['name']                = "My Company 3";
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals('My Company 3', $response['data']['name']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
