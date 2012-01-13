@@ -303,6 +303,24 @@
 
                       }
                 });
+                
+                //Removes the duplicate tag from the input on blur of the tag input.
+                $(data.fake_input).bind('blur',data,function(event) {
+                    if ($(event.data.fake_input).val()!='' ) 
+                    {
+                        if( (event.data.minChars <= $(event.data.fake_input).val().length) && (!event.data.maxChars || (event.data.maxChars >= $(event.data.fake_input).val().length)) )
+                        {
+                            $(event.data.real_input).removeTag($(event.data.fake_input).val(),$(event.data.fake_input).val(),{focus:true,unique:(settings.unique)});
+                        }
+                    } 
+                    else 
+                    {                                                             
+                        $(this).removeClass('not_valid');
+                        $(event.data.fake_input).css('color',settings.placeholderColor);
+                    }
+                    return false;
+                });
+
                 //Delete last tag on backspace
                 data.removeWithBackspace && $(data.fake_input).bind('keydown', function(event)
                 {

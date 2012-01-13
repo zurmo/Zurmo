@@ -161,6 +161,14 @@
             assert('is_string($term)');
             $autoCompleteResults = ModelAutoCompleteUtil::getCustomFieldDataByPartialName(
                                        $name, $term);
+            if(count($autoCompleteResults)==0)
+            {
+                $data='No Results Found';
+                $autoCompleteResults[] = array('id'    => '', 
+                                               'value' => '', 
+                                               'label' => $data, 
+                );
+            }
             echo CJSON::encode($autoCompleteResults);
         }
     }
