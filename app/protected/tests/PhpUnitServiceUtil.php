@@ -23,43 +23,44 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    /**
-     * Displays the html/text content from the related NotificationMessage
-     *
-     */
-    class MessageForNotificationElement extends Element
+    require_once 'PHPUnit/Runner/Version.php';
+    class PhpUnitServiceUtil
     {
-        protected function renderEditable()
-        {
-            throw NotSupportedException();
-        }
+        // Installed version must be equal or higher then phpUnitMinimumVersion
+        public static $phpUnitMinimumVersion = '3.5';
 
-        protected function renderControlEditable()
-        {
-            throw NotSupportedException();
-        }
+        // Installed version must be less then phpUnitMaximumVersion
+        public static $phpUnitMaximumVersion = '3.6';
 
-        /**
-         * Renders the attribute from the model.
-         * @return The element's content.
-         */
-        protected function renderControlNonEditable()
+        public static function checkVersion()
         {
-            assert('$this->model instanceof Notification');
-            if ($this->model->notificationMessage->id > 0)
+            try
             {
-                $content = null;
-                if ($this->model->notificationMessage->htmlContent != null)
+                $actualVersion = PHPUnit_Runner_Version::id();
+
+                if (version_compare($actualVersion, self::$phpUnitMinimumVersion) < 0)
                 {
-                    $content = $this->model->notificationMessage->htmlContent;
-                    return Yii::app()->format->raw($content);
+                    echo "\n Zurmo tests are not working with PHPUnit {$actualVersion} \n";
+                    echo "PHPUnit version must be equal and higher then PHPUnit " . self::$phpUnitMinimumVersion . " and ";
+                    echo "lower then " .self::$phpUnitMaximumVersion . "\n";
+                    echo "Please upgrade your PHPUnit version \n\n";
+                    exit;
                 }
-                elseif ($this->model->notificationMessage->textContent != null)
+
+                if (version_compare($actualVersion, self::$phpUnitMaximumVersion) >= 0)
                 {
-                    $content = $this->model->notificationMessage->textContent;
-                    return Yii::app()->format->text($content);
+                    echo "\n Zurmo tests are not working with PHPUnit {$actualVersion} \n";
+                    echo "PHPUnit version must be equal and higher then PHPUnit " . self::$phpUnitMinimumVersion . " and ";
+                    echo "lower then " .self::$phpUnitMaximumVersion . "\n";
+                    echo "Please downgrade your PHPUnit version \n\n";
+                    exit;
                 }
+                return;
+            }
+            catch (Exception $e)
+            {
+                echo "You must install PHPUnit, before running tests";
+                exit;
             }
         }
     }

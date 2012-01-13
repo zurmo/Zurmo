@@ -107,6 +107,8 @@
             => 'Demo-Daten fertig geladen',
         'Freezing database.'
             => 'Freezing Datenbank',
+        'Host name where Zurmo will be installed.'
+            => 'Der Name des Hosts, auf dem Zurmo installiert werden soll.',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -224,6 +226,8 @@
             => 'Die debug.php config-Datei ist nicht beschreibbar',
         'The debug.php config file is writable.'
             => 'Die debug.php Konfigurationsdatei ist beschreibbar.',
+        'The instance folders are present and writable.'
+            => 'Die System-Dateien sind vorhanden und beschreibbar.',
         'The name of the database you want to run Zurmo in.'
             => 'Name der Datenbank für zurmo.',
         'The next step is to install the demo data.'
@@ -232,6 +236,10 @@
             => 'Die perInstance.php config-Datei ist nicht beschreibbar.',
         'The perInstance.php config file is writable.'
             => 'Die perInstance.php config-Datei ist beschreibbar.',
+        'The relative path where Zurmo will be installed.'
+            => 'Der relative Pfad, wo Zurmo installiert werden soll.',
+        'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
+            => 'Das System hat erkannt, dass die hostInfo und / oder ScriptUrl nicht eingerichtet sind. Bitte öffnen Sie die perInstance.php config-Datei und  konfigurieren dieser Parameter.',
         'There was a problem creating the database Error code:'
             => 'Es gab ein Problem beim Erstellen der Datenbank Fehlercode:',
         'There was a problem creating the user Error code:'
@@ -276,5 +284,9 @@
             => 'Zurmo administrative Passwort. Der Benutzername ist `super`. Sie können dieses später ändern.',
         'Zurmo Installation'
             => 'Zurmo Installation',
+        '{folderPath} is missing.'
+            => '{folderPath} fehlt',
+        '{folderPath} is not writable.'
+            => '{folderPath} ist nicht beschreibbar.',
     );
 ?>

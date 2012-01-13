@@ -24,30 +24,22 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // KEEP these in alphabetical order.
-    // KEEP them indented correctly.
-    // KEEP all the language files up-to-date with each other.
-    // DON'T MAKE A MESS!
-    return array(
-        'A simple notification'
-            => 'Una notifica simplice',
-        'Html Content'
-            => 'Contenuto HTML',
-        'Is Read'
-            => 'isRead',
-        'Is Read must be set as true or false, not null.'
-            => 'L\'attributo IsRead non può essere null.',
-        'Notification'
-            => 'Notifica',
-        'Notification Message'
-            => 'Messaggio di notifica',
-        'Notifications List'
-            => 'Lista notifiche',
-        'Text Content'
-            => 'Contenuto di testo',
-        'Unread'
-            => 'Non legge',
-        'You have a new notification'
-            => 'Nuova notifica',
-    );
+    /**
+     * A  NotificationRules to manage when jobs are detected as being 'stuck' by the
+     * job monitor.
+     */
+    class HostInfoAndScriptUrlNotSetupNotificationRules extends JobsManagerAccessNotificationRules
+    {
+        protected $critical    = true;
+
+        public static function getDisplayName()
+        {
+            return Yii::t('Default', 'hostInfo or scriptUrl not set up');
+        }
+
+        public static function getType()
+        {
+            return 'HostInfoAndScriptUrlNotSetup';
+        }
+    }
 ?>

@@ -154,6 +154,8 @@
                     'databaseType'          => 'mysql',
                     'removeExistingData'    => '1',
                     'installDemoData'       => '',
+                    'hostInfo'              => '',
+                    'scriptUrl'             => '',
                 )));
             $content = $this->runControllerWithExitExceptionAndGetContent('install/default/settings');
             $errors = CJSON::decode($content);

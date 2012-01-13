@@ -45,8 +45,12 @@
             => 'Abgeschlossen mit Fehlern',
         'End Date Time'
             => 'Datum/Zeit durchgeführt',
+        'Error Log'
+            => 'Fehlerlog',
         'Every 5 minutes'
             => 'Jeder 5 Minuten',
+        'hostInfo or scriptUrl not set up'
+            => 'hostInfo oder ScriptUrl nicht eingerichtet',
         'How often should I run each Job?'
             => 'Häufigkeit der Aufgaben: Empfehlungen',
         'How to Setup the Jobs to Run Automatically'
@@ -85,6 +89,8 @@
             => 'Empfohlene Häufigkeit',
         'Reset'
             => 'Reset',
+        'Return to Job Manager'
+            => 'Zurück zu Job Manager',
         'Scheduled jobs are stuck'
             => 'Geplante Aufträge geklebt',
         'Script will run at most for {seconds} seconds.'

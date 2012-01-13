@@ -106,6 +106,8 @@
             => 'I dati di demo sono installati.',
         'Freezing database.'
             => 'Freezing el database.',
+        'Host name where Zurmo will be installed.'
+            => 'Il nome di host dove Zurmo va essere installato.',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -224,6 +226,8 @@
             => 'Il file di config depbug.php non è scrivibile.',
         'The debug.php config file is writable.'
             => 'Il file di config depbug.php è scrivibile',
+        'The instance folders are present and writable.'
+            => 'I cartelle di sistema sono presenti e scrivibili.',
         'The name of the database you want to run Zurmo in.'
             => 'Il nome del database per Zurmo.',
         'The next step is to install the demo data.'
@@ -232,6 +236,10 @@
             => 'Il file di config perInstance.php non è scrivibile',
         'The perInstance.php config file is writable.'
             => 'Il file di config perInstance.php è scrivibile',
+        'The relative path where Zurmo will be installed.'
+            => 'Il percorso relativo del file dove Zurmo va essere installato.',
+        'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
+            => 'Il sistema ha trovato che hostInfo e/o scriptUrl non sono configurati.  Prego di aprire il file config perInstance.php e configurare questi parametri.',
         'There was a problem creating the database Error code:'
             => 'C\'era un errore durante la creazione del database dei codice Errore:',
         'There was a problem creating the user Error code:'
@@ -276,5 +284,9 @@
             => 'Password amministrativa di Zurmo.  Il utente è `super`.  Si può cambiare questo più tardi.',
         'Zurmo Installation'
             => 'Installazione di Zurmo',
+        '{folderPath} is missing.'
+            => '{folderPath} mancante.',
+        '{folderPath} is not writable.'
+            => '{folderPath} non è scrivibile.',
     );
 ?>

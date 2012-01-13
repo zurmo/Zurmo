@@ -49,7 +49,7 @@
     require_once($webApplication);
 
     $webApplication = Yii::createApplication('WebApplication', $config);
-    if(file_exists($runtimePath))
+    if (file_exists($runtimePath))
     {
         $webApplication->setRuntimePath($runtimePath);
     }

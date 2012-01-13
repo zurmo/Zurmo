@@ -94,40 +94,40 @@
                 return '';
             }
         }
-        
+
          /**
           * This function overrides the radioButtonList from CHtml and excepts a new variable which consists of select
           * box to be appended to the label element.
           */
-        public static function radioButtonList($name, $select, $data, $htmlOptions = array(), 
+        public static function radioButtonList($name, $select, $data, $htmlOptions = array(),
                                                $dataSelectOption = array())
         {
             $template   =   isset($htmlOptions['template'])?$htmlOptions['template']:'{input} {label}';
             $separator  =   isset($htmlOptions['separator'])?$htmlOptions['separator']:"<br/>\n";
-            unset($htmlOptions['template'],$htmlOptions['separator']);
+            unset($htmlOptions['template'], $htmlOptions['separator']);
 
             $labelOptions   =   isset($htmlOptions['labelOptions'])?$htmlOptions['labelOptions']:array();
             unset($htmlOptions['labelOptions']);
 
-            $items=array();
-            $baseID=self::getIdByName($name);
-            $id=0;
-            foreach($data as $value => $label)
+            $items = array();
+            $baseID = self::getIdByName($name);
+            $id = 0;
+            foreach ($data as $value => $label)
             {
-                $checked                =   !strcmp($value,$select);
+                $checked                =   !strcmp($value, $select);
                 $htmlOptions['value']   =   $value;
-                $htmlOptions['id']      =   $baseID.'_'.$id++;
-                $option                 =   self::radioButton($name,$checked,$htmlOptions);
-                $label                  =   self::label($label,$htmlOptions['id'],$labelOptions);
+                $htmlOptions['id']      =   $baseID . '_' . $id++;
+                $option                 =   self::radioButton($name, $checked, $htmlOptions);
+                $label                  =   self::label($label, $htmlOptions['id'], $labelOptions);
                 $selectOption           =   "";
-                if(isset($dataSelectOption[$value]))
+                if (isset($dataSelectOption[$value]))
                 {
                     $selectOption       =   str_replace("{bindId}", $htmlOptions['id'], $dataSelectOption[$value]);
                 }
-                $items[]=strtr($template,array('{input}'    =>  $option, 
-                                               '{label}'    =>  $label.$selectOption));
+                $items[] = strtr($template, array('{input}'    =>  $option,
+                                                  '{label}'    =>  $label . $selectOption));
             }
-            return implode($separator,$items);
+            return implode($separator, $items);
         }
     }
 ?>

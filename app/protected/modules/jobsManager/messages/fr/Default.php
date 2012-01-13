@@ -45,8 +45,12 @@
             => 'Réalisé avec des erreurs',
         'End Date Time'
             => 'Date/heure réalisé?',
+        'Error Log'
+            => 'Log d\'Erreurs',
         'Every 5 minutes'
             => 'Chaque 5 minutes',
+        'hostInfo or scriptUrl not set up'
+            => 'hostInfo ou scriptUrl n\'est pas configuré',
         'How often should I run each Job?'
             => 'Fréquence d\'exécution de tâches: recommendations',
         'How to Setup the Jobs to Run Automatically'
@@ -85,6 +89,8 @@
             => 'Fréquence recommandée',
         'Reset'
             => 'Relance',
+        'Return to Job Manager'
+            => 'Retour aux Tâches système',
         'Scheduled jobs are stuck'
             => 'Les tâches planifiées ont échouées.',
         'Script will run at most for {seconds} seconds.'
