@@ -173,15 +173,7 @@
                 'showScriptName' => true,
                 'rules'=>array(
                     // API REST patterns
-                    //Api REST test patterns
                     array('zurmo/api/logout',   'pattern'=>'zurmo/api/logout',          'verb'=>'GET'),
-                    array('api/<model>Api/read',   'pattern'=>'api/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
-                    array('api/<model>Api/list',   'pattern'=>'api/<model:\w+>/api/list/*',          'verb'=>'GET'),
-                    array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
-                    array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
-                    array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/create/',          'verb'=>'POST'),
-                    array('api/<model>Api/<action>', 'pattern'=>'api/<model:\w+>/api/<action>/*'),
-
                     array('<module>/api/read',   'pattern'=>'<module:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
                     array('<module>/api/list',   'pattern'=>'<module:\w+>/api/list/*',          'verb'=>'GET'),
                     array('<module>/api/update', 'pattern'=>'<module:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
@@ -357,5 +349,17 @@
     $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
+
+    // Routes for api test
+    $testApiConfig['components']['urlManager']['rules'] = array(
+        array('api/<model>Api/read',   'pattern'=>'api/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
+        array('api/<model>Api/list',   'pattern'=>'api/<model:\w+>/api/list/*',          'verb'=>'GET'),
+        array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
+        array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
+        array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/create/',          'verb'=>'POST'),
+        array('api/<model>Api/<action>', 'pattern'=>'api/<model:\w+>/api/<action>/*'),
+    );
+
+    $common_config = CMap::mergeArray($testApiConfig, $common_config);
     return $common_config;
 ?>
