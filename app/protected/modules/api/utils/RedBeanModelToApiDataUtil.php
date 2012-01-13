@@ -41,7 +41,8 @@
         {
             $data       = array();
             $data['id'] = $this->model->id;
-            foreach($this->model->getAttributes() as $attributeName => $notUsed)
+            $retrievableAttributes = static::resolveRetrievableAttributesByModel($this->model);
+            foreach($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
             {
                 $type             = ModelAttributeToMixedApiTypeUtil::getType($this->model, $attributeName);
                 $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
@@ -84,6 +85,24 @@
                  }
             }
             return $data;
+        }
+
+        public function resolveRetrievableAttributesByModel($model)
+        {
+            $retrievableAttributeNames = array();
+           foreach ($model->attributeNames() as $name)
+           {
+               try
+               {
+                   $value = $model->{$name};
+                   $retrievableAttributeNames[] = $name;
+               }
+               catch (Exception $e)
+               {
+                   // Skip this attribute
+               }
+           }
+            return $retrievableAttributeNames;
         }
     }
 ?>
