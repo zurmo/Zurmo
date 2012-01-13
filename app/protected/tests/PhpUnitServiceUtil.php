@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
     require_once 'PHPUnit/Runner/Version.php';
-    class PhpUnitVersionHelper
+    class PhpUnitServiceUtil
     {
         // Installed version must be equal or higher then phpUnitMinimumVersion
         public static $phpUnitMinimumVersion = '3.5';

@@ -26,10 +26,9 @@
 
     $cwd = getcwd();
 
-    require_once('../PhpUnitVersionHelper.php');
+    require_once('../PhpUnitServiceUtil.php');
     require_once('../testRoots.php');
     require_once('../bootstrap.php');
-
 
     $freeze = true; // TODO - figure out the correct was to pass information like this into tests.
 
@@ -39,7 +38,7 @@
         {
             global $argv, $freeze;
 
-            PhpUnitVersionHelper::checkVersion();
+            PhpUnitServiceUtil::checkVersion();
             $usage = "\n"                                                                                                    .
                      "  Usage: phpunit [phpunit options] TestSuite.php <All|Framework|Misc|moduleName|TestClassName> [custom options]\n" .
                      "\n"                                                                                                    .
