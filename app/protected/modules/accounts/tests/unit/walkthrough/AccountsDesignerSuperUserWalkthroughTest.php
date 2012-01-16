@@ -159,20 +159,21 @@
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeCreate');
 
             //View creation screen, then create custom field for each custom field type.
-            $this->createCheckBoxCustomFieldByModule            ('AccountsModule', 'checkbox');
-            $this->createCurrencyValueCustomFieldByModule       ('AccountsModule', 'currency');
-            $this->createDateCustomFieldByModule                ('AccountsModule', 'date');
-            $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetime');
-            $this->createDecimalCustomFieldByModule             ('AccountsModule', 'decimal');
-            $this->createDropDownCustomFieldByModule            ('AccountsModule', 'picklist');
-            $this->createMultiSelectDropDownCustomFieldByModule ('AccountsModule', 'multiselect');
-            $this->createTagCloudCustomFieldByModule            ('AccountsModule', 'tagcloud');
-            $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');
-            $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phone');
-            $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radio');
-            $this->createTextCustomFieldByModule                ('AccountsModule', 'text');
-            $this->createTextAreaCustomFieldByModule            ('AccountsModule', 'textarea');
-            $this->createUrlCustomFieldByModule                 ('AccountsModule', 'url');
+            $this->createCheckBoxCustomFieldByModule                ('AccountsModule', 'checkbox');
+            $this->createCurrencyValueCustomFieldByModule           ('AccountsModule', 'currency');
+            $this->createDateCustomFieldByModule                    ('AccountsModule', 'date');
+            $this->createDateTimeCustomFieldByModule                ('AccountsModule', 'datetime');
+            $this->createDecimalCustomFieldByModule                 ('AccountsModule', 'decimal');
+            $this->createDropDownCustomFieldByModule                ('AccountsModule', 'picklist');
+            $this->createMultiSelectDropDownCustomFieldByModule     ('AccountsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule                ('AccountsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByAccountModule ('AccountsModule', 'calculatednumber');
+            $this->createIntegerCustomFieldByModule                 ('AccountsModule', 'integer');
+            $this->createPhoneCustomFieldByModule                   ('AccountsModule', 'phone');
+            $this->createRadioDropDownCustomFieldByModule           ('AccountsModule', 'radio');
+            $this->createTextCustomFieldByModule                    ('AccountsModule', 'text');
+            $this->createTextAreaCustomFieldByModule                ('AccountsModule', 'textarea');
+            $this->createUrlCustomFieldByModule                     ('AccountsModule', 'url');
         }
 
         /**
@@ -381,6 +382,10 @@
             $this->assertContains('rr'                                      , $account[0]->multiselect->values);
             $this->assertContains('x'                                       , $account[0]->tagcloud->values);
             $this->assertContains('z'                                       , $account[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Account');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account[0]);
+            $this->assertEquals(474000930                                   , $testCalculatedValue);
         }
 
         /**
@@ -556,6 +561,11 @@
             $this->assertContains('hh'                                      , $account[0]->multiselect->values);
             $this->assertContains('w'                                       , $account[0]->tagcloud->values);
             $this->assertContains('y'                                       , $account[0]->tagcloud->values);
+
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Account');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account[0]);
+            $this->assertEquals(472000630                                   , $testCalculatedValue);
         }
 
         /**

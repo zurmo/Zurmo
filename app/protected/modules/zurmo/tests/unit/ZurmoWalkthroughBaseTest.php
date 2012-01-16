@@ -250,7 +250,7 @@
                 {
                     if (strpos($scriptPath, 'http') === false)
                     {
-                        //$this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
+                        $this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
                     }
                 }
             }
@@ -370,6 +370,12 @@
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TagCloud', $extraPostData);
         }
 
+        protected function createCalculatedNumberCustomFieldByAccountModule($moduleClassName, $name)
+        {
+            $extraPostData = array('formula' => 'employees + annualRevenue');
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CalculatedNumber', $extraPostData);
+        }
+
         protected function createModuleEditBadValidationPostData()
         {
             return array('singularModuleLabels' =>
@@ -446,6 +452,7 @@
                                             'attributeName'     => $name,
                                         ), $extraPostData)));
             $this->runControllerWithRedirectExceptionAndGetContent('designer/default/attributeEdit');
+
             //Now confirm everything did in fact save correctly.
             $modelClassName = $moduleClassName::getPrimaryModelName();
             $newModel       = new $modelClassName(false);
@@ -456,18 +463,25 @@
                 'en' => $name . ' en',
                 'fr' => $name . ' fr',
             );
-            $this->assertEquals(
-                $compareData, $newModel->getAttributeLabelsForAllSupportedLanguagesByAttributeName($name));
 
-            //Now go to the detail viwe of the attribute.
+            if ($attributeTypeName != "CalculatedNumber")
+            {
+                $this->assertEquals(
+                    $compareData, $newModel->getAttributeLabelsForAllSupportedLanguagesByAttributeName($name));
+            }
+
+            //Now go to the detail view of the attribute.
             $this->setGetArray(array(   'moduleClassName'       => $moduleClassName,
                                         'attributeTypeName'     => $attributeTypeName,
                                         'attributeName'         => $name));
-            $this->resetPostArray();
+
             $content = $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeDetails');
 
-            //Now test going to the user interface edit view for the existing attribute.
-            $content = $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeEdit');
+            if ($attributeTypeName != "CalculatedNumber")
+            {
+                //Now test going to the user interface edit view for the existing attribute.
+                $content = $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeEdit');
+            }
         }
     }
 ?>
