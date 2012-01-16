@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateDependentDropDownAttribute</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateDependentDropDownAttribute</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php?r=designer/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Pick List</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownAttributeForm_attributeName</td>
+	<td>testcountry_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownAttributeForm_attributeLabels_en</td>
+	<td>testcountry_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aaaa</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bbbb</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cccc</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: testcountry_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Pick List</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>testcountry_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>testcountry_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>compareText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>aaaa<br />bbbb<br />cccc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Pick List</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownAttributeForm_attributeName</td>
+	<td>teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownAttributeForm_attributeLabels_en</td>
+	<td>teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aaa1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aaa2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aaa3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bbb1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bbb2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bbb3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ccc1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ccc2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ccc3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Pick List</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>compareText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>aaa1<br />aaa2<br />aaa3<br />bbb1<br />bbb2<br />bbb3<br />ccc1<br />ccc2<br />ccc3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Pick List</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownAttributeForm_attributeName</td>
+	<td>testcity_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownAttributeForm_attributeLabels_en</td>
+	<td>testcity_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aa1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ab1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ac1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aa2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ab2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ac2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>aa3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ab3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ac3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ba1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bb1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bc1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ba2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bb2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bc2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ba3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bb3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>bc3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ca1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cb1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cc1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ca2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cb2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cc2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>ca3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cb3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=customFieldDataData_AddInput</td>
+	<td>cc3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=customFieldDataData_AddInputButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isRequired</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>DropDownAttributeForm_isAudited</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: testcity_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Pick List</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>testcity_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>testcity_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[5]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>compareText</td>
+	<td>//div[@id='DropDownAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>aa1<br>ab1<br>ac1<br>aa2<br>ab2<br>ac2<br>aa3<br>ab3<br>ac3<br>ba1<br>bb1<br>bc1<br>ba2<br>bb2<br>bc2<br>ba3<br>bb3<br>bc3<br>ca1<br>cb1<br>cc1<br>ca2<br>cb2<br>cc2<br>ca3<br>cb3<br>cc3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Dependent Pick Lists</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownDependencyAttributeForm_attributeName</td>
+	<td>location_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DropDownDependencyAttributeForm_attributeLabels_en</td>
+	<td>location_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_0_attributeName</td>
+	<td>label=testcountry_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_attributeName</td>
+	<td>teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_attributeName</td>
+	<td>label=teststate_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>//div[@id='DropDownDependencyMappingData']/table/tbody/tr[1]/td[2]/table/tbody/tr[3]/td/table/tbody/tr/td[2]/b</td>
+	<td>Show If</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_0</td>
+	<td>label=aaaa</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_1</td>
+	<td>label=aaaa</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_2</td>
+	<td>label=aaaa</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_3</td>
+	<td>label=bbbb</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_4</td>
+	<td>label=bbbb</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_5</td>
+	<td>label=bbbb</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_6</td>
+	<td>label=cccc</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_7</td>
+	<td>label=cccc</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_8</td>
+	<td>label=cccc</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_attributeName</td>
+	<td>label=testcity_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>//div[@id='DropDownDependencyMappingData']/table/tbody/tr[1]/td[3]/table/tbody/tr[3]/td/table/tbody/tr/td[2]/b</td>
+	<td>Show If</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_0</td>
+	<td>label=aaa1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_1</td>
+	<td>label=aaa1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_2</td>
+	<td>label=aaa1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_3</td>
+	<td>label=aaa2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_4</td>
+	<td>label=aaa2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_5</td>
+	<td>label=aaa2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_6</td>
+	<td>label=aaa3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_7</td>
+	<td>label=aaa3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_8</td>
+	<td>label=aaa3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_9</td>
+	<td>label=bbb1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_10</td>
+	<td>label=bbb1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_11</td>
+	<td>label=bbb1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_12</td>
+	<td>label=bbb2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_13</td>
+	<td>label=bbb2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_14</td>
+	<td>label=bbb2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_15</td>
+	<td>label=bbb3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_16</td>
+	<td>label=bbb3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_17</td>
+	<td>label=bbb3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_18</td>
+	<td>label=ccc1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_19</td>
+	<td>label=ccc1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_20</td>
+	<td>label=ccc1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_21</td>
+	<td>label=ccc2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_22</td>
+	<td>label=ccc2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_23</td>
+	<td>label=ccc2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_24</td>
+	<td>label=ccc3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_25</td>
+	<td>label=ccc3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_26</td>
+	<td>label=ccc3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: location_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownDependencyAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Dependent Pick Lists</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownDependencyAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>location_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DropDownDependencyAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>location_${randomSuffix}</td>
+</tr>
+</tbody></table>
+</body>
+</html>
