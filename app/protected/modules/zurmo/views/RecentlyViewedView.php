@@ -29,9 +29,23 @@
      */
     class RecentlyViewedView extends View
     {
+        protected $recentlyViewedItems;
+
+        public function __construct($recentlyViewedItems)
+        {
+            assert('is_array($recentlyViewedData)');
+            $this->recentlyViewedItems = $recentlyViewedItems;
+        }
+
         protected function renderContent()
         {
-            $content = 'Recently Viewed list - todo';
+            $content = Yii::t('Default', 'Recently Viewed');
+            foreach($this->recentlyViewedItems as $recentlyViewedItem)
+            {
+                //$recentlyViewedItem['moduleClassName'] is also available, can use
+                //to determine class for image?
+                $content .= $recentlyViewedItem['link'] . "<br/>";
+            }
             return $content;
         }
     }
