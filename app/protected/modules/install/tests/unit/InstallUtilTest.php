@@ -298,6 +298,21 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
+        public function testCheckThreadStackValue()
+        {
+            $minimumRequiredThreadStackValue = 524288;
+            $threadStackValue                = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseThreadStackValue('mysql',
+                                                                $this->hostname,
+                                                                $this->rootUsername,
+                                                                $this->rootPassword,
+                                                                $minimumRequiredThreadStackValue,
+                                                                $threadStackValue));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
         public function testCheckDatabaseDefaultCollation()
         {
             $notAllowedDatabaseCollations = array('utf8_general_ci');

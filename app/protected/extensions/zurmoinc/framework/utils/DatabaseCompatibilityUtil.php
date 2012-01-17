@@ -420,6 +420,41 @@
         }
 
         /**
+        * Get database thread_stack
+        * @param string $databaseType
+        * @param string $databaseHostname
+        * @param string $databaseUsername
+        * @param string $databasePassword
+        * @throws NotSupportedException
+        */
+        public static function getDatabaseThreadStackValue($databaseType,
+                                                           $databaseHostname,
+                                                           $databaseUsername,
+                                                           $databasePassword)
+        {
+            if ($databaseType != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'thread_stack'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        return $row[1];
+                    }
+            }
+            return false;
+        }
+
+        /**
          * Get database default collation
          * @param string $databaseType
          * @param string $databaseHostname

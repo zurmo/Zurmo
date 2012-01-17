@@ -332,6 +332,21 @@
             return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
         }
 
+        public static function checkDatabaseThreadStackValue($databaseType,
+                                                             $databaseHostname,
+                                                             $databaseUsername,
+                                                             $databasePassword,
+                                                             $minimumRequiredThreadStackValue,
+                                                             /* out */ & $threadStackValue)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            $threadStackValue = DatabaseCompatibilityUtil::getDatabaseThreadStackValue($databaseType,
+                                                                                       $databaseHostname,
+                                                                                       $databaseUsername,
+                                                                                       $databasePassword);
+            return $minimumRequiredThreadStackValue <= $threadStackValue;
+        }
+
         public static function checkDatabaseDefaultCollation($databaseType,
                                                            $databaseHostname,
                                                            $databaseName,

@@ -186,6 +186,15 @@
             $this->assertGreaterThan(0, $maxSpRecursionDepth);
         }
 
+        public function testGetDatabaseThreadStackValue()
+        {
+            $threadStackValue = DatabaseCompatibilityUtil::getDatabaseThreadStackValue('mysql',
+                                                                                          $this->hostname,
+                                                                                          $this->rootUsername,
+                                                                                          $this->rootPassword);
+            $this->assertGreaterThan(0, $threadStackValue);
+        }
+
         public function testGetDatabaseDefaultCollation()
         {
             $dbDefaultCollation = DatabaseCompatibilityUtil::getDatabaseDefaultCollation('mysql',
