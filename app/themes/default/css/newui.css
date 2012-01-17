@@ -66,7 +66,7 @@ footer, header, hgroup, menu, nav, section {
 .PageView{
 	
 }
-/*Mast Head*/
+/*MastHead*/
 #HeaderLinksView{
 	background: url(../images/header-bar-1.png) left top repeat-x;
 	height:38px;
@@ -199,6 +199,32 @@ footer, header, hgroup, menu, nav, section {
 #HomePageView .AppContent{ /*dashboard*/
 	padding-right:0;
 }
+
+/*Inner toolbar*/
+.view-toolbar{
+	border:1px solid #b7b7b7;
+	border-top-color: #e7e7e7;
+	border-left-color:#d7d7d7;
+	border-right-color:#d7d7d7;
+	border-radius:4px;
+	float:left;	
+	margin:20px 0 15px 0;
+	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12); /*999*/
+	background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+}
+.view-toolbar a{
+	color:#656565;
+	font-weight:bold;
+	text-shadow:#fff 0 1px 0;
+	padding:7px 10px;
+	display:inline-block;
+	border-left:1px solid #bababa;
+}
+.view-toolbar a:first-child{
+	border-left:none;
+}
+
+
 /*Footer*/
 #FooterView{
 	margin:20px 40px;

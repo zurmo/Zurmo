@@ -93,7 +93,7 @@
                     $renderedContent = $element->render();
                     if (!$first && !empty($renderedContent))
                     {
-                        $content .= '&#160;|&#160;';
+                       // $content .= '&#160;|&#160;';
                     }
                     $first = false;
                     $content .= $renderedContent;
