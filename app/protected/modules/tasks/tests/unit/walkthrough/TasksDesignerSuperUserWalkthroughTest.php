@@ -159,6 +159,7 @@
             $this->createIntegerCustomFieldByModule             ('TasksModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('TasksModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('TasksModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('TasksModule', 'calculatednumber');
             $this->createPhoneCustomFieldByModule               ('TasksModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('TasksModule', 'radio');
             $this->createTextCustomFieldByModule                ('TasksModule', 'text');
@@ -319,6 +320,10 @@
             $this->assertContains('rr'                                     , $task[0]->multiselect->values);
             $this->assertContains('x'                                      , $task[0]->tagcloud->values);
             $this->assertContains('z'                                      , $task[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Task');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $task[0]);
+            $this->assertEquals(1476                                       , $testCalculatedValue);
         }
 
         /**
@@ -409,10 +414,14 @@
             $this->assertEquals($task[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($task[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($task[0]->url                              , 'http://wwww.abc-edit.com');
-            $this->assertContains('gg'                                      , $task[0]->multiselect->values);
-            $this->assertContains('hh'                                      , $task[0]->multiselect->values);
-            $this->assertContains('w'                                       , $task[0]->tagcloud->values);
-            $this->assertContains('y'                                       , $task[0]->tagcloud->values);
+            $this->assertContains('gg'                                     , $task[0]->multiselect->values);
+            $this->assertContains('hh'                                     , $task[0]->multiselect->values);
+            $this->assertContains('w'                                      , $task[0]->tagcloud->values);
+            $this->assertContains('y'                                      , $task[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Task');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $task[0]);
+            $this->assertEquals(132                                        , $testCalculatedValue);
         }
 
         /**

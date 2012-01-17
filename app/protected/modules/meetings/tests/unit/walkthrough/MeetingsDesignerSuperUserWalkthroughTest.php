@@ -160,6 +160,7 @@
             $this->createIntegerCustomFieldByModule             ('MeetingsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('MeetingsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('MeetingsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('MeetingsModule', 'calculatednumber');
             $this->createPhoneCustomFieldByModule               ('MeetingsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('MeetingsModule', 'radio');
             $this->createTextCustomFieldByModule                ('MeetingsModule', 'text');
@@ -321,6 +322,10 @@
             $this->assertContains('x'                                         , $meeting[0]->tagcloud->values);
             $this->assertContains('z'                                         , $meeting[0]->tagcloud->values);
             $this->assertContains('z'                                         , $meeting[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
+            $this->assertEquals(111                                           , $testCalculatedValue);
         }
 
         /**
@@ -419,6 +424,10 @@
             $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('w'                                         , $meeting[0]->tagcloud->values);
             $this->assertContains('y'                                         , $meeting[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
+            $this->assertEquals(1                                             , $testCalculatedValue);
         }
 
         /**

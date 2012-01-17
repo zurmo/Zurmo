@@ -159,21 +159,21 @@
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeCreate');
 
             //View creation screen, then create custom field for each custom field type.
-            $this->createCheckBoxCustomFieldByModule                ('AccountsModule', 'checkbox');
-            $this->createCurrencyValueCustomFieldByModule           ('AccountsModule', 'currency');
-            $this->createDateCustomFieldByModule                    ('AccountsModule', 'date');
-            $this->createDateTimeCustomFieldByModule                ('AccountsModule', 'datetime');
-            $this->createDecimalCustomFieldByModule                 ('AccountsModule', 'decimal');
-            $this->createDropDownCustomFieldByModule                ('AccountsModule', 'picklist');
-            $this->createMultiSelectDropDownCustomFieldByModule     ('AccountsModule', 'multiselect');
-            $this->createTagCloudCustomFieldByModule                ('AccountsModule', 'tagcloud');
-            $this->createCalculatedNumberCustomFieldByAccountModule ('AccountsModule', 'calculatednumber');
-            $this->createIntegerCustomFieldByModule                 ('AccountsModule', 'integer');
-            $this->createPhoneCustomFieldByModule                   ('AccountsModule', 'phone');
-            $this->createRadioDropDownCustomFieldByModule           ('AccountsModule', 'radio');
-            $this->createTextCustomFieldByModule                    ('AccountsModule', 'text');
-            $this->createTextAreaCustomFieldByModule                ('AccountsModule', 'textarea');
-            $this->createUrlCustomFieldByModule                     ('AccountsModule', 'url');
+            $this->createCheckBoxCustomFieldByModule            ('AccountsModule', 'checkbox');
+            $this->createCurrencyValueCustomFieldByModule       ('AccountsModule', 'currency');
+            $this->createDateCustomFieldByModule                ('AccountsModule', 'date');
+            $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetime');
+            $this->createDecimalCustomFieldByModule             ('AccountsModule', 'decimal');
+            $this->createDropDownCustomFieldByModule            ('AccountsModule', 'picklist');
+            $this->createMultiSelectDropDownCustomFieldByModule ('AccountsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('AccountsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('AccountsModule', 'calculatednumber');
+            $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');
+            $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phone');
+            $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radio');
+            $this->createTextCustomFieldByModule                ('AccountsModule', 'text');
+            $this->createTextAreaCustomFieldByModule            ('AccountsModule', 'textarea');
+            $this->createUrlCustomFieldByModule                 ('AccountsModule', 'url');
         }
 
         /**

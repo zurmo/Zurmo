@@ -166,6 +166,7 @@
             $this->createIntegerCustomFieldByModule             ('ContactsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('ContactsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('ContactsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('ContactsModule', 'calculatednumber');
             $this->createPhoneCustomFieldByModule               ('ContactsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('ContactsModule', 'radio');
             $this->createTextCustomFieldByModule                ('ContactsModule', 'text');
@@ -512,6 +513,10 @@
             $this->assertContains('rr'                                   , $contact->multiselect->values);
             $this->assertContains('x'                                    , $contact->tagcloud->values);
             $this->assertContains('z'                                    , $contact->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
+            $this->assertEquals(135                                      , $testCalculatedValue);
         }
 
         /**
@@ -558,14 +563,14 @@
                                         'text'               => 'This is a test Text',
                                         'textarea'           => 'This is a test TextArea',
                                         'url'                => 'http://wwww.abc.com',
-                                        'checkbox'           => array('value'  =>  '1'),
-                                        'currency'           => array('value'  =>  45),
-                                        'picklist'           => array('value'  =>  'a'),
-                                        'multiselect'        => array('values' =>  'gg'),
-                                        'tagcloud'           => array('values' =>  'w'),
-                                        'radio'              => array('value'  =>  'd'),
-                                        'date__Date'         => array('type'   =>  'Today'),
-                                        'datetime__DateTime' => array('type'   =>  'Today')),
+                                        'checkbox'           => array('value'   =>  '1'),
+                                        'currency'           => array('value'   =>  45),
+                                        'picklist'           => array('value'   =>  'a'),
+                                        'multiselect'        =>  array('values' =>  'ff'),
+                                        'tagcloud'           =>  array('values' =>  'x'),
+                                        'radio'              => array('value'   =>  'd'),
+                                        'date__Date'         => array('type'    =>  'Today'),
+                                        'datetime__DateTime' => array('type'    =>  'Today')),
                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
@@ -711,6 +716,10 @@
             $this->assertContains('hh'                                   , $contact->multiselect->values);
             $this->assertContains('w'                                    , $contact->tagcloud->values);
             $this->assertContains('y'                                    , $contact->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
+            $this->assertEquals(23                                       , $testCalculatedValue);
         }
 
         /**

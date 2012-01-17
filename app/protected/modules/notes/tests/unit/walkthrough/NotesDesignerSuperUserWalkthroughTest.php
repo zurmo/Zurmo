@@ -153,6 +153,7 @@
             $this->createIntegerCustomFieldByModule             ('NotesModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('NotesModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('NotesModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('NotesModule', 'calculatednumber');
             $this->createPhoneCustomFieldByModule               ('NotesModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('NotesModule', 'radio');
             $this->createTextCustomFieldByModule                ('NotesModule', 'text');
@@ -289,6 +290,10 @@
             $this->assertContains('rr'                                     , $note[0]->multiselect->values);
             $this->assertContains('x'                                      , $note[0]->tagcloud->values);
             $this->assertContains('z'                                      , $note[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Note');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
+            $this->assertEquals(135                                        , $testCalculatedValue);
         }
 
         /**
@@ -376,6 +381,10 @@
             $this->assertContains('hh'                                     , $note[0]->multiselect->values);
             $this->assertContains('w'                                      , $note[0]->tagcloud->values);
             $this->assertContains('y'                                      , $note[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Note');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
+            $this->assertEquals(23                                         , $testCalculatedValue);
         }
 
         /**

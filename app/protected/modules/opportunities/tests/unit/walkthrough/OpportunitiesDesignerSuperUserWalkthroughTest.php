@@ -168,6 +168,7 @@
             $this->createIntegerCustomFieldByModule             ('OpportunitiesModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('OpportunitiesModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('OpportunitiesModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('OpportunitiesModule', 'calculatednumber');
             $this->createPhoneCustomFieldByModule               ('OpportunitiesModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('OpportunitiesModule', 'radio');
             $this->createTextCustomFieldByModule                ('OpportunitiesModule', 'text');
@@ -338,6 +339,10 @@
             $this->assertContains('rr'                                   , $opportunity->multiselect->values);
             $this->assertContains('x'                                    , $opportunity->tagcloud->values);
             $this->assertContains('z'                                    , $opportunity->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Opportunity');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $opportunity);
+            $this->assertEquals(1476                                     , $testCalculatedValue);
         }
 
         /**
@@ -482,6 +487,10 @@
             $this->assertContains('hh'                                   , $opportunity->multiselect->values);
             $this->assertContains('w'                                    , $opportunity->tagcloud->values);
             $this->assertContains('y'                                    , $opportunity->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Opportunity');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $opportunity);
+            $this->assertEquals(132                                      , $testCalculatedValue);
         }
 
         /**

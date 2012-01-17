@@ -157,6 +157,7 @@
             $this->createIntegerCustomFieldByModule             ('ContactsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('ContactsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('ContactsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('ContactsModule', 'calculatednumber');
             $this->createPhoneCustomFieldByModule               ('ContactsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('ContactsModule', 'radio');
             $this->createTextCustomFieldByModule                ('ContactsModule', 'text');
@@ -378,6 +379,10 @@
             $this->assertContains('rr'                                , $lead->multiselect->values);
             $this->assertContains('x'                                 , $lead->tagcloud->values);
             $this->assertContains('z'                                 , $lead->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);
+            $this->assertEquals(135                                      , $testCalculatedValue);
         }
 
         /**
@@ -581,6 +586,10 @@
             $this->assertContains('hh'                                , $lead->multiselect->values);
             $this->assertContains('w'                                 , $lead->tagcloud->values);
             $this->assertContains('y'                                 , $lead->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);
+            $this->assertEquals(23                                    , $testCalculatedValue);
         }
 
         /**

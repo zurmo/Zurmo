@@ -250,7 +250,7 @@
                 {
                     if (strpos($scriptPath, 'http') === false)
                     {
-                        $this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
+                        //$this->assertTrue(file_exists($scriptPath), $scriptPath . 'does not exist and it should.');
                     }
                 }
             }
@@ -370,9 +370,16 @@
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TagCloud', $extraPostData);
         }
 
-        protected function createCalculatedNumberCustomFieldByAccountModule($moduleClassName, $name)
+        protected function createCalculatedNumberCustomFieldByModule($moduleClassName, $name)
         {
-            $extraPostData = array('formula' => 'employees + annualRevenue');
+            $formulaForModule = array('AccountsModule'      => 'employees + annualRevenue', 
+                                      'ContactsModule'      => 'decimal + integer', 
+                                      'MeetingsModule'      => 'decimal - integer', 
+                                      'NotesModule'         => 'decimal + integer', 
+                                      'OpportunitiesModule' => 'decimal * integer', 
+                                      'TasksModule'         => 'decimal * integer');
+
+            $extraPostData = array('formula' => $formulaForModule[$moduleClassName]);
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CalculatedNumber', $extraPostData);
         }
 
@@ -480,7 +487,7 @@
             if ($attributeTypeName != "CalculatedNumber")
             {
                 //Now test going to the user interface edit view for the existing attribute.
-                $content = $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeEdit');
+                $content = $this->runControllerWithRedirectExceptionAndGetContent('designer/default/attributeEdit');
             }
         }
     }

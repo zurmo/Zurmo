@@ -134,6 +134,9 @@
                                         array(
                                             'element' => 'tagcloud',
                                         ),
+                                        array(
+                                            'element' => 'calculatednumber',
+                                        ),
                                     )
                                 ),
                                 array('cells' =>
@@ -311,6 +314,13 @@
                                     array(
                                         array(
                                             'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'calculatednumber',
                                         ),
                                     )
                                 ),
