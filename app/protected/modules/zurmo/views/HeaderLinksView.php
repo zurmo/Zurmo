@@ -47,10 +47,11 @@
 
             $content  = '<div>';
             $content .= static::renderHeaderMenuContent(
-                            static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems));
-            $content .= static::renderNotificationsLinkContent();
-            $content .= static::renderHeaderMenuContent(
                             static::resolveSettingsMenuItemsWithTopLevelItem($this->settingsMenuItems));
+		    $content .= static::renderNotificationsLinkContent();
+           	$content .= static::renderHeaderMenuContent(
+                            static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems));
+           	
             $content .= '</div>';
             return $content;
         }
