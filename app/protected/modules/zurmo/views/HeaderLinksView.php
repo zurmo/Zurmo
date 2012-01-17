@@ -47,10 +47,12 @@
 
             $content  = '<div>';
             $content .= static::renderHeaderMenuContent(
-                            static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems));
+                            static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems),
+                            'user-header-menu');
             $content .= static::renderNotificationsLinkContent();
             $content .= static::renderHeaderMenuContent(
-                            static::resolveSettingsMenuItemsWithTopLevelItem($this->settingsMenuItems));
+                            static::resolveSettingsMenuItemsWithTopLevelItem($this->settingsMenuItems),
+                            'settings-header-menu');
             $content .= '</div>';
             return $content;
         }
@@ -72,9 +74,10 @@
         }
 
 
-        protected static function renderHeaderMenuContent($menuItems)
+        protected static function renderHeaderMenuContent($menuItems, $menuId)
         {
             assert('is_array($menuItems)');
+            assert('is_string($menuId) && $menuId != null');
             if (empty($menuItems))
             {
                 return;
@@ -85,6 +88,7 @@
                 'items'                   => $menuItems,
                 'navContainerClass'       => 'nav-single-container',
                 'navBarClass'             => 'nav-single-bar',
+                'htmlOptions' => array('id' => $menuId),
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['headerMenu'];
