@@ -37,6 +37,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
+                            array('type' => 'CreateDashboardLink'),
                             array('type' => 'EditDashboardLink'),
                             array('type' => 'AddPortletAjaxLink',
                                 'uniqueLayoutId' => 'eval:$this->uniqueLayoutId',
