@@ -95,5 +95,19 @@
             echo $view->render();
             Yii::app()->end(0, false);
         }
+
+        /**
+         * Method for testing creating a simple notification to the current user.
+         */
+        public function actionCreateTest()
+        {
+            $message                    = new NotificationMessage();
+            $message->textContent       = 'text content';
+            $message->htmlContent       = 'html content';
+            $rules                      = new SimpleNotificationRules();
+            $rules->addUser(Yii::app()->user->userModel);
+            NotificationsUtil::submit($message, $rules);
+            echo 'Test notification created';
+        }
     }
 ?>

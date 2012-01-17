@@ -116,19 +116,72 @@
                                                     array('titleLabel', 'descriptionLabel'));
         }
 
+        public static function getOrderedAccessibleHeaderMenuForCurrentUser()
+        {
+            $headerMenuItems = static::getAccessibleHeaderMenuForCurrentUser();
+            usort($headerMenuItems, "static::orderHeaderMenuItems");
+            return $headerMenuItems;
+        }
+
         /**
-         * Get accessible header menu item based on the current user.
+         * Get accessible header menu item based on the specified module class name for the current user.
          * @return array of menu items.
          */
-        public static function getAccessibleHeaderMenuByCurrentUser()
+        protected static function getAccessibleHeaderMenuForCurrentUser()
         {
-            $user     = Yii::app()->user->userModel;
-            $metadata = ZurmoModule::getMetadata();
-            assert('!empty($metadata["global"]["headerMenuItems"])');
-            $menuItems = MenuUtil::resolveModuleMenuForAccess(  'ZurmoModule',
-                                                                $metadata['global']['headerMenuItems'],
+            $user            = Yii::app()->user->userModel;
+            $modules         = Module::getModuleObjects();
+            $headerMenuItems = array();
+            foreach ($modules as $module)
+            {
+                $metadata = $module::getMetadata();
+                if(!empty($metadata['global']['headerMenuItems']))
+                {
+                    $menuItems = MenuUtil::resolveModuleMenuForAccess(  get_class($module),
+                                                                        $metadata['global']['headerMenuItems'],
+                                                                        $user);
+
+                    $headerMenuItems = array_merge($headerMenuItems,
+                                                   self::resolveMenuItemsForLanguageLocalization
+                                                       ($menuItems, get_class($module)));
+                }
+            }
+            return $headerMenuItems;
+        }
+
+        protected static function orderHeaderMenuItems($a, $b) {
+            if(!isset($a['order']))
+            {
+                $aOrder = 1;
+            }
+            else
+            {
+                $aOrder = $a['order'];
+            }
+            if(!isset($b['order']))
+            {
+                $bOrder = 1;
+            }
+            else
+            {
+                $bOrder = $b['order'];
+            }
+            return $aOrder - $bOrder;
+        }
+
+        /**
+         * Get accessible user header menu item based for the current user.
+         * @return array of menu items.
+         */
+        public static function getAccessibleUserHeaderMenuForCurrentUser()
+        {
+            $user      = Yii::app()->user->userModel;
+            $metadata  = UsersModule::getMetadata();
+            assert('!empty($metadata["global"]["userHeaderMenuItems"])');
+            $menuItems = MenuUtil::resolveModuleMenuForAccess('UsersModule',
+                                                                $metadata['global']['userHeaderMenuItems'],
                                                                 $user);
-            return self::resolveMenuItemsForLanguageLocalization            ($menuItems, 'ZurmoModule');
+            return self::resolveMenuItemsForLanguageLocalization            ($menuItems, 'UsersModule');
         }
 
         /**

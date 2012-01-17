@@ -46,6 +46,14 @@
                         'right'            => self::RIGHT_ACCESS_DESIGNER,
                     ),
                 ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Designer',
+                        'url' => array('/designer/default'),
+                        'right' => self::RIGHT_ACCESS_DESIGNER,
+                        'order' => 1,
+                    ),
+                ),
             );
             return $metadata;
         }

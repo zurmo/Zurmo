@@ -58,6 +58,14 @@
                         'right'            => self::RIGHT_ACCESS_ROLES,
                     ),
                 ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Roles',
+                        'url' => array('/zurmo/role'),
+                        'right' => self::RIGHT_ACCESS_ROLES,
+                        'order' => 5,
+                    ),
+                ),
                 'shortcutsMenuItems' => array(
                     array(
                         'label' => 'Roles',

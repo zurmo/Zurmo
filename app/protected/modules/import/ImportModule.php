@@ -51,6 +51,14 @@
                         'right'            => self::RIGHT_ACCESS_IMPORT,
                     ),
                 ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Import',
+                        'url' => array('/import/default'),
+                        'right' => self::RIGHT_ACCESS_IMPORT,
+                        'order' => 2,
+                    ),
+                ),
             );
             return $metadata;
         }

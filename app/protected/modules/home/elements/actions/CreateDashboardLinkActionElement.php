@@ -24,27 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class HeaderView extends View
+    class CreateDashboardLinkActionElement extends LinkActionElement
     {
-        private $verticalGridView;
-
-        public function __construct($settingsMenuItems, $userMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl)
+        public function getActionType()
         {
-            assert('is_array($settingsMenuItems)');
-            assert('is_array($userMenuItems)');
-            assert('is_string($notificationsUrl)');
-            assert('is_array($moduleNamesAndLabels)');
-            assert('is_string($sourceUrl)');
-            $this->verticalGridView   = new GridView(2, 1);
-            $this->verticalGridView->setView(
-                                        new HeaderLinksView($settingsMenuItems, $userMenuItems, $notificationsUrl), 0, 0);
-            $this->verticalGridView->setView(
-                                        new GlobalSearchAndRecentlyViewedView($moduleNamesAndLabels, $sourceUrl),1, 0);
+            return 'Create';
         }
 
-        protected function renderContent()
+        protected function getDefaultLabel()
         {
-            return $this->verticalGridView->render();
+            return Yii::t('Default', 'Create a Dashboard');
+        }
+
+        protected function getDefaultRoute()
+        {
+            return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/createDashboard/');
         }
     }
 ?>
