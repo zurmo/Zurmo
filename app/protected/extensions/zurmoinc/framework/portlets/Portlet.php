@@ -79,6 +79,23 @@
             return $portletCollection;
         }
 
+        public static function getByLayoutId($layoutId)
+        {
+            $portletCollection = array();
+            assert('is_string($layoutId)');
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            $sql = "select id, {$quote}column$quote, position "          .
+                   'from portlet '                                       .
+                   "where layoutid = '$layoutId'"                        .
+                   'order by id;';
+            foreach (R::getAll($sql) as $row)
+            {
+                $portlet = Portlet::getById(intval($row['id']));
+                $portletCollection[$row['id']] = $portlet;
+            }
+            return $portletCollection;
+        }
+
         public static function makePortletsUsingMetadataSortedByColumnIdAndPosition($layoutId, $metadata, $user, $params)
         {
             $portletCollection = array();
