@@ -34,6 +34,10 @@
 
         private $dynamicAttributeNames = array();
 
+        private $supportsMixedSearch;
+
+        public  $anyMixedAttributes;
+
         public function __construct(RedBeanModel $model)
         {
             parent::__construct($model);
@@ -60,7 +64,8 @@
             {
                 $dynamicAttributeRules[] = array($attributeName, 'safe');
             }
-            return array_merge(parent::rules(), $dynamicAttributeRules);
+            $rules = array_merge(parent::rules(), $dynamicAttributeRules);
+            return array_merge($rules, $this->getMixedSearchRules());
         }
 
         /**
@@ -76,7 +81,8 @@
                 list($realAttributeName, $type)         = explode($delimiter, $attributeName);
                 $dynamicAttributeLabels[$attributeName] = $this->model->getAttributeLabel($realAttributeName);
             }
-            return array_merge(parent::attributeLabels(), $dynamicAttributeLabels);
+            $attributeLabels = array_merge(parent::attributeLabels(), $dynamicAttributeLabels);
+            return array_merge($attributeLabels, $this->getMixedSearchAttributeLabels());
         }
 
         /**
@@ -136,6 +142,8 @@
                 assert('$dynamicAttributeToElementTypes[$type] != null');
                 $metadata[get_called_class()]['elements'][$attributeName] = $dynamicAttributeToElementTypes[$type];
             }
+            //add something to resolve for global search....
+            $this->resolveMixedSearchAttributeElementForMetadata($metadata[get_called_class()]['elements']);
             return $metadata;
         }
 
@@ -337,6 +345,82 @@
                 {
                     throw new NotSupportedException();
                 }
+            }
+        }
+
+        private function supportsMixedSearch()
+        {
+            if($this->supportsMixedSearch === null)
+            {
+                $this->supportsMixedSearch = false;
+                if($this->model instanceof Item)
+                {
+                    $moduleClassName = $this->model->getModuleClassName();
+                    if($moduleClassName::getGlobalSearchFormClassName() != null)
+                    {
+                        $this->supportsMixedSearch  = true;
+                    }
+                }
+
+            }
+            return $this->supportsMixedSearch;
+        }
+
+        private function getMixedSearchRules()
+        {
+            if($this->supportsMixedSearch())
+            {
+                return array(array('anyMixedAttributes', 'safe'));
+            }
+        }
+
+        private function getMixedSearchAttributeLabels()
+        {
+            if($this->supportsMixedSearch())
+            {
+                return array('anyMixedAttributes' => Yii::t('Default', 'Any Mixed Fields'));
+            }
+        }
+
+        public function resolveMixedSearchAttributeMappedToRealAttributesMetadata(& $realAttributesMetadata)
+        {
+            assert('is_array($realAttributesMetadata)');
+            if($this->supportsMixedSearch())
+            {
+                $moduleClassName            = $this->model->getModuleClassName();
+                $metadata                   = $moduleClassName::getMetadata();
+                $data                       = array('anyMixedAttributes' => array());
+                if($metadata['global']['globalSearchAttributeNames'] != null)
+                {
+                    foreach($metadata['global']['globalSearchAttributeNames'] as $attributeName)
+                    {
+                        if(!isset($realAttributesMetadata[$attributeName]))
+                        {
+                            $data['anyMixedAttributes'][] = array($attributeName);
+                        }
+                        elseif(isset($realAttributesMetadata[$attributeName]) &&
+                               is_array($realAttributesMetadata[$attributeName]))
+                        {
+                            foreach($realAttributesMetadata[$attributeName] as $mixedAttributeMetadata)
+                            {
+                                $data['anyMixedAttributes'][] = $mixedAttributeMetadata;
+                            }
+                        }
+                        else
+                        {
+                            throw new NotSupportedException();
+                        }
+                    }
+                }
+                $realAttributesMetadata = array_merge($realAttributesMetadata, $data);
+            }
+        }
+
+        protected function resolveMixedSearchAttributeElementForMetadata(& $metadata)
+        {
+            if($this->supportsMixedSearch())
+            {
+                $metadata['anyMixedAttributes'] = 'AnyMixedAttributesSearch';
             }
         }
     }

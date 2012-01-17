@@ -36,12 +36,12 @@
             $passed = true;
             if (!InstallUtil::isFileUploadsOn())
             {
-                $this->message = Yii::t('Default', 'PHP File Uploads is Off.  This should be on.');
+                $this->message = Yii::t('Default', 'PHP file_uploads is Off.  This should be on.');
                 $passed        = false;
             }
             else
             {
-                $this->message = Yii::t('Default', 'PHP File Uploads is on which is ok.');
+                $this->message = Yii::t('Default', 'PHP file_uploads is on which is ok.');
             }
             return $passed;
         }

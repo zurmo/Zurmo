@@ -58,7 +58,7 @@
         'Create AccountsModulePluralLabel'
             => 'Crea AccountsModulePluralLabel',
         'Create AccountsModuleSingularLabel'
-            => 'Crea AccountsModuleSingularLabel',
+            => 'Nuovo AccountsModuleSingularLabel',
         'Delete AccountsModulePluralLabel'
             => 'Elimina AccountsModulePluralLabel',
         'Employees'

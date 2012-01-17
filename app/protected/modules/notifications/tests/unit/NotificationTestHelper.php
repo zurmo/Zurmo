@@ -34,14 +34,14 @@
             $notification->owner  = $owner;
             $notification->isRead = false;
             $saved = $notification->save();
-            assert($saved);
+            assert($saved); // Not Coding Standard
 
             //Same with a message.
             $message              = new NotificationMessage();
             $message->textContent = 'text' . $content;
             $message->htmlContent = 'html' . $content;
             $saved = $message->save();
-            assert($saved);
+            assert($saved); // Not Coding Standard
         }
     }
 ?>

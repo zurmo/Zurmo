@@ -50,19 +50,26 @@
         {
             $matches = array();
             $serverName = $_SERVER['SERVER_SOFTWARE'];
-            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
-                if (preg_match('/([^\/]+)\/(\d+\.\d)?/', $_SERVER['SERVER_SOFTWARE'], $matches)) { // Not Coding Standard
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
+            {
+                if (preg_match('/([^\/]+)\/(\d+\.\d)?/', $_SERVER['SERVER_SOFTWARE'], $matches)) // Not Coding Standard
+                {
                     $serverName = strtolower($matches[1]);
                     $actualVersion = $matches[2];
-                    if (array_key_exists($serverName, $minimumRequiredVersions)) {
+                    if (array_key_exists($serverName, $minimumRequiredVersions))
+                    {
                         return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
                     }
                 }
-            } else if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
-                if (preg_match('/([^\/]+)\/(\d+\.\d+(.\d+))?/', $_SERVER['SERVER_SOFTWARE'], $matches)) { // Not Coding Standard
+            }
+            elseif (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0)
+            {
+                if (preg_match('/([^\/]+)\/(\d+\.\d+(.\d+))?/', $_SERVER['SERVER_SOFTWARE'], $matches)) // Not Coding Standard
+                {
                     $serverName = strtolower($matches[1]);
                     $actualVersion = $matches[2];
-                    if (array_key_exists($serverName, $minimumRequiredVersions)) {
+                    if (array_key_exists($serverName, $minimumRequiredVersions))
+                    {
                         return self::checkVersion($minimumRequiredVersions[$serverName], $actualVersion);
                     }
                 }
@@ -440,7 +447,8 @@
                                                   $databaseType, $databaseHost, $databaseName, $username, $password,
                                                   $memcacheHost = null, $memcachePort = null, $minifyScripts = true,
                                                   $language,
-                                                  $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php')
+                                                  $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php',
+                                                  $hostInfo, $scriptUrl)
         {
             assert('is_dir($instanceRoot)');
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -451,6 +459,8 @@
             assert('is_string($memcacheHost) || $memcacheHost == null');
             assert('(is_int   ($memcachePort) && $memcachePort >= 1024) || $memcachePort == null');
             assert('is_string($language)     && $language     != ""');
+            assert('is_string($hostInfo)     || $hostInfo     == ""');
+            assert('is_string($scriptUrl)    || $scriptUrl    == ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
@@ -503,6 +513,12 @@
                             array(
                                 'host'   => '$memcacheHost',
                                 'port'   => $memcachePort, ",
+                                     $contents);
+            $contents = preg_replace('/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'hostInfo\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
+                                     "\$instanceConfig['components']['request']['hostInfo']         = '$hostInfo';",
+                                     $contents);
+            $contents = preg_replace('/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'scriptUrl\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
+                                     "\$instanceConfig['components']['request']['scriptUrl']         = '$scriptUrl';",
                                      $contents);
             $contents = preg_replace('/\s+\/\/ REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.*?>/s', // Not Coding Standard
                                      "\n?>",
@@ -655,7 +671,9 @@
                                             true,
                                             Yii::app()->language,
                                             $perInstanceFilename,
-                                            $debugFilename);
+                                            $debugFilename,
+                                            $form->hostInfo,
+                                            $form->scriptUrl);
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
@@ -710,9 +728,16 @@
                 {
                     DemoDataUtil::load($messageLogger, 3);
                 }
-
                 $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             }
+            // Send notification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
+            $message                    = new NotificationMessage();
+            $message->textContent       = Yii::t('Default', 'The system has detected that the hostInfo and/or scriptUrl are ' .
+                                                            'not setup. Please open the perInstance.php config file and ' .
+                                                            'setup those two parameters.');
+            $rules                      = new HostInfoAndScriptUrlNotSetupNotificationRules();
+            NotificationsUtil::submit($message, $rules);
+
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
@@ -738,9 +763,35 @@
             $messageLogger = new MessageLogger($messageStreamer);
             self::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
-            if($unfreezeWhenDone)
+            if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();
+            }
+        }
+
+        public static function getDefaultHostInfo()
+        {
+            $hostInfo = "";
+            if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !='')
+            {
+                $hostInfo = 'http://' . $_SERVER['HTTP_HOST'];
+            }
+            elseif (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] != '')
+            {
+                $hostInfo = 'http://' . $_SERVER['SERVER_NAME'];
+            }
+            return $hostInfo;
+        }
+
+        public static function getDefaultScriptUrl()
+        {
+            if (isset($_SERVER['PHP_SELF']))
+            {
+                return $_SERVER['PHP_SELF'];
+            }
+            else
+            {
+                return '';
             }
         }
     }

@@ -510,7 +510,7 @@
                                 throw new FailedFileUploadException(Yii::t('Default', 'Failed to create temporary database table from CSV.'));
                             }
                         }
-                        catch(BulkInsertFailedException $e)
+                        catch (BulkInsertFailedException $e)
                         {
                             throw new FailedFileUploadException($e->getMessage());
                         }

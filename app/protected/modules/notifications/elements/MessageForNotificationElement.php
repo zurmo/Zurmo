@@ -47,18 +47,19 @@
         protected function renderControlNonEditable()
         {
             assert('$this->model instanceof Notification');
-            if($this->model->notificationMessage->id > 0)
+            if ($this->model->notificationMessage->id > 0)
             {
                 $content = null;
-                if($this->model->notificationMessage->htmlContent != null)
+                if ($this->model->notificationMessage->htmlContent != null)
                 {
                     $content = $this->model->notificationMessage->htmlContent;
+                    return Yii::app()->format->raw($content);
                 }
-                elseif($this->model->notificationMessage->textContent != null)
+                elseif ($this->model->notificationMessage->textContent != null)
                 {
                     $content = $this->model->notificationMessage->textContent;
+                    return Yii::app()->format->text($content);
                 }
-                return Yii::app()->format->text($content);
             }
         }
     }

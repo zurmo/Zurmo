@@ -59,7 +59,7 @@
                             JobsToJobsCollectionViewUtil::getMonitorJobData(),
                             JobsToJobsCollectionViewUtil::getNonMonitorJobsData(),
                             $messageBoxContent);
-            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+            $view = new JobsManagerPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $view));
             echo $view->render();
         }
@@ -77,14 +77,13 @@
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
                                  Yii::t('Default', 'The job {jobName} was not found to be stuck and therefore was not reset.',
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }
-
         }
 
         public function actionJobLogsModalList($type)
@@ -119,6 +118,14 @@
                             'modalContainer',
                             Yii::t('Default', 'Job Log for {jobDisplayName}',
                                    array('{jobDisplayName}' => $jobClassName::getDisplayName())));
+            echo $view->render();
+        }
+
+        public function actionJobLogDetails($id)
+        {
+            $jobLog = JobLog::getById(intval($id));
+            $view = new JobsManagerPageView($this,
+                $this->makeTitleBarAndDetailsView($jobLog));
             echo $view->render();
         }
     }

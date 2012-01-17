@@ -347,9 +347,6 @@
         {
             Yii::app()->clientScript->registerCoreScript('jquery');
             Yii::app()->clientScript->registerCoreScript('jquery.ui');
-            $ziiWidgetAssetPath = Yii::getPathOfAlias('zii.widgets.assets');
-            $baseScriptUrl      = Yii::app()->getAssetManager()->publish($ziiWidgetAssetPath) . '/gridview';
-            Yii::app()->clientScript->registerScriptFile($baseScriptUrl . '/jquery.yiigridview.js', CClientScript::POS_END);
         }
 
         /**
@@ -357,9 +354,7 @@
          */
         public static function getScriptFilesThatLoadOnAllPages()
         {
-            $ziiWidgetAssetPath = Yii::getPathOfAlias('zii.widgets.assets');
-            $baseScriptUrl      = Yii::app()->getAssetManager()->publish($ziiWidgetAssetPath) . '/gridview';
-            return array($baseScriptUrl . '/jquery.yiigridview.js');
+            return array();
         }
     }
 ?>
