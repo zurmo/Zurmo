@@ -33,7 +33,7 @@
 
         public function __construct($recentlyViewedItems)
         {
-            assert('is_array($recentlyViewedData)');
+            assert('is_array($recentlyViewedItems)');
             $this->recentlyViewedItems = $recentlyViewedItems;
         }
 
