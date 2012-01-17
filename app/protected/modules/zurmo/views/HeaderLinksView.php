@@ -66,9 +66,6 @@
         protected static function resolveSettingsMenuItemsWithTopLevelItem($menuItems)
         {
             assert('is_array($menuItems)');
-            echo "<pre>";
-            print_r($menuItems);
-            echo "</pre>";
             $finalMenuItems             = array(array('label' => Yii::t('Default', 'Settings'), 'url' => null));
             $finalMenuItems[0]['items'] = $menuItems;
             return $finalMenuItems;
