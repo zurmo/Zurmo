@@ -39,7 +39,7 @@
             $this->verticalGridView->setView(
                                         new HeaderLinksView($settingsMenuItems, $userMenuItems, $notificationsUrl), 0, 0);
             $this->verticalGridView->setView(
-                                        new GlobalSearchAndRecentlyViewedView($moduleNamesAndLabels, $sourceUrl),1, 0);
+                                        new GlobalSearchView($moduleNamesAndLabels, $sourceUrl),1, 0);
         }
 
         protected function renderContent()
