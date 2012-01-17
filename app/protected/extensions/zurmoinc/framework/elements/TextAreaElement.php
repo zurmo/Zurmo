@@ -40,7 +40,7 @@
             $data['label'] = $this->renderLabel();
             $data['content'] = $this->renderControlEditable();
             $data['error'] = $this->renderError();
-            echo 'sing'.ArrayUtil::getArrayValue($this->params, 'wide'). "\n";
+            echo ArrayUtil::getArrayValue($this->params, 'wide'). "\n";
             $data['colspan'] = ArrayUtil::getArrayValue($this->params, 'wide') ? 3 : 1;
             return $this->resolveContentTemplate($this->editableTemplate, $data);
         }
