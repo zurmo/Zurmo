@@ -26,34 +26,71 @@
 
     class HeaderLinksView extends View
     {
-        protected $menuMetadata;
+        protected $settingsMenuItems;
+
+        protected $userMenuItems;
 
         protected $notificationsUrl;
 
-        public function __construct($menuMetadata, $notificationsUrl)
+        public function __construct($settingsMenuItems, $userMenuItems, $notificationsUrl)
         {
-            assert('is_array($menuMetadata)');
+            assert('is_array($settingsMenuItems)');
+            assert('is_array($userMenuItems)');
             assert('is_string($notificationsUrl)');
-            $this->menuMetadata     = $menuMetadata;
-            $this->notificationsUrl = $notificationsUrl;
+            $this->settingsMenuItems     = $settingsMenuItems;
+            $this->userMenuItems         = $userMenuItems;
+            $this->notificationsUrl      = $notificationsUrl;
         }
 
         protected function renderContent()
         {
-            foreach ($this->menuMetadata as $menuItem)
-            {
-                $links[$menuItem['label']] = Yii::app()->createUrl($menuItem['route']);
-            }
 
-            $content  = '<div><ul>';
+            $content  = '<div>';
+            $content .= static::renderHeaderMenuContent(
+                            static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems));
             $content .= static::renderNotificationsLinkContent();
-            $content .= '<li>' . Yii::t('Default', 'Welcome') . ', <b>' . Yii::app()->user->firstName . '</b></li>';
-            foreach ($links as $label => $link)
-            {
-                $content .= "<li><a href=\"$link\">$label</a></li>";
-            }
-            $content .= '</ul></div>';
+            $content .= static::renderHeaderMenuContent(
+                            static::resolveSettingsMenuItemsWithTopLevelItem($this->settingsMenuItems));
+            $content .= '</div>';
             return $content;
+        }
+
+        protected static function resolveUserMenuItemsWithTopLevelItem($menuItems)
+        {
+            assert('is_array($menuItems)');
+            $finalMenuItems             = array(array('label' => Yii::app()->user->userModel->username, 'url' => null));
+            $finalMenuItems[0]['items'] = $menuItems;
+            return $finalMenuItems;
+        }
+
+        protected static function resolveSettingsMenuItemsWithTopLevelItem($menuItems)
+        {
+            assert('is_array($menuItems)');
+            echo "<pre>";
+            print_r($menuItems);
+            echo "</pre>";
+            $finalMenuItems             = array(array('label' => Yii::t('Default', 'Settings'), 'url' => null));
+            $finalMenuItems[0]['items'] = $menuItems;
+            return $finalMenuItems;
+        }
+
+
+        protected static function renderHeaderMenuContent($menuItems)
+        {
+            assert('is_array($menuItems)');
+            if (empty($menuItems))
+            {
+                return;
+            }
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("headerMenu");
+            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+                'items'                   => $menuItems,
+                'navContainerClass'       => 'nav-single-container',
+                'navBarClass'             => 'nav-single-bar',
+            ));
+            $cClipWidget->endClip();
+            return $cClipWidget->getController()->clips['headerMenu'];
         }
 
         protected function renderNotificationsLinkContent()
@@ -67,7 +104,7 @@
                 $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
             }
             $content  .= "<a href=\"$link\">$label</a>";
-            return '<li><span class="notifications-link">' . $content . '</span></li>';
+            return '<span class="notifications-link">' . $content . '</span>';
         }
     }
 ?>

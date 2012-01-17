@@ -539,6 +539,16 @@
                 }
             }
         }
+        if (isset($metadata['global']['userHeaderMenuItems']))
+        {
+            foreach ($metadata['global']['userHeaderMenuItems'] as $menuItem)
+            {
+                if (!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
         if (isset($metadata['global']['configureMenuItems']))
         {
             foreach ($metadata['global']['configureMenuItems'] as $menuItem)

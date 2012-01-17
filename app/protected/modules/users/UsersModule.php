@@ -117,6 +117,24 @@
                         'right'            => self::RIGHT_ACCESS_USERS,
                     ),
                 ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Users',
+                        'url' => array('/users/default'),
+                        'right' => self::RIGHT_ACCESS_USERS,
+                        'order' => 4,
+                    ),
+                ),
+                'userHeaderMenuItems' => array(
+                        array(
+                            'label' => 'My Profile',
+                            'url' => array('/users/default/profile'),
+                        ),
+                        array(
+                            'label' => 'Sign Out',
+                            'url' => array('/zurmo/default/logout'),
+                        ),
+                ),
                 'shortcutsMenuItems' => array(
                     array(
                         'label' => 'Users',

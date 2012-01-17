@@ -75,13 +75,20 @@
 
         protected static function makeHeaderView()
         {
-            $menuMetadata         = MenuUtil::getAccessibleHeaderMenuByCurrentUser();
+            $settingsMenuItems    = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
+            $userMenuItems        = static::getAndResolveUserMenuItemsForHeader();
             $notificationsUrl     = Yii::app()->createUrl('notifications/default');
             $moduleNamesAndLabels = GlobalSearchUtil::
                                     getGlobalSearchScopingModuleNamesAndLabelsDataByUser(Yii::app()->user->userModel);
             $sourceUrl            = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
             GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption($moduleNamesAndLabels);
-            return new HeaderView($menuMetadata, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);
+            return new HeaderView($settingsMenuItems, $userMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);
+        }
+
+        protected static function getAndResolveUserMenuItemsForHeader()
+        {
+            $userMenuItems             = MenuUtil::getAccessibleUserHeaderMenuForCurrentUser();
+            return $userMenuItems;
         }
 
         protected static function makeMenuView()
