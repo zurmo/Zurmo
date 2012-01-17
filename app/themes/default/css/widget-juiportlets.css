@@ -1,4 +1,8 @@
 /* Columns section */
+.juiportlet-columns{
+	float:left;
+}
+
 .juiportlet-columns .juiportlet-column {
 	float: left;
 	/* Min-height: */
