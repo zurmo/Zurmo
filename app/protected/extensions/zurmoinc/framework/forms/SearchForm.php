@@ -372,6 +372,7 @@
             {
                 return array(array('anyMixedAttributes', 'safe'));
             }
+            return array();
         }
 
         private function getMixedSearchAttributeLabels()
@@ -380,6 +381,7 @@
             {
                 return array('anyMixedAttributes' => Yii::t('Default', 'Any Mixed Fields'));
             }
+            return array();
         }
 
         public function resolveMixedSearchAttributeMappedToRealAttributesMetadata(& $realAttributesMetadata)
