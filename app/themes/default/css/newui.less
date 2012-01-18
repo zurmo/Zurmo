@@ -1,5 +1,5 @@
 /*Imports*/
-@import 'originals/newui.css';
+@import 'originals/mbmenu.css';
 
 
 /*Variables*/
@@ -30,8 +30,6 @@
 	overflow: hidden;
 }
 
-
-
 *{
 	margin:0;
 	padding:0;
@@ -40,47 +38,33 @@
 html, body{
 	background:#DDDEDE;
 }
+
 body{
 	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size:11px;
 	color:#545454;
 }
+
 h1, h2, h3, h4, h5, h6{
 	color:#262877;
 	text-shadow: rgba( 255, 255, 255, 0.8 ) 0 1px 0;
 }
+
 a:link, a:hover, a:active, a:visited{
 	text-decoration:none;
 	color:#545454;
 }
+
 a:hover{
 	color:#262877 !important;
 }
 
-
-
-/*
-.border-radius(@radius: 4px){
-	     -o-border-radius: @radius;
-	   -moz-border-radius: @radius;
-	-webkit-border-radius: @radius;
-	        border-radius: @radius;
-	behavior: url({@url}PIE-1.0beta5/PIE.php);
-}
-
-.box-shadow{
-	     -o-box-shadow:  1px 1px 2px 1px #cccccc;
-	   -moz-box-shadow:  1px 1px 2px 1px #cccccc;
-	-webkit-box-shadow:  1px 1px 2px 1px #cccccc;
-	        box-shadow:  1px 1px 2px 1px #cccccc;
-	behavior: url({@url}PIE-1.0beta5/PIE.php);
-}
-*/
 /*HTML5*/
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 /*CLEARFIX*/
 .clearfix:after {
 	content: ".";
@@ -89,17 +73,21 @@ footer, header, hgroup, menu, nav, section {
 	clear: both;
 	visibility: hidden;
 }
+
 .clearfix {
 	height: 1%;
 }
+
 *:first-child + html .clearfix {
 	min-height: 1px;
 }
+
 .ZurmoDefaultPageView,
 .ZurmoPageView,
 .PageView{
 	
 }
+
 /*MastHead*/
 #HeaderLinksView{
 	background: url(../images/header-bar-1.png) left top repeat-x;
@@ -134,9 +122,11 @@ footer, header, hgroup, menu, nav, section {
 	font-size:12px;
 	font-weight:bold;
 }
+
 #HeaderLinksView li a:hover{
 	color:#fff !important;
 }
+
 #HeaderLinksView ul ul{
 	display:none;
 	position:absolute;
@@ -144,9 +134,7 @@ footer, header, hgroup, menu, nav, section {
 	margin-top:0;
 	float:left;
 	border:1px solid #b6b6b6;
-	
 	background: -webkit-linear-gradient(top, rgba(235,235,235,1) 0%, rgba(245,245,245,1) 100%);
-	
 	.b-shadow( inset 0 0 0 2px #fff );
 	.b-shadow( 0 0 10px 5px rgba(50, 50, 50, 0.3) );
 	li{
@@ -161,8 +149,8 @@ footer, header, hgroup, menu, nav, section {
 			color:#111 !important;
 		}
 	}
-	
 }
+
 .notifications-link{
 	float:right;
 	display:inline-block;
@@ -172,14 +160,12 @@ footer, header, hgroup, menu, nav, section {
 	padding-left:10px;
 }
 
-
-
-
 #GlobalSearchView{
 	height:40px;
 	background: url(../images/header-bar-2.png) left top repeat-x;
 	-webkit-box-shadow:  0 0 10px 2px rgba(102, 102, 102, 0.5);
 }
+
 #app-search{
 	margin:0 40px 0 40px;
 }
@@ -196,11 +182,13 @@ footer, header, hgroup, menu, nav, section {
 	margin:7px 0 0 -3px;
 	background: url(../images/search-bar-gradient.png) left top repeat-x;
 }
+
 #globalSearchInput:focus{
 	outline: 0;
 	color:#545454;
 	font-style:normal;
 }
+
 #global-search-loopa{
 	padding:0;
 	margin:0;
@@ -213,6 +201,7 @@ footer, header, hgroup, menu, nav, section {
 	border-right:none;
 	background: url(../images/search-bar-loopa.png) left top no-repeat;
 }
+
 #globalSearchInput .ui-multiselect-menu{
 	min-width: 225px !important;
 }
@@ -225,6 +214,7 @@ footer, header, hgroup, menu, nav, section {
 	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
 	-webkit-border-radius: 0 0 5px 5px;
 }
+
 /*Left Sidebar*/
 .AppNavigation{
 	width:170px;
@@ -235,22 +225,28 @@ footer, header, hgroup, menu, nav, section {
 	height:100%;
 	display:block;
 }
+
 .AppNavigation ul{
 	/*margin-left:15px;*/
 }
+
 .AppNavigation li{
 	list-style:none;
 }
+
 #MenuView{
 	padding:20px 5px;
 	border-bottom: #ccc;
 }
+
 #MenuView .parent{
 	
 }
+
 #MenuView .parent > ul{
 	display:none;
 }
+
 #MenuView .parent > a{
 	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight:bold;
@@ -264,13 +260,14 @@ footer, header, hgroup, menu, nav, section {
 	-webkit-border-radius: 4px;
 	text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
 }
+
 #MenuView .parent > a:hover{
 	color:#fff !important;
 	text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
 	background:#7cb830 url(../images/main-nav-selected.png) left top no-repeat;
 }
-/*Recently Viewed*/
 
+/*Recently Viewed*/
 #RecentlyViewedView{
 	float:left;
 	background: url(../images/recently-viewed-gradient.png) left top repeat-x;
@@ -292,8 +289,7 @@ footer, header, hgroup, menu, nav, section {
 		padding:0;
 		a{
 			width:160px;
-			.text-overflow;
-			  
+			.text-overflow;		  
 			line-height: 33px;
 			//text-indent:40px;
 			display:block;
@@ -331,15 +327,15 @@ footer, header, hgroup, menu, nav, section {
 	}
 }
 
-
-
 /*Content*/
 .AppContent{
 	padding:20px 20px 20px 20px;
 	margin-left:172px;
 	margin-bottom:20px;
 }
-#HomePageView .AppContent{ /*dashboard*/
+
+/*dashboard*/
+#HomePageView .AppContent{ 
 	padding-right:0;
 }
 
@@ -348,6 +344,7 @@ footer, header, hgroup, menu, nav, section {
 	width:100%;
 	display:inline-block;
 }
+
 .view-toolbar{
 	border:1px solid #b7b7b7;
 	border-top-color: #e7e7e7;
@@ -359,6 +356,7 @@ footer, header, hgroup, menu, nav, section {
 	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12); /*999*/
 	background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
 }
+
 .view-toolbar a{
 	color:#656565;
 	font-weight:bold;
@@ -367,45 +365,51 @@ footer, header, hgroup, menu, nav, section {
 	display:inline-block;
 	border-left:1px solid #bababa;
 }
+
 .view-toolbar a:first-child{
 	border-left:none;
 }
-
 
 /*Footer*/
 #FooterView{
 	margin:20px 40px;
 }
+
 .performance-info{
 	width: 900px;
 	margin:0 auto;
 }
 
-/*general table style*/
-table {/* tables still need 'cellspacing="0"' in the markup */
+/*general table style, tables still need 'cellspacing="0"' in the markup */
+table {
 	border-collapse: separate;
 	border-spacing: 0;
 }
+
 caption, th, td {
 	font-weight: normal;
 	text-align: left;
 }
+
 table.items{
 	border: 1px solid #DFDFDF;
 	border-collapse: collapse;
 	border-spacing: 1px;
 }
+
 table.items th, table.items td{
 	border: 1px solid #DFDFDF;
 	vertical-align:middle;
 	padding:2px;
 }
+
 table.items{
 	width:100%;
 	/*border-right:none;
 	border-left:none;
 	border-bottom:none;*/
 }
+
 table.items tr{}
 
 table.items td,
@@ -414,25 +418,23 @@ table.items th{
 	border-left:none;
 	padding:10px 0;
 }
+
 table.items tbody,
 table.items tbody tr:last-child,
 table.items tbody tr:last-child td{
 	border-bottom: none;
 }
-/*
-table.items tbody tr:last-child td{
-	border-bottom:none;
-	padding-bottom:0;
-}
-*/
+
 table.items thead tr th:first-child,
 table.items tbody tr td:first-child{
 	padding-left:15px;
 }
+
 table.items thead tr th:last-child,
 table.items tbody tr td:last-child{
 	padding-right:15px;
 }
+
 table.items th{
 	font-weight:bold !important;
 	height:35px;
@@ -440,4 +442,3 @@ table.items th{
 	background: url(../images/table-items-header.png) left top repeat-x;
 	padding:0;
 }
-
