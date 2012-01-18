@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Test ApiTestModelItem2 related API functions.
+    */
     class ApiRestTestModelItem2Test extends ApiRestTest
     {
         public function testApiServerUrl()

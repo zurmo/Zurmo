@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Api test controller, used to test actions related to ApiTestModelItem2
+     */
     class ApiTestModelItem2ApiController extends ZurmoModuleApiController
     {
         public function actionCustomGet()
@@ -41,13 +44,8 @@
         public function actionCustomList()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            //if(!isset($params['data']))
-            //{
-            //    $message = Yii::t('Default', 'Data are empty.');
-                //    throw new ApiException($message);
-                //}
-                $result    =  $this->processList($params);
-                Yii::app()->apiHelper->sendResponse($result);
+            $result    =  $this->processList($params);
+            Yii::app()->apiHelper->sendResponse($result);
         }
 
         public function actionCustomPost()

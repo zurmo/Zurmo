@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Test Note related API functions.
+    */
     class ApiRestNoteTest extends ApiRestTest
     {
         public function testApiServerUrl()
@@ -80,7 +83,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/read/' . $notes[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('The id specified was invalid.', $response['message']);
+            $this->assertEquals('The ID specified was invalid.', $response['message']);
         }
 
         public function testCreateNote()
@@ -238,17 +241,17 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/read/' . $notes[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
+            $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/update/' . $notes[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
+            $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/delete/' . $notes[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
+            $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
             //now check if user have rights, but no permissions.
             $notAllowedUser->setRight('NotesModule', NotesModule::getAccessRight());

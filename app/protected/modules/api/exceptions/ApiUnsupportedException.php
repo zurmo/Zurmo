@@ -25,23 +25,21 @@
      ********************************************************************************/
 
     /**
-     * ApiControllerSecurityUtil::renderAccessFailureView shouldn't generate view,
-     * but rather throw exception
+     * Exception thrown when there is some problem during api request.
      */
-    class ApiControllerSecurityUtil extends ControllerSecurityUtil
+    class ApiUnsupportedException extends ApiException
     {
-        /**
-         * Generate security exception, in case when user doesn't have permissions for requested action.
-         * @param boolean $fromAjax
-         * @param $nonAjaxFailureMessageContent
-         * @throws SecurityException
-         */
-        protected static function renderAccessFailureContent($fromAjax = false, $nonAjaxFailureMessageContent = null)
+        public function __construct($message = null, $code = 0, Exception $previous = null)
         {
-            $message = Yii::t('Default', 'You do not have permissions for this action.');
-            throw new SecurityException($message);
+            if (isset($message))
+            {
+                $message = $message;
+            }
+            else
+            {
+                $message = Yii::t('Default', 'Action not supported.');
+            }
+            parent::__construct($message, $code, $previous);
         }
     }
-
-
 ?>

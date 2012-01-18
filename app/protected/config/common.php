@@ -171,16 +171,16 @@
                 'showScriptName' => true,
                 'rules'=>array(
                     // API REST patterns
-                    array('zurmo/api/logout',   'pattern'=>'zurmo/api/logout',          'verb'=>'GET'),
-                    array('<module>/api/read',   'pattern'=>'<module:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
-                    array('<module>/api/list',   'pattern'=>'<module:\w+>/api/list/*',          'verb'=>'GET'),
-                    array('<module>/api/update', 'pattern'=>'<module:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
-                    array('<module>/api/delete', 'pattern'=>'<module:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
-                    array('<module>/api/create', 'pattern'=>'<module:\w+>/api/create/',          'verb'=>'POST'),
+                    array('zurmo/api/logout',      'pattern'=>'zurmo/api/logout',                    'verb'=>'GET'),
+                    array('<module>/api/read',     'pattern'=>'<module:\w+>/api/read/<id:\d+>',      'verb'=>'GET'),
+                    array('<module>/api/list',     'pattern'=>'<module:\w+>/api/list/*',             'verb'=>'GET'),
+                    array('<module>/api/update',   'pattern'=>'<module:\w+>/api/update/<id:\d+>',    'verb'=>'PUT'),
+                    array('<module>/api/delete',   'pattern'=>'<module:\w+>/api/delete/<id:\d+>',    'verb'=>'DELETE'),
+                    array('<module>/api/create',   'pattern'=>'<module:\w+>/api/create/',            'verb'=>'POST'),
 
-                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
-                    array('zurmo/<model>Api/read',   'pattern'=>'zurmo/<model:\w+>/api/read/<id:\w+>', 'verb'=>'GET'),
-                    array('zurmo/<model>Api/list',   'pattern'=>'zurmo/<model:\w+>/api/list/*',          'verb'=>'GET'),
+                    array('zurmo/<model>Api/read', 'pattern'=>'zurmo/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
+                    array('zurmo/<model>Api/read', 'pattern'=>'zurmo/<model:\w+>/api/read/<id:\w+>', 'verb'=>'GET'),
+                    array('zurmo/<model>Api/list', 'pattern'=>'zurmo/<model:\w+>/api/list/*',        'verb'=>'GET'),
                     '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
                 )
             ),
@@ -217,7 +217,6 @@
         ),
         'import' => array(
             'application.extensions.zurmoinc.framework.adapters.*',
-            'application.extensions.zurmoinc.framework.adapters.api.*',
             'application.extensions.zurmoinc.framework.adapters.columns.*',
             'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
             'application.extensions.zurmoinc.framework.configuration.*',
@@ -347,14 +346,15 @@
     $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.api.adapters.api.*";
 
     // Routes for api test
     $testApiConfig['components']['urlManager']['rules'] = array(
-        array('api/<model>Api/read',   'pattern'=>'api/<model:\w+>/api/read/<id:\d+>', 'verb'=>'GET'),
-        array('api/<model>Api/list',   'pattern'=>'api/<model:\w+>/api/list/*',          'verb'=>'GET'),
-        array('api/<model>Api/update', 'pattern'=>'api/<model:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
-        array('api/<model>Api/delete', 'pattern'=>'api/<model:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
-        array('api/<model>Api/create', 'pattern'=>'api/<model:\w+>/api/create/',          'verb'=>'POST'),
+        array('api/<model>Api/read',     'pattern'=>'api/<model:\w+>/api/read/<id:\d+>',   'verb'=>'GET'),
+        array('api/<model>Api/list',     'pattern'=>'api/<model:\w+>/api/list/*',          'verb'=>'GET'),
+        array('api/<model>Api/update',   'pattern'=>'api/<model:\w+>/api/update/<id:\d+>', 'verb'=>'PUT'),
+        array('api/<model>Api/delete',   'pattern'=>'api/<model:\w+>/api/delete/<id:\d+>', 'verb'=>'DELETE'),
+        array('api/<model>Api/create',   'pattern'=>'api/<model:\w+>/api/create/',         'verb'=>'POST'),
         array('api/<model>Api/<action>', 'pattern'=>'api/<model:\w+>/api/<action>/*'),
     );
 

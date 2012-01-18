@@ -28,17 +28,16 @@
     {
         public function attach($owner)
         {
-
             if(Yii::app()->apiRequest->isApiRequest())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
             }
-
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
-
-            if(!Yii::app()->apiRequest->isApiRequest())
+            else
             {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
 
                 if (!Yii::app()->isApplicationInstalled())

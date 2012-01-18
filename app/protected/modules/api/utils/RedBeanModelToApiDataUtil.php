@@ -29,6 +29,9 @@
      */
     class RedBeanModelToApiDataUtil
     {
+        /**
+         * @var RedBeanModel
+         */
         protected $model;
 
         public function __construct($model)
@@ -37,6 +40,11 @@
             $this->model = $model;
         }
 
+        /**
+         *
+         * Get model properties as array.
+         * return array
+         */
         public function getData()
         {
             $data       = array();
@@ -69,8 +77,7 @@
                     }
                  }
                  //We don't want to list properties from CustomFieldData objects
-                 //This is also case fo rrelated models, not only for custom fields
-                 //To-Do: Check if we need some additional info about related objects, for example username
+                 //This is also case fo related models, not only for custom fields
                  elseif ($this->model->isRelation($attributeName) &&
                          $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                  {
@@ -87,7 +94,11 @@
             return $data;
         }
 
-        public function resolveRetrievableAttributesByModel($model)
+        /**
+         * Return array of retrievable model attributes
+         * @return array
+         */
+        protected static function resolveRetrievableAttributesByModel($model)
         {
             $retrievableAttributeNames = array();
            foreach ($model->attributeNames() as $name)
@@ -99,7 +110,6 @@
                }
                catch (Exception $e)
                {
-                   // Skip this attribute
                }
            }
             return $retrievableAttributeNames;

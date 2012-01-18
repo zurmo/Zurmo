@@ -127,10 +127,10 @@
 
         protected static function processAccessFailure($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
-            static::renderAccessFailureView($fromAjax, $nonAjaxFailureMessageContent);
+            static::renderAccessFailureContent($fromAjax, $nonAjaxFailureMessageContent);
         }
 
-        protected static function renderAccessFailureView($fromAjax = false, $nonAjaxFailureMessageContent = null)
+        protected static function renderAccessFailureContent($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
             if ($fromAjax)
             {

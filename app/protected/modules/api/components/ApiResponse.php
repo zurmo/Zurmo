@@ -24,10 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * ApiResponse
+     */
     abstract class ApiResponse
     {
         const STATUS_SUCCESS           = 'SUCCESS';
         const STATUS_FAILURE           = 'FAILURE';
+
+        /**
+         * Generate output
+         * @param ApiResult $result
+         * @throws NotImplementedException
+         */
         public static function generateOutput($result)
         {
             throw new NotImplementedException();

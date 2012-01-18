@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Test custom model action API functions.
+    */
     class ApiRestCustomModelActionTest extends ApiRestTest
     {
         public function testApiServerUrl()

@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Api test controller, used to test actions related to ApiTestModelItem
+    */
     class ApiTestModelItemApiController extends ZurmoModuleApiController
     {
         protected function getModelName()

@@ -23,7 +23,9 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
+    /**
+    * REST API helper class.
+    */
     class ApiRestTestHelper
     {
         public static function createApiCall($url, $method, $headers, $data = array())
@@ -57,8 +59,6 @@
                     break;
             }
             $response = curl_exec($handle);
-            //$info = curl_getinfo($handle);
-            //print_r($info);
             return $response;
         }
     }

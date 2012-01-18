@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Handle API requests.
+    */
     class ApiRequest
     {
         const REST           = 'REST';
@@ -31,24 +34,35 @@
         const JSON_FORMAT    = 'json';
         const XML_FORMAT     = 'xml';
 
+        /**
+         * Params format for response.
+         * @var string
+         */
         protected $paramsFormat;
 
         /**
-         * Store params from request
+         * Store params from request.
          * @var array
          */
         protected $params = array();
 
-        //To be redeclard in children classes
+        /**
+         * To be redeclard in children classes.
+         */
         public function getServiceType()
         {
         }
 
-        //To be redeclard in children classes
+        /**
+         * To be redeclard in children classes.
+         */
         public static function getParamsFromRequest()
         {
         }
 
+        /**
+         * Init class.
+         */
         public function init()
         {
             $this->parseResponseFormat();
@@ -74,12 +88,17 @@
             $this->paramsFormat = $paramsFormat;
         }
 
+        /**
+         * Get requested response format (json or xml)
+         */
         protected function parseResponseFormat()
         {
-            //ToDo:This produce warnings, when running unit tests, because $_SERVER['HTTP_ACCEPT'] is not defined in cli environment
             @$this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], self::JSON_FORMAT)) ? self::JSON_FORMAT : self::XML_FORMAT;
         }
 
+        /**
+         * Get sessionId from HTTP headers
+         */
         public function getSessionId()
         {
             if(isset($_SERVER['HTTP_ZURMO_SESSION_ID']))
@@ -92,6 +111,9 @@
             }
         }
 
+        /**
+        * Get token from HTTP headers
+        */
         public function getSessionToken()
         {
             if(isset($_SERVER['HTTP_ZURMO_TOKEN']))
@@ -104,6 +126,9 @@
             }
         }
 
+        /**
+        * Get username from HTTP headers
+        */
         public function getUsername()
         {
             if(isset($_SERVER['HTTP_ZURMO_AUTH_USERNAME']))
@@ -116,6 +141,9 @@
             }
         }
 
+        /**
+        * Get password from HTTP headers
+        */
         public function getPassword()
         {
             if(isset($_SERVER['HTTP_ZURMO_AUTH_PASSWORD']))
@@ -128,6 +156,9 @@
             }
         }
 
+        /**
+        * Get language from HTTP headers
+        */
         public function getLanguage()
         {
             if(isset($_SERVER['HTTP_ZURMO_LANG']))
@@ -140,6 +171,9 @@
             }
         }
 
+        /**
+        * Get request type from HTTP headers
+        */
         public function getRequestType()
         {
             if(isset($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']))
@@ -159,6 +193,9 @@
             }
         }
 
+        /**
+        * Parse params from request.
+        */
         public function parseParams()
         {
             if ($this->getRequestType() == self::REST)
@@ -176,6 +213,10 @@
             $this->setParams($params);
         }
 
+        /**
+         * Check if request is api request.
+         * @return boolean
+         */
         public function isApiRequest()
         {
             $url = Yii::app()->getRequest()->getUrl();

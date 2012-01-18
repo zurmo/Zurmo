@@ -24,13 +24,14 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Api helper class
+     */
     class ZurmoApiHelper extends CApplicationComponent
     {
-        public function init()
-        {
-            parent::init();
-        }
-
+        /**
+         * Get params from request, depending on request type(REST or SOAP)
+         */
         public function getRequestParams()
         {
             $requestClassName = $this->getRequestClassName();
@@ -38,12 +39,21 @@
             return $params;
         }
 
+        /**
+         * Generate response
+         * @param ApiResult $result
+         */
         public function sendResponse(ApiResult $result)
         {
             $responseClassName = $this->getResponseClassName();
             $responseClassName::generateOutput($result);
         }
 
+        /**
+         * Get request class name
+         * @throws ApiException
+         * @return string
+         */
         protected function getRequestClassName()
         {
             $requestType = Yii::app()->apiRequest->getRequestType();
@@ -57,11 +67,16 @@
             }
             else
             {
-                $message = Yii::t('Default', 'Invalid request type.');
+                $message = Yii::t('Default', 'Invalid API request type.');
                 throw new ApiException($message);
             }
         }
 
+        /**
+         * Get response class name
+         * @throws ApiException
+         * @return string
+         */
         protected function getResponseClassName()
         {
             $responseType = Yii::app()->apiRequest->getResponseFormat();

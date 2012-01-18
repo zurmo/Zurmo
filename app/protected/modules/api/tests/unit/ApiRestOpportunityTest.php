@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Test Opportunity related API functions.
+    */
     class ApiRestOpportunityTest extends ApiRestTest
     {
         public function testApiServerUrl()
@@ -83,7 +86,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/read/' . $opportunities[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('The id specified was invalid.', $response['message']);
+            $this->assertEquals('The ID specified was invalid.', $response['message']);
         }
 
         public function testCreateOpportunity()
@@ -276,17 +279,17 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/read/' . $opportunities[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
+            $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/update/' . $opportunities[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
+            $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/delete/' . $opportunities[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('You do not have rights for this action.', $response['message']);
+            $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
             //now check if user have rights, but no permissions.
             $notAllowedUser->setRight('OpportunitiesModule', OpportunitiesModule::getAccessRight());

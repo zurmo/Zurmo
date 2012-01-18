@@ -28,11 +28,14 @@
     {
         protected function processList()
         {
+
             $customFieldDataItems = CustomFieldData::getAll();
             $data = array();
             foreach ($customFieldDataItems as $customFieldDataItem)
             {
-                $data[$customFieldDataItem->name] = unserialize($customFieldDataItem->serializedData);
+                $dataAndLabels    = CustomFieldDataUtil::
+                    getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldDataItem, Yii::app()->language);
+                $data[$customFieldDataItem->name] = $dataAndLabels;
             }
             $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
             return $result;
@@ -43,7 +46,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if(!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processRead($params['id']);
@@ -62,36 +65,35 @@
                 throw new ApiException($message);
             }
 
-            $customFieldData    = unserialize($customFieldData->serializedData);
+            $customFieldData    = CustomFieldDataUtil::
+                getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, Yii::app()->language);
 
-            if(count($customFieldData) > 0)
+            try
             {
                 $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $customFieldData, null, null);
             }
-            else
+            catch (Exception $e)
             {
-                $message = Yii::t('Default', 'Custom field values are empty.');
+                $message = $e->getMessage();
                 throw new ApiException($message);
             }
+
             return $result;
         }
 
         public function actionCreate()
         {
-            $message = Yii::t('Default', 'Action not supported.');
-            throw new ApiException($message);
+            throw new ApiUnsupportedException();
         }
 
         public function actionUpdate()
         {
-            $message = Yii::t('Default', 'Action not supported.');
-            throw new ApiException($message);
+            throw new ApiUnsupportedException();
         }
 
         public function actionDelete()
         {
-            $message = Yii::t('Default', 'Action not supported.');
-            throw new ApiException($message);
+            throw new ApiUnsupportedException();
         }
     }
 ?>

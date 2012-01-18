@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Test model for API: ApiTestModelItem2
+    */
     class ApiTestModelItem2 extends OwnedSecurableItem
     {
         public static function getByName($name)

@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Base class for API REST functions tests.
+    */
     class ApiRestTest extends ApiBaseTest
     {
         protected function login($username = 'super', $password = 'super')

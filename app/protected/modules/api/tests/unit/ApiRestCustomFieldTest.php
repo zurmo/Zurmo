@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Test CustomField related API functions.
+    */
     class ApiRestCustomFieldTest extends ApiRestTest
     {
         public function testApiServerUrl()
@@ -55,20 +58,20 @@
             $industryFieldData->serializedData = serialize($industryValues);
             $this->assertTrue($industryFieldData->save());
 
+            $customFieldDataItems = CustomFieldData::getAll();
+            $compareData = array();
+            foreach ($customFieldDataItems as $customFieldDataItem)
+            {
+                $dataAndLabels    = CustomFieldDataUtil::
+                    getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldDataItem, 'en');
+                $compareData[$customFieldDataItem->name] = $dataAndLabels;
+            }
+
             //Test List
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/list/', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-
-            foreach ($response['data'] as $key => $value)
-            {
-                ksort($response['data'][$key]);
-            }
-            foreach ($industryValues as $key => $value)
-            {
-                ksort($industryValues);
-            }
-            $this->assertEquals($industryValues, $response['data']['Industries']);
+            $this->assertEquals($compareData, $response['data']);
         }
 
         /**
@@ -94,9 +97,15 @@
             $typeFieldData->serializedData = serialize($values);
             $this->assertTrue($typeFieldData->save());
 
+            CustomFieldData::forgetAll();
+            $customFieldData = CustomFieldData::getByName('AccountTypes');
+            $compareData    = CustomFieldDataUtil::
+                getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, 'en');
+
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/customField/api/read/AccountTypes', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
         }
     }
 ?>

@@ -49,10 +49,10 @@
 
         protected static function processAccessFailure()
         {
-            static::renderAccessFailureView();
+            static::renderAccessFailureContent();
         }
 
-        protected static function renderAccessFailureView()
+        protected static function renderAccessFailureContent()
         {
             $messageView = new AccessFailureView();
             $view        = new AccessFailurePageView($messageView);

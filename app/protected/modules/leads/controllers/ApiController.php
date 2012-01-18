@@ -24,13 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Leads API Controller
+    */
     class LeadsApiController extends ZurmoModuleApiController
     {
-        protected function getStateMetadataAdapterClassName()
-        {
-            return 'LeadsStateMetadataAdapter';
-        }
-
         protected function getSearchFormClassName()
         {
             return 'LeadsSearchForm';

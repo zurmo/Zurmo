@@ -24,24 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Role API Controller
+    */
     class ZurmoRoleApiController extends ZurmoModuleApiController
     {
         public function actionCreate()
         {
-            $message = Yii::t('Default', 'Action not supported.');
-            throw new ApiException($message);
+            throw new ApiUnsupportedException();
         }
 
         public function actionUpdate()
         {
-            $message = Yii::t('Default', 'Action not supported.');
-            throw new ApiException($message);
+            throw new ApiUnsupportedException();
         }
 
         public function actionDelete()
         {
-            $message = Yii::t('Default', 'Action not supported.');
-            throw new ApiException($message);
+            throw new ApiUnsupportedException();
         }
 
         protected function getModelName()

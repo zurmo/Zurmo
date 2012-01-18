@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * ZurmoAPiController is responsible for login and logout actions.
+    */
     class ZurmoApiController extends ZurmoModuleApiController
     {
         public function actionLogin()
@@ -64,7 +67,7 @@
             }
             else
             {
-                $message = Yii::t('Default', 'User is not logged out.');
+                $message = Yii::t('Default', 'Logout failed.');
                 throw new ApiException($message);
             }
         }

@@ -29,7 +29,7 @@
      * should extend this class to provide generic functionality
      * that is applicable to all standard api modules.
      */
-    abstract class ZurmoModuleApiController extends ZurmoModuleController
+    abstract class ZurmoModuleApiController extends ZurmoBaseController
     {
         const RIGHTS_FILTER_PATH = 'application.modules.api.utils.ApiRightsControllerFilter';
 
@@ -59,7 +59,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if(!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processRead((int)$params['id']);
@@ -90,7 +90,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if(!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processUpdate((int)$params['id'], $params['data']);
@@ -102,7 +102,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if(!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processDelete((int)$params['id']);
@@ -125,7 +125,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
 
@@ -141,9 +141,9 @@
 
             try
             {
-                $redBeanModelToApiDataUtil   = new RedBeanModelToApiDataUtil($model);
-                $data   = $redBeanModelToApiDataUtil->getData();
-                $result = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
+                $redBeanModelToApiDataUtil = new RedBeanModelToApiDataUtil($model);
+                $data                      = $redBeanModelToApiDataUtil->getData();
+                $result                    = new ApiResult(ApiResponse::STATUS_SUCCESS, $data, null, null);
             }
             catch (Exception $e)
             {
@@ -151,11 +151,6 @@
                 throw new ApiException($message);
             }
             return $result;
-        }
-
-        protected function getStateMetadataAdapterClassName()
-        {
-            return null;
         }
 
         protected function getSearchFormClassName()
@@ -207,8 +202,8 @@
                 {
                     $searchForm = null;
                 }
-                $stateMetadataAdapterClassName = $this->getStateMetadataAdapterClassName();
 
+                $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
                 $dataProvider = $this->makeRedBeanDataProviderFromGet(
                                     $searchForm,
                                     $modelClassName,
@@ -298,7 +293,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
 
@@ -351,7 +346,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
 

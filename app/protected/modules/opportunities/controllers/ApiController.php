@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+    * Opportunities API Controller
+    */
     class OpportunitiesApiController extends ZurmoModuleApiController
     {
         protected function getSearchFormClassName()

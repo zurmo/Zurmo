@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * ApiModule is used to manage api calls.
+     *
+     */
     class ApiModule extends SecurableModule
     {
         public function getDependencies()
