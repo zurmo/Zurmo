@@ -337,6 +337,32 @@
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
         }
 
+        protected function createDependentDropDownCustomFieldByModule($moduleClassName, $name)
+        {
+            $customFieldDataData     = array('testCountry'  => array('aaaa','bbbb'),
+                                             'testState'    => array('aaa1','aaa2','bbb1','bbb2'),
+                                             'testCity'     => array('aa1','ab1','aa2','ab2','ba1','bb1','ba2','bb2')
+                                       );
+            $customFieldDataLabelsFr = array('testCountry'  => array('aaaa Fr','bbbb Fr'),
+                                             'testState'    => array('aaa1 Fr','aaa2 Fr','bbb1 Fr','bbb2 Fr'),
+                                             'testCity'     => array('aa1 Fr','ab1 Fr','aa2 Fr','ab2 Fr','ba1 Fr','bb1 Fr','ba2 Fr','bb2 Fr')
+                                       );
+            $customFieldDataLabelsDe = array('testCountry'  => array('aaaa De','bbbb De'),
+                                             'testState'    => array('aaa1 De','aaa2 De','bbb1 De','bbb2 De'),
+                                             'testCity'     => array('aa1 De','ab1 De','aa2 De','ab2 De','ba1 De','bb1 De','ba2 De','bb2 De')
+                                       );
+            $extraPostData = array( 'defaultValueOrder'     => '1',
+                                    'isAudited'             => '1',
+                                    'isRequired'            => '0',
+                                    'customFieldDataData'   => $customFieldDataData[$name],
+                                    'customFieldDataLabels' => array(
+                                        'fr' => $customFieldDataLabelsFr[$name],
+                                        'de' => $customFieldDataLabelsDe[$name],
+                                    )
+                             );
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
+        }
+
         protected function createRadioDropDownCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValueOrder'   => '2',
@@ -381,6 +407,35 @@
 
             $extraPostData = array('formula' => $formulaForModule[$moduleClassName]);
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CalculatedNumber', $extraPostData);
+        }
+
+        protected function createDropDownDependencyCustomFieldByModule($moduleClassName, $name)
+        {
+            $mappingData = array(
+                                array('attributeName'=>'testCountry'),
+                                array('attributeName'=>'testState',
+                                      'valuesToParentValues'=>array('aaa1'=>'aaaa',
+                                                                    'aaa2'=>'aaaa',
+                                                                    'bbb1'=>'bbbb',
+                                                                    'bbb2'=>'bbbb'
+                                                              )
+                                ),
+                                array('attributeName'=>'testCity',
+                                      'valuesToParentValues'=>array('aa1'=>'aaa1',
+                                                                    'ab1'=>'aaa1',
+                                                                    'aa2'=>'aaa2',
+                                                                    'ab2'=>'aaa2',
+                                                                    'ba1'=>'bbb1',
+                                                                    'bb1'=>'bbb1',
+                                                                    'ba2'=>'bbb2',
+                                                                    'bb2'=>'bbb2',
+                                                               )
+                                ),
+                                array('attributeName'=>'')
+                           );
+
+            $extraPostData = array('mappingData' => $mappingData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDownDependency', $extraPostData);
         }
 
         protected function createModuleEditBadValidationPostData()

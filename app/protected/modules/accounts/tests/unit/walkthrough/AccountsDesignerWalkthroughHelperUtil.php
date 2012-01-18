@@ -179,6 +179,13 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'dropdowndependency',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                         array(
@@ -267,6 +274,23 @@
                                         ),
                                         array(
                                             'element' => 'calculatednumber',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'testCountry',
+                                        ),
+                                        array(
+                                            'element' => 'testState',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'testCity',
                                         ),
                                     )
                                 ),
@@ -637,6 +661,27 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'testCountry',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'testState',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'testCity',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -817,6 +862,27 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'testCountry',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'testState',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'testCity',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -883,6 +949,9 @@
                             'picklist'           => array('value'  => 'b'),
                             'multiselect'        => array('values' => 'gg'),
                             'tagcloud'           => array('values' => 'w'),
+                            'testCountry'        => array('value'  => 'aaaa'),
+                            'testState'          => array('value'  => 'aaa2'),
+                            'testCity'           => array('value'  => 'ab2'),
                             'radio'              => array('value'  => 'e'),
                             'date__Date'         => array('type'   => 'Today'),
                             'datetime__DateTime' => array('type'   => 'Today'));
