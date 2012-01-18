@@ -39,13 +39,19 @@
 
         protected function renderContent()
         {
-            $content = Yii::t('Default', 'Recently Viewed');
+            $content = Yii::t('Default', '<h3>Recently Viewed</h3>');
+			
+			$content .= '<ul>';
+			
             foreach($this->recentlyViewedItems as $recentlyViewedItem)
             {
                 //$recentlyViewedItem['moduleClassName'] is also available, can use
                 //to determine class for image?
-                $content .= $recentlyViewedItem['link'] . "<br/>";
+                $content .= '<li class="type-'.$recentlyViewedItem['moduleClassName'].'"><em></em>'.$recentlyViewedItem['link'] . '</li>';
             }
+			
+			$content .= '</ul>';
+			
             return $content;
         }
     }

@@ -1,3 +1,37 @@
+/*Imports*/
+@import 'originals/newui.css';
+
+
+/*Variables*/
+
+/*Functions*/
+
+.t-shadow(@style){
+	/*color, x, y blur*/
+	-webkit-text-shadow: @style;
+	   -moz-text-shadow: @style;
+	     -o-text-shadow: @style;
+	    -ms-text-shadow: @style;
+			text-shadow: @style;
+}
+.b-shadow(@style){
+	/*x, y, blur, spread, color*/
+	-webkit-box-shadow: @style;
+	   -moz-box-shadow: @style;
+	     -o-box-shadow: @style;
+	    -ms-box-shadow: @style;
+			box-shadow: @style;
+}
+.text-overflow(){
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+
 *{
 	margin:0;
 	padding:0;
@@ -85,6 +119,7 @@ footer, header, hgroup, menu, nav, section {
 	float:right;
 	margin-left:10px;
 	padding-left:10px;
+	position: relative;
 }
 
 #HeaderLinksView div > ul > li{
@@ -103,10 +138,30 @@ footer, header, hgroup, menu, nav, section {
 	color:#fff !important;
 }
 #HeaderLinksView ul ul{
-	margin-left:0;
-	margin-top:5px;
-	float:left;
 	display:none;
+	position:absolute;
+	margin-left:0;
+	margin-top:0;
+	float:left;
+	border:1px solid #b6b6b6;
+	
+	background: -webkit-linear-gradient(top, rgba(235,235,235,1) 0%, rgba(245,245,245,1) 100%);
+	
+	.b-shadow( inset 0 0 0 2px #fff );
+	.b-shadow( 0 0 10px 5px rgba(50, 50, 50, 0.3) );
+	li{
+		line-height: 100%;
+		padding:15px 25px 15px 25px;
+	}
+	a{
+		color:#666;
+		font-size:11px;
+		font-weight:normal;
+		&:hover{
+			color:#111 !important;
+		}
+	}
+	
 }
 .notifications-link{
 	float:right;
@@ -214,16 +269,70 @@ footer, header, hgroup, menu, nav, section {
 	text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
 	background:#7cb830 url(../images/main-nav-selected.png) left top no-repeat;
 }
+/*Recently Viewed*/
+
 #RecentlyViewedView{
-	width:170px;
 	float:left;
 	background: url(../images/recently-viewed-gradient.png) left top repeat-x;
 	border-right:1px solid #eee;
 	border-left:1px solid #eee;
 	border-top:1px solid #F9F9FA;
-	height:100%;
-	display:block;
+	padding:20px 5px;
+	width:160px;
+	h3{
+		color:#666;
+		font-size:10px;
+		margin-bottom:20px;
+	}
+	li{
+		font-size:12px;
+		font-weight: bold;
+		color:#555;
+		margin:0;
+		padding:0;
+		a{
+			width:160px;
+			.text-overflow;
+			  
+			line-height: 33px;
+			//text-indent:40px;
+			display:block;
+			-webkit-border-radius: 4px;
+			text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+			&:hover{
+				color:#fff !important;
+				text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
+				background:#7cb830 url(../images/main-nav-selected.png) left top no-repeat;
+			}
+			&:before{
+				width:24px;
+				height:24px;
+				background:#FFF;
+				border-radius: 4px;
+				content: "@";
+				display:inline-block;
+				line-height: 24px;
+				text-align:center;
+				margin-left:2px;
+				margin-right:8px;
+				&:hover{
+					color:#555 !important;
+				}
+			}
+		}
+		em{
+			width:24px;
+			height:24px;
+			background:#FFF;
+			border-radius: 4px;
+			display:none;
+			margin-right:8px;
+		}
+	}
 }
+
+
+
 /*Content*/
 .AppContent{
 	padding:20px 20px 20px 20px;
@@ -235,6 +344,10 @@ footer, header, hgroup, menu, nav, section {
 }
 
 /*Inner toolbar*/
+.view-toolbar-container{
+	width:100%;
+	display:inline-block;
+}
 .view-toolbar{
 	border:1px solid #b7b7b7;
 	border-top-color: #e7e7e7;
