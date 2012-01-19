@@ -157,10 +157,14 @@
             $this->createDateTimeCustomFieldByModule            ('MeetingsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('MeetingsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('MeetingsModule', 'picklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'citypicklist');
             $this->createIntegerCustomFieldByModule             ('MeetingsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('MeetingsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('MeetingsModule', 'tagcloud');
             $this->createCalculatedNumberCustomFieldByModule    ('MeetingsModule', 'calculatednumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('MeetingsModule', 'dropdowndependency');
             $this->createPhoneCustomFieldByModule               ('MeetingsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('MeetingsModule', 'radio');
             $this->createTextCustomFieldByModule                ('MeetingsModule', 'text');
@@ -271,9 +275,12 @@
                                             'date'                              => $date,
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
-                                            'picklist'                          => array('value' => 'a'),
+                                            'picklist'                          => array('value'  => 'a'),
                                             'multiselect'                       => array('values' => array('ff', 'rr')),
                                             'tagcloud'                          => array('values' => array('x', 'z')),
+                                            'countrypicklist'                   => array('value'  => 'bbbb'),
+                                            'statepicklist'                     => array('value'  => 'bbb1'),
+                                            'citypicklist'                      => array('value'  => 'bb1'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
                                             'radio'                             => array('value' => 'd'),
@@ -317,6 +324,9 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc.com');
+            $this->assertEquals($meeting[0]->countrypicklist->value           , 'bbbb');
+            $this->assertEquals($meeting[0]->statepicklist->value             , 'bbb1');
+            $this->assertEquals($meeting[0]->citypicklist->value              , 'bb1');
             $this->assertContains('ff'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('rr'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('x'                                         , $meeting[0]->tagcloud->values);
@@ -376,6 +386,9 @@
                                 'picklist'                          => array('value'  => 'b'),
                                 'multiselect'                       => array('values' =>  array('gg', 'hh')),
                                 'tagcloud'                          => array('values' =>  array('w', 'y')),
+                                'countrypicklist'                   => array('value'  => 'aaaa'),
+                                'statepicklist'                     => array('value'  => 'aaa1'),
+                                'citypicklist'                      => array('value'  => 'ab1'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -420,6 +433,9 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertEquals($meeting[0]->countrypicklist->value           , 'aaaa');
+            $this->assertEquals($meeting[0]->statepicklist->value             , 'aaa1');
+            $this->assertEquals($meeting[0]->citypicklist->value              , 'ab1');
             $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('w'                                         , $meeting[0]->tagcloud->values);

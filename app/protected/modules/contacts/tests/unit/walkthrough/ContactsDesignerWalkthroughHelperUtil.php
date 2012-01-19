@@ -204,6 +204,13 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'dropdowndependency',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                         array(
@@ -296,7 +303,17 @@
                                             'element' => 'tagcloud',
                                         ),
                                         array(
-                                            'element' => 'calculatednumber',
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                        array(
+                                            'element' => 'citypicklist',
                                         ),
                                     )
                                 ),
@@ -708,6 +725,27 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'citypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -914,6 +952,27 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'citypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -978,14 +1037,17 @@
                             'text'               => 'This is a test Edit Text',
                             'textarea'           => 'This is a test Edit TextArea',
                             'url'                => 'http://wwww.abc-edit.com',
-                            'checkbox'           => array('value'  =>  '0'),
-                            'currency'           => array('value'  =>  40),
-                            'picklist'           => array('value'  =>  'b'),
+                            'checkbox'           => array('value'  => '0'),
+                            'currency'           => array('value'  => 40),
+                            'picklist'           => array('value'  => 'b'),
                             'multiselect'        => array('values' => 'gg'),
                             'tagcloud'           => array('values' => 'w'),
-                            'radio'              => array('value'  =>  'e'),
-                            'date__Date'         => array('type'   =>  'Today'),
-                            'datetime__DateTime' => array('type'   =>  'Today'));
+                            'countrypicklist'    => array('value'  => 'aaaa'),
+                            'statepicklist'      => array('value'  => 'aaa1'),
+                            'citypicklist'       => array('value'  => 'ab1'),
+                            'radio'              => array('value'  => 'e'),
+                            'date__Date'         => array('type'   => 'Today'),
+                            'datetime__DateTime' => array('type'   => 'Today'));
         }
     }
 ?>

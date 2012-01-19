@@ -165,13 +165,13 @@
             $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('AccountsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('AccountsModule', 'picklist');
-            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'testCountry');
-            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'testState');
-            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'testCity');
+            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'citypicklist');
             $this->createMultiSelectDropDownCustomFieldByModule ('AccountsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('AccountsModule', 'tagcloud');
             $this->createCalculatedNumberCustomFieldByModule    ('AccountsModule', 'calculatednumber');
-            $this->createDropDownDependencyFieldByModule        ('AccountsModule', 'dropdowndependency');
+            $this->createDropDownDependencyCustomFieldByModule  ('AccountsModule', 'dropdowndependency');
             $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');
             $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radio');
@@ -324,9 +324,9 @@
                                     'picklist'                          => array('value'  => 'a'),
                                     'multiselect'                       => array('values' => array('ff', 'rr')),
                                     'tagcloud'                          => array('values' => array('x', 'z')),
-                                    'testCountry'                       => array('value'  => 'bbbb'),
-                                    'testState'                         => array('value'  => 'bbb1'),
-                                    'testCity'                          => array('value'  => 'bb1'),
+                                    'countrypicklist'                   => array('value'  => 'bbbb'),
+                                    'statepicklist'                     => array('value'  => 'bbb1'),
+                                    'citypicklist'                      => array('value'  => 'bb1'),
                                     'integer'                           => '12',
                                     'phone'                             => '259-784-2169',
                                     'radio'                             => array('value' => 'd'),
@@ -385,9 +385,9 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
-            $this->assertEquals($account[0]->testCountry->value             , 'bbbb');
-            $this->assertEquals($account[0]->testState->value               , 'bbb1');
-            $this->assertEquals($account[0]->testCity->value                , 'bb1');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'bbbb');
+            $this->assertEquals($account[0]->statepicklist->value           , 'bbb1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'bb1');
             $this->assertContains('ff'                                      , $account[0]->multiselect->values);
             $this->assertContains('rr'                                      , $account[0]->multiselect->values);
             $this->assertContains('x'                                       , $account[0]->tagcloud->values);
@@ -436,9 +436,9 @@
                                         'picklist'              => array('value'  =>  'a'),
                                         'multiselect'           => array('values' =>  'ff'),
                                         'tagcloud'              => array('values' =>  'x'),
-                                        'testCountry'           => array('value'  => 'bbbb'),
-                                        'testState'             => array('value'  => 'bbb1'),
-                                        'testCity'              => array('value'  => 'bb1'),
+                                        'countrypicklist'       => array('value'  => 'bbbb'),
+                                        'statepicklist'         => array('value'  => 'bbb1'),
+                                        'citypicklist'          => array('value'  => 'bb1'),
                                         'radio'                 => array('value'  =>  'd'),
                                         'date__Date'            => array('type'   =>  'Today'),
                                         'datetime__DateTime'    => array('type'   =>  'Today')),
@@ -510,9 +510,9 @@
                             'picklist'                          => array('value'  => 'b'),
                             'multiselect'                       => array('values' =>  array('gg', 'hh')),
                             'tagcloud'                          => array('values' =>  array('w', 'y')),
-                            'testCountry'                       => array('value'  => 'aaaa'),
-                            'testState'                         => array('value'  => 'aaa1'),
-                            'testCity'                          => array('value'  => 'ab1'),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
                             'integer'                           => '11',
                             'phone'                             => '259-784-2069',
                             'radio'                             => array('value' => 'e'),
@@ -573,9 +573,9 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($account[0]->testCountry->value             , 'aaaa');
-            $this->assertEquals($account[0]->testState->value               , 'aaa1');
-            $this->assertEquals($account[0]->testCity->value                , 'ab1');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($account[0]->statepicklist->value           , 'aaa1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                      , $account[0]->multiselect->values);
             $this->assertContains('hh'                                      , $account[0]->multiselect->values);
             $this->assertContains('w'                                       , $account[0]->tagcloud->values);

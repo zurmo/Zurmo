@@ -163,10 +163,14 @@
             $this->createDateTimeCustomFieldByModule            ('ContactsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('ContactsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('ContactsModule', 'picklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'citypicklist');
             $this->createIntegerCustomFieldByModule             ('ContactsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('ContactsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('ContactsModule', 'tagcloud');
             $this->createCalculatedNumberCustomFieldByModule    ('ContactsModule', 'calculatednumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('ContactsModule', 'dropdowndependency');
             $this->createPhoneCustomFieldByModule               ('ContactsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('ContactsModule', 'radio');
             $this->createTextCustomFieldByModule                ('ContactsModule', 'text');
@@ -404,54 +408,57 @@
             //Create a new contact based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Contact' => array(
-                                'title'                             =>  array('value' => 'Mr.'),
-                                'firstName'                         =>  'Sarah',
-                                'lastName'                          =>  'Williams',
-                                'state'                             =>  array('id' => $contactStateId),
-                                'jobTitle'                          =>  'Sales Director',
-                                'account'                           =>  array('id' => $accountId),
-                                'department'                        =>  'Sales',
-                                'officePhone'                       =>  '739-741-3005',
-                                'source'                            =>  array('value' => 'Self-Generated'),
-                                'mobilePhone'                       =>  '285-301-8232',
-                                'officeFax'                         =>  '255-455-1914',
-                                'primaryEmail'                      =>  array('emailAddress' => 'info@myNewContact.com',
-                                                                              'optOut' => '1',
-                                                                              'isInvalid' => '0'),
-                                'secondaryEmail'                    =>  array('emailAddress' => '',
+                                'title'                             => array('value' => 'Mr.'),
+                                'firstName'                         => 'Sarah',
+                                'lastName'                          => 'Williams',
+                                'state'                             => array('id' => $contactStateId),
+                                'jobTitle'                          => 'Sales Director',
+                                'account'                           => array('id' => $accountId),
+                                'department'                        => 'Sales',
+                                'officePhone'                       => '739-741-3005',
+                                'source'                            => array('value' => 'Self-Generated'),
+                                'mobilePhone'                       => '285-301-8232',
+                                'officeFax'                         => '255-455-1914',
+                                'primaryEmail'                      => array('emailAddress' => 'info@myNewContact.com',
+                                                                             'optOut' => '1',
+                                                                             'isInvalid' => '0'),
+                                'secondaryEmail'                    => array('emailAddress' => '',
                                                                               'optOut' => '0',
                                                                               'isInvalid' => '0'),
-                                'primaryAddress'                    =>  array('street1' => '6466 South Madison Creek',
+                                'primaryAddress'                    => array('street1' => '6466 South Madison Creek',
                                                                               'street2' => '',
                                                                               'city' => 'Chicago',
                                                                               'state' => 'IL',
                                                                               'postalCode' => '60652',
                                                                               'country' => 'USA'),
-                                'secondaryAddress'                  =>  array('street1' => '26217 West Third Lane',
-                                                                              'street2' => '',
-                                                                              'city' => 'New York',
-                                                                              'state' => 'NY',
-                                                                              'postalCode' => '10169',
-                                                                              'country' => 'USA'),
-                                'owner'                             =>  array('id' => $superUserId),
-                                'explicitReadWriteModelPermissions' =>  array('type' => null),
-                                'description'                       =>  'This is a Description',
-                                'checkbox'                          =>  '1',
-                                'currency'                          =>  array('value'   => 45,
-                                                                              'currency' => array(
-                                                                              'id' => $baseCurrency->id)),
-                                'date'                              =>  $date,
-                                'datetime'                          =>  $datetime,
-                                'decimal'                           =>  '123',
-                                'picklist'                          =>  array('value' => 'a'),
-                                'multiselect'                       =>  array('values' => array('ff', 'rr')),
-                                'tagcloud'                          =>  array('values' => array('x', 'z')),
-                                'integer'                           =>  '12',
-                                'phone'                             =>  '259-784-2169',
-                                'radio'                             =>  array('value' => 'd'),
-                                'text'                              =>  'This is a test Text',
-                                'textarea'                          =>  'This is a test TextArea',
-                                'url'                               =>  'http://wwww.abc.com')));
+                                'secondaryAddress'                  => array('street1' => '26217 West Third Lane',
+                                                                             'street2' => '',
+                                                                             'city' => 'New York',
+                                                                             'state' => 'NY',
+                                                                             'postalCode' => '10169',
+                                                                             'country' => 'USA'),
+                                'owner'                             => array('id' => $superUserId),
+                                'explicitReadWriteModelPermissions' => array('type' => null),
+                                'description'                       => 'This is a Description',
+                                'checkbox'                          => '1',
+                                'currency'                          => array('value'   => 45,
+                                                                             'currency' => array(
+                                                                             'id' => $baseCurrency->id)),
+                                'date'                              => $date,
+                                'datetime'                          => $datetime,
+                                'decimal'                           => '123',
+                                'picklist'                          => array('value' => 'a'),
+                                'multiselect'                       => array('values' => array('ff', 'rr')),
+                                'tagcloud'                          => array('values' => array('x', 'z')),
+                                'countrypicklist'                   => array('value'  => 'bbbb'),
+                                'statepicklist'                     => array('value'  => 'bbb1'),
+                                'citypicklist'                      => array('value'  => 'bb1'),
+                                'integer'                           => '12',
+                                'phone'                             => '259-784-2169',
+                                'radio'                             => array('value' => 'd'),
+                                'text'                              => 'This is a test Text',
+                                'textarea'                          => 'This is a test TextArea',
+                                'url'                               => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -509,6 +516,9 @@
             $this->assertEquals($contact->text                           , 'This is a test Text');
             $this->assertEquals($contact->textarea                       , 'This is a test TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc.com');
+            $this->assertEquals($contact->countrypicklist->value         , 'bbbb');
+            $this->assertEquals($contact->statepicklist->value           , 'bbb1');
+            $this->assertEquals($contact->citypicklist->value            , 'bb1');
             $this->assertContains('ff'                                   , $contact->multiselect->values);
             $this->assertContains('rr'                                   , $contact->multiselect->values);
             $this->assertContains('x'                                    , $contact->tagcloud->values);
@@ -563,14 +573,17 @@
                                         'text'               => 'This is a test Text',
                                         'textarea'           => 'This is a test TextArea',
                                         'url'                => 'http://wwww.abc.com',
-                                        'checkbox'           => array('value'   =>  '1'),
-                                        'currency'           => array('value'   =>  45),
-                                        'picklist'           => array('value'   =>  'a'),
-                                        'multiselect'        =>  array('values' =>  'ff'),
-                                        'tagcloud'           =>  array('values' =>  'x'),
-                                        'radio'              => array('value'   =>  'd'),
-                                        'date__Date'         => array('type'    =>  'Today'),
-                                        'datetime__DateTime' => array('type'    =>  'Today')),
+                                        'checkbox'           => array('value'  => '1'),
+                                        'currency'           => array('value'  => 45),
+                                        'picklist'           => array('value'  => 'a'),
+                                        'multiselect'        => array('values' => 'ff'),
+                                        'tagcloud'           => array('values' => 'x'),
+                                        'countrypicklist'    => array('value'  => 'bbbb'),
+                                        'statepicklist'      => array('value'  => 'bbb1'),
+                                        'citypicklist'       => array('value'  => 'bb1'),
+                                        'radio'              => array('value'  => 'd'),
+                                        'date__Date'         => array('type'   => 'Today'),
+                                        'datetime__DateTime' => array('type'   => 'Today')),
                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
@@ -609,54 +622,57 @@
             //Edit and save the contact.
             $this->setGetArray(array('id' => $contactId));
             $this->setPostArray(array('Contact' => array(
-                            'title'                             =>  array('value' => 'Mrs.'),
-                            'firstName'                         =>  'Sarah',
-                            'lastName'                          =>  'Williams Edit',
-                            'jobTitle'                          =>  'Sales Director Edit',
-                            'department'                        =>  'Sales Edit',
-                            'officePhone'                       =>  '739-742-3005',
-                            'source'                            =>  array('value' => 'Inbound Call'),
-                            'mobilePhone'                       =>  '285-300-8232',
-                            'officeFax'                         =>  '255-454-1914',
-                            'state'                             =>  array('id' => $contactStateId),
-                            'owner'                             =>  array('id' => $superUserId),
-                            'account'                           =>  array('id' => $accountId),
-                            'primaryEmail'                      =>  array('emailAddress' => 'info@myNewContact.com',
-                                                                          'optOut' => '0',
-                                                                          'isInvalid' => '0'),
-                            'secondaryEmail'                    =>  array('emailAddress' => 'info@myNewContactEdit.com',
-                                                                          'optOut' => '0',
-                                                                          'isInvalid' => '0'),
-                            'primaryAddress'                    =>  array('street1' => '26378 South Arlington Ave',
-                                                                          'street2' => '',
-                                                                          'city' => 'San Jose',
-                                                                          'state' => 'CA',
-                                                                          'postalCode' => '95131',
-                                                                          'country' => 'USA'),
-                            'secondaryAddress'                  =>  array('street1' => '18693 West Spring Center',
-                                                                          'street2' => '',
-                                                                          'city' => 'Philadelphia',
-                                                                          'state' => 'PA',
-                                                                          'postalCode' => '19102',
-                                                                          'country' => 'USA'),
-                            'explicitReadWriteModelPermissions' =>  array('type' => $explicitReadWriteModelPermission),
-                            'description'                       =>  'This is a Edit Description',
-                            'checkbox'                          =>  '0',
-                            'currency'                          =>  array('value'   => 40,
-                                                                          'currency' => array(
-                                                                          'id' => $baseCurrency->id)),
-                            'date'                              =>  $date,
-                            'datetime'                          =>  $datetime,
-                            'decimal'                           =>  '12',
-                            'picklist'                          =>  array('value' => 'b'),
-                            'multiselect'                       =>  array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          =>  array('values' =>  array('w', 'y')),
-                            'integer'                           =>  '11',
-                            'phone'                             =>  '259-784-2069',
-                            'radio'                             =>  array('value' => 'e'),
-                            'text'                              =>  'This is a test Edit Text',
-                            'textarea'                          =>  'This is a test Edit TextArea',
-                            'url'                               =>  'http://wwww.abc-edit.com'),
+                            'title'                             => array('value' => 'Mrs.'),
+                            'firstName'                         => 'Sarah',
+                            'lastName'                          => 'Williams Edit',
+                            'jobTitle'                          => 'Sales Director Edit',
+                            'department'                        => 'Sales Edit',
+                            'officePhone'                       => '739-742-3005',
+                            'source'                            => array('value' => 'Inbound Call'),
+                            'mobilePhone'                       => '285-300-8232',
+                            'officeFax'                         => '255-454-1914',
+                            'state'                             => array('id' => $contactStateId),
+                            'owner'                             => array('id' => $superUserId),
+                            'account'                           => array('id' => $accountId),
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewContact.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => 'info@myNewContactEdit.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'primaryAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'secondaryAddress'                  => array('street1' => '18693 West Spring Center',
+                                                                         'street2' => '',
+                                                                         'city' => 'Philadelphia',
+                                                                         'state' => 'PA',
+                                                                         'postalCode' => '19102',
+                                                                         'country' => 'USA'),
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'description'                       => 'This is a Edit Description',
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'    => 40,
+                                                                         'currency' => array(
+                                                                         'id' => $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array('w', 'y')),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
                                 'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/edit');
 
@@ -712,6 +728,9 @@
             $this->assertEquals($contact->text                           , 'This is a test Edit Text');
             $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($contact->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($contact->statepicklist->value           , 'aaa1');
+            $this->assertEquals($contact->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                   , $contact->multiselect->values);
             $this->assertContains('hh'                                   , $contact->multiselect->values);
             $this->assertContains('w'                                    , $contact->tagcloud->values);

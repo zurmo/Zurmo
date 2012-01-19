@@ -280,17 +280,17 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testCountry',
+                                            'element' => 'countrypicklist',
                                         ),
                                         array(
-                                            'element' => 'testState',
+                                            'element' => 'statepicklist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testCity',
+                                            'element' => 'citypicklist',
                                         ),
                                     )
                                 ),
@@ -661,21 +661,21 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testCountry',
+                                            'element' => 'countrypicklist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testState',
+                                            'element' => 'statepicklist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testCity',
+                                            'element' => 'citypicklist',
                                         ),
                                     )
                                 ),
@@ -862,21 +862,21 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testCountry',
+                                            'element' => 'countrypicklist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testState',
+                                            'element' => 'statepicklist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'testCity',
+                                            'element' => 'citypicklist',
                                         ),
                                     )
                                 ),
@@ -949,9 +949,9 @@
                             'picklist'           => array('value'  => 'b'),
                             'multiselect'        => array('values' => 'gg'),
                             'tagcloud'           => array('values' => 'w'),
-                            'testCountry'        => array('value'  => 'aaaa'),
-                            'testState'          => array('value'  => 'aaa2'),
-                            'testCity'           => array('value'  => 'ab2'),
+                            'countrypicklist'    => array('value'  => 'aaaa'),
+                            'statepicklist'      => array('value'  => 'aaa1'),
+                            'citypicklist'       => array('value'  => 'ab1'),
                             'radio'              => array('value'  => 'e'),
                             'date__Date'         => array('type'   => 'Today'),
                             'datetime__DateTime' => array('type'   => 'Today'));

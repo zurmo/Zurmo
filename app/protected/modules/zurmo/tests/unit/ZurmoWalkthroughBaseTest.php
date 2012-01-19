@@ -339,27 +339,28 @@
 
         protected function createDependentDropDownCustomFieldByModule($moduleClassName, $name)
         {
-            $customFieldDataData     = array('testCountry'  => array('aaaa','bbbb'),
-                                             'testState'    => array('aaa1','aaa2','bbb1','bbb2'),
-                                             'testCity'     => array('aa1','ab1','aa2','ab2','ba1','bb1','ba2','bb2')
+            $customFieldDataData     = array('countrypicklist' => array('aaaa','bbbb'),
+                                             'statepicklist'   => array('aaa1','aaa2','bbb1','bbb2'),
+                                             'citypicklist'    => array('aa1','ab1','aa2','ab2','ba1','bb1','ba2','bb2')
                                        );
-            $customFieldDataLabelsFr = array('testCountry'  => array('aaaa Fr','bbbb Fr'),
-                                             'testState'    => array('aaa1 Fr','aaa2 Fr','bbb1 Fr','bbb2 Fr'),
-                                             'testCity'     => array('aa1 Fr','ab1 Fr','aa2 Fr','ab2 Fr','ba1 Fr','bb1 Fr','ba2 Fr','bb2 Fr')
+            $customFieldDataLabelsFr = array('countrypicklist' => array('aaaa Fr','bbbb Fr'),
+                                             'statepicklist'   => array('aaa1 Fr','aaa2 Fr','bbb1 Fr','bbb2 Fr'),
+                                             'citypicklist'    => array('aa1 Fr','ab1 Fr','aa2 Fr','ab2 Fr','ba1 Fr','bb1 Fr','ba2 Fr','bb2 Fr')
                                        );
-            $customFieldDataLabelsDe = array('testCountry'  => array('aaaa De','bbbb De'),
-                                             'testState'    => array('aaa1 De','aaa2 De','bbb1 De','bbb2 De'),
-                                             'testCity'     => array('aa1 De','ab1 De','aa2 De','ab2 De','ba1 De','bb1 De','ba2 De','bb2 De')
+            $customFieldDataLabelsDe = array('countrypicklist'  => array('aaaa De','bbbb De'),
+                                             'statepicklist'    => array('aaa1 De','aaa2 De','bbb1 De','bbb2 De'),
+                                             'citypicklist'     => array('aa1 De','ab1 De','aa2 De','ab2 De','ba1 De','bb1 De','ba2 De','bb2 De')
                                        );
-            $extraPostData = array( 'defaultValueOrder'     => '1',
-                                    'isAudited'             => '1',
-                                    'isRequired'            => '0',
-                                    'customFieldDataData'   => $customFieldDataData[$name],
-                                    'customFieldDataLabels' => array(
-                                        'fr' => $customFieldDataLabelsFr[$name],
-                                        'de' => $customFieldDataLabelsDe[$name],
-                                    )
-                             );
+            $extraPostData           = array(
+                                        'defaultValueOrder'     => '1',
+                                        'isAudited'             => '1',
+                                        'isRequired'            => '0',
+                                        'customFieldDataData'   => $customFieldDataData[$name],
+                                        'customFieldDataLabels' => array(
+                                                           'fr' => $customFieldDataLabelsFr[$name],
+                                                           'de' => $customFieldDataLabelsDe[$name],
+                                                            )
+                                       );
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
         }
 
@@ -412,15 +413,15 @@
         protected function createDropDownDependencyCustomFieldByModule($moduleClassName, $name)
         {
             $mappingData = array(
-                                array('attributeName'=>'testCountry'),
-                                array('attributeName'=>'testState',
+                                array('attributeName'=>'countrypicklist'),
+                                array('attributeName'=>'statepicklist',
                                       'valuesToParentValues'=>array('aaa1'=>'aaaa',
                                                                     'aaa2'=>'aaaa',
                                                                     'bbb1'=>'bbbb',
                                                                     'bbb2'=>'bbbb'
                                                               )
                                 ),
-                                array('attributeName'=>'testCity',
+                                array('attributeName'=>'citypicklist',
                                       'valuesToParentValues'=>array('aa1'=>'aaa1',
                                                                     'ab1'=>'aaa1',
                                                                     'aa2'=>'aaa2',
@@ -526,7 +527,7 @@
                 'fr' => $name . ' fr',
             );
 
-            if ($attributeTypeName != "CalculatedNumber")
+            if ($attributeTypeName != "CalculatedNumber" && $attributeTypeName != "DropDownDependency")
             {
                 $this->assertEquals(
                     $compareData, $newModel->getAttributeLabelsForAllSupportedLanguagesByAttributeName($name));
@@ -539,7 +540,7 @@
 
             $content = $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeDetails');
 
-            if ($attributeTypeName != "CalculatedNumber")
+            if ($attributeTypeName != "CalculatedNumber" && $attributeTypeName != "DropDownDependency")
             {
                 //Now test going to the user interface edit view for the existing attribute.
                 $content = $this->runControllerWithRedirectExceptionAndGetContent('designer/default/attributeEdit');
