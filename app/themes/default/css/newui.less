@@ -3,6 +3,10 @@
 
 
 /*Variables*/
+//blue theme
+@themeColor : #262877;
+//@themeColorRGB : 38, 40, 179;
+
 
 /*Functions*/
 
@@ -28,6 +32,13 @@
 	-webkit-text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+}
+.radius(@style){
+	-webkit-border-radius:@style;
+	-moz-border-radius:@style;
+	-ms-border-radius:@style;
+	-o-border-radius:@style;
+	border-radius:@style;
 }
 
 *{
@@ -311,7 +322,7 @@ footer, header, hgroup, menu, nav, section {
 		a{
 			width:160px;
 			.text-overflow;		  
-			line-height: 33px;
+			line-height: 32px;
 			//text-indent:40px;
 			display:block;
 			-webkit-border-radius: 4px;
@@ -330,7 +341,7 @@ footer, header, hgroup, menu, nav, section {
 				display:inline-block;
 				line-height: 24px;
 				text-align:center;
-				margin-left:2px;
+				margin-left:4px;
 				margin-right:8px;
 				&:hover{
 					color:#555 !important;
@@ -374,7 +385,8 @@ footer, header, hgroup, menu, nav, section {
 	border-radius:4px;
 	float:left;	
 	margin:20px 0 15px 0;
-	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12); /*999*/
+	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+	//-webkit-box-shadow:  ; /*999*/
 	background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
 }
 
@@ -446,14 +458,14 @@ table.items tbody tr:last-child td{
 	border-bottom: none;
 }
 
-table.items thead tr th:first-child,
-table.items tbody tr td:first-child{
+.juiportlet-widget table.items thead tr th:first-child,
+.juiportlet-widget table.items tbody tr td:first-child{
 	padding-left:15px;
 }
 
 table.items thead tr th:last-child,
 table.items tbody tr td:last-child{
-	padding-right:15px;
+	//padding-right:15px;
 }
 
 table.items th{
@@ -462,4 +474,73 @@ table.items th{
 	line-height: 35px;
 	background: url(../images/table-items-header.png) left top repeat-x;
 	padding:0;
+}
+.checkbox-column, .button-column{
+	width:45px;
+	text-align:center;
+}
+tr.odd{
+	
+}
+tr.even{
+	background:#fafafa;	
+}
+table.items tr:hover{
+	background-color:#D4E7BC;
+}
+
+/*forms*/
+.form input[type="text"]{
+	border:1px solid #ccc;
+	.radius(3px);
+	font-size:12px;
+	color:#999;
+	text-indent:6px;
+	line-height: 24px;
+	.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
+	width:98%;
+	&:focus{
+		.b-shadow(0 0 1px 1px @themeColor);
+	}
+}
+.AppContent label{
+	font-size:12px !important;
+	color:#666;
+	font-weight:400 !important;
+	padding-top:8px;
+}
+
+/*Form Edit Account*/
+.form form{
+	
+}
+.form th{
+	vertical-align: text-top;
+}
+.form table{
+	table-layout:fixed;
+	width:100%;
+	padding:20px 10px;
+	border:1px solid #CCC;
+	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12)); /*999*/
+}
+.form form thead tr th:first-child,
+.form form tbody tr td:first-child{
+	padding-left:15px;
+}
+#col-0{
+	//width:50% !important;
+}
+
+
+/*Footer*/
+#credit-link{
+	img{
+		margin-right:10px;
+		margin-left:10px;
+		float:left;
+	}
+	span{
+		line-height: 19px;
+	}
 }

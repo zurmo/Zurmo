@@ -51,8 +51,8 @@
 
         protected function renderContent()
         {
-            $content  = '<div class="view-toolbar">';
-            $content .= '</div>';
+            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            $content .= '</div></div>';
             $content .= '<table>';
             $content .= '<colgroup>';
             //$content .= '<col style="width:80%" /><col style="width:20%" />';

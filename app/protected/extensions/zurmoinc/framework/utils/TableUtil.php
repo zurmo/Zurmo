@@ -35,16 +35,16 @@
             assert('$columnCount <= 2');
             if ($columnCount == 1)
             {
-                $width = 80;
+                $width = 85;
             }
             else
             {
-                $width = 30;
+                $width = 35;
             }
             $content = '<colgroup>';
             for ($i = 0; $i < $columnCount; $i++)
             {
-                $content .= '<col style="width:20%" /><col style="width:' . $width . '%" />';
+                $content .= '<col style="width:15%" /><col style="width:' . $width . '%" />';
             }
             $content .= '</colgroup>';
             return $content;

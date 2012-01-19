@@ -56,9 +56,9 @@
          */
         protected function renderContent()
         {
-            $content = '<div class="view-toolbar">';
+            $content = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementBar(false);
-            $content .= '</div>';
+            $content .= '</div></div>';
             $content .= $this->renderFormLayout();
             return $content;
         }

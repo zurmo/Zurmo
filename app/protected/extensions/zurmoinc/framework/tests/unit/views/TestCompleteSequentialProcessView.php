@@ -43,9 +43,9 @@
         protected function renderContent()
         {
             $content  = '<h1>Sequential Process Complete</h1>';
-            $content .= '<div class="view-toolbar">' . "\n";
+            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">' . "\n";
             $content .= "<h2>A second message for the complete process.</h2>";
-            $content .= '</div>';
+            $content .= '</div></div>';
             $this->registerScripts();
             return $content;
         }

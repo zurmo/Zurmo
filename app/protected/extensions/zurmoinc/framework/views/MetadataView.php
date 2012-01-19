@@ -58,9 +58,9 @@
          */
         protected function renderViewToolBar($renderInForm = true)
         {
-            $content = '<div class="view-toolbar">';
+            $content = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementBar($renderInForm);
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 

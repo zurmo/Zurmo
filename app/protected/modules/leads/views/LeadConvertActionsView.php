@@ -97,9 +97,9 @@
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-select-link'));
             $skipLink   = CHtml::link(Yii::t('Default', 'Skip AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-skip-link'));
-            $content    = '<div class="view-toolbar">';
+            $content    = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content   .= $cancelLink->render() . '&#160;';
-            $content .= '</div>';
+            $content .= '</div></div>';
             $content .= '<div id="account-select-title" style="margin-bottom:5px;">';
             if ($this->userCanCreateAccount)
             {

@@ -47,7 +47,7 @@
         {
             $previousPageLinkContent = $this->renderPreviousPageLinkContent();
             $nextPageLinkContent     = $this->renderNextPageLinkContent();
-            $content  = '<div class="view-toolbar">'; //change to different class?
+            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">'; //change to different class?
             if ($previousPageLinkContent)
             {
                 $content .= '<div id="previous-page-link" class="import-previous-page-link">' .
@@ -58,7 +58,7 @@
                 $content .= '<div id="next-page-link" class="import-next-page-link">' .
                 $nextPageLinkContent . '</div>';
             }
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 

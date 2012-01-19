@@ -92,14 +92,14 @@
                                                                 )
                                                             );
             $content .= $formStart;
-            $content .= '<div class="view-toolbar">';
+            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= $this->renderNotificationBar('NotificationBar');
             $content .= $this->renderSaveLayoutButton('NotificationBar');
             if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
             }
-            $content .= '</div>';
+            $content .= '</div></div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
