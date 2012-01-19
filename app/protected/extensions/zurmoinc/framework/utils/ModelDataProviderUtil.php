@@ -286,6 +286,11 @@
                 //of ascertaining this information for now.
                 throw new NotSupportedException();
             }
+            if($operatorType != 'oneOf')
+            {
+                //only support oneOf for the moment.  Once we add allOf, need to have an alternative sub-query
+                //below that uses if/else logic to compare count against how many possibles. then return 1 or 0.
+            }
             $relationAttributeTableName      = RedBeanModel::getTableName($relationAttributeModelClassName);
             $tableAliasName                  = $relationAttributeTableName;
             $joinColumnName                  = 'value';
@@ -295,7 +300,7 @@
                                   "where $quote$tableAliasName$quote.$quote$relationColumnName$quote = " . // Not Coding Standard
                                   "$quote$relationAttributeTableAliasName$quote.id " . // Not Coding Standard
                                   "and $quote$tableAliasName$quote.$quote$joinColumnName$quote " . // Not Coding Standard
-                                  DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType, $value) . "))";
+                                  DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType, $value) . " limit 1))";
         }
 
         protected static function resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(

@@ -38,6 +38,9 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        /**
+         * Test that the multiple select attribute can query properly for search.
+         */
         public function testSetGetAndSearchForMultiSelectDropDownAttribute()
         {
             $super = User::getByUsername('super');
@@ -104,7 +107,7 @@
             $this->assertEquals($values,                 $attributeForm->customFieldDataData);
             $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
 
-            //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
+            //Test that validation on completely new multi select picklists works correctly and is inline with the rules
             //from the CustomFieldData model.
             $attributeForm = new MultiSelectDropDownAttributeForm();
             $attributeForm->attributeName    = 's';    //name to short. test that this fails.
@@ -154,8 +157,7 @@
             $this->assertContains('Writing',                  $account->testHobbies->values);
             $this->assertContains('Reading',                  $account->testHobbies->values);
 
-            //Searching with a custom field that is not blank should produce an errors.
-            //RedBean_Exception_SQL: SQLSTATE[21000]: Cardinality violation: 1242 Subquery returns more than 1 row
+            //Searching with a custom field that is not blank should not produce an errors.
             $searchPostData      = array('name'        => 'my test account',
                                          'officePhone' => null,
                                          'testHobbies' => array('values' => array('Writing', 'Reading')),
@@ -164,7 +166,6 @@
             $searchForm          = new AccountsSearchForm($account);
             $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $searchPostData);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
-
             //Run search and make sure the data returned matches how many total accounts are available.
             $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data                = $dataProvider->getData();
