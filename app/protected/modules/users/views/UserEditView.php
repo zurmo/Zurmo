@@ -219,6 +219,11 @@
             {
                 $elementInformation['type'] = 'ReadOnlyDerivedUserStatus';
             }
+            if ($elementInformation['attributeName'] == 'role' &&
+                !RightsUtil::canUserAccessModule('RolesModule', Yii::app()->user->userModel))
+            {
+                $elementInformation['type']   = 'ReadOnlyModel';
+            }
         }
     }
 ?>
