@@ -46,6 +46,7 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
+            //Create a test multiple values custom field.
             $values = array(
                 'Reading',
                 'Writing',
@@ -107,55 +108,40 @@
             $this->assertEquals($values,                 $attributeForm->customFieldDataData);
             $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
 
-            //Test that validation on completely new multi select picklists works correctly and is inline with the rules
-            //from the CustomFieldData model.
-            $attributeForm = new MultiSelectDropDownAttributeForm();
-            $attributeForm->attributeName    = 's';    //name to short. test that this fails.
-            $attributeForm->attributeLabels  = array(
-                'de' => 'Test Hobbies 3 de',
-                'en' => 'Test Hobbies 3 en',
-                'es' => 'Test Hobbies 3 es',
-                'fr' => 'Test Hobbies 3 fr',
-                'it' => 'Test Hobbies 3 it',
-            );
-            $attributeForm->isAudited           = true;
-            $attributeForm->isRequired          = true;
-            $attributeForm->defaultValueOrder   = 1;
-            $attributeForm->customFieldDataData = array('a', 'b', 'c');
-            $modelAttributesAdapterClassName    = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
-            $adapter                            = new $modelAttributesAdapterClassName(new Account());
-            $this->assertFalse($attributeForm->validate());
-            $attributeForm->attributeName       = 'camelcased';
-            $this->assertTrue($attributeForm->validate());
-            try
-            {
-                $adapter->setAttributeMetadataFromForm($attributeForm);
-            }
-            catch (Exception $e)
-            {
-                echo $e->getMessage();
-                $this->fail();
-            }
-
-            $account = new Account();
-            $account->name                       = 'my test account';
-            $account->owner                      = Yii::app()->user->userModel;
-
-            $customFieldValue1 = new CustomFieldValue();
-            $customFieldValue1->value = 'Writing';
-            $account->testHobbies->values->add($customFieldValue1);
-            $customFieldValue2 = new CustomFieldValue();
+            //Create an account to test searching multiple fields on for search.
+            $account                  = new Account();
+            $this->assertEquals(1, $account->testHobbies->values->count());
+            $account->name            = 'my test account';
+            $account->owner           = Yii::app()->user->userModel;
+            $customFieldValue2        = new CustomFieldValue();
             $customFieldValue2->value = 'Reading';
             $account->testHobbies->values->add($customFieldValue2);
-
-            $saved = $account->save();
-            $this->assertTrue($saved);
-            $accountId = $account->id;
-            $account->forget();
-            unset($account);
-            $account = Account::getById($accountId);
+            $this->assertTrue($account->save());
+            $accountId                = $account->id;
+            $account                  = Account::getById($accountId);
+            $this->assertEquals(2, $account->testHobbies->values->count());
             $this->assertContains('Writing',                  $account->testHobbies->values);
             $this->assertContains('Reading',                  $account->testHobbies->values);
+
+            //Create a second account with different hobbies
+            $account                  = new Account();
+            //Remove the default value of 'Writing';
+            $account->testHobbies->values->removeByIndex(0);
+            $account->name            = 'my test account2';
+            $account->owner           = Yii::app()->user->userModel;
+            $customFieldValue1        = new CustomFieldValue();
+            $customFieldValue1->value = 'Singing';
+            $account->testHobbies->values->add($customFieldValue1);
+            $customFieldValue2        = new CustomFieldValue();
+            $customFieldValue2->value = 'Surfing';
+            $account->testHobbies->values->add($customFieldValue2);
+            $this->assertTrue($account->save());
+
+            $accountId                = $account->id;
+            $account                  = Account::getById($accountId);
+            $this->assertEquals(2, $account->testHobbies->values->count());
+            $this->assertContains('Singing',                  $account->testHobbies->values);
+            $this->assertContains('Surfing',                  $account->testHobbies->values);
 
             //Searching with a custom field that is not blank should not produce an errors.
             $searchPostData      = array('name'        => 'my test account',
