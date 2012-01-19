@@ -212,7 +212,7 @@
             }
             if (is_string($value))
             {
-                return self::resolveToLowerForStringComparison($operatorType, $value);
+                return self::resolveToLowerForStringComparison($operatorType, self::escape($value));
             }
             elseif (is_array($value) && count($value) > 0)
             {
@@ -239,7 +239,8 @@
             }
             return SQLOperatorUtil::getOperatorByType($operatorType) .
             " '" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
-            $value . SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'";
+            $value .
+            SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'";
         }
 
         /**

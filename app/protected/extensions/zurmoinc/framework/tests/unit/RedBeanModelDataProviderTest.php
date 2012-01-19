@@ -284,7 +284,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}l{$quote}.{$quote}lmember{$quote} = lower('some\'value'))";
+            $compareWhere = "({$quote}l{$quote}.{$quote}lmember{$quote} = 'some\'value')";
             $this->assertEquals($compareWhere, $where);
 
             //Make sure the sql runs properly.
