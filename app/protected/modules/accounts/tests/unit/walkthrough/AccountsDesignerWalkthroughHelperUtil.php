@@ -273,22 +273,15 @@
                                             'element' => 'tagcloud',
                                         ),
                                         array(
-                                            'element' => 'calculatednumber',
+                                            'element' => 'countrypicklist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
-                                        array(
-                                            'element' => 'countrypicklist',
-                                        ),
                                         array(
                                             'element' => 'statepicklist',
                                         ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
                                         array(
                                             'element' => 'citypicklist',
                                         ),
@@ -849,13 +842,6 @@
                                     array(
                                         array(
                                             'element' => 'tagcloud',
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'element' => 'calculatednumber',
                                         ),
                                     )
                                 ),

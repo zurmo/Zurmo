@@ -1,0 +1,174 @@
+<?php
+    /*********************************************************************************
+     * Zurmo is a customer relationship management program developed by
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     *
+     * Zurmo is free software; you can redistribute it and/or modify it under
+     * the terms of the GNU General Public License version 3 as published by the
+     * Free Software Foundation with the addition of the following permission added
+     * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+     * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+     * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+     *
+     * Zurmo is distributed in the hope that it will be useful, but WITHOUT
+     * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * details.
+     *
+     * You should have received a copy of the GNU General Public License along with
+     * this program; if not, see http://www.gnu.org/licenses or write to the Free
+     * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+     * 02110-1301 USA.
+     *
+     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
+     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     ********************************************************************************/
+
+    class MultiSelectDropDownSearchFormTest extends BaseTest
+    {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function setup()
+        {
+            parent::setup();
+            Yii::app()->user->userModel = User::getByUsername('super');
+        }
+
+        public function testSetGetAndSearchForMultiSelectDropDownAttribute()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $values = array(
+                'Reading',
+                'Writing',
+                'Singing',
+                'Surfing',
+            );
+            $labels = array('fr' => array('Reading fr', 'Writing fr', 'Singing fr', 'Surfing fr'),
+                            'de' => array('Reading de', 'Writing de', 'Singing de', 'Surfing de'),
+            );
+            $hobbiesFieldData = CustomFieldData::getByName('Hobbies');
+            $hobbiesFieldData->serializedData = serialize($values);
+            $this->assertTrue($hobbiesFieldData->save());
+
+            $attributeForm = new MultiSelectDropDownAttributeForm();
+            $attributeForm->attributeName    = 'testHobbies';
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Hobbies 2 de',
+                'en' => 'Test Hobbies 2 en',
+                'es' => 'Test Hobbies 2 es',
+                'fr' => 'Test Hobbies 2 fr',
+                'it' => 'Test Hobbies 2 it',
+            );
+            $attributeForm->isAudited             = true;
+            $attributeForm->isRequired            = true;
+            $attributeForm->defaultValueOrder     = 1;
+            $attributeForm->customFieldDataData   = $values;
+            $attributeForm->customFieldDataName   = 'Hobbies';
+            $attributeForm->customFieldDataLabels = $labels;
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter                         = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $account       = new Account();
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'testHobbies');
+            $this->assertEquals('MultiSelectDropDown', $attributeForm->getAttributeTypeName());
+            $this->assertEquals('testHobbies',         $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Hobbies 2 de',
+                'en' => 'Test Hobbies 2 en',
+                'es' => 'Test Hobbies 2 es',
+                'fr' => 'Test Hobbies 2 fr',
+                'it' => 'Test Hobbies 2 it',
+            );
+            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+            $this->assertEquals(true,                    $attributeForm->isAudited);
+            $this->assertEquals(true,                    $attributeForm->isRequired);
+            $this->assertEquals('Writing',               $attributeForm->defaultValue);
+            $this->assertEquals(1,                       $attributeForm->defaultValueOrder);
+            $this->assertEquals('Hobbies',               $attributeForm->customFieldDataName);
+            $this->assertEquals($values,                 $attributeForm->customFieldDataData);
+            $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
+
+            //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
+            //from the CustomFieldData model.
+            $attributeForm = new MultiSelectDropDownAttributeForm();
+            $attributeForm->attributeName    = 's';    //name to short. test that this fails.
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Hobbies 3 de',
+                'en' => 'Test Hobbies 3 en',
+                'es' => 'Test Hobbies 3 es',
+                'fr' => 'Test Hobbies 3 fr',
+                'it' => 'Test Hobbies 3 it',
+            );
+            $attributeForm->isAudited           = true;
+            $attributeForm->isRequired          = true;
+            $attributeForm->defaultValueOrder   = 1;
+            $attributeForm->customFieldDataData = array('a', 'b', 'c');
+            $modelAttributesAdapterClassName    = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter                            = new $modelAttributesAdapterClassName(new Account());
+            $this->assertFalse($attributeForm->validate());
+            $attributeForm->attributeName       = 'camelcased';
+            $this->assertTrue($attributeForm->validate());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $account = new Account();
+            $account->name                       = 'my test account';
+            $account->owner                      = Yii::app()->user->userModel;
+
+            $customFieldValue1 = new CustomFieldValue();
+            $customFieldValue1->value = 'Writing';
+            $account->testHobbies->values->add($customFieldValue1);
+            $customFieldValue2 = new CustomFieldValue();
+            $customFieldValue2->value = 'Reading';
+            $account->testHobbies->values->add($customFieldValue2);
+
+            $saved = $account->save();
+            $this->assertTrue($saved);
+            $accountId = $account->id;
+            $account->forget();
+            unset($account);
+            $account = Account::getById($accountId);
+            $this->assertContains('Writing',                  $account->testHobbies->values);
+            $this->assertContains('Reading',                  $account->testHobbies->values);
+
+            //Searching with a custom field that is not blank should produce an errors.
+            //RedBean_Exception_SQL: SQLSTATE[21000]: Cardinality violation: 1242 Subquery returns more than 1 row
+            $searchPostData      = array('name'        => 'my test account',
+                                         'officePhone' => null,
+                                         'testHobbies' => array('values' => array('Writing', 'Reading')),
+                                         'officeFax'   => null);
+            $account             = new Account(false);
+            $searchForm          = new AccountsSearchForm($account);
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $searchPostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+
+            //Run search and make sure the data returned matches how many total accounts are available.
+            $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
+            $data                = $dataProvider->getData();
+            $this->assertEquals(1, count($data));
+        }
+    }
+?>

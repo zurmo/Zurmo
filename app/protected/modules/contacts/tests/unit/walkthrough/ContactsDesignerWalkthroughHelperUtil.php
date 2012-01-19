@@ -945,13 +945,6 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'calculatednumber',
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
                                             'element' => 'countrypicklist',
                                         ),
                                     )

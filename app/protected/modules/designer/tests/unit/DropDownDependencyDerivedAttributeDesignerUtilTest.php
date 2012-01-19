@@ -58,7 +58,6 @@
                                                             'mappingData' => $mappingData));
             $this->assertTrue($metadata->save());
 
-
             //Change b3 to b3New
             $oldAndNewValuePairs = array('b3' => 'b3New');
             DropDownDependencyDerivedAttributeDesignerUtil::
@@ -148,7 +147,7 @@
         public function testResolveValuesInMappingWhenValueWasRemoved()
         {
             //Remove a1
-            $customFieldDataData = array('a2New','a3','a4');
+            $customFieldDataData = array('a2New', 'a3', 'a4');
             DropDownDependencyDerivedAttributeDesignerUtil::
             resolveValuesInMappingWhenValueWasRemoved('aModelClassName', 'a', $customFieldDataData);
 
@@ -176,7 +175,7 @@
             $this->assertEquals($compareData, $unserializedData['mappingData']);
 
             //Remove b4
-            $customFieldDataData = array('b1','b2','b3New');
+            $customFieldDataData = array('b1', 'b2', 'b3New');
             DropDownDependencyDerivedAttributeDesignerUtil::
             resolveValuesInMappingWhenValueWasRemoved('aModelClassName', 'b', $customFieldDataData);
 

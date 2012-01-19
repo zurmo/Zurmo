@@ -1021,12 +1021,12 @@
                 'cb3',
                 'cc3',
             );
-            $city_labels = array('fr' => array('aa1 fr', 'ab1 fr', 'ac1 fr', 'aa2 fr', 'ab2 fr', 'ac2 fr', 'aa3 fr', 'ab3 fr','ac3 fr',
-                                               'ba1 fr', 'bb1 fr', 'bc1 fr', 'ba2 fr', 'bb2 fr', 'bc2 fr', 'ba3 fr', 'bb3 fr','bc3 fr',
-                                               'ca1 fr', 'cb1 fr', 'cc1 fr', 'ca2 fr', 'cb2 fr', 'cc2 fr', 'ca3 fr', 'cb3 fr','cc3 fr'),
-                                 'de' => array('aa1 de', 'ab1 de', 'ac1 de', 'aa2 de', 'ab2 de', 'ac2 de', 'aa3 de', 'ab3 de','ac3 de',
-                                               'ba1 de', 'bb1 de', 'bc1 de', 'ba2 de', 'bb2 de', 'bc2 de', 'ba3 de', 'bb3 de','bc3 de',
-                                               'ca1 de', 'cb1 de', 'cc1 de', 'ca2 de', 'cb2 de', 'cc2 de', 'ca3 de', 'cb3 de','cc3 de'),
+            $city_labels = array('fr' => array('aa1 fr', 'ab1 fr', 'ac1 fr', 'aa2 fr', 'ab2 fr', 'ac2 fr', 'aa3 fr', 'ab3 fr', 'ac3 fr', 
+                                               'ba1 fr', 'bb1 fr', 'bc1 fr', 'ba2 fr', 'bb2 fr', 'bc2 fr', 'ba3 fr', 'bb3 fr', 'bc3 fr', 
+                                               'ca1 fr', 'cb1 fr', 'cc1 fr', 'ca2 fr', 'cb2 fr', 'cc2 fr', 'ca3 fr', 'cb3 fr', 'cc3 fr'), 
+                                 'de' => array('aa1 de', 'ab1 de', 'ac1 de', 'aa2 de', 'ab2 de', 'ac2 de', 'aa3 de', 'ab3 de', 'ac3 de', 
+                                               'ba1 de', 'bb1 de', 'bc1 de', 'ba2 de', 'bb2 de', 'bc2 de', 'ba3 de', 'bb3 de', 'bc3 de', 
+                                               'ca1 de', 'cb1 de', 'cc1 de', 'ca2 de', 'cb2 de', 'cc2 de', 'ca3 de', 'cb3 de', 'cc3 de'),
             );
             $statesFieldData = CustomFieldData::getByName('Cities');
             $statesFieldData->serializedData = serialize($cities);
@@ -1077,7 +1077,6 @@
             $this->assertEquals($cities,      $attributeForm->customFieldDataData);
             $this->assertEquals($city_labels, $attributeForm->customFieldDataLabels);
 
-
             $attributeName = 'testLocation';
             $attributeForm = new DropDownDependencyAttributeForm();
             $attributeForm->attributeName    = $attributeName;
@@ -1089,50 +1088,50 @@
                 'it' => 'Test Location Value 2 it',
             );
             $attributeForm->mappingData      = array(
-                                                    array('attributeName'=>'testCountry'),
-                                                    array('attributeName'=>'testState',
-                                                          'valuesToParentValues'=>array('aaa1'=>'aaaa',
-                                                                                        'aaa2'=>'aaaa',
-                                                                                        'aaa3'=>'aaaa',
-                                                                                        'bbb1'=>'bbbb',
-                                                                                        'bbb2'=>'bbbb',
-                                                                                        'bbb3'=>'bbbb',
-                                                                                        'ccc1'=>'cccc',
-                                                                                        'ccc2'=>'cccc',
-                                                                                        'ccc3'=>'cccc'
+                                                    array('attributeName'        => 'testCountry'),
+                                                    array('attributeName'        => 'testState',
+                                                          'valuesToParentValues' => array('aaa1' => 'aaaa',
+                                                                                          'aaa2' => 'aaaa',
+                                                                                          'aaa3' => 'aaaa',
+                                                                                          'bbb1' => 'bbbb',
+                                                                                          'bbb2' => 'bbbb',
+                                                                                          'bbb3' => 'bbbb',
+                                                                                          'ccc1' => 'cccc',
+                                                                                          'ccc2' => 'cccc',
+                                                                                          'ccc3' => 'cccc'
                                                                                   )
                                                     ),
-                                                    array('attributeName'=>'testCity',
-                                                          'valuesToParentValues'=>array('aa1'=>'aaa1',
-                                                                                        'ab1'=>'aaa1',
-                                                                                        'ac1'=>'aaa1',
-                                                                                        'aa2'=>'aaa2',
-                                                                                        'ab2'=>'aaa2',
-                                                                                        'ac2'=>'aaa2',
-                                                                                        'aa3'=>'aaa3',
-                                                                                        'ab3'=>'aaa3',
-                                                                                        'ac3'=>'aaa3',
-                                                                                        'ba1'=>'bbb1',
-                                                                                        'bb1'=>'bbb1',
-                                                                                        'bc1'=>'bbb1',
-                                                                                        'ba2'=>'bbb2',
-                                                                                        'bb2'=>'bbb2',
-                                                                                        'bc2'=>'bbb2',
-                                                                                        'ba3'=>'bbb3',
-                                                                                        'bb3'=>'bbb3',
-                                                                                        'bc3'=>'bbb3',
-                                                                                        'ca1'=>'ccc1',
-                                                                                        'cb1'=>'ccc1',
-                                                                                        'cc1'=>'ccc1',
-                                                                                        'ca2'=>'ccc2',
-                                                                                        'cb2'=>'ccc2',
-                                                                                        'cc2'=>'ccc2',
-                                                                                        'ca3'=>'ccc3',
-                                                                                        'cb3'=>'ccc3',
-                                                                                        'cc3'=>'ccc3'
+                                                    array('attributeName'        => 'testCity',
+                                                          'valuesToParentValues' => array('aa1' => 'aaa1',
+                                                                                          'ab1' => 'aaa1',
+                                                                                          'ac1' => 'aaa1',
+                                                                                          'aa2' => 'aaa2',
+                                                                                          'ab2' => 'aaa2',
+                                                                                          'ac2' => 'aaa2',
+                                                                                          'aa3' => 'aaa3',
+                                                                                          'ab3' => 'aaa3',
+                                                                                          'ac3' => 'aaa3',
+                                                                                          'ba1' => 'bbb1',
+                                                                                          'bb1' => 'bbb1',
+                                                                                          'bc1' => 'bbb1',
+                                                                                          'ba2' => 'bbb2',
+                                                                                          'bb2' => 'bbb2',
+                                                                                          'bc2' => 'bbb2',
+                                                                                          'ba3' => 'bbb3',
+                                                                                          'bb3' => 'bbb3',
+                                                                                          'bc3' => 'bbb3',
+                                                                                          'ca1' => 'ccc1',
+                                                                                          'cb1' => 'ccc1',
+                                                                                          'cc1' => 'ccc1',
+                                                                                          'ca2' => 'ccc2',
+                                                                                          'cb2' => 'ccc2',
+                                                                                          'cc2' => 'ccc2',
+                                                                                          'ca3' => 'ccc3',
+                                                                                          'cb3' => 'ccc3',
+                                                                                          'cc3' => 'ccc3'
                                                                                    )
                                                     ),
-                                                    array('attributeName'=>'')
+                                                    array('attributeName' => '')
                                                );
 
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();

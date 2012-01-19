@@ -44,7 +44,7 @@
             $customFieldData->serializedData   = serialize($values);
             $customFieldData->serializedLabels = serialize($labels);
             $saved = $customFieldData->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -52,7 +52,7 @@
 
         public function testGetSetAndMethods()
         {
-            $availableCustomFieldAttributes = array('a','test','b');
+            $availableCustomFieldAttributes = array('a', 'test', 'b');
             $mappingData                    = array('Item 1' => 'parentItem1', 'Item2' => null);
             $customFieldData                = CustomFieldData::getByName('Items');
             $mapping = new DropDownDependencyCustomFieldMapping(3, 'test',

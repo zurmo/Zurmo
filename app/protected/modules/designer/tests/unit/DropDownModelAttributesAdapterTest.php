@@ -33,7 +33,6 @@
             self::makeDropDownAttributeUsingAdapter('aaa', 'a', new Account());
             self::makeDropDownAttributeUsingAdapter('bbb', 'b', new Account());
             self::makeDropDownAttributeUsingAdapter('ccc', 'c', new Account());
-
         }
 
         public static function makeDropDownAttributeUsingAdapter($namePrefix, $valuesPrefix, RedBeanModel $modelTouse)
@@ -50,7 +49,7 @@
             $airplanesFieldData = CustomFieldData::getByName($namePrefix . 'TheData');
             $airplanesFieldData->serializedData = serialize($values);
             $saved = $airplanesFieldData->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -111,7 +110,6 @@
             $metadata->serializedMetadata = serialize(array('attributeLabels' => array('a' => 'b'),
                                                             'mappingData' => $mappingData));
             $this->assertTrue($metadata->save());
-
 
             //Change b3 to b3New
             $attributeForm                                    = AttributesFormFactory::
