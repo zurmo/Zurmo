@@ -42,8 +42,8 @@
     $installed        = false; // Set to true by the installation process.
     $instanceConfig   = array(); //Set any parameters you want to have merged into configuration array.
                                  //@see CustomManagement
-    $instanceConfig['components']['request']['hostInfo'] = '';
-    $instanceConfig['components']['request']['scriptUrl'] = '';
+    //$instanceConfig['components']['request']['hostInfo'] = '';
+    //$instanceConfig['components']['request']['scriptUrl'] = '';
 
     $urlManager = array (); //Set any parameters you want to customize url manager.
     $testApiUrl = '';

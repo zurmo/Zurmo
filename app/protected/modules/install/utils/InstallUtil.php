@@ -529,10 +529,10 @@
                                 'host'   => '$memcacheHost',
                                 'port'   => $memcachePort, ",
                                      $contents);
-            $contents = preg_replace('/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'hostInfo\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
+            $contents = preg_replace('/\/\/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'hostInfo\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
                                      "\$instanceConfig['components']['request']['hostInfo']         = '$hostInfo';",
                                      $contents);
-            $contents = preg_replace('/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'scriptUrl\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
+            $contents = preg_replace('/\/\/\$instanceConfig\[\'components\'\]\[\'request\'\]\[\'scriptUrl\'\]\s*=\s*\'.*?\';/', // Not Coding Standard
                                      "\$instanceConfig['components']['request']['scriptUrl']         = '$scriptUrl';",
                                      $contents);
             $contents = preg_replace('/\s+\/\/ REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.*?>/s', // Not Coding Standard
