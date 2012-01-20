@@ -65,7 +65,7 @@
         }
 
         /**
-         * If a current user cannot read the model, then render a AccessFailurePageView
+         * If a current user cannot write the model, then render a AccessFailurePageView
          * and end the application.
          * @param $model - RedBeanModel
          * @return null;
@@ -81,7 +81,7 @@
         }
 
         /**
-         * If a current user cannot read the model, then render a AccessFailurePageView
+         * If a current user cannot delete the model, then render a AccessFailurePageView
          * and end the application.
          * @param $model - RedBeanModel
          * @return null;
@@ -97,7 +97,7 @@
         }
 
         /**
-         * If a current user cannot read the module, then render a AccessFailurePageView
+         * If a current user cannot write the module, then render a AccessFailurePageView
          * and end the application.
          * @param $model - RedBeanModel
          * @return null;
@@ -127,10 +127,10 @@
 
         protected static function processAccessFailure($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
-            static::renderAccessFailureView($fromAjax, $nonAjaxFailureMessageContent);
+            static::renderAccessFailureContent($fromAjax, $nonAjaxFailureMessageContent);
         }
 
-        protected static function renderAccessFailureView($fromAjax = false, $nonAjaxFailureMessageContent = null)
+        protected static function renderAccessFailureContent($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
             if ($fromAjax)
             {

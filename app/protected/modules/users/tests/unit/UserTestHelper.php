@@ -38,4 +38,18 @@
             assert('$saved');
             return $user;
         }
+
+        public static function createBasicUserWithManager($name, $manager)
+        {
+            $user = new User();
+            $user->username     = strtolower($name);
+            $user->title->value = 'Mr.';
+            $user->firstName    = $name;
+            $user->lastName     = $name . 'son';
+            $user->manager = $manager;
+            $user->setPassword(strtolower($name));
+            $saved = $user->save();
+            assert('$saved');
+            return $user;
+        }
     }

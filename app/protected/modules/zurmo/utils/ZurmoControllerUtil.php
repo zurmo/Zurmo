@@ -31,30 +31,39 @@
     {
         public static function saveModelFromPost($postData, $model, & $savedSucessfully, & $modelToStringValue)
         {
+            $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
+                                                 $model, $postData);
+            return static::saveModelFromSanitizedData($sanitizedPostData, $model, $savedSucessfully, $modelToStringValue);
+        }
+
+        public static function saveModelFromSanitizedData($sanitizedData, $model, & $savedSucessfully, & $modelToStringValue)
+        {
+            //note: the logic for ExplicitReadWriteModelPermission might still need to be moved up into the
+            //post method above, not sure how this is coming in from API.
             if ($model instanceof SecurableItem)
             {
                 $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
-                                                     resolveByPostDataAndModelThenMake($postData, $model);
+                                                     resolveByPostDataAndModelThenMake($sanitizedData, $model);
             }
             else
             {
                 $explicitReadWriteModelPermissions = null;
             }
-            $readyToUsePostData                = ExplicitReadWriteModelPermissionsUtil::
-                                                 removeIfExistsFromPostData($postData);
-            $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(
-                                                 $model, $readyToUsePostData);
-            $sanitizedOwnerPostData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
-                                                 $sanitizedPostData, 'owner');
-            $sanitizedPostDataWithoutOwner     = PostUtil::
-                                                 removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
-            $model->setAttributes($sanitizedPostDataWithoutOwner);
+            $readyToUseData                    = ExplicitReadWriteModelPermissionsUtil::
+                                                 removeIfExistsFromPostData($sanitizedData);
+
+            $sanitizedOwnerData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
+                                                 $readyToUseData, 'owner');
+            $sanitizedDataWithoutOwner     = PostUtil::
+                                                 removeElementFromPostDataForSavingModel($readyToUseData, 'owner');
+            $model->setAttributes($sanitizedDataWithoutOwner);
+
             if ($model->validate())
             {
                 $modelToStringValue = strval($model);
-                if ($sanitizedOwnerPostData != null)
+                if ($sanitizedOwnerData != null)
                 {
-                    $model->setAttributes($sanitizedOwnerPostData);
+                    $model->setAttributes($sanitizedOwnerData);
                 }
                 if ($model instanceof OwnedSecurableItem)
                 {
@@ -74,6 +83,9 @@
                     }
                     $savedSucessfully = true;
                 }
+            }
+            else
+            {
             }
             return $model;
         }

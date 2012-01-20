@@ -73,7 +73,7 @@
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
             $searchAttributes          = SearchUtil::resolveSearchAttributesFromGetArray(get_class($searchModel));
             $sanitizedSearchAttributes = GetUtil::sanitizePostByDesignerTypeForSavingModel($searchModel,
-                                                                                            $searchAttributes);
+                                                                                           $searchAttributes);
             $sortAttribute             = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
             $sortDescending            = SearchUtil::resolveSortDescendingFromGetArray($listModelClassName);
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
@@ -81,6 +81,7 @@
                 $userId,
                 $sanitizedSearchAttributes
             );
+
             return RedBeanModelDataProviderUtil::makeDataProvider(
                 $metadataAdapter,
                 $listModelClassName,
