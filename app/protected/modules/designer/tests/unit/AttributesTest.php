@@ -678,6 +678,15 @@
          */
         public function testSetAndGetMultiSelectDropDownAttribute()
         {
+            $this->setAndGetMultiSelectDropDownAttribute('testHobbies1', true);
+            $this->setAndGetMultiSelectDropDownAttribute('testHobbies2', false);
+        }
+
+        public function setAndGetMultiSelectDropDownAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $values = array(
                 'Reading',
                 'Writing',
@@ -692,7 +701,7 @@
             $this->assertTrue($hobbiesFieldData->save());
 
             $attributeForm = new MultiSelectDropDownAttributeForm();
-            $attributeForm->attributeName    = 'testHobbies';
+            $attributeForm->attributeName    = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Hobbies 2 de',
                 'en' => 'Test Hobbies 2 en',
@@ -702,10 +711,18 @@
             );
             $attributeForm->isAudited             = true;
             $attributeForm->isRequired            = true;
-            $attributeForm->defaultValueOrder     = 1;
             $attributeForm->customFieldDataData   = $values;
             $attributeForm->customFieldDataName   = 'Hobbies';
             $attributeForm->customFieldDataLabels = $labels;
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValueOrder = 1;
+            }
+            else
+            {
+                $attributeForm->defaultValueOrder = null;
+            }
 
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter                         = new $modelAttributesAdapterClassName(new Account());
@@ -720,9 +737,9 @@
             }
 
             $account       = new Account();
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'testHobbies');
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, $attributeName);
             $this->assertEquals('MultiSelectDropDown', $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testHobbies',         $attributeForm->attributeName);
+            $this->assertEquals($attributeName,         $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Hobbies 2 de',
                 'en' => 'Test Hobbies 2 en',
@@ -733,11 +750,20 @@
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
             $this->assertEquals(true,                    $attributeForm->isAudited);
             $this->assertEquals(true,                    $attributeForm->isRequired);
-            $this->assertEquals('Writing',               $attributeForm->defaultValue);
-            $this->assertEquals(1,                       $attributeForm->defaultValueOrder);
             $this->assertEquals('Hobbies',               $attributeForm->customFieldDataName);
             $this->assertEquals($values,                 $attributeForm->customFieldDataData);
             $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals('Writing',           $attributeForm->defaultValue);
+                $this->assertEquals(1,                   $attributeForm->defaultValueOrder);
+            }
+            else
+            {
+                $this->assertEquals(null,                $attributeForm->defaultValue);
+                $this->assertEquals(null,                $attributeForm->defaultValueOrder);
+            }
 
             //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
             //from the CustomFieldData model.
@@ -752,7 +778,10 @@
             );
             $attributeForm->isAudited           = true;
             $attributeForm->isRequired          = true;
-            $attributeForm->defaultValueOrder   = 1;
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValueOrder = 1;
+            }
             $attributeForm->customFieldDataData = array('a', 'b', 'c');
             $modelAttributesAdapterClassName    = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter                            = new $modelAttributesAdapterClassName(new Account());
@@ -1617,16 +1646,21 @@
             $account->testCountry->value         = 'bbbb';
             $account->testState->value           = 'bbb2';
             $account->testCity->value            = 'bc2';
-
             //Set value to Multiselect list.
             $customHobbyValue1           = new CustomFieldValue();
-            $customHobbyValue1->value    = 'Writing';
-            $account->testHobbies->values->add($customHobbyValue1);
-
+            $customHobbyValue1->value    = 'Reading';
+            $account->testHobbies1->values->add($customHobbyValue1);
+            $customHobbyValue2           = new CustomFieldValue();
+            $customHobbyValue2->value    = 'Singing';
+            $account->testHobbies2->values->add($customHobbyValue2);
             //Set value to Tagcloud.
             $customLanguageValue1        = new CustomFieldValue();
             $customLanguageValue1->value = 'French';
             $account->testLanguages->values->add($customLanguageValue1);
+
+            unset($customHobbyValue1);
+            unset($customHobbyValue2);
+            unset($customLanguageValue1);
 
             $saved = $account->save();
             $this->assertTrue($saved);
@@ -1649,16 +1683,16 @@
             $this->assertEquals('some test text area stuff', $account->testTextArea2);
             $this->assertEquals('http://www.zurmo.com',      $account->testUrl2);
             $this->assertEquals('song2',                     $account->playMyFavoriteSong->value);
-            $this->assertContains('Writing',                 $account->testHobbies->values);
+            $this->assertContains('Writing',                 $account->testHobbies1->values);
+            $this->assertContains('Reading',                 $account->testHobbies1->values);
+            $this->assertContains('Singing',                 $account->testHobbies2->values);
             $this->assertContains('French',                  $account->testLanguages->values);
             $this->assertEquals('bbbb',                      $account->testCountry->value);
             $this->assertEquals('bbb2',                      $account->testState->value);
             $this->assertEquals('bc2',                       $account->testCity->value);
-
             $metadata              = CalculatedDerivedAttributeMetadata::
                                      getByNameAndModelClassName('testCalculatedValue', 'Account');
             $testCalculatedValue   = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account);
-
             $this->assertEquals(774.56,                      (double)$testCalculatedValue);
 
             unset($testCalculatedValue);
@@ -1684,13 +1718,23 @@
             $account->testState->value           = 'ccc3'; 
             $account->testCity->value            = 'ca3'; 
 
+            $account->testHobbies1->values->removeAll();
+            $account->testHobbies2->values->removeAll();
+
             //Set multiple value to Multiselect list.
-            $customFieldValue1 = new CustomFieldValue();
-            $customFieldValue1->value = 'Writing';
-            $account->testHobbies->values->add($customFieldValue1);
-            $customFieldValue2 = new CustomFieldValue();
-            $customFieldValue2->value = 'Reading';
-            $account->testHobbies->values->add($customFieldValue2);
+            $customHobbyValue1 = new CustomFieldValue();
+            $customHobbyValue1->value = 'Writing';
+            $account->testHobbies1->values->add($customHobbyValue1);
+            $customHobbyValue2 = new CustomFieldValue();
+            $customHobbyValue2->value = 'Reading';
+            $account->testHobbies1->values->add($customHobbyValue2);
+
+            $customHobbyValue3 = new CustomFieldValue();
+            $customHobbyValue3->value = 'Singing';
+            $account->testHobbies2->values->add($customHobbyValue3);
+            $customHobbyValue4 = new CustomFieldValue();
+            $customHobbyValue4->value = 'Surfing';
+            $account->testHobbies2->values->add($customHobbyValue4);
 
             //Set multiple value to Tagcloud.
             $customLanguageValue1 = new CustomFieldValue();
@@ -1721,8 +1765,10 @@
             $this->assertEquals('some test text area stuff2', $account->testTextArea2);
             $this->assertEquals('http://www.zurmo.org',       $account->testUrl2);
             $this->assertEquals('song3',                      $account->playMyFavoriteSong->value);
-            $this->assertContains('Writing',                  $account->testHobbies->values);
-            $this->assertContains('Reading',                  $account->testHobbies->values);
+            $this->assertContains('Writing',                  $account->testHobbies1->values);
+            $this->assertContains('Reading',                  $account->testHobbies1->values);
+            $this->assertContains('Singing',                  $account->testHobbies2->values);
+            $this->assertContains('Surfing',                  $account->testHobbies2->values);
             $this->assertContains('English',                  $account->testLanguages->values);
             $this->assertContains('French',                   $account->testLanguages->values);
             $this->assertEquals('cccc',                       $account->testCountry->value);
