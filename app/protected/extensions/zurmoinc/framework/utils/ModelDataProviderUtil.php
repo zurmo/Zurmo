@@ -85,7 +85,8 @@
             {
                 if (isset($clauseInformation['concatedAttributeNames']))
                 {
-                    if($clauseInformation['relatedAttributeName'] != null)
+                    if(isset($clauseInformation['relatedAttributeName']) &&
+                       $clauseInformation['relatedAttributeName'] != null)
                     {
                         throw new NotSupportedException();
                     }
@@ -192,7 +193,7 @@
             foreach ($concatedAttributeNames as $attributeName)
             {
                 $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                           get_class($model), $attributeName);
+                                                           $modelClassName, $attributeName);
                 $tableAliasName                      = self::resolveShouldAddFromTableAndGetAliasName(
                                                            $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
                 $tableAliasAndColumnNames[]          = array($tableAliasName,
