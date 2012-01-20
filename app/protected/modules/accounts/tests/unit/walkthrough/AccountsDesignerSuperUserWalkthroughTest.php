@@ -316,8 +316,8 @@
                                     'explicitReadWriteModelPermissions' => array('type' => null),
                                     'checkbox'                          => '1',
                                     'currency'                          => array('value'    => 45,
-                                                                                  'currency' => array('id' =>
-                                                                                  $baseCurrency->id)),
+                                                                                 'currency' => array('id' =>
+                                                                                 $baseCurrency->id)),
                                     'date'                              => $date,
                                     'datetime'                          => $datetime,
                                     'decimal'                           => '123',
@@ -598,6 +598,26 @@
             $this->resetPostArray();
             $this->setGetArray(array(
                         'AccountsSearchForm' => AccountsDesignerWalkthroughHelperUtil::fetchAccountsSearchFormGetData(),
+                        'ajax'               => 'list-view')
+            );
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
+
+            //Assert that the edit account exits after the edit and is diaplayed on the search page.
+            $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
+            $this->assertTrue(strpos($content, "myEditAccount") > 0);
+        }
+
+        /**
+         * @depends testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule
+         */
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleWithMultiSelectValueSetToNull()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a created account using the customfield.
+            $this->resetPostArray();
+            $this->setGetArray(array(
+                        'AccountsSearchForm' => AccountsDesignerWalkthroughHelperUtil::fetchAccountsSearchFormGetDataWithMultiSelectValueSetToNull(),
                         'ajax'               => 'list-view')
             );
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
