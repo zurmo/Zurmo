@@ -901,6 +901,12 @@
          */
         public function testSetAndGetDropDownDependencyAttribute()
         {
+            $this->setAndGetDropDownDependencyAttribute1();
+            $this->setAndGetDropDownDependencyAttribute2();
+        }
+
+        public function setAndGetDropDownDependencyAttribute1()
+        {
             $countries = array(
                 'aaaa',
                 'bbbb',
@@ -956,7 +962,7 @@
             $this->assertEquals(true,             $attributeForm->isRequired);
             $this->assertEquals('Countries',      $attributeForm->customFieldDataName);
             $this->assertEquals($countries,       $attributeForm->customFieldDataData);
-            $this->assertEquals($country_labels,          $attributeForm->customFieldDataLabels);
+            $this->assertEquals($country_labels,  $attributeForm->customFieldDataLabels);
 
             $states = array(
                 'aaa1',
@@ -1062,8 +1068,8 @@
             $this->assertTrue($statesFieldData->save());
 
             $attributeForm = new DropDownAttributeForm();
-            $attributeForm->attributeName    = 'testCity';
-            $attributeForm->attributeLabels  = array(
+            $attributeForm->attributeName         = 'testCity';
+            $attributeForm->attributeLabels       = array(
                 'de' => 'Test City 2 de',
                 'en' => 'Test City 2 en',
                 'es' => 'Test City 2 es',
@@ -1106,7 +1112,7 @@
             $this->assertEquals($cities,      $attributeForm->customFieldDataData);
             $this->assertEquals($city_labels, $attributeForm->customFieldDataLabels);
 
-            $attributeName = 'testLocation';
+            $attributeName = "testLocation";
             $attributeForm = new DropDownDependencyAttributeForm();
             $attributeForm->attributeName    = $attributeName;
             $attributeForm->attributeLabels  = array(
@@ -1184,6 +1190,181 @@
                 'es' => 'Test Location Value 2 es',
                 'fr' => 'Test Location Value 2 fr',
                 'it' => 'Test Location Value 2 it',
+            );
+            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+        }
+
+        public function setAndGetDropDownDependencyAttribute2()
+        {
+            $education = array(
+                'aaaa',
+                'bbbb',
+                'cccc',
+            );
+            $education_labels = array('fr' => array('aaaa fr', 'bbbb fr', 'cccc fr'),
+                                      'de' => array('aaaa de', 'bbbb de', 'cccc de'),
+            );
+            $educationFieldData                   = CustomFieldData::getByName('Education');
+            $educationFieldData->serializedData   = serialize($education);
+            $this->assertTrue($educationFieldData->save());
+
+            $attributeForm                        = new DropDownAttributeForm();
+            $attributeForm->attributeName         = 'testEducation';
+            $attributeForm->attributeLabels       = array(
+                'de' => 'Test Education 2 de',
+                'en' => 'Test Education 2 en',
+                'es' => 'Test Education 2 es',
+                'fr' => 'Test Education 2 fr',
+                'it' => 'Test Education 2 it',
+            );
+            $attributeForm->isAudited             = true;
+            $attributeForm->isRequired            = true;
+            $attributeForm->customFieldDataData   = $education;
+            $attributeForm->customFieldDataName   = 'Education';
+            $attributeForm->customFieldDataLabels = $education_labels;
+
+            $modelAttributesAdapterClassName      = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $account = new Account();
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'testEducation');
+            $this->assertEquals('DropDown',              $attributeForm->getAttributeTypeName());
+            $this->assertEquals('testEducation',         $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Education 2 de',
+                'en' => 'Test Education 2 en',
+                'es' => 'Test Education 2 es',
+                'fr' => 'Test Education 2 fr',
+                'it' => 'Test Education 2 it',
+            );
+            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+            $this->assertEquals(true,                    $attributeForm->isAudited);
+            $this->assertEquals(true,                    $attributeForm->isRequired);
+            $this->assertEquals('Education',             $attributeForm->customFieldDataName);
+            $this->assertEquals($education,              $attributeForm->customFieldDataData);
+            $this->assertEquals($education_labels,       $attributeForm->customFieldDataLabels);
+
+            $stream = array(
+                'aaa1',
+                'aaa2',
+                'aaa3',
+                'bbb1',
+                'bbb2',
+                'bbb3',
+                'ccc1',
+                'ccc2',
+                'ccc3',
+            );
+            $stream_labels = array('fr' => array('aaa1 fr', 'aaa2 fr', 'aaa3 fr', 'bbb1 fr', 'bbb2 fr', 'bbb3 fr', 'ccc1 fr', 'ccc2 fr', 'ccc3 fr'),
+                                   'de' => array('aaa1 de', 'aaa2 de', 'aaa3 de', 'bbb1 de', 'bbb2 de', 'bbb3 de', 'ccc1 de', 'ccc2 de', 'ccc3 de'),
+            );
+            $streamFieldData                      = CustomFieldData::getByName('Stream');
+            $streamFieldData->serializedData      = serialize($stream);
+            $this->assertTrue($streamFieldData->save());
+
+            $attributeForm                        = new DropDownAttributeForm();
+            $attributeForm->attributeName         = 'testStream';
+            $attributeForm->attributeLabels       = array(
+                'de' => 'Test Stream 2 de',
+                'en' => 'Test Stream 2 en',
+                'es' => 'Test Stream 2 es',
+                'fr' => 'Test Stream 2 fr',
+                'it' => 'Test Stream 2 it',
+            );
+            $attributeForm->isAudited             = true;
+            $attributeForm->isRequired            = true;
+            $attributeForm->customFieldDataData   = $stream;
+            $attributeForm->customFieldDataName   = 'Stream';
+            $attributeForm->customFieldDataLabels = $stream_labels;
+
+            $modelAttributesAdapterClassName      = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter                              = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $account = new Account();
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'testStream');
+            $this->assertEquals('DropDown',     $attributeForm->getAttributeTypeName());
+            $this->assertEquals('testStream',   $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Stream 2 de',
+                'en' => 'Test Stream 2 en',
+                'es' => 'Test Stream 2 es',
+                'fr' => 'Test Stream 2 fr',
+                'it' => 'Test Stream 2 it',
+            );
+            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
+            $this->assertEquals(true,           $attributeForm->isAudited);
+            $this->assertEquals(true,           $attributeForm->isRequired);
+            $this->assertEquals('Stream',       $attributeForm->customFieldDataName);
+            $this->assertEquals($stream,        $attributeForm->customFieldDataData);
+            $this->assertEquals($stream_labels, $attributeForm->customFieldDataLabels);
+
+            $attributeName = "testQualification";
+            $attributeForm = new DropDownDependencyAttributeForm();
+            $attributeForm->attributeName    = $attributeName;
+            $attributeForm->attributeLabels  = array(
+                'de' => 'Test Qualification Value 2 de',
+                'en' => 'Test Qualification Value 2 en',
+                'es' => 'Test Qualification Value 2 es',
+                'fr' => 'Test Qualification Value 2 fr',
+                'it' => 'Test Qualification Value 2 it',
+            );
+            $attributeForm->mappingData      = array(
+                                                    array('attributeName'        => 'testEducation'),
+                                                    array('attributeName'        => 'testStream',
+                                                          'valuesToParentValues' => array('aaa1' => 'aaaa',
+                                                                                          'aaa2' => 'aaaa',
+                                                                                          'aaa3' => 'aaaa',
+                                                                                          'bbb1' => 'bbbb',
+                                                                                          'bbb2' => 'bbbb',
+                                                                                          'bbb3' => 'bbbb',
+                                                                                          'ccc1' => 'cccc',
+                                                                                          'ccc2' => 'cccc',
+                                                                                          'ccc3' => 'cccc'
+                                                                                  )
+                                                    ),
+                                                    array('attributeName' => ''),
+                                                    array('attributeName' => '')
+                                               );
+
+            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new Account());
+            try
+            {
+                $adapter->setAttributeMetadataFromForm($attributeForm);
+            }
+            catch (FailedDatabaseSchemaChangeException $e)
+            {
+                echo $e->getMessage();
+                $this->fail();
+            }
+
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName(new Account(), $attributeName);
+            $this->assertEquals('DropDownDependency', $attributeForm->getAttributeTypeName());
+            $this->assertEquals($attributeName,       $attributeForm->attributeName);
+            $compareAttributeLabels = array(
+                'de' => 'Test Qualification Value 2 de',
+                'en' => 'Test Qualification Value 2 en',
+                'es' => 'Test Qualification Value 2 es',
+                'fr' => 'Test Qualification Value 2 fr',
+                'it' => 'Test Qualification Value 2 it',
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
         }
@@ -1619,43 +1800,45 @@
         {
             $currencies = Currency::getAll();
             $account = new Account();
-            $account->name                       = 'my test account';
-            $account->owner                      = Yii::app()->user->userModel;
-            $account->testCheckBox2              = 0;
-            $account->testCurrency2->value       = 728.89;
-            $account->testCurrency2->currency    = $currencies[0];
-            $account->testDate2                  = '2008-09-03';
-            $account->testDate3                  = '2008-09-02';
-            $account->testDateTime2              = '2008-09-02 03:03:03';
-            $account->testDateTime3              = '2008-09-01 03:03:03';
-            $account->testDecimal2               = 45.67;
-            $account->testDecimal3               = 31.05;
-            $account->testAirPlane->value        = 'A380'; //Dive Bomber
-            $account->testInteger2               = 56;
-            $account->testInteger3               = 21;
-            $account->testPhone2                 = '345345234';
-            $account->testPhone3                 = '345345221';
-            $account->testAirPlaneParts->value   = 'Seat'; // Wheel
-            $account->testText2                  = 'some test stuff';
-            $account->testText3                  = 'some test stuff 3';
-            $account->testTextArea2              = 'some test text area stuff';
-            $account->testTextArea3              = 'some test text area stuff 3';
-            $account->testUrl2                   = 'http://www.zurmo.com';
-            $account->testUrl3                   = 'http://www.zurmo.org';
-            $account->playMyFavoriteSong->value  = 'song2'; // song 3
-            $account->testCountry->value         = 'bbbb';
-            $account->testState->value           = 'bbb2';
-            $account->testCity->value            = 'bc2';
+            $account->name                              = 'my test account';
+            $account->owner                             = Yii::app()->user->userModel;
+            $account->testCheckBox2                     = 0;
+            $account->testCurrency2->value              = 728.89;
+            $account->testCurrency2->currency           = $currencies[0];
+            $account->testDate2                         = '2008-09-03';
+            $account->testDate3                         = '2008-09-02';
+            $account->testDateTime2                     = '2008-09-02 03:03:03';
+            $account->testDateTime3                     = '2008-09-01 03:03:03';
+            $account->testDecimal2                      = 45.67;
+            $account->testDecimal3                      = 31.05;
+            $account->testAirPlane->value               = 'A380'; //Dive Bomber
+            $account->testInteger2                      = 56;
+            $account->testInteger3                      = 21;
+            $account->testPhone2                        = '345345234';
+            $account->testPhone3                        = '345345221';
+            $account->testAirPlaneParts->value          = 'Seat'; // Wheel
+            $account->testText2                         = 'some test stuff';
+            $account->testText3                         = 'some test stuff 3';
+            $account->testTextArea2                     = 'some test text area stuff';
+            $account->testTextArea3                     = 'some test text area stuff 3';
+            $account->testUrl2                          = 'http://www.zurmo.com';
+            $account->testUrl3                          = 'http://www.zurmo.org';
+            $account->playMyFavoriteSong->value         = 'song2'; // song 3
+            $account->testCountry->value                = 'bbbb';
+            $account->testState->value                  = 'bbb2';
+            $account->testCity->value                   = 'bc2';
+            $account->testEducation->value              = 'cccc';
+            $account->testStream->value                 = 'ccc3';
             //Set value to Multiselect list.
-            $customHobbyValue1           = new CustomFieldValue();
-            $customHobbyValue1->value    = 'Reading';
+            $customHobbyValue1                          = new CustomFieldValue();
+            $customHobbyValue1->value                   = 'Reading';
             $account->testHobbies1->values->add($customHobbyValue1);
-            $customHobbyValue2           = new CustomFieldValue();
-            $customHobbyValue2->value    = 'Singing';
+            $customHobbyValue2                          = new CustomFieldValue();
+            $customHobbyValue2->value                   = 'Singing';
             $account->testHobbies2->values->add($customHobbyValue2);
             //Set value to Tagcloud.
-            $customLanguageValue1        = new CustomFieldValue();
-            $customLanguageValue1->value = 'French';
+            $customLanguageValue1                       = new CustomFieldValue();
+            $customLanguageValue1->value                = 'French';
             $account->testLanguages->values->add($customLanguageValue1);
 
             unset($customHobbyValue1);
@@ -1690,6 +1873,8 @@
             $this->assertEquals('bbbb',                      $account->testCountry->value);
             $this->assertEquals('bbb2',                      $account->testState->value);
             $this->assertEquals('bc2',                       $account->testCity->value);
+            $this->assertEquals('cccc',                      $account->testEducation->value);
+            $this->assertEquals('ccc3',                      $account->testStream->value);
             $metadata              = CalculatedDerivedAttributeMetadata::
                                      getByNameAndModelClassName('testCalculatedValue', 'Account');
             $testCalculatedValue   = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account);
@@ -1700,48 +1885,50 @@
             unset($account);
             $account = Account::getById($accountId);
             //Switch values around to cover for any default value pollution on the assertions above.
-            $account->testCheckBox2              = 1;
-            $account->testCurrency2->value       = 728.92;
-            $account->testCurrency2->currency    = $currencies[0];
-            $account->testDate2                  = '2008-09-04';
-            $account->testDateTime2              = '2008-09-03 03:03:03';
-            $account->testDecimal2               = 45.68;
-            $account->testAirPlane->value        = 'Dive Bomber';
-            $account->testInteger2               = 57;
-            $account->testPhone2                 = '3453452344';
-            $account->testAirPlaneParts->value   = 'Wheel';
-            $account->testText2                  = 'some test stuff2';
-            $account->testTextArea2              = 'some test text area stuff2';
-            $account->testUrl2                   = 'http://www.zurmo.org';
-            $account->playMyFavoriteSong->value  = 'song3';
-            $account->testCountry->value         = 'cccc'; 
-            $account->testState->value           = 'ccc3'; 
-            $account->testCity->value            = 'ca3'; 
+            $account->testCheckBox2                     = 1;
+            $account->testCurrency2->value              = 728.92;
+            $account->testCurrency2->currency           = $currencies[0];
+            $account->testDate2                         = '2008-09-04';
+            $account->testDateTime2                     = '2008-09-03 03:03:03';
+            $account->testDecimal2                      = 45.68;
+            $account->testAirPlane->value               = 'Dive Bomber';
+            $account->testInteger2                      = 57;
+            $account->testPhone2                        = '3453452344';
+            $account->testAirPlaneParts->value          = 'Wheel';
+            $account->testText2                         = 'some test stuff2';
+            $account->testTextArea2                     = 'some test text area stuff2';
+            $account->testUrl2                          = 'http://www.zurmo.org';
+            $account->playMyFavoriteSong->value         = 'song3';
+            $account->testCountry->value                = 'cccc'; 
+            $account->testState->value                  = 'ccc3'; 
+            $account->testCity->value                   = 'ca3'; 
+            $account->testEducation->value              = 'aaaa';
+            $account->testStream->value                 = 'aaa1';
 
             $account->testHobbies1->values->removeAll();
             $account->testHobbies2->values->removeAll();
 
             //Set multiple value to Multiselect list.
-            $customHobbyValue1 = new CustomFieldValue();
-            $customHobbyValue1->value = 'Writing';
+            $customHobbyValue1                          = new CustomFieldValue();
+            $customHobbyValue1->value                   = 'Writing';
             $account->testHobbies1->values->add($customHobbyValue1);
-            $customHobbyValue2 = new CustomFieldValue();
-            $customHobbyValue2->value = 'Reading';
+            $customHobbyValue2                          = new CustomFieldValue();
+            $customHobbyValue2->value                   = 'Reading';
             $account->testHobbies1->values->add($customHobbyValue2);
 
-            $customHobbyValue3 = new CustomFieldValue();
-            $customHobbyValue3->value = 'Singing';
+            $customHobbyValue3                          = new CustomFieldValue();
+            $customHobbyValue3->value                   = 'Singing';
             $account->testHobbies2->values->add($customHobbyValue3);
-            $customHobbyValue4 = new CustomFieldValue();
-            $customHobbyValue4->value = 'Surfing';
+            $customHobbyValue4                          = new CustomFieldValue();
+            $customHobbyValue4->value                   = 'Surfing';
             $account->testHobbies2->values->add($customHobbyValue4);
 
             //Set multiple value to Tagcloud.
-            $customLanguageValue1 = new CustomFieldValue();
-            $customLanguageValue1->value = 'English';
+            $customLanguageValue1                       = new CustomFieldValue();
+            $customLanguageValue1->value                = 'English';
             $account->testLanguages->values->add($customLanguageValue1);
-            $customLanguageValue2 = new CustomFieldValue();
-            $customLanguageValue2->value = 'French';
+            $customLanguageValue2                       = new CustomFieldValue();
+            $customLanguageValue2->value                = 'French';
             $account->testLanguages->values->add($customLanguageValue2);
 
             $saved = $account->save();
@@ -1774,6 +1961,8 @@
             $this->assertEquals('cccc',                       $account->testCountry->value);
             $this->assertEquals('ccc3',                       $account->testState->value);
             $this->assertEquals('ca3',                        $account->testCity->value);
+            $this->assertEquals('aaaa',                       $account->testEducation->value);
+            $this->assertEquals('aaa1',                       $account->testStream->value);
         }
 
         /**
