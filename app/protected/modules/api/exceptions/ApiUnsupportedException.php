@@ -25,21 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Exception thrown when there is some problem during api request.
+     * Exception thrown when user doesn't have rights for login via api.
      */
-    class ApiUnsupportedException extends ApiException
+    class NoRightWebApiLoginException extends ApiException
     {
-        public function __construct($message = null, $code = 0, Exception $previous = null)
-        {
-            if (isset($message))
-            {
-                $message = $message;
-            }
-            else
-            {
-                $message = Yii::t('Default', 'Action not supported.');
-            }
-            parent::__construct($message, $code, $previous);
-        }
     }
 ?>
