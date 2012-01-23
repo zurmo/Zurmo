@@ -173,9 +173,10 @@
                 $isUrlAllowedToGuests = false;
                 foreach ($allowedGuestUserUrls as $url)
                 {
-                    if (ZurmoUrlManager::getPositionOfPathInUrl($url) === 0)
+                    if (ZurmoUrlManager::getPositionOfPathInUrl($url) !== false)
                     {
                         $isUrlAllowedToGuests = true;
+                        break;
                     }
                 }
 
