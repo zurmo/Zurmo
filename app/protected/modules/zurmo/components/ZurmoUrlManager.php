@@ -32,29 +32,7 @@
         public static function getPositionOfPathInUrl($keyword)
         {
             $reqestedUrl = Yii::app()->getRequest()->getUrl();
-
-            if (strpos($reqestedUrl, '/index.php') === 0)
-            {
-                $entryScriptName = '/index.php';
-            }
-            elseif (strpos($reqestedUrl, '/test.php') === 0)
-            {
-                $entryScriptName = '/test.php';
-            }
-            else
-            {
-                return false;
-            }
-
-            if (strpos($keyword, $entryScriptName) === 0)
-            {
-                $position = strpos($reqestedUrl, '/' . ltrim($keyword, '/'));
-            }
-            else
-            {
-                $position = strpos($reqestedUrl, $entryScriptName . '/' . ltrim($keyword, '/'));
-            }
-
+            $position = strpos(trim($reqestedUrl, '/'), trim($keyword, '/'));
             return $position;
         }
     }

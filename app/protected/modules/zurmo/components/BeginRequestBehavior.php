@@ -170,7 +170,6 @@
                     Yii::app()->createUrl('zurmo/api/login'),
                     Yii::app()->createUrl('zurmo/api/logout'),
                 );
-                $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;
                 foreach ($allowedGuestUserUrls as $url)
                 {
