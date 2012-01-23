@@ -81,6 +81,10 @@
                 'currencyHelper' => array(
                     'baseCode' => $currencyBaseCode,
                 ),
+                'urlManager' => $urlManager,
+            ),
+            'params' => array(
+                'testApiUrl' => $testApiUrl,
             ),
         )
     );

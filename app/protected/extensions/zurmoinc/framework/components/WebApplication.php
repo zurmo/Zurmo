@@ -31,7 +31,6 @@
          * @var boolean
          */
         protected $installed;
-
         /**
          * Override so that the application looks at the controller class name differently.
          * Instead of having controllers with the same class name across the application,
@@ -89,6 +88,7 @@
                 {
                     $controllerID .= '/';
                 }
+
                 $baseClassName = ucfirst($id) . 'Controller';
                 //this assumes owner is the module, which i am not sure is always true...
                 if ($this->isOwnerTheController($owner))

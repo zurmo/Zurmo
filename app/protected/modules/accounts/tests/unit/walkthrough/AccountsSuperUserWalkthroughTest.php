@@ -75,7 +75,7 @@
             $this->setPostArray(array('Account' => array('officePhone' => '456765421')));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             $superAccount = Account::getById($superAccountId);
             $this->assertEquals('456765421', $superAccount->officePhone);
             //Test having a failed validation on the account during save.
@@ -283,8 +283,7 @@
             $accounts = Account::getByName('myNewAccount');
             $this->assertEquals(1, count($accounts));
             $this->assertTrue  ($accounts[0]->id > 0);
-            $compareRedirectUrl = Yii::app()->getUrlManager()->getBaseUrl() .
-                                    '?r=accounts/default/details&id=' . $accounts[0]->id; // Not Coding Standard
+            $compareRedirectUrl = Yii::app()->createUrl('accounts/default/details', array('id' => $accounts[0]->id));
             $this->assertEquals($compareRedirectUrl, $redirectUrl);
             $this->assertEquals('456765421', $accounts[0]->officePhone);
             $this->assertTrue  ($accounts[0]->owner == $super);

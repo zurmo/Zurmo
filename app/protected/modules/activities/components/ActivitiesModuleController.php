@@ -35,7 +35,7 @@
          * Override to handle the ActivityItemForm processing from POST.
          * @see ZurmoBaseController->attemptToSaveModelFromPost
          */
-        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
+        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null, $redirect = true)
         {
             assert('$model instanceof Activity');
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');

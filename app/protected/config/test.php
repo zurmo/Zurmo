@@ -23,7 +23,10 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-    define ('IS_TEST', true);
+    if (!defined('IS_TEST'))
+    {
+        define('IS_TEST', true);
+    }
     $common_config = CMap::mergeArray(
         require('main.php'),
         array(
@@ -54,6 +57,7 @@
             ),
         )
     );
+
     //override and use test specific begin behavior
     $common_config['behaviors']['onBeginRequest'] = array(
         'class' => 'application.tests.BeginRequestTestBehavior'
