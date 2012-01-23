@@ -2407,24 +2407,25 @@
         public function getAttributes(array $attributeNames = null)
         {
             $values = array();
-            foreach ($this->attributeNames() as $attributeName)
-            {
-                $values[$attributeName] = $this->$attributeName;
-            }
             if (is_array($attributeNames))
             {
                 $values2 = array();
+                $allModelAttributeNames = $this->attributeNames();
                 foreach ($attributeNames as $attributeName)
                 {
-                    if (isset($values[$attributeName]))
+                    if (in_array($attributeName, $allModelAttributeNames))
                     {
-                        $values2[$attributeName] = $values[$attributeName];
+                        $values2[$attributeName] = $this->$attributeName;
                     }
                 }
                 return $values2;
             }
             else
             {
+                foreach ($this->attributeNames() as $attributeName)
+                {
+                    $values[$attributeName] = $this->$attributeName;
+                }
                 return $values;
             }
         }

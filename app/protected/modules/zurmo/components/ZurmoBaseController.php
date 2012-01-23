@@ -37,23 +37,23 @@
             if (is_subclass_of($moduleClassName, 'SecurableModule'))
             {
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH,
+                        self::getRightsFilterPath(),
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getAccessRight(),
                 );
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + create, createFromRelation, inlineCreateSave',
+                        self::getRightsFilterPath() . ' + create, createFromRelation, inlineCreateSave',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );
                 $filters[] = array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' + delete',
+                        self::getRightsFilterPath() . ' + delete',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getDeleteRight(),
                 );
             }
             $filters[] = array(
-                ZurmoBaseController::RIGHTS_FILTER_PATH . ' + massEdit, massEditProgressSave',
+                self::getRightsFilterPath() . ' + massEdit, massEditProgressSave',
                 'moduleClassName' => 'ZurmoModule',
                 'rightName' => ZurmoModule::RIGHT_BULK_WRITE,
             );
@@ -63,6 +63,11 @@
         public function __construct($id, $module = null)
         {
             parent::__construct($id, $module);
+        }
+
+        public static function getRightsFilterPath()
+        {
+            return static::RIGHTS_FILTER_PATH;
         }
 
         protected function makeSearchFilterListView(
@@ -392,7 +397,7 @@
          * Check if form is posted. If form is posted attempt to save. If save is complete, confirm the current
          * user can still read the model.  If not, then redirect the user to the index action for the module.
          */
-        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
+        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null, $redirect = true)
         {
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
             $savedSucessfully   = false;
@@ -404,7 +409,7 @@
                 $model            = ZurmoControllerUtil::
                                     saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             }
-            if ($savedSucessfully)
+            if ($savedSucessfully && $redirect)
             {
                 $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
             }

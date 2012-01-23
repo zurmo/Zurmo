@@ -49,10 +49,16 @@
             {
                 throw new BadPasswordException();
             }
-            if (Right::ALLOW != $user->getEffectiveRight(
-                'UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB))
+            if (Right::ALLOW != $user->getEffectiveRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) &&
+                !Yii::app()->apiRequest->isApiRequest())
             {
                 throw new NoRightWebLoginException();
+            }
+
+            if (Right::ALLOW != $user->getEffectiveRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API) &&
+                Yii::app()->apiRequest->isApiRequest())
+            {
+                throw new ApiNoRightWebApiLoginException();
             }
             return $user;
         }

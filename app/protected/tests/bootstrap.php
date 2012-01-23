@@ -35,6 +35,13 @@
     if (!is_file(INSTANCE_ROOT . '/protected/config/perInstanceTest.php'))
     {
         copy(INSTANCE_ROOT . '/protected/config/perInstanceDIST.php', INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
+
+        //Mark test application installed, because we need this variable to be set to true, for api tests
+        $contents = file_get_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
+        $contents = preg_replace('/\$installed\s*=\s*false;/',
+                                 '$installed = true;',
+                                 $contents);
+        file_put_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php', $contents);
     }
 
     $debug          = INSTANCE_ROOT . '/protected/config/debugTest.php';

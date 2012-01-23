@@ -45,6 +45,9 @@
     //$instanceConfig['components']['request']['hostInfo'] = '';
     //$instanceConfig['components']['request']['scriptUrl'] = '';
 
+    $urlManager = array (); //Set any parameters you want to customize url manager.
+    $testApiUrl = '';
+
     if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
     {
         require_once INSTANCE_ROOT . '/protected/config/perInstanceConfig.php';

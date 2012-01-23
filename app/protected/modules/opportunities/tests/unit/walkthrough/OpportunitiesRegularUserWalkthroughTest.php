@@ -138,7 +138,7 @@
             $this->setGetArray(array('id' => $opportunity->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/delete',
-            Yii::app()->getUrlManager()->getBaseUrl() . '?r=opportunities/default/index'); // Not Coding Standard
+                                                                   Yii::app()->createUrl('opportunities/default/index'));
 
             //Autocomplete for Opportunity should not fail.
             $this->setGetArray(array('term' => 'super'));

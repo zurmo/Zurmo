@@ -28,7 +28,7 @@
      * Helper class for handling GET
      * arrays.
      */
-    class GetUtil
+    class GetUtil extends DataUtil
     {
         public static function getData()
         {
