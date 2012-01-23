@@ -116,6 +116,7 @@
         public static function getSearchAttributesFromSearchArray($searchArray)
         {
             array_walk_recursive($searchArray, 'SearchUtil::changeEmptyValueToNull');
+            SearchUtil::changeEmptyArrayValuesToNull($searchArray);
             return $searchArray;
         }
 
@@ -128,6 +129,27 @@
             if (empty($value) && $value !== '0')
             {
                 $value = null;
+            }
+        }
+
+        /**
+         * if a value is an array, and the array has an element that is empty, remove it.
+         * @see getSearchAttributesFromSearchArray
+         */
+        private static function changeEmptyArrayValuesToNull(& $searchArray)
+        {
+            foreach($searchArray as $key => $value)
+            {
+                if (is_array($value) && isset($value['values']) && is_array($value['values']))
+                {
+                    foreach($value['values'] as $subKey => $subValue)
+                    {
+                        if($subValue == null)
+                        {
+                            unset($searchArray[$key]['values'][$subKey]);
+                        }
+                    }
+                }
             }
         }
 
