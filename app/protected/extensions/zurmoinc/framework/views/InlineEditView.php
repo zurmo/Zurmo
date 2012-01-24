@@ -65,7 +65,7 @@
 
         protected function renderContent()
         {
-            $formName = 'inline-edit-form';
+            $formName = $this->getFormName();
             $afterValidateAjax = $this->renderConfigSaveAjax($formName);
             $content = '<div class="wide form">';
             $clipWidget = new ClipWidget();
@@ -107,6 +107,11 @@
             $content .= $formEnd;
             $content .= '</div>';
             return $content;
+        }
+
+        public function getFormName()
+        {
+            return "inline-edit-form";
         }
 
         protected function renderConfigSaveAjax($formName)
