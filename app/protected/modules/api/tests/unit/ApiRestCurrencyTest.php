@@ -84,6 +84,10 @@
 
             //Test List
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/zurmo/currency/api/list/', 'GET', $headers);
+            $res = print_r($response, true);
+            $fp = fopen('/home/ivica/data.html', 'w');
+            fwrite($fp, $res);
+            fclose($fp);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(count($currencies), count($response['data']['items']));

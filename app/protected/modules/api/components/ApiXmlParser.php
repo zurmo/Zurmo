@@ -38,9 +38,9 @@
          * @param SimpleXMLElement $xml - should only be used recursively
          * @return string XML
          */
-        public static function arrayToXml($data, $rootNodeName = 'zurmoMessage', &$xml=null)
+        public static function arrayToXml($data, $rootNodeName = 'zurmoMessage', & $xml=null)
         {
-            if ($xml=== null)
+            if ($xml === null)
             {
                 $xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
             }

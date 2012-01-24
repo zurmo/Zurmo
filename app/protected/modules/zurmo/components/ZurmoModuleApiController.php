@@ -192,7 +192,7 @@
                     $_GET[$searchFormClassName] = $filterParams['search'];
                 }
 
-                $model= new $modelClassName(false);
+                $model = new $modelClassName(false);
                 if (isset($searchFormClassName))
                 {
                     $searchForm = new $searchFormClassName($model);
