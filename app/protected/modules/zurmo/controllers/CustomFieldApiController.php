@@ -43,7 +43,7 @@
         public function actionRead()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
@@ -55,7 +55,8 @@
         protected function processRead($id)
         {
             assert('is_string($id)');
-            try{
+            try
+            {
                 $customFieldData = CustomFieldData::getByName($id);
             }
             catch (NotFoundException $e)

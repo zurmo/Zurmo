@@ -32,7 +32,7 @@
         public function actionCustomGet()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The id specified was invalid.');
                 throw new ApiException($message);
@@ -51,7 +51,7 @@
         public function actionCustomPost()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['data']))
+            if (!isset($params['data']))
             {
                 $message = Yii::t('Default', 'Please provide data.');
                 throw new ApiException($message);
@@ -63,7 +63,7 @@
         public function actionCustomUpdate()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The id specified was invalid.');
                 throw new ApiException($message);
@@ -75,7 +75,7 @@
         public function actionCustomDelete()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The id specified was invalid.');
                 throw new ApiException($message);

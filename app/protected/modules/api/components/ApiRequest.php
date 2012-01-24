@@ -101,7 +101,7 @@
          */
         public function getSessionId()
         {
-            if(isset($_SERVER['HTTP_ZURMO_SESSION_ID']))
+            if (isset($_SERVER['HTTP_ZURMO_SESSION_ID']))
             {
                 return $_SERVER['HTTP_ZURMO_SESSION_ID'];
             }
@@ -116,7 +116,7 @@
         */
         public function getSessionToken()
         {
-            if(isset($_SERVER['HTTP_ZURMO_TOKEN']))
+            if (isset($_SERVER['HTTP_ZURMO_TOKEN']))
             {
                 return $_SERVER['HTTP_ZURMO_TOKEN'];
             }
@@ -131,7 +131,7 @@
         */
         public function getUsername()
         {
-            if(isset($_SERVER['HTTP_ZURMO_AUTH_USERNAME']))
+            if (isset($_SERVER['HTTP_ZURMO_AUTH_USERNAME']))
             {
                 return $_SERVER['HTTP_ZURMO_AUTH_USERNAME'];
             }
@@ -146,7 +146,7 @@
         */
         public function getPassword()
         {
-            if(isset($_SERVER['HTTP_ZURMO_AUTH_PASSWORD']))
+            if (isset($_SERVER['HTTP_ZURMO_AUTH_PASSWORD']))
             {
                 return $_SERVER['HTTP_ZURMO_AUTH_PASSWORD'];
             }
@@ -161,7 +161,7 @@
         */
         public function getLanguage()
         {
-            if(isset($_SERVER['HTTP_ZURMO_LANG']))
+            if (isset($_SERVER['HTTP_ZURMO_LANG']))
             {
                 return $_SERVER['HTTP_ZURMO_LANG'];
             }
@@ -176,13 +176,13 @@
         */
         public function getRequestType()
         {
-            if(isset($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']))
+            if (isset($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']))
             {
                 if (strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'rest')
                 {
                     return self::REST;
                 }
-                elseif(strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'soap')
+                elseif (strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'soap')
                 {
                     return self::SOAP;
                 }
@@ -206,7 +206,8 @@
             {
                 $params = ApiSoapRequest::getParamsFromRequest();
             }
-            else {
+            else
+            {
                 echo Yii::t('Default', "Invalid request");
                 Yii::app()->end();
             }

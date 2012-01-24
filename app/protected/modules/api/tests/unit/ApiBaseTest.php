@@ -38,7 +38,8 @@
             $super = SecurityTestHelper::createSuperAdmin();
         }
 
-        public function setUp(){
+        public function setUp()
+        {
             parent::setUp();
             if (strlen(Yii::app()->params['testApiUrl']) > 0)
             {

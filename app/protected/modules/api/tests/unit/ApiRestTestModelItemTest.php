@@ -50,7 +50,6 @@
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertTrue(isset($response['data']['sessionId']) && is_string($response['data']['sessionId']));
             $this->assertTrue(isset($response['data']['token']) && is_string($response['data']['token']));
-            //ToDo: Check if session exist
         }
 
         /**
@@ -92,7 +91,6 @@
             $testItem3_2->name     = 'Jim';
             $this->assertTrue($testItem3_2->save());
 
-
             $testItem = new ApiTestModelItem();
             $testItem->firstName     = 'Bob5';
             $testItem->lastName      = 'Bob5';
@@ -105,7 +103,6 @@
             $testItem->string        = 'aString';
             $testItem->textArea      = 'Some Text Area';
             $testItem->url           = 'http://www.asite.com';
-            $testItem->owner         = $super;
             $testItem->currencyValue = $currencyValue;
             $testItem->hasOne        = $testItem2;
             $testItem->hasMany->add($testItem3_1);
@@ -114,23 +111,37 @@
             $testItem->save();
             $util  = new RedBeanModelToApiDataUtil($testItem);
             $data  = $util->getData();
+            unset($data['createdDateTime']);
+            unset($data['modifiedDateTime']);
+            unset($data['id']);
+            unset($data['currencyValue']['id']);
+            $data['owner'] = array(
+                 'id' => $super->id,
+            );
+
             $compareData = $data;
+            unset($data['createdByUser']);
+            unset($data['modifiedByUser']);
 
             $testItem->delete();
             $testItem->forget();
             unset($testItem);
 
-            unset($data['createdDateTime']);
-            unset($data['modifiedDateTime']);
-            unset($data['createdByUser']);
-            unset($data['modifiedByUser']);
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/create/', 'POST', $headers, array('data' => $data));
+            /*
+            $res = print_r($response, true);
+            $fp = fopen('/home/ivica/data.html', 'w');
+            fwrite($fp, $res);
+            fclose($fp);
+            exit;
+            */
             $response = json_decode($response, true);
 
             $id = $response['data']['id'];
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
             unset($response['data']['id']);
+            unset($response['data']['owner']['username']);
             unset($compareData['id']);
             unset($response['data']['currencyValue']['id']);
             unset($compareData['currencyValue']['id']);
@@ -140,7 +151,6 @@
             ksort($compareData);
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
-
         }
 
         /**

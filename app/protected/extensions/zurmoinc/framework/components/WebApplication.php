@@ -31,6 +31,7 @@
          * @var boolean
          */
         protected $installed;
+
         /**
          * Override so that the application looks at the controller class name differently.
          * Instead of having controllers with the same class name across the application,

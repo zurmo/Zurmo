@@ -97,7 +97,7 @@
         {
             CApplicationComponent::init();
 
-            if(Yii::app()->apiRequest->isApiRequest())
+            if (Yii::app()->apiRequest->isApiRequest())
             {
                 if ($sessionId = Yii::app()->apiRequest->getSessionId())
                 {

@@ -125,7 +125,6 @@
             $secondaryEmail['optOut']       = 0;
             $secondaryEmail['isInvalid']    = 1;
 
-
             $billingAddress['street1']      = '129 Noodle Boulevard';
             $billingAddress['street2']      = 'Apartment 6000A';
             $billingAddress['city']         = 'Noodleville';
@@ -201,7 +200,8 @@
         /**
         * @depends testCreateAccount
         */
-        public function testUpdateAccount(){
+        public function testUpdateAccount()
+        {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -598,7 +598,7 @@
         */
         public function testNotAllowedGuestAction()
         {
-            $authenticationData = $this->login('st','st');
+            $authenticationData = $this->login('st', 'st');
             $headers = array(
                 'Accept: application/json',
                 'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],

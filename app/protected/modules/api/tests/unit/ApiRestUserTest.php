@@ -192,7 +192,6 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-
             $authenticationData = $this->login();
             $headers = array(
                 'Accept: application/json',
@@ -205,7 +204,8 @@
         /**
          * @depends testCreateUser
          */
-        public function testUpdateUser(){
+        public function testUpdateUser()
+        {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -266,7 +266,6 @@
             $this->assertEquals(3, $response['data']['totalCount']);
             $this->assertEquals(1, $response['data']['currentPage']);
         }
-
 
         /**
          * @depends testListUsers

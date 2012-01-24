@@ -50,22 +50,22 @@
             $data       = array();
             $data['id'] = $this->model->id;
             $retrievableAttributes = static::resolveRetrievableAttributesByModel($this->model);
-            foreach($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
+            foreach ($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
             {
                 $type             = ModelAttributeToMixedApiTypeUtil::getType($this->model, $attributeName);
                 $adapterClassName = $type . 'RedBeanModelAttributeValueToApiValueAdapter';
-                if($type != null && @class_exists($adapterClassName) &&
+                if ($type != null && @class_exists($adapterClassName) &&
                    !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
                       RedBeanModel::HAS_ONE))
                 {
                     $adapter = new $adapterClassName($this->model, $attributeName);
                     $adapter->resolveData($data);
                 }
-                elseif($this->model->isOwnedRelation($attributeName) &&
+                elseif ($this->model->isOwnedRelation($attributeName) &&
                        ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
                         $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
                 {
-                    if($this->model->{$attributeName}->id > 0)
+                    if ($this->model->{$attributeName}->id > 0)
                     {
                         $util = new RedBeanModelToApiDataUtil($this->model->{$attributeName});
                         $relatedData          = $util->getData();
@@ -81,7 +81,7 @@
                  elseif ($this->model->isRelation($attributeName) &&
                          $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                  {
-                    if($this->model->{$attributeName}->id > 0)
+                    if ($this->model->{$attributeName}->id > 0)
                     {
                         $data[$attributeName] = array('id' => $this->model->{$attributeName}->id);
                     }

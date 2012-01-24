@@ -178,7 +178,8 @@
         /**
          * @depends testCreateOpportunity
          */
-        public function testUpdateOpportunity(){
+        public function testUpdateOpportunity()
+        {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -248,7 +249,6 @@
             $this->assertEquals(1, $response['data']['currentPage']);
             $this->assertEquals(array($compareData), $response['data']['items']);
         }
-
 
         /**
          * @depends testListOpportunities
@@ -353,7 +353,6 @@
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
-
             // Test with privileged user
             $authenticationData = $this->login();
             $headers = array(
@@ -372,7 +371,6 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
         }
-
 
         /**
         * @depends testListOpportunities

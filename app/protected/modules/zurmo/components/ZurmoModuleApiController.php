@@ -47,7 +47,7 @@
             {
                 $filterChain->run();
             }
-            catch(Exception $e)
+            catch (Exception $e)
             {
                 $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $e->getMessage(), null);
                 Yii::app()->apiHelper->sendResponse($result);
@@ -57,7 +57,7 @@
         public function actionRead()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
@@ -76,7 +76,7 @@
         public function actionCreate()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['data']))
+            if (!isset($params['data']))
             {
                 $message = Yii::t('Default', 'Please provide data.');
                 throw new ApiException($message);
@@ -88,7 +88,7 @@
         public function actionUpdate()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
@@ -100,7 +100,7 @@
         public function actionDelete()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
-            if(!isset($params['id']))
+            if (!isset($params['id']))
             {
                 $message = Yii::t('Default', 'The ID specified was invalid.');
                 throw new ApiException($message);
@@ -133,7 +133,7 @@
             {
                 ApiControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
             }
-            catch(SecurityException $e)
+            catch (SecurityException $e)
             {
                 $message = $e->getMessage();
                 throw new ApiException($message);
@@ -187,7 +187,6 @@
                     $_GET[$modelClassName . '_sort'] = $filterParams['sort'];
                 }
 
-
                 if (isset($filterParams['search']) && isset($searchFormClassName))
                 {
                     $_GET[$searchFormClassName] = $filterParams['search'];
@@ -200,7 +199,7 @@
                 }
                 else
                 {
-                    $searchForm = null;
+                    $searchForm = new SearchForm($model);
                 }
 
                 $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
@@ -267,8 +266,6 @@
                 {
                     $errors = $model->getErrors();
                     $message = Yii::t('Default', 'Model was not created.');
-                    // To-Do: How to pass $errors and $message to exception
-                    //throw new ApiException($message);
                     $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, $errors);
                 }
             }
@@ -279,8 +276,6 @@
             }
             return $result;
         }
-
-
 
         protected function processUpdate($id, $data)
         {
@@ -301,7 +296,7 @@
             {
                 ApiControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
             }
-            catch(SecurityException $e)
+            catch (SecurityException $e)
             {
                 $message = $e->getMessage();
                 throw new ApiException($message);
@@ -354,7 +349,7 @@
             {
                 ApiControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($model);
             }
-            catch(SecurityException $e)
+            catch (SecurityException $e)
             {
                 $message = $e->getMessage();
                 throw new ApiException($message);
@@ -387,7 +382,7 @@
             if (isset($data))
             {
                 $model            = ZurmoControllerUtil::
-                                    saveModelFromSanitizedData($data, $model, $savedSucessfully, $modelToStringValue);
+                    saveModelFromSanitizedData($data, $model, $savedSucessfully, $modelToStringValue);
             }
             if ($savedSucessfully && $redirect)
             {
@@ -395,7 +390,5 @@
             }
             return $model;
         }
-
-
     }
 ?>

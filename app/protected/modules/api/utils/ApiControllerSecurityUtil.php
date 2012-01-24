@@ -42,6 +42,4 @@
             throw new SecurityException($message);
         }
     }
-
-
 ?>

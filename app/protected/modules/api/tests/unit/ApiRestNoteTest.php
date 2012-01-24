@@ -133,7 +133,8 @@
         /**
          * @depends testCreateNote
          */
-        public function testUpdateNote(){
+        public function testUpdateNote()
+        {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -203,7 +204,6 @@
             $this->assertEquals(1, $response['data']['currentPage']);
             $this->assertEquals(array($compareData), $response['data']['items']);
         }
-
 
         /**
          * @depends testListNotes

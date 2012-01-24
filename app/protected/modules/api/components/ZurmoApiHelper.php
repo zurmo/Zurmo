@@ -61,7 +61,7 @@
             {
                 return 'ApiRestRequest';
             }
-            elseif($requestType == ApiRequest::SOAP)
+            elseif ($requestType == ApiRequest::SOAP)
             {
                 return 'ApiSoapRequest';
             }
@@ -84,7 +84,7 @@
             {
                 return 'ApiJsonResponse';
             }
-            elseif($responseType == ApiRequest::XML_FORMAT)
+            elseif ($responseType == ApiRequest::XML_FORMAT)
             {
                 return 'ApiXmlResponse';
             }

@@ -37,7 +37,8 @@
             $super = SecurityTestHelper::createSuperAdmin();
         }
 
-        public function setUp(){
+        public function setUp()
+        {
             parent::setUp();
             $freeze = false;
             if (RedBeanDatabase::isFrozen())
@@ -94,7 +95,7 @@
                 'integer'           => 10,
                 'phone'             => '21313213',
                 'string'            => 'aString',
-                'textArea'		    => 'Some Text Area',
+                'textArea'          => 'Some Text Area',
                 'url'               => 'http://www.asite.com',
                 'currencyValue'     => null,
                 'dropDown'          => null,
@@ -180,7 +181,7 @@
                 'integer'           => 10,
                 'phone'             => '21313213',
                 'string'            => 'aString',
-                'textArea'		    => 'Some Text Area',
+                'textArea'          => 'Some Text Area',
                 'url'               => 'http://www.asite.com',
                 'currencyValue'     => array(
                     'id'         => $currencyValue->id,

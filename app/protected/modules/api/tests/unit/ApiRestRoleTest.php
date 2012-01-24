@@ -97,7 +97,6 @@
             $this->assertEquals(count($roles), $response['data']['totalCount']);
             $this->assertEquals(1, $response['data']['currentPage']);
             $this->assertEquals($compareData, $response['data']['items']);
-
         }
     }
 ?>

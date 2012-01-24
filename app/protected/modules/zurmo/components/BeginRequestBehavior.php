@@ -28,7 +28,7 @@
     {
         public function attach($owner)
         {
-            if(Yii::app()->apiRequest->isApiRequest())
+            if (Yii::app()->apiRequest->isApiRequest())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
@@ -249,7 +249,7 @@
 
         public function handleLoadLanguage($event)
         {
-            if(!Yii::app()->apiRequest->isApiRequest())
+            if (!Yii::app()->apiRequest->isApiRequest())
             {
                 if (isset($_GET['lang']) && $_GET['lang'] != null)
                 {

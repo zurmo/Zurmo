@@ -30,7 +30,7 @@
         {
             assert('$this->model->{$this->attribute} instanceof Currency');
             $currency = $this->model->{$this->attribute};
-            if($currency->id > 0)
+            if ($currency->id > 0)
             {
                 $data[$this->attribute] = array('id'         => $currency->id);
             }

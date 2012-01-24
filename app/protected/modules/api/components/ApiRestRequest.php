@@ -33,7 +33,8 @@
          * Return service type.
          * @see ApiRequest::getServiceType()
          */
-        public function getServiceType(){
+        public function getServiceType()
+        {
             return ApiRequest::REST;
         }
 

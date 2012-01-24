@@ -133,7 +133,6 @@
             $secondaryEmail['optOut']       = 0;
             $secondaryEmail['isInvalid']    = 1;
 
-
             $primaryAddress['street1']      = '129 Noodle Boulevard';
             $primaryAddress['street2']      = 'Apartment 6000A';
             $primaryAddress['city']         = 'Noodleville';
@@ -159,9 +158,8 @@
             $data['mobilePhone']         = "653-235-7821";
             $data['officeFax']           = "653-235-7834";
             $data['description']         = "Some desc.";
-            $data['companyName']         = "Michael Co,";
+            $data['companyName']         = "Michael Co";
             $data['website']             = "http://sample.com";
-
 
             $data['industry']['value']   = $industryValues[2];
             $data['source']['value']     = $sourceValues[1];
@@ -173,7 +171,6 @@
             $data['secondaryEmail']      = $secondaryEmail;
             $data['primaryAddress']      = $primaryAddress;
             $data['secondaryAddress']    = $secondaryAddress;
-
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
@@ -222,7 +219,8 @@
         /**
          * @depends testCreateContact
          */
-        public function testUpdateContact(){
+        public function testUpdateContact()
+        {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -291,7 +289,6 @@
             $this->assertEquals(1, $response['data']['totalCount']);
             $this->assertEquals(array($compareData), $response['data']['items']);
         }
-
 
         /**
         * @depends testListContacts

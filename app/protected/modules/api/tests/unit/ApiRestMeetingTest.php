@@ -116,7 +116,6 @@
             $data['location']       = "Office";
             $data['description']    = "Description";
 
-
             $data['category']['value'] = $categories[1];
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/create/', 'POST', $headers, array('data' => $data));
@@ -151,7 +150,8 @@
         /**
          * @depends testCreateMeeting
          */
-        public function testUpdateMeeting(){
+        public function testUpdateMeeting()
+        {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -189,7 +189,6 @@
             unset($response['data']['modifiedDateTime']);
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
-
         }
 
         /**
@@ -350,7 +349,6 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
         }
-
 
         /**
         * @depends testUnprivilegedUserViewUpdateDeleteMeetings
