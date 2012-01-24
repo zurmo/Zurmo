@@ -42,7 +42,7 @@
 
             $aVerticalGridView   = new GridView(2, 1);
 
-            $aVerticalGridView->setCssClasses( array('AppNavigation')); //navigation left column
+            $aVerticalGridView->setCssClasses( array('AppNavigation', 'clearfix')); //navigation left column
             $aVerticalGridView->setView(static::makeMenuView(), 0, 0); //TODO cuurent item/link shpuld have some class, like current-nav-item
             $aVerticalGridView->setView(static::makeRecentlyViewedView(), 1, 0);
 

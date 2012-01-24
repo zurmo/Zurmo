@@ -57,8 +57,8 @@ body{
 }
 
 h1, h2, h3, h4, h5, h6{
-	color:#262877;
-	text-shadow: rgba( 255, 255, 255, 0.8 ) 0 1px 0;
+	color:@themeColor;
+	.t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
 }
 
 a:link, a:hover, a:active, a:visited{
@@ -245,6 +245,7 @@ footer, header, hgroup, menu, nav, section {
 	background:#fff url(../images/content-gradient.png) left top repeat-x;
 	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
 	-webkit-border-radius: 0 0 5px 5px;
+
 }
 
 /*Left Sidebar*/
@@ -255,7 +256,9 @@ footer, header, hgroup, menu, nav, section {
 	border-right:1px solid #eee;
 	border-left:1px solid #eee;
 	height:100%;
+	overflow:hidden;
 	display:block;
+	//position: fixed;
 }
 
 .AppNavigation ul{
@@ -542,5 +545,56 @@ table.items tr:hover{
 	}
 	span{
 		line-height: 19px;
+	}
+}
+
+/*Popup Modals*/
+.ui-dialog-titlebar {
+	padding:0;
+	margin:0;
+}
+.ui-dialog{
+	overflow: visible;
+	padding:0 !important;
+	margin:0 !important;
+	border:1px solid #CCCCCC;
+	background:#fff;
+	.b-shadow(0 0 11px 5px rgba(51, 51, 51, 0.40)); /*33*/
+	.ui-dialog-title{
+		padding:0 !important;
+		margin:0 !important;
+		font-size:15px;
+		font-weight:bold;
+		color:@themeColor;
+		.t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
+		width: 100%;
+		height: 40px;
+		line-height: 40px;
+		background: url(../images/portlet-header-gradient.png) left top repeat-x;
+		border-bottom:1px solid #dfdfdf;
+		text-indent:15px;
+	}
+	.ui-dialog-titlebar {
+	 	padding:0 !important;
+		margin:0 !important;
+	 }
+	 .ui-dialog-content {
+	 	padding:15px;
+	 }
+	 .ui-dialog-titlebar-close {
+	 	background:url(../images/widget-close-btn.png) left top no-repeat;
+		position: absolute;
+		right: 0;
+		top: 0;
+		margin: -15px -15px 0 0;
+		padding: 0;
+		width:30px;
+		height: 31px;
+		opacity:1;
+		display:block;
+		z-index:5000;
+		&:hover{
+			border:none;
+		}
 	}
 }
