@@ -110,11 +110,12 @@
         {
             assert('$moduleClassName != null && is_string($moduleClassName)');
             assert('$rightName == null || is_string($rightName)');
-            assert('$user instanceof User');
+
             if ($rightName == null)
-                {
-                    return true;
-                }
+            {
+                return true;
+            }
+            assert('$user instanceof User');
             return Right::ALLOW == $user->getEffectiveRight($moduleClassName, $rightName);
         }
     }
