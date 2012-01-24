@@ -145,17 +145,25 @@
 
             //Searching with a custom field that is not blank should not produce an errors.
             $searchPostData      = array('name'        => 'my test account',
-                                         'officePhone' => null,
-                                         'testHobbies' => array('values' => array('Writing', 'Reading')),
-                                         'officeFax'   => null);
+                                         'officePhone' => '',
+                                         'testHobbies' => array('values' => array(0 => '')),
+                                         'officeFax'   => '');
+
+            $modifiedSearchPostData = SearchUtil::getSearchAttributesFromSearchArray($searchPostData);
+
+            $this->assertEquals(array('name'        => 'my test account',
+                                      'officePhone' => null,
+                                      'testHobbies' => array('values' => array()),
+                                      'officeFax'   => null), $modifiedSearchPostData);
+
             $account             = new Account(false);
             $searchForm          = new AccountsSearchForm($account);
-            $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $searchPostData);
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $modifiedSearchPostData);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             //Run search and make sure the data returned matches how many total accounts are available.
             $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data                = $dataProvider->getData();
-            $this->assertEquals(1, count($data));
+            $this->assertEquals(2, count($data));
         }
     }
 ?>
