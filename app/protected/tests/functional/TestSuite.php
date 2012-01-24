@@ -488,7 +488,7 @@
             elseif (isset($params['clearCache']) && $params['clearCache'] == '1' &&
                     isset($params['ignoreBrowserCheck']) && $params['ignoreBrowserCheck'] == '1')
             {
-                $url = $url . "index.php/zurmo/default/login&clearCache=1&ignoreBrowserCheck=1"; // Not Coding Standard
+                $url = $url . "index.php/zurmo/default/login?clearCache=1&ignoreBrowserCheck=1"; // Not Coding Standard
             }
             else
             {
