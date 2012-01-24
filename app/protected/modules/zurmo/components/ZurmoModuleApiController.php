@@ -199,7 +199,7 @@
                 }
                 else
                 {
-                    $searchForm = new SearchForm($model);
+                    $searchForm = null;
                 }
 
                 $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
