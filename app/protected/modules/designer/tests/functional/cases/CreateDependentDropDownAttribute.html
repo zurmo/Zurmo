@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>javascript{Math.floor(Math.random()*11000)}</td>
 	<td>randomSuffix</td>
@@ -783,14 +788,19 @@
 	<td>location_${randomSuffix}</td>
 </tr>
 <tr>
+	<td>assertValue</td>
+	<td>//select[@id='DropDownDependencyAttributeForm_mappingData_1_attributeName']/option</td>
+	<td></td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_0_attributeName</td>
 	<td>label=testcountry_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>id=DropDownDependencyAttributeForm_mappingData_1_attributeName</td>
-	<td>teststate_${randomSuffix}</td>
+	<td>waitForText</td>
+	<td>//select[@id='DropDownDependencyAttributeForm_mappingData_1_attributeName']/option</td>
+	<td>(None)</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -798,9 +808,9 @@
 	<td>label=teststate_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>//div[@id='DropDownDependencyMappingData']/table/tbody/tr[1]/td[2]/table/tbody/tr[3]/td/table/tbody/tr/td[2]/b</td>
-	<td>Show If</td>
+	<td>waitForElementPresent</td>
+	<td>DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_0</td>
+	<td></td>
 </tr>
 <tr>
 	<td>select</td>
@@ -853,9 +863,9 @@
 	<td>label=testcity_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>//div[@id='DropDownDependencyMappingData']/table/tbody/tr[1]/td[3]/table/tbody/tr[3]/td/table/tbody/tr/td[2]/b</td>
-	<td>Show If</td>
+	<td>waitForElementPresent</td>
+	<td>DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_0</td>
+	<td></td>
 </tr>
 <tr>
 	<td>select</td>
