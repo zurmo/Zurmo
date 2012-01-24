@@ -48,5 +48,10 @@
         {
             return 'Group';
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'GroupsSearchForm';
+        }
     }
 ?>

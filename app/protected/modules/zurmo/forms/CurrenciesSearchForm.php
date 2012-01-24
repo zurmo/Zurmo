@@ -25,33 +25,9 @@
      ********************************************************************************/
 
     /**
-    * Currency API Controller
-    */
-    class ZurmoCurrencyApiController extends ZurmoModuleApiController
+     * Currency search form.
+     */
+    class CurrenciesSearchForm extends SearchForm
     {
-        public function actionCreate()
-        {
-            throw new ApiUnsupportedException();
-        }
-
-        public function actionUpdate()
-        {
-            throw new ApiUnsupportedException();
-        }
-
-        public function actionDelete()
-        {
-            throw new ApiUnsupportedException();
-        }
-
-        protected function getModelName()
-        {
-            return 'Currency';
-        }
-
-        protected function getSearchFormClassName()
-        {
-            return 'CurrenciesSearchForm';
-        }
     }
 ?>

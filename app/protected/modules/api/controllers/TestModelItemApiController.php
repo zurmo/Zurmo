@@ -33,5 +33,10 @@
         {
             return 'ApiTestModelItem';
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'ApiTestModelItemSearchForm';
+        }
     }
 ?>

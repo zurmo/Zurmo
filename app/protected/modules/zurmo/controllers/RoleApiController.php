@@ -48,5 +48,10 @@
         {
             return 'Role';
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'RolesSearchForm';
+        }
     }
 ?>

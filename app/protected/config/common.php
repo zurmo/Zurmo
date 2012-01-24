@@ -346,7 +346,8 @@
     $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
-    $common_config['import'][] = "application.modules.api.adapters.api.*";
+    $common_config['import'][] = "application.modules.api.adapters.api.*";                          // Not Coding Standard
+    $common_config['import'][] = "application.modules.api.tests.unit.forms.*";                      // Not Coding Standard
 
     // Routes for api test
     $testApiConfig['components']['urlManager']['rules'] = array(

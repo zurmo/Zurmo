@@ -95,5 +95,10 @@
         {
             throw new ApiUnsupportedException();
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'CustomFieldsSearchForm';
+        }
     }
 ?>
