@@ -220,7 +220,16 @@
          */
         public function isApiRequest()
         {
-            $url = Yii::app()->getRequest()->getUrl();
+            // We need to catch exception and return false in case that this method is called via ConsoleApplication.
+            try
+            {
+                $url = Yii::app()->getRequest()->getUrl();
+            }
+            catch (CException $e)
+            {
+                $url = '';
+            }
+
             if (strpos($url, '/api/') !== false)
             {
                 return true;
