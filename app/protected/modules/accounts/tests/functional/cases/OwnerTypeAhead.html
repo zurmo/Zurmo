@@ -12,64 +12,64 @@
 <tr><td rowspan="1" colspan="3">Test User Type Ahead</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default/create</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/accounts/default/create</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Account_owner_id</td>
-	<td>1</td>
+  <td>assertValue</td>
+  <td>Account_owner_id</td>
+  <td>1</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Account_owner_name</td>
-	<td>Super User</td>
+  <td>assertValue</td>
+  <td>Account_owner_name</td>
+  <td>Super User</td>
 </tr>
 <tr>
-	<td>focus</td>
-	<td>Account_owner_name</td>
-	<td></td>
+  <td>focus</td>
+  <td>Account_owner_name</td>
+  <td></td>
 </tr>
 <tr>
-	<td>typeAndTypeKeys</td>
-	<td>Account_owner_name</td>
-	<td>sam</td>
+  <td>typeAndTypeKeys</td>
+  <td>Account_owner_name</td>
+  <td>sam</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//html/body/ul/li/a[. = &quot;Sam Smith (sam)&quot;]</td>
-	<td></td>
+  <td>waitForElementPresent</td>
+  <td>//html/body/ul/li/a[. = &quot;Sam Smith (sam)&quot;]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>mouseOver</td>
-	<td>//html/body/ul/li/a[. = &quot;Sam Smith (sam)&quot;]</td>
-	<td><br /></td>
+  <td>mouseOver</td>
+  <td>//html/body/ul/li/a[. = &quot;Sam Smith (sam)&quot;]</td>
+  <td><br /></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//html/body/ul/li/a[. = &quot;Sam Smith (sam)&quot;]</td>
-	<td><br /></td>
+  <td>click</td>
+  <td>//html/body/ul/li/a[. = &quot;Sam Smith (sam)&quot;]</td>
+  <td><br /></td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Account_owner_name</td>
-	<td>Sam Smith</td>
+  <td>assertValue</td>
+  <td>Account_owner_name</td>
+  <td>Sam Smith</td>
 </tr>
 <tr>
-	<td>assertNotValue</td>
-	<td>Account_owner_id</td>
-	<td></td>
+  <td>assertNotValue</td>
+  <td>Account_owner_id</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

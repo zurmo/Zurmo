@@ -12,498 +12,498 @@
 <tr><td rowspan="1" colspan="3">CreateModifyRole</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix2</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>randomSuffix2</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=configuration</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/configuration</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Manage Roles</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Manage Roles</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Roles</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Roles</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Role_name</td>
-	<td>testRole${randomSuffix}</td>
+  <td>type</td>
+  <td>Role_name</td>
+  <td>testRole${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>testRole${randomSuffix}</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>testRole${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=testRole${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=testRole${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Role_name</td>
-	<td>testRole${randomSuffix}</td>
+  <td>assertValue</td>
+  <td>Role_name</td>
+  <td>testRole${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Cancel</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Cancel</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Roles: Home</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Roles: Home</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Role_name</td>
-	<td>testRole${randomSuffix2}</td>
+  <td>type</td>
+  <td>Role_name</td>
+  <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Role_role_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>Role_role_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Select a Parent Role</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Select a Parent Role</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=testRole${randomSuffix}</td>
-	<td></td>
+  <td>click</td>
+  <td>link=testRole${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>Role_role_name</td>
-	<td>testRole${randomSuffix}</td>
+  <td>waitForValue</td>
+  <td>Role_role_name</td>
+  <td>testRole${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Roles: Home </td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Roles: Home </td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=testRole${randomSuffix2}</td>
-	<td>testRole${randomSuffix2}</td>
+  <td>assertText</td>
+  <td>link=testRole${randomSuffix2}</td>
+  <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=testRole${randomSuffix2}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=testRole${randomSuffix2}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Role_name</td>
-	<td>testRole${randomSuffix2}</td>
+  <td>assertValue</td>
+  <td>Role_name</td>
+  <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Role_role_name</td>
-	<td>testRole${randomSuffix}</td>
+  <td>assertValue</td>
+  <td>Role_role_name</td>
+  <td>testRole${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <!-- Create a User -->
 <tr>
-	<td>open</td>
-	<td>index.php?r=configuration</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/configuration</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Admin</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Admin</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Users</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>UserPasswordForm_title_value</td>
-	<td>label=Mr.</td>
+  <td>select</td>
+  <td>UserPasswordForm_title_value</td>
+  <td>label=Mr.</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_firstName</td>
-	<td>Jhon</td>
+  <td>type</td>
+  <td>UserPasswordForm_firstName</td>
+  <td>Jhon</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_lastName</td>
-	<td>Smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UserPasswordForm_lastName</td>
+  <td>Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_username</td>
-	<td>jhon smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UserPasswordForm_username</td>
+  <td>jhon smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_newPassword</td>
-	<td>abc123</td>
+  <td>type</td>
+  <td>UserPasswordForm_newPassword</td>
+  <td>abc123</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_newPassword_repeat</td>
-	<td>abc123</td>
+  <td>type</td>
+  <td>UserPasswordForm_newPassword_repeat</td>
+  <td>abc123</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Edit</td>
-	<td>Edit</td>
+  <td>assertText</td>
+  <td>link=Edit</td>
+  <td>Edit</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mr. Jhon Smith${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
+  <td>Mr. Jhon Smith${randomSuffix}</td>
 </tr>
 <!-- Create of a User completes here-->
 <tr>
-	<td>open</td>
-	<td>index.php?r=users/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/users/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <!-- Search for a user -->
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Advanced Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UsersSearchForm_username</td>
-	<td>jhon smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UsersSearchForm_username</td>
+  <td>jhon smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td>Jhon Smith${randomSuffix}</td>
+  <td>assertText</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td>Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <!-- Search for a user ends here-->
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
-	<td>Role</td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
+  <td>Role</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
-	<td></td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Edit</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>User_role_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>User_role_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Select a Role</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Select a Role</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=testRole${randomSuffix2}</td>
-	<td></td>
+  <td>click</td>
+  <td>link=testRole${randomSuffix2}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>User_role_name</td>
-	<td>testRole${randomSuffix2}</td>
+  <td>waitForValue</td>
+  <td>User_role_name</td>
+  <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTable</td>
-	<td>//div[@id='UserDetailsView']/table.0.3</td>
-	<td>testRole${randomSuffix2}</td>
+  <td>assertTable</td>
+  <td>//div[@id='UserDetailsView']/table.0.3</td>
+  <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=zurmo/role</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/zurmo/role</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=testRole${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=testRole${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Delete Role</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Delete Role</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to remove this role?</td>
-	<td></td>
+  <td>assertConfirmation</td>
+  <td>Are you sure you want to remove this role?</td>
+  <td></td>
 </tr>
 <tr>
-	<td>chooseOkOnNextConfirmationAndWait</td>
-	<td></td>
-	<td></td>
+  <td>chooseOkOnNextConfirmationAndWait</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Roles: Home </td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Roles: Home </td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>link=testRole${randomSuffix}</td>
-	<td></td>
+  <td>assertTextNotPresent</td>
+  <td>link=testRole${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=testRole${randomSuffix2}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=testRole${randomSuffix2}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>Role_role_name</td>
-	<td></td>
+  <td>assertValue</td>
+  <td>Role_role_name</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Delete Role</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Delete Role</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to remove this role?</td>
-	<td></td>
+  <td>assertConfirmation</td>
+  <td>Are you sure you want to remove this role?</td>
+  <td></td>
 </tr>
 <tr>
-	<td>chooseOkOnNextConfirmationAndWait</td>
-	<td></td>
-	<td></td>
+  <td>chooseOkOnNextConfirmationAndWait</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Roles: Home </td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Roles: Home </td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>assertTextNotPresent</td>
+  <td>Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>link=testRole${randomSuffix2}</td>
-	<td></td>
+  <td>assertTextNotPresent</td>
+  <td>link=testRole${randomSuffix2}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=users/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/users/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
-	<td>Role</td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
+  <td>Role</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
-	<td></td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

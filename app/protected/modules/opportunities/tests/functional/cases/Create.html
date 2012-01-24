@@ -12,254 +12,254 @@
 <tr><td rowspan="1" colspan="3">CreateEditOpportunity</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>storeGlobal</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+  <td>storeGlobal</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=accounts/default/create</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/accounts/default/create</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Accounts: (Unnamed)</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Accounts: (Unnamed)</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Account_name</td>
-	<td>my account ${randomSuffix}</td>
+  <td>type</td>
+  <td>Account_name</td>
+  <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>my account ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>my account ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=opportunities/default/create</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/opportunities/default/create</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Opportunities: (Unnamed)</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Opportunities: (Unnamed)</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Opportunity_name</td>
-	<td>Test Opportunity ${randomSuffix}</td>
+  <td>type</td>
+  <td>Opportunity_name</td>
+  <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Opportunity_amount_value</td>
-	<td>500.34</td>
+  <td>type</td>
+  <td>Opportunity_amount_value</td>
+  <td>500.34</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Opportunity_account_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>Opportunity_account_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Account Search</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Account Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Account_name</td>
-	<td>my account ${randomSuffix}</td>
+  <td>type</td>
+  <td>Account_name</td>
+  <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result(s).</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result(s).</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>my account ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>my account ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=my account ${randomSuffix}</td>
-	<td></td>
+  <td>click</td>
+  <td>link=my account ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>Opportunity_account_name</td>
-	<td>my account ${randomSuffix}</td>
+  <td>waitForValue</td>
+  <td>Opportunity_account_name</td>
+  <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertNotValue</td>
-	<td>Opportunity_account_id</td>
-	<td></td>
+  <td>assertNotValue</td>
+  <td>Opportunity_account_id</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Opportunity_closeDate</td>
-	<td></td>
+  <td>click</td>
+  <td>Opportunity_closeDate</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/div/a[2]/span</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/div/a[2]/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=1</td>
-	<td></td>
+  <td>click</td>
+  <td>link=1</td>
+  <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Opportunity_stage_value</td>
-	<td>label=Negotiating</td>
+  <td>select</td>
+  <td>Opportunity_stage_value</td>
+  <td>label=Negotiating</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Opportunity_source_value</td>
-	<td>label=Tradeshow</td>
+  <td>select</td>
+  <td>Opportunity_source_value</td>
+  <td>label=Tradeshow</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Opportunity_owner_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>Opportunity_owner_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>User Search</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>User Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>User[firstName]</td>
-	<td>Sam</td>
+  <td>type</td>
+  <td>User[firstName]</td>
+  <td>Sam</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>User[lastName]</td>
-	<td>Smith</td>
+  <td>type</td>
+  <td>User[lastName]</td>
+  <td>Smith</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result(s).</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result(s).</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Sam Smith</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Sam Smith</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Sam Smith</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Sam Smith</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>Opportunity_owner_name</td>
-	<td>Sam Smith</td>
+  <td>waitForValue</td>
+  <td>Opportunity_owner_name</td>
+  <td>Sam Smith</td>
 </tr>
 <tr>
-	<td>assertNotValue</td>
-	<td>Opportunity_owner_id</td>
-	<td></td>
+  <td>assertNotValue</td>
+  <td>Opportunity_owner_id</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Opportunities: Test Opportunity ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Opportunities: Test Opportunity ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Test Opportunity ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>500.34</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>500.34</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Tradeshow</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Tradeshow</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Negotiating</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Negotiating</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertNotText</td>
-	<td>//div[@id='OpportunityEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
-	<td></td>
+  <td>assertNotText</td>
+  <td>//div[@id='OpportunityEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=my account ${randomSuffix}</td>
-	<td>my account ${randomSuffix}</td>
+  <td>assertText</td>
+  <td>link=my account ${randomSuffix}</td>
+  <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Edit</td>
+  <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>Opportunity_stage_value</td>
-	<td>label=Closed Won</td>
+  <td>select</td>
+  <td>Opportunity_stage_value</td>
+  <td>label=Closed Won</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Opportunities: Test Opportunity ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Opportunities: Test Opportunity ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Closed Won</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Closed Won</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

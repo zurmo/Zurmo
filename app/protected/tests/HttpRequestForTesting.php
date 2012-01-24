@@ -42,7 +42,7 @@
          */
         public function getRequestUri()
         {
-            return '/app/test/index.php?r=somewhereForTheTest'; // Not Coding Standard
+            return '/app/test/index.php/somewhereForTheTest'; // Not Coding Standard
         }
 
         /**

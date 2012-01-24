@@ -12,219 +12,219 @@
 <tr><td rowspan="1" colspan="3">CreateTextAttribute</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=designer/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/designer/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Fields</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Fields</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Standard Fields</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Standard Fields</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Custom Fields</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Custom Fields</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>functesttextfield_${randomSuffix}</td>
-	<td></td>
+  <td>assertTextNotPresent</td>
+  <td>functesttextfield_${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Create Field</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Create Field</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Text</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Text</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>TextAttributeForm_attributeName</td>
-	<td>functesttextfield_${randomSuffix}</td>
+  <td>type</td>
+  <td>TextAttributeForm_attributeName</td>
+  <td>functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>TextAttributeForm_attributeLabels_en</td>
-	<td>functesttextfield_${randomSuffix}</td>
+  <td>type</td>
+  <td>TextAttributeForm_attributeLabels_en</td>
+  <td>functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>TextAttributeForm_defaultValue</td>
-	<td>AText</td>
+  <td>type</td>
+  <td>TextAttributeForm_defaultValue</td>
+  <td>AText</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>TextAttributeForm_maxLength</td>
-	<td>88</td>
+  <td>type</td>
+  <td>TextAttributeForm_maxLength</td>
+  <td>88</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>TextAttributeForm_isRequired</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>TextAttributeForm_isRequired</td>
+  <td>off</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>TextAttributeForm_isRequired</td>
-	<td></td>
+  <td>click</td>
+  <td>TextAttributeForm_isRequired</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>TextAttributeForm_isRequired</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>TextAttributeForm_isRequired</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>TextAttributeForm_isAudited</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>TextAttributeForm_isAudited</td>
+  <td>off</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>TextAttributeForm_isAudited</td>
-	<td></td>
+  <td>click</td>
+  <td>TextAttributeForm_isAudited</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>TextAttributeForm_isAudited</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>TextAttributeForm_isAudited</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: functesttextfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>exact:Field: functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[1]/td</td>
-	<td>Text</td>
+  <td>assertText</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[1]/td</td>
+  <td>Text</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[2]/td</td>
-	<td>functesttextfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[2]/td</td>
+  <td>functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functesttextfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[3]/td</td>
+  <td>functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[4]/td</td>
-	<td>AText</td>
+  <td>assertText</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>AText</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[5]/td</td>
-	<td>88</td>
+  <td>assertText</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[5]/td</td>
+  <td>88</td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Edit</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
-	<td>exact:Edit Field: functesttextfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+  <td>exact:Edit Field: functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>TextAttributeForm_defaultValue</td>
-	<td>AText_New</td>
+  <td>type</td>
+  <td>TextAttributeForm_defaultValue</td>
+  <td>AText_New</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>TextAttributeForm_isRequired</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>TextAttributeForm_isRequired</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>TextAttributeForm_isRequired</td>
-	<td></td>
+  <td>click</td>
+  <td>TextAttributeForm_isRequired</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>TextAttributeForm_isRequired</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>TextAttributeForm_isRequired</td>
+  <td>off</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: functesttextfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>exact:Field: functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[4]/td</td>
-	<td>AText_New</td>
+  <td>assertText</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>AText_New</td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>off</td>
 </tr>
 </tbody></table>
 </body>
