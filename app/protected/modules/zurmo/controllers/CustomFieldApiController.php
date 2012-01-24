@@ -26,9 +26,8 @@
 
     class ZurmoCustomFieldApiController extends ZurmoModuleApiController
     {
-        protected function processList()
+        protected function processList($params)
         {
-
             $customFieldDataItems = CustomFieldData::getAll();
             $data = array();
             foreach ($customFieldDataItems as $customFieldDataItem)

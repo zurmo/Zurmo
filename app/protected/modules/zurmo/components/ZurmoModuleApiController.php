@@ -174,12 +174,12 @@
 
                 if (isset($filterParams['pagination']['pageSize']))
                 {
-                    $pageSize = $filterParams['pagination']['pageSize'];
+                    $pageSize = (int)$filterParams['pagination']['pageSize'];
                 }
 
                 if (isset($filterParams['pagination']['page']))
                 {
-                    $_GET[$modelClassName . '_page'] = $filterParams['pagination']['page'];
+                    $_GET[$modelClassName . '_page'] = (int)$filterParams['pagination']['page'];
                 }
 
                 if (isset($filterParams['sort']))
@@ -205,16 +205,16 @@
 
                 $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
                 $dataProvider = $this->makeRedBeanDataProviderFromGet(
-                                    $searchForm,
-                                    $modelClassName,
-                                    $pageSize,
-                                    Yii::app()->user->userModel->id,
-                                    $stateMetadataAdapterClassName
-                                );
+                    $searchForm,
+                    $modelClassName,
+                    $pageSize,
+                    Yii::app()->user->userModel->id,
+                    $stateMetadataAdapterClassName
+                );
 
-                if (isset($filterParams['pagination']['page']) && intval($filterParams['pagination']['page']) > 0)
+                if (isset($filterParams['pagination']['page']) && (int)$filterParams['pagination']['page'] > 0)
                 {
-                    $currentPage = intval($filterParams['pagination']['page']);
+                    $currentPage = (int)$filterParams['pagination']['page'];
                 }
                 else
                 {
