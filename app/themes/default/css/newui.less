@@ -259,6 +259,7 @@ footer, header, hgroup, menu, nav, section {
 	overflow:hidden;
 	display:block;
 	//position: fixed;
+	overflow: visible;
 }
 
 .AppNavigation ul{
@@ -270,33 +271,52 @@ footer, header, hgroup, menu, nav, section {
 }
 
 #MenuView{
-	padding:20px 5px;
+	padding:20px 0;
 	border-bottom: #ccc;
 }
 
 #MenuView .parent{
-	
+	position:relative;
 }
 
 #MenuView .parent > ul{
-	//display:none;
-}
-
-#MenuView .parent > a{
-	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight:bold;
-	font-size:12px;
-	color:#555555;
-	text-decoration:none;
+	display:none;
+	position:absolute;
+	left:170px;
+	top:0;
+	padding:5px 5px;
+	background:#fefefe url(../images/sidebar-gradient.png) left top repeat-x;
+	border:1px solid #ccc;
 	width:160px;
-	line-height: 33px;
-	text-indent:16px;
-	display:block;
-	-webkit-border-radius: 4px;
-	text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+	.b-shadow(0 0 5px 5px rgba(153, 153, 153, 0.25));
+	li{
+		
+	}
+	a span{
+		margin-left:0;
+	}
 }
 
-#MenuView .parent > a:hover{
+/*#MenuView .parent > a*/
+#MenuView a{
+	display:block;
+	span{
+		font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-weight:bold;
+		font-size:12px;
+		color:#555555;
+		text-decoration:none;
+		width:160px;
+		line-height: 33px;
+		text-indent:16px;
+		display:block;
+		-webkit-border-radius: 4px;
+		text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+		margin-left:5px;
+	}
+}
+/*#MenuView .parent >*/
+#MenuView a:hover span{
 	color:#fff !important;
 	text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
 	background:#7cb830 url(../images/main-nav-selected.png) left top no-repeat;
