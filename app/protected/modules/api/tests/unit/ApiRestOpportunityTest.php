@@ -198,7 +198,7 @@
             $opportunities[0]->forget();
 
             $data['probability']                = "15";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/update/' . $opportunities[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);

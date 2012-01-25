@@ -153,7 +153,7 @@
             $notes[0]->forget();
 
             $updateData['description']    = "Updated note description";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/update/' . $notes[0]->id, 'PUT', $headers, array('data' => $updateData));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $updateData));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);

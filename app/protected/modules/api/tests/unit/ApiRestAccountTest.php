@@ -220,7 +220,7 @@
             $accounts[0]->forget();
 
             $data['name']                = "My Company 2";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);

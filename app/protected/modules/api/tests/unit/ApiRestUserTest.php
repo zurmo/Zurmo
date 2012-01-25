@@ -223,7 +223,7 @@
             $user->forget();
 
             $data['firstName']                = "John";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/update/' . $user->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 

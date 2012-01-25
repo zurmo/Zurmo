@@ -170,7 +170,7 @@
             $meetings[0]->forget();
 
             $data['description']    = "Some new description";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/update/' . $meetings[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/meetings/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);

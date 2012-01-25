@@ -239,7 +239,7 @@
             $contacts[0]->forget();
 
             $data['department']                = "Support";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/update/' . $contacts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
