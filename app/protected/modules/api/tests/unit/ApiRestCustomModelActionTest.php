@@ -49,6 +49,14 @@
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
+
+            // Create this test table here, because we don't want to add this into ApiModule rootModels methods.
+            $apiTestModelItem2Temp = new ApiTestModelItem2();
+            $apiTestModelItem2Temp->name = 'tempName';
+            $saved = $apiTestModelItem2Temp->save();
+            $this->assertTrue($saved);
+            $apiTestModelItem2Temp->delete();
+
             //Test Create
             $data = array('name' => 'new name');
 
