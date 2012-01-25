@@ -216,10 +216,11 @@
                 resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
             }
             RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
-            $routeParams = array_merge($_GET, array(
-                'attributeName' => $attributeForm->attributeName,
-                0 => 'default/attributeDetails'
-            ));
+            $routeParams = array_merge(
+                array('default/attributeDetails'),
+                $_GET,
+                array('attributeName' => $attributeForm->attributeName)
+            );
             $this->redirect($routeParams);
         }
 
@@ -383,10 +384,11 @@
             $adapter->setMetadata();
             Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
             GeneralCache::forgetAll();
-            $routeParams = array_merge($_GET, array(
-                'moduleClassName' => get_class($module),
-                0 => 'default/modulesMenu'
-            ));
+            $routeParams = array_merge(
+                array('default/modulesMenu'),
+                $_GET,
+                array('moduleClassName' => get_class($module))
+            );
             $this->redirect($routeParams);
         }
     }
