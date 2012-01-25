@@ -175,7 +175,7 @@
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $tasks[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/tasks/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
