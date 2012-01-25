@@ -133,9 +133,9 @@
                         {
                             url : $.fn.yiiGridView.getUrl('" . $this->id . "')
                         }
+                        options.url = options.url +'/'+ $(this).val();
                         addListViewSelectedIdsAndSelectAllToUrl('" . $this->id . "', options);
-                        var data = 'ajax=&r=" . Yii::app()->getController()->getModule()->getId() // Not Coding Standard
-                        . "/default/' + $(this).val() + '&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
+                        var data = '' + $(this).val() + '&ajax=&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
                         "url = $.param.querystring(options.url, data);
                         window.location.href = url;
                         return false;
