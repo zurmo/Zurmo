@@ -65,6 +65,7 @@
          */
         public function testDeleteLead()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -90,6 +91,7 @@
 
         public function testCreateLead()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -221,6 +223,7 @@
          */
         public function testUpdateLead()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -236,7 +239,6 @@
             $this->assertEquals(1, count($leads));
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($leads[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
-            $leads[0]->forget();
 
             $data['department']                = "Support";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
@@ -252,7 +254,7 @@
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/read/' . $leads[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/leads/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
@@ -265,6 +267,7 @@
          */
         public function testListLead()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -295,6 +298,7 @@
          */
         public function testUnprivilegedUserViewUpdateDeleteLead()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -424,6 +428,7 @@
         */
         public function testSearchLeads()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -557,6 +562,7 @@
 
         public function testEditLeadWithIncompleteData()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -588,6 +594,7 @@
 
         public function testEditLeadWIthIncorrectDataType()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();

@@ -66,6 +66,7 @@
          */
         public function testDeleteOpportunity()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -91,6 +92,7 @@
 
         public function testCreateOpportunity()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -180,6 +182,7 @@
          */
         public function testUpdateOpportunity()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -195,7 +198,6 @@
             $this->assertEquals(1, count($opportunities));
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($opportunities[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
-            $opportunities[0]->forget();
 
             $data['probability']                = "15";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
@@ -211,7 +213,7 @@
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/read/' . $opportunities[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/opportunities/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
@@ -224,6 +226,7 @@
          */
         public function testListOpportunities()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -255,6 +258,7 @@
          */
         public function testUnprivilegedUserViewUpdateDeleteOpportunities()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -377,6 +381,7 @@
         */
         public function testSearchOpportunities()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $anotherUser = User::getByUsername('steven');
@@ -510,6 +515,7 @@
 
         public function testEditOpportunityWithIncompleteData()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -541,6 +547,7 @@
 
         public function testEditOpportunityWIthIncorrectDataType()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();

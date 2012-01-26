@@ -65,6 +65,7 @@
         */
         public function testDeleteAccount()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -88,6 +89,7 @@
 
         public function testCreateAccount()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             ReadPermissionsOptimizationUtil::rebuild();
@@ -202,6 +204,7 @@
         */
         public function testUpdateAccount()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -217,7 +220,6 @@
             $this->assertEquals(1, count($accounts));
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($accounts[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
-            $accounts[0]->forget();
 
             $data['name']                = "My Company 2";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
@@ -246,6 +248,7 @@
         */
         public function testListAccounts()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -276,6 +279,7 @@
         */
         public function testUnprivilegedUserViewUpdateDeleteAcounts()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -398,6 +402,7 @@
         */
         public function testSearchAccounts()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -528,6 +533,7 @@
 
         public function testEditAccountWithIncompleteData()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -561,6 +567,7 @@
 
         public function testEditAccountWIthIncorrectDataType()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -598,6 +605,7 @@
         */
         public function testNotAllowedGuestAction()
         {
+            RedBeanModel::forgetAll();
             $authenticationData = $this->login('st', 'st');
             $headers = array(
                 'Accept: application/json',

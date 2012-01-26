@@ -65,6 +65,7 @@
          */
         public function testDeleteContact()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -90,6 +91,7 @@
 
         public function testCreateContact()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -221,6 +223,7 @@
          */
         public function testUpdateContact()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -236,7 +239,6 @@
             $this->assertEquals(1, count($contacts));
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($contacts[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
-            $contacts[0]->forget();
 
             $data['department']                = "Support";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
@@ -252,7 +254,7 @@
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/read/' . $contacts[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
@@ -265,6 +267,7 @@
          */
         public function testListContacts()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -295,6 +298,7 @@
         */
         public function testUnprivilegedUserViewUpdateDeleteContacts()
         {
+            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -423,6 +427,7 @@
         */
         public function testSearch()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -556,6 +561,7 @@
 
         public function testEditContactWithIncompleteData()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -587,6 +593,7 @@
 
         public function testEditContactWIthIncorrectDataType()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
