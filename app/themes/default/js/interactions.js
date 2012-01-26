@@ -9,13 +9,13 @@ $(window).ready(function(){
 		function(){
 			if ( $(this).find('ul') ){
 				$(this).find('ul').addClass('active-submenu');
-				$(this).find('ul').fadeIn(100);
+				$(this).find('ul').stop(true, true).fadeIn(100);
 			}
 		}, 
 		function(){
 			if ( $(this).find('ul') ){
 				$(this).find('ul').removeClass('active-submenu');
-				$(this).find('ul').fadeOut(250);
+				$(this).find('ul').stop(true, true).fadeOut(250);
 			}
 		}
 	);
