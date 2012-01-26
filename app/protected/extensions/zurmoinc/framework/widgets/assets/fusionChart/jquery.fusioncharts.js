@@ -1,6 +1,6 @@
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * FusionCharts Free jQuery Library and Plugin
      * Copyright (c) 2010 FusionCharts
