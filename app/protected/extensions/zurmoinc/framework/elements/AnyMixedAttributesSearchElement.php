@@ -32,6 +32,18 @@
     class AnyMixedAttributesSearchElement extends TextElement
     {
         /**
+         * Override to ensure the attributeName is anyMixedAttributes
+         */
+        protected function renderControlEditable()
+        {
+            assert('$this->model instanceof SearchForm');
+            assert('$this->attribute = "anyMixedAttributes"');
+            $content  = $this->renderSearchScopingInputContent();
+            $content .= parent::renderControlEditable();
+            return $content;
+        }
+
+        /**
          * (non-PHPdoc)
          * @see Element::getHtmlOptions()
          */
@@ -39,7 +51,6 @@
         {
             $htmlOptions             = array('class'   => 'input-hint',
                                              'onfocus' => '$(this).removeClass("input-hint"); $(this).val("");',
-                                             'onblur'  => '$(this).val("")',
                                              'size'	   => 80,
                                              'value'   => Yii::t('Default', 'Start typing to search'));
             return array_merge(parent::getHtmlOptions(), $htmlOptions);
@@ -61,6 +72,25 @@
         protected function renderLabel()
         {
             return null;
+        }
+
+        protected function renderSearchScopingInputContent()
+        {
+            $cClipWidget   = new CClipWidget();
+            $cClipWidget->beginClip("ScopedJuiMultiSelect");
+            $cClipWidget->widget('ext.zurmoinc.framework.widgets.ScopedSearchJuiMultiSelect', array(
+                'dataAndLabels'  => $this->model->getGlobalSearchAttributeNamesAndLabelsAndAll(),
+                'selectedValue'  => 'All',
+                'inputId'        => $this->getEditableInputId(SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME),
+                'inputName'      => $this->getEditableInputName(SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME),
+                'options'        => array(
+                                          'selectedText' => '',
+                                          'noneSelectedText' => '', 'header' => false,
+                                          'position' => array('my' =>  'right top', 'at' => 'right bottom'))
+            ));
+            $cClipWidget->endClip();
+            $content = $cClipWidget->getController()->clips['ScopedJuiMultiSelect'];
+            return $content;
         }
     }
 ?>

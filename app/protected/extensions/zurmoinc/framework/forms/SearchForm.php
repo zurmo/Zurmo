@@ -38,6 +38,8 @@
 
         public  $anyMixedAttributes;
 
+        private $anyMixedAttributesScope;
+
         public function __construct(RedBeanModel $model)
         {
             parent::__construct($model);
@@ -51,6 +53,11 @@
                                                      FormModelUtil::DELIMITER . $attributeData['elementType'];
                 }
             }
+        }
+
+        public function setAnyMixedAttributesScope($anyMixedAttributesScope)
+        {
+            $this->anyMixedAttributesScope = $anyMixedAttributesScope;
         }
 
         /**
@@ -396,21 +403,25 @@
                 {
                     foreach($metadata['global']['globalSearchAttributeNames'] as $attributeName)
                     {
-                        if(!isset($realAttributesMetadata[$attributeName]))
+                        if($this->anyMixedAttributesScope == null ||
+                           in_array($attributeName, $this->anyMixedAttributesScope))
                         {
-                            $data['anyMixedAttributes'][] = array($attributeName);
-                        }
-                        elseif(isset($realAttributesMetadata[$attributeName]) &&
-                               is_array($realAttributesMetadata[$attributeName]))
-                        {
-                            foreach($realAttributesMetadata[$attributeName] as $mixedAttributeMetadata)
+                            if(!isset($realAttributesMetadata[$attributeName]))
                             {
-                                $data['anyMixedAttributes'][] = $mixedAttributeMetadata;
+                                $data['anyMixedAttributes'][] = array($attributeName);
                             }
-                        }
-                        else
-                        {
-                            throw new NotSupportedException();
+                            elseif(isset($realAttributesMetadata[$attributeName]) &&
+                                   is_array($realAttributesMetadata[$attributeName]))
+                            {
+                                foreach($realAttributesMetadata[$attributeName] as $mixedAttributeMetadata)
+                                {
+                                    $data['anyMixedAttributes'][] = $mixedAttributeMetadata;
+                                }
+                            }
+                            else
+                            {
+                                throw new NotSupportedException();
+                            }
                         }
                     }
                 }
@@ -424,6 +435,28 @@
             {
                 $metadata['anyMixedAttributes'] = 'AnyMixedAttributesSearch';
             }
+        }
+
+        public function getGlobalSearchAttributeNamesAndLabelsAndAll()
+        {
+            $namesAndLabels = array();
+            if($this->supportsMixedSearch())
+            {
+                $moduleClassName            = $this->model->getModuleClassName();
+                $metadata                   = $moduleClassName::getMetadata();
+                if($metadata['global']['globalSearchAttributeNames'] != null)
+                {
+                    foreach($metadata['global']['globalSearchAttributeNames'] as $attributeName)
+                    {
+                        $namesAndLabels[$attributeName] = $this->model->getAttributeLabel($attributeName);
+                    }
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            return array_merge(array('All' => Yii::t('Default', 'All')), $namesAndLabels);
         }
     }
 ?>

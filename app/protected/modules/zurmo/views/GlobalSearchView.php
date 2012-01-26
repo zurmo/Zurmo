@@ -84,10 +84,9 @@
 
         protected function renderGlobalSearchScopingInputContent()
         {
-            $imagePath            = Yii::app()->baseUrl . '/themes/default/images/searchIcon.gif';
             $cClipWidget   = new CClipWidget();
-            $cClipWidget->beginClip("JuiMultiSelect");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.JuiMultiSelect', array(
+            $cClipWidget->beginClip("ScopedJuiMultiSelect");
+            $cClipWidget->widget('ext.zurmoinc.framework.widgets.ScopedSearchJuiMultiSelect', array(
                 'dataAndLabels'  => $this->moduleNamesAndLabelsAndAll,
                 'selectedValue'  => 'All',
                 'inputId'        => 'globalSearchScope',
@@ -98,41 +97,9 @@
                                           'position' => array('my' =>  'right top', 'at' => 'right bottom'))
             ));
             $cClipWidget->endClip();
-            $content = $cClipWidget->getController()->clips['JuiMultiSelect'];
+            $content = $cClipWidget->getController()->clips['ScopedJuiMultiSelect'];
             // Begin Not Coding Standard
-            $script = '/*$("#globalSearchScope").multiselect("getButton").width("25");
-                       $("#globalSearchScope").multiselect("getButton").html(\'<span>' .
-                            CHtml::image($imagePath, 'Search Icon') . '</span>\');*/
-                       $("#globalSearchScope").bind("multiselectclick", function(event, ui){
-                            if($("#globalSearchScope").multiselect("widget").find(":checkbox:checked").length == 0)
-                            {
-                                $("#globalSearchScope").multiselect("widget").find(":checkbox").each(function(){
-                                    if(this.value == "All" && !this.checked)
-                                    {
-                                        this.click();
-                                    }
-                                });
-                            }
-                            if(ui.value == "All" && ui.checked)
-                            {
-                                $("#globalSearchScope").multiselect("widget").find(":checkbox").each(function(){
-                                    if(this.value != "All" && this.checked)
-                                    {
-                                        this.click();
-                                    }
-                                });
-                            }
-                            else if(ui.value != "All" && ui.checked)
-                            {
-                                $("#globalSearchScope").multiselect("widget").find(":checkbox").each(function(){
-                                    if(this.value == "All" && this.checked)
-                                    {
-                                        this.click();
-                                    }
-                                });
-                            }
-                        });
-                        $("#globalSearchInput").bind("focus", function(event, ui){
+            $script = '$("#globalSearchInput").bind("focus", function(event, ui){
                             $("#globalSearchInput").autocomplete("option", "source", "' . $this->sourceUrl . '&" + $.param($("#globalSearchScope").serializeArray()));
                         });
                        ';
