@@ -4,7 +4,13 @@
 
 /*Variables*/
 //blue theme
+
 @themeColor : #262877;
+@themeColor2 : #7BB730;
+
+
+
+
 //@themeColorRGB : 38, 40, 179;
 
 
@@ -289,6 +295,7 @@ footer, header, hgroup, menu, nav, section {
 	border:1px solid #ccc;
 	width:160px;
 	.b-shadow(0 0 5px 5px rgba(153, 153, 153, 0.25));
+	z-index:9999;
 	li{
 		
 	}
@@ -420,6 +427,13 @@ footer, header, hgroup, menu, nav, section {
 	padding:7px 10px;
 	display:inline-block;
 	border-left:1px solid #bababa;
+	&:hover{
+		color:@themeColor2 !important;
+	}
+	&:active{
+		color:#656565;
+		box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+	}
 }
 
 .view-toolbar a:first-child{
