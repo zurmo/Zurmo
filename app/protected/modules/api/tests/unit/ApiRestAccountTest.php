@@ -202,6 +202,7 @@
         */
         public function testUpdateAccount()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 

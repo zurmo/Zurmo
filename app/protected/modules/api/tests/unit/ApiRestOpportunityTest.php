@@ -180,6 +180,7 @@
          */
         public function testUpdateOpportunity()
         {
+            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
