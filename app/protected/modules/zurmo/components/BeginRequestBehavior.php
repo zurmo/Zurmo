@@ -42,6 +42,7 @@
 
                 if (!Yii::app()->isApplicationInstalled())
                 {
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstanceFolderCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleTidyCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
@@ -61,6 +62,21 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
+            }
+        }
+
+        /**
+        * This check is required during installation since if runtime, assets and data folders are missing
+        * yii web application can not be started correctly.
+        * @param $event
+        */
+        public function handleInstanceFolderCheck($event)
+        {
+            $instanceFoldersServiceHelper = new InstanceFoldersServiceHelper();
+            if (!$instanceFoldersServiceHelper->runCheckAndGetIfSuccessful())
+            {
+                echo $instanceFoldersServiceHelper->getMessage();
+                Yii::app()->end(0, false);
             }
         }
 
