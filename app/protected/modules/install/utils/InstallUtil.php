@@ -798,11 +798,18 @@
             return $hostInfo;
         }
 
-        public static function getDefaultScriptUrl()
+        public static function getDefaultScriptUrl($route = '')
         {
             if (isset($_SERVER['PHP_SELF']))
             {
-                return $_SERVER['PHP_SELF'];
+                $url = rtrim($_SERVER['PHP_SELF'], '/');
+                $route = rtrim($route, '/');
+
+                if($route != '')
+                {
+                    $url = rtrim($url, $route);
+                }
+                return $url;
             }
             else
             {

@@ -67,7 +67,7 @@
                 $form->setMemcacheIsNotAvailable();
             }
             $form->hostInfo = InstallUtil::getDefaultHostInfo();
-            $form->scriptUrl = InstallUtil::getDefaultScriptUrl();
+            $form->scriptUrl = InstallUtil::getDefaultScriptUrl($this->getRoute());
 
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'install-form')
             {
