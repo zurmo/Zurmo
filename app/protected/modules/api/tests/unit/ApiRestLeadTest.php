@@ -65,7 +65,6 @@
          */
         public function testDeleteLead()
         {
-            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -91,7 +90,6 @@
 
         public function testCreateLead()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -223,7 +221,6 @@
          */
         public function testUpdateLead()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -298,7 +295,6 @@
          */
         public function testUnprivilegedUserViewUpdateDeleteLead()
         {
-            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -428,7 +424,6 @@
         */
         public function testSearchLeads()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -562,7 +557,6 @@
 
         public function testEditLeadWithIncompleteData()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -594,7 +588,6 @@
 
         public function testEditLeadWIthIncorrectDataType()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();

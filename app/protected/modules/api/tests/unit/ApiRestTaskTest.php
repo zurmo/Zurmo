@@ -64,7 +64,6 @@
          */
         public function testDeleteTask()
         {
-            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -86,12 +85,10 @@
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('The ID specified was invalid.', $response['message']);
-            RedBeanModel::forgetAll();
         }
 
         public function testCreateTask()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -145,7 +142,6 @@
          */
         public function testUpdateTask()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -223,7 +219,6 @@
         */
         public function testUnprivilegedUserViewUpdateDeleteTasks()
         {
-            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -353,7 +348,6 @@
         */
         public function testSearchTasks()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $anotherUser = User::getByUsername('steven');
@@ -523,7 +517,6 @@
 
         public function testEditTaskWithIncompleteData()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -555,7 +548,6 @@
 
         public function testEditTaskWIthIncorrectDataType()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();

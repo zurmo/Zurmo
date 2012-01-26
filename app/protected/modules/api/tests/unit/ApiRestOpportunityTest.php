@@ -66,7 +66,6 @@
          */
         public function testDeleteOpportunity()
         {
-            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $authenticationData = $this->login();
             $headers = array(
@@ -92,7 +91,6 @@
 
         public function testCreateOpportunity()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -182,7 +180,6 @@
          */
         public function testUpdateOpportunity()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
@@ -258,7 +255,6 @@
          */
         public function testUnprivilegedUserViewUpdateDeleteOpportunities()
         {
-            RedBeanModel::forgetAll();
             Yii::app()->user->userModel        = User::getByUsername('super');
             $notAllowedUser = UserTestHelper::createBasicUser('Steven');
             $notAllowedUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API);
@@ -381,7 +377,6 @@
         */
         public function testSearchOpportunities()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $anotherUser = User::getByUsername('steven');
@@ -515,7 +510,6 @@
 
         public function testEditOpportunityWithIncompleteData()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
@@ -547,7 +541,6 @@
 
         public function testEditOpportunityWIthIncorrectDataType()
         {
-            RedBeanModel::forgetAll();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $authenticationData = $this->login();
