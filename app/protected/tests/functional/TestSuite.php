@@ -201,6 +201,7 @@
                     echo 'Restoring test db';
                     self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                 }
+                self::clearPreviousTestResultsByBrowser($browserDisplayName);
             }
             echo 'Functional Run Complete.' . "\n";
             self::updateTestResultsSummaryFile();
@@ -384,9 +385,8 @@
             self::makeResultsSummaryFile($data);
         }
 
-        protected static function clearpreviousTestResultsByBrowser($browserId)
+        protected static function clearPreviousTestResultsByBrowser($browserDisplayName)
         {
-            $data = array();
             if (is_dir(TEST_RESULTS_PATH))
             {
                 $resultsNames = scandir(TEST_RESULTS_PATH);
@@ -394,18 +394,12 @@
                 {
                     if ($resultFile != '.' &&
                     $resultFile != '..' &&
-                    $resultFile != 'Summary.html')
+                    stristr($resultFile, strtolower($browserDisplayName)))
                     {
-                        $data[] = array(
-                                    'fileName' => $resultFile,
-                                    'modifiedDate' => date ("F d Y H:i:s.", filemtime(TEST_RESULTS_PATH . $resultFile)),
-                                    'status'   => self::getResultFileStatusByFileName($resultFile),
-                                    'browser'       => self::getResultFileBrowserByFileName($resultFile),
-                        );
+                        unlink(TEST_RESULTS_PATH . $resultFile);
                     }
                 }
             }
-            self::makeResultsSummaryFile($data);
         }
 
         protected static function getResultFileStatusByFileName($resultFile)
