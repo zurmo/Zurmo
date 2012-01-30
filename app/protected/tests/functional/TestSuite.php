@@ -165,6 +165,7 @@
             $browsersToRun = self::resolveBrowserFromParameter();
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
+                self::clearPreviousTestResultsByBrowser($browserDisplayName);
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
                 {
                     echo 'Restoring test db';
@@ -201,7 +202,6 @@
                     echo 'Restoring test db';
                     self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
                 }
-                self::clearPreviousTestResultsByBrowser($browserDisplayName);
             }
             echo 'Functional Run Complete.' . "\n";
             self::updateTestResultsSummaryFile();
