@@ -388,12 +388,14 @@
 
         protected function createTagCloudCustomFieldByModule($moduleClassName, $name)
         {
-            $extraPostData = array( 'defaultValueOrder'   => '1',
-                                    'isAudited'           => '1',
-                                    'isRequired'          => '1',
-                                    'customFieldDataData' => array(
-                                                'w', 'x', 'y', 'z'
-                                    ));
+            $extraPostData = array( 'defaultValueOrder'     => '1',
+                                    'isAudited'             => '1',
+                                    'isRequired'            => '1',
+                                    'customFieldDataData'   => array('reading', 'writing', 'surfing', 'gardening'),
+                                    'customFieldDataLabels' => array(
+                                                           'fr' => array('reading fr', 'writing fr', 'surfing fr', 'gardening fr'),
+                                                           'de' => array('reading de', 'writing de', 'surfing de', 'gardening de'),
+                                                            ));
             $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TagCloud', $extraPostData);
         }
 

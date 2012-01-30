@@ -312,7 +312,7 @@
                                     'decimal'                           => '123',
                                     'picklist'                          => array('value'  => 'a'),
                                     'multiselect'                       => array('values' => array('ff', 'rr')),
-                                    'tagcloud'                          => array('values' => array('x', 'z')),
+                                    'tagcloud'                          => array('values' => array('writing', 'gardening')),
                                     'countrypicklist'                   => array('value'  => 'bbbb'),
                                     'statepicklist'                     => array('value'  => 'bbb1'),
                                     'citypicklist'                      => array('value'  => 'bb1'),
@@ -387,8 +387,8 @@
             $this->assertEquals($lead->citypicklist->value            , 'bb1');
             $this->assertContains('ff'                                , $lead->multiselect->values);
             $this->assertContains('rr'                                , $lead->multiselect->values);
-            $this->assertContains('x'                                 , $lead->tagcloud->values);
-            $this->assertContains('z'                                 , $lead->tagcloud->values);
+            $this->assertContains('writing'                           , $lead->tagcloud->values);
+            $this->assertContains('gardening'                         , $lead->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);
@@ -445,7 +445,7 @@
                                                             'currency'           => array('value'  =>  45),
                                                             'picklist'           => array('value'  =>  'a'),
                                                             'multiselect'        => array('values' => array('ff', 'rr')),
-                                                            'tagcloud'           => array('values' => array('x', 'z')),
+                                                            'tagcloud'           => array('values' => array('writing', 'gardening')),
                                                             'countrypicklist'    => array('value'  => 'bbbb'),
                                                             'statepicklist'      => array('value'  => 'bbb1'),
                                                             'citypicklist'       => array('value'  => 'bb1'),
@@ -464,7 +464,7 @@
         /**
          * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterCreatingTheLeadUser
          */
-        public function testEditOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule()
+        public function testEditOfTheLeadUserForTheTagCloudFieldAfterRemovingAllTagsPlacedForLeadsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -532,7 +532,7 @@
                             'decimal'                           => '12',
                             'picklist'                          => array('value'  => 'b'),
                             'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          => array('values' =>  array('w', 'y')),
+                            'tagcloud'                          => array('values' =>  array()),
                             'countrypicklist'                   => array('value'  => 'aaaa'),
                             'statepicklist'                     => array('value'  => 'aaa1'),
                             'citypicklist'                      => array('value'  => 'ab1'),
@@ -605,8 +605,162 @@
             $this->assertEquals($lead->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                , $lead->multiselect->values);
             $this->assertContains('hh'                                , $lead->multiselect->values);
-            $this->assertContains('w'                                 , $lead->tagcloud->values);
-            $this->assertContains('y'                                 , $lead->tagcloud->values);
+            $this->assertNotContains('reading'                        , $lead->tagcloud->values);
+            $this->assertNotContains('writing'                        , $lead->tagcloud->values);
+            $this->assertNotContains('surfing'                        , $lead->tagcloud->values);
+            $this->assertNotContains('gardening'                      , $lead->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);
+            $this->assertEquals(23                                    , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheLeadUserForTheTagCloudFieldAfterRemovingAllTagsPlacedForLeadsModule
+         */
+        public function testEditOfTheLeadUserForTheCustomFieldsPlacedForLeadsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Retrieve the the super user id.
+            $superUserId = $super->id;
+
+            //Retrieve the lead id.
+            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Retrieve the Lead State (Status) Id based on the name.
+            $leadState   = ContactState::getByName('In Progress');
+            $leadStateId = $leadState[0]->id;
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+
+            //Edit and save the lead.
+            $this->setGetArray(array('id' => $leadId));
+            $this->setPostArray(array('Contact' => array(
+                            'title'                             => array('value' => 'Mrs.'),
+                            'firstName'                         => 'Sarah',
+                            'lastName'                          => 'Williams Edit',
+                            'jobTitle'                          => 'Sales Director Edit',
+                            'companyName'                       => 'ABC Telecom Edit',
+                            'industry'                          => array('value' => 'Banking'),
+                            'website'                           => 'http://www.companyedit.com',
+                            'department'                        => 'Sales Edit',
+                            'officePhone'                       => '739-742-3005',
+                            'source'                            => array('value' => 'Inbound Call'),
+                            'mobilePhone'                       => '285-300-8232',
+                            'officeFax'                         => '255-454-1914',
+                            'state'                             => array('id' => $leadStateId),
+                            'owner'                             => array('id' => $superUserId),
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewLead.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => 'info@myNewLeadEdit.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'primaryAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'secondaryAddress'                  => array('street1' => '1652 North Cedar Court',
+                                                                         'street2' => '',
+                                                                         'city' => 'Phoenix',
+                                                                         'state' => 'AZ',
+                                                                         'postalCode' => '85003',
+                                                                         'country' => 'USA'),
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'description'                       => 'This is a Edit Description',
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'   => 40,
+                                                                         'currency' => array(
+                                                                         'id' => $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
+                            'save'                              => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/edit');
+
+            //Check the details if they are saved properly for the custom fields after the edit.
+            $lead  = Contact::getById($leadId);
+            //Retrieve the permission of the lead.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem($lead);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+
+            $this->assertEquals($lead->title->value                   , 'Mrs.');
+            $this->assertEquals($lead->firstName                      , 'Sarah');
+            $this->assertEquals($lead->lastName                       , 'Williams Edit');
+            $this->assertEquals($lead->state->id                      , $leadStateId);
+            $this->assertEquals($lead->jobTitle                       , 'Sales Director Edit');
+            $this->assertEquals($lead->companyName                    , 'ABC Telecom Edit');
+            $this->assertEquals($lead->industry->value                , 'Banking');
+            $this->assertEquals($lead->website                        , 'http://www.companyedit.com');
+            $this->assertEquals($lead->department                     , 'Sales Edit');
+            $this->assertEquals($lead->officePhone                    , '739-742-3005');
+            $this->assertEquals($lead->source->value                  , 'Inbound Call');
+            $this->assertEquals($lead->mobilePhone                    , '285-300-8232');
+            $this->assertEquals($lead->officeFax                      , '255-454-1914');
+            $this->assertEquals($lead->primaryEmail->emailAddress     , 'info@myNewLead.com');
+            $this->assertEquals($lead->primaryEmail->optOut           , '0');
+            $this->assertEquals($lead->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($lead->secondaryEmail->emailAddress   , 'info@myNewLeadEdit.com');
+            $this->assertEquals($lead->secondaryEmail->optOut         , '0');
+            $this->assertEquals($lead->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($lead->primaryAddress->street1        , '26378 South Arlington Ave');
+            $this->assertEquals($lead->primaryAddress->street2        , '');
+            $this->assertEquals($lead->primaryAddress->city           , 'San Jose');
+            $this->assertEquals($lead->primaryAddress->state          , 'CA');
+            $this->assertEquals($lead->primaryAddress->postalCode     , '95131');
+            $this->assertEquals($lead->primaryAddress->country        , 'USA');
+            $this->assertEquals($lead->secondaryAddress->street1      , '1652 North Cedar Court');
+            $this->assertEquals($lead->secondaryAddress->street2      , '');
+            $this->assertEquals($lead->secondaryAddress->city         , 'Phoenix');
+            $this->assertEquals($lead->secondaryAddress->state        , 'AZ');
+            $this->assertEquals($lead->secondaryAddress->postalCode   , '85003');
+            $this->assertEquals($lead->secondaryAddress->country      , 'USA');
+            $this->assertEquals(1                                     , count($readWritePermitables));
+            $this->assertEquals(0                                     , count($readOnlyPermitables));
+            $this->assertEquals($lead->description                    , 'This is a Edit Description');
+            $this->assertEquals($lead->checkbox                       , '0');
+            $this->assertEquals($lead->currency->value                ,  40);
+            $this->assertEquals($lead->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($lead->date                           , $dateAssert);
+            $this->assertEquals($lead->datetime                       , $datetimeAssert);
+            $this->assertEquals($lead->decimal                        , '12');
+            $this->assertEquals($lead->picklist->value                , 'b');
+            $this->assertEquals($lead->integer                        ,  11);
+            $this->assertEquals($lead->phone                          , '259-784-2069');
+            $this->assertEquals($lead->radio->value                   , 'e');
+            $this->assertEquals($lead->text                           , 'This is a test Edit Text');
+            $this->assertEquals($lead->textarea                       , 'This is a test Edit TextArea');
+            $this->assertEquals($lead->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($lead->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($lead->statepicklist->value           , 'aaa1');
+            $this->assertEquals($lead->citypicklist->value            , 'ab1');
+            $this->assertContains('gg'                                , $lead->multiselect->values);
+            $this->assertContains('hh'                                , $lead->multiselect->values);
+            $this->assertContains('reading'                           , $lead->tagcloud->values);
+            $this->assertContains('surfing'                           , $lead->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);

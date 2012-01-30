@@ -449,7 +449,7 @@
                                 'decimal'                           => '123',
                                 'picklist'                          => array('value' => 'a'),
                                 'multiselect'                       => array('values' => array('ff', 'rr')),
-                                'tagcloud'                          => array('values' => array('x', 'z')),
+                                'tagcloud'                          => array('values' => array('writing', 'gardening')),
                                 'countrypicklist'                   => array('value'  => 'bbbb'),
                                 'statepicklist'                     => array('value'  => 'bbb1'),
                                 'citypicklist'                      => array('value'  => 'bb1'),
@@ -521,8 +521,8 @@
             $this->assertEquals($contact->citypicklist->value            , 'bb1');
             $this->assertContains('ff'                                   , $contact->multiselect->values);
             $this->assertContains('rr'                                   , $contact->multiselect->values);
-            $this->assertContains('x'                                    , $contact->tagcloud->values);
-            $this->assertContains('z'                                    , $contact->tagcloud->values);
+            $this->assertContains('writing'                              , $contact->tagcloud->values);
+            $this->assertContains('gardening'                            , $contact->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
@@ -577,7 +577,7 @@
                                         'currency'           => array('value'  => 45),
                                         'picklist'           => array('value'  => 'a'),
                                         'multiselect'        => array('values' => array('ff', 'rr')),
-                                        'tagcloud'           => array('values' => array('x', 'z')),
+                                        'tagcloud'           => array('values' => array('writing', 'gardening')),
                                         'countrypicklist'    => array('value'  => 'bbbb'),
                                         'statepicklist'      => array('value'  => 'bbb1'),
                                         'citypicklist'       => array('value'  => 'bb1'),
@@ -596,7 +596,7 @@
         /**
          * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContact
          */
-        public function testEditOfTheContactForTheCustomFieldsPlacedForContactsModule()
+        public function testEditOfTheContactForTheTagCloudFieldAfterRemovingAllTagsPlacedForContactsModule()
         {
             $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -663,7 +663,7 @@
                             'decimal'                           => '12',
                             'picklist'                          => array('value'  => 'b'),
                             'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          => array('values' =>  array('w', 'y')),
+                            'tagcloud'                          => array('values' =>  array()),
                             'countrypicklist'                   => array('value'  => 'aaaa'),
                             'statepicklist'                     => array('value'  => 'aaa1'),
                             'citypicklist'                      => array('value'  => 'ab1'),
@@ -733,8 +733,159 @@
             $this->assertEquals($contact->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                   , $contact->multiselect->values);
             $this->assertContains('hh'                                   , $contact->multiselect->values);
-            $this->assertContains('w'                                    , $contact->tagcloud->values);
-            $this->assertContains('y'                                    , $contact->tagcloud->values);
+            $this->assertNotContains('reading'                           , $contact->tagcloud->values);
+            $this->assertNotContains('writing'                           , $contact->tagcloud->values);
+            $this->assertNotContains('surfing'                           , $contact->tagcloud->values);
+            $this->assertNotContains('gardening'                         , $contact->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
+            $this->assertEquals(23                                       , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheContactForTheTagCloudFieldAfterRemovingAllTagsPlacedForContactsModule
+         */
+        public function testEditOfTheContactForTheCustomFieldsPlacedForContactsModule()
+        {
+            $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+
+            //Retrieve the super account id and the super user id.
+            $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            $superUserId = $super->id;
+
+            //Retrieve the contact id.
+            $contact     = Contact::getByName ('Sarah Williams');
+            $contactId   = $contact[0]->id;
+
+            //Retrieve the Contact State (Status) Id based on the name.
+            $contactState   = ContactState::getByName('RecycledC');
+            $contactStateId = $contactState[0]->id;
+
+            //Edit and save the contact.
+            $this->setGetArray(array('id' => $contactId));
+            $this->setPostArray(array('Contact' => array(
+                            'title'                             => array('value' => 'Mrs.'),
+                            'firstName'                         => 'Sarah',
+                            'lastName'                          => 'Williams Edit',
+                            'jobTitle'                          => 'Sales Director Edit',
+                            'department'                        => 'Sales Edit',
+                            'officePhone'                       => '739-742-3005',
+                            'source'                            => array('value' => 'Inbound Call'),
+                            'mobilePhone'                       => '285-300-8232',
+                            'officeFax'                         => '255-454-1914',
+                            'state'                             => array('id' => $contactStateId),
+                            'owner'                             => array('id' => $superUserId),
+                            'account'                           => array('id' => $accountId),
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewContact.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => 'info@myNewContactEdit.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'primaryAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'secondaryAddress'                  => array('street1' => '18693 West Spring Center',
+                                                                         'street2' => '',
+                                                                         'city' => 'Philadelphia',
+                                                                         'state' => 'PA',
+                                                                         'postalCode' => '19102',
+                                                                         'country' => 'USA'),
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'description'                       => 'This is a Edit Description',
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'    => 40,
+                                                                         'currency' => array(
+                                                                         'id' => $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
+                                'save' => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/edit');
+
+            //Check the details if they are saved properly for the custom fields after the edit.
+            $contact  = Contact::getById($contactId);
+            //Retrieve the permission of the contact.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem($contact);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+
+            $this->assertEquals($contact->title->value                   , 'Mrs.');
+            $this->assertEquals($contact->firstName                      , 'Sarah');
+            $this->assertEquals($contact->lastName                       , 'Williams Edit');
+            $this->assertEquals($contact->state->id                      , $contactStateId);
+            $this->assertEquals($contact->jobTitle                       , 'Sales Director Edit');
+            $this->assertEquals($contact->department                     , 'Sales Edit');
+            $this->assertEquals($contact->officePhone                    , '739-742-3005');
+            $this->assertEquals($contact->source->value                  , 'Inbound Call');
+            $this->assertEquals($contact->mobilePhone                    , '285-300-8232');
+            $this->assertEquals($contact->officeFax                      , '255-454-1914');
+            $this->assertEquals($contact->primaryEmail->emailAddress     , 'info@myNewContact.com');
+            $this->assertEquals($contact->primaryEmail->optOut           , '0');
+            $this->assertEquals($contact->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($contact->secondaryEmail->emailAddress   , 'info@myNewContactEdit.com');
+            $this->assertEquals($contact->secondaryEmail->optOut         , '0');
+            $this->assertEquals($contact->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($contact->primaryAddress->street1        , '26378 South Arlington Ave');
+            $this->assertEquals($contact->primaryAddress->street2        , '');
+            $this->assertEquals($contact->primaryAddress->city           , 'San Jose');
+            $this->assertEquals($contact->primaryAddress->state          , 'CA');
+            $this->assertEquals($contact->primaryAddress->postalCode     , '95131');
+            $this->assertEquals($contact->primaryAddress->country        , 'USA');
+            $this->assertEquals($contact->secondaryAddress->street1      , '18693 West Spring Center');
+            $this->assertEquals($contact->secondaryAddress->street2      , '');
+            $this->assertEquals($contact->secondaryAddress->city         , 'Philadelphia');
+            $this->assertEquals($contact->secondaryAddress->state        , 'PA');
+            $this->assertEquals($contact->secondaryAddress->postalCode   , '19102');
+            $this->assertEquals($contact->secondaryAddress->country      , 'USA');
+            $this->assertEquals(1                                        , count($readWritePermitables));
+            $this->assertEquals(0                                        , count($readOnlyPermitables));
+            $this->assertEquals($contact->description                    , 'This is a Edit Description');
+            $this->assertEquals($contact->checkbox                       , '0');
+            $this->assertEquals($contact->currency->value                ,  40);
+            $this->assertEquals($contact->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($contact->date                           , $dateAssert);
+            $this->assertEquals($contact->datetime                       , $datetimeAssert);
+            $this->assertEquals($contact->decimal                        , '12');
+            $this->assertEquals($contact->picklist->value                , 'b');
+            $this->assertEquals($contact->integer                        ,  11);
+            $this->assertEquals($contact->phone                          , '259-784-2069');
+            $this->assertEquals($contact->radio->value                   , 'e');
+            $this->assertEquals($contact->text                           , 'This is a test Edit Text');
+            $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
+            $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($contact->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($contact->statepicklist->value           , 'aaa1');
+            $this->assertEquals($contact->citypicklist->value            , 'ab1');
+            $this->assertContains('gg'                                   , $contact->multiselect->values);
+            $this->assertContains('hh'                                   , $contact->multiselect->values);
+            $this->assertContains('reading'                              , $contact->tagcloud->values);
+            $this->assertContains('surfing'                              , $contact->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);

@@ -276,7 +276,7 @@
                                             'decimal'                           => '123',
                                             'picklist'                          => array('value'  => 'a'),
                                             'multiselect'                       => array('values' => array('ff', 'rr')),
-                                            'tagcloud'                          => array('values' => array('x', 'z')),
+                                            'tagcloud'                          => array('values' => array('writing', 'gardening')),
                                             'countrypicklist'                   => array('value'  => 'bbbb'),
                                             'statepicklist'                     => array('value'  => 'bbb1'),
                                             'citypicklist'                      => array('value'  => 'bb1'),
@@ -328,8 +328,8 @@
             $this->assertEquals($task[0]->citypicklist->value              , 'bb1');
             $this->assertContains('ff'                                     , $task[0]->multiselect->values);
             $this->assertContains('rr'                                     , $task[0]->multiselect->values);
-            $this->assertContains('x'                                      , $task[0]->tagcloud->values);
-            $this->assertContains('z'                                      , $task[0]->tagcloud->values);
+            $this->assertContains('writing'                                , $task[0]->tagcloud->values);
+            $this->assertContains('gardening'                              , $task[0]->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Task');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $task[0]);
@@ -339,7 +339,7 @@
         /**
          * @depends testCreateAnTaskAfterTheCustomFieldsArePlacedForTasksModule
          */
-        public function testEditOfTheTaskForTheCustomFieldsPlacedForTasksModule()
+        public function testEditOfTheTaskForTheTagCloudFieldAfterRemovingAllTagsPlacedForTasksModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -379,7 +379,7 @@
                                 'decimal'                           => '12',
                                 'picklist'                          => array('value' => 'b'),
                                 'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                                'tagcloud'                          => array('values' =>  array('w', 'y')),
+                                'tagcloud'                          => array('values' =>  array()),
                                 'countrypicklist'                   => array('value'  => 'aaaa'),
                                 'statepicklist'                     => array('value'  => 'aaa1'),
                                 'citypicklist'                      => array('value'  => 'ab1'),
@@ -432,8 +432,114 @@
             $this->assertEquals($task[0]->citypicklist->value              , 'ab1');
             $this->assertContains('gg'                                     , $task[0]->multiselect->values);
             $this->assertContains('hh'                                     , $task[0]->multiselect->values);
-            $this->assertContains('w'                                      , $task[0]->tagcloud->values);
-            $this->assertContains('y'                                      , $task[0]->tagcloud->values);
+            $this->assertNotContains('reading'                             , $task[0]->tagcloud->values);
+            $this->assertNotContains('writing'                             , $task[0]->tagcloud->values);
+            $this->assertNotContains('surfing'                             , $task[0]->tagcloud->values);
+            $this->assertNotContains('gardening'                           , $task[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Task');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $task[0]);
+            $this->assertEquals(132                                        , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheTaskForTheTagCloudFieldAfterRemovingAllTagsPlacedForTasksModule
+         */
+        public function testEditOfTheTaskForTheCustomFieldsPlacedForTasksModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Retrieve the task Id.
+            $task = Task::getByName('myEditTask');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+
+            //Get the super user, account, opportunity and contact id.
+            $superUserId        = $super->id;
+            $superAccount       = Account::getByName('superAccount');
+            $superContactId     = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
+            $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
+            $baseCurrency       = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+
+            //Edit the task based on the custom fields and the task id.
+            $this->setGetArray (array('id' => $task[0]->id));
+            $this->setPostArray(array('Task' => array(
+                                'name'                              => 'myEditTask',
+                                'dueDateTime'                       => $datetime,
+                                'completed'                         => '1',
+                                'completedDateTime'                 => $datetime,
+                                'description'                       => 'This is edit task Description',
+                                'owner'                             => array('id' => $superUserId),
+                                'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                                'checkbox'                          => '0',
+                                'currency'                          => array('value'   => 40,
+                                                                             'currency' => array(
+                                                                             'id' => $baseCurrency->id)),
+                                'date'                              => $date,
+                                'datetime'                          => $datetime,
+                                'decimal'                           => '12',
+                                'picklist'                          => array('value' => 'b'),
+                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                                'countrypicklist'                   => array('value'  => 'aaaa'),
+                                'statepicklist'                     => array('value'  => 'aaa1'),
+                                'citypicklist'                      => array('value'  => 'ab1'),
+                                'integer'                           => '11',
+                                'phone'                             => '259-784-2069',
+                                'radio'                             => array('value' => 'e'),
+                                'text'                              => 'This is a test Edit Text',
+                                'textarea'                          => 'This is a test Edit TextArea',
+                                'url'                               => 'http://wwww.abc-edit.com'),
+                                'ActivityItemForm' => array(
+                                'Account'     => array('id'  => $superAccount[0]->id),
+                                'Contact'     => array('id'  => $superContactId),
+                                'Opportunity' => array('id'  => $superOpportunityId)),
+                                'save' => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('tasks/default/edit');
+
+             //Check the details if they are saved properly for the custom fields.
+            $task = Task::getByName('myEditTask');
+
+            //Retrieve the permission of the task.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Task::getById($task[0]->id));
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+
+            $this->assertEquals($task[0]->name                             , 'myEditTask');
+            $this->assertEquals($task[0]->dueDateTime                      , $datetimeAssert);
+            $this->assertEquals($task[0]->completed                        , '1');
+            $this->assertEquals($task[0]->completedDateTime                , $datetimeAssert);
+            $this->assertEquals($task[0]->description                      , 'This is edit task Description');
+            $this->assertEquals($task[0]->owner->id                        , $superUserId);
+            $this->assertEquals($task[0]->activityItems->count()           , 3);
+            $this->assertEquals(1                                          , count($readWritePermitables));
+            $this->assertEquals(0                                          , count($readOnlyPermitables));
+            $this->assertEquals($task[0]->checkbox                         , '0');
+            $this->assertEquals($task[0]->currency->value                  , 40);
+            $this->assertEquals($task[0]->currency->currency->id           , $baseCurrency->id);
+            $this->assertEquals($task[0]->date                             , $dateAssert);
+            $this->assertEquals($task[0]->datetime                         , $datetimeAssert);
+            $this->assertEquals($task[0]->decimal                          , '12');
+            $this->assertEquals($task[0]->picklist->value                  , 'b');
+            $this->assertEquals($task[0]->integer                          , 11);
+            $this->assertEquals($task[0]->phone                            , '259-784-2069');
+            $this->assertEquals($task[0]->radio->value                     , 'e');
+            $this->assertEquals($task[0]->text                             , 'This is a test Edit Text');
+            $this->assertEquals($task[0]->textarea                         , 'This is a test Edit TextArea');
+            $this->assertEquals($task[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertEquals($task[0]->countrypicklist->value           , 'aaaa');
+            $this->assertEquals($task[0]->statepicklist->value             , 'aaa1');
+            $this->assertEquals($task[0]->citypicklist->value              , 'ab1');
+            $this->assertContains('gg'                                     , $task[0]->multiselect->values);
+            $this->assertContains('hh'                                     , $task[0]->multiselect->values);
+            $this->assertContains('reading'                                , $task[0]->tagcloud->values);
+            $this->assertContains('surfing'                                , $task[0]->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Task');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $task[0]);

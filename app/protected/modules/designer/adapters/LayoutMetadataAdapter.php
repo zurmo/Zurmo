@@ -106,7 +106,7 @@
                     }
                     else
                     {
-                        $savableMetadata['panels'][$panelKey]['rows'] = array();
+                        $savableMetadata['panels'][$panelKey]['rows'] = array(); 
                     }
                 }
                 if(!$atLeastOneElementPlaced)

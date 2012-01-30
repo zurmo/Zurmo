@@ -805,7 +805,7 @@
                             'currency'           => array('value'  =>  40),
                             'picklist'           => array('value'  =>  'b'),
                             'multiselect'        => array('values' => array('gg', 'hh')),
-                            'tagcloud'           => array('values' => array('w', 'y')),
+                            'tagcloud'           => array('values' => array('reading', 'surfing')),
                             'countrypicklist'    => array('value'  => 'aaaa'),
                             'statepicklist'      => array('value'  => 'aaa1'),
                             'citypicklist'       => array('value'  => 'ab1'),
