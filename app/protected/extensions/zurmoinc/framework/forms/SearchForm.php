@@ -36,8 +36,18 @@
 
         private $supportsMixedSearch;
 
+        /**
+         * String of search content to search on a mixed set of attributes scoped by
+         * @see $anyMixedAttributesScope
+         * @var string
+         */
         public  $anyMixedAttributes;
 
+        /**
+         * Array of attributes to only use for @see $anyMixedAttributes data.  Or set as
+         * null if nothing specifically scoped on.
+         * @var array or null
+         */
         private $anyMixedAttributesScope;
 
         public function __construct(RedBeanModel $model)
@@ -58,6 +68,11 @@
         public function setAnyMixedAttributesScope($anyMixedAttributesScope)
         {
             $this->anyMixedAttributesScope = $anyMixedAttributesScope;
+        }
+
+        public function getAnyMixedAttributesScope()
+        {
+            return $this->anyMixedAttributesScope;
         }
 
         /**
@@ -360,15 +375,11 @@
             if($this->supportsMixedSearch === null)
             {
                 $this->supportsMixedSearch = false;
-                if($this->model instanceof Item)
+                $moduleClassName = $this->model->getModuleClassName();
+                if($moduleClassName != null && $moduleClassName::getGlobalSearchFormClassName() != null)
                 {
-                    $moduleClassName = $this->model->getModuleClassName();
-                    if($moduleClassName::getGlobalSearchFormClassName() != null)
-                    {
-                        $this->supportsMixedSearch  = true;
-                    }
+                    $this->supportsMixedSearch  = true;
                 }
-
             }
             return $this->supportsMixedSearch;
         }
@@ -391,6 +402,10 @@
             return array();
         }
 
+        /**
+         * Resolves a mixed attribute search by filtering out any attributes not part of the scope.
+         * @param unknown_type $realAttributesMetadata
+         */
         public function resolveMixedSearchAttributeMappedToRealAttributesMetadata(& $realAttributesMetadata)
         {
             assert('is_array($realAttributesMetadata)');
@@ -437,6 +452,10 @@
             }
         }
 
+        /**
+         * @return array of attributeName and label pairings.  Based on what attributes are used
+         * in a mixed attribute search.
+         */
         public function getGlobalSearchAttributeNamesAndLabelsAndAll()
         {
             $namesAndLabels = array();

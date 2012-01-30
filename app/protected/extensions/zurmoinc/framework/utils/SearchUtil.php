@@ -45,7 +45,8 @@
             if (!empty($_GET[$getArrayName]))
             {
                 $searchAttributes = SearchUtil::getSearchAttributesFromSearchArray($_GET[$getArrayName]);
-                if(isset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
+                if(isset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) ||
+                    key_exists(self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME, $searchAttributes))
                 {
                     unset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]);
                 }
@@ -53,6 +54,13 @@
             return $searchAttributes;
         }
 
+        /**
+         * From the get array, if the anyMixedAttributeScope variable is present, retrieve and set into the
+         * $searchModel.  If the value is 'All', then set into the SearchModel a value of null since this
+         * means there is no scoping.
+         * @param object $searchModel
+         * @param string $getArrayName
+         */
         public static function resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName)
         {
             assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');

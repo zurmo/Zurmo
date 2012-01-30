@@ -44,6 +44,21 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => 'Advanced Search',
+                            'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'fullName', 'type' => 'Text'),
                                             ),
                                         ),
@@ -54,11 +69,6 @@
                                         ),
                                     )
                                 ),
-                            ),
-                        ),
-                        array(
-                            'title' => 'Advanced Search',
-                            'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(

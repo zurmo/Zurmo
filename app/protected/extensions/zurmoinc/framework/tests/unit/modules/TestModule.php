@@ -43,6 +43,8 @@
                 'a' => 1,
                 'b' => 2,
                 'c' => 3,
+                //globalSearchAttributeNames is used by A model.
+                'globalSearchAttributeNames' => array('a', 'name')
             );
             return $metadata;
         }
@@ -50,6 +52,11 @@
         public static function getPrimaryModelName()
         {
             return 'A';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'ASearchFormTestModel';
         }
     }
 ?>
