@@ -355,8 +355,8 @@ footer, header, hgroup, menu, nav, section {
 			line-height: 32px;
 			//text-indent:40px;
 			display:block;
-			-webkit-border-radius: 4px;
-			text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+			.radius( 4px );
+			.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
 			&:hover{
 				color:#fff !important;
 				text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
@@ -405,6 +405,7 @@ footer, header, hgroup, menu, nav, section {
 .view-toolbar-container{
 	width:100%;
 	display:inline-block;
+	position:relative;
 }
 
 .view-toolbar{
@@ -420,7 +421,7 @@ footer, header, hgroup, menu, nav, section {
 	background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
 }
 
-.view-toolbar a{
+.view-toolbar-link(){
 	color:#656565;
 	font-weight:bold;
 	text-shadow:#fff 0 1px 0;
@@ -434,6 +435,10 @@ footer, header, hgroup, menu, nav, section {
 		color:#656565;
 		box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
 	}
+}
+
+.view-toolbar a{
+	.view-toolbar-link();
 }
 
 .view-toolbar a:first-child{
@@ -557,17 +562,126 @@ table.items tr:hover{
 .form table{
 	table-layout:fixed;
 	width:100%;
-	padding:20px 10px;
-	border:1px solid #CCC;
-	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12)); /*999*/
+	border-bottom:1px solid #CCCCCC;
+	
 }
 .form form thead tr th:first-child,
 .form form tbody tr td:first-child{
 	padding-left:15px;
 }
+
+.form form{
+	padding:15px;
+	border:1px solid #CCC;
+	.b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
+	
+	background: #ffffff;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#F5F5F5));
+	background: -webkit-linear-gradient(#ffffff, #F5F5F5);
+	background: -moz-linear-gradient(#ffffff, #F5F5F5);
+	background: -ms-linear-gradient(#ffffff, #F5F5F5);
+	background: -o-linear-gradient(#ffffff, #F5F5F5);
+	background: linear-gradient(#ffffff, #F5F5F5);
+	-pie-background: linear-gradient(#ffffff, #F5F5F5);
+	//behavior: url(/PIE.htc);
+}
+
 #col-0{
 	//width:50% !important;
 }
+
+.form-toolbar{
+	padding-top:13px;
+	text-align:center;
+	border-top:1px solid #fff;
+	a, input[type="submit"]{
+		padding:0 30px;
+		line-height:23px;
+		margin:0 10px;
+		font-size:12px;
+		font-weight:bold;
+		.radius( 4px );
+		.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+		border-top:1px solid #e7e7e7;
+		border-left: 1px solid #d7d7d7;
+		border-right:1px solid #d7d7d7;
+		border-bottom:1px solid #bababa;
+	}
+	a{
+		color:#333333;
+		background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+		display:inline-block;
+		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+		&:hover{
+			color:@themeColor2 !important;
+		}
+		&:active{
+			color:#656565;
+			box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+		}
+	}
+	input{
+		color:#FFF;
+		//line-height: 25px !important;
+		//border:none;
+		.t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
+		.b-shadow(inset 0 1px 1px 1px rgba(255, 255, 255, 0.8));
+		background: #97c43d;
+		background: -webkit-gradient(linear, 0 0, 0 bottom, from(#97c43d), to(#6FA82D));
+		background: -webkit-linear-gradient(#97c43d, #6FA82D);
+		background: -moz-linear-gradient(#97c43d, #6FA82D);
+		background: -ms-linear-gradient(#97c43d, #6FA82D);
+		background: -o-linear-gradient(#97c43d, #6FA82D);
+		background: linear-gradient(#97c43d, #6FA82D);
+		-pie-background: linear-gradient(#97c43d, #6FA82D);
+		//behavior: url(/PIE.htc);
+		cursor:pointer;
+		
+		
+		
+		&:hover{
+			color:#656565 !important;
+		}
+		&:active{
+			color:#FFF !important;
+			box-shadow: inset 0 1px 5px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+		}
+	}
+}
+
+
+.portlet-toolbar{
+	position: absolute;
+	top:-42px;
+	right:8px;
+	a {
+		padding:0 15px;
+		line-height:23px;
+		margin:0;
+		font-size:12px;
+		font-weight:bold;
+		.radius( 4px );
+		.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+		border-top:1px solid #e7e7e7;
+		border-left: 1px solid #d7d7d7;
+		border-right:1px solid #d7d7d7;
+		border-bottom:1px solid #bababa;
+		color:#333333;
+		background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+		display:inline-block;
+		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+		&:hover{
+			color:@themeColor2 !important;
+		}
+		&:active{
+			color:#656565;
+			box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+		}
+	}
+}
+
+
+
 
 
 /*Footer*/
@@ -631,4 +745,11 @@ table.items tr:hover{
 			border:none;
 		}
 	}
+}
+.ui-corner-all{
+	border-radius: 0 !important;
+}
+.ui-widget-header{
+	border:none !important;
+	background:none !important;
 }

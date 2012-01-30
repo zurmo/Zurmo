@@ -19,3 +19,7 @@ app/protected/config/perInstance.php
 app/protected/config/debug.php
 app/protected/config/perInstanceTest.php
 app/protected/config/debugTest.php
+UI Design
+app/.settings
+.DS_Store
+app/themes/default/images/gif.gif
