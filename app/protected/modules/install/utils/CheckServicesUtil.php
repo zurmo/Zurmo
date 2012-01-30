@@ -69,7 +69,8 @@
                          'DatabaseMaxAllowedPacketSize',
                          'DatabaseMaxSpRecursionDepth',
                          'DatabaseThreadStack',
-                         'DatabaseDefaultCollation'
+                         'DatabaseDefaultCollation',
+                         'DatabaseLogBin'
             );
         }
 

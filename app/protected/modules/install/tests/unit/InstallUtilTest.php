@@ -337,6 +337,35 @@
                                                                                  $this->rootPassword));
         }
 
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckDatabaseLogBinValue()
+        {
+            $logBinValue     = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseLogBinValue('mysql',
+                                                                       $this->hostname,
+                                                                       $this->temporaryDatabaseName,
+                                                                       $this->rootUsername,
+                                                                       $this->rootPassword,
+                                                                       $logBinValue));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckDatabaseLogBinTrustFunctionCreatorsValue()
+        {
+            $logBinTrustFunctionCreatorsValue     = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseLogBinTrustFunctionCreatorsValue(
+                                                                            'mysql',
+                                                                            $this->hostname,
+                                                                            $this->temporaryDatabaseName,
+                                                                            $this->rootUsername,
+                                                                            $this->rootPassword,
+                                                                            $logBinTrustFunctionCreatorsValue));
+        }
+
         public function testCheckMemcacheConnection()
         {
             $this->assertTrue  (InstallUtil::checkMemcacheConnection('127.0.0.1', 11211));

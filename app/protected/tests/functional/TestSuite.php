@@ -384,6 +384,30 @@
             self::makeResultsSummaryFile($data);
         }
 
+        protected static function clearpreviousTestResultsByBrowser($browserId)
+        {
+            $data = array();
+            if (is_dir(TEST_RESULTS_PATH))
+            {
+                $resultsNames = scandir(TEST_RESULTS_PATH);
+                foreach ($resultsNames as $resultFile)
+                {
+                    if ($resultFile != '.' &&
+                    $resultFile != '..' &&
+                    $resultFile != 'Summary.html')
+                    {
+                        $data[] = array(
+                                    'fileName' => $resultFile,
+                                    'modifiedDate' => date ("F d Y H:i:s.", filemtime(TEST_RESULTS_PATH . $resultFile)),
+                                    'status'   => self::getResultFileStatusByFileName($resultFile),
+                                    'browser'       => self::getResultFileBrowserByFileName($resultFile),
+                        );
+                    }
+                }
+            }
+            self::makeResultsSummaryFile($data);
+        }
+
         protected static function getResultFileStatusByFileName($resultFile)
         {
             $contents = file_get_contents(TEST_RESULTS_PATH . $resultFile);

@@ -44,6 +44,8 @@
                                 right_name    varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare exit handler for 1054, 1146 # Column, table doesn\'t exist.
@@ -71,6 +73,8 @@
                                 policy_name   varchar(255)
                              )
             returns varchar(255) # A policy value can be anything RedBean will do whatever it it needs to to store it,
+            DETERMINISTIC
+            READS SQL DATA
             begin                # but since PDO returns it as a string I am too, until I know if that is a bad thing.
                 declare result tinyint;
                 declare exit handler for 1054, 1146 # Column, table doesn\'t exist.
@@ -95,6 +99,8 @@
                                 permitable_id_2 int(11)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare user_id_1, user_id_2, group_id_1, group_id_2 int(11);
@@ -131,6 +137,8 @@
                                 _permitable_id int(11)
                             )
             returns int(11)
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result int(11);
                 declare exit handler for 1146 # Table doesn\'t exist.
@@ -176,6 +184,8 @@
                                 right_name  varchar(255)
                             )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare is_super_administrator tinyint;
@@ -196,6 +206,8 @@
                                 right_name  varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare _permitable_id tinyint;
@@ -219,6 +231,8 @@
                                 right_name  varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare combined_right tinyint default 0;
                 declare __group_id int(11);
@@ -263,6 +277,8 @@
                                 policy_name varchar(255)
                              )
             returns varchar(255) # A policy value can be anything RedBean will do whatever it it needs to to store it,
+            DETERMINISTIC
+            READS SQL DATA
             begin                # but since PDO returns it as a string I am too, until I know if that is a bad thing.
                 declare result tinyint;
                 declare _permitable_id tinyint;
@@ -288,6 +304,8 @@
                                 right_name  varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
 
@@ -306,6 +324,8 @@
                                 right_name  varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare _permitable_id tinyint;
@@ -329,6 +349,8 @@
                                 right_name  varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare _permitable_id tinyint;
@@ -352,6 +374,8 @@
                                 right_name  varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare combined_right tinyint;
 
@@ -373,6 +397,8 @@
                                 policy_name varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint;
                 declare _permitable_id tinyint;
@@ -396,6 +422,8 @@
                                 policy_name varchar(255)
                              )
             returns varchar(255) # A policy value can be anything RedBean will do whatever it it needs to to store it,
+            DETERMINISTIC
+            READS SQL DATA
             begin                # but since PDO returns it as a string I am too, until I know if that is a bad thing.
                 declare result tinyint;
                 declare _permitable_id tinyint;
@@ -420,6 +448,8 @@
                                 _permitable_id int(11)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint default 0;
                 declare group_id_1 int(11);
@@ -455,6 +485,8 @@
                                 _user_id    int(11)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint default 0;
                 declare _group_id int(11);
@@ -480,6 +512,8 @@
                                 _permitable_id int(11)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint default 0;
                 declare _group_name varchar(255);
@@ -516,6 +550,8 @@
                                 _user_id  int(11)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare result tinyint default 0;
 
@@ -533,6 +569,8 @@
                                 caching_on        tinyint
                              )
             returns smallint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare allow_permissions, deny_permissions smallint default 0;
                 declare is_super_administrator, is_owner tinyint;
@@ -580,6 +618,8 @@
                                 module_name      varchar(255)
                              )
             returns tinyint
+            DETERMINISTIC
+            READS SQL DATA
             begin
                 declare has_read tinyint default 0;
 
@@ -1098,6 +1138,7 @@
             end;',
 
             'create procedure clear_cache_all_actual_permissions()
+            READS SQL DATA
             begin
                 declare continue handler for 1146 # Table doesn\'t exist.
                     begin

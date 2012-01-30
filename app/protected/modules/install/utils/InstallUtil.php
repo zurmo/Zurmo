@@ -302,6 +302,9 @@
             return array($errorNumber, $errorString);
         }
 
+        /**
+        * Check database max_allowed_packet_size value.
+        */
         public static function checkDatabaseMaxAllowedPacketsSize($databaseType,
                                                                 $databaseHostname,
                                                                 $databaseUsername,
@@ -317,6 +320,9 @@
             return $minimumRequireBytes <= $actualBytes;
         }
 
+        /**
+        * Check database max_sp_recursion_depth value.
+        */
         public static function checkDatabaseMaxSpRecursionDepth($databaseType,
                                                               $databaseHostname,
                                                               $databaseUsername,
@@ -332,6 +338,9 @@
             return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
         }
 
+        /**
+        * Check database thread_stack value.
+        */
         public static function checkDatabaseThreadStackValue($databaseType,
                                                              $databaseHostname,
                                                              $databaseUsername,
@@ -347,6 +356,9 @@
             return $minimumRequiredThreadStackValue <= $threadStackValue;
         }
 
+        /**
+        * Check database default collation.
+        */
         public static function checkDatabaseDefaultCollation($databaseType,
                                                            $databaseHostname,
                                                            $databaseName,
@@ -363,6 +375,56 @@
                                                                                                $databaseUsername,
                                                                                                $databasePassword);
             return !in_array($databaseDefaultCollation, $notAllowedDatabaseCollations);
+        }
+
+        /**
+        * Check if log_bin is turned off.
+        */
+        public static function checkDatabaseLogBinValue($databaseType,
+                                                        $databaseHostname,
+                                                        $databaseUsername,
+                                                        $databasePassword,
+                                                        /* out */ & $logBinValue)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            $logBinValue = DatabaseCompatibilityUtil::getDatabaseLogBinValue($databaseType,
+                                                                             $databaseHostname,
+                                                                             $databaseUsername,
+                                                                             $databasePassword);
+            if (strtolower($logBinValue) == 'on' || $logBinValue == '1')
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+        * Check if log_bin_trust_function_creators is turned on.
+        * We check this only when log_bin is turned on.
+        */
+        public static function checkDatabaseLogBinTrustFunctionCreatorsValue($databaseType,
+                                                                             $databaseHostname,
+                                                                             $databaseUsername,
+                                                                             $databasePassword,
+                                                                             /* out */ & $logBinTrustFunctionCreatorsValue)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            $logBinTrustFunctionCreatorsValue = DatabaseCompatibilityUtil::getDatabaseLogBinTrustFunctionCreatorsValue(
+                                                                            $databaseType,
+                                                                            $databaseHostname,
+                                                                            $databaseUsername,
+                                                                            $databasePassword);
+            if (strtolower($logBinTrustFunctionCreatorsValue) == 'on' || $logBinTrustFunctionCreatorsValue == '1')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /**
