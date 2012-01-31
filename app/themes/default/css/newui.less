@@ -804,26 +804,38 @@ table.items tr:hover{
 	.ui-dialog-titlebar {
 	 	padding:0 !important;
 		margin:0 !important;
+		z-index:11000;
 	 }
 	 .ui-dialog-content {
 	 	padding:15px;
 	 }
 	 .ui-dialog-titlebar-close {
-	 	background:url(../images/widget-close-btn.png) left top no-repeat;
 		position: absolute;
-		right: 0;
-		top: 0;
-		margin: -15px -15px 0 0;
-		padding: 0;
-		width:30px;
-		height: 31px;
+		right: -15px;
+		top: -8px;
+		width:30px !important;
+		height: 31px !important;
 		opacity:1;
 		display:block;
-		z-index:5000;
+		z-index:11000;
 		&:hover{
 			border:none;
+			background:none;
+		}
+		.ui-icon-closethick{
+			background: transparent url(../images/widget-close-btn.png) left top no-repeat;
+			padding: 0 !important;
+			margin:0 !important;
+			width:30px !important;
+			height: 31px !important;
+			&:hover{
+				background: transparent url(../images/widget-close-btn.png) left top no-repeat;
+			}
 		}
 	}
+}
+.ui-resizable-handle{
+	z-index: 0;
 }
 .ui-corner-all{
 	border-radius: 0 !important;
