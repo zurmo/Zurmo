@@ -1,5 +1,7 @@
 /*Imports*/
 @import 'originals/mbmenu.css';
+@import url('clearfix.css');
+//@import url('mixins.less');
 
 
 /*Variables*/
@@ -46,6 +48,21 @@
 	-o-border-radius:@style;
 	border-radius:@style;
 }
+
+
+.clearfix() {
+  zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    zoom: 1;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
 
 *{
 	margin:0;
@@ -843,4 +860,73 @@ table.items tr:hover{
 .ui-widget-header{
 	border:none !important;
 	background:none !important;
+}
+
+/*Search Scope box*/
+#FilteredListView, .select-all-options, .summary{
+	/*@TODO check what this component do - for now its hidden cause its not in design*/
+	display:none;
+}
+.ZurmoSearchView{
+	padding:0;
+	#search-form{
+		position: relative;
+		padding:10px 0 0 0;
+		border: 1px solid #DFDFDF;
+		border-bottom:none;
+		height:35px;/*@TODO check why I need specific height here and the elemnt doesn´t collapse*/
+		.b-shadow(none);
+		
+		background: url(../images/portlet-header-gradient.png) left bottom repeat-x;
+
+
+		
+		
+		
+		table{
+			border-bottom:none;
+		}
+	}
+}
+.search-view-0{
+	margin-left:10px;
+	width:220px;
+	float:left;
+	#global-search-loopa{
+		position: relative;
+		top:0;
+		float:left;
+	}
+	input[type="text"]{
+		width:179px;
+		float:right;
+		margin:0 0 0 0;
+		.radius(0);
+		.b-shadow(none);
+		border-left:none;
+	
+		font-style: italic;
+		color: #999;
+		text-indent: 10px;
+		line-height: 23px;
+		height: 23px;
+		border: 1px solid #d5d4d4;
+		border-left: none;
+		background: url(../images/search-bar-gradient.png) left top repeat-x;
+		
+		&:focus{
+			outline: none !important;
+			box-shadow:none !important;
+		}
+	}
+}
+.search-form-tools{
+	float:left;
+	margin-left:20px;
+}
+.search-view-1{
+	width: 50%;
+	float:left;
+	margin-top:50px;
+	position:absolute;
 }
