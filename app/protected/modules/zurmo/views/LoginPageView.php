@@ -29,9 +29,12 @@
         public function __construct(CController $controller, CFormModel $formModel, $extraHeaderContent = null)
         {
             assert('is_string($extraHeaderContent) || $extraHeaderContent == null');
+			
+			$loginview = new LoginView($controller, $formModel, $extraHeaderContent);
+			$loginview->setCssClasses(array('clearfix'));
             $gridView = new GridView(2, 1);
-            $gridView->setView(new LoginView($controller, $formModel, $extraHeaderContent), 0, 0);
-            $gridView->setView(new FooterView(),                       1, 0);
+            $gridView->setView($loginview, 0, 0);
+            $gridView->setView(new FooterView(), 1, 0);
             parent::__construct($gridView);
         }
 

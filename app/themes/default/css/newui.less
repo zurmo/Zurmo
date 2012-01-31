@@ -104,6 +104,85 @@ footer, header, hgroup, menu, nav, section {
 .PageView{
 	
 }
+/*Login*/
+#LoginPageView > .GridView{
+	background: url(../images/header-bar-1.png) left top repeat-x;
+	padding-top:38px;
+}
+#LoginView{
+	min-width:900px;
+	height:100%;
+	margin:0 40px 0 40px;
+	background:#fff url(../images/content-gradient.png) left top repeat-x;
+	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
+	-webkit-border-radius: 0 0 5px 5px;
+	padding:100px 0;
+	#login-box{
+		width:500px;
+		margin:0 auto;
+	}
+	#LoginLogo{
+		width:50%;
+		float:left;
+		img{
+			float:right;
+			margin:30% 15px 0 0;
+		}
+	}
+	.form{
+		width:50%;
+		float:right;
+		form{
+			padding-top:0 !important;
+			padding-bottom:0 !important;
+			background:none !important;
+			border-top:none !important;
+			border-right:none !important;
+			border-bottom:none !important;
+			.b-shadow(none);
+			> div{
+				margin-bottom:15px;
+			}
+			> div.clearfix{
+				margin-bottom:0;
+			}
+			label{
+				display:inline-block;
+				margin-bottom:5px;
+			}
+			input[type="password"], input[type="text"]{
+				background:#fff !important;
+				margin:0 !important;
+			}
+			input[type="checkbox"]{
+				float:left;
+				margin-right:10px;
+				clear:both;
+			}
+			input[type="submit"]{
+				margin:0;
+				padding:0 30px;
+				line-height:23px;
+				font-size:12px;
+				font-weight:bold;
+				.radius( 4px );
+				.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+				border-top:1px solid #e7e7e7;
+				border-left: 1px solid #d7d7d7;
+				border-right:1px solid #d7d7d7;
+				border-bottom:1px solid #bababa;
+				background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+				display: inline-block;
+			}
+			.errorMessage{
+				font-size:11px;
+				padding-top:4px
+			}
+		}
+	}
+	
+}
+
 
 /*MastHead*/
 #HeaderLinksView{
@@ -532,7 +611,7 @@ table.items tr:hover{
 }
 
 /*forms*/
-.form input[type="text"]{
+.form input[type="text"], .form input[type="password"]{
 	border:1px solid #ccc;
 	.radius(3px);
 	font-size:12px;
