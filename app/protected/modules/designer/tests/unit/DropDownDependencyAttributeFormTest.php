@@ -81,7 +81,7 @@
             $attributeForm->mappingData      = $mappingData['mappingData'];
 
             $attributeForm->sanitizeFromPostAndSetAttributes($mappingData);
-            $this->assertEquals($testMappingData,$attributeForm->mappingData);
+            $this->assertEquals($testMappingData, $attributeForm->mappingData);
         }
     }
 ?>

@@ -803,9 +803,9 @@
         }
 
         /**
-         * @depends testCreateAnAccountUserAfterTheCustomFieldsArePlacedForAccountsModule
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterDeletingTheAccount
          */
-        public function testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModuleAfterCreatingTheAccountUser()
+        public function testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -819,7 +819,10 @@
             $this->assertTrue(strpos($content, "reading") > 0);
         }
 
-        public function testLabelLocalizationForTheTagCloudFieldPlacedForAccountsModuleAfterCreatingTheAccountUser()
+        /**
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModuleAfterCreatingTheAccountUser
+         */
+        public function testLabelLocalizationForTheTagCloudFieldPlacedForAccountsModule()
         {
             Yii::app()->user->userModel =  User::getByUsername('super');
             $languageHelper = new ZurmoLanguageHelper();

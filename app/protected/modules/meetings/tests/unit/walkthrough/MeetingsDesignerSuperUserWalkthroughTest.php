@@ -123,7 +123,7 @@
             $this->assertEquals('meeting new name',  MeetingsModule::getModuleLabelByTypeAndLanguage('SingularLowerCase'));
             $this->assertEquals('meeting new names', MeetingsModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
-            //Load LayoutEdit for each applicable module and applicable layout
+            //Load LayoutEdit for each applicable module and applicable layout.
             $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
                                      'viewClassName'   => 'UpcomingMeetingsForAccountRelatedListView'));
@@ -140,7 +140,7 @@
         }
 
         /**
-         * @depends testSuperUserMeetingDefaultControllerActions
+         * @depends testSuperUserMeetingDefaultControllerActions.
          */
         public function testSuperUserCustomFieldsWalkthroughForMeetingsModule()
         {
@@ -173,7 +173,7 @@
         }
 
         /**
-         * @depends testSuperUserCustomFieldsWalkthroughForMeetingsModule
+         * @depends testSuperUserCustomFieldsWalkthroughForMeetingsModule.
          */
         public function testSuperUserAddCustomFieldsToLayoutsForMeetingsModule()
         {
@@ -212,7 +212,7 @@
         }
 
         /**
-         * @depends testSuperUserAddCustomFieldsToLayoutsForMeetingsModule
+         * @depends testSuperUserAddCustomFieldsToLayoutsForMeetingsModule.
          */
         public function testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule()
         {
@@ -235,7 +235,7 @@
         }
 
         /**
-         * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule
+         * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule.
          */
         public function testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule()
         {
@@ -339,7 +339,7 @@
         }
 
         /**
-         * @depends testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule
+         * @depends testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule.
          */
         public function testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule()
         {
@@ -449,7 +449,7 @@
         }
 
         /**
-         * @depends testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule
+         * @depends testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule.
          */
         public function testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
         {
@@ -557,7 +557,7 @@
         }
 
         /**
-         * @depends testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule
+         * @depends testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule.
          */
         public function testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
         {
@@ -573,6 +573,49 @@
             //Check to confirm that the meeting is deleted.
             $meeting = Meeting::getByName('myEditMeeting');
             $this->assertEquals(0, count($meeting));
+        }
+
+        /**
+         * @depends testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule.
+         */
+        public function testTypeAheadWorksForTheTagCloudFieldPlacedForMeetingsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'rea'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected value.
+            $this->assertTrue(strpos($content, "reading") > 0);
+        }
+
+        /**
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForTasksModule.
+         */
+        public function testLabelLocalizationForTheTagCloudFieldPlacedForMeetingsModule()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $this->assertEquals('en', $languageHelper->getForCurrentUser());
+            Yii::app()->user->userModel->language = 'fr';
+            $this->assertTrue(Yii::app()->user->userModel->save());
+            $languageHelper->setActive('fr');
+            $this->assertEquals('fr', Yii::app()->user->getState('language'));
+
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'surf'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected value.
+            $this->assertTrue(strpos($content, "surfing fr") > 0);
         }
     }
 ?>
