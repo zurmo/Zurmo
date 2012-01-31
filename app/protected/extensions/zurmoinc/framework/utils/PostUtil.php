@@ -69,9 +69,10 @@
                             }
                         }
                     }
-                    else
+                    elseif ($model->isAttribute($attributeName))
                     {
-                        if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
+                        $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+                        if($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
                         {
                             $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
                                                 $model, $attributeName);
@@ -83,22 +84,16 @@
                                                                          $value['firstDate']);
                             }
                         }
-                        elseif($model->isAttribute($attributeName) &&
-                               isset($value['values']) &&
-                               is_string($value['values']))
+                        elseif(isset($value['values']) && is_string($value['values']) && $designerType == 'TagCloud')
                         {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
-                            if ($designerType == 'TagCloud')
+                            if($postData[$attributeName]['values'] == '')
                             {
-                                if($postData[$attributeName]['values'] == '')
-                                {
-                                    $postData[$attributeName]['values'] = array();
-                                }
-                                else
-                                {
-                                    $postData[$attributeName]['values'] = explode(',', $postData[$attributeName]['values']);
-                                }
-                             }
+                                $postData[$attributeName]['values'] = array();
+                            }
+                            else
+                            {
+                                $postData[$attributeName]['values'] = explode(',', $postData[$attributeName]['values']);
+                            }
                         }
                     }
                 }
