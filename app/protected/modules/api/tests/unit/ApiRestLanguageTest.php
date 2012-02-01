@@ -53,8 +53,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/read/2/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            // ToDo: after we add transation for French, edit message below
-            $this->assertEquals('Login required on French language.', $response['message']);
+            $this->assertEquals('Login required.', $response['message']);
 
             $authenticationData = $this->login();
             $headers = array(
@@ -68,8 +67,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem2/api/read/2/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            // ToDo: after we add transation for French, edit message below
-            $this->assertEquals('The id specified was invalid on French language.', $response['message']);
+            $this->assertEquals('ID invalide.', $response['message']);
         }
     }
 ?>
