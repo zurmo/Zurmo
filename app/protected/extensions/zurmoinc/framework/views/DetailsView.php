@@ -60,7 +60,12 @@
             $content .= $this->renderActionElementBar(false);
             $content .= '</div></div>';
             $content .= $this->renderFormLayout();
+            $content .= $this->renderAfterFormLayoutForDetailsContent();
             return $content;
+        }
+
+        protected function renderAfterFormLayoutForDetailsContent()
+        {
         }
 
         /**
