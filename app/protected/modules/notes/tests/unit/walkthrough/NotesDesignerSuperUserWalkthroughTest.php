@@ -406,7 +406,7 @@
         }
 
         /**
-         * @depends testCreateAnNoteAfterTheCustomFieldsArePlacedForNotesModule
+         * @depends testEditOfTheNoteForTheTagCloudFieldAfterRemovingAllTagsPlacedForNotesModule
          */
         public function testEditOfTheNoteForTheCustomFieldsPlacedForNotesModule()
         {

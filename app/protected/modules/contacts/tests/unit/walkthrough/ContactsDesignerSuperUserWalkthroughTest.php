@@ -971,7 +971,7 @@
         }
 
         /**
-         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForLeadsModuleAfterDeletingTheLead
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterDeletingTheContact
          */
         public function testTypeAheadWorksForTheTagCloudFieldPlacedForContactsModule()
         {

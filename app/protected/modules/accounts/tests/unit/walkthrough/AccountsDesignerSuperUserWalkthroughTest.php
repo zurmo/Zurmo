@@ -451,6 +451,9 @@
             $this->assertTrue(strpos($content, "myNewAccount") > 0);
         }
 
+        /**
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterCreatingTheAccountUser
+         */
         public function testEditOfTheAccountUserForTheTagCloudFieldAfterRemovingAllTagsPlacedForAccountsModule()
         {
             $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -820,7 +823,7 @@
         }
 
         /**
-         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModuleAfterCreatingTheAccountUser
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModule
          */
         public function testLabelLocalizationForTheTagCloudFieldPlacedForAccountsModule()
         {

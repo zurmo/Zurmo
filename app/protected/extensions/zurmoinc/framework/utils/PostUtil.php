@@ -74,8 +74,6 @@
                         $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
                         if($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
                         {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
                                 $value['firstDate'] != null)
                             {

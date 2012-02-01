@@ -140,7 +140,7 @@
         }
 
         /**
-         * @depends testSuperUserMeetingDefaultControllerActions.
+         * @depends testSuperUserMeetingDefaultControllerActions
          */
         public function testSuperUserCustomFieldsWalkthroughForMeetingsModule()
         {
@@ -173,7 +173,7 @@
         }
 
         /**
-         * @depends testSuperUserCustomFieldsWalkthroughForMeetingsModule.
+         * @depends testSuperUserCustomFieldsWalkthroughForMeetingsModule
          */
         public function testSuperUserAddCustomFieldsToLayoutsForMeetingsModule()
         {
@@ -212,7 +212,7 @@
         }
 
         /**
-         * @depends testSuperUserAddCustomFieldsToLayoutsForMeetingsModule.
+         * @depends testSuperUserAddCustomFieldsToLayoutsForMeetingsModule
          */
         public function testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule()
         {
@@ -235,7 +235,7 @@
         }
 
         /**
-         * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule.
+         * @depends testLayoutsLoadOkAfterCustomFieldsPlacedForMeetingsModule
          */
         public function testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule()
         {
@@ -339,7 +339,7 @@
         }
 
         /**
-         * @depends testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule.
+         * @depends testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule
          */
         public function testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule()
         {
@@ -449,7 +449,7 @@
         }
 
         /**
-         * @depends testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule.
+         * @depends testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule
          */
         public function testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
         {
@@ -557,7 +557,7 @@
         }
 
         /**
-         * @depends testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule.
+         * @depends testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule
          */
         public function testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
         {
@@ -576,7 +576,7 @@
         }
 
         /**
-         * @depends testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule.
+         * @depends testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule
          */
         public function testTypeAheadWorksForTheTagCloudFieldPlacedForMeetingsModule()
         {
@@ -593,7 +593,7 @@
         }
 
         /**
-         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForTasksModule.
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForMeetingsModule
          */
         public function testLabelLocalizationForTheTagCloudFieldPlacedForMeetingsModule()
         {
