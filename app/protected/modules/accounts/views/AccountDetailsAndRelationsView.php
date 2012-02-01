@@ -39,18 +39,12 @@
                         'viewClassName' => 'AccountEditAndDetailsView',
                     ),
                     'leftBottomView' => array(
-                        'showAsTabbed' => true,
+                        'showAsTabbed' => false,
                         'columns' => array(
                             array(
                                 'rows' => array(
                                     array(
                                         'type' => 'AccountNoteInlineEditAndLatestActivtiesForPortlet'
-                                    ),
-                                    array(
-                                        'type' => 'ContactsForAccountRelatedList',
-                                    ),
-                                    array(
-                                        'type' => 'OpportunitiesForAccountRelatedList',
                                     )
                                 )
                             )
@@ -65,6 +59,12 @@
                                     ),
                                     array(
                                         'type' => 'OpenTasksForAccountRelatedList',
+                                    ),
+                                    array(
+                                        'type' => 'ContactsForAccountRelatedList',
+                                    ),
+                                    array(
+                                        'type' => 'OpportunitiesForAccountRelatedList',
                                     )
                                 )
                             )
