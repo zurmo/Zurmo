@@ -90,6 +90,10 @@
             => 'Contraseña de base de datos',
         'Database schema creation complete.'
             => 'Esquema de la base de datos creada',
+        'Database thread_stack value is:'
+            => 'El valor de thread_stack la base de datos es:',
+        'Database thread_stack value meets minimum requirement.'
+            => 'El valor de thread_stack en la base de datos cumple con los requisitos mínimos.',
         'Database username'
             => 'Nombre de usuario de base de datos',
         'Dropping existing tables.'

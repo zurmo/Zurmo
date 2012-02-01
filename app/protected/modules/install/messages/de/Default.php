@@ -91,6 +91,10 @@
             => 'Datenbankkennwort',
         'Database schema creation complete.'
             => 'Datenbankschema Erstellung abzuschließen',
+        'Database thread_stack value is:'
+            => 'Wert der thread_stack der Datenbank:',
+        'Database thread_stack value meets minimum requirement.'
+            => 'Wert von Datenbank thread_stack erfüllt Mindestanforderung.',
         'Database username'
             => 'Datenbank Benutzername',
         'Dropping existing tables.'

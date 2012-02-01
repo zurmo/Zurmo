@@ -87,6 +87,8 @@
             => 'Valuta',
         'An error has occurred. Please click'
             => 'C\'era un errore.  Prego di cliccare',
+        'An error occured during login. Please try again.'
+            => 'Errore login. Prego di provare di nuovo.',
         'Any City'
             => 'Città',
         'Any Country'
@@ -267,6 +269,8 @@
             => 'Assicurazione',
         'Invalid currency code'
             => 'Codice non valido.',
+        'Invalid username or password.'
+            => 'Nome utente sconosciuto o password non valida.',
         'Is Invalid'
             => 'È invalido',
         'Job Title'
@@ -299,8 +303,12 @@
             => 'Carica',
         'Login'
             => 'Accedi',
+        'Login required.'
+            => 'Login obbligatorio.',
         'Logout'
             => 'Eschi',
+        'Logout failed.'
+            => 'Logout fallito.',
         'Longitude'
             => 'Longitudine',
         'Manage Active Languages'
@@ -329,6 +337,10 @@
             => 'Campi obbligatori mancanti',
         'Mobile Phone'
             => 'Cellulare',
+        'Model was not created.'
+            => 'Il modello non era creato.',
+        'Model was not updated.'
+            => 'Il modello non era aggiornato.',
         'Module Name - Plural'
             => 'Nome di modulo - plurale',
         'Module Name - Plural (lowercase)'
@@ -393,6 +405,8 @@
             => 'Privilegi',
         'Permitable'
             => 'Permetto',
+        'Please provide data.'
+            => 'Prego di provare i dati.',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Prego di usare FireFox, Chrome, o Internet Explorer.',
         'Policies'
@@ -469,6 +483,8 @@
             => 'Spiacente! Il tuo browser non supporta.',
         'Source'
             => 'Fonte',
+        'Specified custom field name was invalid.'
+            => 'Nome del campo personalizzato non è valido.',
         'Stage'
             => 'Fase di Vendita',
         'Standard Fields'
@@ -495,6 +511,8 @@
             => 'Il servizio di corsi delle valute non è disponibile. Il tasso non fu aggiornato.',
         'The currency was not removed because it is in use.'
             => 'La valuta non fu eliminata perché é in uso.',
+        'The ID specified was invalid.'
+            => 'ID non è valido.',
         'The status specified is invalid.'
             => 'Il stato specificate non é valido.',
         'There are no recently viewed items.'

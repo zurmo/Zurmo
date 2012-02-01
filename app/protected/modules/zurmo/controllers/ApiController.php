@@ -38,7 +38,7 @@
             }
             catch (Exception $e)
             {
-                $message = Yii::t('Default', 'An error occur during login. Pleease try again.');
+                $message = Yii::t('Default', 'An error occured during login. Please try again.');
                 throw new ApiException($message);
             }
             if ($identity->errorCode == UserIdentity::ERROR_NONE)

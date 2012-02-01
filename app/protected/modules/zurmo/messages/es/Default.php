@@ -87,6 +87,8 @@
             => 'Suma',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
+        'An error occured during login. Please try again.'
+            => 'Error de login. Por favor, inténtalo de nuevo.',
         'Any City'
             => 'Ciudad',
         'Any Country'
@@ -267,6 +269,8 @@
             => 'Seguros',
         'Invalid currency code'
             => 'Código de divisa inválido',
+        'Invalid username or password.'
+            => 'El nombre de usuario o contraseña no es válido.',
         'Is Invalid'
             => 'Es inválido',
         'Job Title'
@@ -299,8 +303,12 @@
             => 'Cargar',
         'Login'
             => 'Acceder',
+        'Login required.'
+            => 'Login requerido.',
         'Logout'
             => 'Salir',
+        'Logout failed.'
+            => 'Error de salido.',
         'Longitude'
             => 'Longitud',
         'Manage Active Languages'
@@ -329,6 +337,10 @@
             => 'Los campos obligatorios se colocará en el punto de vista',
         'Mobile Phone'
             => 'Tel. móvil',
+        'Model was not created.'
+            => ' El modelo no fue creado.',
+        'Model was not updated.'
+            => 'El modelo no ha sido actualizado.',
         'Module Name - Plural'
             => 'Nombre del módulo - Plural',
         'Module Name - Plural (lowercase)'
@@ -393,6 +405,8 @@
             => 'Permisos',
         'Permitable'
             => 'Permitable',
+        'Please provide data.'
+            => 'Por favor, facilite los datos.',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Por favor, use Firefox, Chrome, o Internet Explorer.',
         'Policies'
@@ -469,6 +483,8 @@
             => '¡Lo siento! Su navegador no es compatible.',
         'Source'
             => 'Fuente',
+        'Specified custom field name was invalid.'
+            => 'El nombre del campo personalizado no es válido.',
         'Stage'
             => 'Etapa',
         'Standard Fields'
@@ -495,6 +511,8 @@
             => 'El servicio web para los tipos de cambio no estaba disponible. El tipo de cambio no puede ser actualizado automáticamente.',
         'The currency was not removed because it is in use.'
             => 'La moneda no se ha eliminado porque está en uso.',
+        'The ID specified was invalid.'
+            => ' ID no válido.',
         'The status specified is invalid.'
             => 'El estatus especificado no es válido.',
         'There are no recently viewed items.'

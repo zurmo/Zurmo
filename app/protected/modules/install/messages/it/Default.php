@@ -90,6 +90,10 @@
             => 'Password del database',
         'Database schema creation complete.'
             => 'Creazione schema di database è completato.',
+        'Database thread_stack value is:'
+            => 'Il valore thread_stack del database è:',
+        'Database thread_stack value meets minimum requirement.'
+            => 'Il valore thread_stack del database soddisfa il requisito minimale.',
         'Database username'
             => 'Nome d\'utente del database',
         'Dropping existing tables.'
