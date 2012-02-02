@@ -25,34 +25,19 @@
      ********************************************************************************/
 
     /**
-     * Helper functionality for use in accessing and manipulating arrays.
+     * Text Util contain text related helper functions
      */
-    class ArrayUtil
+    class TextUtil
     {
         /**
-         * Returns value of $array[$element] if $element is defined, otherwise if not defined will return null
+         * Convert string to lowercase, based on encoding
+         * @param string $string
+         * @return string
          */
-        public static function getArrayValue($array, $element)
+        public static function strToLowerWithDefaultEncoding($string)
         {
-            if (isset($array[$element]))
-            {
-                return $array[$element];
-            }
-            return null;
-        }
-
-        public static function resolveArrayToLowerCase($array)
-        {
-            return unserialize(TextUtil::strToLowerWithDefaultEncoding(serialize($array)));
-        }
-
-        /**
-         * Case insensitive version of @link http://www.php.net/manual/en/function.array-unique.php
-         * @param array $array
-         */
-        public static function array_iunique($array)
-        {
-            return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
+            assert('is_string($string)');
+            return mb_strtolower($string, Yii::app()->charset);
         }
     }
 ?>

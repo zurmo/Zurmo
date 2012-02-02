@@ -137,7 +137,7 @@
                 {
                     continue;
                 }
-                if (!in_array(mb_strtolower($valueCountData[$columnName]), $usernameValues))
+                if (!in_array(TextUtil::strToLowerWithDefaultEncoding($valueCountData[$columnName]), $usernameValues))
                 {
                     $count++;
                 }

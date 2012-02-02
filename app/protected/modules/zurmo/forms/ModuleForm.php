@@ -62,7 +62,7 @@
                 {
                     $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
                 }
-                if ($data[$language] != mb_strtolower($data[$language], Yii::app()->charset))
+                if ($data[$language] != TextUtil::strToLowerWithDefaultEncoding($data[$language]))
                 {
                     $this->addError($attribute . '[' . $language . ']',
                                 Yii::t('Default', 'Label must be all lowercase.'));

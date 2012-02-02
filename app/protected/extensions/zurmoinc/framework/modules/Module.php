@@ -168,12 +168,12 @@
                     return Yii::t('Default', static::getSingularModuleLabel());
                 case 'SingularLowerCase':
                     $string  = Yii::t('Default', static::getSingularModuleLabel(), array(), null, $language);
-                    return mb_strtolower($string, Yii::app()->charset);
+                    return TextUtil::strToLowerWithDefaultEncoding($string);
                 case 'Plural':
                     return Yii::t('Default', static::getPluralModuleLabel(), array(), null, $language);
                 case 'PluralLowerCase':
                     $string  = Yii::t('Default', static::getPluralModuleLabel(), array(), null, $language);
-                    return mb_strtolower($string, Yii::app()->charset);
+                    return TextUtil::strToLowerWithDefaultEncoding($string);
             }
         }
 
