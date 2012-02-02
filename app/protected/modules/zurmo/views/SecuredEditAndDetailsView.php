@@ -69,10 +69,10 @@
             $content = parent::renderRightSideFormLayoutForEdit($form);
             if($this->getModel() instanceof OwnedSecurableItem)
             {
-                $content .= "<h3>".Yii::t('Default', 'Rights and Permissions') . "</h3>\n";
+                $content .= "<h3>".Yii::t('Default', 'Rights and Permissions') . '</h3><div id="owner-box">';
                 $element  = new UserElement($this->getModel(), 'owner', $form);
                 $element->editableTemplate = '{label}{content}{error}';
-                $content .= $element->render();
+                $content .= $element->render().'</div>';
                 $element  = new DerivedExplicitReadWriteModelPermissionsElement($this->getModel(), 'null', $form);
                 $element->editableTemplate = '{label}{content}{error}';
                 $content .= $element->render();

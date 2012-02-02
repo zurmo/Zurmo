@@ -1,7 +1,7 @@
 /*Imports*/
 //@import 'originals/mbmenu.css';
 //@import url('clearfix.css');
-@import 'mixins';
+//@import 'mixins';
 
 
 /*Variables*/
@@ -344,7 +344,7 @@ footer, header, hgroup, menu, nav, section {
 	min-width:900px;
 	height:100%;
 	margin:0 40px 0 40px;
-	background:#fff url(../images/content-gradient.png) left top repeat-x;
+	//background:#fff url(../images/content-gradient.png) left top repeat-x;
 	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
 	-webkit-border-radius: 0 0 5px 5px;
 
@@ -429,8 +429,8 @@ footer, header, hgroup, menu, nav, section {
 #RecentlyViewedView{
 	float:left;
 	background: url(../images/recently-viewed-gradient.png) left top repeat-x;
-	border-right:1px solid #eee;
-	border-left:1px solid #eee;
+	//border-right:1px solid #eee;
+	//border-left:1px solid #eee;
 	border-top:1px solid #F9F9FA;
 	padding:20px 5px;
 	width:160px;
@@ -490,6 +490,7 @@ footer, header, hgroup, menu, nav, section {
 	padding:20px 20px 20px 20px;
 	margin-left:172px;
 	margin-bottom:20px;
+	background:#fff;
 }
 
 /*dashboard*/
@@ -957,10 +958,24 @@ table.items tr:hover{
 			line-height: 100%;
 			padding-top:0;
 		}
+		#owner-box{
+			margin-bottom:15px;
+			label, &+label{
+				font-size:12px;
+				font-weight:600;
+			}
+		}
 		input[type="text"]{
 			//width:200px;
+			margin-bottom: 4px;
 		}
+		
+		#owner-box + label{
+			margin-bottom:15px;
+		}
+		
 		.radio-input{
+			margin-bottom:10px;
 			width:100%;
 			float:left;
 			display: block;
@@ -971,11 +986,13 @@ table.items tr:hover{
 			}
 			input[type="radio"]{
 				float:left;
-				margin-right:8px;
+				margin:0 8px 0 10px;
 				vertical-align: middle;
 			}
 			select{
 				display:block;
+				margin-left:30px;
+				margin-bottom:0;
 			}	
 		}
 		input[type="text"], select{
@@ -1000,6 +1017,23 @@ table.items tr:hover{
 	.jnotify-item{
 		margin:0 20px 20px 0;
 		padding:10px;
-		.radius(10);
+		//.radius(5px);
+		border-radius:5px !important;
+		border:1px solid #FFCC00;
+		background:#FFFCB5;
+		font-size:12px;
+		font-weight:600;
+		color:#333333;
+	}
+	.ui-icon-circle-close{
+		position: absolute;
+		top:-17px;
+		right:6px;
+		background: transparent url(../images/widget-close-btn.png) left top no-repeat;
+		padding: 0 !important;
+		margin:0 !important;
+		width:30px !important;
+		height: 31px !important;
+		cursor:pointer;
 	}
 }
