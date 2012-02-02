@@ -26,7 +26,6 @@
 
     class RequiredAttributesValidViewUtilTest extends BaseTest
     {
-
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -127,6 +126,5 @@
             $booleanTest = RequiredAttributesValidViewUtil::isViewMissingRequiredAttributes('ContactsModule', 'ContactEditAndDetailsView');
             $this->assertFalse($booleanTest);
         }
-
     }
 ?>

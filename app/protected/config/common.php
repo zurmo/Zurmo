@@ -169,7 +169,7 @@
                 'urlFormat' => 'path',
                 'caseSensitive' => true,
                 'showScriptName' => true,
-                'rules'=>array(
+                'rules' => array(
                     // API REST patterns
                     array('zurmo/api/logout',      'pattern' => 'zurmo/api/logout',                    'verb' => 'GET'),    // Not Coding Standard
                     array('<module>/api/read',     'pattern' => '<module:\w+>/api/read/<id:\d+>',      'verb' => 'GET'),    // Not Coding Standard

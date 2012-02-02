@@ -867,7 +867,7 @@
                 $url = rtrim($_SERVER['PHP_SELF'], '/');
                 $route = rtrim($route, '/');
 
-                if($route != '')
+                if ($route != '')
                 {
                     $url = rtrim($url, $route);
                 }

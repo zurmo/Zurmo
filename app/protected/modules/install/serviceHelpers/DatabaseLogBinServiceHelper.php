@@ -62,7 +62,6 @@
                                                        $this->minimumUploadRequireBytes,
                                                        $logBinTrustFunctionCreatorsValue))
                 {
-
                         $this->message  = Yii::t('Default', 'Database log_bin option is turned on and log_bin_trust_function_creators is turned off.') . ' ';
                         $this->message .= Yii::t('Default', 'You must either to turn of log_bin, or to le log_bin turned on, but to turn on log_bin_trust_function_creators option.');
                         $passed = false;
