@@ -957,10 +957,24 @@ table.items tr:hover{
 			line-height: 100%;
 			padding-top:0;
 		}
+		#owner-box{
+			margin-bottom:15px;
+			label, &+label{
+				font-size:12px;
+				font-weight:600;
+			}
+		}
 		input[type="text"]{
 			//width:200px;
+			margin-bottom: 4px;
 		}
+		
+		#owner-box + label{
+			margin-bottom:15px;
+		}
+		
 		.radio-input{
+			margin-bottom:10px;
 			width:100%;
 			float:left;
 			display: block;
@@ -971,11 +985,13 @@ table.items tr:hover{
 			}
 			input[type="radio"]{
 				float:left;
-				margin-right:8px;
+				margin:0 8px 0 10px;
 				vertical-align: middle;
 			}
 			select{
 				display:block;
+				margin-left:30px;
+				margin-bottom:0;
 			}	
 		}
 		input[type="text"], select{
