@@ -1,7 +1,7 @@
 /*Imports*/
-@import 'originals/mbmenu.css';
-@import url('clearfix.css');
-//@import url('mixins.less');
+//@import 'originals/mbmenu.css';
+//@import url('clearfix.css');
+@import 'mixins';
 
 
 /*Variables*/
@@ -935,6 +935,10 @@ table.items tr:hover{
 	table{
 		float:left;
 		width: 70%;
+		border-bottom:none;
+	}
+	.view-toolbar-container{
+		border-top:1px solid #CCCCCC;
 	}
 	#permissions-module{
 		width:30%;
@@ -952,6 +956,9 @@ table.items tr:hover{
 			display: block;
 			line-height: 100%;
 			padding-top:0;
+		}
+		input[type="text"]{
+			//width:200px;
 		}
 		.radio-input{
 			width:100%;
@@ -982,4 +989,17 @@ table.items tr:hover{
 	/*@TODO temp style*/
 	padding:8px 10px;
 	background:#323232;
+}
+
+
+/*Flash Message View*/
+#FlashMessageView{
+	position: relative;
+	margin-left:192px;
+	top:20px;
+	.jnotify-item{
+		margin:0 20px 20px 0;
+		padding:10px;
+		.radius(10);
+	}
 }
