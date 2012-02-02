@@ -62,19 +62,18 @@
                                                        $this->minimumUploadRequireBytes,
                                                        $logBinTrustFunctionCreatorsValue))
                 {
-                        $this->message  = Yii::t('Default', 'Database log_bin option is turned on and log_bin_trust_function_creators is turned off.') . ' ';
-                        $this->message .= Yii::t('Default', 'You must either to turn of log_bin, or to left log_bin turned on, but to turn on log_bin_trust_function_creators option.');
+                        $this->message  = Yii::t('Default', 'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators option=on.');
                         $passed = false;
                 }
                 else
                 {
-                    $this->message = Yii::t('Default', 'Database log_bin option is turned on and log_bin_trust_function_creators is turned on, and pass requirements.');
+                    $this->message = Yii::t('Default', 'Database log_bin=on and log_bin_trust_function_creators option=on therefore satisfies this requirement.');
                     $passed = true;
                 }
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database log_bin option is turned off and pass requirements.');
+                $this->message = Yii::t('Default', 'Database log_bin=off and therefore satisfies this requirement.');
             }
             return $passed;
         }

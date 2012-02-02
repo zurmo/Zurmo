@@ -79,7 +79,7 @@
         {
             if ($this->type == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME)
             {
-                $compareValue = mb_strtolower($value);
+                $compareValue = TextUtil::strToLowerWithDefaultEncoding($value);
             }
             else
             {
