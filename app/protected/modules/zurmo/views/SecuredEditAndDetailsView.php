@@ -69,7 +69,7 @@
             $content = parent::renderRightSideFormLayoutForEdit($form);
             if($this->getModel() instanceof OwnedSecurableItem)
             {
-                $content .= Yii::t('Default', 'Rights and Permissions') . "\n";
+                $content .= "<h3>".Yii::t('Default', 'Rights and Permissions') . "</h3>\n";
                 $element  = new UserElement($this->getModel(), 'owner', $form);
                 $element->editableTemplate = '{label}{content}{error}';
                 $content .= $element->render();
