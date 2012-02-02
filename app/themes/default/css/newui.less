@@ -876,13 +876,7 @@ table.items tr:hover{
 		border-bottom:none;
 		height:35px;/*@TODO check why I need specific height here and the elemnt doesn´t collapse*/
 		.b-shadow(none);
-		
 		background: url(../images/portlet-header-gradient.png) left bottom repeat-x;
-
-
-		
-		
-		
 		table{
 			border-bottom:none;
 		}
@@ -929,4 +923,63 @@ table.items tr:hover{
 	float:left;
 	margin-top:50px;
 	position:absolute;
+}
+
+/*Edit + Add Account View*/
+.buffer{
+	padding-left:30px;
+}
+#edit-form{
+	.clearfix;
+	position: relative;
+	table{
+		float:left;
+		width: 70%;
+	}
+	#permissions-module{
+		width:30%;
+		float:right;
+		h3{
+			margin-bottom:8px;
+		}
+		.buffer > div{
+			padding:8px 10px;
+			background:#F4F4F4;
+			.clearfix();
+		}
+		label{
+			width: 100%;
+			display: block;
+			line-height: 100%;
+			padding-top:0;
+		}
+		.radio-input{
+			width:100%;
+			float:left;
+			display: block;
+			label{
+				width:auto;
+				float:left;
+				vertical-align: middle;
+			}
+			input[type="radio"]{
+				float:left;
+				margin-right:8px;
+				vertical-align: middle;
+			}
+			select{
+				display:block;
+			}	
+		}
+		input[type="text"], select{
+			margin-top:6px;
+		}
+	}
+}
+
+/*Auto Complete*/
+.ui-autocomplete{
+	/*@TODO temp style*/
+	padding:8px 10px;
+	background:#323232;
 }
