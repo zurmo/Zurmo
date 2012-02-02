@@ -35,7 +35,9 @@
 
         public $showStatusBarOneAtATime = true;
 
-        public $statusBarId = 'StatusBar';
+        public $statusBarId             = 'StatusBar';
+
+        public $cssFile                 ='css/jquery-ui.css';
 
         /**
          * Initialize the JNotify Widget
@@ -43,6 +45,8 @@
         public function init()
         {
             $this->registerClientScripts();
+            $this->themeUrl = Yii::app()->baseUrl . '/themes';
+            $this->theme    = Yii::app()->theme->name;
             parent::init();
         }
 
