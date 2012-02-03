@@ -44,7 +44,10 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'AccountNoteInlineEditAndLatestActivtiesForPortlet'
+                                        'type' => 'NoteInlineEditForPortlet'
+                                    ),
+                                    array(
+                                        'type' => 'AccountLatestActivtiesForPortlet'
                                     )
                                 )
                             )
