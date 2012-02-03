@@ -344,17 +344,26 @@ footer, header, hgroup, menu, nav, section {
 	min-width:900px;
 	height:100%;
 	margin:0 40px 0 40px;
+	background:#fff url(../images/nav.png) left top repeat-y;
 	//background:#fff url(../images/content-gradient.png) left top repeat-x;
 	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
 	-webkit-border-radius: 0 0 5px 5px;
-
+	z-index: 0;
+	position:relative;
+}
+#HeaderView{
+	position:relative;
+	z-index:9999;
+	/*position: fixed;
+	width:100%;*/
 }
 
 /*Left Sidebar*/
 .AppNavigation{
 	width:170px;
 	float:left;
-	background: url(../images/sidebar-gradient.png) left top repeat-x;
+	background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(244,244,244,1) 100%);
+	//background: url(../images/sidebar-gradient.png) left top repeat-x;
 	border-right:1px solid #eee;
 	border-left:1px solid #eee;
 	height:100%;
@@ -374,7 +383,7 @@ footer, header, hgroup, menu, nav, section {
 
 #MenuView{
 	padding:20px 0;
-	border-bottom: #ccc;
+	border-bottom:1px solid #cccccc;
 }
 
 #MenuView .parent{
@@ -427,8 +436,9 @@ footer, header, hgroup, menu, nav, section {
 
 /*Recently Viewed*/
 #RecentlyViewedView{
-	float:left;
-	background: url(../images/recently-viewed-gradient.png) left top repeat-x;
+	//float:left;
+	background: -webkit-linear-gradient(top, rgba(220,220,220,1) 0%, rgba(227,227,227,1) 100%);
+	//background: url(../images/recently-viewed-gradient.png) left top repeat-x;
 	//border-right:1px solid #eee;
 	//border-left:1px solid #eee;
 	border-top:1px solid #F9F9FA;
@@ -490,7 +500,8 @@ footer, header, hgroup, menu, nav, section {
 	padding:20px 20px 20px 20px;
 	margin-left:172px;
 	margin-bottom:20px;
-	background:#fff;
+	//background:#fff;
+	background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 100px);
 }
 
 /*dashboard*/
