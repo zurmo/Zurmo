@@ -472,7 +472,9 @@
             $superUserId = $super->id;
 
             //Retrieve the lead id.
-            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams');
+            $lead   = Contact::getByName('Sarah Williams');
+            $leadId = $lead[0]->id;
+            $this->assertEquals(2, $lead[0]->tagcloud->values->count());
 
             //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
@@ -605,10 +607,7 @@
             $this->assertEquals($lead->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                , $lead->multiselect->values);
             $this->assertContains('hh'                                , $lead->multiselect->values);
-            $this->assertNotContains('reading'                        , $lead->tagcloud->values);
-            $this->assertNotContains('writing'                        , $lead->tagcloud->values);
-            $this->assertNotContains('surfing'                        , $lead->tagcloud->values);
-            $this->assertNotContains('gardening'                      , $lead->tagcloud->values);
+            $this->assertEquals(0                                     , $lead->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);

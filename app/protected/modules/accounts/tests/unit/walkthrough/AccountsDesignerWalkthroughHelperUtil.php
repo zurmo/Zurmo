@@ -181,6 +181,9 @@
                                         array(
                                             'element' => 'dropdowndependency',
                                         ),
+                                        array(
+                                            'element' => 'dropdowndependency2',
+                                        ),
                                     )
                                 ),
                                 array('cells' =>

@@ -172,6 +172,7 @@
             $this->createTagCloudCustomFieldByModule            ('AccountsModule', 'tagcloud');
             $this->createCalculatedNumberCustomFieldByModule    ('AccountsModule', 'calculatednumber');
             $this->createDropDownDependencyCustomFieldByModule  ('AccountsModule', 'dropdowndependency');
+            $this->createDropDownDependencyCustomFieldByModule  ('AccountsModule', 'dropdowndependency2');
             $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');
             $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radio');
@@ -467,7 +468,9 @@
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
 
             //Get the account id from the recently created account.
-            $accountId      = self::getModelIdByModelNameAndName('Account', 'myNewAccount');
+            $account        = Account::getByName('myNewAccount');
+            $accountId      = $account[0]->id;
+            $this->assertEquals(2, $account[0]->tagcloud->values->count());
 
             //Edit and save the account.
             $this->setGetArray(array('id' => $accountId));
@@ -578,10 +581,7 @@
             $this->assertEquals($account[0]->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                      , $account[0]->multiselect->values);
             $this->assertContains('hh'                                      , $account[0]->multiselect->values);
-            $this->assertNotContains('reading'                              , $account[0]->tagcloud->values);
-            $this->assertNotContains('writing'                              , $account[0]->tagcloud->values);
-            $this->assertNotContains('surfing'                              , $account[0]->tagcloud->values);
-            $this->assertNotContains('gardening'                            , $account[0]->tagcloud->values);
+            $this->assertEquals(0                                           , $account[0]->tagcloud->values->count());
 
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Account');
@@ -767,7 +767,224 @@
         }
 
         /**
-         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterEditingTheAccountUser
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleWithMultiSelectValueSetToNull
+         */
+        public function testCreateSecondAccountForUserAfterTheCustomFieldsArePlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Create a new account based on the custom fields.
+            $this->resetGetArray();
+            $this->setPostArray(array('Account' => array(
+                                    'name'                              => 'mySecondAccount',
+                                    'officePhone'                       => '259-784-2169',
+                                    'industry'                          => array('value' => 'Automotive'),
+                                    'officeFax'                         => '299-845-7863',
+                                    'employees'                         => '930',
+                                    'annualRevenue'                     => '474000000',
+                                    'type'                              => array('value' => 'Prospect'),
+                                    'website'                           => 'http://www.Unnamed.com',
+                                    'primaryEmail'                      => array('emailAddress' => 'info@myNewAccount.com',
+                                                                                  'optOut' => '1',
+                                                                                  'isInvalid' => '0'),
+                                    'secondaryEmail'                    => array('emailAddress' => '',
+                                                                                  'optOut' => '0',
+                                                                                  'isInvalid' => '0'),
+                                    'billingAddress'                    => array('street1' => '6466 South Madison Creek',
+                                                                                  'street2' => '',
+                                                                                  'city' => 'Chicago',
+                                                                                  'state' => 'IL',
+                                                                                  'postalCode' => '60652',
+                                                                                  'country' => 'USA'),
+                                    'shippingAddress'                   => array('street1' => '27054 West Michigan Lane',
+                                                                                  'street2' => '',
+                                                                                  'city' => 'Austin',
+                                                                                  'state' => 'TX',
+                                                                                  'postalCode' => '78759',
+                                                                                  'country' => 'USA'),
+                                    'description'                       => 'This is a Description',
+                                    'explicitReadWriteModelPermissions' => array('type' => null),
+                                    'checkbox'                          => '1',
+                                    'currency'                          => array('value'    => 45,
+                                                                                 'currency' => array('id' =>
+                                                                                 $baseCurrency->id)),
+                                    'date'                              => $date,
+                                    'datetime'                          => $datetime,
+                                    'decimal'                           => '123',
+                                    'picklist'                          => array('value'  => 'a'),
+                                    'multiselect'                       => array('values' => array('gg', 'ff')),
+                                    'tagcloud'                          => array('values' => array('reading', 'writing')),
+                                    'countrypicklist'                   => array('value'  => 'bbbb'),
+                                    'statepicklist'                     => array('value'  => 'bbb1'),
+                                    'citypicklist'                      => array('value'  => 'bb1'),
+                                    'integer'                           => '12',
+                                    'phone'                             => '259-784-2169',
+                                    'radio'                             => array('value' => 'd'),
+                                    'text'                              => 'This is a test Text',
+                                    'textarea'                          => 'This is a test TextArea',
+                                    'url'                               => 'http://wwww.abc.com')));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
+
+            //Check the details if they are saved properly for the custom fields.
+            $account = Account::getByName('mySecondAccount');
+            //Retrieve the permission for the account.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name                           , 'mySecondAccount');
+            $this->assertEquals($account[0]->officePhone                    , '259-784-2169');
+            $this->assertEquals($account[0]->industry->value                , 'Automotive');
+            $this->assertEquals($account[0]->officeFax                      , '299-845-7863');
+            $this->assertEquals($account[0]->employees                      , '930');
+            $this->assertEquals($account[0]->annualRevenue                  , '474000000');
+            $this->assertEquals($account[0]->type->value                    , 'Prospect');
+            $this->assertEquals($account[0]->website                        , 'http://www.Unnamed.com');
+            $this->assertEquals($account[0]->primaryEmail->emailAddress     , 'info@myNewAccount.com');
+            $this->assertEquals($account[0]->primaryEmail->optOut           , '1');
+            $this->assertEquals($account[0]->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($account[0]->secondaryEmail->emailAddress   , '');
+            $this->assertEquals($account[0]->secondaryEmail->optOut         , '0');
+            $this->assertEquals($account[0]->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($account[0]->billingAddress->street1        , '6466 South Madison Creek');
+            $this->assertEquals($account[0]->billingAddress->street2        , '');
+            $this->assertEquals($account[0]->billingAddress->city           , 'Chicago');
+            $this->assertEquals($account[0]->billingAddress->state          , 'IL');
+            $this->assertEquals($account[0]->billingAddress->postalCode     , '60652');
+            $this->assertEquals($account[0]->billingAddress->country        , 'USA');
+            $this->assertEquals($account[0]->shippingAddress->street1       , '27054 West Michigan Lane');
+            $this->assertEquals($account[0]->shippingAddress->street2       , '');
+            $this->assertEquals($account[0]->shippingAddress->city          , 'Austin');
+            $this->assertEquals($account[0]->shippingAddress->state         , 'TX');
+            $this->assertEquals($account[0]->shippingAddress->postalCode    , '78759');
+            $this->assertEquals($account[0]->shippingAddress->country       , 'USA');
+            $this->assertEquals($account[0]->description                    , 'This is a Description');
+            $this->assertEquals(0                                           , count($readWritePermitables));
+            $this->assertEquals(0                                           , count($readOnlyPermitables));
+            $this->assertEquals($account[0]->checkbox                       , '1');
+            $this->assertEquals($account[0]->currency->value                , 45);
+            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($account[0]->date                           , $dateAssert);
+            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
+            $this->assertEquals($account[0]->decimal                        , '123');
+            $this->assertEquals($account[0]->picklist->value                , 'a');
+            $this->assertEquals($account[0]->integer                        , 12);
+            $this->assertEquals($account[0]->phone                          , '259-784-2169');
+            $this->assertEquals($account[0]->radio->value                   , 'd');
+            $this->assertEquals($account[0]->text                           , 'This is a test Text');
+            $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
+            $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'bbbb');
+            $this->assertEquals($account[0]->statepicklist->value           , 'bbb1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'bb1');
+            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
+            $this->assertContains('ff'                                      , $account[0]->multiselect->values);
+            $this->assertContains('reading'                                 , $account[0]->tagcloud->values);
+            $this->assertContains('writing'                                 , $account[0]->tagcloud->values);
+        }
+
+        /**
+         * @depends testCreateSecondAccountForUserAfterTheCustomFieldsArePlacedForAccountsModule
+         */
+        public function testMassUpdateForMultiSelectFieldPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('gg'           , $account[0]->multiselect->values);
+            $this->assertContains('hh'           , $account[0]->multiselect->values);
+            unset($account);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('gg'           , $secondAccount[0]->multiselect->values);
+            $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
+            unset($secondAccount);
+            
+            $this->resetPostArray();
+            $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
+            $this->assertTrue(strpos($content, "Mass Update") > 0);
+
+            $this->setPostArray(array('save'     => 'Save',
+                                      'MassEdit' => array('multiselect' => '1'),
+                                      'Account'  => array('multiselect' => array('values' => array('ff', 'rr')))
+                                     )
+                               );
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('ff'           , $account[0]->multiselect->values);
+            $this->assertContains('rr'           , $account[0]->multiselect->values);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
+            $this->assertContains('rr'           , $secondAccount[0]->multiselect->values);
+        }
+
+        /**
+         * @depends testMassUpdateForMultiSelectFieldPlacedForAccountsModule
+         */
+        public function testMassUpdateForTagCloudFieldPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('reading'      , $account[0]->tagcloud->values);
+            $this->assertContains('surfing'      , $account[0]->tagcloud->values);
+            unset($account);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('reading'      , $secondAccount[0]->tagcloud->values);
+            $this->assertContains('writing'      , $secondAccount[0]->tagcloud->values);
+            unset($secondAccount);
+
+            $this->resetPostArray();
+            $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
+            $this->assertTrue(strpos($content, "Mass Update") > 0);
+
+            $this->setPostArray(array('save'     => 'Save',
+                                      'MassEdit' => array('tagcloud' => '1'),
+                                      'Account'  => array('tagcloud' => array('values' => array('writing', 'gardening')))
+                                     )
+                               );
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('writing'      , $account[0]->tagcloud->values);
+            $this->assertContains('gardening'    , $account[0]->tagcloud->values);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('writing'      , $secondAccount[0]->tagcloud->values);
+            $this->assertContains('gardening'    , $secondAccount[0]->tagcloud->values);
+        }
+
+        /**
+         * @depends testMassUpdateForTagCloudFieldPlacedForAccountsModule
          */
         public function testDeleteOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
         {

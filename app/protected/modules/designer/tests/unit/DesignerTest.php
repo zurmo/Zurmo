@@ -818,7 +818,7 @@
             $this->assertTrue($adapter->isStandardAttributeRequiredByDefault('lastName'));
         }
 
-        public function testSetMetadataFromLayoutWithAndWithOutRequiredCustomField()
+        public function testSetMetadataFormLayoutWithAndWithOutRequiredCustomFieldForDropDownDependencyAttribute()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
 

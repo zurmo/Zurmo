@@ -613,7 +613,9 @@
             $superUserId = $super->id;
 
             //Retrieve the contact id.
-            $contactId   = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
+            $contact   = Contact::getByName('Sarah Williams');
+            $contactId = $contact[0]->id;
+            $this->assertEquals(2, $contact[0]->tagcloud->values->count());
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('RecycledC');
@@ -733,10 +735,7 @@
             $this->assertEquals($contact->citypicklist->value            , 'ab1');
             $this->assertContains('gg'                                   , $contact->multiselect->values);
             $this->assertContains('hh'                                   , $contact->multiselect->values);
-            $this->assertNotContains('reading'                           , $contact->tagcloud->values);
-            $this->assertNotContains('writing'                           , $contact->tagcloud->values);
-            $this->assertNotContains('surfing'                           , $contact->tagcloud->values);
-            $this->assertNotContains('gardening'                         , $contact->tagcloud->values);
+            $this->assertEquals(0                                        , $contact->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);

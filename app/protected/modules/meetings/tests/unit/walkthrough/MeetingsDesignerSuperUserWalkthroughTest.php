@@ -347,6 +347,7 @@
 
             //Retrieve the meeting Id.
             $meeting = Meeting::getByName('myNewMeeting');
+            $this->assertEquals(2, $meeting[0]->tagcloud->values->count());
 
             //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
@@ -438,10 +439,7 @@
             $this->assertEquals($meeting[0]->citypicklist->value              , 'ab1');
             $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
-            $this->assertNotContains('reading'                                , $meeting[0]->tagcloud->values);
-            $this->assertNotContains('writing'                                , $meeting[0]->tagcloud->values);
-            $this->assertNotContains('surfing'                                , $meeting[0]->tagcloud->values);
-            $this->assertNotContains('gardening'                              , $meeting[0]->tagcloud->values);
+            $this->assertEquals(0                                             , $meeting[0]->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Meeting');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);

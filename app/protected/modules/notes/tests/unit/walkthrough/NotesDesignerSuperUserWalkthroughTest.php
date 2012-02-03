@@ -329,6 +329,7 @@
 
             //Retrieve the note Id based on the created note.
             $note = Note::getByName('Note Description');
+            $this->assertEquals(2, $note[0]->tagcloud->values->count());
 
             //Edit a note based on the custom fields.
             $this->setGetArray(array('id' => $note[0]->id));
@@ -395,10 +396,7 @@
             $this->assertEquals($note[0]->citypicklist->value              , 'ab1');
             $this->assertContains('gg'                                     , $note[0]->multiselect->values);
             $this->assertContains('hh'                                     , $note[0]->multiselect->values);
-            $this->assertNotContains('reading'                             , $note[0]->tagcloud->values);
-            $this->assertNotContains('writing'                             , $note[0]->tagcloud->values);
-            $this->assertNotContains('surfing'                             , $note[0]->tagcloud->values);
-            $this->assertNotContains('gardening'                           , $note[0]->tagcloud->values);
+            $this->assertEquals(0                                          , $note[0]->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Note');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);

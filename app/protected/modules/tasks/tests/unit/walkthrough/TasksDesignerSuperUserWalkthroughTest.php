@@ -345,6 +345,7 @@
 
             //Retrieve the task Id.
             $task = Task::getByName('myNewTask');
+            $this->assertEquals(2, $task[0]->tagcloud->values->count());
 
             //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
@@ -432,10 +433,7 @@
             $this->assertEquals($task[0]->citypicklist->value              , 'ab1');
             $this->assertContains('gg'                                     , $task[0]->multiselect->values);
             $this->assertContains('hh'                                     , $task[0]->multiselect->values);
-            $this->assertNotContains('reading'                             , $task[0]->tagcloud->values);
-            $this->assertNotContains('writing'                             , $task[0]->tagcloud->values);
-            $this->assertNotContains('surfing'                             , $task[0]->tagcloud->values);
-            $this->assertNotContains('gardening'                           , $task[0]->tagcloud->values);
+            $this->assertEquals(0                                          , $task[0]->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Task');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $task[0]);

@@ -33,7 +33,7 @@
         }
 
         public function setup()
-        {
+        { 
             parent::setup();
             Yii::app()->user->userModel = User::getByUsername('super');
         }
@@ -682,7 +682,7 @@
             $this->setAndGetMultiSelectDropDownAttribute('testHobbies2', false);
         }
 
-        public function setAndGetMultiSelectDropDownAttribute($attributeName, $withDefaultData)
+        protected function setAndGetMultiSelectDropDownAttribute($attributeName, $withDefaultData)
         {
             $this->assertTrue(isset($attributeName) && $attributeName != '');
             $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
@@ -721,6 +721,7 @@
             }
             else
             {
+                $attributeForm->defaultValue      = null;
                 $attributeForm->defaultValueOrder = null;
             }
 
@@ -782,6 +783,11 @@
             {
                 $attributeForm->defaultValueOrder = 1;
             }
+            else
+            {
+                $attributeForm->defaultValue      = null;
+                $attributeForm->defaultValueOrder = null;
+            }
             $attributeForm->customFieldDataData = array('a', 'b', 'c');
             $modelAttributesAdapterClassName    = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter                            = new $modelAttributesAdapterClassName(new Account());
@@ -804,6 +810,15 @@
          */
         public function testSetAndGetTagCloudAttribute()
         {
+            $this->setAndGetTagCloudAttribute('testLanguages1', true);
+            $this->setAndGetTagCloudAttribute('testLanguages2', false);
+        }
+
+        protected function setAndGetTagCloudAttribute($attributeName, $withDefaultData)
+        {
+            $this->assertTrue(isset($attributeName) && $attributeName != '');
+            $this->assertTrue(isset($withDefaultData) && is_bool($withDefaultData));
+
             $values = array(
                 'English',
                 'French',
@@ -818,7 +833,7 @@
             $this->assertTrue($languageFieldData->save());
 
             $attributeForm                   = new TagCloudAttributeForm();
-            $attributeForm->attributeName    = 'testLanguages';
+            $attributeForm->attributeName    = $attributeName;
             $attributeForm->attributeLabels  = array(
                 'de' => 'Test Languages 2 de',
                 'en' => 'Test Languages 2 en',
@@ -828,10 +843,18 @@
             );
             $attributeForm->isAudited             = true;
             $attributeForm->isRequired            = true;
-            $attributeForm->defaultValueOrder     = 1;
             $attributeForm->customFieldDataData   = $values;
             $attributeForm->customFieldDataName   = 'Languages';
             $attributeForm->customFieldDataLabels = $labels;
+
+            if ($withDefaultData)
+            {
+                $attributeForm->defaultValueOrder = 1;
+            }
+            else
+            {
+                $attributeForm->defaultValueOrder = null;
+            }
 
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName(new Account());
@@ -846,9 +869,9 @@
             }
 
             $account = new Account();
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, 'testLanguages');
-            $this->assertEquals('TagCloud',      $attributeForm->getAttributeTypeName());
-            $this->assertEquals('testLanguages', $attributeForm->attributeName);
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, $attributeName);
+            $this->assertEquals('TagCloud',     $attributeForm->getAttributeTypeName());
+            $this->assertEquals($attributeName, $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Languages 2 de',
                 'en' => 'Test Languages 2 en',
@@ -859,11 +882,20 @@
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
             $this->assertEquals(true,                    $attributeForm->isAudited);
             $this->assertEquals(true,                    $attributeForm->isRequired);
-            $this->assertEquals('French',                $attributeForm->defaultValue);
-            $this->assertEquals(1,                       $attributeForm->defaultValueOrder);
             $this->assertEquals('Languages',             $attributeForm->customFieldDataName);
             $this->assertEquals($values,                 $attributeForm->customFieldDataData);
             $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
+
+            if ($withDefaultData)
+            {
+                $this->assertEquals('French',            $attributeForm->defaultValue);
+                $this->assertEquals(1,                   $attributeForm->defaultValueOrder);
+            }
+            else
+            {
+                $this->assertEquals(null,                $attributeForm->defaultValue);
+                $this->assertEquals(null,                $attributeForm->defaultValueOrder);
+            }
 
             //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
             //from the CustomFieldData model.
@@ -901,11 +933,11 @@
          */
         public function testSetAndGetDropDownDependencyAttribute()
         {
-            $this->setAndGetDropDownDependencyAttribute1();
-            $this->setAndGetDropDownDependencyAttribute2();
+            $this->setAndGetDropDownDependencyAttributeWithThreeLevelDependency();
+            $this->setAndGetDropDownDependencyAttributeWithTwoLevelDependency();
         }
 
-        public function setAndGetDropDownDependencyAttribute1()
+        protected function setAndGetDropDownDependencyAttributeWithThreeLevelDependency()
         {
             $countries = array(
                 'aaaa',
@@ -1194,7 +1226,7 @@
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
         }
 
-        public function setAndGetDropDownDependencyAttribute2()
+        public function setAndGetDropDownDependencyAttributeWithTwoLevelDependency()
         {
             $education = array(
                 'aaaa',
@@ -1370,7 +1402,7 @@
         }
 
         /**
-         * @depends testSetAndGetTagCloudAttribute
+         * @depends testSetAndGetDropDownDependencyAttribute
          */
         public function testSetAndGetCalculatedNumberAttribute()
         {
@@ -1829,6 +1861,7 @@
             $account->testCity->value                   = 'bc2';
             $account->testEducation->value              = 'cccc';
             $account->testStream->value                 = 'ccc3';
+
             //Set value to Multiselect list.
             $customHobbyValue1                          = new CustomFieldValue();
             $customHobbyValue1->value                   = 'Reading';
@@ -1838,12 +1871,16 @@
             $account->testHobbies2->values->add($customHobbyValue2);
             //Set value to Tagcloud.
             $customLanguageValue1                       = new CustomFieldValue();
-            $customLanguageValue1->value                = 'French';
-            $account->testLanguages->values->add($customLanguageValue1);
+            $customLanguageValue1->value                = 'English';
+            $account->testLanguages1->values->add($customLanguageValue1);
+            $customLanguageValue2                       = new CustomFieldValue();
+            $customLanguageValue2->value                = 'Spanish';
+            $account->testLanguages2->values->add($customLanguageValue2);
 
             unset($customHobbyValue1);
             unset($customHobbyValue2);
             unset($customLanguageValue1);
+            unset($customLanguageValue2);
 
             $saved = $account->save();
             $this->assertTrue($saved);
@@ -1869,7 +1906,9 @@
             $this->assertContains('Writing',                 $account->testHobbies1->values);
             $this->assertContains('Reading',                 $account->testHobbies1->values);
             $this->assertContains('Singing',                 $account->testHobbies2->values);
-            $this->assertContains('French',                  $account->testLanguages->values);
+            $this->assertContains('English',                 $account->testLanguages1->values);
+            $this->assertContains('French',                  $account->testLanguages1->values);
+            $this->assertContains('Spanish',                 $account->testLanguages2->values);
             $this->assertEquals('bbbb',                      $account->testCountry->value);
             $this->assertEquals('bbb2',                      $account->testState->value);
             $this->assertEquals('bc2',                       $account->testCity->value);
@@ -1907,6 +1946,13 @@
 
             $account->testHobbies1->values->removeAll();
             $account->testHobbies2->values->removeAll();
+            $account->testLanguages1->values->removeAll();
+            $account->testLanguages2->values->removeAll();
+
+            $this->assertEquals(0, $account->testHobbies1->values->count());
+            $this->assertEquals(0, $account->testHobbies2->values->count());
+            $this->assertEquals(0, $account->testLanguages1->values->count());
+            $this->assertEquals(0, $account->testLanguages2->values->count());
 
             //Set multiple value to Multiselect list.
             $customHobbyValue1                          = new CustomFieldValue();
@@ -1922,14 +1968,27 @@
             $customHobbyValue4                          = new CustomFieldValue();
             $customHobbyValue4->value                   = 'Surfing';
             $account->testHobbies2->values->add($customHobbyValue4);
+            $customHobbyValue5                          = new CustomFieldValue();
+            $customHobbyValue5->value                   = 'Reading';
+            $account->testHobbies2->values->add($customHobbyValue5);
 
             //Set multiple value to Tagcloud.
             $customLanguageValue1                       = new CustomFieldValue();
             $customLanguageValue1->value                = 'English';
-            $account->testLanguages->values->add($customLanguageValue1);
+            $account->testLanguages1->values->add($customLanguageValue1);
             $customLanguageValue2                       = new CustomFieldValue();
-            $customLanguageValue2->value                = 'French';
-            $account->testLanguages->values->add($customLanguageValue2);
+            $customLanguageValue2->value                = 'Danish';
+            $account->testLanguages1->values->add($customLanguageValue2);
+            $customLanguageValue3                       = new CustomFieldValue();
+            $customLanguageValue3->value                = 'Spanish';
+            $account->testLanguages1->values->add($customLanguageValue3);
+
+            $customLanguageValue4                       = new CustomFieldValue();
+            $customLanguageValue4->value                = 'French';
+            $account->testLanguages2->values->add($customLanguageValue4);
+            $customLanguageValue5                       = new CustomFieldValue();
+            $customLanguageValue5->value                = 'Spanish';
+            $account->testLanguages2->values->add($customLanguageValue5);
 
             $saved = $account->save();
             $this->assertTrue($saved);
@@ -1952,12 +2011,20 @@
             $this->assertEquals('some test text area stuff2', $account->testTextArea2);
             $this->assertEquals('http://www.zurmo.org',       $account->testUrl2);
             $this->assertEquals('song3',                      $account->playMyFavoriteSong->value);
+            $this->assertEquals(2,                            $account->testHobbies1->values->count());
+            $this->assertEquals(3,                            $account->testHobbies2->values->count());
+            $this->assertEquals(3,                            $account->testLanguages1->values->count());
+            $this->assertEquals(2,                            $account->testLanguages2->values->count());
             $this->assertContains('Writing',                  $account->testHobbies1->values);
             $this->assertContains('Reading',                  $account->testHobbies1->values);
             $this->assertContains('Singing',                  $account->testHobbies2->values);
             $this->assertContains('Surfing',                  $account->testHobbies2->values);
-            $this->assertContains('English',                  $account->testLanguages->values);
-            $this->assertContains('French',                   $account->testLanguages->values);
+            $this->assertContains('Reading',                  $account->testHobbies2->values);
+            $this->assertContains('English',                  $account->testLanguages1->values);
+            $this->assertContains('Danish',                   $account->testLanguages1->values);
+            $this->assertContains('Spanish',                  $account->testLanguages1->values);
+            $this->assertContains('French',                   $account->testLanguages2->values);
+            $this->assertContains('Spanish',                  $account->testLanguages2->values);
             $this->assertEquals('cccc',                       $account->testCountry->value);
             $this->assertEquals('ccc3',                       $account->testState->value);
             $this->assertEquals('ca3',                        $account->testCity->value);

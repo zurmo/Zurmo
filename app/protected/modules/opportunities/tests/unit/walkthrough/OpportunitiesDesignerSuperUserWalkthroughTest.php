@@ -425,7 +425,9 @@
             $accountId                        = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superUserId                      = $super->id;
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
-            $opportunityId                    = self::getModelIdByModelNameAndName('Opportunity', 'myNewOpportunity');
+            $opportunity   = Opportunity::getByName('myNewOpportunity');
+            $opportunityId = $opportunity[0]->id;
+            $this->assertEquals(2, $opportunity[0]->tagcloud->values->count());
 
             //Edit a new Opportunity based on the custom fields.
             $this->setGetArray(array('id' => $opportunityId));
@@ -504,10 +506,7 @@
             $this->assertEquals($opportunity->citypicklist->value        , 'ab1');
             $this->assertContains('gg'                                   , $opportunity->multiselect->values);
             $this->assertContains('hh'                                   , $opportunity->multiselect->values);
-            $this->assertNotContains('reading'                           , $opportunity->tagcloud->values);
-            $this->assertNotContains('writing'                           , $opportunity->tagcloud->values);
-            $this->assertNotContains('surfing'                           , $opportunity->tagcloud->values);
-            $this->assertNotContains('gardening'                         , $opportunity->tagcloud->values);
+            $this->assertEquals(0                                        , $opportunity->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calculatednumber', 'Opportunity');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $opportunity);
