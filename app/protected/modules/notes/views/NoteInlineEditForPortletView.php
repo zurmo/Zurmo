@@ -121,35 +121,6 @@
                                                         array( 'id' => $this->params['relationModel']->id));
         }
 
-        protected function getDataProvider($uniquePageId, $form)
-        {
-            assert('is_string($uniquePageId)');
-            assert('$form instanceOf LatestActivitiesConfigurationForm');
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('subListPageSize');
-            $filteredMashableModelClassNames = LatestActivitiesUtil::resolveMashableModelClassNamesByFilteredBy(
-                                                    array_keys($form->mashableModelClassNamesAndDisplayLabels),
-                                                    $form->filteredByModelName);
-            $relationItemId = (int)$this->params['relationModel']->getClassId('Item');
-            if ($form->rollup)
-            {
-                $relationItemsIds = ModelRollUpUtil::getItemIdsByModelAndUser($this->params['relationModel'],
-                                                                              Yii::app()->user->userModel);
-            }
-            else
-            {
-                $relationItemsIds = array($relationItemId);
-            }
-            $modelClassNamesAndSearchAttributeData = // Not Coding Standard
-                LatestActivitiesUtil::
-                    getSearchAttributesDataByModelClassNamesAndRelatedItemIds($filteredMashableModelClassNames,
-                                                                              $relationItemsIds);
-            $modelClassNamesAndSortAttributes =      // Not Coding Standard
-                LatestActivitiesUtil::getSortAttributesByMashableModelClassNames($filteredMashableModelClassNames);
-            return new RedBeanModelsDataProvider($uniquePageId, $modelClassNamesAndSortAttributes,
-                                                          true, $modelClassNamesAndSearchAttributeData,
-                                                          array('pagination' => array('pageSize' => $pageSize)));
-        }
-
         public static function canUserConfigure()
         {
             return false;
