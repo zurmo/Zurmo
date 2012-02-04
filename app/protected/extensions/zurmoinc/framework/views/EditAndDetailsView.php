@@ -63,7 +63,8 @@
             {
                 return parent::renderContent();
             }
-            $content = '<div class="wide form">';
+            $content  = $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -88,6 +89,17 @@
             $content .= '</div>';
             return $content;
         }
+
+        protected function renderTitleContent()
+        {
+            if($this->model->id > 0)
+            {
+                return '<h3>' . strval($this->model) . '</h3>';
+            }
+            return '<h3>' . $this->getNewModelTitleLabel() . '</h3>';
+        }
+
+        abstract protected function getNewModelTitleLabel();
 
         protected function renderRightSideContent($form)
         {

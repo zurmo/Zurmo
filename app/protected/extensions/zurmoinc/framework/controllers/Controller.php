@@ -130,12 +130,12 @@
                 'relationModel'    => $model,
                 'redirectUrl'      => $redirectUrl,
             );
-            $gridView = new GridView(2, 1);
-            $gridView->setView(new TitleBarView (
-                                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'), strval($model)), 0, 0);
+            $gridView = new GridView(1, 1);
+            //$gridView->setView(new TitleBarView (
+            //                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'), strval($model)), 0, 0);
             $gridView->setView(new $viewClassName(  $this->getId(),
                                                     $this->getModule()->getId(),
-                                                    $params), 1, 0);
+                                                    $params), 0, 0);
             return $gridView;
         }
 
@@ -152,6 +152,14 @@
                 $this->getModule()->getPluralCamelCasedName(),
                 $renderType
             );
+        }
+
+        protected function makeEditAndDetailsView($model, $renderType)
+        {
+            assert('$model != null');
+            assert('$renderType == "Edit" || $renderType == "Details"');
+            $editViewClassName = get_class($model) . 'EditAndDetailsView';
+            return new $editViewClassName($renderType, $this->getId(), $this->getModule()->getId(), $model);
         }
 
         protected function makeTitleBarAndEditView($model, $titleBarAndEditViewClassName)

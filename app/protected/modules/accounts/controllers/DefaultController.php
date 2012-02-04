@@ -82,10 +82,10 @@
 
         public function actionCreate()
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $editAndDetailsView = $this->makeEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost(new Account()), 'Edit');
             $view = new AccountsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                         makeStandardViewForCurrentUser($this, $editAndDetailsView));
             echo $view->render();
         }
 
@@ -95,7 +95,7 @@
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($account);
             $view = new AccountsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndEditAndDetailsView(
+                                             $this->makeEditAndDetailsView(
                                                  $this->attemptToSaveModelFromPost($account, $redirectUrl), 'Edit')));
             echo $view->render();
         }
