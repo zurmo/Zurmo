@@ -131,10 +131,6 @@
         protected function renderConfigurationFormLayout($form)
         {
             assert('$form instanceof ZurmoActiveForm');
-
-            $element                   = new LatestActivitiesViewTypeStaticDropDownElement($this->configurationForm,                                                                           'viewType', $form);
-            $element->editableTemplate = '{content}';
-            $viewTypeElementContent    = $element->render();
             $element                   = new LatestActivitiesRollUpCheckBoxElement($this->configurationForm, 'rollup',
                                                                                  $form);
             $element->editableTemplate = '{content}{label}';
@@ -150,7 +146,6 @@
             $content .= $ownedByFilterContent;
             $content .= '<div class="latest-activity-rollup">' . $rollupElementContent . '</div>';
             $content .= '</div>' . "\n";
-            $content .= '<div class="latest-activity-view-type">' . $viewTypeElementContent . '</div>';
             return $content;
         }
 
@@ -168,11 +163,6 @@
             Yii::app()->clientScript->registerScript($this->uniquePageId, "
             $('#LatestActivitiesConfigurationForm_rollup').button();
             $('#LatestActivitiesConfigurationForm_ownedByFilter').buttonset();
-            $('#LatestActivitiesConfigurationForm_viewType_value').change(function()
-                {
-                    " . $ajaxSubmitScript . "
-                }
-            );
             $('#LatestActivitiesConfigurationForm_rollup').click(function()
                 {
                     " . $ajaxSubmitScript . "

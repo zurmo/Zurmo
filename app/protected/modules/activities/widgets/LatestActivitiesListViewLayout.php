@@ -58,6 +58,8 @@
                     $content .= get_class($model);
                     $content .= '</td>';
                     $content .= '<td>';
+                    $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                                    $model->{$orderByAttributeName}, 'long', null) . '<br/>';
                     $modelDisplayString = strval($model);
                     if (strlen($modelDisplayString) > 200)
                     {
@@ -68,21 +70,17 @@
                     $moduleId        = $moduleClassName::getDirectoryName();
                     $element  = new DetailsLinkActionElement('default', $moduleId, $model->id, $params);
                     $content .= $element->render() . '<br/>';
-                    $content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
+                    //$content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
                     $extraContent = $mashableActivityRules->getLatestActivityExtraDisplayStringByModel($model);
                     if ($extraContent)
                     {
                         $content .= '<br/>' . $extraContent;
                     }
                     $content .= '</td>';
-                    $content .= '<td nowrap="nowrap">';
-                    $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                    $model->{$orderByAttributeName}, 'short', null);
-                    $content .= '</td>';
                     $content .= '</tr>';
                 }
                 $content .= '<tr>';
-                $content .= '<td colspan="3">';
+                $content .= '<td colspan="2">';
                 $content .= $this->renderPaginationContent();
                 $content .= '</td>';
                 $content .= '</tr>';
