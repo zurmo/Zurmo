@@ -67,7 +67,7 @@
                 }
                 else
                 {
-                    $this->message = Yii::t('Default', 'Database log_bin=on and log_bin_trust_function_creators=on therefore satisfies this requirement.');
+                    $this->message = Yii::t('Default', 'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement');
                     $passed = true;
                 }
             }

@@ -78,7 +78,7 @@
             => 'Base de datos no está en modo estricto.',
         'Database log_bin=off and therefore satisfies this requirement.'
             => 'En la base de datos, el valor del parámetro log_bin=off y cumple con las condiciones necesarias.',
-        'Database log_bin=on and log_bin_trust_function_creators=on therefore satisfies this requirement'
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement'
             => 'En la base de datos, los valores de parámetros log_bin=on y log_bin_trust_function_creators=on y cumplen con las condiciones necesarias.',
         'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.'
             => 'En la base de datos, los valores de parámetros log_bin=on. Debe cambiar la configuración de log_bin=off o log_bin_trust_function_creators=on.',
