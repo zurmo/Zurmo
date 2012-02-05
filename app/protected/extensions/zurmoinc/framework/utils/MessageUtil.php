@@ -39,7 +39,7 @@
         public static function getMessages($language, $moduleName = null, $category = null)
         {
             assert('is_string($language)');
-            assert('strlen($language) == 2');
+            assert('strlen($language) == 2 || strlen($language) == 5');
             if ($moduleName === null)
             {
                 $directories = self::getMessageDirectoriesForAllModules();
