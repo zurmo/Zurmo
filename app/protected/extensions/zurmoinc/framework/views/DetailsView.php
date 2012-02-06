@@ -56,12 +56,14 @@
          */
         protected function renderContent()
         {
-            $content  = $this->renderTitleContent();
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
             $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementBar(false);
             $content .= '</div></div>';
             $content .= $this->renderFormLayout();
-            $content .= $this->renderAfterFormLayoutForDetailsContent();
+            $content .= '<p>'.$this->renderAfterFormLayoutForDetailsContent().'</p>';
+			$content .= '</div>';
             return $content;
         }
 

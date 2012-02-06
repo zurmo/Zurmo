@@ -63,7 +63,8 @@
             {
                 return parent::renderContent();
             }
-            $content  = $this->renderTitleContent();
+			$content  = '<div>';
+            $content .= $this->renderTitleContent();
             $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
@@ -86,7 +87,7 @@
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
 
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
@@ -94,9 +95,9 @@
         {
             if($this->model->id > 0)
             {
-                return '<h3>' . strval($this->model) . '</h3>';
+                return '<h1>' . strval($this->model) . '</h1>';
             }
-            return '<h3>' . $this->getNewModelTitleLabel() . '</h3>';
+            return '<h1>' . $this->getNewModelTitleLabel() . '</h1>';
         }
 
         abstract protected function getNewModelTitleLabel();
