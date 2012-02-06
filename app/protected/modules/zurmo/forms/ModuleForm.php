@@ -30,8 +30,8 @@
      */
     abstract class ModuleForm extends ConfigurableMetadataModel
     {
-        public $singularModuleLabels = array();
-        public $pluralModuleLabels   = array();
+        public $singularModuleLabels   = array();
+        public $pluralModuleLabels     = array();
 
         public function __construct()
         {

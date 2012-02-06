@@ -28,10 +28,10 @@
     {
         public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model)
         {
-            $this->controllerId = $controllerId;
-            $this->moduleId     = $moduleId;
-            $this->model        = $model;
-            $this->modelId      = null;
+            $this->controllerId          = $controllerId;
+            $this->moduleId              = $moduleId;
+            $this->model                 = $model;
+            $this->modelId               = null;
         }
 
         public function isUniqueToAPage()

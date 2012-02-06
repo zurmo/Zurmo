@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,23 +24,39 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class LeadsModuleForm extends GlobalSearchEnabledModuleForm
+    /**
+     * Given an attributesCollection, filter the collection to only attributes that are acceptable for a
+     * global search.  This is so the user in the user interface of the module settings, can pick which
+     * fields to add or remove from global search.
+     */
+    class ModelAttributeCollectionToGlobalSearchAttributesAdapter
     {
-        public $convertToAccountSetting;
+        protected $attributes;
 
-        public function rules()
+        public function __construct(array $attributes)
         {
-            return array_merge(parent::rules(), array(
-                array('convertToAccountSetting', 'required'),
-            ));
+            $this->attributes = $attributes;
         }
 
-        public function attributeLabels()
+        /**
+         * Based on the $attributes, return value/label pairings only for attributes that are acceptable to
+         * be picked as a global search attribute.
+         */
+        public function getValuesAndLabelsData()
         {
-            return array_merge(parent::attributeLabels(), array(
-                'convertToAccountSetting' => Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
-                                                LabelUtil::getTranslationParamsForAllModules()),
-            ));
+            $valuesAndLabels = array();
+            foreach($this->attributes as $attributeName => $data)
+            {
+                if(($data['elementType'] == 'Text' ||
+                   $data['elementType'] == 'Integer' ||
+                   $data['elementType'] == 'Decimal' ||
+                   $data['elementType'] == 'TextArea') && $attributeName != 'id')
+                {
+                    $valuesAndLabels[$attributeName] = $data['attributeLabel'];
+                }
+            }
+            asort($valuesAndLabels);
+            return $valuesAndLabels;
         }
     }
 ?>

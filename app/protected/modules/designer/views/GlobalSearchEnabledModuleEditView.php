@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,23 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class LeadsModuleForm extends GlobalSearchEnabledModuleForm
+    abstract class GlobalSearchEnabledModuleEditView extends ModuleEditView
     {
-        public $convertToAccountSetting;
-
-        public function rules()
+        public static function getDefaultMetadata()
         {
-            return array_merge(parent::rules(), array(
-                array('convertToAccountSetting', 'required'),
-            ));
-        }
-
-        public function attributeLabels()
-        {
-            return array_merge(parent::attributeLabels(), array(
-                'convertToAccountSetting' => Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
-                                                LabelUtil::getTranslationParamsForAllModules()),
-            ));
+            $metadata = parent::getDefaultMetadata();
+            $metadata['global']['panels'][0]['rows'][] = array('cells' =>
+                                                                array(
+                                                                    array(
+                                                                        'elements' => array(
+                                                                            array('attributeName' =>
+                                                                                    'globalSearchAttributeNames',
+                                                                                  'type' =>
+                                                                                      'ModuleGlobalSearchAttributes'),
+                                                                        ),
+                                                                    ),
+                                                                )
+                                                            );
+            return $metadata;
         }
     }
 ?>

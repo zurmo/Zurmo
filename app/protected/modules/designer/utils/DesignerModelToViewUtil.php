@@ -41,6 +41,16 @@
             return new ModelAttributesAdapter(new $modelClassName());
         }
 
+        public static function getModelAttributesAdapterByModelForViewClassName($modelForViewClassName, $modelClassName)
+        {
+            assert('is_subclass_of($modelForViewClassName, "ModelForm") || is_subclass_of($modelForViewClassName, "RedBeanModel")');
+            if (is_subclass_of($modelForViewClassName, 'ModelForm'))
+            {
+                return new ModelFormAttributesAdapter(new $modelForViewClassName(new $modelClassName()));
+            }
+            return new ModelAttributesAdapter(new $modelClassName());
+        }
+
         protected static function getModelForViewClassName($viewClassName, $modelClassName)
         {
             $formClassName = $viewClassName::getModelForMetadataClassName();

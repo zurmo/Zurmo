@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,23 +24,44 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class LeadsModuleForm extends GlobalSearchEnabledModuleForm
+    /**
+     * Element for displaying the modules global search attributes.  This allows a user to select or unselect
+     * which attributes are used as part of the global search for this module.
+     */
+    class ModuleGlobalSearchAttributesElement extends Element
     {
-        public $convertToAccountSetting;
-
-        public function rules()
+        protected function renderControlEditable()
         {
-            return array_merge(parent::rules(), array(
-                array('convertToAccountSetting', 'required'),
-            ));
+            assert('$this->model instanceof GlobalSearchEnabledModuleForm');
+            assert('$this->attribute == "globalSearchAttributeNames"');
+            $content = null;
+            $content .= $this->form->checkBoxList(
+                $this->model,
+                $this->attribute,
+                $this->getDropDownArray(),
+                $this->getEditableHtmlOptions()
+            );
+            return $content;
         }
 
-        public function attributeLabels()
+        protected function getEditableHtmlOptions()
         {
-            return array_merge(parent::attributeLabels(), array(
-                'convertToAccountSetting' => Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
-                                                LabelUtil::getTranslationParamsForAllModules()),
-            ));
+            return array('template' => '<div class="multi-select-checkbox-input">{input}{label}</div>');
+        }
+
+        protected function renderLabel()
+        {
+            return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
+        }
+
+        protected function renderControlNonEditable()
+        {
+            throw new NotSupportedException();
+        }
+
+        protected function getDropDownArray()
+        {
+            return $this->model->availableGlobalSearchAttributeNames;
         }
     }
 ?>
