@@ -131,7 +131,7 @@
                                     $checked = true;
                                 }
                                 $element  = new $elementclassname($this->model, $elementInformation['attributeName'], $form, $params);
-                                $content .= $this->renderActiveAttributesCheckBox($element->getEditableNameIds(), $elementInformation['attributeName'], $checked);
+                                $content .= $this->renderActiveAttributesCheckBox($element->getEditableNameIds(), $elementInformation, $checked);
                                 $content .= $element->render();
                             }
                         }
@@ -144,15 +144,27 @@
             return $content;
         }
 
-        protected function renderActiveAttributesCheckBox($elementIds, $attributeName, $checked)
+        protected function renderActiveAttributesCheckBox($elementIds, $elementInformation, $checked)
         {
-            $checkBoxHtmlOptions = array();
-            $checkBoxHtmlOptions['id'] = "MassEdit_" . $attributeName;
-            $enableInputsScript = "";
-            $disableInputsScript = "";
+            $checkBoxHtmlOptions         = array();
+            $checkBoxHtmlOptions['id']   = "MassEdit_" . $elementInformation['attributeName'];
+            $enableInputsScript          = "";
+            $disableInputsScript         = "";
+            $disableTagCloudInputsScript = "";
             foreach ($elementIds as $id)
             {
-                $enableInputsScript  .= "$('#" . $id . "').removeAttr('disabled'); \n";
+                if ($elementInformation['type'] == 'TagCloud')
+                {
+                    $enableInputsScript  .= "$('#" . $id . "').removeAttr('disabled'); \n";
+                    $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
+                    $id = $id.'_tag';
+                    if (!$checked)
+                    {
+                        $disableTagCloudInputsScript = "$('#" . $id . "').attr('disabled', 'disabled');";
+                    }
+                }
+
+                $enableInputsScript .= "$('#" . $id . "').removeAttr('disabled'); \n";
                 $enableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
                 {
                     if ($('#" . $id . "').attr('href') != undefined)
@@ -183,9 +195,10 @@ $('#{$checkBoxHtmlOptions['id']}').click(function()
         }
     }
 );
+$disableTagCloudInputsScript
 END;
             Yii::app()->clientScript->registerScript($checkBoxHtmlOptions['id'], $massEditScript);
-            return "<th>" . CHtml::checkBox("MassEdit[" . $attributeName . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
+            return "<th>" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
         }
 
         public static function getDesignerRulesType()

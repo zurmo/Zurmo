@@ -48,6 +48,7 @@
                                                  $sanitizedPostData, 'owner');
             $sanitizedPostDataWithoutOwner     = PostUtil::
                                                  removeElementFromPostDataForSavingModel($sanitizedPostData, 'owner');
+
             $model->setAttributes($sanitizedPostDataWithoutOwner);
             if ($model->validate())
             {

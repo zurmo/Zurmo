@@ -38,6 +38,20 @@
                 {
                     unset($_POST[$postVariableName][$attributeName]);
                 }
+                else
+                {
+                    if (isset($values['values']) && is_string($values['values']))
+                    {
+                        if ($_POST[$postVariableName][$attributeName]['values'] == '')
+                        {
+                            $_POST[$postVariableName][$attributeName]['values'] = array();
+                        }
+                        else
+                        {
+                            $_POST[$postVariableName][$attributeName]['values'] = explode(',', $_POST[$postVariableName][$attributeName]['values']);
+                        }
+                    }
+                }
             }
         }
 
@@ -72,7 +86,7 @@
                     elseif ($model->isAttribute($attributeName))
                     {
                         $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
-                        if($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
+                        if ($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
                         {
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
                                 $value['firstDate'] != null)
@@ -82,9 +96,9 @@
                                                                          $value['firstDate']);
                             }
                         }
-                        elseif(isset($value['values']) && is_string($value['values']) && $designerType == 'TagCloud')
+                        elseif (isset($value['values']) && is_string($value['values']) && $designerType == 'TagCloud')
                         {
-                            if($postData[$attributeName]['values'] == '')
+                            if ($postData[$attributeName]['values'] == '')
                             {
                                 $postData[$attributeName]['values'] = array();
                             }
