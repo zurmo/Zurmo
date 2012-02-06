@@ -644,7 +644,9 @@ table.items tr:hover{
 }
 
 /*forms*/
-.form input[type="text"], .form input[type="password"]{
+.form input[type="text"],
+.form input[type="password"],
+.form textarea{
 	border:1px solid #ccc;
 	.radius(3px);
 	font-size:12px;
@@ -657,6 +659,10 @@ table.items tr:hover{
 		.b-shadow(0 0 1px 1px @themeColor);
 	}
 }
+
+
+
+
 .AppContent label{
 	font-size:12px !important;
 	color:#666;
@@ -1103,6 +1109,62 @@ table.items tr:hover{
 		}
 	}
 }
+
+#NoteInlineEditView{
+	form{
+		background:none;
+		border:none;
+		.b-shadow(none);
+		
+		textarea{
+			
+		}
+		
+		table{
+			border-bottom:none;
+		}
+		.view-toolbar-container{
+			
+		}
+		input[type="submit"]{
+			float:right;
+			cursor:pointer;
+			padding:0 15px;
+			line-height:23px;
+			margin:0 10px 0 0;
+			font-size:12px;
+			font-weight:bold;
+			.radius( 4px );
+			.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+			border-top:1px solid #e7e7e7;
+			border-left: 1px solid #d7d7d7;
+			border-right:1px solid #d7d7d7;
+			border-bottom:1px solid #bababa;
+			color:#333333;
+			background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+			display:inline-block;
+			.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+			&:hover{
+				color:@themeColor2 !important;
+			}
+			&:active{
+				color:#656565;
+				box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+			}
+		}
+	}
+}
+.hasDatepicker{
+	width:90% !important;
+	margin-right:3% !important; 
+}
+
+
+
+
+
+
+
 
 /*Auto Complete*/
 .ui-autocomplete{
