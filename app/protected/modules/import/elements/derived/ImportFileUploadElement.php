@@ -91,10 +91,10 @@
 
             $delimiterElement                          = new TextElement($this->model, 'rowColumnDelimiter',
                                                          $this->form, $params);
-            $delimiterElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
+            $delimiterElement->editableTemplate        = '<div>{label} {content}</div>';
             $enclosureElement                          = new TextElement($this->model, 'rowColumnEnclosure',
                                                          $this->form, $params);
-            $enclosureElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
+            $enclosureElement->editableTemplate        = '<div>{label} {content}</div>';
             $content  = $delimiterElement->render();
             $content .= $enclosureElement->render();
             $content .= '<div style="clear:both;"></div>' . "\n";

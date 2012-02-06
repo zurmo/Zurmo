@@ -138,8 +138,7 @@
             $element                   = new LatestActivitiesOwnedByFilterRadioElement($this->configurationForm,
                                                                                       'ownedByFilter',
                                                                                       $form);
-            $element->editableTemplate =  '<div style="float:left;"' .
-                                          ' id="LatestActivitiesConfigurationForm_ownedByFilter">{content}</div>';
+            $element->editableTemplate =  '<div id="LatestActivitiesConfigurationForm_ownedByFilter">{content}</div>';
             $ownedByFilterContent      = $element->render();
 
             $content  = '<div class="horizontal-line latest-activity-toolbar">';
