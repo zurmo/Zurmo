@@ -55,11 +55,11 @@
                     $orderByAttributeName = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
                     $content .= '<tr>';
                     $content .= '<td>';
-                    $content .= get_class($model);
+                    $content .= '<span class="'.get_class($model).'">'.get_class($model).'</span>';
                     $content .= '</td>';
                     $content .= '<td>';
-                    $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                    $model->{$orderByAttributeName}, 'long', null) . '<br/>';
+                    $content .= '<strong>'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                                    $model->{$orderByAttributeName}, 'long', null) . '</strong><br/>';
                     $modelDisplayString = strval($model);
                     if (strlen($modelDisplayString) > 200)
                     {

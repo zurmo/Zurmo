@@ -1159,7 +1159,63 @@ table.items tr:hover{
 	margin-right:3% !important; 
 }
 
-
+/*Latest Activity*/
+.LatestActivitiesView{
+	form{
+		position: relative;
+		.clearfix();
+	}
+	.latest-activity-toolbar{
+		position: absolute;
+		top:-40px;
+		right:10px;
+		width:65%;
+		> div{
+			float:left;
+		}
+		#LatestActivitiesConfigurationForm_ownedByFilter{
+			float:left;
+			label{
+				margin-right:6px;
+			}
+		}
+		.latest-activity-rollup{
+			float:right;
+		}
+		label{
+			padding-top:0;
+			border:none;
+			background:none;
+			font-size:11px !important;
+			padding:4px;
+		}
+		.ui-state-active{
+			background:@themeColor;
+			color:#FFF;
+			.radius(3px) !important;
+			border:none;
+		}
+		.ui-button-text{
+			padding:0;
+			margin:0;
+		}
+	}
+	td, th{
+		padding:10px 0;
+		border-bottom: 1px solid #DFDFDF;
+	}
+	tr{
+		&:last-child{
+			td, th{
+				border-bottom:none;
+			}
+		}
+	}
+	tr td:first-child{
+		padding-left:15px;
+		padding-right:15px;
+	}
+}
 
 
 
