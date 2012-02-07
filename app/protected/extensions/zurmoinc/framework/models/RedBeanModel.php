@@ -372,7 +372,10 @@
                     {
                         $tableName = self::getTableName($modelClassName);
                         $lastBean = R::getBean($lastBean, $tableName);
-                        assert('$lastBean !== null');
+                        if($lastBean === null)
+                        {
+                            new MissingBeanException();
+                        }
                         assert('$lastBean->id > 0');
                     }
                     $this->modelClassNameToBean[$modelClassName] = $lastBean;
@@ -2646,7 +2649,13 @@
             foreach ($beans as $bean)
             {
                 assert('$bean instanceof RedBean_OODBBean');
-                $models[] = self::makeModel($bean, $modelClassName);
+                try
+                {
+                    $models[] = self::makeModel($bean, $modelClassName);
+                }
+                catch(MissingBeanException $e)
+                {
+                }
             }
             return $models;
         }
