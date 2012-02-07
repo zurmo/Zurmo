@@ -747,7 +747,7 @@
         }
 
         /**
-         * @depends testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterEditingTheAccountUser
          */
         public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleWithMultiSelectValueSetToNull()
         {
@@ -894,6 +894,119 @@
         /**
          * @depends testCreateSecondAccountForUserAfterTheCustomFieldsArePlacedForAccountsModule
          */
+        public function testMultiValueCustomFieldContentAfterCreateAndEditPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Create a new account based on the custom fields.
+            $this->resetGetArray();
+            $this->setPostArray(array('Account' => array(
+                            'name'                              => 'myThirdAccount',
+                            'officePhone'                       => '259-784-2169',
+                            'industry'                          => array('value' => 'Automotive'),
+                            'officeFax'                         => '299-845-7863',
+                            'employees'                         => '930',
+                            'annualRevenue'                     => '474000000',
+                            'type'                              => array('value' => 'Prospect'),
+                            'website'                           => 'http://www.Unnamed.com',
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewAccount.com',
+                                                                          'optOut' => '1',
+                                                                          'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => '',
+                                                                          'optOut' => '0',
+                                                                          'isInvalid' => '0'),
+                            'billingAddress'                    => array('street1' => '6466 South Madison Creek',
+                                                                          'street2' => '',
+                                                                          'city' => 'Chicago',
+                                                                          'state' => 'IL',
+                                                                          'postalCode' => '60652',
+                                                                          'country' => 'USA'),
+                            'shippingAddress'                   => array('street1' => '27054 West Michigan Lane',
+                                                                          'street2' => '',
+                                                                          'city' => 'Austin',
+                                                                          'state' => 'TX',
+                                                                          'postalCode' => '78759',
+                                                                          'country' => 'USA'),
+                            'description'                       => 'This is a Description',
+                            'explicitReadWriteModelPermissions' => array('type' => null),
+                            'checkbox'                          => '1',
+                            'currency'                          => array('value'    => 45,
+                                                                         'currency' => array('id' =>
+                                                                         $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '123',
+                            'picklist'                          => array('value'  => 'a'),
+                            'multiselect'                       => array('values' => array('gg', 'ff')),
+                            'tagcloud'                          => array('values' => array('reading', 'writing')),
+                            'countrypicklist'                   => array('value'  => 'bbbb'),
+                            'statepicklist'                     => array('value'  => 'bbb1'),
+                            'citypicklist'                      => array('value'  => 'bb1'),
+                            'integer'                           => '12',
+                            'phone'                             => '259-784-2169',
+                            'radio'                             => array('value' => 'd'),
+                            'text'                              => 'This is a test Text',
+                            'textarea'                          => 'This is a test TextArea',
+                            'url'                               => 'http://wwww.abc.com')));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
+
+            //Check the details if they are saved properly for the custom fields.
+            $account = Account::getByName('myThirdAccount');
+            //Retrieve the permission for the account.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name               , 'myThirdAccount');
+            $this->assertEquals(2                               , $account[0]->multiselect->values->count());
+            $this->assertEquals(2                               , $account[0]->tagcloud->values->count());
+            $this->assertContains('gg'                          , $account[0]->multiselect->values);
+            $this->assertContains('ff'                          , $account[0]->multiselect->values);
+            $this->assertContains('reading'                     , $account[0]->tagcloud->values);
+            $this->assertContains('writing'                     , $account[0]->tagcloud->values);
+            unset($account);
+
+            $account        = Account::getByName('myThirdAccount');
+            $accountId      = $account[0]->id;
+            //Edit and save the account.
+            $this->setGetArray(array('id' => $accountId));
+            $this->setPostArray(array('Account' => array(
+                            'name'                              => 'myThirdAccount',
+                            'multiselect'                       => array('values' =>  array('ff')),
+                            'tagcloud'                          => array('values' =>  array('writing')),
+                            ),
+                            'save' => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
+
+            //Check the details if they are saved properly for the custom fields.
+            $account = Account::getByName('myThirdAccount');
+            //Retrieve the permission for the account.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals(1                               , $account[0]->multiselect->values->count());
+            $this->assertContains('ff'                          , $account[0]->multiselect->values);
+            $this->assertNotContains('gg'                       , $account[0]->multiselect->values);
+            $this->assertNotContains('hh'                       , $account[0]->multiselect->values);
+            $this->assertNotContains('rr'                       , $account[0]->multiselect->values);
+
+            $this->assertEquals(1                               , $account[0]->tagcloud->values->count());
+            $this->assertContains('writing'                     , $account[0]->tagcloud->values);
+        }
+
+        /**
+         * @depends testMultiValueCustomFieldContentAfterCreateAndEditPlacedForAccountsModule
+         */
         public function testMassUpdateForMultiSelectFieldPlacedForAccountsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -914,8 +1027,7 @@
             
             $this->resetPostArray();
             $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
-            $this->assertTrue(strpos($content, "Mass Update") > 0);
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
 
             $this->setPostArray(array('save'     => 'Save',
                                       'MassEdit' => array('multiselect' => '1'),
@@ -960,8 +1072,7 @@
 
             $this->resetPostArray();
             $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
-            $this->assertTrue(strpos($content, "Mass Update") > 0);
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
 
             $this->setPostArray(array('save'     => 'Save',
                                       'MassEdit' => array('tagcloud' => '1'),

@@ -109,6 +109,7 @@
                         }
                     }
                 }
+
                 foreach($values as $value)
                 {
                     $customFieldValue = new CustomFieldValue();

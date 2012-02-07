@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownSearchFormTest extends BaseTest
+    class MultiSelectDropDownFormTest extends BaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -38,14 +38,8 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
-        /**
-         * Test that the multiple select attribute can query properly for search.
-         */
-        public function testSetGetAndSearchForMultiSelectDropDownAttribute()
+        public function testSetAndGetMultiSelectDropDownAttribute()
         {
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-
             //Create a test multiple values custom field.
             $values = array(
                 'Reading',
@@ -107,6 +101,16 @@
             $this->assertEquals('Hobbies',               $attributeForm->customFieldDataName);
             $this->assertEquals($values,                 $attributeForm->customFieldDataData);
             $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
+        }
+
+         /**
+         * @depends testSetAndGetMultiSelectDropDownAttribute
+         */
+        public function testSearchForMultiSelectDropDownAttributePlacedForAccountsModule()
+        {
+            //Test that the multiple select attribute can query properly for search.
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
 
             //Create an account to test searching multiple fields on for search.
             $account                  = new Account();
@@ -164,6 +168,51 @@
             $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data                = $dataProvider->getData();
             $this->assertEquals(2, count($data));
+        }
+
+        /**
+         * @depends testSearchForMultiSelectDropDownAttributePlacedForAccountsModule
+         */
+        public function testMultiSelectDropDownAttributeValuesAfterCreateAndEditPlacedForAccountsModule()
+        {
+            //Test that the multiple select attribute can query properly for search.
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            //Create an account to test searching multiple fields on for search.
+            $account                  = new Account();
+            $this->assertEquals(1, $account->testHobbies->values->count());
+            $account->testHobbies->values->removeAll();
+            $this->assertEquals(0, $account->testHobbies->values->count());
+            $account->name            = 'MyTestAccount';
+            $account->owner           = Yii::app()->user->userModel;
+            $customFieldValue1        = new CustomFieldValue();
+            $customFieldValue1->value = 'Reading';
+            $account->testHobbies->values->add($customFieldValue1);
+            $customFieldValue2        = new CustomFieldValue();
+            $customFieldValue2->value = 'Writing';
+            $account->testHobbies->values->add($customFieldValue2);
+            $this->assertTrue($account->save());
+            $accountId                = $account->id;
+            $account->forget();
+            unset($account);
+
+            $account                  = Account::getById($accountId);
+            $this->assertEquals(2, $account->testHobbies->values->count());
+            $this->assertContains('Reading',                  $account->testHobbies->values);
+            $this->assertContains('Writing',                  $account->testHobbies->values);
+            $account->forget();
+            unset($account);
+
+            $account = Account::getById($accountId);
+            $customFieldValue3        = new CustomFieldValue();
+            $customFieldValue3->value = 'Writing';
+            $account->testHobbies->values->add($customFieldValue3);
+            $this->assertEquals(2, $account->testHobbies->values->count());
+            $this->assertContains('Reading',                  $account->testHobbies->values);
+            $this->assertContains('Writing',                  $account->testHobbies->values);
+            $this->assertNotContains('Surfing',               $account->testHobbies->values);
+            $this->assertNotContains('Gardening',             $account->testHobbies->values);
         }
     }
 ?>
