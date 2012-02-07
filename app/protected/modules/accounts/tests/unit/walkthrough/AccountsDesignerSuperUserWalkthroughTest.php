@@ -1024,7 +1024,7 @@
             $this->assertContains('gg'           , $secondAccount[0]->multiselect->values);
             $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
             unset($secondAccount);
-            
+
             $this->resetPostArray();
             $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');

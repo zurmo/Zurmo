@@ -208,7 +208,7 @@
             $customFieldValue3        = new CustomFieldValue();
             $customFieldValue3->value = 'Writing';
             $account->testHobbies->values->add($customFieldValue3);
-            $this->assertEquals(2, $account->testHobbies->values->count());
+            $this->assertEquals(3, $account->testHobbies->values->count());
             $this->assertContains('Reading',                  $account->testHobbies->values);
             $this->assertContains('Writing',                  $account->testHobbies->values);
             $this->assertNotContains('Surfing',               $account->testHobbies->values);

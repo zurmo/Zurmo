@@ -88,6 +88,7 @@
 
         public function setValues($values)
         {
+            $customFieldValueObject = array();
             if(count($values) == 0)
             {
                 $this->values->removeAll();
@@ -100,13 +101,18 @@
                     {
                         if(!in_array($customFieldValue->value, $values))
                         {
-                            $this->values->remove($customFieldValue);
+                            $customFieldValueObject[] = $customFieldValue;
                         }
                         else
                         {
                             $key = array_search($customFieldValue->value, $values);
                             unset($values[$key]);
                         }
+                    }
+
+                    foreach($customFieldValueObject as $customFieldValue)
+                    {
+                        $this->values->remove($customFieldValue);
                     }
                 }
 
