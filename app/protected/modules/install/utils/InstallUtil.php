@@ -754,6 +754,14 @@
             $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
+
+            // Send notification to super admin to delete test.php file in case if this
+            // installation is used in production mode.
+            $message                    = new NotificationMessage();
+            $message->textContent       = Yii::t('Default', 'If this website is in production mode, please remove app/test.php file. ');
+            $rules                      = new RemoveApiTestEntryScriptFileNotificationRules();
+            NotificationsUtil::submit($message, $rules);
+
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 
