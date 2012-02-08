@@ -518,7 +518,7 @@
             $user = UserTestHelper::createBasicUser('JosephSmith');
 
             // Provide data with wrong type.
-            $data['language']         = "AAAA";
+            $data['language']         = "AAAAAAA";
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
