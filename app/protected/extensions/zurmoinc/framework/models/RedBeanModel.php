@@ -372,7 +372,10 @@
                     {
                         $tableName = self::getTableName($modelClassName);
                         $lastBean = R::getBean($lastBean, $tableName);
-                        assert('$lastBean !== null');
+                        if($lastBean === null)
+                        {
+                            throw new MissingBeanException();
+                        }
                         assert('$lastBean->id > 0');
                     }
                     $this->modelClassNameToBean[$modelClassName] = $lastBean;
@@ -1740,7 +1743,7 @@
                                                                self::HAS_MANY_BELONGS_TO)))
                             {
                                 if ($relatedModel->isModified() ||
-                                    ($this->isAttributeRequired($relationName) && $relatedModel->id <= 0))
+                                    ($this->isAttributeRequired($relationName) ))
                                 {
                                     // Validation of this model has already done.
                                     if (!$relatedModel->save(false))

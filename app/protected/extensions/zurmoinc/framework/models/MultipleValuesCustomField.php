@@ -109,7 +109,6 @@
                             unset($values[$key]);
                         }
                     }
-
                     foreach($customFieldValueObject as $customFieldValue)
                     {
                         $this->values->remove($customFieldValue);
