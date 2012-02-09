@@ -103,76 +103,8 @@
             $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
         }
 
-        /**
-         * @depends testSetAndGetMultiSelectDropDownAttribute
-         */
-        public function testSetAndGetTagCloudAttribute()
-        {
-            $attributeName = 'testLanguages';
-            $values = array(
-                'English',
-                'French',
-                'Danish',
-                'Spanish',
-            );
-            $labels = array('fr' => array('English fr', 'French fr', 'Danish fr', 'Spanish fr'),
-                            'de' => array('English de', 'French de', 'Danish de', 'Spanish de'),
-            );
-            $languageFieldData = CustomFieldData::getByName('Languages');
-            $languageFieldData->serializedData = serialize($values);
-            $this->assertTrue($languageFieldData->save());
-
-            $attributeForm                   = new TagCloudAttributeForm();
-            $attributeForm->attributeName    = $attributeName;
-            $attributeForm->attributeLabels  = array(
-                'de' => 'Test Languages 2 de',
-                'en' => 'Test Languages 2 en',
-                'es' => 'Test Languages 2 es',
-                'fr' => 'Test Languages 2 fr',
-                'it' => 'Test Languages 2 it',
-            );
-            $attributeForm->isAudited             = true;
-            $attributeForm->isRequired            = true;
-            $attributeForm->defaultValueOrder     = 1;
-            $attributeForm->customFieldDataData   = $values;
-            $attributeForm->customFieldDataName   = 'Languages';
-            $attributeForm->customFieldDataLabels = $labels;
-
-            $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
-            $adapter = new $modelAttributesAdapterClassName(new Account());
-            try
-            {
-                $adapter->setAttributeMetadataFromForm($attributeForm);
-            }
-            catch (FailedDatabaseSchemaChangeException $e)
-            {
-                echo $e->getMessage();
-                $this->fail();
-            }
-
-            $account = new Account();
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, $attributeName);
-            $this->assertEquals('TagCloud',     $attributeForm->getAttributeTypeName());
-            $this->assertEquals($attributeName, $attributeForm->attributeName);
-            $compareAttributeLabels = array(
-                'de' => 'Test Languages 2 de',
-                'en' => 'Test Languages 2 en',
-                'es' => 'Test Languages 2 es',
-                'fr' => 'Test Languages 2 fr',
-                'it' => 'Test Languages 2 it',
-            );
-            $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
-            $this->assertEquals(true,                    $attributeForm->isAudited);
-            $this->assertEquals(true,                    $attributeForm->isRequired);
-            $this->assertEquals('French',                $attributeForm->defaultValue);
-            $this->assertEquals(1,                       $attributeForm->defaultValueOrder);
-            $this->assertEquals('Languages',             $attributeForm->customFieldDataName);
-            $this->assertEquals($values,                 $attributeForm->customFieldDataData);
-            $this->assertEquals($labels,                 $attributeForm->customFieldDataLabels);
-        }
-
          /**
-         * @depends testSetAndGetTagCloudAttribute
+         * @depends testSetAndGetMultiSelectDropDownAttribute
          */
         public function testSearchForMultiSelectDropDownAttributePlacedForAccountsModule()
         {
@@ -236,44 +168,6 @@
             $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data                = $dataProvider->getData();
             $this->assertEquals(2, count($data));
-        }
-
-        /**
-         * @depends testSearchForMultiSelectDropDownAttributePlacedForAccountsModule
-         */
-        public function testMassUpdateForMultiSelectDropDownAttributePlacedForAccountsModule()
-        {
-            //Test that the multiple select attribute can query properly for search.
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-
-            //Searching with a custom field that is not blank should not produce an errors.
-            $_GET['selectedIds']  = '';
-            $_GET['selectAll']    = 1;
-            $_GET['ajax']         = '';
-            $_GET['Account_page'] = 1;
-            $_POST['save']        = 'Save';
-            $_POST['MassEdit']    = array ('testHobbies' => 1);
-            $_POST['Account']     = array ('testHobbies' => array(
-                                           'values'      => array('0' => 'Reading',
-                                                                  '1' => 'Surfing')
-                                                            )
-                                          );
-
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('massEditProgressPageSize');
-            $account             = new Account(false);
-
-            $modelClassName      = get_class($account);
-            PostUtil::sanitizePostForSavingMassEdit($modelClassName);
-            $sanitizedOwnerPostData = PostUtil::sanitizePostDataToJustHavingElementForSavingModel($_POST[$modelClassName], 'owner');
-            $sanitizedPostDataWithoutOwner = PostUtil::removeElementFromPostDataForSavingModel($_POST[$modelClassName], 'owner');
-            $massEditPostrDataWithoutOwner = PostUtil::removeElementFromPostDataForSavingModel($_POST['MassEdit'], 'owner');
-            $account->setAttributes($sanitizedPostDataWithoutOwner);
-            
-            $account->setAttributes($sanitizedPostDataWithoutOwner);
-            $account->validate(array_keys($massEditPostrDataWithoutOwner));
-            $account->save(false);
-            $this->assertEquals(array(), $account->getErrors());
         }
 
         /**
