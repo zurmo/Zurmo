@@ -527,7 +527,7 @@
 
             $id = $user->id;
             $data = array();
-            $data['language']         = "AAAAA";
+            $data['language']         = "AAAAAAA";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
