@@ -41,6 +41,7 @@
 
         'components' => array(
             'assetManager' => array(
+                'class' => 'ZurmoAssetManager',
                 'basePath' => INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'assets/',
             ),
             'apiRequest' => array(
