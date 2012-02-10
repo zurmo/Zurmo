@@ -36,15 +36,20 @@
          */
         protected function renderControlEditable()
         {
-            $valueTypeid                       = $this->getEditableInputId($this->attribute,   'type');
-            $valueFirstDateId                  = $this->getEditableInputId($this->attribute,   'firstDate');
-            $firstDateSpanAreaId               = $valueTypeid . '-first-date-area';
-            $valueTypesRequiringFirstDateInput = MixedDateTypesSearchFormAttributeMappingRules::
-                                                 getValueTypesRequiringFirstDateInput();
+            $valueTypeid                        = $this->getEditableInputId($this->attribute,   'type');
+            $valueFirstDateId                   = $this->getEditableInputId($this->attribute,   'firstDate');
+            $firstDateSpanAreaId                = $valueTypeid . '-first-date-area';
+            $valueSecondDateId                  = $this->getEditableInputId($this->attribute,   'secondDate');
+            $secondDateSpanAreaId               = $valueTypeid . '-second-date-area';
+            $valueTypesRequiringFirstDateInput  = MixedDateTypesSearchFormAttributeMappingRules::
+                                                  getValueTypesRequiringFirstDateInput();
+            $valueTypesRequiringSecondDateInput = MixedDateTypesSearchFormAttributeMappingRules::
+                                                  getValueTypesRequiringSecondDateInput();
             Yii::app()->clientScript->registerScript('mixedDateTypesForSearch' . $valueTypeid, "
                 $('#{$valueTypeid}').change( function()
                     {
-                        arr = " . CJSON::encode($valueTypesRequiringFirstDateInput) . ";
+                        arr  = " . CJSON::encode($valueTypesRequiringFirstDateInput) . ";
+                        arr2 = " . CJSON::encode($valueTypesRequiringSecondDateInput) . ";
                         if ($.inArray($(this).val(), arr) != -1)
                         {
                                $('#{$firstDateSpanAreaId}').show();
@@ -55,18 +60,36 @@
                             $('#{$firstDateSpanAreaId}').hide();
                             $('#{$valueFirstDateId}').prop('disabled', true);
                         }
+                        if ($.inArray($(this).val(), arr2) != -1)
+                        {
+                            $('#{$secondDateSpanAreaId}').show();
+                            $('#{$valueSecondDateId}').prop('disabled', false);
+                        }
+                        else
+                        {
+                            $('#{$secondDateSpanAreaId}').hide();
+                            $('#{$valueSecondDateId}').prop('disabled', true);
+                        }
                     }
                 );
             ");
-            $startingDivStyle  = null;
+            $startingDivStyleFirstDate   = null;
+            $startingDivStyleSecondDate  = null;
             $valueType         = ArrayUtil::getArrayValue($this->model->{$this->attribute}, 'type');
             if (!in_array($valueType, $valueTypesRequiringFirstDateInput))
             {
-                $startingDivStyle = "style='display:none;'";
+                $startingDivStyleFirstDate = "style='display:none;'";
+            }
+            if (!in_array($valueType, $valueTypesRequiringSecondDateInput))
+            {
+                $startingDivStyleSecondDate = "style='display:none;'";
             }
             $content  = $this->renderEditableValueTypeContent();
-            $content .= '<span id="' . $firstDateSpanAreaId . '" ' . $startingDivStyle . '>';
+            $content .= '<span id="' . $firstDateSpanAreaId . '" ' . $startingDivStyleFirstDate . '>';
             $content .= '&#160;' . $this->renderEditableFirstDateContent();
+            $content .= '</span>';
+            $content .= '<span id="' . $secondDateSpanAreaId . '" ' . $startingDivStyleSecondDate . '>';
+            $content .= '&#160;' . Yii::t('Default', 'and') . $this->renderEditableSecondDateContent();
             $content .= '</span>';
             return $content;
         }
@@ -88,11 +111,40 @@
             $cClipWidget->beginClip("EditableDateElement");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.JuiDatePicker', array(
                 'attribute'           => $this->attribute,
-                'value'               => ArrayUtil::getArrayValue($value, 'firstDate'),
+                'value'               => DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
+                                         ArrayUtil::getArrayValue($value, 'firstDate')),
                 'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
                 'htmlOptions'         => array(
                     'id'              => $this->getEditableInputId($this->attribute, 'firstDate'),
                     'name'            => $this->getEditableInputName($this->attribute, 'firstDate'),
+                ),
+                'options'             => array(
+                    'showOn'          => 'both',
+                    'showButtonPanel' => true,
+                    'buttonImage'     => $themePath . '/images/jqueryui/calendar.gif',
+                    'buttonImageOnly' => true,
+                    'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
+                                            DateTimeUtil::getLocaleDateFormat()),
+                ),
+            ));
+            $cClipWidget->endClip();
+            return $cClipWidget->getController()->clips['EditableDateElement'];
+        }
+
+        protected function renderEditableSecondDateContent()
+        {
+            $themePath = Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name;
+            $value     = $this->model->{$this->attribute};
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("EditableDateElement");
+            $cClipWidget->widget('ext.zurmoinc.framework.widgets.JuiDatePicker', array(
+                'attribute'           => $this->attribute,
+                'value'               => DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
+                                         ArrayUtil::getArrayValue($value, 'secondDate')),
+                'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
+                'htmlOptions'         => array(
+                    'id'              => $this->getEditableInputId($this->attribute, 'secondDate'),
+                    'name'            => $this->getEditableInputName($this->attribute, 'secondDate'),
                 ),
                 'options'             => array(
                     'showOn'          => 'both',

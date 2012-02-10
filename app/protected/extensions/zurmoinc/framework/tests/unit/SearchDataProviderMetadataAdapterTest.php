@@ -395,5 +395,94 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
+
+        public function testSearchFormDynamicAttributesBetweenAndOnDateSearch()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'date__Date'      => array('type'          => MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON,
+                                                 'firstDate'   => '1991-03-04'),
+                'date2__Date'      => array('type'          => MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN,
+                                                 'firstDate'   => '1991-03-05',
+                                                 'secondDate'  => '1992-04-04'),
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata           = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'date',
+                    'operatorType'         => 'equals',
+                    'value'                => '1991-03-04',
+                ),
+                2 => array(
+                    'attributeName'        => 'date2',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => '1991-03-05',
+                ),
+                3 => array(
+                    'attributeName'        => 'date2',
+                    'operatorType'         => 'lessThanOrEqualTo',
+                    'value'                => '1992-04-04',
+                ),
+            );
+
+            $compareStructure = '(1) and (2 and 3)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+        public function testSearchFormDynamicAttributesBetweenAndOnDateTimeSearch()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'dateTime__DateTime'      => array('type'          => MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON,
+                                                   'firstDate'   => '1991-03-04'),
+                'dateTime2__DateTime'      => array('type'          => MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN,
+                                                    'firstDate'   => '1991-03-05',
+                                                    'secondDate'  => '1992-04-04'),
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $metadata           = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'dateTime',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => '1991-03-04 00:00:00',
+                ),
+                2 => array(
+                    'attributeName'        => 'dateTime',
+                    'operatorType'         => 'lessThanOrEqualTo',
+                    'value'                => '1991-03-04 23:59:59',
+                ),
+                3 => array(
+                    'attributeName'        => 'dateTime2',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => '1991-03-05 00:00:00',
+                ),
+                4 => array(
+                    'attributeName'        => 'dateTime2',
+                    'operatorType'         => 'lessThanOrEqualTo',
+                    'value'                => '1992-04-04 23:59:59',
+                ),
+            );
+
+            $compareStructure = '(1 and 2) and (3 and 4)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
     }
 ?>

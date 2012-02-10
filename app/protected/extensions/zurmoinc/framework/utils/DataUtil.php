@@ -71,6 +71,13 @@
                                                                      resolveValueForDateDBFormatted(
                                                                      $value['firstDate']);
                             }
+                            if ($designerType == 'MixedDateTypesForSearch' && isset($value['secondDate']) &&
+                            $value['secondDate'] != null)
+                            {
+                                $data[$attributeName]['secondDate'] = DateTimeUtil::
+                                                                     resolveValueForDateDBFormatted(
+                                                                     $value['secondDate']);
+                            }
                         }
                     }
                 }

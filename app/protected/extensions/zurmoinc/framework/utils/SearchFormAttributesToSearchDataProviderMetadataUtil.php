@@ -37,6 +37,7 @@
         {
             assert('$model instanceof SearchForm');
             $metadata        = $model->getAttributesMappedToRealAttributesMetadata();
+
             $adaptedMetadata = array();
             if (isset($metadata[$attributeName]))
             {

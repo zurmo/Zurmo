@@ -132,6 +132,31 @@
                                                               'operatorType' => 'lessThanOrEqualTo')));
             $this->assertEquals($compareData, $metadata);
 
+            //Test Date = On X
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
+            $value['firstDate'] = '2011-05-04';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $compareData        = array(array('date' => array('value' => '2011-05-04',
+                                                              'operatorType' => 'equals')));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Between X and Y
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN;
+            $value['firstDate'] = '2011-05-04';
+            $value['secondDate'] = '2011-06-04';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $compareData        = array(array('date' => array('value' => '2011-05-04',
+                                                              'operatorType' => 'greaterThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)),
+                                        array('date' => array('value' => '2011-06-04',
+                                                              'operatorType' => 'lessThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+
             //Test Date next 7 days
             $value              = array();
             $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_NEXT_7_DAYS;

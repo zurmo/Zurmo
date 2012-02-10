@@ -51,7 +51,8 @@
             {
                 if ($value['type'] == self::TYPE_YESTERDAY ||
                    $value['type'] == self::TYPE_TODAY ||
-                   $value['type'] == self::TYPE_TOMORROW)
+                   $value['type'] == self::TYPE_TOMORROW ||
+                   $value['type'] == self::TYPE_ON)
                 {
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $greaterThanValue      = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($dateValue);
@@ -70,6 +71,15 @@
                     $dateValue             = static::resolveValueDataIntoUsableValue($value);
                     $lessThanValue         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($dateValue);
                     $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', $lessThanValue));
+                }
+                elseif ($value['type'] == self::TYPE_BETWEEN)
+                {
+                    $firstDateValue        = static::resolveValueDataForBetweenIntoUsableFirstDateValue($value);
+                    $secondDateValue       = static::resolveValueDataForBetweenIntoUsableSecondDateValue($value);
+                    $greaterThanValue      = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($firstDateValue);
+                    $lessThanValue         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($secondDateValue);
+                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue, true),
+                                                   array($realAttributeName, null, 'lessThanOrEqualTo',    $lessThanValue, true));
                 }
                 elseif ($value['type'] == self::TYPE_NEXT_7_DAYS)
                 {
