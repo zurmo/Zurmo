@@ -1,4 +1,4 @@
-.juiportlet-columns .juiportlet-column {
+/*.juiportlet-columns .juiportlet-column {
 	float: left;
 	min-height: 400px;
 	height: auto !important;
@@ -39,7 +39,7 @@
 	padding: 0;
 	border:1px solid #CCC;
 	background: #FFF url(../images/portlet-gradient.png) left bottom repeat-x;
-	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12); /*999*/
+	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12);
 }
 
 .juiportlet-columns .juiportlet-widget h3 {
@@ -100,7 +100,6 @@
 }
 .juiportlet-widget-placeholder {
 	border: 2px dashed #262877;
-	/*background: url(../images/gif.gif) 50% 50% no-repeat;*/
 }
 
 .juiportlet-widget-placeholder {
@@ -136,4 +135,4 @@
 .juiportlet-widget-content table.items tbody tr:last-child td{
 	border-bottom:none;
 	padding-bottom:0;
-}
+}*/

@@ -46,6 +46,8 @@
                     'imageUrl'	      => false,
                     'visible'         => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
                     'options'         => array('class' => 'pencil'),
+                    'label'           => '!',
+                    'title'           => 'Update',
                     ),
                 ),
             );

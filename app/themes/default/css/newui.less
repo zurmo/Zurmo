@@ -5,6 +5,24 @@
 @import 'widget-juiportlets.less';
 
 
+
+@font-face {
+    font-family: 'ZurmoSymblyRegular';
+    src: url('../fonts/zurmosymblyregular-regular-webfont.eot');
+    src: url('../fonts/zurmosymblyregular-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/zurmosymblyregular-regular-webfont.woff') format('woff'),
+         url('../fonts/zurmosymblyregular-regular-webfont.ttf') format('truetype'),
+         url('../fonts/zurmosymblyregular-regular-webfont.svg#ZurmoSymblyRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.symbly(@size : 32px ) {
+	font-weight:normal;
+	font-size:@size;
+	font-family: "ZurmoSymblyRegular", sans-serif;
+}
+
+
 /*Variables*/
 //blue theme
 
@@ -629,9 +647,14 @@ table.items th{
 	background: url(../images/table-items-header.png) left top repeat-x;
 	padding:0;
 }
-.checkbox-column, .button-column{
-	width:45px;
+.checkbox-column{
+	width:35px;
 	text-align:center;
+}
+.button-column{
+	width:25px;
+	text-align:center;
+	vertical-align:top !important;
 }
 tr.odd{
 	
@@ -641,6 +664,23 @@ tr.even{
 }
 table.items tr:hover{
 	background-color:#D4E7BC;
+	color:@themeColor;
+	.pencil{
+		visibility:visible;
+		color:@themeColor;
+	}
+}
+table.items thead{
+	#gradient > .vertical(#f9f9f9, #f4f4f4);
+}
+table.items thead tr:hover{
+	#gradient > .vertical(#f9f9f9, #f4f4f4);
+}
+.pencil{
+	display:block;
+	margin-top:-2px;
+	.symbly(24px);
+	visibility:hidden;
 }
 
 /*forms*/
