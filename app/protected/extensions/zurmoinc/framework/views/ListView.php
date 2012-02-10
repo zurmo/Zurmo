@@ -178,6 +178,11 @@
                 );
                 array_push($columns, $firstColumn);
             }
+            $lastColumn = $this->getCGridViewLastColumn();
+            if (!empty($lastColumn))
+            {
+                array_push($columns, $lastColumn);
+            }
             $metadata = $this->resolveMetadata();
             foreach ($metadata['global']['panels'] as $panel)
             {
@@ -194,11 +199,7 @@
                     }
                 }
             }
-            $lastColumn = $this->getCGridViewLastColumn();
-            if (!empty($lastColumn))
-            {
-                array_push($columns, $lastColumn);
-            }
+
             return $columns;
         }
 
