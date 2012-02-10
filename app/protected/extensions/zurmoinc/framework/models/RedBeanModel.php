@@ -374,7 +374,7 @@
                         $lastBean = R::getBean($lastBean, $tableName);
                         if($lastBean === null)
                         {
-                            new MissingBeanException();
+                            throw new MissingBeanException();
                         }
                         assert('$lastBean->id > 0');
                     }
