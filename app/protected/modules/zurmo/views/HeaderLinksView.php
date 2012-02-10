@@ -46,6 +46,7 @@
         {
 
             $content  = '<div class="clearfix"><div id="corp-logo"><img src="/themes/default/images/Zurmo_logo.png"><span>Corp Name</span></div>';
+            $content .= '<div id="user-toolbar" class="clearfix">';
             $content .= static::renderHeaderMenuContent(
                             static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems),
                             'user-header-menu');
@@ -53,7 +54,7 @@
             $content .= static::renderHeaderMenuContent(
                             static::resolveSettingsMenuItemsWithTopLevelItem($this->settingsMenuItems),
                             'settings-header-menu');
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
@@ -104,7 +105,7 @@
             {
                 $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
             }
-            $content  .= "<a href=\"$link\">$label</a>";
+            $content  .= "<a href=\"$link\"><span>g</span>$label</a>";
             return '<span class="notifications-link">' . $content . '</span>';
         }
     }
