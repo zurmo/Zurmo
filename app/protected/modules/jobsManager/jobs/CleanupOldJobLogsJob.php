@@ -25,16 +25,16 @@
      ********************************************************************************/
 
     /**
-     * A job for removing old import models after the imports are complete.
+     * A job for removing old job logs.
      */
-    class ImportCleanupJob extends BaseJob
+    class CleanupOldJobLogsJob extends BaseJob
     {
         /**
          * @returns Translated label that describes this job type.
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Import Cleanup Job');
+           return Yii::t('Default', 'Cleanup old job logs Job');
         }
 
         /**
@@ -42,7 +42,7 @@
          */
         public static function getType()
         {
-            return 'ImportCleanup';
+            return 'CleanupOldJobLogs';
         }
 
         public static function getRecommendedRunFrequencyContent()
@@ -51,9 +51,9 @@
         }
 
         /**
-         * Return all imports where the modifiedDateTime was more than 1 week ago.  Then
-         * delete the imports.
-         * (non-PHPdoc)
+         * Return all job logs where the modifiedDateTime was more than 1 week ago.
+         * Then delete these logs.
+         *
          * @see BaseJob::run()
          */
         public function run()
@@ -62,18 +62,18 @@
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
                 1 => array(
-                    'attributeName'        => 'modifiedDateTime',
+                    'attributeName'        => 'endDateTime',
                     'operatorType'         => 'lessThan',
                     'value'                => $oneWeekAgoTimeStamp,
                 ),
             );
             $searchAttributeData['structure'] = '1';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
-            $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
-            $importModels = Import::getSubset($joinTablesAdapter, null, 1000, $where, null);
-            foreach ($importModels as $import)
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
+            $where = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
+            $jobLogModels = JobLog::getSubset($joinTablesAdapter, null, 1000, $where, null);
+            foreach ($jobLogModels as $jobLog)
             {
-                $import->delete();
+                $jobLog->delete();
             }
             return true;
         }
