@@ -70,7 +70,7 @@
             $searchAttributeData['structure'] = '1';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
             $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
-            $importModels = Import::getSubset($joinTablesAdapter, null, null, $where, null);
+            $importModels = Import::getSubset($joinTablesAdapter, null, 1000, $where, null);
             foreach ($importModels as $import)
             {
                 $import->delete();
