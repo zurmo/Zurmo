@@ -889,14 +889,17 @@ table.items tr:hover{
 .ZurmoSearchView{
 	padding:0;
 	.b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );
+	float:left;
+	width:100%;
 	#search-form{
 		position: relative;
 		padding:10px 0 0 0;
 		border: 1px solid #DFDFDF;
 		border-bottom:none;
-		height:35px;/*@TODO check why I need specific height here and the elemnt doesn´t collapse*/
+		#gradient > .vertical(#f6f6f6, #ededed);
 		.b-shadow(none);
-		background: url(../images/portlet-header-gradient.png) left bottom repeat-x;
+		box-shadow:inset 0 1px 0 0 #ffffff;
+		.clearfix();
 		table{
 			border-bottom:none;
 		}
