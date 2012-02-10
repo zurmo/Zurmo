@@ -49,7 +49,6 @@
             return 'MultiSelectDropDownModelAttributesAdapter';
         }
 
-
         /**
          * Get how many records in a model have each possible customFieldData value selected.
          * If the customFieldData doesn't exist yet, then return 0.
@@ -63,6 +62,5 @@
             }
             return 0;
         }
-
     }
 ?>

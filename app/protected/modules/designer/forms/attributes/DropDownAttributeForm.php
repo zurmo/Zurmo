@@ -164,9 +164,9 @@
             }
             if (!empty($data))
             {
-                foreach($data as $value)
+                foreach ($data as $value)
                 {
-                    if($value != str_replace(',', '', $value))
+                    if ($value != str_replace(',', '', $value))
                     {
                         $this->addError('customFieldDataData', Yii::t('Default', 'Each value must not contain a comma.'));
                         return;

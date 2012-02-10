@@ -903,32 +903,6 @@
             );
         }
 
-        public static function getAccountsMassEditViewLayoutWithMultiSelectAndTagCloudFieldsPlaced()
-        {
-            return array(
-                    'panels' => array(
-                        array(
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'element' => 'multiselect',
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'element' => 'tagcloud',
-                                        ),
-                                    )
-                                ),
-                            ),
-                        ),
-                    ),
-            );
-        }
-
         /**
          * This function returns the necessary get parameters for the account search form
          * based on the account edited data.

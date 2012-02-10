@@ -625,7 +625,7 @@
             $superUserId = $super->id;
 
             //Retrieve the lead id.
-            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams');
+            $leadId     = self::getModelIdByModelNameAndName('Contact', 'Sarah Williams Edit');
 
             //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());

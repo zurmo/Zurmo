@@ -214,7 +214,7 @@
             {
                 $modelClassName = get_class($model);
                 $model          = new $modelClassName(); //Forces metadata to reload
-                if($model->isAttribute($attributeForm->attributeName))
+                if ($model->isAttribute($attributeForm->attributeName))
                 {
                     RequiredAttributesValidViewUtil::
                     resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
@@ -229,7 +229,7 @@
             {
                 $modelClassName = get_class($model);
                 $model          = new $modelClassName(); //Forces metadata to reload
-                if($model->isAttribute($attributeForm->attributeName))
+                if ($model->isAttribute($attributeForm->attributeName))
                 {
                     RequiredAttributesValidViewUtil::
                     resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);

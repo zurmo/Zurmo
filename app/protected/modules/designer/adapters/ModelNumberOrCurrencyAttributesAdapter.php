@@ -41,9 +41,9 @@
         {
             $adapter    = new ModelAttributesAdapter($this->model);
             $attributes = $adapter->getAttributes();
-            foreach($attributes as $attributeName => $data)
+            foreach ($attributes as $attributeName => $data)
             {
-                if(!in_array($data['elementType'], array('Decimal', 'Integer', 'CurrencyValue')))
+                if (!in_array($data['elementType'], array('Decimal', 'Integer', 'CurrencyValue')))
                 {
                     unset($attributes[$attributeName]);
                 }

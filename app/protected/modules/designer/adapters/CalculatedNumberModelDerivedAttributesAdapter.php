@@ -38,7 +38,7 @@
             $elementType       = $attributeForm->getAttributeTypeName();
             $formula           = $attributeForm->formula;
             $id                = $attributeForm->id;
-            if($id != null)
+            if ($id != null)
             {
                 $metadata = CalculatedDerivedAttributeMetadata::getById($id);
                 $metadata->setScenario('nonAutoBuild');
@@ -53,7 +53,7 @@
             $metadata->serializedMetadata = serialize(array('formula'         => $formula,
                                                             'attributeLabels' => $attributeLabels));
             $saved = $metadata->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

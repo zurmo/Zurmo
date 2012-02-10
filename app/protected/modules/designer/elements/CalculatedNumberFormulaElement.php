@@ -55,13 +55,13 @@
             $model          = new $modelClassName(false);
             $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
             $attributeData  = $adapter->getAttributes();
-            if(count($attributeData) > 0)
+            if (count($attributeData) > 0)
             {
                 $content  = '<b>' . Yii::t('Default', 'Available Fields:') . '</b>';
                 $content .= '<table style="width:auto">';
                 $content .= '<tr><td><b>' . Yii::t('Default', 'Field Name') . '</b></td>';
                 $content .= '<td><b>' . Yii::t('Default', 'Formula Name') . '</b></td></tr>';
-                foreach($attributeData as $attributeName => $data)
+                foreach ($attributeData as $attributeName => $data)
                 {
                     $content .= '<tr><td>' . $data['attributeLabel'] . '</td><td>' . $attributeName . '</td></tr>';
                 }

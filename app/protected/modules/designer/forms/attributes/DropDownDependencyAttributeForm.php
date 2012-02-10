@@ -65,7 +65,7 @@
             assert('$model === null || !$model->isAttribute($attributeName)');
             if ($model !== null)
             {
-                if($attributeName != null)
+                if ($attributeName != null)
                 {
                     $metadata              = DropDownDependencyDerivedAttributeMetadata::
                                              getByNameAndModelClassName($attributeName, get_class($model));
@@ -93,6 +93,7 @@
                 'mappingData'   => Yii::t('Default', 'Dependency Mapping'),
             ));
         }
+
         public static function getAttributeTypeDisplayName()
         {
             return Yii::t('Default', 'Dependent Pick Lists');
@@ -121,7 +122,7 @@
                           getByNameAndModelClassName($this->attributeName, $this->modelClassName);
                 $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
             }
         }
@@ -142,27 +143,27 @@
             assert('$attribute == "mappingData"');
             $mappingData            = $this->$attribute;
             $selectedAttributeNames = 0;
-            foreach($mappingData as $data)
+            foreach ($mappingData as $data)
             {
-                if(isset($data['attributeName']) && $data['attributeName'] != null)
+                if (isset($data['attributeName']) && $data['attributeName'] != null)
                 {
-                    $selectedAttributeNames ++;
+                    $selectedAttributeNames++;
                 }
             }
-            if(count($mappingData) < 2  || $selectedAttributeNames < 2)
+            if (count($mappingData) < 2  || $selectedAttributeNames < 2)
             {
                 $this->addError('mappingData',  Yii::t('Default', 'You must select at least 2 pick-lists.'));
             }
-            if(count($mappingData) > 4 || $selectedAttributeNames > 4)
+            if (count($mappingData) > 4 || $selectedAttributeNames > 4)
             {
                 $this->addError('mappingData',  Yii::t('Default', 'You can only have at most 4 pick-lists selected.'));
             }
-            foreach($mappingData as $position => $attributeNameAndData)
+            foreach ($mappingData as $position => $attributeNameAndData)
             {
                 assert('isset($attributeNameAndData["attributeName"])');
-                if($position > 0 && $attributeNameAndData['attributeName'] != null)
+                if ($position > 0 && $attributeNameAndData['attributeName'] != null)
                 {
-                    if(!isset($attributeNameAndData['valuesToParentValues']) ||
+                    if (!isset($attributeNameAndData['valuesToParentValues']) ||
                        self::getValuesToParentValuesMappedCount($attributeNameAndData['valuesToParentValues']) == 0)
                     {
                         $this->addError('mappingData', Yii::t('Default', 'At least one pick-list value must be mapped for each used level.'));
@@ -180,9 +181,9 @@
                                                                                           $parentAttributeName);
                         $parentDataValues       = unserialize($parentCustomFieldData->serializedData);
 
-                        foreach($attributeNameAndData['valuesToParentValues'] as $customFieldDataValue => $parentCustomFieldDataValue)
+                        foreach ($attributeNameAndData['valuesToParentValues'] as $customFieldDataValue => $parentCustomFieldDataValue)
                         {
-                            if($parentCustomFieldDataValue != null &&
+                            if ($parentCustomFieldDataValue != null &&
                                !in_array($parentCustomFieldDataValue, $parentDataValues))
                             {
                                 $this->addError('mappingData',
@@ -197,7 +198,6 @@
                 }
             }
         }
-
 
         /**
          * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
@@ -214,11 +214,11 @@
         public function sanitizeFromPostAndSetAttributes($values)
         {
             assert('is_array($values)');
-            if(isset($values['mappingData']))
+            if (isset($values['mappingData']))
             {
-                foreach($values['mappingData'] as $position => $data)
+                foreach ($values['mappingData'] as $position => $data)
                 {
-                    if($data['attributeName'] == null && isset($data['valuesToParentValues']))
+                    if ($data['attributeName'] == null && isset($data['valuesToParentValues']))
                     {
                         unset($values['mappingData'][$position]['valuesToParentValues']);
                     }
@@ -237,11 +237,11 @@
         {
             assert('is_array($valuesToParentValues)');
             $count = 0;
-            foreach($valuesToParentValues as $value => $parentValue)
+            foreach ($valuesToParentValues as $value => $parentValue)
             {
-                if($parentValue != null)
+                if ($parentValue != null)
                 {
-                    $count ++;
+                    $count++;
                 }
             }
             return $count;
@@ -249,7 +249,7 @@
 
         public function canUpdateAttributeProperty($propertyName)
         {
-            if($propertyName == 'attributeName' && $this->id != null)
+            if ($propertyName == 'attributeName' && $this->id != null)
             {
                 return false;
             }

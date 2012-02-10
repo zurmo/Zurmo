@@ -43,25 +43,25 @@
             assert('is_string($attributeName)');
             assert('is_array($oldAndNewValuePairs) && count($oldAndNewValuePairs) > 0');
             $attributesMetadata = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName($modelClassName);
-            if(count($attributesMetadata) > 0)
+            if (count($attributesMetadata) > 0)
             {
-                foreach($attributesMetadata as $metadata)
+                foreach ($attributesMetadata as $metadata)
                 {
                     $saveMetadata   = false;
                     $parentPosition = null;
-                    if($metadata->serializedMetadata != null)
+                    if ($metadata->serializedMetadata != null)
                     {
                         $unserializedMetadata = unserialize($metadata->serializedMetadata);
-                        if(isset($unserializedMetadata['mappingData']))
+                        if (isset($unserializedMetadata['mappingData']))
                         {
-                            foreach($oldAndNewValuePairs as $oldValue => $newValue)
+                            foreach ($oldAndNewValuePairs as $oldValue => $newValue)
                             {
-                                foreach($unserializedMetadata['mappingData'] as $position => $data)
+                                foreach ($unserializedMetadata['mappingData'] as $position => $data)
                                 {
-                                    if($data['attributeName'] == $attributeName)
+                                    if ($data['attributeName'] == $attributeName)
                                     {
                                         $parentPosition = $position;
-                                        if(isset($data['valuesToParentValues']) &&
+                                        if (isset($data['valuesToParentValues']) &&
                                            isset($data['valuesToParentValues'][$oldValue]))
                                         {
                                             $mappedValue = $unserializedMetadata['mappingData'][$position]
@@ -75,16 +75,16 @@
                                         }
                                     }
                                 }
-                                if($parentPosition !== null)
+                                if ($parentPosition !== null)
                                 {
                                     $nextPosition = $parentPosition + 1;
-                                    if(isset($unserializedMetadata['mappingData'][$nextPosition]) &&
+                                    if (isset($unserializedMetadata['mappingData'][$nextPosition]) &&
                                        isset($unserializedMetadata['mappingData'][$nextPosition]['valuesToParentValues']))
                                     {
-                                        foreach($unserializedMetadata['mappingData'][$nextPosition]
+                                        foreach ($unserializedMetadata['mappingData'][$nextPosition]
                                                                      ['valuesToParentValues'] as $value => $parentValue)
                                         {
-                                            if($parentValue == $oldValue)
+                                            if ($parentValue == $oldValue)
                                             {
                                                 $unserializedMetadata['mappingData'][$nextPosition]
                                                                      ['valuesToParentValues'][$value] = $newValue;
@@ -97,11 +97,11 @@
                             }
                         }
                     }
-                    if($saveMetadata)
+                    if ($saveMetadata)
                     {
                         $metadata->serializedMetadata = serialize($unserializedMetadata);
                         $saved = $metadata->save();
-                        if(!$saved)
+                        if (!$saved)
                         {
                             throw new NotSupportedException();
                         }
@@ -125,27 +125,27 @@
             assert('is_string($attributeName)');
             assert('is_array($customFieldDataData) && count($customFieldDataData) > 0');
                     $attributesMetadata = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName($modelClassName);
-            if(count($attributesMetadata) > 0)
+            if (count($attributesMetadata) > 0)
             {
-                foreach($attributesMetadata as $metadata)
+                foreach ($attributesMetadata as $metadata)
                 {
                     $saveMetadata   = false;
                     $parentPosition = null;
-                    if($metadata->serializedMetadata != null)
+                    if ($metadata->serializedMetadata != null)
                     {
                         $unserializedMetadata = unserialize($metadata->serializedMetadata);
-                        if(isset($unserializedMetadata['mappingData']))
+                        if (isset($unserializedMetadata['mappingData']))
                         {
-                            foreach($unserializedMetadata['mappingData'] as $position => $data)
+                            foreach ($unserializedMetadata['mappingData'] as $position => $data)
                             {
-                                if($data['attributeName'] == $attributeName)
+                                if ($data['attributeName'] == $attributeName)
                                 {
                                     $parentPosition = $position;
-                                    if(isset($data['valuesToParentValues']))
+                                    if (isset($data['valuesToParentValues']))
                                     {
-                                        foreach($data['valuesToParentValues'] as $value => $parentValue)
+                                        foreach ($data['valuesToParentValues'] as $value => $parentValue)
                                         {
-                                            if(!in_array($value, $customFieldDataData))
+                                            if (!in_array($value, $customFieldDataData))
                                             {
                                                 unset($unserializedMetadata['mappingData'][$position]
                                                                        ['valuesToParentValues'][$value]);
@@ -155,16 +155,16 @@
                                     }
                                 }
                             }
-                            if($parentPosition !== null)
+                            if ($parentPosition !== null)
                             {
                                 $nextPosition = $parentPosition + 1;
-                                if(isset($unserializedMetadata['mappingData'][$nextPosition]) &&
+                                if (isset($unserializedMetadata['mappingData'][$nextPosition]) &&
                                    isset($unserializedMetadata['mappingData'][$nextPosition]['valuesToParentValues']))
                                 {
-                                    foreach($unserializedMetadata['mappingData'][$nextPosition]
+                                    foreach ($unserializedMetadata['mappingData'][$nextPosition]
                                                                  ['valuesToParentValues'] as $value => $parentValue)
                                     {
-                                        if(!in_array($parentValue, $customFieldDataData))
+                                        if (!in_array($parentValue, $customFieldDataData))
                                         {
                                             $unserializedMetadata['mappingData'][$nextPosition]
                                                                  ['valuesToParentValues'][$value] = null;
@@ -175,11 +175,11 @@
                             }
                         }
                     }
-                    if($saveMetadata)
+                    if ($saveMetadata)
                     {
                         $metadata->serializedMetadata = serialize($unserializedMetadata);
                         $saved = $metadata->save();
-                        if(!$saved)
+                        if (!$saved)
                         {
                             throw new NotSupportedException();
                         }

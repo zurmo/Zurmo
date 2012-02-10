@@ -74,10 +74,9 @@
                                         $newValue);
                        $oldValue                       = $attributeForm->customFieldDataDataExistingValues[$order];
                        $oldAndNewValuePairs[$oldValue] = $newValue;
-
                    }
                 }
-                if(count($oldAndNewValuePairs) > 0)
+                if (count($oldAndNewValuePairs) > 0)
                 {
                     DropDownDependencyDerivedAttributeDesignerUtil::
                     updateValueInMappingByOldAndNewValue($modelClassName,

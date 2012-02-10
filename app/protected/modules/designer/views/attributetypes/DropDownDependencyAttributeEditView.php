@@ -93,7 +93,7 @@
             $mappingDataDivId                = 'DropDownDependencyMappingData';
             $ajaxActionId                    = 'changeDropDownDependencyAttribute';
             $content                         = null;
-            if($renderContainer)
+            if ($renderContainer)
             {
                 $content                    .= '<div id="' . $mappingDataDivId . '">';
             }
@@ -107,7 +107,7 @@
                                                                                            $ajaxActionId,
                                                                                            $mappingDataDivId);
             $content                        .= $dropDownDependencyMappingLayout->render();
-            if($renderContainer)
+            if ($renderContainer)
             {
                 $content                        .= '</div>' . "\n";
             }

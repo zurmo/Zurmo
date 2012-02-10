@@ -130,16 +130,16 @@
                              "OwnedMultipleValuesCustomField", "MultipleValuesCustomField"))');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
-            if($owned)
+            if ($owned)
             {
-                if(!in_array($relationModelClassName, array("OwnedCustomField", "OwnedMultipleValuesCustomField")))
+                if (!in_array($relationModelClassName, array("OwnedCustomField", "OwnedMultipleValuesCustomField")))
                 {
                     throw new NotSupportedException();
                 }
             }
             else
             {
-                if(!in_array($relationModelClassName, array("CustomField", "MultipleValuesCustomField")))
+                if (!in_array($relationModelClassName, array("CustomField", "MultipleValuesCustomField")))
                 {
                     throw new NotSupportedException();
                 }
@@ -149,7 +149,7 @@
             {
                 $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,
                                                                                $relationModelClassName);
-                if($owned)
+                if ($owned)
                 {
                     $metadata[$modelClassName]['relations'][$relationName][2] = RedBeanModel::OWNED;
                 }

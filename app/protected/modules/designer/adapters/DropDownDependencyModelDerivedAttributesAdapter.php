@@ -38,7 +38,7 @@
             $elementType       = $attributeForm->getAttributeTypeName();
             $mappingData       = $attributeForm->mappingData;
             $id                = $attributeForm->id;
-            if($id != null)
+            if ($id != null)
             {
                 $metadata = DropDownDependencyDerivedAttributeMetadata::getById($id);
                 $metadata->setScenario('nonAutoBuild');
@@ -53,7 +53,7 @@
             $metadata->serializedMetadata = serialize(array('mappingData'     => $mappingData,
                                                             'attributeLabels' => $attributeLabels));
             $saved = $metadata->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

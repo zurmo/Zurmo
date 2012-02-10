@@ -118,7 +118,7 @@
         {
             $dropDownDependencyCustomFieldParentMapping = null;
             $content                                    = null;
-            foreach($this->dependencyCollection as $dropDownDependencyCustomFieldMapping)
+            foreach ($this->dependencyCollection as $dropDownDependencyCustomFieldMapping)
             {
                 assert('$dropDownDependencyCustomFieldMapping instanceof DropDownDependencyCustomFieldMapping');
                 $content .= '<td>';
@@ -149,7 +149,7 @@
             $content .= '</tr>';
             $content .= '<tr>';
             $content .= '<td>';
-            if($mapping->getAttributeName() != null && $mapping->getPosition() > 0)
+            if ($mapping->getAttributeName() != null && $mapping->getPosition() > 0)
             {
                 $content .= $this->renderValuesToParentValuesContent($mapping, $parentMapping);
             }
@@ -170,7 +170,7 @@
             $htmlOptions          = array();
             $htmlOptions['id']    = $inputId;
 
-            if($mapping->allowsAttributeSelection())
+            if ($mapping->allowsAttributeSelection())
             {
                 $htmlOptions['empty'] = Yii::t('Default', '(None)');
                 $data                 = $mapping->getAvailableCustomFieldAttributes();
@@ -220,7 +220,7 @@
             $content .= '</td>';
             $content .= '</tr>';
             $valuePosition = 0;
-            foreach($dataAndLabels as $value => $label)
+            foreach ($dataAndLabels as $value => $label)
             {
                 $content .= '<tr>';
                 $content .= '<td>';
@@ -235,7 +235,7 @@
                                         $mapping->getMappingDataSelectedParentValueByValue($value));
                 $content .= '</td>';
                 $content .= '</tr>';
-                $valuePosition ++;
+                $valuePosition++;
             }
             $content .= '</table>';
             return $content;

@@ -109,7 +109,7 @@
                         $savableMetadata['panels'][$panelKey]['rows'] = array(); 
                     }
                 }
-                if(!$atLeastOneElementPlaced)
+                if (!$atLeastOneElementPlaced)
                 {
                     $this->message = Yii::t('Default', 'You must have at least one field placed in order to save a layout.');
                     return false;
@@ -193,7 +193,7 @@
                                                                             $attributesUsed);
                 $placeElement = true;
             }
-            elseif(isset($this->placeableLayoutAttributes[$elementName]) &&
+            elseif (isset($this->placeableLayoutAttributes[$elementName]) &&
                    $this->placeableLayoutAttributes[$elementName]['elementType'] == 'DropDownDependency')
             {
                 $moduleClassName              = $this->moduleClassName;
@@ -294,7 +294,6 @@
                     return false;
                 }
             }
-
             return true;
         }
 
@@ -304,17 +303,17 @@
             $modelClassName  = $moduleClassName::getPrimaryModelName();
             foreach ($this->placedDirectAttributeNamesAsElements as $attributeName)
             {
-                if(isset($this->placeableLayoutAttributes[$attributeName]))
+                if (isset($this->placeableLayoutAttributes[$attributeName]))
                 {
                     $elementType = $this->placeableLayoutAttributes[$attributeName]['elementType'];
-                    if($elementType == 'DropDownDependency')
+                    if ($elementType == 'DropDownDependency')
                     {
                         $metadata           = DropDownDependencyDerivedAttributeMetadata::
                                               getByNameAndModelClassName($attributeName, $modelClassName);
                         $usedAttributeNames = $metadata->getUsedAttributeNames();
-                        foreach($usedAttributeNames as $usedAttribute)
+                        foreach ($usedAttributeNames as $usedAttribute)
                         {
-                            if(in_array($usedAttribute, $this->placedDirectAttributeNamesAsElements))
+                            if (in_array($usedAttribute, $this->placedDirectAttributeNamesAsElements))
                             {
                                 $this->message =
                                 Yii::t('Default', 'All field placed must be unique. Two of the placed ' .

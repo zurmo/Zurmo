@@ -40,7 +40,7 @@
          */
         public static function getDesignerType($model, $attributeName)
         {
-            if(!$model->isAttribute($attributeName))
+            if (!$model->isAttribute($attributeName))
             {
                 return DerivedAttributeToMixedTypeUtil::getType(get_class($model), $attributeName);
             }

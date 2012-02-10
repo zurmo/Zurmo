@@ -42,7 +42,7 @@
             $attributes = array();
             $calculatedAttributes = CalculatedDerivedAttributeMetadata::
                                     getAllByModelClassName($this->modelClassName);
-            foreach($calculatedAttributes as $attribute)
+            foreach ($calculatedAttributes as $attribute)
             {
                 ModelAttributeCollectionUtil::populateCollection(
                     $attributes,
@@ -54,7 +54,7 @@
 
             $dropdownDependencyAttributes = DropDownDependencyDerivedAttributeMetadata::
                                             getAllByModelClassName($this->modelClassName);
-            foreach($dropdownDependencyAttributes as $attribute)
+            foreach ($dropdownDependencyAttributes as $attribute)
             {
                 ModelAttributeCollectionUtil::populateCollection(
                     $attributes,

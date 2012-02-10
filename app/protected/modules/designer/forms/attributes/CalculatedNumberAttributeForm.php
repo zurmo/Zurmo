@@ -41,7 +41,7 @@
             assert('$model === null || !$model->isAttribute($attributeName)');
             if ($model !== null)
             {
-                if($attributeName != null)
+                if ($attributeName != null)
                 {
                     $metadata              = CalculatedDerivedAttributeMetadata::
                                              getByNameAndModelClassName($attributeName, get_class($model));
@@ -96,7 +96,7 @@
             $modelClassName = $this->modelClassName;
             $model          = new $modelClassName(false);
             $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
-            if(!CalculatedNumberUtil::isFormulaValid($this->{$attribute}, $adapter))
+            if (!CalculatedNumberUtil::isFormulaValid($this->{$attribute}, $adapter))
             {
                 $this->addError('formula', Yii::t('Default', 'The formula is invalid.'));
             }
@@ -118,7 +118,7 @@
                     $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
                 }
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
             }
         }
@@ -133,7 +133,7 @@
 
         public function canUpdateAttributeProperty($propertyName)
         {
-            if($propertyName == 'attributeName' && $this->id != null)
+            if ($propertyName == 'attributeName' && $this->id != null)
             {
                 return false;
             }

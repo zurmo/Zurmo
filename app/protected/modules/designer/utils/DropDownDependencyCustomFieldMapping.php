@@ -130,7 +130,7 @@
          */
         public function getSelectHigherLevelFirstMessage()
         {
-            if($this->allowsAttributeSelection())
+            if ($this->allowsAttributeSelection())
             {
                 throw new NotSupportedException();
             }
@@ -149,7 +149,7 @@
         public function getMappingDataSelectedParentValueByValue($value)
         {
             assert('is_string($value)');
-            if(isset($this->mappingData[$value]))
+            if (isset($this->mappingData[$value]))
             {
                 return $this->mappingData[$value];
             }

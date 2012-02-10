@@ -65,7 +65,7 @@
             $depthCount                     = 0;
             $availableCustomFieldAttributes = self::getCustomFieldAttributesNotUsedInOtherDependencyAttributes();
             $parentAttributeName            = null;
-            foreach($mappingData as $dependencyData)
+            foreach ($mappingData as $dependencyData)
             {
                 self::resolveAvailableCustomFieldAttributes($availableCustomFieldAttributes, $parentAttributeName);
                 $valuesToParentValues = self::resolveValuesToParentValues($dependencyData);
@@ -77,9 +77,9 @@
                                              $valuesToParentValues);
                 $collection[]        = $dependencyMapping;
                 $parentAttributeName = $dependencyData['attributeName'];
-                $depthCount ++;
+                $depthCount++;
             }
-            if($this->maxDepth > $depthCount)
+            if ($this->maxDepth > $depthCount)
             {
                 self::resolveAvailableCustomFieldAttributes($availableCustomFieldAttributes, $parentAttributeName);
                 $allowSelection = true;
@@ -92,13 +92,13 @@
                                                  null,
                                                  null
                                              );
-                    if(!$allowSelection)
+                    if (!$allowSelection)
                     {
                         $dependencyMapping->doNotAllowAttributeSelection();
                     }
                     $collection[]   = $dependencyMapping;
                     $allowSelection = false;
-                    $depthCount ++;
+                    $depthCount++;
                 }
             }
             return $collection;
@@ -113,14 +113,14 @@
             $model                    = new $modelClassName(false);
             $attributeNames           = CustomFieldUtil::getCustomFieldAttributeNames($model);
             $dropDownDependencyModels = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName($this->modelClassName);
-            foreach($dropDownDependencyModels as $dropDownDependency)
+            foreach ($dropDownDependencyModels as $dropDownDependency)
             {
-                if($dropDownDependency->name != $this->attributeName)
+                if ($dropDownDependency->name != $this->attributeName)
                 {
                     $usedAttributeNames = $dropDownDependency->getUsedAttributeNames();
-                    foreach($usedAttributeNames as $usedAttributeName)
+                    foreach ($usedAttributeNames as $usedAttributeName)
                     {
-                        if(in_array($usedAttributeName, $attributeNames))
+                        if (in_array($usedAttributeName, $attributeNames))
                         {
                             $key = array_search($usedAttributeName, $attributeNames);
                             unset($attributeNames[$key]);
@@ -129,7 +129,7 @@
                 }
             }
             $attributeNamesAndLabels = array();
-            foreach($attributeNames as $attributeName)
+            foreach ($attributeNames as $attributeName)
             {
                 $attributeNamesAndLabels[$attributeName] = $model->getAttributeLabel($attributeName);
             }
@@ -140,7 +140,7 @@
         {
             assert('is_array($availableCustomFieldAttributes)');
             assert('is_string($parentAttributeName) || $parentAttributeName == null');
-            if($parentAttributeName != null && isset($availableCustomFieldAttributes[$parentAttributeName]))
+            if ($parentAttributeName != null && isset($availableCustomFieldAttributes[$parentAttributeName]))
             {
                 unset($availableCustomFieldAttributes[$parentAttributeName]);
             }
@@ -149,7 +149,7 @@
         protected function getAttributeCustomFieldData($attributeName)
         {
             assert('is_string($attributeName) || $attributeName == null');
-            if($attributeName == null)
+            if ($attributeName == null)
             {
                 return null;
             }
@@ -160,7 +160,7 @@
         protected function resolveValuesToParentValues($dependencyData)
         {
             assert('is_array($dependencyData)');
-            if(isset($dependencyData['valuesToParentValues']))
+            if (isset($dependencyData['valuesToParentValues']))
             {
                 return $dependencyData['valuesToParentValues'];
             }
