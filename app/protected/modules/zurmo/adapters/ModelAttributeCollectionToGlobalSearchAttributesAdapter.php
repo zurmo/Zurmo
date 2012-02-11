@@ -50,6 +50,7 @@
                 if(($data['elementType'] == 'Text' ||
                    $data['elementType'] == 'Integer' ||
                    $data['elementType'] == 'Decimal' ||
+                   $data['elementType'] == 'Phone' ||
                    $data['elementType'] == 'TextArea') && $attributeName != 'id')
                 {
                     $valuesAndLabels[$attributeName] = $data['attributeLabel'];

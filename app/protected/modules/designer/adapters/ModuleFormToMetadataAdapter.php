@@ -59,7 +59,10 @@
                 }
                 else
                 {
-                    $metadata['global'][$attributeName] = $this->form->$attributeName;
+                    if($this->form->isAttributeSafe($attributeName))
+                    {
+                        $metadata['global'][$attributeName] = $this->form->$attributeName;
+                    }
                 }
             }
             $module::setMetadata($metadata);
