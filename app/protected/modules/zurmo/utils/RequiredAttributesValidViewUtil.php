@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -30,6 +30,18 @@
      * on designer rules, are marked as missing required attributes.  Once these required attributes are placed, the
      * view is marked as containing the required attributes.  The default controller actions such as edit and create
      * resolve this information and display an error page if a view is missing required attributes.
+     *
+     * Additional Documentation:
+     * Lets say you have a model Account.  The name attribute is required on the account.  This means that the edit
+     * form for an account needs to have the name attribute present, otherwise the user will click 'save' and an
+     * exception will be thrown because the name attribute is not present.  The goal of RequiredAttributesValidViewUtil
+     * to provide a way to analyze in real-time if a attribute is missing from a layout that requires all required
+     * attributes.  Search view for example, does not require all required attributes but the Edit view for example
+     * does.  The designer rules are a way of providing rules and information for certain types of views.
+     * When you call resolveToSetAsMissingRequiredAttributesByModelClassName, it will check to see if any views require
+     * all require attributes by inspecting the designer rules for all the views that are associated with the suppliled
+     * model name.  If any of the views require all require attributes, it will check to see if the attributeName
+     * specified is in fact already on the view or not.  Then it takes appropriate action.
      */
     class RequiredAttributesValidViewUtil
     {

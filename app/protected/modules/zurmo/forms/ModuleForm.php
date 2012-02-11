@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -30,8 +30,8 @@
      */
     abstract class ModuleForm extends ConfigurableMetadataModel
     {
-        public $singularModuleLabels = array();
-        public $pluralModuleLabels   = array();
+        public $singularModuleLabels   = array();
+        public $pluralModuleLabels     = array();
 
         public function __construct()
         {
@@ -62,7 +62,7 @@
                 {
                     $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
                 }
-                if ($data[$language] != mb_strtolower($data[$language], Yii::app()->charset))
+                if ($data[$language] != TextUtil::strToLowerWithDefaultEncoding($data[$language]))
                 {
                     $this->addError($attribute . '[' . $language . ']',
                                 Yii::t('Default', 'Label must be all lowercase.'));

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -92,6 +92,10 @@
             $postData          = array( 'date__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
                                           'firstDate' => '3/25/11'),
+                                         'date2__Date'  =>
+                                    array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN,
+                                          'firstDate' =>  '5/25/11',
+                                          'secondDate' => '6/25/11'),
                                 'dateTime__DateTime'  =>
                                    array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
                                           'firstDate' => '3/26/11'));
@@ -99,6 +103,10 @@
             $compareData = array( 'date__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
                                           'firstDate' => '2011-03-25'),
+                                  'date2__Date'  =>
+                                    array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN,
+                                          'firstDate'  => '2011-05-25',
+                                          'secondDate' => '2011-06-25'),
                                 'dateTime__DateTime'  =>
                                    array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
                                           'firstDate' => '2011-03-26'));

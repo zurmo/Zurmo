@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -165,6 +165,7 @@
             $browsersToRun = self::resolveBrowserFromParameter();
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
+                self::clearPreviousTestResultsByBrowser($browserDisplayName);
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
                 {
                     echo 'Restoring test db';
@@ -384,6 +385,23 @@
             self::makeResultsSummaryFile($data);
         }
 
+        protected static function clearPreviousTestResultsByBrowser($browserDisplayName)
+        {
+            if (is_dir(TEST_RESULTS_PATH))
+            {
+                $resultsNames = scandir(TEST_RESULTS_PATH);
+                foreach ($resultsNames as $resultFile)
+                {
+                    if ($resultFile != '.' &&
+                    $resultFile != '..' &&
+                    stristr($resultFile, strtolower($browserDisplayName)))
+                    {
+                        unlink(TEST_RESULTS_PATH . $resultFile);
+                    }
+                }
+            }
+        }
+
         protected static function getResultFileStatusByFileName($resultFile)
         {
             $contents = file_get_contents(TEST_RESULTS_PATH . $resultFile);
@@ -488,7 +506,7 @@
             elseif (isset($params['clearCache']) && $params['clearCache'] == '1' &&
                     isset($params['ignoreBrowserCheck']) && $params['ignoreBrowserCheck'] == '1')
             {
-                $url = $url . "index.php?r=zurmo/default/login&clearCache=1&ignoreBrowserCheck=1"; // Not Coding Standard
+                $url = $url . "index.php/zurmo/default/login?clearCache=1&ignoreBrowserCheck=1"; // Not Coding Standard
             }
             else
             {

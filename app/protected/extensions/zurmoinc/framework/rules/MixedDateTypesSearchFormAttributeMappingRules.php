@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -38,6 +38,10 @@
         const TYPE_BEFORE         = 'Before';
 
         const TYPE_AFTER          = 'After';
+
+        const TYPE_ON             = 'On';
+
+        const TYPE_BETWEEN        = 'Between';
 
         const TYPE_NEXT_7_DAYS    = 'Next 7 Days';
 
@@ -77,7 +81,8 @@
                              calculateNew(DateTimeCalculatorUtil::YESTERDAY,
                              new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser())));
                 }
-                elseif ($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER)
+                elseif ($value['type'] == self::TYPE_BEFORE || $value['type'] == self::TYPE_AFTER ||
+                        $value['type'] == self::TYPE_ON)
                 {
                     if ($value["firstDate"] == null)
                     {
@@ -93,6 +98,40 @@
             return null;
         }
 
+        /**
+         * When the value type is between, returns the firstDate value.
+         * @param unknown_type $value
+         */
+        public static function resolveValueDataForBetweenIntoUsableFirstDateValue($value)
+        {
+            if($value['type'] != self::TYPE_BETWEEN)
+            {
+                throw new NotSupportedException();
+            }
+            if ($value["firstDate"] == null)
+            {
+                return null;
+            }
+            return $value['firstDate'];
+        }
+
+        /**
+         * When the value type is between, returns the secondDate value.
+         * @param unknown_type $value
+         */
+        public static function resolveValueDataForBetweenIntoUsableSecondDateValue($value)
+        {
+            if($value['type'] != self::TYPE_BETWEEN)
+            {
+                throw new NotSupportedException();
+            }
+            if ($value["secondDate"] == null)
+            {
+                return null;
+            }
+            return $value['secondDate'];
+        }
+
         public static function getValidValueTypesAndLabels()
         {
             return array(self::TYPE_YESTERDAY   => Yii::t('Default', 'Yesterday'),
@@ -100,6 +139,8 @@
                          self::TYPE_TOMORROW    => Yii::t('Default', 'Tomorrow'),
                          self::TYPE_BEFORE      => Yii::t('Default', 'Before'),
                          self::TYPE_AFTER       => Yii::t('Default', 'After'),
+                         self::TYPE_ON          => Yii::t('Default', 'On'),
+                         self::TYPE_BETWEEN     => Yii::t('Default', 'Between'),
                          self::TYPE_NEXT_7_DAYS => Yii::t('Default', 'Next 7 Days'),
                          self::TYPE_LAST_7_DAYS => Yii::t('Default', 'Last 7 Days'),
             );
@@ -107,7 +148,12 @@
 
         public static function getValueTypesRequiringFirstDateInput()
         {
-            return array(self::TYPE_BEFORE, self::TYPE_AFTER);
+            return array(self::TYPE_BEFORE, self::TYPE_AFTER, self::TYPE_ON, self::TYPE_BETWEEN);
+        }
+
+            public static function getValueTypesRequiringSecondDateInput()
+        {
+            return array(self::TYPE_BETWEEN);
         }
 
         /**
@@ -143,6 +189,17 @@
                 elseif ($value['type'] == self::TYPE_BEFORE)
                 {
                     $attributeAndRelations = array(array($realAttributeName, null, 'lessThanOrEqualTo', 'resolveValueByRules'));
+                }
+                elseif ($value['type'] == self::TYPE_ON)
+                {
+                    $attributeAndRelations = array(array($realAttributeName, null, 'equals', 'resolveValueByRules'));
+                }
+                elseif ($value['type'] == self::TYPE_BETWEEN)
+                {
+                    $firstDateValue = static::resolveValueDataForBetweenIntoUsableFirstDateValue($value);
+                    $secondDateValue = static::resolveValueDataForBetweenIntoUsableSecondDateValue($value);
+                    $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $firstDateValue, true),
+                                                   array($realAttributeName, null, 'lessThanOrEqualTo',    $secondDateValue, true));
                 }
                 elseif ($value['type'] == self::TYPE_NEXT_7_DAYS)
                 {

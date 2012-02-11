@@ -12,64 +12,64 @@
 <tr><td rowspan="1" colspan="3">Search</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=contacts/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/contacts/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Contacts: Home</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Contacts: Home</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Advanced Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>ContactsSearchForm_fullName</td>
-	<td>Jane ${randomSuffix}</td>
+  <td>type</td>
+  <td>ContactsSearchForm_fullName</td>
+  <td>Jane ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Jinny Jane ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Jinny Jane ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>ContactsSearchForm_fullName</td>
-	<td>Jane ${randomSuffix}</td>
+  <td>verifyValue</td>
+  <td>ContactsSearchForm_fullName</td>
+  <td>Jane ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Clear Search</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Clear Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>ContactsSearchForm_fullName</td>
-	<td></td>
+  <td>verifyValue</td>
+  <td>ContactsSearchForm_fullName</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

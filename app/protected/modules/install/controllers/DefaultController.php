@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -67,7 +67,7 @@
                 $form->setMemcacheIsNotAvailable();
             }
             $form->hostInfo = InstallUtil::getDefaultHostInfo();
-            $form->scriptUrl = InstallUtil::getDefaultScriptUrl();
+            $form->scriptUrl = InstallUtil::getDefaultScriptUrl($this->getRoute());
 
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'install-form')
             {

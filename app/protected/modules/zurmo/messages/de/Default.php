@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -87,6 +87,8 @@
             => 'Betrag',
         'An error has occurred. Please click'
             => 'Ein Fehler ist aufgetreten. Bitte klicken',
+        'An error occured during login. Please try again.'
+            => 'Fehler bei der Anmeldung. Bitte versuchen Sie es noch einmal.',
         'Any City'
             => 'Stadt',
         'Any Country'
@@ -267,6 +269,8 @@
             => 'Versicherung',
         'Invalid currency code'
             => 'Ungültige Währungscode',
+        'Invalid username or password.'
+            => 'Ungültiger Benutzername oder Kennwort.',
         'Is Invalid'
             => 'ist ungültig',
         'Job Title'
@@ -299,8 +303,12 @@
             => 'Laden',
         'Login'
             => 'Anmelden',
+        'Login required.'
+            => 'Login erforderlich.',
         'Logout'
             => 'Abmelden',
+        'Logout failed.'
+            => 'Fehler bei der Abmeldung.',
         'Longitude'
             => 'Länge',
         'Manage Active Languages'
@@ -329,6 +337,10 @@
             => 'Fehlende Pflichtangaben',
         'Mobile Phone'
             => 'Mobiltelefon',
+        'Model was not created.'
+            => 'Das Modell wurde nicht erstellt.',
+        'Model was not updated.'
+            => 'Das Modell wurde nicht aktualisiert.',
         'Module Name - Plural'
             => 'Modul Name - Plural',
         'Module Name - Plural (lowercase)'
@@ -393,6 +405,8 @@
             => 'Berechtigungen',
         'Permitable'
             => 'Erlaubt',
+        'Please provide data.'
+            => 'Bitte geben Sie die Daten.',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Bitte benutzen Sie FireFox, Chrome oder Internet Explorer.',
         'Policies'
@@ -469,6 +483,8 @@
             => 'Sorry! Ihr Browser ist nicht unterstützt',
         'Source'
             => 'Quelle',
+        'Specified custom field name was invalid.'
+            => 'Der Name der benutzerdefinierte Feld ist ungültig.',
         'Stage'
             => 'Stufe',
         'Standard Fields'
@@ -495,6 +511,8 @@
             => 'Der Wechselkurs Web-Service war nicht verfügbar. Der Wechselkurs konnte nicht automatisch aktualisiert werden',
         'The currency was not removed because it is in use.'
             => 'Die Währung wurde nicht gelöscht, weil es in Gebrauch ist.',
+        'The ID specified was invalid.'
+            => 'ID ist ungültig.',
         'The status specified is invalid.'
             => 'Der Status ist ungültig.',
         'There are no recently viewed items.'

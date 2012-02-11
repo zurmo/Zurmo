@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -49,10 +49,16 @@
             {
                 throw new BadPasswordException();
             }
-            if (Right::ALLOW != $user->getEffectiveRight(
-                'UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB))
+            if (Right::ALLOW != $user->getEffectiveRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) &&
+                !Yii::app()->apiRequest->isApiRequest())
             {
                 throw new NoRightWebLoginException();
+            }
+
+            if (Right::ALLOW != $user->getEffectiveRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API) &&
+                Yii::app()->apiRequest->isApiRequest())
+            {
+                throw new ApiNoRightWebApiLoginException();
             }
             return $user;
         }
@@ -559,7 +565,7 @@
                     array('hash',     'type',    'type' => 'string'),
                     array('hash',     'length',  'min'   => 32, 'max' => 32),
                     array('language', 'type',    'type'  => 'string'),
-                    array('language', 'length',  'max'   => 2),
+                    array('language', 'length',  'max'   => 5),
                     array('timeZone', 'type',    'type'  => 'string'),
                     array('timeZone', 'length',  'max'   => 64),
                     array('timeZone', 'default', 'value' => 'UTC'),

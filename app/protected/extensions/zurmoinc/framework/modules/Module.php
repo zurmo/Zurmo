@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -168,12 +168,12 @@
                     return Yii::t('Default', static::getSingularModuleLabel());
                 case 'SingularLowerCase':
                     $string  = Yii::t('Default', static::getSingularModuleLabel(), array(), null, $language);
-                    return mb_strtolower($string, Yii::app()->charset);
+                    return TextUtil::strToLowerWithDefaultEncoding($string);
                 case 'Plural':
                     return Yii::t('Default', static::getPluralModuleLabel(), array(), null, $language);
                 case 'PluralLowerCase':
                     $string  = Yii::t('Default', static::getPluralModuleLabel(), array(), null, $language);
-                    return mb_strtolower($string, Yii::app()->charset);
+                    return TextUtil::strToLowerWithDefaultEncoding($string);
             }
         }
 

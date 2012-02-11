@@ -12,428 +12,428 @@
 <tr><td rowspan="1" colspan="3">Create Edit Delete Tasks For Leads</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=leads/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/leads/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Leads: Home</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Leads: Home</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Advanced Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>LeadsSearchForm_fullName</td>
-	<td>Sally ${randomSuffix}</td>
+  <td>type</td>
+  <td>LeadsSearchForm_fullName</td>
+  <td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Leads: Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Leads: Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[contains(@class, 'OpenTasksForContactRelatedListView')]/div[1]/a</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[contains(@class, 'OpenTasksForContactRelatedListView')]/div[1]/a</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Tasks: (Unnamed)</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Tasks: (Unnamed)</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Task_name</td>
-	<td>Task kick-off lead ${randomSuffix}</td>
+  <td>type</td>
+  <td>Task_name</td>
+  <td>Task kick-off lead ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Task_dueDateTime</td>
-	<td></td>
+  <td>click</td>
+  <td>Task_dueDateTime</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Hour</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Hour</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/div[1]/a[2]/span</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/div[1]/a[2]/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/table/tbody/tr[2]/td[3]/a</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/table/tbody/tr[2]/td[3]/a</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/div[3]/button[2]</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/div[3]/button[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>ActivityItemForm_Account_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>ActivityItemForm_Account_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Account Search</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Account Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Account_name</td>
-	<td>my account ${randomSuffix}</td>
+  <td>type</td>
+  <td>Account_name</td>
+  <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result(s).</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result(s).</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>my account ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>my account ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=my account ${randomSuffix}</td>
-	<td></td>
+  <td>click</td>
+  <td>link=my account ${randomSuffix}</td>
+  <td></td>
 </tr><tr>
-	<td>waitForValue</td>
-	<td>ActivityItemForm_Account_name</td>
-	<td>my account ${randomSuffix}</td>
+  <td>waitForValue</td>
+  <td>ActivityItemForm_Account_name</td>
+  <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>ActivityItemForm_Contact_name</td>
-	<td>Silly Sally ${randomSuffix}</td>
+  <td>verifyValue</td>
+  <td>ActivityItemForm_Contact_name</td>
+  <td>Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>ActivityItemForm_Opportunity_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>ActivityItemForm_Opportunity_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Opportunity Search</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Opportunity Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Opportunity_name</td>
-	<td>Test Opportunity ${randomSuffix}</td>
+  <td>type</td>
+  <td>Opportunity_name</td>
+  <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result(s).</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result(s).</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Test Opportunity ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Test Opportunity ${randomSuffix}</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Test Opportunity ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>ActivityItemForm_Opportunity_name</td>
-	<td>Test Opportunity ${randomSuffix}</td>
+  <td>waitForValue</td>
+  <td>ActivityItemForm_Opportunity_name</td>
+  <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Task_description</td>
-	<td>This is a test Task</td>
+  <td>type</td>
+  <td>Task_description</td>
+  <td>This is a test Task</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Task_owner_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>Task_owner_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>User Search</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>User Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>User_firstName</td>
-	<td>Sam</td>
+  <td>type</td>
+  <td>User_firstName</td>
+  <td>Sam</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>User_lastName</td>
-	<td>Smith</td>
+  <td>type</td>
+  <td>User_lastName</td>
+  <td>Smith</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result(s).</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result(s).</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Sam Smith</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Sam Smith</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Sam Smith</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Sam Smith</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>Task_owner_name</td>
-	<td>Sam Smith</td>
+  <td>waitForValue</td>
+  <td>Task_owner_name</td>
+  <td>Sam Smith</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Task_explicitReadWriteModelPermissions_type_2</td>
-	<td></td>
+  <td>click</td>
+  <td>Task_explicitReadWriteModelPermissions_type_2</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Task kick-off lead ${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Task kick-off lead ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Tasks: Task kick-off lead ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Tasks: Task kick-off lead ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>my account ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>my account ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Test Opportunity ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Everyone</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Everyone</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>This is a test Task</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>This is a test Task</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Edit</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Task_name</td>
-	<td>Task kick-off new lead ${randomSuffix}</td>
+  <td>type</td>
+  <td>Task_name</td>
+  <td>Task kick-off new lead ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Task_completed</td>
-	<td></td>
+  <td>click</td>
+  <td>Task_completed</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Task_completedDateTime</td>
-	<td></td>
+  <td>click</td>
+  <td>Task_completedDateTime</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Hour</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Hour</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/div[1]/a[2]/span</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/div[1]/a[2]/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/table/tbody/tr[3]/td[3]/a</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/table/tbody/tr[3]/td[3]/a</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='ui-datepicker-div']/div[3]/button[2]</td>
-	<td></td>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/div[3]/button[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Task_explicitReadWriteModelPermissions_type_0</td>
-	<td></td>
+  <td>click</td>
+  <td>Task_explicitReadWriteModelPermissions_type_0</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Tasks: Task kick-off new lead ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Tasks: Task kick-off new lead ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>Task_completed</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>Task_completed</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>Task_completed</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>Task_completed</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Owner</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Owner</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Delete</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Delete</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForConfirmation</td>
-	<td>Are you sure you want to remove this task?</td>
-	<td></td>
+  <td>waitForConfirmation</td>
+  <td>Are you sure you want to remove this task?</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=leads/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/leads/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Leads: Home</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Leads: Home</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Advanced Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>LeadsSearchForm_fullName</td>
-	<td>Sally ${randomSuffix}</td>
+  <td>type</td>
+  <td>LeadsSearchForm_fullName</td>
+  <td>Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Leads: Silly Sally ${randomSuffix}</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Leads: Silly Sally ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextNotPresent</td>
-	<td>Task kick-off new lead ${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextNotPresent</td>
+  <td>Task kick-off new lead ${randomSuffix}</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

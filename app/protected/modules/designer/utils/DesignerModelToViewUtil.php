@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -33,6 +33,16 @@
         public static function getModelAttributesAdapter($viewClassName, $modelClassName)
         {
             $modelForViewClassName = DesignerModelToViewUtil::getModelForViewClassName($viewClassName, $modelClassName);
+            assert('is_subclass_of($modelForViewClassName, "ModelForm") || is_subclass_of($modelForViewClassName, "RedBeanModel")');
+            if (is_subclass_of($modelForViewClassName, 'ModelForm'))
+            {
+                return new ModelFormAttributesAdapter(new $modelForViewClassName(new $modelClassName()));
+            }
+            return new ModelAttributesAdapter(new $modelClassName());
+        }
+
+        public static function getModelAttributesAdapterByModelForViewClassName($modelForViewClassName, $modelClassName)
+        {
             assert('is_subclass_of($modelForViewClassName, "ModelForm") || is_subclass_of($modelForViewClassName, "RedBeanModel")');
             if (is_subclass_of($modelForViewClassName, 'ModelForm'))
             {

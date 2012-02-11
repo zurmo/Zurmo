@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -268,7 +268,7 @@
          * the _set is blocking the entry of a reserved name and _set is used
          * by setAttributes which comes before validate is called.
          */
-        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
+        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null, $redirect = true)
         {
             assert('$redirectUrlParams == null || is_array($redirectUrlParams)');
             $postVariableName = get_class($model);

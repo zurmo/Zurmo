@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -34,6 +34,7 @@
             $everyone   = Group::getByName(Group::EVERYONE_GROUP_NAME);
             $everyone->setRight('UsersModule',         UsersModule::RIGHT_LOGIN_VIA_WEB);
             $everyone->setRight('UsersModule',         UsersModule::RIGHT_LOGIN_VIA_MOBILE);
+            $everyone->setRight('UsersModule',         UsersModule::RIGHT_LOGIN_VIA_WEB_API);
             $everyone->setRight('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS, Right::ALLOW);
             $everyone->setRight('AccountsModule',      AccountsModule::RIGHT_CREATE_ACCOUNTS, Right::ALLOW);
             $everyone->setRight('AccountsModule',      AccountsModule::RIGHT_DELETE_ACCOUNTS, Right::ALLOW);

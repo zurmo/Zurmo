@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -42,8 +42,11 @@
     $installed        = false; // Set to true by the installation process.
     $instanceConfig   = array(); //Set any parameters you want to have merged into configuration array.
                                  //@see CustomManagement
-    $instanceConfig['components']['request']['hostInfo'] = '';
-    $instanceConfig['components']['request']['scriptUrl'] = '';
+    //$instanceConfig['components']['request']['hostInfo'] = '';
+    //$instanceConfig['components']['request']['scriptUrl'] = '';
+
+    $urlManager = array (); //Set any parameters you want to customize url manager.
+    $testApiUrl = '';
 
     if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
     {

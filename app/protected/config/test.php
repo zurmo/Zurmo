@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -23,7 +23,10 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-    define ('IS_TEST', true);
+    if (!defined('IS_TEST'))
+    {
+        define('IS_TEST', true);
+    }
     $common_config = CMap::mergeArray(
         require('main.php'),
         array(
@@ -54,6 +57,7 @@
             ),
         )
     );
+
     //override and use test specific begin behavior
     $common_config['behaviors']['onBeginRequest'] = array(
         'class' => 'application.tests.BeginRequestTestBehavior'

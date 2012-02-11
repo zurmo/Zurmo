@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -406,6 +406,111 @@
                 case 'mysql':
                     $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_sp_recursion_depth'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        return $row[1];
+                    }
+            }
+            return false;
+        }
+
+        /**
+        * Get database thread_stack
+        * @param string $databaseType
+        * @param string $databaseHostname
+        * @param string $databaseUsername
+        * @param string $databasePassword
+        * @throws NotSupportedException
+        */
+        public static function getDatabaseThreadStackValue($databaseType,
+                                                           $databaseHostname,
+                                                           $databaseUsername,
+                                                           $databasePassword)
+        {
+            if ($databaseType != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'thread_stack'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        return $row[1];
+                    }
+            }
+            return false;
+        }
+
+        /**
+        * Get database log_bin
+        * @param string $databaseType
+        * @param string $databaseHostname
+        * @param string $databaseUsername
+        * @param string $databasePassword
+        * @throws NotSupportedException
+        */
+        public static function getDatabaseLogBinValue($databaseType,
+                                                      $databaseHostname,
+                                                      $databaseUsername,
+                                                      $databasePassword)
+        {
+            if ($databaseType != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'log_bin'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        return $row[1];
+                    }
+            }
+            return false;
+        }
+
+        /**
+        * Get database log_bin_trust_function_creators
+        * @param string $databaseType
+        * @param string $databaseHostname
+        * @param string $databaseUsername
+        * @param string $databasePassword
+        * @throws NotSupportedException
+        */
+        public static function getDatabaseLogBinTrustFunctionCreatorsValue($databaseType,
+                                                                           $databaseHostname,
+                                                                           $databaseUsername,
+                                                                           $databasePassword)
+        {
+            if ($databaseType != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'log_bin_trust_function_creators'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
                     {

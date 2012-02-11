@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -33,6 +33,20 @@
             $user->title->value = 'Mr.';
             $user->firstName    = $name;
             $user->lastName     = $name . 'son';
+            $user->setPassword(strtolower($name));
+            $saved = $user->save();
+            assert('$saved');
+            return $user;
+        }
+
+        public static function createBasicUserWithManager($name, $manager)
+        {
+            $user = new User();
+            $user->username     = strtolower($name);
+            $user->title->value = 'Mr.';
+            $user->firstName    = $name;
+            $user->lastName     = $name . 'son';
+            $user->manager = $manager;
             $user->setPassword(strtolower($name));
             $saved = $user->save();
             assert('$saved');

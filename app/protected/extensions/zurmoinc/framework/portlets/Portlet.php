@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -70,6 +70,23 @@
             $sql = "select id, {$quote}column$quote, position "          .
                    'from portlet '                                       .
                    "where layoutid = '$layoutId' and _user_id = $userId " .
+                   'order by id;';
+            foreach (R::getAll($sql) as $row)
+            {
+                $portlet = Portlet::getById(intval($row['id']));
+                $portletCollection[$row['id']] = $portlet;
+            }
+            return $portletCollection;
+        }
+
+        public static function getByLayoutId($layoutId)
+        {
+            $portletCollection = array();
+            assert('is_string($layoutId)');
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            $sql = "select id, {$quote}column$quote, position "          .
+                   'from portlet '                                       .
+                   "where layoutid = '$layoutId'"                        .
                    'order by id;';
             foreach (R::getAll($sql) as $row)
             {

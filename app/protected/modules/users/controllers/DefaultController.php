@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -159,7 +159,7 @@
          * Override to handle UserStatus processing.
          * @see ZurmoBaseController::attemptToSaveModelFromPost()
          */
-        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null)
+        protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null, $redirect = true)
         {
             assert('$model instanceof User || $model instanceof UserPasswordForm');
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');

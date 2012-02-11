@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -148,6 +148,7 @@
             $content     = Yii::t('Default', 'Active') . '&#160;';
             $content    .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">';
             $content    .= Yii::t('Default', 'What is this?') . '</span>';
+            Yii::import('application.extensions.qtip.QTip');
             $qtip = new QTip();
             $qtip->addQTip("#active-languages-tooltip");
             return $content;

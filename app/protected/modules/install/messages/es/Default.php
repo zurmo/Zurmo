@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -76,6 +76,12 @@
             => 'Base de datos está en modo estricto.',
         'Database is not in strict mode.'
             => 'Base de datos no está en modo estricto.',
+        'Database log_bin=off and therefore satisfies this requirement.'
+            => 'En la base de datos, el valor del parámetro log_bin=off y cumple con las condiciones necesarias.',
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement'
+            => 'En la base de datos, los valores de parámetros log_bin=on y log_bin_trust_function_creators=on y cumplen con las condiciones necesarias.',
+        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.'
+            => 'En la base de datos, los valores de parámetros log_bin=on. Debe cambiar la configuración de log_bin=off o log_bin_trust_function_creators=on.',
         'Database max_allowed_packet size is:'
             => 'Base de datos max_allowed_packet tamaño es:',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -90,6 +96,10 @@
             => 'Contraseña de base de datos',
         'Database schema creation complete.'
             => 'Esquema de la base de datos creada',
+        'Database thread_stack value is:'
+            => 'El valor de thread_stack la base de datos es:',
+        'Database thread_stack value meets minimum requirement.'
+            => 'El valor de thread_stack en la base de datos cumple con los requisitos mínimos.',
         'Database username'
             => 'Nombre de usuario de base de datos',
         'Dropping existing tables.'
@@ -106,6 +116,8 @@
             => 'Terminado de cargar datos de demostración.',
         'Freezing database.'
             => 'Freezing base de datos',
+        'Host name where Zurmo will be installed.'
+            => 'El nombre del host donde Zurmo se instalará.',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -225,7 +237,7 @@
         'The debug.php config file is writable.'
             => 'Se puede escribirEl archivo de configuración  debug.php',
         'The instance folders are present and writable.'
-            =>'Los archivos del sistema están presentes y escritura.',
+            => 'Los archivos del sistema están presentes y escritura.',
         'The name of the database you want to run Zurmo in.'
             => 'El nombre de la base de datos para Zurmo.',
         'The next step is to install the demo data.'
@@ -234,6 +246,10 @@
             => 'No se puede escribir ll archivo de configuración perInstance.php.',
         'The perInstance.php config file is writable.'
             => 'Se puede escribir ll archivo de configuración perInstance.php.',
+        'The relative path where Zurmo will be installed.'
+            => 'La ruta relativa en Zurmo se instalará.',
+        'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
+            => 'El sistema ha detectado que hostinfo y/o ScirptUrl no se configuran. Por favor, abra el archivo de configuración perInstance.php y configurar estos parámetros.',
         'There was a problem creating the database Error code:'
             => 'Hubo un problema al crear la base de datos de errores',
         'There was a problem creating the user Error code:'

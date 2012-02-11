@@ -12,156 +12,156 @@
 <tr><td rowspan="1" colspan="3">ParentGroupTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>parentrandomSuffix</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>parentrandomSuffix</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>childrandomSuffix</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>childrandomSuffix</td>
 </tr>
 <!-- create a parent group -->
 <tr>
-	<td>open</td>
-	<td>index.php?r=zurmo/group</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/zurmo/group</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Group_name</td>
-	<td>TestGroup${parentrandomSuffix}</td>
+  <td>type</td>
+  <td>Group_name</td>
+  <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='GroupEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>TestGroup${parentrandomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='GroupEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <!-- create a parent group ends here -->
 <tr>
-	<td>open</td>
-	<td>index.php?r=zurmo/group</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/zurmo/group</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Group_name</td>
-	<td>TestGroup${childrandomSuffix}</td>
+  <td>type</td>
+  <td>Group_name</td>
+  <td>TestGroup${childrandomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>Group_group_SelectLink</td>
-	<td></td>
+  <td>click</td>
+  <td>Group_group_SelectLink</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Select a Parent Group</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Select a Parent Group</td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=TestGroup${parentrandomSuffix}</td>
-	<td></td>
+  <td>click</td>
+  <td>link=TestGroup${parentrandomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForValue</td>
-	<td>Group_group_name</td>
-	<td>TestGroup${parentrandomSuffix}</td>
+  <td>waitForValue</td>
+  <td>Group_group_name</td>
+  <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Groups: TestGroup${childrandomSuffix}</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Groups: TestGroup${childrandomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTable</td>
-	<td>//div[@id='GroupEditAndDetailsView']/table.1.1</td>
-	<td>TestGroup${parentrandomSuffix}</td>
+  <td>assertTable</td>
+  <td>//div[@id='GroupEditAndDetailsView']/table.1.1</td>
+  <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/div/div/ul/li/ul/li[2]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/div/div/ul/li/ul/li[2]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=TestGroup${childrandomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=TestGroup${childrandomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Groups: TestGroup${childrandomSuffix}</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Groups: TestGroup${childrandomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=TestGroup${parentrandomSuffix}</td>
-	<td>TestGroup${parentrandomSuffix}</td>
+  <td>assertText</td>
+  <td>link=TestGroup${parentrandomSuffix}</td>
+  <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 </tbody></table>
 </body>

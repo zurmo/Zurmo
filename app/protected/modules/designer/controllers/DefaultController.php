@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -222,10 +222,11 @@
                 resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
             }
             RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
-            $routeParams = array_merge($_GET, array(
-                'attributeName' => $attributeForm->attributeName,
-                0 => 'default/attributeDetails'
-            ));
+            $routeParams = array_merge(
+                array('default/attributeDetails'),
+                $_GET,
+                array('attributeName' => $attributeForm->attributeName)
+            );
             $this->redirect($routeParams);
         }
 
@@ -392,10 +393,11 @@
             $adapter->setMetadata();
             Yii::app()->languageHelper->flushModuleLabelTranslationParameters();
             GeneralCache::forgetAll();
-            $routeParams = array_merge($_GET, array(
-                'moduleClassName' => get_class($module),
-                0 => 'default/modulesMenu'
-            ));
+            $routeParams = array_merge(
+                array('default/modulesMenu'),
+                $_GET,
+                array('moduleClassName' => get_class($module))
+            );
             $this->redirect($routeParams);
         }
     }
