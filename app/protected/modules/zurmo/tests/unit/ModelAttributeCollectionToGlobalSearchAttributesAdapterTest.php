@@ -43,7 +43,7 @@
             $this->assertEquals(30, count($attributeCollection));
             $adapter                 = new ModelAttributeCollectionToGlobalSearchAttributesAdapter(
                                                 $attributeCollection);
-            $this->assertEquals(10, count($adapter->getValuesAndLabelsData()));
+            $this->assertEquals(12, count($adapter->getValuesAndLabelsData()));
             $compareData = array(
                 'annualRevenue'   => 'Annual Revenue',
                 'anyCity'         => 'Any City',
@@ -55,6 +55,8 @@
                 'description'     => 'Description',
                 'employees'       => 'Employees',
                 'name'            => 'Name',
+                'officeFax'		  => 'Office Fax',
+                'officePhone'	  => 'Office Phone'
             );
             $this->assertEquals($compareData, $adapter->getValuesAndLabelsData());
         }
