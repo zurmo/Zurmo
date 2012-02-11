@@ -172,7 +172,8 @@
             $modelClassNamesAndSearchAttributeData = // Not Coding Standard
                 LatestActivitiesUtil::
                     getSearchAttributesDataByModelClassNamesAndRelatedItemIds($filteredMashableModelClassNames,
-                                                                              $relationItemsIds);
+                                                                              $relationItemsIds,
+                                                                              LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL);
             $modelClassNamesAndSortAttributes =      // Not Coding Standard
                 LatestActivitiesUtil::getSortAttributesByMashableModelClassNames($filteredMashableModelClassNames);
             return new RedBeanModelsDataProvider($uniquePageId, $modelClassNamesAndSortAttributes,

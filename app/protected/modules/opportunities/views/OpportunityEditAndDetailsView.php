@@ -155,5 +155,11 @@
             );
             return $metadata;
         }
+
+        protected function getNewModelTitleLabel()
+        {
+            return Yii::t('Default', 'Create a New OpportunitiesModuleSingularLabel',
+                                     LabelUtil::getTranslationParamsForAllModules());
+        }
     }
 ?>

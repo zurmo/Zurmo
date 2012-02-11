@@ -152,5 +152,11 @@
             );
             return $metadata;
         }
+
+        protected function getNewModelTitleLabel()
+        {
+            return Yii::t('Default', 'Create a New TasksModuleSingularLabel',
+                                     LabelUtil::getTranslationParamsForAllModules());
+        }
     }
 ?>
