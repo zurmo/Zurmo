@@ -45,16 +45,17 @@
         protected function renderContent()
         {
 
-            $content  = '<div class="clearfix"><div id="corp-logo"><img src="themes/default/images/Zurmo_logo.png"><span>Company Name</span></div>';
-            $content .= '<div id="user-toolbar" class="clearfix">';
-            $content .= static::renderHeaderMenuContent(
+            $imagePath = Yii::app()->baseUrl . '/themes/default/images/';
+            $content   = '<div class="clearfix"><div id="corp-logo"><img src="' . $imagePath. 'Zurmo_logo.png"><span>Company Name</span></div>';
+            $content  .= '<div id="user-toolbar" class="clearfix">';
+            $content  .= static::renderHeaderMenuContent(
                             static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems),
                             'user-header-menu');
-            $content .= static::renderNotificationsLinkContent();
-            $content .= static::renderHeaderMenuContent(
+            $content  .= static::renderNotificationsLinkContent();
+            $content  .= static::renderHeaderMenuContent(
                             static::resolveSettingsMenuItemsWithTopLevelItem($this->settingsMenuItems),
                             'settings-header-menu');
-            $content .= '</div></div>';
+            $content  .= '</div></div>';
             return $content;
         }
 
