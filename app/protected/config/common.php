@@ -525,24 +525,27 @@
 
 
 
-        'application.modules.contacts.models.Contact',
+            'application.modules.contacts.models.Contact',
 
-        'application.modules.designer.adapters.ModelAttributesAdapter',
-        'application.modules.designer.utils.ModelAttributeCollectionUtil',
-        'application.modules.designer.utils.ModelAttributeToDesignerTypeUtil',
+            'application.modules.designer.adapters.ModelAttributesAdapter',
+            'application.modules.designer.utils.ModelAttributeCollectionUtil',
+            'application.modules.designer.utils.ModelAttributeToDesignerTypeUtil',
 
-        'application.modules.notifications.models.Notification',
+            'application.modules.notifications.models.Notification',
 
-        'application.modules.opportunities.forms.OpportunitiesModuleForm',
-        'application.modules.opportunities.forms.OpportunitiesSearchForm',
-        'application.modules.opportunities.models.Opportunity',
-        'application.modules.opportunities.views.OpportunitiesListView',
-        'application.modules.opportunities.views.OpportunitiesPageView',
-        'application.modules.opportunities.views.OpportunitiesSearchView',
+            'application.modules.opportunities.OpportunitiesModule',
+            'application.modules.opportunities.forms.OpportunitiesModuleForm',
+            'application.modules.opportunities.forms.OpportunitiesSearchForm',
+            'application.modules.opportunities.models.Opportunity',
+            'application.modules.opportunities.views.OpportunitiesListView',
+            'application.modules.opportunities.views.OpportunitiesPageView',
+            'application.modules.opportunities.views.OpportunitiesSearchView',
 
-        'application.modules.users.models.User',
-        'application.modules.users.validators.validateTimeZone',
-        'application.modules.users.validators.UsernameLengthValidator',
+
+
+            'application.modules.users.models.User',
+            'application.modules.users.validators.validateTimeZone',
+            'application.modules.users.validators.UsernameLengthValidator',
 
 
 
