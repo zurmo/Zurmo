@@ -32,7 +32,7 @@
         '(None)'
             => '(Nessuno)',
         'Add File'
-            => 'Carica un file', //'Caricare un file', CHANGE TEST
+            => 'Carica un file',
         'Add Files'
             => 'Caricare file',
         'Add Item'
