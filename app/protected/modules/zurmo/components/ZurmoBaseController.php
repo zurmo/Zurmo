@@ -98,6 +98,31 @@
             );
         }
 
+        protected function makeActionBarSearchAndListView(
+            $searchModel,
+            $filteredListModelClassName,
+            $pageSize,
+            $title,
+            $userId,
+            $dataProvider,
+            $actionBarViewClassName = 'SecuredActionBarForSearchAndListView'
+            )
+        {
+            assert('is_string($actionBarViewClassName)');
+            $listModel = $searchModel->getModel();
+            return new ActionBarSearchAndListView(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $searchModel,
+                $listModel,
+                $this->getModule()->getPluralCamelCasedName(),
+                $dataProvider,
+                GetUtil::resolveSelectedIdsFromGet(),
+                GetUtil::resolveSelectAllFromGet(),
+                $actionBarViewClassName
+            );
+        }
+
         protected function makeFilteredListDataProviderFromGet(
             $filteredListId,
             $listModelClassName,

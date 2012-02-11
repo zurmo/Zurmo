@@ -54,7 +54,7 @@
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
-            $searchFilterListView = $this->makeSearchFilterListView(
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
                 'AccountsFilteredList',
                 $pageSize,
@@ -63,7 +63,7 @@
                 $dataProvider
             );
             $view = new AccountsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 

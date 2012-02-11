@@ -39,7 +39,7 @@
          * True/false to decide if each row in the list view widget
          * will have a checkbox.
          */
-        protected $rowsAreSelectable;
+        protected $rowsAreSelectable = false;
 
         /**
          * Unique identifier of the list view widget. Allows for multiple list view
@@ -117,12 +117,17 @@
             return $content;
         }
 
+        public function getRowsAreSelectable()
+        {
+            return $this->rowsAreSelectable;
+        }
+
         protected function getCGridViewParams()
         {
             $columns = $this->getCGridViewColumns();
             assert('is_array($columns)');
             return array(
-                'id' => $this->gridId . $this->gridIdSuffix,
+                'id' => $this->getGridViewId(),
                 'htmlOptions' => array(
                     'class' => 'cgrid-view'
                 ),
@@ -135,9 +140,13 @@
                 'afterAjaxUpdate'  => 'js:function(id, data) {processAjaxSuccessError(id, data)}',
                 'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
                 'columns' => $columns,
-                'nullDisplay' => '&#160;',
-                'massActionMenu' => $this->getMassActionMenuForCurrentUser(),
+                'nullDisplay' => '&#160;'
             );
+        }
+
+        public function getGridViewId()
+        {
+            return $this->gridId . $this->gridIdSuffix;
         }
 
         protected function getCGridViewPagerParams()
@@ -311,18 +320,6 @@
         public static function getDesignerRulesType()
         {
             return 'ListView';
-        }
-
-        protected function getMassActionMenuForCurrentUser()
-        {
-            if (Right::ALLOW == Yii::app()->user->userModel->getEffectiveRight(
-                    'ZurmoModule', ZurmoModule::RIGHT_BULK_WRITE))
-            {
-                return array(
-                    ''           => Yii::t('Default', 'Perform Action'),
-                    'massEdit'   => Yii::t('Default', 'Update Selected'),
-                );
-            }
         }
 
         /**

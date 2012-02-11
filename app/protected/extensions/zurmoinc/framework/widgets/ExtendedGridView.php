@@ -34,9 +34,7 @@
     {
         protected $selectAllOptionsCssClass = 'select-all-options';
 
-        protected $MassActionsCssClass = 'mass-action';
-
-        public $template = "{selectRowsSelectors}{summary}\n{items}\n{massActionSelector}{pager}";
+        public $template = "{selectRowsSelectors}{summary}\n{items}\n{pager}";
 
         public $selectAll;
 
@@ -49,8 +47,6 @@
          * Override to have proper XHTML compliant space value
          */
         public $blankDisplay = '&#160;';
-
-        public $massActionMenu = array();
 
         /**
          * Override to display select all/none optional
@@ -89,60 +85,6 @@
                 echo '<div class="' . $this->selectAllOptionsCssClass . '">' . Yii::t('Default', 'Select') . ':&#160;' . $allLink
                 . '&#160;|&#160;' . $noneLink . '</div>' . "\n";
             }
-        }
-
-        /**
-         * Render a mass action drop down for the list view.
-         */
-        public function renderMassActionSelector()
-        {
-            if (($count = $this->dataProvider->getItemCount()) <= 0)
-            {
-                return;
-            }
-            if ($this->selectableRows > 0 && $this->massActionMenu > 0)
-            {
-                echo '&#160;<div class="' . $this->MassActionsCssClass . '">' . $this->renderMassActionDropDownElement() . '</div>' . "\n";
-            }
-        }
-
-        protected function renderMassActionDropDownElement()
-        {
-            $name = $this->id . '-massAction';
-            $htmlOptions = array(
-                'name' => $name,
-                'id'   => $name,
-            );
-            Yii::app()->clientScript->registerScript($this->id . '-listViewMassActionDropDown', "
-                $('#" . $this->id . "-massAction').live('change', function()
-                    {
-                        if ($(this).val() == '')
-                        {
-                            return false;
-                        }
-                        if ($('#" . $this->id . "-selectAll').val() == '')
-                        {
-                            if ($('#" . $this->id . "-selectedIds').val() == '')
-                            {
-                                alert('" . Yii::t('Default', 'You must select at least one record') . "');
-                                $(this).val('');
-                                return false;
-                            }
-                        }
-                        var options =
-                        {
-                            url : $.fn.yiiGridView.getUrl('" . $this->id . "')
-                        }
-                        addListViewSelectedIdsAndSelectAllToUrl('" . $this->id . "', options);
-                        var data = 'ajax=&r=" . Yii::app()->getController()->getModule()->getId() // Not Coding Standard
-                        . "/default/' + $(this).val() + '&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
-                        "url = $.param.querystring(options.url, data);
-                        window.location.href = url;
-                        return false;
-                    }
-                );
-            ");
-            return CHtml::dropDownList($name, '', $this->massActionMenu, $htmlOptions);
         }
     }
 ?>

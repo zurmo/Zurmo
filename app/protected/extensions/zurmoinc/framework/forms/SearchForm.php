@@ -467,7 +467,14 @@
                 {
                     foreach($metadata['global']['globalSearchAttributeNames'] as $attributeName)
                     {
-                        $namesAndLabels[$attributeName] = $this->model->getAttributeLabel($attributeName);
+                        if($this->isAttribute($attributeName))
+                        {
+                            $namesAndLabels[$attributeName] = $this->getAttributeLabel($attributeName);
+                        }
+                        else
+                        {
+                            $namesAndLabels[$attributeName] = $this->model->getAttributeLabel($attributeName);
+                        }
                     }
                 }
             }
