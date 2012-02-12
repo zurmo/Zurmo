@@ -45,9 +45,8 @@
                                          $this->getGridViewActionRoute('edit') . '", array("id" => $data->id))',
                     'imageUrl'	      => false,
                     'visible'         => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
-                    'options'         => array('class' => 'pencil'),
-                    'label'           => '!',
-                    'title'           => 'Update',
+                    'options'         => array('class' => 'pencil', 'title' => 'Update'),
+                    'label'           => '!'
                     ),
                 ),
             );
