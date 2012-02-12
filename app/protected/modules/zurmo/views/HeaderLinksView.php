@@ -49,6 +49,9 @@
             $content   = '<div class="clearfix"><div id="corp-logo"><img src="' . $imagePath. 'Zurmo_logo.png"><span>Company Name</span></div>';
             $content  .= '<div id="user-toolbar" class="clearfix">';
             $content  .= static::renderHeaderMenuContent(
+            $content  = '<div class="clearfix"><div id="corp-logo"><img src="themes/default/images/Zurmo_logo.png"><span>Corp Name</span></div>';
+            $content .= '<div id="user-toolbar" class="clearfix">';
+            $content .= static::renderHeaderMenuContent(
                             static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems),
                             'user-header-menu');
             $content  .= static::renderNotificationsLinkContent();
