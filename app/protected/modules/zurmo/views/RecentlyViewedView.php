@@ -47,7 +47,8 @@
             {
                 //$recentlyViewedItem['moduleClassName'] is also available, can use
                 //to determine class for image?
-                $content .= '<li class="type-'.$recentlyViewedItem['moduleClassName'].'"><em></em>'.$recentlyViewedItem['link'] . '</li>';
+                $link = preg_replace( '/>/', '><em></em>', $recentlyViewedItem['link'], 1 );
+                $content .= '<li class="type-'.$recentlyViewedItem['moduleClassName'].'">'.$link.'</li>';
             }
 			
 			$content .= '</ul>';
