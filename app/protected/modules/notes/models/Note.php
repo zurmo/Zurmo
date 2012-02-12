@@ -34,12 +34,19 @@
 
         public function __toString()
         {
-            $description  = trim($this->description);
-            if ($description == '')
+            try
             {
-                $description = Yii::t('Default', '(Unnamed)');
+                $description  = trim($this->description);
+                if ($description == '')
+                {
+                    $description = Yii::t('Default', '(Unnamed)');
+                }
+                return $description;
             }
-            return $description;
+            catch (AccessDeniedSecurityException $e)
+            {
+                return '';
+            }
         }
 
             public static function getModuleClassName()

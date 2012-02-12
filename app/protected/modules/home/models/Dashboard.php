@@ -87,11 +87,18 @@
 
         public function __toString()
         {
-            if (trim($this->name) == '')
+            try
             {
-                return Yii::t('Default', '(Unnamed)');
+                if (trim($this->name) == '')
+                {
+                    return Yii::t('Default', '(Unnamed)');
+                }
+                return $this->name;
             }
-            return $this->name;
+            catch (AccessDeniedSecurityException $e)
+            {
+                return '';
+            }
         }
 
         public static function getDefaultMetadata()

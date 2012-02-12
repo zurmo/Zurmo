@@ -28,12 +28,19 @@
     {
         public function __toString()
         {
-            $fullName = $this->getFullName();
-            if ($fullName == '')
+            try
             {
-                return Yii::t('Default', '(Unnamed)');
+                $fullName = $this->getFullName();
+                if ($fullName == '')
+                {
+                    return Yii::t('Default', '(Unnamed)');
+                }
+                return $fullName;
             }
-            return $fullName;
+            catch (AccessDeniedSecurityException $e)
+            {
+                return '';
+            }
         }
 
         public function getFullName()
