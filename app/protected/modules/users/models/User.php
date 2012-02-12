@@ -569,7 +569,7 @@
                     array('timeZone', 'type',    'type'  => 'string'),
                     array('timeZone', 'length',  'max'   => 64),
                     array('timeZone', 'default', 'value' => 'UTC'),
-                    array('timeZone', 'validateTimeZone'),
+                    array('timeZone', 'ValidateTimeZone'),
                 ),
                 'elements' => array(
                 ),

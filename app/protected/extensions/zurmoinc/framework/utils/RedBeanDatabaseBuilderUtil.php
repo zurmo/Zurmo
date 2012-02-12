@@ -322,7 +322,7 @@
                     case 'RedBeanModelCompareDateTimeValidator':
                     case 'RedBeanModelRequiredValidator':
                     case 'UsernameLengthValidator':
-                    case 'validateTimeZone':
+                    case 'ValidateTimeZone':
                         break;
 
                     case 'RedBeanModelTypeValidator':

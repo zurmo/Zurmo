@@ -544,7 +544,7 @@
 
 
             'application.modules.users.models.User',
-            'application.modules.users.validators.validateTimeZone',
+            'application.modules.users.validators.ValidateTimeZone',
             'application.modules.users.validators.UsernameLengthValidator',
 
 

@@ -29,7 +29,7 @@
      * This validator validates to see if a valid time zone is entered by validating it with DateTimeZone class.
      * See the yii documentation.
      */
-    class validateTimeZone extends CValidator
+    class ValidateTimeZone extends CValidator
     {
         /**
          * See the yii documentation.
