@@ -89,7 +89,7 @@
                 $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                                 "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                                 "{$quote}multiplevaluescustomfield{$quote}.id " .
-                                "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C')))";
+                                "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C') limit 1))";
                 $this->assertEquals($compareWhere, $where);
                 //Now test that the joinTablesAdapter has correct information.
                 $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -140,11 +140,11 @@
                 $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                                 "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                                 "{$quote}multiplevaluescustomfield{$quote}.id " .
-                                "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C')))";
+                                "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C') limit 1))";
                 $compareWhere .= " and (1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                                 "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                                 "{$quote}multiplevaluescustomfield1{$quote}.id " .
-                                "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('D','E','F')))";
+                                "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('D','E','F') limit 1))";
                 $this->assertEquals($compareWhere, $where);
                 //Now test that the joinTablesAdapter has correct information.
                 $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());

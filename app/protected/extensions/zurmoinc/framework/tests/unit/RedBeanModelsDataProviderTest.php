@@ -267,7 +267,7 @@
             $compareSubsetSql .= "from ({$quote}i{$quote}, {$quote}h{$quote}) ";
             $compareSubsetSql .= "left join {$quote}k{$quote} on {$quote}k{$quote}.{$quote}i_id{$quote} = ";
             $compareSubsetSql .= "{$quote}i{$quote}.{$quote}id{$quote} ";
-            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN('d','e','f'))"; // Not Coding Standard
+            $compareSubsetSql .= "where ({$quote}k{$quote}.{$quote}kmember{$quote} IN('d','e\'d','f'))"; // Not Coding Standard
             $compareSubsetSql .= " and {$quote}h{$quote}.{$quote}id{$quote} = {$quote}i{$quote}.{$quote}h_id{$quote}";
             $compareSubsetSql .= ") ";
             $compareSubsetSql .= "UNION (";
