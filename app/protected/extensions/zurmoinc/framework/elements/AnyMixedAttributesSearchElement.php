@@ -86,7 +86,8 @@
                 'options'        => array(
                                           'selectedText' => '',
                                           'noneSelectedText' => '', 'header' => false,
-                                          'position' => array('my' =>  'right top', 'at' => 'right bottom'))
+                                          //'position' => array('my' =>  'right top', 'at' => 'right bottom')
+                                          )
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['ScopedJuiMultiSelect'];

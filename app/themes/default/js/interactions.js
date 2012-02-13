@@ -1,7 +1,7 @@
 $(window).ready(function(){
 	
-	//main menu flyouts
-	$( '#MenuView .parent' ).hover(
+	//main menu flyouts or mbmenu releacment
+	$( '#MenuView .parent, #HeaderLinksView .parent, #ShortcutsMenu .parent' ).hover(
 		function(){
 			if ( $(this).find('ul') ){
 				$(this).find('ul').stop(true, true).fadeIn(100);
@@ -14,6 +14,8 @@ $(window).ready(function(){
 		}
 	);
 	
+	
+	/*
 	$( '#HeaderLinksView .parent' ).hover(
 		function(){
 			if ( $(this).find('ul') ){
@@ -26,5 +28,5 @@ $(window).ready(function(){
 			}
 		}
 	);
-	
+	*/
 });
