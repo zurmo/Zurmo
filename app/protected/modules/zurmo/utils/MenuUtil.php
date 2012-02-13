@@ -94,7 +94,6 @@
          */
         public static function getAccessibleShortcutsCreateMenuByCurrentUser()
         {
-            assert('is_string($moduleClassName)');
             $user            = Yii::app()->user->userModel;
             $modules         = Module::getModuleObjects();
             $createMenuItems = array(

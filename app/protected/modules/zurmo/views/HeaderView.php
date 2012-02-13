@@ -32,8 +32,8 @@
                                     $shortcutsCreateMenuItems,
                                     $notificationsUrl, $moduleNamesAndLabels, $sourceUrl)
         {
-            assert('is_string($controllerId');
-            assert('is_string($moduleId');
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
             assert('is_array($settingsMenuItems)');
             assert('is_array($userMenuItems)');
             assert('is_array($shortcutsCreateMenuItems)');

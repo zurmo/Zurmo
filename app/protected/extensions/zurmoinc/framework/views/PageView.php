@@ -80,8 +80,8 @@
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
-                    $performanceMessage .= 'Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
-                    $performanceMessage .= 'Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= '<span>Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= '<span>Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
                 }
             }
             else
@@ -206,7 +206,7 @@
         {
             $themeUrl = Yii::app()->baseUrl . '/themes';
             $theme    = Yii::app()->theme->name;
-            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . $themeUrl . '/' . $theme . '/css/newui.less">';
+            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . $themeUrl . '/' . $theme . '/css/newui.less"/>';
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/less-1.2.0.min.js');
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/interactions.js');
             return '<?xml version="1.0" encoding="utf-8"?>'.
