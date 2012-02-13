@@ -74,9 +74,9 @@
 
         protected function renderContent()
         {
-            $content  = '<div class="view-toolbar">';
+            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementBar(false);
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
@@ -91,8 +91,11 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type'  => 'CreateLink'),
+                            array('type'  => 'CreateLink',
+                            	'htmlOptions' => array('class' => 'icon-create'),
+							),
                             array('type'  => 'MassEditLink',
+                                  'htmlOptions' => array('class' => 'icon-edit'),
                                   'listViewGridId' => 'eval:$this->listViewGridId',
                                   'pageVarName' => 'eval:$this->pageVarName'),
                         ),
