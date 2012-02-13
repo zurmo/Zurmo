@@ -40,6 +40,10 @@
          */
         protected $pageTitle;
 
+        public $height = 480;
+
+        public $width  = 700;
+
         /**
          * TODO
          */
@@ -73,8 +77,8 @@
                     'title'    => $this->pageTitle,
                     'autoOpen' => true,
                     'modal'    => true,
-                    'height'   => 480,
-                    'width'    => 700,
+                    'height'   => $this->height,
+                    'width'    => $this->width,
                 ),
             ));
             echo $this->view->render();
