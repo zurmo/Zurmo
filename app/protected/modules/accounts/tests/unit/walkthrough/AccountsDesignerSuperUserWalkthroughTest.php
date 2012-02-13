@@ -24,8 +24,6 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    ********************************************************************************/
-
     /**
     * Designer Module Walkthrough of accounts.
     * Walkthrough for the super user of all possible controller actions.

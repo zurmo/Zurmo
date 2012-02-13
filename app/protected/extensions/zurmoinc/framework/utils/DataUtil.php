@@ -60,16 +60,15 @@
                     }
                     else
                     {
-                        if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
+                        $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+                        if ($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
                         {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
-                            $value['firstDate'] != null)
+                                $value['firstDate'] != null)
                             {
                                 $data[$attributeName]['firstDate'] = DateTimeUtil::
-                                                                     resolveValueForDateDBFormatted(
-                                                                     $value['firstDate']);
+                                                                         resolveValueForDateDBFormatted(
+                                                                         $value['firstDate']);
                             }
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['secondDate']) &&
                             $value['secondDate'] != null)
@@ -77,6 +76,17 @@
                                 $data[$attributeName]['secondDate'] = DateTimeUtil::
                                                                      resolveValueForDateDBFormatted(
                                                                      $value['secondDate']);
+                            }
+                        }
+                        elseif (isset($value['values']) && is_string($value['values']) && $designerType == 'TagCloud')
+                        {
+                            if ($data[$attributeName]['values'] == '')
+                            {
+                                $data[$attributeName]['values'] = array();
+                            }
+                            else
+                            {
+                                $data[$attributeName]['values'] = explode(',', $data[$attributeName]['values']);
                             }
                         }
                     }
