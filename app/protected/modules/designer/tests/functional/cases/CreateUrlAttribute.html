@@ -12,224 +12,224 @@
 <tr><td rowspan="1" colspan="3">CreateUrlAttribute</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=designer/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/designer/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Fields</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Fields</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Standard Fields</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Standard Fields</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Custom Fields</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Custom Fields</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>functesturlfield_${randomSuffix}</td>
-	<td></td>
+  <td>assertTextNotPresent</td>
+  <td>functesturlfield_${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Create Field</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Create Field</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=URL</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=URL</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UrlAttributeForm_attributeName</td>
-	<td>functesturlfield_${randomSuffix}</td>
+  <td>type</td>
+  <td>UrlAttributeForm_attributeName</td>
+  <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UrlAttributeForm_attributeLabels_en</td>
-	<td>functesturlfield_${randomSuffix}</td>
+  <td>type</td>
+  <td>UrlAttributeForm_attributeLabels_en</td>
+  <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UrlAttributeForm_defaultValue</td>
-	<td>http://functionaltestsrock.com</td>
+  <td>type</td>
+  <td>UrlAttributeForm_defaultValue</td>
+  <td>http://functionaltestsrock.com</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UrlAttributeForm_maxLength</td>
-	<td>75</td>
+  <td>type</td>
+  <td>UrlAttributeForm_maxLength</td>
+  <td>75</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>UrlAttributeForm_isRequired</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>UrlAttributeForm_isRequired</td>
+  <td>off</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>UrlAttributeForm_isRequired</td>
-	<td></td>
+  <td>click</td>
+  <td>UrlAttributeForm_isRequired</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>UrlAttributeForm_isRequired</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>UrlAttributeForm_isRequired</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>UrlAttributeForm_isAudited</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>UrlAttributeForm_isAudited</td>
+  <td>off</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>UrlAttributeForm_isAudited</td>
-	<td></td>
+  <td>click</td>
+  <td>UrlAttributeForm_isAudited</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>UrlAttributeForm_isAudited</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>UrlAttributeForm_isAudited</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: functesturlfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>exact:Field: functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[1]/td</td>
-	<td>URL</td>
+  <td>assertText</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[1]/td</td>
+  <td>URL</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[2]/td</td>
-	<td>functesturlfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[2]/td</td>
+  <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[3]/td</td>
-	<td>functesturlfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[3]/td</td>
+  <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[4]/td</td>
-	<td>http://functionaltestsrock.com</td>
+  <td>assertText</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>http://functionaltestsrock.com</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[5]/td</td>
-	<td>75</td>
+  <td>assertText</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[5]/td</td>
+  <td>75</td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Edit</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
-	<td>exact:Edit Field: functesturlfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TitleBarAndAttributeEditView']/div[1]/div/h1</td>
+  <td>exact:Edit Field: functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UrlAttributeForm_attributeLabels_en</td>
-	<td>functesturlfield_${randomSuffix}</td>
+  <td>type</td>
+  <td>UrlAttributeForm_attributeLabels_en</td>
+  <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UrlAttributeForm_defaultValue</td>
-	<td>http://functionalnewtestsrock.com</td>
+  <td>type</td>
+  <td>UrlAttributeForm_defaultValue</td>
+  <td>http://functionalnewtestsrock.com</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>UrlAttributeForm_isRequired</td>
-	<td>on</td>
+  <td>verifyValue</td>
+  <td>UrlAttributeForm_isRequired</td>
+  <td>on</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>UrlAttributeForm_isRequired</td>
-	<td></td>
+  <td>click</td>
+  <td>UrlAttributeForm_isRequired</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>UrlAttributeForm_isRequired</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>UrlAttributeForm_isRequired</td>
+  <td>off</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
-	<td>exact:Field: functesturlfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>exact:Field: functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[4]/td</td>
-	<td>http://functionalnewtestsrock.com</td>
+  <td>assertText</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>http://functionalnewtestsrock.com</td>
 </tr>
 <tr>
-	<td>assertNotEditable</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td></td>
+  <td>assertNotEditable</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
-	<td>off</td>
+  <td>verifyValue</td>
+  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>off</td>
 </tr>
 </tbody></table>
 </body>

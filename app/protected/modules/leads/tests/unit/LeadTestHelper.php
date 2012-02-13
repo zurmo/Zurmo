@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -33,6 +33,20 @@
             $contact->firstName  = $firstName;
             $contact->lastName   = $firstName.'son';
             $contact->owner      = $owner;
+            $contact->state      = LeadsUtil::getStartingState();
+            $saved               = $contact->save();
+            assert('$saved');
+            return $contact;
+        }
+
+        public static function createLeadWithAccountByNameForOwner($firstName, $owner, $account)
+        {
+            ContactsModule::loadStartingData();
+            $contact = new Contact();
+            $contact->firstName  = $firstName;
+            $contact->lastName   = $firstName.'son';
+            $contact->owner      = $owner;
+            $contact->account    = $account;
             $contact->state      = LeadsUtil::getStartingState();
             $saved               = $contact->save();
             assert('$saved');

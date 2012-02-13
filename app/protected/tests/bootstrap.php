@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -35,6 +35,13 @@
     if (!is_file(INSTANCE_ROOT . '/protected/config/perInstanceTest.php'))
     {
         copy(INSTANCE_ROOT . '/protected/config/perInstanceDIST.php', INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
+
+        //Mark test application installed, because we need this variable to be set to true, for api tests
+        $contents = file_get_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
+        $contents = preg_replace('/\$installed\s*=\s*false;/',
+                                 '$installed = true;',
+                                 $contents);
+        file_put_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php', $contents);
     }
 
     $debug          = INSTANCE_ROOT . '/protected/config/debugTest.php';

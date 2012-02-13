@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -133,9 +133,9 @@
                         {
                             url : $.fn.yiiGridView.getUrl('" . $this->id . "')
                         }
+                        options.url = options.url +'/'+ $(this).val();
                         addListViewSelectedIdsAndSelectAllToUrl('" . $this->id . "', options);
-                        var data = 'ajax=&r=" . Yii::app()->getController()->getModule()->getId() // Not Coding Standard
-                        . "/default/' + $(this).val() + '&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
+                        var data = '' + $(this).val() + '&ajax=&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
                         "url = $.param.querystring(options.url, data);
                         window.location.href = url;
                         return false;

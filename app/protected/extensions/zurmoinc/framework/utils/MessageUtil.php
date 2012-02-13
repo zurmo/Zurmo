@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -39,7 +39,7 @@
         public static function getMessages($language, $moduleName = null, $category = null)
         {
             assert('is_string($language)');
-            assert('strlen($language) == 2');
+            assert('strlen($language) == 2 || strlen($language) == 5');
             if ($moduleName === null)
             {
                 $directories = self::getMessageDirectoriesForAllModules();

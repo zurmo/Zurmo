@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -2445,24 +2445,25 @@
         public function getAttributes(array $attributeNames = null)
         {
             $values = array();
-            foreach ($this->attributeNames() as $attributeName)
-            {
-                $values[$attributeName] = $this->$attributeName;
-            }
             if (is_array($attributeNames))
             {
                 $values2 = array();
+                $allModelAttributeNames = $this->attributeNames();
                 foreach ($attributeNames as $attributeName)
                 {
-                    if (isset($values[$attributeName]))
+                    if (in_array($attributeName, $allModelAttributeNames))
                     {
-                        $values2[$attributeName] = $values[$attributeName];
+                        $values2[$attributeName] = $this->$attributeName;
                     }
                 }
                 return $values2;
             }
             else
             {
+                foreach ($this->attributeNames() as $attributeName)
+                {
+                    $values[$attributeName] = $this->$attributeName;
+                }
                 return $values;
             }
         }
@@ -2692,7 +2693,13 @@
             foreach ($beans as $bean)
             {
                 assert('$bean instanceof RedBean_OODBBean');
-                $models[] = self::makeModel($bean, $modelClassName);
+                try
+                {
+                    $models[] = self::makeModel($bean, $modelClassName);
+                }
+                catch(MissingBeanException $e)
+                {
+                }
             }
             return $models;
         }

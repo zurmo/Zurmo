@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -93,9 +93,9 @@
             $lowerCaseDropDownValues             = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $generateMissingPickListError        = false;
             //does the value already exist in the custom field data
-            if (in_array(mb_strtolower($value), $lowerCaseDropDownValues))
+            if (in_array(TextUtil::strToLowerWithDefaultEncoding($value), $lowerCaseDropDownValues))
             {
-                $keyToUse                        = array_search(mb_strtolower($value), $lowerCaseDropDownValues);
+                $keyToUse                        = array_search(TextUtil::strToLowerWithDefaultEncoding($value), $lowerCaseDropDownValues);
                 $resolvedValueToUse              = $dropDownValues[$keyToUse];
             }
             else
@@ -104,9 +104,9 @@
                 $lowerCaseValuesToAdd                = ArrayUtil::resolveArrayToLowerCase(
                                                        $importInstructionsData['DropDown']
                                                        [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-                if (in_array(mb_strtolower($value), $lowerCaseValuesToAdd))
+                if (in_array(TextUtil::strToLowerWithDefaultEncoding($value), $lowerCaseValuesToAdd))
                 {
-                    $keyToAddAndUse                  = array_search(mb_strtolower($value), $lowerCaseValuesToAdd);
+                    $keyToAddAndUse                  = array_search(TextUtil::strToLowerWithDefaultEncoding($value), $lowerCaseValuesToAdd);
                     $resolvedValueToUse              = $importInstructionsData['DropDown']
                                                        [DropDownSanitizerUtil::ADD_MISSING_VALUE][$keyToAddAndUse];
                     $unserializedData                = unserialize($customFieldData->serializedData);
@@ -120,9 +120,9 @@
                     $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
                                                        $importInstructionsData['DropDown']
                                                        [DropDownSanitizerUtil::MAP_MISSING_VALUES]);
-                    if (isset($lowerCaseMissingValuesToMap[mb_strtolower($value)]))
+                    if (isset($lowerCaseMissingValuesToMap[TextUtil::strToLowerWithDefaultEncoding($value)]))
                     {
-                        $keyToUse           = array_search($lowerCaseMissingValuesToMap[mb_strtolower($value)],
+                        $keyToUse           = array_search($lowerCaseMissingValuesToMap[TextUtil::strToLowerWithDefaultEncoding($value)],
                                                            $lowerCaseDropDownValues);
                         if ($keyToUse === false)
                         {

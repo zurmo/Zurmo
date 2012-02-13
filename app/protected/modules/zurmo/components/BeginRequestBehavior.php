@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -28,19 +28,34 @@
     {
         public function attach($owner)
         {
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
-            if (!Yii::app()->isApplicationInstalled())
+            if (Yii::app()->apiRequest->isApiRequest())
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleTidyCheck'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
             }
             else
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
+
+                if (!Yii::app()->isApplicationInstalled())
+                {
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstanceFolderCheck'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleTidyCheck'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                }
+                else
+                {
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
+                }
+            }
+
+            if (Yii::app()->isApplicationInstalled())
+            {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
@@ -51,11 +66,26 @@
         }
 
         /**
-         * This check is required during installation since if you do not have the extension for tidy installed,
-         * the page will not load properly to install the application since debug is true before the install is
-         * complete.
-         * @param $event
-         */
+        * This check is required during installation since if runtime, assets and data folders are missing
+        * yii web application can not be started correctly.
+        * @param $event
+        */
+        public function handleInstanceFolderCheck($event)
+        {
+            $instanceFoldersServiceHelper = new InstanceFoldersServiceHelper();
+            if (!$instanceFoldersServiceHelper->runCheckAndGetIfSuccessful())
+            {
+                echo $instanceFoldersServiceHelper->getMessage();
+                Yii::app()->end(0, false);
+            }
+        }
+
+        /**
+        * This check is required during installation since if you do not have the extension for tidy installed,
+        * the page will not load properly to install the application since debug is true before the install is
+        * complete.
+        * @param $event
+        */
         public function handleTidyCheck($event)
         {
             $tidyServiceHelper = new TidyServiceHelper();
@@ -69,15 +99,27 @@
 
         public function handleInstallCheck($event)
         {
-            if (!array_key_exists('r', $_GET) ||
-            !in_array($_GET['r'], array('zurmo/default/unsupportedBrowser',
-                                        'install/default',
-                                        'install/default/welcome',
-                                        'install/default/checkSystem',
-                                        'install/default/settings',
-                                        'install/default/runInstallation',
-                                        'install/default/installDemoData',
-                                        'min/serve')))
+            $allowedInstallUrls = array (
+                Yii::app()->createUrl('zurmo/default/unsupportedBrowser'),
+                Yii::app()->createUrl('install/default'),
+                Yii::app()->createUrl('install/default/welcome'),
+                Yii::app()->createUrl('install/default/checkSystem'),
+                Yii::app()->createUrl('install/default/settings'),
+                Yii::app()->createUrl('install/default/runInstallation'),
+                Yii::app()->createUrl('install/default/installDemoData'),
+                Yii::app()->createUrl('min/serve')
+            );
+            $reqestedUrl = Yii::app()->getRequest()->getUrl();
+            $redirect = true;
+            foreach ($allowedInstallUrls as $allowedUrl)
+            {
+                if (strpos($reqestedUrl, $allowedUrl) === 0)
+                {
+                    $redirect = false;
+                    break;
+                }
+            }
+            if ($redirect)
             {
                 $url = Yii::app()->createUrl('install/default');
                 Yii::app()->request->redirect($url);
@@ -113,14 +155,53 @@
 
         public function handleBeginRequest($event)
         {
-            if (!array_key_exists('r', $_GET) ||
-                !in_array($_GET['r'], array('zurmo/default/unsupportedBrowser',
-                                            'zurmo/default/login',
-                                            'min/serve')))
+            if (Yii::app()->user->isGuest)
             {
-                if (Yii::app()->user->isGuest)
+                $allowedGuestUserUrls = array (
+                    Yii::app()->createUrl('zurmo/default/unsupportedBrowser'),
+                    Yii::app()->createUrl('zurmo/default/login'),
+                    Yii::app()->createUrl('min/serve'),
+                );
+                $reqestedUrl = Yii::app()->getRequest()->getUrl();
+                $isUrlAllowedToGuests = false;
+                foreach ($allowedGuestUserUrls as $url)
+                {
+                    if (strpos($reqestedUrl, $url) === 0)
+                    {
+                        $isUrlAllowedToGuests = true;
+                    }
+                }
+                if (!$isUrlAllowedToGuests)
                 {
                     Yii::app()->user->loginRequired();
+                }
+            }
+        }
+
+        public function handleBeginApiRequest($event)
+        {
+            if (Yii::app()->user->isGuest)
+            {
+                $allowedGuestUserUrls = array (
+                    Yii::app()->createUrl('zurmo/api/login'),
+                    Yii::app()->createUrl('zurmo/api/logout'),
+                );
+                $isUrlAllowedToGuests = false;
+                foreach ($allowedGuestUserUrls as $url)
+                {
+                    if (ZurmoUrlManager::getPositionOfPathInUrl($url) !== false)
+                    {
+                        $isUrlAllowedToGuests = true;
+                        break;
+                    }
+                }
+
+                if (!$isUrlAllowedToGuests)
+                {
+                    $message = Yii::t('Default', 'Login required.');
+                    $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, null);
+                    Yii::app()->apiHelper->sendResponse($result);
+                    exit;
                 }
             }
         }
@@ -184,9 +265,19 @@
 
         public function handleLoadLanguage($event)
         {
-            if (isset($_GET['lang']) && $_GET['lang'] != null)
+            if (!Yii::app()->apiRequest->isApiRequest())
             {
-                Yii::app()->languageHelper->setActive($_GET['lang']);
+                if (isset($_GET['lang']) && $_GET['lang'] != null)
+                {
+                    Yii::app()->languageHelper->setActive($_GET['lang']);
+                }
+            }
+            else
+            {
+                if ($lang = Yii::app()->apiRequest->getLanguage())
+                {
+                    Yii::app()->languageHelper->setActive($lang);
+                }
             }
             Yii::app()->languageHelper->load();
         }
@@ -208,5 +299,5 @@
                 Yii::app()->custom->resolveIsCustomDataLoaded();
             }
         }
-    }
+     }
 ?>

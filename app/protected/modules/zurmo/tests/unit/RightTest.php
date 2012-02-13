@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -311,12 +311,14 @@
             $nerd->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS, Right::ALLOW);
             $nerd->setRight('LeadsModule',    LeadsModule::RIGHT_ACCESS_LEADS,       Right::DENY);
             $nerd->setRight('UsersModule',    UsersModule::RIGHT_LOGIN_VIA_WEB,      Right::ALLOW);
+            $nerd->setRight('UsersModule',    UsersModule::RIGHT_LOGIN_VIA_WEB_API,  Right::ALLOW);
             $this->assertTrue($nerd->save());
 
             $this->assertEquals(Right::ALLOW, $nerd->getEffectiveRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS));
             $this->assertEquals(Right::ALLOW, $nerd->getEffectiveRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS));
             $this->assertEquals(Right::DENY,  $nerd->getEffectiveRight('LeadsModule',    LeadsModule::RIGHT_ACCESS_LEADS));
             $this->assertEquals(Right::ALLOW, $nerd->getEffectiveRight('UsersModule',    UsersModule::RIGHT_LOGIN_VIA_WEB));
+            $this->assertEquals(Right::ALLOW, $nerd->getEffectiveRight('UsersModule',    UsersModule::RIGHT_LOGIN_VIA_WEB_API));
         }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -40,6 +40,10 @@
          */
         protected $pageTitle;
 
+        public $height = 480;
+
+        public $width  = 700;
+
         /**
          * TODO
          */
@@ -73,8 +77,8 @@
                     'title'    => $this->pageTitle,
                     'autoOpen' => true,
                     'modal'    => true,
-                    'height'   => 480,
-                    'width'    => 700,
+                    'height'   => $this->height,
+                    'width'    => $this->width,
                 ),
             ));
             echo $this->view->render();

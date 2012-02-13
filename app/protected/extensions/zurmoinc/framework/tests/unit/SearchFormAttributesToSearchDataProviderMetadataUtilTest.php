@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -130,6 +130,31 @@
                                   getMetadata($searchForm, 'date__Date', $value);
             $compareData        = array(array('date' => array('value' => '2011-05-04',
                                                               'operatorType' => 'lessThanOrEqualTo')));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = On X
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
+            $value['firstDate'] = '2011-05-04';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $compareData        = array(array('date' => array('value' => '2011-05-04',
+                                                              'operatorType' => 'equals')));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Between X and Y
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN;
+            $value['firstDate'] = '2011-05-04';
+            $value['secondDate'] = '2011-06-04';
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'date__Date', $value);
+            $compareData        = array(array('date' => array('value' => '2011-05-04',
+                                                              'operatorType' => 'greaterThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)),
+                                        array('date' => array('value' => '2011-06-04',
+                                                              'operatorType' => 'lessThanOrEqualTo',
+                                                              'appendStructureAsAnd' => true)));
             $this->assertEquals($compareData, $metadata);
 
             //Test Date next 7 days

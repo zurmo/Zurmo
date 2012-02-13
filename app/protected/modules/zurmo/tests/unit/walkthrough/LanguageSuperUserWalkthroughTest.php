@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -82,7 +82,7 @@
             $this->setPostArray(array('LanguageCollection' => array(
                 'fr' => array('active' => '1'), 'de' => array('active' => ''))));
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages changed successfully.') !== false);
+            $this->assertTrue(strpos($content, 'Changes to active languages saved successfully.') !== false);
 
             //Confirm the correct languages are active.
             $data = Yii::app()->languageHelper->getActiveLanguages();

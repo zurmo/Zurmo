@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -23,34 +23,43 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
     /**
-     * This validator can be used by both a User model as well as a CFormModel like in User import for example.
-     * This validator validates to see if a valid time zone is entered by validating it with DateTimeZone class.
-     * See the yii documentation.
-     */
-    class validateTimeZone extends CValidator
+    * REST API helper class.
+    */
+    class ApiRestTestHelper
     {
-        /**
-         * See the yii documentation.
-         */
-        protected function validateAttribute($model, $attributeName)
+        public static function createApiCall($url, $method, $headers, $data = array())
         {
-            if ($model->$attributeName != null)
+            if ($method == 'PUT')
             {
-                try
-                {
-                    if (new DateTimeZone($model->$attributeName) === false)
-                    {
-                        $model->addError($attributeName, Yii::t('Default', 'The time zone is invalid.'));
-                    }
-                }
-                catch (Exception $e)
-                {
-                    //Need to set UTC instead of checking validity of time zone to properly handle db auto build.
-                    $model->$attributeName == 'UTC';
-                }
+                $headers[] = 'X-HTTP-Method-Override: PUT';
             }
+
+            $handle = curl_init();
+            curl_setopt($handle, CURLOPT_URL, $url);
+            curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+
+            switch($method)
+            {
+                case 'GET':
+                    break;
+                case 'POST':
+                    curl_setopt($handle, CURLOPT_POST, true);
+                    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
+                    break;
+                case 'PUT':
+                    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+                    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
+                    break;
+                case 'DELETE':
+                    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                    break;
+            }
+            $response = curl_exec($handle);
+            return $response;
         }
     }
 ?>

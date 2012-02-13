@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -234,6 +234,27 @@
                                             'elements' => array(
                                                 array('attributeName' => 'installDemoData', 'type' => 'CheckBox',
                                                       'description' => Yii::t('Default', 'Install demo data.')),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'hostInfo', 'type' => 'Text',
+                                                      'description' => Yii::t('Default', 'Host name where Zurmo will be installed.'))
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'scriptUrl', 'type' => 'Text',
+                                                      'description' => Yii::t('Default', 'The relative path where ' .
+                                                      'Zurmo will be installed.')),
                                             ),
                                         ),
                                     )

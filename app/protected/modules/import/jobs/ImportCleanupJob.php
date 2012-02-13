@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -70,13 +70,12 @@
             $searchAttributeData['structure'] = '1';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
             $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
-            $importModels = Import::getSubset($joinTablesAdapter, null, null, $where, null);
-            foreach($importModels as $import)
+            $importModels = Import::getSubset($joinTablesAdapter, null, 1000, $where, null);
+            foreach ($importModels as $import)
             {
                 $import->delete();
             }
             return true;
         }
     }
-
 ?>

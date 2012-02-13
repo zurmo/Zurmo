@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -70,7 +70,7 @@
                 array('explicitReadWriteModelPermissions' => $postData)));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             //Confirm the permissions are set right based on how the account was saved.
             $accounts[0]->forget();
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
@@ -88,7 +88,7 @@
                 array('explicitReadWriteModelPermissions' => $postData)));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             //Confirm the permissions are set right based on how the account was saved.
             $accounts[0]->forget();
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
@@ -106,7 +106,7 @@
                 array('explicitReadWriteModelPermissions' => $postData)));
             //Make sure the redirect is to the details view and not the list view.
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/edit',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=accounts/default/details&id=' . $superAccountId); // Not Coding Standard
+                        Yii::app()->createUrl('accounts/default/details', array('id' => $superAccountId)));
             //Confirm the permissions are set right based on how the account was saved.
             $accounts[0]->forget();
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::

@@ -12,910 +12,910 @@
 <tr><td rowspan="1" colspan="3">Create and Modify Group</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+  <td>setSpeed</td>
+  <td>1000</td>
+  <td></td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+  <td>store</td>
+  <td>javascript{Math.floor(Math.random()*11000)}</td>
+  <td>randomSuffix</td>
 </tr>
 <!-- Create a User -->
 <tr>
-	<td>open</td>
-	<td>index.php?r=configuration</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/configuration</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Admin</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Admin</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Users</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Users</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>UserPasswordForm_title_value</td>
-	<td>label=Mr.</td>
+  <td>select</td>
+  <td>UserPasswordForm_title_value</td>
+  <td>label=Mr.</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_firstName</td>
-	<td>Jhon</td>
+  <td>type</td>
+  <td>UserPasswordForm_firstName</td>
+  <td>Jhon</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_lastName</td>
-	<td>Smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UserPasswordForm_lastName</td>
+  <td>Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_username</td>
-	<td>jhon smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UserPasswordForm_username</td>
+  <td>jhon smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_newPassword</td>
-	<td>abc123</td>
+  <td>type</td>
+  <td>UserPasswordForm_newPassword</td>
+  <td>abc123</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UserPasswordForm_newPassword_repeat</td>
-	<td>abc123</td>
+  <td>type</td>
+  <td>UserPasswordForm_newPassword_repeat</td>
+  <td>abc123</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Edit</td>
-	<td>Edit</td>
+  <td>assertText</td>
+  <td>link=Edit</td>
+  <td>Edit</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
-	<td>Mr. Jhon Smith${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
+  <td>Mr. Jhon Smith${randomSuffix}</td>
 </tr>
 <!-- Create of a User completes here-->
 <tr>
-	<td>open</td>
-	<td>index.php?r=zurmo/group</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/zurmo/group</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>Group_name</td>
-	<td>TestGroup${randomSuffix}</td>
+  <td>type</td>
+  <td>Group_name</td>
+  <td>TestGroup${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='GroupEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>TestGroup${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='GroupEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>TestGroup${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=User Membership</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=User Membership</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>addSelection</td>
-	<td>edit-form_userNonMembershipData</td>
-	<td>label=Jhon Smith${randomSuffix}</td>
+  <td>addSelection</td>
+  <td>edit-form_userNonMembershipData</td>
+  <td>label=Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>yw0moveRight</td>
-	<td></td>
+  <td>click</td>
+  <td>yw0moveRight</td>
+  <td></td>
 </tr>
 <tr>
-	<td>addSelection</td>
-	<td>edit-form_userNonMembershipData</td>
-	<td>label=Sally Smith</td>
+  <td>addSelection</td>
+  <td>edit-form_userNonMembershipData</td>
+  <td>label=Sally Smith</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>yw0moveRight</td>
-	<td></td>
+  <td>click</td>
+  <td>yw0moveRight</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>User Membership Saved Successfully</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>User Membership Saved Successfully</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=User Membership</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=User Membership</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>removeSelection</td>
-	<td>edit-form_userMembershipData</td>
-	<td>label=Jhon Smith${randomSuffix}</td>
+  <td>removeSelection</td>
+  <td>edit-form_userMembershipData</td>
+  <td>label=Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>addSelection</td>
-	<td>edit-form_userMembershipData</td>
-	<td>label=Sally Smith</td>
+  <td>addSelection</td>
+  <td>edit-form_userMembershipData</td>
+  <td>label=Sally Smith</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Sally Smith</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Sally Smith</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Cancel</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Cancel</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Module Permissions</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Module Permissions</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>ModulePermissionsForm_AccountsModule__1_value</td>
-	<td>label=All</td>
+  <td>select</td>
+  <td>ModulePermissionsForm_AccountsModule__1_value</td>
+  <td>label=All</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>ModulePermissionsForm_AccountsModule__2_value</td>
-	<td>label=Owner Only</td>
+  <td>select</td>
+  <td>ModulePermissionsForm_AccountsModule__2_value</td>
+  <td>label=Owner Only</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>ModulePermissionsForm_AccountsModule__4_value</td>
-	<td>label=Owner Only</td>
+  <td>select</td>
+  <td>ModulePermissionsForm_AccountsModule__4_value</td>
+  <td>label=Owner Only</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>ModulePermissionsForm_ContactsModule__1_value</td>
-	<td>label=All</td>
+  <td>select</td>
+  <td>ModulePermissionsForm_ContactsModule__1_value</td>
+  <td>label=All</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Module Permissions Saved Successfully.</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Module Permissions Saved Successfully.</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Module Permissions</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Module Permissions</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_AccountsModule__1_value</td>
-	<td>All</td>
+  <td>assertSelectedLabel</td>
+  <td>ModulePermissionsForm_AccountsModule__1_value</td>
+  <td>All</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_AccountsModule__2_value</td>
-	<td>Owner Only</td>
+  <td>assertSelectedLabel</td>
+  <td>ModulePermissionsForm_AccountsModule__2_value</td>
+  <td>Owner Only</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_AccountsModule__4_value</td>
-	<td>Owner Only</td>
+  <td>assertSelectedLabel</td>
+  <td>ModulePermissionsForm_AccountsModule__4_value</td>
+  <td>Owner Only</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_ContactsModule__1_value</td>
-	<td>All</td>
+  <td>assertSelectedLabel</td>
+  <td>ModulePermissionsForm_ContactsModule__1_value</td>
+  <td>All</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_ContactsModule__2_value</td>
-	<td>Not Set - Ad-hoc / Owner</td>
+  <td>assertSelectedLabel</td>
+  <td>ModulePermissionsForm_ContactsModule__2_value</td>
+  <td>Not Set - Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>ModulePermissionsForm_ContactsModule__4_value</td>
-	<td>Not Set - Ad-hoc / Owner</td>
+  <td>assertSelectedLabel</td>
+  <td>ModulePermissionsForm_ContactsModule__4_value</td>
+  <td>Not Set - Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Cancel</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Cancel</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Rights</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Rights</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
-	<td>Inherited - Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
+  <td>Inherited - Allow</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
-	<td>Inherited - Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
+  <td>Inherited - Allow</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
-	<td>Inherited - Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
+  <td>Inherited - Allow</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
-	<td>label=Allow</td>
+  <td>select</td>
+  <td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
+  <td>label=Allow</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
-	<td>label=Allow</td>
+  <td>select</td>
+  <td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
+  <td>label=Allow</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
-	<td>label=Allow</td>
+  <td>select</td>
+  <td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
+  <td>label=Allow</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Rights Saved Successfully.</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Rights Saved Successfully.</td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Rights</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Rights</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
-	<td>Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_AccountsModule__RIGHT_CREATE_ACCOUNTS_value</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
-	<td>Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_LeadsModule__RIGHT_CREATE_LEADS_value</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_ContactsModule__RIGHT_CREATE_CONTACTS_value</td>
-	<td>Inherited - Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_ContactsModule__RIGHT_CREATE_CONTACTS_value</td>
+  <td>Inherited - Allow</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
-	<td>Allow</td>
+  <td>assertSelectedLabel</td>
+  <td>RightsForm_UsersModule__RIGHT_LOGIN_VIA_WEB_value</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Cancel</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Cancel</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Policies</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Policies</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_ENFORCE_STRONG_PASSWORDS_value</td>
-	<td>Not Set</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_ENFORCE_STRONG_PASSWORDS_value</td>
+  <td>Not Set</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH__helper</td>
-	<td>Not Set</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH__helper</td>
+  <td>Not Set</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH__helper</td>
-	<td>Not Set</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH__helper</td>
+  <td>Not Set</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES_value</td>
-	<td>Not Set</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES_value</td>
+  <td>Not Set</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>PoliciesForm_UsersModule__POLICY_ENFORCE_STRONG_PASSWORDS_value</td>
-	<td>label=Yes</td>
+  <td>select</td>
+  <td>PoliciesForm_UsersModule__POLICY_ENFORCE_STRONG_PASSWORDS_value</td>
+  <td>label=Yes</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH__helper</td>
-	<td>label=Yes</td>
+  <td>select</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH__helper</td>
+  <td>label=Yes</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH__helper</td>
-	<td>label=Yes</td>
+  <td>select</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH__helper</td>
+  <td>label=Yes</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES_value</td>
-	<td>label=Yes</td>
+  <td>select</td>
+  <td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES_value</td>
+  <td>label=Yes</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//form[@id='edit-form']/table/tbody/tr[2]/td/div</td>
-	<td>You must specify a value.</td>
+  <td>assertText</td>
+  <td>//form[@id='edit-form']/table/tbody/tr[2]/td/div</td>
+  <td>You must specify a value.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//form[@id='edit-form']/table/tbody/tr[3]/td/div</td>
-	<td>You must specify a value.</td>
+  <td>assertText</td>
+  <td>//form[@id='edit-form']/table/tbody/tr[3]/td/div</td>
+  <td>You must specify a value.</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//form[@id='edit-form']/table/tbody/tr[4]/td/div</td>
-	<td>You must specify a value.</td>
+  <td>assertText</td>
+  <td>//form[@id='edit-form']/table/tbody/tr[4]/td/div</td>
+  <td>You must specify a value.</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH</td>
-	<td>5</td>
+  <td>type</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH</td>
+  <td>5</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH</td>
-	<td>5</td>
+  <td>type</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH</td>
+  <td>5</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES</td>
-	<td>30</td>
+  <td>type</td>
+  <td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES</td>
+  <td>30</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Policies Saved Successfully</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Policies Saved Successfully</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Policies</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Policies</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_ENFORCE_STRONG_PASSWORDS_value</td>
-	<td>Yes</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_ENFORCE_STRONG_PASSWORDS_value</td>
+  <td>Yes</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH__helper</td>
-	<td>Yes</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH__helper</td>
+  <td>Yes</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH__helper</td>
-	<td>Yes</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH__helper</td>
+  <td>Yes</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES_value</td>
-	<td>Yes</td>
+  <td>assertSelectedLabel</td>
+  <td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES_value</td>
+  <td>Yes</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES</td>
-	<td>30</td>
+  <td>assertValue</td>
+  <td>PoliciesForm_UsersModule__POLICY_PASSWORD_EXPIRES</td>
+  <td>30</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH</td>
-	<td>5</td>
+  <td>assertValue</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_USERNAME_LENGTH</td>
+  <td>5</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH</td>
-	<td>5</td>
+  <td>assertValue</td>
+  <td>PoliciesForm_UsersModule__POLICY_MINIMUM_PASSWORD_LENGTH</td>
+  <td>5</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=users/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/users/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Users: Home</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Users: Home</td>
+  <td></td>
 </tr>
 <!-- Search for a user -->
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Advanced Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UsersSearchForm_username</td>
-	<td>jhon smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UsersSearchForm_username</td>
+  <td>jhon smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td>Jhon Smith${randomSuffix}</td>
+  <td>assertText</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td>Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <!-- Search for a user ends here-->
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Security</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Security</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Groups</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Groups</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Rights</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Rights</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Policies</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Policies</td>
+  <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Module Permissions</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Module Permissions</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>TestGroup${randomSuffix}</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>TestGroup${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[2]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[2]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[1]/td</td>
-	<td>Deny</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[1]/td</td>
+  <td>Deny</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[8]/tbody/tr[2]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[8]/tbody/tr[2]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>Yes</td>
+  <td>assertText</td>
+  <td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>Yes</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[2]/td</td>
-	<td>5</td>
+  <td>assertText</td>
+  <td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[2]/td</td>
+  <td>5</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[3]/td</td>
-	<td>5</td>
+  <td>assertText</td>
+  <td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[3]/td</td>
+  <td>5</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[4]/td</td>
-	<td>Yes, every 30 day(s)</td>
+  <td>assertText</td>
+  <td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[4]/td</td>
+  <td>Yes, every 30 day(s)</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
-	<td>All</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
+  <td>All</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[1]</td>
-	<td>All</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[1]</td>
+  <td>All</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
-	<td>Owner Only</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+  <td>Owner Only</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[3]</td>
-	<td>Owner Only</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[3]</td>
+  <td>Owner Only</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[3]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[3]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=zurmo/group</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/zurmo/group</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=TestGroup${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=TestGroup${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Delete Group</td>
-	<td></td>
+  <td>click</td>
+  <td>link=Delete Group</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to remove this group?</td>
-	<td></td>
+  <td>assertConfirmation</td>
+  <td>Are you sure you want to remove this group?</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php?r=users/default</td>
-	<td></td>
+  <td>open</td>
+  <td>index.php/users/default</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <!-- Search for a user -->
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced Search</td>
-	<td></td>
+  <td>verifyTextPresent</td>
+  <td>Advanced Search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>UsersSearchForm_username</td>
-	<td>jhon smith${randomSuffix}</td>
+  <td>type</td>
+  <td>UsersSearchForm_username</td>
+  <td>jhon smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>search</td>
-	<td></td>
+  <td>click</td>
+  <td>search</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Displaying 1-1 of 1 result</td>
-	<td></td>
+  <td>waitForTextPresent</td>
+  <td>Displaying 1-1 of 1 result</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td>Jhon Smith${randomSuffix}</td>
+  <td>assertText</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td>Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Jhon Smith${randomSuffix}</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td></td>
 </tr>
 <!-- Search for a user ends here-->
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Security</td>
-	<td></td>
+  <td>clickAndWait</td>
+  <td>link=Security</td>
+  <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>TestGroup${randomSuffix}</td>
-	<td></td>
+  <td>assertTextNotPresent</td>
+  <td>TestGroup${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Everyone</td>
-	<td></td>
+  <td>assertTextPresent</td>
+  <td>Everyone</td>
+  <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>No</td>
+  <td>assertText</td>
+  <td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>No</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[4]/td</td>
-	<td>No</td>
+  <td>assertText</td>
+  <td>//div[@id='PoliciesEditAndDetailsView']/table/tbody/tr[4]/td</td>
+  <td>No</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[1]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[1]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[3]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[2]/td[3]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[3]</td>
-	<td>Ad-hoc / Owner</td>
+  <td>assertText</td>
+  <td>//div[@id='ModulePermissionsEditAndDetailsView']/table/tbody/tr[3]/td[3]</td>
+  <td>Ad-hoc / Owner</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[1]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[2]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table/tbody/tr[2]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[1]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[2]/tbody/tr[2]/td</td>
+  <td>Allow</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[1]/td</td>
-	<td>Deny</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[3]/tbody/tr[1]/td</td>
+  <td>Deny</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='RightsEditAndDetailsView']/table[8]/tbody/tr[2]/td</td>
-	<td>Allow</td>
+  <td>assertText</td>
+  <td>//div[@id='RightsEditAndDetailsView']/table[8]/tbody/tr[2]/td</td>
+  <td>Allow</td>
 </tr>
 </tbody></table>
 </body>

@@ -87,6 +87,22 @@
     text-align: center;
 }
 
+#FooterView. footer-logo
+{
+    text-align:center;
+}
+
+#FooterView .footer-logo a:link, #FooterView .footer-logo a:visited,
+#FooterView .footer-logo a:hover, #FooterView .footer-logo a:active
+{
+    width: 60px;
+    height: 19px;
+    background-image: url(../images/Zurmo.png);
+    display: block;
+    margin: auto;
+}
+
+
 #ErrorPageView, #LoginPageView, #UnsupportedBrowserPageView, #InstallAccessFailurePageView
 {
     width: 350px;

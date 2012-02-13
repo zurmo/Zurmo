@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -126,7 +126,7 @@
             $this->setGetArray(array('id' => $contact->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('contacts/default/index'));
 
             //Autocomplete for Contact should not fail.
             $this->setGetArray(array('term' => 'super'));
@@ -217,7 +217,7 @@
             $this->setGetArray(array('id' => $contact->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('contacts/default/index'));
 
             Yii::app()->user->userModel = $super;
             //create some roles
@@ -341,7 +341,7 @@
             $this->setGetArray(array('id' => $contact2->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
+                       Yii::app()->createUrl('contacts/default/index'));
 
             $parentRole->users->remove($userInParentRole);
             $parentRole->roles->remove($childRole);
@@ -482,7 +482,7 @@
             $this->setGetArray(array('id' => $contact3->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=contacts/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('contacts/default/index'));
 
             //clear up the role relationships between users so not to effect next assertions
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');

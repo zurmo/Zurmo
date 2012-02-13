@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -130,7 +130,7 @@
             $this->setGetArray(array('id' => $lead->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('leads/default/index'));
 
             //Autocomplete for Lead should not fail.
             $this->setGetArray(array('term' => 'super'));
@@ -217,7 +217,7 @@
             $this->setGetArray(array('id' => $lead->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('leads/default/index'));
 
             //create some roles
             Yii::app()->user->userModel = $super;
@@ -342,7 +342,7 @@
             $this->setGetArray(array('id' => $lead2->id));
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('leads/default/index'));
 
             //clear up the role relationships between users so not to effect next assertions
             $parentRole->users->remove($userInParentRole);
@@ -485,7 +485,7 @@
             $this->logoutCurrentUserLoginNewUserAndGetByUsername($userInChildGroup->username);
             $this->setGetArray(array('id' => $lead3->id));
             $this->runControllerWithRedirectExceptionAndGetContent('leads/default/delete',
-                        Yii::app()->getUrlManager()->getBaseUrl() . '?r=leads/default/index'); // Not Coding Standard
+                        Yii::app()->createUrl('leads/default/index'));
 
             //clear up the role relationships between users so not to effect next assertions
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');

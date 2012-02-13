@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -298,6 +298,21 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
+        public function testCheckThreadStackValue()
+        {
+            $minimumRequiredThreadStackValue = 524288;
+            $threadStackValue                = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseThreadStackValue('mysql',
+                                                                $this->hostname,
+                                                                $this->rootUsername,
+                                                                $this->rootPassword,
+                                                                $minimumRequiredThreadStackValue,
+                                                                $threadStackValue));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
         public function testCheckDatabaseDefaultCollation()
         {
             $notAllowedDatabaseCollations = array('utf8_general_ci');
@@ -320,6 +335,35 @@
                                                                                  $this->hostname,
                                                                                  $this->rootUsername,
                                                                                  $this->rootPassword));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckDatabaseLogBinValue()
+        {
+            $logBinValue     = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseLogBinValue('mysql',
+                                                                       $this->hostname,
+                                                                       $this->temporaryDatabaseName,
+                                                                       $this->rootUsername,
+                                                                       $this->rootPassword,
+                                                                       $logBinValue));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckDatabaseLogBinTrustFunctionCreatorsValue()
+        {
+            $logBinTrustFunctionCreatorsValue     = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseLogBinTrustFunctionCreatorsValue(
+                                                                            'mysql',
+                                                                            $this->hostname,
+                                                                            $this->temporaryDatabaseName,
+                                                                            $this->rootUsername,
+                                                                            $this->rootPassword,
+                                                                            $logBinTrustFunctionCreatorsValue));
         }
 
         public function testCheckMemcacheConnection()
