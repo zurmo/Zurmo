@@ -100,6 +100,13 @@
                     'officeFax'        => 'officeFax',
                     'companyName'      => 'name',
                 ),
+                'shortcutsCreateMenuItems' => array(
+                    array(
+                        'label' => 'LeadsModuleSingularLabel',
+                        'url'   => array('/leads/default/create'),
+                        'right' => self::RIGHT_CREATE_LEADS
+                    ),
+                ),
                 'globalSearchAttributeNames' => array(
                     'fullName',
                     'anyEmail',

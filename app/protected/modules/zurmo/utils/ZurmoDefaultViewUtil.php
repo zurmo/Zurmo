@@ -56,7 +56,7 @@
             $horizontalGridView->setView($containedView, 0, 2);
 
             $verticalGridView   = new GridView(4, 1);
-            $verticalGridView->setView(static::makeHeaderView(),                    0, 0);
+            $verticalGridView->setView(static::makeHeaderView($controller),                    0, 0);
 
             //$verticalGridView->setView(static::makeMenuView(),                      1, 0);
 
@@ -84,16 +84,19 @@
             return $verticalGridView;
         }
 
-        protected static function makeHeaderView()
+        protected static function makeHeaderView(CController $controller)
         {
-            $settingsMenuItems    = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
-            $userMenuItems        = static::getAndResolveUserMenuItemsForHeader();
-            $notificationsUrl     = Yii::app()->createUrl('notifications/default');
-            $moduleNamesAndLabels = GlobalSearchUtil::
-                                    getGlobalSearchScopingModuleNamesAndLabelsDataByUser(Yii::app()->user->userModel);
-            $sourceUrl            = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
-            GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption($moduleNamesAndLabels);
-            return new HeaderView($settingsMenuItems, $userMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);
+            $settingsMenuItems        = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
+            $userMenuItems            = static::getAndResolveUserMenuItemsForHeader();
+            $shortcutsCreateMenuItems = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
+            $notificationsUrl         = Yii::app()->createUrl('notifications/default');
+            $moduleNamesAndLabels     = GlobalSearchUtil::
+                                        getGlobalSearchScopingModuleNamesAndLabelsDataByUser(Yii::app()->user->userModel);
+            $sourceUrl                = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
+                                        GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption(
+                                        $moduleNamesAndLabels);
+            return new HeaderView($controller->getId(), $controller->getModule()->getId(), $settingsMenuItems,
+                                  $userMenuItems, $shortcutsCreateMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);
         }
 
         protected static function getAndResolveUserMenuItemsForHeader()

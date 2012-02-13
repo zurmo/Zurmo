@@ -28,18 +28,31 @@
     {
         private $verticalGridView;
 
-        public function __construct($settingsMenuItems, $userMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl)
+        public function __construct($controllerId, $moduleId, $settingsMenuItems, $userMenuItems,
+                                    $shortcutsCreateMenuItems,
+                                    $notificationsUrl, $moduleNamesAndLabels, $sourceUrl)
         {
+            assert('is_string($controllerId');
+            assert('is_string($moduleId');
             assert('is_array($settingsMenuItems)');
             assert('is_array($userMenuItems)');
+            assert('is_array($shortcutsCreateMenuItems)');
             assert('is_string($notificationsUrl)');
             assert('is_array($moduleNamesAndLabels)');
             assert('is_string($sourceUrl)');
+
+            $shortcutsCreateMenuView = new ShortcutsCreateMenuView(
+                $controllerId,
+                $moduleId,
+                $shortcutsCreateMenuItems
+            );
             $this->verticalGridView   = new GridView(2, 1);
             $this->verticalGridView->setView(
                                         new HeaderLinksView($settingsMenuItems, $userMenuItems, $notificationsUrl), 0, 0);
-            $this->verticalGridView->setView(
-                                        new GlobalSearchView($moduleNamesAndLabels, $sourceUrl),1, 0);
+            $horizontalGridView = new GridView(1, 2);
+            $horizontalGridView->setView(new GlobalSearchView($moduleNamesAndLabels, $sourceUrl), 0, 0);
+            $horizontalGridView->setView($shortcutsCreateMenuView, 0, 1);
+            $this->verticalGridView->setView($horizontalGridView,1, 0);
         }
 
         protected function renderContent()

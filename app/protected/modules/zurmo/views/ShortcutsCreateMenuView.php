@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class DropDownShortcutsMenuView extends View
+    class ShortcutsCreateMenuView extends View
     {
         protected $controllerId;
 
@@ -61,7 +61,7 @@
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("Shortcuts");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
-                'items'                   => $this->menuItems,
+                'items'                   => array($this->menuItems),
                 'navContainerClass'       => 'nav-single-container',
                 'navBarClass'             => 'nav-single-bar',
             ));

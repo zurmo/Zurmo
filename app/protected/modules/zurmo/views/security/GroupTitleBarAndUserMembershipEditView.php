@@ -34,12 +34,7 @@
             $moduleName)
         {
             parent::__construct(2, 1);
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('GroupsModule');
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                                    $controllerId,
-                                    $moduleId,
-                                    $menuItems);
-            $this->setView(new TitleBarView(Yii::t('Default', 'User Membership'), $model, 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new TitleBarView(Yii::t('Default', 'User Membership'), $model, 1), 0, 0);
             $this->setView(new GroupUserMembershipEditView($controllerId, $moduleId, $form, $model->id), 1, 0);
         }
     }

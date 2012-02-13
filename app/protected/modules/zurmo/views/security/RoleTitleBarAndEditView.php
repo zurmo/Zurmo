@@ -32,13 +32,8 @@
             assert('$moduleId != null');
             assert('is_array($params)');
             parent::__construct(2, 1);
-            $menuItems     = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('RolesModule');
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                                    $controllerId,
-                                    $moduleId,
-                                    $menuItems);
             $titleBarView = new TitleBarView (  RolesModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $role->name, 1, $shortcutsMenu->render());
+                                                $role->name, 1);
             $this->setView($titleBarView, 0, 0);
             $this->setView(new GroupEditAndDetailsView ('Details', $controllerId, $moduleId, $role), 1, 0);
         }

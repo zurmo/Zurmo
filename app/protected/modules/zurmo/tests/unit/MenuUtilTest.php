@@ -36,20 +36,20 @@
             SecurityTestHelper::createRoles();
         }
 
-        public function testGetAccessibleShortcutsMenuByCurrentUser()
+        public function testGetAccessibleShortcutsCreateMenuByCurrentUser()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
-            $menu = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('UsersModule');
+            $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $this->assertEquals(1, count($menu));
             $this->assertEquals(2, count($menu[0]['items']));
             Yii::app()->user->userModel = User::getByUsername('billy');
-            $menu = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('UsersModule');
+            $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $this->assertEquals(0, count($menu));
             $bill = User::getByUsername('billy');
             $bill->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS);
             $saved = $bill->save();
             $this->assertTrue($saved);
-            $menu = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('UsersModule');
+            $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $this->assertEquals(1, count($menu));
             $this->assertEquals(1, count($menu[0]['items']));
         }
@@ -127,7 +127,7 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $metadata                                 = AccountsModule::getMetadata();
             $backupMetadata                           = $metadata;
-            $metadata['global']['shortcutsMenuItems'] = array(
+            $metadata['global']['shortcutsCreateMenuItems'] = array(
                 array(
                     'label' => 'AccountsModulePluralLabel',
                     'url'   => array('/accounts/default'),
@@ -154,7 +154,7 @@
                 ),
             );
             AccountsModule::setMetadata($metadata);
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('AccountsModule');
+            $menuItems = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $compareData = array(
                 array(
                     'label' => 'Accounts',

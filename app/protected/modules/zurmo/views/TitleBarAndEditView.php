@@ -30,19 +30,13 @@
         {
             parent::__construct(2, 1);
             $moduleClassName = $moduleName . 'Module';
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                $controllerId,
-                $moduleId,
-                $menuItems
-            );
             $description = strval($model);
             if (strlen($description) > 100)
             {
                 $description = substr($description, 0, 100) . '...';
             }
             $titleBarView = new TitleBarView (  $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $description, 1, $shortcutsMenu->render());
+                                                $description, 1);
             $this->setView($titleBarView, 0, 0);
             $editViewClassName = get_class($model) . 'EditView';
             $this->setView(new $editViewClassName($controllerId, $moduleId, $model), 1, 0);

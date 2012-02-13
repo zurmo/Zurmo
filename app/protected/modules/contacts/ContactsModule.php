@@ -81,6 +81,13 @@
                     'showLayoutsLink' => true,
                     'showMenusLink' => true,
                 ),
+                'shortcutsCreateMenuItems' => array(
+                    array(
+                        'label' => 'ContactsModuleSingularLabel',
+                        'url'   => array('/contacts/default/create'),
+                        'right' => self::RIGHT_CREATE_CONTACTS,
+                    ),
+                ),
                 'startingState' => 1,
                 'globalSearchAttributeNames' => array(
                     'fullName',

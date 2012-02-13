@@ -92,13 +92,32 @@
          * Get accessible shortcuts menu item based on the current user.
          * @return array of menu items.
          */
-        public static function getAccessibleShortcutsMenuByCurrentUser($moduleClassName)
+        public static function getAccessibleShortcutsCreateMenuByCurrentUser()
         {
             assert('is_string($moduleClassName)');
-            $user      = Yii::app()->user->userModel;
-            $metadata  = $moduleClassName::getShortCutsMenuItems();
-            $menuItems = MenuUtil::resolveModuleMenuForAccess($moduleClassName, $metadata, $user);
-            return self::resolveMenuItemsForLanguageLocalization($menuItems, $moduleClassName);
+            $user            = Yii::app()->user->userModel;
+            $modules         = Module::getModuleObjects();
+            $createMenuItems = array(
+                        'label' => Yii::t('Default', 'Create New'),
+                        'url'   => null,
+                        'items' => array());
+            foreach ($modules as $module)
+            {
+                $metadata  = $module::getShortCutsCreateMenuItems();
+                $menuItems = MenuUtil::resolveModuleMenuForAccess(get_class($module), $metadata, $user);
+                $menuItems = self::resolveMenuItemsForLanguageLocalization($menuItems, get_class($module));
+                if(!empty($menuItems))
+                {
+                    $createMenuItems['items'] = array_merge($createMenuItems['items'],
+                                                   self::resolveMenuItemsForLanguageLocalization
+                                                       ($menuItems, get_class($module)));
+                }
+            }
+            if(empty($createMenuItems['items']))
+            {
+                return array();
+            }
+            return $createMenuItems;
         }
 
         /**

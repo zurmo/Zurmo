@@ -30,14 +30,8 @@
         {
             assert('$user instanceof User || $user instanceof UserPasswordForm');
             parent::__construct(2, 1);
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('UsersModule');
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                $controllerId,
-                $moduleId,
-                $menuItems
-            );
             $titleBarView = new TitleBarView (  UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $user, 1, $shortcutsMenu->render());
+                                                $user, 1);
             $this->setView($titleBarView, 0, 0);
             $this->setView(new UserCreateView($controllerId, $moduleId, $user), 1, 0);
         }

@@ -66,25 +66,6 @@
                         'order' => 5,
                     ),
                 ),
-                'shortcutsMenuItems' => array(
-                    array(
-                        'label' => 'Roles',
-                        'url'   => array('/zurmo/role'),
-                        'right' => self::RIGHT_ACCESS_ROLES,
-                        'items' => array(
-                            array(
-                                'label' => 'Create Role',
-                                'url'   => array('/zurmo/role/create'),
-                                'right' => self::RIGHT_ACCESS_ROLES,
-                            ),
-                            array(
-                                'label' => 'Roles',
-                                'url'   => array('/zurmo/role'),
-                                'right' => self::RIGHT_ACCESS_ROLES,
-                            ),
-                        ),
-                    ),
-                ),
             );
             return $metadata;
         }

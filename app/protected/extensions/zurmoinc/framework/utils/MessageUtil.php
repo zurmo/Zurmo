@@ -509,9 +509,9 @@
                 }
             }
         }
-        if (isset($metadata['global']['shortcutsMenuItems']))
+        if (isset($metadata['global']['shortcutsCreateMenuItems']))
         {
-            foreach ($metadata['global']['shortcutsMenuItems'] as $menuItem)
+            foreach ($metadata['global']['shortcutsCreateMenuItems'] as $menuItem)
             {
                 if (isset($menuItem['items']))
                 {

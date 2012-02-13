@@ -368,13 +368,13 @@
             return array();
         }
 
-        public static function getShortCutsMenuItems()
+        public static function getShortCutsCreateMenuItems()
         {
             $calledClass = get_called_class();
             $metadata = $calledClass::getMetadata();
-            if (!empty($metadata['global']['shortcutsMenuItems']))
+            if (!empty($metadata['global']['shortcutsCreateMenuItems']))
             {
-                return $metadata['global']['shortcutsMenuItems'];
+                return $metadata['global']['shortcutsCreateMenuItems'];
             }
             return array();
         }

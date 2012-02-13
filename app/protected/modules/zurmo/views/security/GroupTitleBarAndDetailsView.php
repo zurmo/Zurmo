@@ -32,13 +32,8 @@
             assert('$moduleId != null');
             assert('is_array($params)');
             parent::__construct(2, 1);
-            $menuItems     = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('GroupsModule');
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                                    $controllerId,
-                                    $moduleId,
-                                    $menuItems);
             $titleBarView = new TitleBarView (  GroupsModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $group->name, 1, $shortcutsMenu->render());
+                                                $group->name, 1);
             $this->setView($titleBarView, 0, 0);
             $this->setView(new GroupEditAndDetailsView ('Details', $controllerId, $moduleId, $group), 1, 0);
         }

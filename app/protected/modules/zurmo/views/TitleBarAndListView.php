@@ -53,13 +53,7 @@
                 $description = Yii::t('Default', 'Home');
             }
             $moduleClassName = $moduleName . 'Module';
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                $controllerId,
-                $moduleId,
-                $menuItems
-            );
-            $this->setView(new TitleBarView($title, $description, 1, $shortcutsMenu->render()), 0, 0);
+            $this->setView(new TitleBarView($title, $description, 1), 0, 0);
             $this->setView(new $listViewClassName($controllerId, $moduleId, get_class($listModel), $dataProvider, $selectedIds, $selectAll), 1, 0);
         }
 

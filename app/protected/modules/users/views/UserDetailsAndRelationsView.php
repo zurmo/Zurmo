@@ -29,14 +29,8 @@
         public function __construct($controllerId, $moduleId, User $user, $params)
         {
             parent::__construct(2, 1);
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('UsersModule');
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                $controllerId,
-                $moduleId,
-                $menuItems
-            );
             $titleBarView = new TitleBarView (  UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $user, 1, $shortcutsMenu->render());
+                                                $user, 1);
             $this->setView($titleBarView, 0, 0);
             $this->setView(new UserDetailsView ($controllerId, $moduleId, $user), 1, 0);
         }

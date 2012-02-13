@@ -34,17 +34,10 @@
             )
         {
             parent::__construct(2, 1);
-            $menuItems = MenuUtil::getAccessibleShortcutsMenuByCurrentUser('UsersModule');
-            $shortcutsMenu = new DropDownShortcutsMenuView(
-                $controllerId,
-                $moduleId,
-                $menuItems
-            );
             $titleBar = new TitleBarView (
                                     UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
                                     $user . '&#160;-&#160;' . Yii::t('Default', 'Configuration') . '&#160;',
-                                    1,
-                                    $shortcutsMenu->render());
+                                    1);
             $this->setView($titleBar, 0, 0);
             $this->setView(new UserConfigurationEditView($controllerId, $moduleId, $formModel), 1, 0);
         }
