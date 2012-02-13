@@ -61,6 +61,7 @@
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("Shortcuts");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+            	'htmlOptions' => array('id' => 'ShortcutsMenu'),
                 'items'                   => array($this->menuItems),
                 'navContainerClass'       => 'nav-single-container',
                 'navBarClass'             => 'nav-single-bar',
