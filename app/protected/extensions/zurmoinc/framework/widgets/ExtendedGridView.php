@@ -86,5 +86,69 @@
                 . '&#160;|&#160;' . $noneLink . '</div>' . "\n";
             }
         }
+
+        /**
+         * Renders the top pager content
+         */
+        public function renderTopPager()
+        {
+            if(!$this->enablePagination)
+            {
+                return;
+            }
+            $pager = array();
+            $class = 'TopLinkPager';
+            if(is_array($this->pager))
+            {
+                $pager = $this->pager;
+                if(isset($pager['class']))
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            $pager['pages'] = $this->dataProvider->getPagination();
+            if($pager['pages']->getPageCount() > 1)
+            {
+                echo '<div class="'.$this->pagerCssClass.'">';
+                $this->widget($class,$pager);
+                echo '</div>';
+            }
+        }
+
+        /**
+         * Renders the bottom pager content
+         */
+        public function renderBottomPager()
+        {
+            if(!$this->enablePagination)
+            {
+                return;
+            }
+            $pager = array();
+            $class = 'BottomLinkPager';
+            if(is_array($this->pager))
+            {
+                $pager = $this->pager;
+                if(isset($pager['class']))
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            $pager['pages'] = $this->dataProvider->getPagination();
+            if($pager['pages']->getPageCount() > 1)
+            {
+                echo '<div class="'.$this->pagerCssClass.'">';
+                $this->widget($class,$pager);
+                echo '</div>';
+            }
+        }
     }
 ?>

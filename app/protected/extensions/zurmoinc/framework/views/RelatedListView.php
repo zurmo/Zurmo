@@ -94,18 +94,18 @@
             );
         }
 
-        /**
-         * TODO
-         */
+        protected function getCGridViewParams()
+        {
+            $params = parent::getCGridViewParams();
+            return array_merge($params, array('template' => "{topPager}\n{items}\n{bottomPager}"));
+        }
+
         protected function getCGridViewPagerParams()
         {
             return array(
                     'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'firstPageLabel' => '&lt;&lt;',
-                    'prevPageLabel'  => '&lt;',
-                    'nextPageLabel'  => '&gt;',
-                    'lastPageLabel'  => '&gt;&gt;',
-                    'class'          => 'LinkPager',
+                    'prevPageLabel'  => 'UP ARROW',
+                    'nextPageLabel'  => 'DOWN ARROW',
                     'paginationParams' => array_merge($_GET, array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/details',
                 );
