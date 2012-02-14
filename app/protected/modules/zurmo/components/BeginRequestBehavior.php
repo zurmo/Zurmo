@@ -78,7 +78,10 @@
             }
             catch (NotFoundException $e)
             {
-                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework');
+                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(
+                                                Yii::app()->basePath . '/extensions/zurmoinc/framework',
+                                                Yii::app()->basePath . '/extensions/zurmoinc/framework',
+                                                'application.extensions.zurmoinc.framework');
                 GeneralCache::cacheEntry('filesToIncludeFromFramework', $filesToIncludeFromFramework);
             }
             foreach ($filesToIncludeFromFramework as $file)
@@ -92,7 +95,10 @@
             }
             catch (NotFoundException $e)
             {
-                $filesToIncludeFromModules = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules');
+                $filesToIncludeFromModules = FileUtil::getFilesFromDir(
+                                                Yii::app()->basePath . '/modules',
+                                                Yii::app()->basePath . '/modules',
+                                                'application.modules');
                 GeneralCache::cacheEntry('filesToIncludeFromModules', $filesToIncludeFromModules);
             }
 
