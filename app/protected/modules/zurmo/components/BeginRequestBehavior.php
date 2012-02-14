@@ -67,25 +67,40 @@
         }
 
         /**
-        * Import all files.
+        * Import all files that need to be included(for lazy loading)
         * @param $event
         */
         public function handleImports($event)
         {
-            $dirs = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework');
-            foreach ($dirs as $dir)
+            try
             {
-                Yii::import($dir);
+                $filesToIncludeFromFramework = GeneralCache::getEntry('filesToIncludeFromFramework');
+            }
+            catch (NotFoundException $e)
+            {
+                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework');
+                GeneralCache::cacheEntry('filesToIncludeFromFramework', $filesToIncludeFromFramework);
+            }
+            foreach ($filesToIncludeFromFramework as $file)
+            {
+                Yii::import($file);
             }
 
-            $dirs = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules');
-            foreach ($dirs as $dir)
+            try
             {
-                Yii::import($dir);
+                $filesToIncludeFromModules = GeneralCache::getEntry('filesToIncludeFromModules');
+            }
+            catch (NotFoundException $e)
+            {
+                $filesToIncludeFromModules = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules');
+                GeneralCache::cacheEntry('filesToIncludeFromModules', $filesToIncludeFromModules);
+            }
+
+            foreach ($filesToIncludeFromModules as $file)
+            {
+                Yii::import($file);
             }
         }
-
-
 
         /**
         * This check is required during installation since if runtime, assets and data folders are missing
