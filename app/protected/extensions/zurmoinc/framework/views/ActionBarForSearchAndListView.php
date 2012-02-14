@@ -95,7 +95,7 @@
                             	'htmlOptions' => array('class' => 'icon-create'),
 							),
                             array('type'  => 'MassEditLink',
-                                  'htmlOptions' => array('class' => 'icon-edit'),
+                            	  'htmlOptions' => array('class' => 'icon-edit'),
                                   'listViewGridId' => 'eval:$this->listViewGridId',
                                   'pageVarName' => 'eval:$this->pageVarName'),
                         ),

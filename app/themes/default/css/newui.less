@@ -490,14 +490,13 @@ footer, header, hgroup, menu, nav, section {
 	width:170px;
 	float:left;
 	background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(244,244,244,1) 100%);
-	//background: url(../images/sidebar-gradient.png) left top repeat-x;
 	border-right:1px solid #eee;
 	border-left:1px solid #eee;
 	height:100%;
 	overflow:hidden;
 	display:block;
-	//position: fixed;
 	overflow: visible;
+	.radius(0 0 0 5px);
 }
 
 .AppNavigation ul{
@@ -567,6 +566,7 @@ footer, header, hgroup, menu, nav, section {
 	border-top:1px solid #F9F9FA;
 	padding:20px 5px;
 	width:160px;
+	
 	h3{
 		color:#666;
 		font-size:10px;
@@ -719,6 +719,11 @@ footer, header, hgroup, menu, nav, section {
 .icon-add:before{
 	content: "Y";
 	.view-toolbar-icons();
+	top:1px;
+}
+#list-view-massAction:before{
+	content: "2";
+	.view-toolbar-icons();	
 	top:1px;
 }
 
@@ -989,13 +994,13 @@ table.items thead tr:hover{
 
 /*Footer*/
 #credit-link{
-	img{
-		margin-right:10px;
-		margin-left:10px;
-		float:left;
-	}
+	background:url(../images/Zurmo.png) left top no-repeat;
+	line-height: 19px;
+	display:block;
+	margin-left:10px;
 	span{
-		line-height: 19px;
+		
+		margin-left:70px;
 	}
 }
 
@@ -1158,13 +1163,19 @@ table.items thead tr:hover{
 	}
 }
 .ui-multiselect-menu{
-	padding:20px 20px 20px 20px;
+	padding:10px;
 	.flyout();
+	overflow: hidden;
+	label{
+		padding-top:0;
+	}
 	input[type="checkbox"]{
-		margin-right:10px;
+		margin:0 10px 0 0 !important;
 	}
 	li{
 		list-style: none;
+		line-height:25px;
+		display:block;
 	}
 }
 .flyout{
