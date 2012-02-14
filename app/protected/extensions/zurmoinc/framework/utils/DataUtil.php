@@ -60,7 +60,15 @@
                     }
                     else
                     {
-                        $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+                        try
+                        {
+                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+                        }
+                        catch(NotImplementedException $e)
+                        {
+                            //In the event that a designer type does not exist.
+                            $designerType = null;
+                        }
                         if ($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
                         {
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&

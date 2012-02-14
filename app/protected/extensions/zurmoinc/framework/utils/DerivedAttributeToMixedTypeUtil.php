@@ -63,7 +63,7 @@
             }
             catch(NotFoundException $e)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException($attributeName . 'M' . $modelClassName);
             }
         }
     }
