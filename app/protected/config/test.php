@@ -32,28 +32,28 @@
         array(
             'import' => array(
                 'application.extensions.zurmoinc.framework.adapters.*',
-            'application.extensions.zurmoinc.framework.adapters.columns.*',
-            'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
-            'application.extensions.zurmoinc.framework.configuration.*',
-            'application.extensions.zurmoinc.framework.components.*',
-            'application.extensions.zurmoinc.framework.controllers.*',
-            'application.extensions.zurmoinc.framework.dataproviders.*',
-            'application.extensions.zurmoinc.framework.elements.*',
-            'application.extensions.zurmoinc.framework.elements.actions.*',
-            'application.extensions.zurmoinc.framework.elements.derived.*',
-            'application.extensions.zurmoinc.framework.exceptions.*',
-            'application.extensions.zurmoinc.framework.forms.*',
-            'application.extensions.zurmoinc.framework.interfaces.*',
-            'application.extensions.zurmoinc.framework.models.*',
-            'application.extensions.zurmoinc.framework.models.validators.*',
-            'application.extensions.zurmoinc.framework.modules.*',
-            'application.extensions.zurmoinc.framework.portlets.*',
-            'application.extensions.zurmoinc.framework.portlets.rules.*',
-            'application.extensions.zurmoinc.framework.rules.*',
-            'application.extensions.zurmoinc.framework.utils.*',
-            'application.extensions.zurmoinc.framework.validators.*',
-            'application.extensions.zurmoinc.framework.views.*',
-            'application.extensions.zurmoinc.framework.widgets.*',
+                'application.extensions.zurmoinc.framework.adapters.columns.*',
+                'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
+                'application.extensions.zurmoinc.framework.configuration.*',
+                'application.extensions.zurmoinc.framework.components.*',
+                'application.extensions.zurmoinc.framework.controllers.*',
+                'application.extensions.zurmoinc.framework.dataproviders.*',
+                'application.extensions.zurmoinc.framework.elements.*',
+                'application.extensions.zurmoinc.framework.elements.actions.*',
+                'application.extensions.zurmoinc.framework.elements.derived.*',
+                'application.extensions.zurmoinc.framework.exceptions.*',
+                'application.extensions.zurmoinc.framework.forms.*',
+                'application.extensions.zurmoinc.framework.interfaces.*',
+                'application.extensions.zurmoinc.framework.models.*',
+                'application.extensions.zurmoinc.framework.models.validators.*',
+                'application.extensions.zurmoinc.framework.modules.*',
+                'application.extensions.zurmoinc.framework.portlets.*',
+                'application.extensions.zurmoinc.framework.portlets.rules.*',
+                'application.extensions.zurmoinc.framework.rules.*',
+                'application.extensions.zurmoinc.framework.utils.*',
+                'application.extensions.zurmoinc.framework.validators.*',
+                'application.extensions.zurmoinc.framework.views.*',
+                'application.extensions.zurmoinc.framework.widgets.*',
                 'application.extensions.zurmoinc.framework.tests.common.*',
                 'application.extensions.zurmoinc.framework.tests.unit.*',
                 'application.extensions.zurmoinc.framework.tests.unit.components.*',
@@ -130,7 +130,6 @@
     }
 
     // Add aliases here that are likely to only be specific to a particular module.
-
     $common_config['import'][] = "application.modules.designer.rules.*";                            // Not Coding Standard
     $common_config['import'][] = "application.modules.designer.rules.elements.*";                   // Not Coding Standard
     $common_config['import'][] = "application.modules.designer.elements.layoutsettings.*";          // Not Coding Standard
