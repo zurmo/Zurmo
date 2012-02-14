@@ -40,7 +40,7 @@
                 }
                 else
                 {
-                    if (isset($values['values']) && is_string((int)$values['values']))
+                    if (isset($values['values']) && is_string($values['values']))
                     {
                         if ($_POST[$postVariableName][$attributeName]['values'] == '')
                         {
