@@ -62,6 +62,9 @@
             $this->runControllerWithNoExceptionsAndGetContent('users/default/create');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
 
+            //Access to admin configuration should be allowed.
+            $this->runControllerWithNoExceptionsAndGetContent('configuration');
+
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
             $users = User::getAll();
@@ -71,7 +74,10 @@
             $cUser = User::getByUsername('cuser');
             $dUser = User::getByUsername('duser');
             $this->setGetArray(array('id' => $aUser->id));
-            $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $this->assertTrue(strpos($content, 'User_role_SelectLink') !== false);
+            $this->assertTrue(strpos($content, 'User_role_name') !== false);
+
             $users = User::getAll();
             $this->assertEquals(5, count($users));
             //Save user.

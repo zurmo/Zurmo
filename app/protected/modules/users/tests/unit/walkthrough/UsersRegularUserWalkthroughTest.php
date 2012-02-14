@@ -50,10 +50,25 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
+            $aUser = User::getByUsername('aUser');
+
+            //Access to admin configuration should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('configuration');
+
+            //Access to users list to modify users should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('users/default');
+
+            $this->setGetArray(array('id' => $aUser->id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $this->assertFalse(strpos($content, 'User_role_SelectLink') !== false);
+            $this->assertFalse(strpos($content, 'User_role_name') !== false);
+
             //Now test all portlet controller actions
             //Now test peon with elevated rights to tabs /other available rights
             //such as convert lead
             //Now test peon with elevated permissions to models.
+                        //actionModalList
+                        //Autocomplete for User
         }
 
         /**
