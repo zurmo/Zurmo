@@ -59,12 +59,55 @@
             $content  = '<div>';
             $content .= $this->renderTitleContent();
             $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
-            $content .= $this->renderActionElementBar(false);
+            $content .= $this->renderActionElementMenu();
             $content .= '</div></div>';
             $content .= $this->renderFormLayout();
             $content .= '<p>'.$this->renderAfterFormLayoutForDetailsContent().'</p>';
-			$content .= '</div>';
+            $content .= '</div>';
             return $content;
+        }
+
+        /**
+         * Render a menu above the form layout. This includes buttons and/or
+         * links to go to different views or process actions such as save or delete
+         * @return A string containing the element's content.
+          */
+        protected function renderActionElementMenu()
+        {
+            $metadata  = $this::getMetadata();
+            $menuItems = array('label' => Yii::t('Default', 'Options'), 'items' => array());
+            if (isset($metadata['global']['toolbar']) && is_array($metadata['global']['toolbar']['elements']))
+            {
+                foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
+                {
+                    $elementclassname = $elementInformation['type'] . 'ActionElement';
+                    $params = array_slice($elementInformation, 1);
+                    array_walk($params, array($this, 'resolveEvaluateSubString'));
+                    $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
+                    if (!$this->shouldRenderToolBarElement($element, $elementInformation))
+                    {
+                        continue;
+                    }
+                    if ($element->isFormRequiredToUse())
+                    {
+                        throw new NotSupportedException();
+                    }
+                    $menuItems['items'][] = $element->renderMenuItem();
+                }
+            }
+            if(count($menuItems['items']) > 0)
+            {
+                $cClipWidget = new CClipWidget();
+                $cClipWidget->beginClip("DetailsOptionMenu");
+                $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+                    'htmlOptions' => array('id' => 'OptionsMenu'),
+                    'items'                   => array($menuItems),
+                    'navContainerClass'       => 'nav-single-container',
+                    'navBarClass'             => 'nav-single-bar',
+                ));
+                $cClipWidget->endClip();
+                return $cClipWidget->getController()->clips['DetailsOptionMenu'];
+            }
         }
 
         protected function renderTitleContent()
