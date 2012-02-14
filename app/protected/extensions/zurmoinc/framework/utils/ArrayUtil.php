@@ -54,5 +54,25 @@
         {
             return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
         }
+
+        /**
+         * Convert multi-dimenision array into flat(one dimension) array
+         */
+        public static function arrayFlat($array)
+        {
+            $flatternArray = array();
+            foreach($array as $element)
+            {
+                if(is_array($element))
+                {
+                    $flatternArray = array_merge($flatternArray, self::arrayFlat($element));
+                }
+                else
+                {
+                    $flatternArray[] = $element;
+                }
+            }
+            return $flatternArray;
+        }
     }
 ?>

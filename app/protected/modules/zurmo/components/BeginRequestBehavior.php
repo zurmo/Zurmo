@@ -28,6 +28,7 @@
     {
         public function attach($owner)
         {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
             if (Yii::app()->apiRequest->isApiRequest())
             {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
@@ -64,6 +65,27 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
             }
         }
+
+        /**
+        * Import all files.
+        * @param $event
+        */
+        public function handleImports($event)
+        {
+            $dirs = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework');
+            foreach ($dirs as $dir)
+            {
+                Yii::import($dir);
+            }
+
+            $dirs = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules');
+            foreach ($dirs as $dir)
+            {
+                Yii::import($dir);
+            }
+        }
+
+
 
         /**
         * This check is required during installation since if runtime, assets and data folders are missing

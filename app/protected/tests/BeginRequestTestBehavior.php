@@ -28,6 +28,7 @@
     {
         public function attach($owner)
         {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
         }
 

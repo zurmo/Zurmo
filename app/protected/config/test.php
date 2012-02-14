@@ -31,6 +31,29 @@
         require('main.php'),
         array(
             'import' => array(
+                'application.extensions.zurmoinc.framework.adapters.*',
+                'application.extensions.zurmoinc.framework.adapters.columns.*',
+                'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
+                'application.extensions.zurmoinc.framework.configuration.*',
+                'application.extensions.zurmoinc.framework.components.*',
+                'application.extensions.zurmoinc.framework.controllers.*',
+                'application.extensions.zurmoinc.framework.dataproviders.*',
+                'application.extensions.zurmoinc.framework.elements.*',
+                'application.extensions.zurmoinc.framework.elements.actions.*',
+                'application.extensions.zurmoinc.framework.elements.derived.*',
+                'application.extensions.zurmoinc.framework.exceptions.*',
+                'application.extensions.zurmoinc.framework.forms.*',
+                'application.extensions.zurmoinc.framework.interfaces.*',
+                'application.extensions.zurmoinc.framework.models.*',
+                'application.extensions.zurmoinc.framework.models.validators.*',
+                'application.extensions.zurmoinc.framework.modules.*',
+                'application.extensions.zurmoinc.framework.portlets.*',
+                'application.extensions.zurmoinc.framework.portlets.rules.*',
+                'application.extensions.zurmoinc.framework.rules.*',
+                'application.extensions.zurmoinc.framework.utils.*',
+                'application.extensions.zurmoinc.framework.validators.*',
+                'application.extensions.zurmoinc.framework.views.*',
+                'application.extensions.zurmoinc.framework.widgets.*',
                 'application.extensions.zurmoinc.framework.tests.common.*',
                 'application.extensions.zurmoinc.framework.tests.unit.*',
                 'application.extensions.zurmoinc.framework.tests.unit.components.*',
@@ -57,6 +80,64 @@
             ),
         )
     );
+
+    foreach ($common_config['modules'] as $index => $moduleName)
+    {
+        //This is to handle nested modules in the config above.
+        if (is_array($moduleName))
+        {
+            $moduleName = $index;
+        }
+        $common_config['import'][] = "application.modules.$moduleName.*";                           // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.adapters.*";                  // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.adapters.columns.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.dataproviders.*";             // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.elements.*";                  // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.elements.actions.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.elements.actions.security.*"; // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.elements.derived.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.components.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.controllers.*";               // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.controllers.filters.*";       // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.exceptions.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.forms.*";                     // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.forms.attributes.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.interfaces.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.jobs.*";                      // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.models.*";                    // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.modules.*";                   // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.rules.*";                     // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.rules.attributes.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.rules.policies.*";            // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.models.*";         // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.walkthrough.*";    // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.*";                     // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.charts.*";              // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.sanitizers.*";          // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.security.*";            // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.utils.analyzers.*";           // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.validators.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.views.*";                     // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.views.attributetypes.*";      // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.views.charts.*";              // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.views.related.*";             // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.widgets.*";                   // Not Coding Standard
+    }
+
+    // Add aliases here that are likely to only be specific to a particular module.
+
+    $common_config['import'][] = "application.modules.designer.rules.*";                            // Not Coding Standard
+    $common_config['import'][] = "application.modules.designer.rules.elements.*";                   // Not Coding Standard
+    $common_config['import'][] = "application.modules.designer.elements.layoutsettings.*";          // Not Coding Standard
+    $common_config['import'][] = "application.modules.designer.forms.attributes.*";                 // Not Coding Standard
+    $common_config['import'][] = "application.modules.install.serviceHelpers.*";                    // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.elements.security.*";                   // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.utils.security.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
 
     //override and use test specific begin behavior
     $common_config['behaviors']['onBeginRequest'] = array(
