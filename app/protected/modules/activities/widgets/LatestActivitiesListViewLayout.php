@@ -55,7 +55,7 @@
                     $orderByAttributeName = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
                     $content .= '<tr>';
                     $content .= '<td>';
-                    $content .= '<span class="'.get_class($model).'">'.get_class($model).'</span>';
+                    $content .= '<span class="'.get_class($model).'"></span>';
                     $content .= '</td>';
                     $content .= '<td>';
                     $content .= '<strong>'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
