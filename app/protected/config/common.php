@@ -220,6 +220,8 @@
             'application.modules.zurmo.components.BeginRequestBehavior',
             'application.extensions.zurmoinc.framework.utils.ArrayUtil',
             'application.extensions.zurmoinc.framework.utils.FileUtil',
+            'application.modules.api.tests.unit.models.*',
+            'application.modules.api.tests.unit.forms.*',
         ),
 
         'modules' => array(

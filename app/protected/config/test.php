@@ -32,28 +32,28 @@
         array(
             'import' => array(
                 'application.extensions.zurmoinc.framework.adapters.*',
-                'application.extensions.zurmoinc.framework.adapters.columns.*',
-                'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
-                'application.extensions.zurmoinc.framework.configuration.*',
-                'application.extensions.zurmoinc.framework.components.*',
-                'application.extensions.zurmoinc.framework.controllers.*',
-                'application.extensions.zurmoinc.framework.dataproviders.*',
-                'application.extensions.zurmoinc.framework.elements.*',
-                'application.extensions.zurmoinc.framework.elements.actions.*',
-                'application.extensions.zurmoinc.framework.elements.derived.*',
-                'application.extensions.zurmoinc.framework.exceptions.*',
-                'application.extensions.zurmoinc.framework.forms.*',
-                'application.extensions.zurmoinc.framework.interfaces.*',
-                'application.extensions.zurmoinc.framework.models.*',
-                'application.extensions.zurmoinc.framework.models.validators.*',
-                'application.extensions.zurmoinc.framework.modules.*',
-                'application.extensions.zurmoinc.framework.portlets.*',
-                'application.extensions.zurmoinc.framework.portlets.rules.*',
-                'application.extensions.zurmoinc.framework.rules.*',
-                'application.extensions.zurmoinc.framework.utils.*',
-                'application.extensions.zurmoinc.framework.validators.*',
-                'application.extensions.zurmoinc.framework.views.*',
-                'application.extensions.zurmoinc.framework.widgets.*',
+            'application.extensions.zurmoinc.framework.adapters.columns.*',
+            'application.extensions.zurmoinc.framework.adapters.dataproviders.*',
+            'application.extensions.zurmoinc.framework.configuration.*',
+            'application.extensions.zurmoinc.framework.components.*',
+            'application.extensions.zurmoinc.framework.controllers.*',
+            'application.extensions.zurmoinc.framework.dataproviders.*',
+            'application.extensions.zurmoinc.framework.elements.*',
+            'application.extensions.zurmoinc.framework.elements.actions.*',
+            'application.extensions.zurmoinc.framework.elements.derived.*',
+            'application.extensions.zurmoinc.framework.exceptions.*',
+            'application.extensions.zurmoinc.framework.forms.*',
+            'application.extensions.zurmoinc.framework.interfaces.*',
+            'application.extensions.zurmoinc.framework.models.*',
+            'application.extensions.zurmoinc.framework.models.validators.*',
+            'application.extensions.zurmoinc.framework.modules.*',
+            'application.extensions.zurmoinc.framework.portlets.*',
+            'application.extensions.zurmoinc.framework.portlets.rules.*',
+            'application.extensions.zurmoinc.framework.rules.*',
+            'application.extensions.zurmoinc.framework.utils.*',
+            'application.extensions.zurmoinc.framework.validators.*',
+            'application.extensions.zurmoinc.framework.views.*',
+            'application.extensions.zurmoinc.framework.widgets.*',
                 'application.extensions.zurmoinc.framework.tests.common.*',
                 'application.extensions.zurmoinc.framework.tests.unit.*',
                 'application.extensions.zurmoinc.framework.tests.unit.components.*',
@@ -81,6 +81,8 @@
         )
     );
 
+    // THIS IS LIKELY TO BE A PERFORMANCE ISSUE, SEARCHING SO MANY DIRECTORIES. TO BE INVESTIGATED.
+    // Add aliases here that are likely to be useful in any module.
     foreach ($common_config['modules'] as $index => $moduleName)
     {
         //This is to handle nested modules in the config above.
@@ -110,6 +112,7 @@
         $common_config['import'][] = "application.modules.$moduleName.rules.attributes.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.rules.policies.*";            // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.*";                // Not Coding Standard
+        $common_config['import'][] = "application.modules.$moduleName.tests.unit.controllers.*";    // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.files.*";          // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.models.*";         // Not Coding Standard
         $common_config['import'][] = "application.modules.$moduleName.tests.unit.walkthrough.*";    // Not Coding Standard
@@ -138,6 +141,8 @@
     $common_config['import'][] = "application.modules.zurmo.views.currency.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.language.*";                      // Not Coding Standard
     $common_config['import'][] = "application.modules.zurmo.views.security.*";                      // Not Coding Standard
+    $common_config['import'][] = "application.modules.api.adapters.api.*";                          // Not Coding Standard
+    $common_config['import'][] = "application.modules.api.tests.unit.forms.*";                      // Not Coding Standard
 
     //override and use test specific begin behavior
     $common_config['behaviors']['onBeginRequest'] = array(
