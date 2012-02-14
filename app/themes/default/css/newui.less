@@ -666,8 +666,12 @@ footer, header, hgroup, menu, nav, section {
 	float:left;	
 	margin:20px 0 15px 0;
 	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
-	//-webkit-box-shadow:  ; /*999*/
 	background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+}
+#ActionBarSearchAndListView{
+	.view-toolbar{
+		margin-top:0;
+	}
 }
 
 .view-toolbar-link(){
@@ -726,6 +730,7 @@ footer, header, hgroup, menu, nav, section {
 	.view-toolbar-icons();	
 	top:1px;
 }
+
 
 
 /*Footer*/
@@ -963,7 +968,7 @@ table.items thead tr:hover{
 	top:-42px;
 	right:8px;
 	a {
-		padding:0 15px;
+		padding:0 15px 0 25px;
 		line-height:23px;
 		margin:0;
 		font-size:12px;
@@ -978,6 +983,12 @@ table.items thead tr:hover{
 		background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 		display:inline-block;
 		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+		&:before{
+			content: "Y";
+			.view-toolbar-icons();
+			top:-1px;
+			color:@themeColor2;
+		}
 		&:hover{
 			color:@themeColor2 !important;
 		}
@@ -1144,6 +1155,10 @@ table.items thead tr:hover{
 	#more-search-link{
 		margin-left:10px;
 		color:@themeColor;
+		&:after{
+			content: "▾";
+			margin-left:5px;
+		}
 	}
 }
 .search-view-1{
@@ -1403,7 +1418,7 @@ table.items thead tr:hover{
 	}
 	.latest-activity-toolbar{
 		position: absolute;
-		top:-40px;
+		top:-38px;
 		right:10px;
 		width:65%;
 		> div{
@@ -1424,6 +1439,9 @@ table.items thead tr:hover{
 			background:none;
 			font-size:11px !important;
 			padding:4px;
+		}
+		input[type="radio"], input[type="checkbox"]{
+			visibility:hidden;
 		}
 		.ui-state-active{
 			background:@themeColor;
