@@ -74,6 +74,11 @@
             $cUser = User::getByUsername('cuser');
             $dUser = User::getByUsername('duser');
             $this->setGetArray(array('id' => $aUser->id));
+
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            //Access to User Role edit link and control available.
             $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
             $this->assertTrue(strpos($content, 'User_role_SelectLink') !== false);
             $this->assertTrue(strpos($content, 'User_role_name') !== false);

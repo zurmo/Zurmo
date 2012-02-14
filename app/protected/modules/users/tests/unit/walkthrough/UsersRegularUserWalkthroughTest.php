@@ -59,6 +59,11 @@
             $this->runControllerShouldResultInAccessFailureAndGetContent('users/default');
 
             $this->setGetArray(array('id' => $aUser->id));
+
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            //Access to User Role edit link and control not available.
             $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
             $this->assertFalse(strpos($content, 'User_role_SelectLink') !== false);
             $this->assertFalse(strpos($content, 'User_role_name') !== false);
