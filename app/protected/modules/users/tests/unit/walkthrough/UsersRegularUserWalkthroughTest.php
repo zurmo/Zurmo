@@ -42,6 +42,7 @@
             $aUser = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB);
             $bUser = UserTestHelper::createBasicUser('bUser');
+            $bUser->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS);
             $cUser = UserTestHelper::createBasicUser('cUser');
             $dUser = UserTestHelper::createBasicUser('dUser');
         }
@@ -51,6 +52,7 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
             $aUser = User::getByUsername('aUser');
+            $bUser = User::getByUsername('bUser');
 
             //Access to admin configuration should fail.
             $this->runControllerShouldResultInAccessFailureAndGetContent('configuration');
@@ -58,8 +60,14 @@
             //Access to users list to modify users should fail.
             $this->runControllerShouldResultInAccessFailureAndGetContent('users/default');
 
-            $this->setGetArray(array('id' => $aUser->id));
+            $this->setGetArray(array('id' => $bUser->id));
+            //Access to view other users Audit Trail should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('users/default/auditEventsModalList');
 
+            //Access to edit other User and Role should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('users/default/edit');
+
+            $this->setGetArray(array('id' => $aUser->id));
             //Access to allowed to view Audit Trail.
             $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
 
