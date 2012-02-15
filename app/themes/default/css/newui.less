@@ -737,13 +737,22 @@ footer, header, hgroup, menu, nav, section {
 #FooterView{
 	margin:20px 40px;
 }
-
 .performance-info{
 	width: 900px;
 	margin:0 auto;
 }
+#credit-link{
+	background:url(../images/Zurmo.png) left top no-repeat;
+	line-height: 19px;
+	display:block;
+	margin-left:10px;
+	span{
+		
+		margin-left:70px;
+	}
+}
 
-/*general table style, tables still need 'cellspacing="0"' in the markup */
+/*General table style, tables still need 'cellspacing="0"' in the markup */
 table {
 	border-collapse: separate;
 	border-spacing: 0;
@@ -857,10 +866,6 @@ table.items thead tr:hover{
 		.b-shadow(0 0 1px 1px @themeColor);
 	}
 }
-
-
-
-
 .AppContent label{
 	font-size:12px !important;
 	color:#666;
@@ -869,8 +874,7 @@ table.items thead tr:hover{
 }
 
 /*Form Edit Account*/
-.form form{
-	
+.form form{	
 }
 .form th{
 	vertical-align: text-top;
@@ -965,13 +969,13 @@ table.items thead tr:hover{
 
 .portlet-toolbar{
 	position: absolute;
-	top:-42px;
+	top:-45px;
 	right:8px;
 	a {
 		padding:0 15px 0 25px;
 		line-height:23px;
 		margin:0;
-		font-size:12px;
+		font-size:10px;
 		font-weight:bold;
 		.radius( 4px );
 		.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
@@ -979,7 +983,7 @@ table.items thead tr:hover{
 		border-left: 1px solid #d7d7d7;
 		border-right:1px solid #d7d7d7;
 		border-bottom:1px solid #bababa;
-		color:#333333;
+		color:#656565;
 		background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 		display:inline-block;
 		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
@@ -988,6 +992,7 @@ table.items thead tr:hover{
 			.view-toolbar-icons();
 			top:-1px;
 			color:@themeColor2;
+			margin-left:2px;
 		}
 		&:hover{
 			color:@themeColor2 !important;
@@ -996,22 +1001,6 @@ table.items thead tr:hover{
 			color:#656565;
 			box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
 		}
-	}
-}
-
-
-
-
-
-/*Footer*/
-#credit-link{
-	background:url(../images/Zurmo.png) left top no-repeat;
-	line-height: 19px;
-	display:block;
-	margin-left:10px;
-	span{
-		
-		margin-left:70px;
 	}
 }
 
@@ -1311,7 +1300,6 @@ table.items thead tr:hover{
 		text-align:center;
 	}
 	table{
-
 		tr{
 			
 		}
@@ -1330,20 +1318,54 @@ table.items thead tr:hover{
 		}
 	}
 }
-/*
 #AccountEditAndDetailsView{
-	.clearfix();
-	position:relative;
+	position: relative;
 	.view-toolbar-container{
 		position:absolute;
-		top:0;
-		right:15px;
+		top:-12px;
+		right:30px;
+		margin:0;
 		.view-toolbar{
 			float:right;
+			border:none;
+			.b-shadow(none);
+		}
+		ul{
+			list-style: none;
 		}
 	}
+	#OptionsMenu > li > a{
+		width: auto;
+		.zButton();
+		&:after{
+			content: "▾";
+			margin-left:5px;
+		}
+	}
+	#OptionsMenu ul{
+		.flyout();
+		padding-top:3px;
+		padding-bottom:3px;
+		display:none;
+		font-weight:normal !important;
+		a{
+			text-indent:0;
+			color: #666;
+			font-size: 11px;
+			font-weight: normal;
+			display: block;
+			padding: 5px 10px 5px 10px;
+			margin: 0 2px;
+			line-height: normal;
+			.t-shadow(none);
+			&:hover{
+				background:@themeColor2 !important;
+				color:#fff !important;
+			}
+		}
+	}	
 }
-*/
+
 #AccountDetailsAndRelationsView{
 	.clearfix();
 	.GridView{
@@ -1366,11 +1388,9 @@ table.items thead tr:hover{
 		background:none;
 		border:none;
 		.b-shadow(none);
-		
 		textarea{
 			
 		}
-		
 		table{
 			border-bottom:none;
 		}
@@ -1411,6 +1431,12 @@ table.items thead tr:hover{
 }
 
 /*Latest Activity*/
+.latest-activity-icon{
+	position:relative;
+	top:-3px;
+	color:#666 !important; 
+	.symbly(42px);
+}
 .LatestActivitiesView{
 	form{
 		position: relative;
@@ -1471,20 +1497,18 @@ table.items thead tr:hover{
 	}
 	.Note:after{
 		content: "R";
-		color:#545454;
-		.symbly(42px);
+		.latest-activity-icon();
 	}
 	.Task:after{
 		content: "a";
-		color:#545454;
-		.symbly(42px);
+		.latest-activity-icon();
 	}
 	.Meeting:after{
 		content: "U";
-		color:#545454;
-		.symbly(42px);
+		.latest-activity-icon();
 	}
 }
+
 
 
 
