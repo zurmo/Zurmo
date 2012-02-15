@@ -25,22 +25,36 @@
      ********************************************************************************/
 
     /**
-     * Override begin request behavior used by console applications.  Certain request/http/url specific logic
-     * is not included since it is not applicable when using the console application.
+     * Helper functionality for manipulation files.
      */
-    class CommandBeginRequestBehavior extends BeginRequestBehavior
+    class FileUtil
     {
-        public function attach($owner)
+        public static function getFilesFromDir($dir, $basePath, $beginAliasPath)
         {
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
-            if (Yii::app()->isApplicationInstalled())
+            $files = array();
+            if ($handle = opendir($dir))
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+                while (false !== ($file = readdir($handle)))
+                {
+                    if ($file != "." && $file != ".." && $file != 'tests')
+                    {
+                        if (is_dir($dir . DIRECTORY_SEPARATOR . $file))
+                        {
+                            $dir2 = $dir . DIRECTORY_SEPARATOR . $file;
+                            $files[] = self::getFilesFromDir($dir2, $basePath, $beginAliasPath);
+                        }
+                        elseif (substr(strrchr($file, '.'), 1) == 'php')
+                        {
+                            $tmp = $dir.DIRECTORY_SEPARATOR.$file;
+                            $tmp = str_replace($basePath, $beginAliasPath, $tmp);
+                            $tmp = str_replace(DIRECTORY_SEPARATOR, '.', $tmp);
+                            $files[] = substr($tmp,0,-4);
+                        }
+                    }
+                }
+                closedir($handle);
             }
+            return ArrayUtil::arrayFlat($files);
         }
     }
 ?>

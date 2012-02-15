@@ -848,6 +848,13 @@
             $messageLogger = new MessageLogger($messageStreamer);
             self::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
+
+            // Send notification to super admin to clean assets folder(optional).
+            $message                    = new NotificationMessage();
+            $message->textContent       = Yii::t('Default', 'Please delete all files from assets folder on server.');
+            $rules                      = new ClearAssetsFolderNotificationRules();
+            NotificationsUtil::submit($message, $rules);
+
             if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();

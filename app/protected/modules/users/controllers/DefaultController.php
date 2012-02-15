@@ -39,7 +39,7 @@
             $filters = array();
             $filters[] = array(
                     ZurmoBaseController::RIGHTS_FILTER_PATH .
-                    ' - modalList, autoComplete, details, profile, edit, changePassword, configurationEdit, securityDetails',
+                    ' - modalList, autoComplete, details, profile, edit, auditEventsModalList, changePassword, configurationEdit, securityDetails',
                     'moduleClassName' => 'UsersModule',
                     'rightName' => UsersModule::getAccessRight(),
             );
@@ -87,6 +87,12 @@
                                                                        $user, $params);
             $view = new UsersPageView($this, $detailsAndRelationsView);
             echo $view->render();
+        }
+
+        public function actionAuditEventsModalList($id)
+        {
+            $this->resolveCanCurrentUserAccessAction(intval($id));
+            parent::actionAuditEventsModalList($id);
         }
 
         public function actionCreate()

@@ -27,7 +27,7 @@
     /**
      * A job for removing old job logs.
      */
-    class CleanupOldJobLogsJob extends BaseJob
+    class JobLogCleanupJob extends BaseJob
     {
         /**
          * @returns Translated label that describes this job type.
@@ -42,7 +42,7 @@
          */
         public static function getType()
         {
-            return 'CleanupOldJobLogs';
+            return 'JobLogCleanup';
         }
 
         public static function getRecommendedRunFrequencyContent()

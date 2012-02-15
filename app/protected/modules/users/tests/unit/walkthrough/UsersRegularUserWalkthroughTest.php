@@ -42,6 +42,7 @@
             $aUser = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB);
             $bUser = UserTestHelper::createBasicUser('bUser');
+            $bUser->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS);
             $cUser = UserTestHelper::createBasicUser('cUser');
             $dUser = UserTestHelper::createBasicUser('dUser');
         }
@@ -50,10 +51,37 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
+            $aUser = User::getByUsername('aUser');
+            $bUser = User::getByUsername('bUser');
+
+            //Access to admin configuration should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('configuration');
+
+            //Access to users list to modify users should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('users/default');
+
+            $this->setGetArray(array('id' => $bUser->id));
+            //Access to view other users Audit Trail should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('users/default/auditEventsModalList');
+
+            //Access to edit other User and Role should fail.
+            $this->runControllerShouldResultInAccessFailureAndGetContent('users/default/edit');
+
+            $this->setGetArray(array('id' => $aUser->id));
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            //Access to User Role edit link and control not available.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $this->assertFalse(strpos($content, 'User_role_SelectLink') !== false);
+            $this->assertFalse(strpos($content, 'User_role_name') !== false);
+
             //Now test all portlet controller actions
             //Now test peon with elevated rights to tabs /other available rights
             //such as convert lead
             //Now test peon with elevated permissions to models.
+                        //actionModalList
+                        //Autocomplete for User
         }
 
         /**

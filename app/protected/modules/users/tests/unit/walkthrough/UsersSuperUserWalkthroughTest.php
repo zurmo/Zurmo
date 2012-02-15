@@ -62,6 +62,9 @@
             $this->runControllerWithNoExceptionsAndGetContent('users/default/create');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
 
+            //Access to admin configuration should be allowed.
+            $this->runControllerWithNoExceptionsAndGetContent('configuration');
+
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
             $users = User::getAll();
@@ -70,8 +73,32 @@
             $bUser = User::getByUsername('buser');
             $cUser = User::getByUsername('cuser');
             $dUser = User::getByUsername('duser');
+            $super = User::getByUsername('super');
+
+            $this->setGetArray(array('id' => $super->id));
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
             $this->setGetArray(array('id' => $aUser->id));
-            $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            $this->setGetArray(array('id' => $bUser->id));
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            $this->setGetArray(array('id' => $super->id));
+            //Access to User Role edit link and control available.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $this->assertTrue(strpos($content, 'User_role_SelectLink') !== false);
+            $this->assertTrue(strpos($content, 'User_role_name') !== false);
+
+            $this->setGetArray(array('id' => $aUser->id));
+            //Access to User Role edit link and control available.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $this->assertTrue(strpos($content, 'User_role_SelectLink') !== false);
+            $this->assertTrue(strpos($content, 'User_role_name') !== false);
+
             $users = User::getAll();
             $this->assertEquals(5, count($users));
             //Save user.
