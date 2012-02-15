@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class CleanupOldJobLogsJobTest extends BaseTest
+    class JobLogCleanupJobTest extends BaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -52,7 +52,7 @@
             $jobLog2->isProcessed = false;
             $jobLog2->save();
 
-            $job = new CleanupOldJobLogsJob();
+            $job = new JobLogCleanupJob();
             $this->assertTrue($job->run());
             $jobLogs = JobLog::getAll();
             $this->assertEquals(1, count($jobLogs));
