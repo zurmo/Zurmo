@@ -41,17 +41,18 @@
             parent::setUpBeforeClass();
             $aUser = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB);
+            $aUser->save();
             $bUser = UserTestHelper::createBasicUser('bUser');
             $bUser->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS);
+            $bUser->save();
             $cUser = UserTestHelper::createBasicUser('cUser');
             $dUser = UserTestHelper::createBasicUser('dUser');
         }
 
         public function testRegularUserAllControllerActions()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
+            $aUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
-            $aUser = User::getByUsername('aUser');
             $bUser = User::getByUsername('bUser');
 
             //Access to admin configuration should fail.
@@ -76,12 +77,22 @@
             $this->assertFalse(strpos($content, 'User_role_SelectLink') !== false);
             $this->assertFalse(strpos($content, 'User_role_name') !== false);
 
+            //Check if the user who has right access for users can access any users audit trail.
+            $bUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('bUser');
+            $this->setGetArray(array('id' => $bUser->id));
+            //Access to audit Trail should not fail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            $this->setGetArray(array('id' => $aUser->id));
+            //Access to other user audit Trail should not fail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
             //Now test all portlet controller actions
             //Now test peon with elevated rights to tabs /other available rights
             //such as convert lead
             //Now test peon with elevated permissions to models.
-                        //actionModalList
-                        //Autocomplete for User
+            //actionModalList
+            //Autocomplete for User
         }
 
         /**
