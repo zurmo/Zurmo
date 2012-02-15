@@ -1320,7 +1320,7 @@ table.items thead tr:hover{
 }
 #AccountEditAndDetailsView{
 	position: relative;
-	.view-toolbar-container{
+	.toolbar-mbmenu{
 		position:absolute;
 		top:-12px;
 		right:30px;
@@ -1333,6 +1333,11 @@ table.items thead tr:hover{
 		ul{
 			list-style: none;
 		}
+	}
+	#OptionsMenu{
+		/*position:absolute;
+		top:-35px;
+		right:8px;*/
 	}
 	#OptionsMenu > li > a{
 		width: auto;
@@ -1465,6 +1470,12 @@ table.items thead tr:hover{
 			background:none;
 			font-size:11px !important;
 			padding:4px;
+			&:hover{
+				background:@themeColor;
+				color:#FFF;
+				.radius(3px) !important;
+				border:none;
+			}
 		}
 		input[type="radio"], input[type="checkbox"]{
 			visibility:hidden;

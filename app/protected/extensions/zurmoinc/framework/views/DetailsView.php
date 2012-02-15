@@ -58,7 +58,7 @@
         {
             $content  = '<div>';
             $content .= $this->renderTitleContent();
-            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementMenu();
             $content .= '</div></div>';
             $content .= $this->renderFormLayout();
