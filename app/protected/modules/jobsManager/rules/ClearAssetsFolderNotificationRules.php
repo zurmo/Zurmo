@@ -25,20 +25,20 @@
      ********************************************************************************/
 
     /**
-     * Inform user to remove the api test entry script for production use.
+     * Inform user(super admin) to clear assets folder, after running updateSchema command.
      */
-    class RemoveApiTestEntryScriptFileNotificationRules extends JobsManagerAccessNotificationRules
+    class ClearAssetsFolderNotificationRules extends JobsManagerAccessNotificationRules
     {
         protected $critical    = false;
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Remove the api test entry script for production use.');
+            return Yii::t('Default', 'Clear the assets folder on server(optional).');
         }
 
         public static function getType()
         {
-            return 'RemoveApiTestEntryScriptFile';
+            return 'ClearAssetsFolder';
         }
     }
 ?>
