@@ -91,7 +91,7 @@
             }
         }
 
-        protected function getIdForSelectInput()
+        public function getIdForSelectInput()
         {
             return $this->getEditableInputId($this->attribute, 'value');
         }

@@ -36,9 +36,9 @@
          */
         protected function loadUsers()
         {
-            foreach (User::getAll() as $user)
+            foreach(User::getAll() as $user)
             {
-                if ($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
+                if($user->getEffectiveRight('JobsManagerModule', JobsManagerModule::RIGHT_ACCESS_JOBSMANAGER) ==
                     Right::ALLOW)
                 {
                     $this->addUser($user);

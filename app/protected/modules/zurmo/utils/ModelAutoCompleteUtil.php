@@ -102,7 +102,7 @@
             assert('is_string($partialTerm)');
             assert('is_int($pageSize)');
             assert('$user->id > 0');
-            $modelClassNamesAndSearchAttributeData = self::makeMmodelClassNamesAndSearchAttributeData($partialTerm, $user);
+            $modelClassNamesAndSearchAttributeData = self::makeModelClassNamesAndSearchAttributeData($partialTerm, $user);
             if (empty($modelClassNamesAndSearchAttributeData))
             {
                 return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
@@ -128,7 +128,7 @@
             return $autoCompleteResults;
         }
 
-        protected static function makeMmodelClassNamesAndSearchAttributeData($partialTerm, User $user)
+        protected static function makeModelClassNamesAndSearchAttributeData($partialTerm, User $user)
         {
             assert('is_string($partialTerm)');
             assert('$user->id > 0');
@@ -164,6 +164,34 @@
                 }
             }
             return $modelClassNamesAndSearchAttributeData;
+        }
+
+        /**
+         * Given a name of a customFieldData object and a term to search on return a JSON encoded
+         * array of autocomplete search results.
+         * @param string $customFieldDataName
+         * @param string $partialName
+         */
+        public static function getCustomFieldDataByPartialName($customFieldDataName, $partialName)
+        {
+            assert('is_string($customFieldDataName)');
+            assert('is_string($partialName)');
+            $customFieldData     = CustomFieldData::getByName($customFieldDataName);
+            $dataAndLabels       = CustomFieldDataUtil::
+                                   getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, Yii::app()->language);
+            $autoCompleteResults = array();
+            foreach($dataAndLabels as $data => $label)
+            {
+                if(stripos($label, $partialName) === 0)
+                {
+                    $autoCompleteResults[] = array(
+                        'id'    => $data,
+                        'value' => $data,
+                        'label' => $label,
+                    );
+                }
+            }
+            return $autoCompleteResults;
         }
     }
 ?>

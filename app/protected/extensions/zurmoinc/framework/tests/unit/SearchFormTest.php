@@ -110,7 +110,7 @@
             $this->assertEquals('MixedDateTypes', $mappingRulesType);
 
             //Test that the correct elements are used for the dynamic date attribute.
-            $elementType = ModelAttributeToDesignerTypeUtil::getDesignerType($searchForm, 'date__Date');
+            $elementType = ModelAttributeToMixedTypeUtil::getType($searchForm, 'date__Date');
             $this->assertEquals('MixedDateTypesForSearch', $elementType);
         }
 
@@ -140,7 +140,7 @@
             $this->assertEquals('MixedDateTimeTypes', $mappingRulesType);
 
             //Test that the correct elements are used for the dynamic date attribute.
-            $elementType = ModelAttributeToDesignerTypeUtil::getDesignerType($searchForm, 'dateTime__DateTime');
+            $elementType = ModelAttributeToMixedTypeUtil::getType($searchForm, 'dateTime__DateTime');
             $this->assertEquals('MixedDateTypesForSearch', $elementType);
         }
     }

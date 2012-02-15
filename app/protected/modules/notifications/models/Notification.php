@@ -36,7 +36,7 @@
                 return null;
             }
             $notificationRulesClassName = $this->type . 'NotificationRules';
-            if (@class_exists($notificationRulesClassName))
+            if(@class_exists($notificationRulesClassName))
             {
                 return $notificationRulesClassName::getDisplayName();
             }
@@ -141,7 +141,7 @@
 
         public function validateIsReadIsSet()
         {
-            if ($this->isRead == null)
+            if($this->isRead == null)
             {
                 $this->addError('isRead', Yii::t('Default', 'Is Read must be set as true or false, not null.'));
             }

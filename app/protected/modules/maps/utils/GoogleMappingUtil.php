@@ -79,7 +79,6 @@
             assert('is_string($apiKey) || $apiKey == null');
             assert('is_numeric($latitude) || $latitude == null');
             assert('is_numeric($longitude) || $longitude == null');
-            // Begin Not Coding Standard
             $mapScript = "
             function plotMap() {
                 var latlng = new google.maps.LatLng($latitude, $longitude);
@@ -103,7 +102,6 @@
             }
             $(document).ready(loadGoogleMap);
             ";
-            // End Not Coding Standard
             // Register the javascripts
             Yii::app()->getClientScript()->registerScript("GoogleMapScript". $containerId, $mapScript, CClientScript::POS_READY);
         }

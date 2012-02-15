@@ -140,7 +140,14 @@
             $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('AccountsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('AccountsModule', 'picklist');
+            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('AccountsModule', 'citypicklist');
             $this->createMultiSelectDropDownCustomFieldByModule ('AccountsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('AccountsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('AccountsModule', 'calculatednumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('AccountsModule', 'dropdowndependency');
+            $this->createDropDownDependencyCustomFieldByModule  ('AccountsModule', 'dropdowndependency2');
             $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integer');
             $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radio');
@@ -255,21 +262,21 @@
             //Create a new account based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Account' => array(
-                                    'name'                              =>  'myNewAccount',
-                                    'officePhone'                       =>  '259-784-2169',
-                                    'industry'                          =>  array('value' => 'Automotive'),
-                                    'officeFax'                         =>  '299-845-7863',
-                                    'employees'                         =>  '930',
-                                    'annualRevenue'                     =>  '474000000',
-                                    'type'                              =>  array('value' => 'Prospect'),
-                                    'website'                           =>  'http://www.Unnamed.com',
-                                    'primaryEmail'                      =>  array('emailAddress' => 'info@myNewAccount.com',
+                                    'name'                              => 'myNewAccount',
+                                    'officePhone'                       => '259-784-2169',
+                                    'industry'                          => array('value' => 'Automotive'),
+                                    'officeFax'                         => '299-845-7863',
+                                    'employees'                         => '930',
+                                    'annualRevenue'                     => '474000000',
+                                    'type'                              => array('value' => 'Prospect'),
+                                    'website'                           => 'http://www.Unnamed.com',
+                                    'primaryEmail'                      => array('emailAddress' => 'info@myNewAccount.com',
                                                                                   'optOut' => '1',
                                                                                   'isInvalid' => '0'),
-                                    'secondaryEmail'                    =>  array('emailAddress' => '',
+                                    'secondaryEmail'                    => array('emailAddress' => '',
                                                                                   'optOut' => '0',
                                                                                   'isInvalid' => '0'),
-                                    'billingAddress'                    =>  array('street1' => '6466 South Madison Creek',
+                                    'billingAddress'                    => array('street1' => '6466 South Madison Creek',
                                                                                   'street2' => '',
                                                                                   'city' => 'Chicago',
                                                                                   'state' => 'IL',
@@ -281,22 +288,27 @@
                                                                                   'state' => 'TX',
                                                                                   'postalCode' => '78759',
                                                                                   'country' => 'USA'),
-                                    'description'                       =>  'This is a Description',
-                                    'explicitReadWriteModelPermissions' =>  array('type' => null),
-                                    'checkbox'                          =>  '1',
-                                    'currency'                          =>  array('value'    => 45,
-                                                                                  'currency' => array('id' =>
-                                                                                  $baseCurrency->id)),
-                                    'date'                              =>  $date,
-                                    'datetime'                          =>  $datetime,
-                                    'decimal'                           =>  '123',
-                                    'picklist'                          =>  array('value' => 'a'),
-                                    'integer'                           =>  '12',
-                                    'phone'                             =>  '259-784-2169',
-                                    'radio'                             =>  array('value' => 'd'),
-                                    'text'                              =>  'This is a test Text',
-                                    'textarea'                          =>  'This is a test TextArea',
-                                    'url'                               =>  'http://wwww.abc.com')));
+                                    'description'                       => 'This is a Description',
+                                    'explicitReadWriteModelPermissions' => array('type' => null),
+                                    'checkbox'                          => '1',
+                                    'currency'                          => array('value'    => 45,
+                                                                                 'currency' => array('id' =>
+                                                                                 $baseCurrency->id)),
+                                    'date'                              => $date,
+                                    'datetime'                          => $datetime,
+                                    'decimal'                           => '123',
+                                    'picklist'                          => array('value'  => 'a'),
+                                    'multiselect'                       => array('values' => array('ff', 'rr')),
+                                    'tagcloud'                          => array('values' => array('writing', 'gardening')),
+                                    'countrypicklist'                   => array('value'  => 'bbbb'),
+                                    'statepicklist'                     => array('value'  => 'bbb1'),
+                                    'citypicklist'                      => array('value'  => 'bb1'),
+                                    'integer'                           => '12',
+                                    'phone'                             => '259-784-2169',
+                                    'radio'                             => array('value' => 'd'),
+                                    'text'                              => 'This is a test Text',
+                                    'textarea'                          => 'This is a test TextArea',
+                                    'url'                               => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -349,6 +361,17 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'bbbb');
+            $this->assertEquals($account[0]->statepicklist->value           , 'bbb1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'bb1');
+            $this->assertContains('ff'                                      , $account[0]->multiselect->values);
+            $this->assertContains('rr'                                      , $account[0]->multiselect->values);
+            $this->assertContains('writing'                                 , $account[0]->tagcloud->values);
+            $this->assertContains('gardening'                               , $account[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Account');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account[0]);
+            $this->assertEquals(474000930                                   , $testCalculatedValue);
         }
 
         /**
@@ -361,35 +384,40 @@
             //Search a created account using the customfields.
             $this->resetPostArray();
             $this->setGetArray(array('AccountsSearchForm' => array(
-                                        'name'                  =>  'myNewAccount',
-                                        'officePhone'           =>  '259-784-2169',
-                                        'type'                  =>   array('value'  =>  'Prospect'),
-                                        'officeFax'             =>  '299-845-7863',
-                                        'employees'             =>  '930',
-                                        'website'               =>  'http://www.Unnamed.com',
-                                        'annualRevenue'         =>  '474000000',
-                                        'anyCity'               =>  'Austin',
-                                        'anyState'              =>  'TX',
-                                        'anyStreet'             =>  '27054 West Michigan Lane',
-                                        'anyPostalCode'         =>  '78759',
-                                        'anyCountry'            =>  'USA',
-                                        'anyEmail'              =>  'info@myNewAccount.com',
-                                        'anyOptOutEmail'        =>  array('value' => '1'),
-                                        'anyInvalidEmail'       =>  array('value' => ''),
-                                        'ownedItemsOnly'        =>  '1',
-                                        'industry'              =>  array('value' => 'Automotive'),
-                                        'decimal'               =>  '123',
-                                        'integer'               =>  '12',
-                                        'phone'                 =>  '259-784-2169',
-                                        'text'                  =>  'This is a test Text',
-                                        'textarea'              =>  'This is a test TextArea',
-                                        'url'                   =>  'http://wwww.abc.com',
-                                        'checkbox'              =>  array('value'  =>  '1'),
-                                        'currency'              =>  array('value'  =>  45),
-                                        'picklist'              =>  array('value'  =>  'a'),
-                                        'radio'                 =>  array('value'  =>  'd'),
-                                        'date__Date'            =>  array('type'   =>  'Today'),
-                                        'datetime__DateTime'    =>  array('type'   =>  'Today')),
+                                        'name'                  => 'myNewAccount',
+                                        'officePhone'           => '259-784-2169',
+                                        'type'                  => array('value'  =>  'Prospect'),
+                                        'officeFax'             => '299-845-7863',
+                                        'employees'             => '930',
+                                        'website'               => 'http://www.Unnamed.com',
+                                        'annualRevenue'         => '474000000',
+                                        'anyCity'               => 'Austin',
+                                        'anyState'              => 'TX',
+                                        'anyStreet'             => '27054 West Michigan Lane',
+                                        'anyPostalCode'         => '78759',
+                                        'anyCountry'            => 'USA',
+                                        'anyEmail'              => 'info@myNewAccount.com',
+                                        'anyOptOutEmail'        => array('value' => '1'),
+                                        'anyInvalidEmail'       => array('value' => ''),
+                                        'ownedItemsOnly'        => '1',
+                                        'industry'              => array('value' => 'Automotive'),
+                                        'decimal'               => '123',
+                                        'integer'               => '12',
+                                        'phone'                 => '259-784-2169',
+                                        'text'                  => 'This is a test Text',
+                                        'textarea'              => 'This is a test TextArea',
+                                        'url'                   => 'http://wwww.abc.com',
+                                        'checkbox'              => array('value'  => '1'),
+                                        'currency'              => array('value'  => 45),
+                                        'picklist'              => array('value'  => 'a'),
+                                        'multiselect'           => array('values' => array('ff', 'rr')),
+                                        'tagcloud'              => array('values' => array('writing', 'gardening')),
+                                        'countrypicklist'       => array('value'  => 'bbbb'),
+                                        'statepicklist'         => array('value'  => 'bbb1'),
+                                        'citypicklist'          => array('value'  => 'bb1'),
+                                        'radio'                 => array('value'  => 'd'),
+                                        'date__Date'            => array('type'   => 'Today'),
+                                        'datetime__DateTime'    => array('type'   => 'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
@@ -402,7 +430,7 @@
         /**
          * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterCreatingTheAccountUser
          */
-        public function testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
+        public function testEditOfTheAccountUserForTheTagCloudFieldAfterRemovingAllTagsPlacedForAccountsModule()
         {
             $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -415,53 +443,60 @@
             $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
 
             //Get the account id from the recently created account.
-            $accountId      = self::getModelIdByModelNameAndName('Account', 'myNewAccount');
+            $account        = Account::getByName('myNewAccount');
+            $accountId      = $account[0]->id;
+            $this->assertEquals(2, $account[0]->tagcloud->values->count());
 
             //Edit and save the account.
             $this->setGetArray(array('id' => $accountId));
             $this->setPostArray(array('Account' => array(
-                            'name'                              =>  'myEditAccount',
-                            'officePhone'                       =>  '259-734-2169',
-                            'industry'                          =>  array('value' => 'Energy'),
-                            'officeFax'                         =>  '299-825-7863',
-                            'employees'                         =>  '630',
-                            'annualRevenue'                     =>  '472000000',
-                            'type'                              =>  array('value' => 'Customer'),
-                            'website'                           =>  'http://www.UnnamedEdit.com',
-                            'primaryEmail'                      =>  array('emailAddress' => 'info@myEditAccount.com',
-                                                                          'optOut' => '0',
-                                                                          'isInvalid' => '0'),
-                            'secondaryEmail'                    =>  array('emailAddress' => '',
-                                                                          'optOut' => '0',
-                                                                          'isInvalid' => '0'),
-                            'billingAddress'                    =>  array('street1' => '26378 South Arlington Ave',
-                                                                          'street2' => '',
-                                                                          'city' => 'San Jose',
-                                                                          'state' => 'CA',
-                                                                          'postalCode' => '95131',
-                                                                          'country' => 'USA'),
-                            'shippingAddress'                    => array('street1' => '8519 East Franklin Center',
-                                                                          'street2' => '',
-                                                                          'city' => 'Chicago',
-                                                                          'state' => 'IL',
-                                                                          'postalCode' => '60652',
-                                                                          'country' => 'USA'),
-                            'description'                       =>  'This is a Edit Description',
-                            'explicitReadWriteModelPermissions' =>  array('type' => $explicitReadWriteModelPermission),
-                            'date'                              =>  $date,
-                            'datetime'                          =>  $datetime,
-                            'checkbox'                          =>  '0',
-                            'currency'                          =>  array('value'   => 40,
+                            'name'                              => 'myEditAccount',
+                            'officePhone'                       => '259-734-2169',
+                            'industry'                          => array('value' => 'Energy'),
+                            'officeFax'                         => '299-825-7863',
+                            'employees'                         => '630',
+                            'annualRevenue'                     => '472000000',
+                            'type'                              => array('value' => 'Customer'),
+                            'website'                           => 'http://www.UnnamedEdit.com',
+                            'primaryEmail'                      => array('emailAddress' => 'info@myEditAccount.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => '',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'billingAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'shippingAddress'                   => array('street1' => '8519 East Franklin Center',
+                                                                         'street2' => '',
+                                                                         'city' => 'Chicago',
+                                                                         'state' => 'IL',
+                                                                         'postalCode' => '60652',
+                                                                         'country' => 'USA'),
+                            'description'                       => 'This is a Edit Description',
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'   => 40,
                                                                           'currency' => array(
                                                                           'id' => $baseCurrency->id)),
-                            'decimal'                           =>  '12',
-                            'picklist'                          =>  array('value' => 'b'),
-                            'integer'                           =>  '11',
-                            'phone'                             =>  '259-784-2069',
-                            'radio'                             =>  array('value' => 'e'),
-                            'text'                              =>  'This is a test Edit Text',
-                            'textarea'                          =>  'This is a test Edit TextArea',
-                            'url'                               =>  'http://wwww.abc-edit.com'),
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array()),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
                             'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
 
@@ -516,6 +551,154 @@
             $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
             $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($account[0]->statepicklist->value           , 'aaa1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'ab1');
+            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
+            $this->assertContains('hh'                                      , $account[0]->multiselect->values);
+            $this->assertEquals(0                                           , $account[0]->tagcloud->values->count());
+
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Account');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account[0]);
+            $this->assertEquals(472000630                                   , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheAccountUserForTheTagCloudFieldAfterRemovingAllTagsPlacedForAccountsModule
+         */
+        public function testEditOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
+        {
+            $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+
+            //Get the account id from the recently created account.
+            $account        = Account::getByName('myEditAccount');
+            $accountId      = $account[0]->id;
+
+            //Edit and save the account.
+            $this->setGetArray(array('id' => $accountId));
+            $this->setPostArray(array('Account' => array(
+                            'name'                              => 'myEditAccount',
+                            'officePhone'                       => '259-734-2169',
+                            'industry'                          => array('value' => 'Energy'),
+                            'officeFax'                         => '299-825-7863',
+                            'employees'                         => '630',
+                            'annualRevenue'                     => '472000000',
+                            'type'                              => array('value' => 'Customer'),
+                            'website'                           => 'http://www.UnnamedEdit.com',
+                            'primaryEmail'                      => array('emailAddress' => 'info@myEditAccount.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => '',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'billingAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'shippingAddress'                   => array('street1' => '8519 East Franklin Center',
+                                                                         'street2' => '',
+                                                                         'city' => 'Chicago',
+                                                                         'state' => 'IL',
+                                                                         'postalCode' => '60652',
+                                                                         'country' => 'USA'),
+                            'description'                       => 'This is a Edit Description',
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'   => 40,
+                                                                          'currency' => array(
+                                                                          'id' => $baseCurrency->id)),
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
+                            'save' => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
+
+            //Check the details if they are saved properly for the custom fields after the edit.
+            $account = Account::getByName('myEditAccount');
+
+            //Retrieve the permission of the account
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name                           , 'myEditAccount');
+            $this->assertEquals($account[0]->officePhone                    , '259-734-2169');
+            $this->assertEquals($account[0]->industry->value                , 'Energy');
+            $this->assertEquals($account[0]->officeFax                      , '299-825-7863');
+            $this->assertEquals($account[0]->employees                      , '630');
+            $this->assertEquals($account[0]->annualRevenue                  , '472000000');
+            $this->assertEquals($account[0]->type->value                    , 'Customer');
+            $this->assertEquals($account[0]->website                        , 'http://www.UnnamedEdit.com');
+            $this->assertEquals($account[0]->primaryEmail->emailAddress     , 'info@myEditAccount.com');
+            $this->assertEquals($account[0]->primaryEmail->optOut           , '0');
+            $this->assertEquals($account[0]->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($account[0]->secondaryEmail->emailAddress   , '');
+            $this->assertEquals($account[0]->secondaryEmail->optOut         , '0');
+            $this->assertEquals($account[0]->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($account[0]->billingAddress->street1        , '26378 South Arlington Ave');
+            $this->assertEquals($account[0]->billingAddress->street2        , '');
+            $this->assertEquals($account[0]->billingAddress->city           , 'San Jose');
+            $this->assertEquals($account[0]->billingAddress->state          , 'CA');
+            $this->assertEquals($account[0]->billingAddress->postalCode     , '95131');
+            $this->assertEquals($account[0]->billingAddress->country        , 'USA');
+            $this->assertEquals($account[0]->shippingAddress->street1       , '8519 East Franklin Center');
+            $this->assertEquals($account[0]->shippingAddress->street2       , '');
+            $this->assertEquals($account[0]->shippingAddress->city          , 'Chicago');
+            $this->assertEquals($account[0]->shippingAddress->state         , 'IL');
+            $this->assertEquals($account[0]->shippingAddress->postalCode    , '60652');
+            $this->assertEquals($account[0]->shippingAddress->country       , 'USA');
+            $this->assertEquals($account[0]->description                    , 'This is a Edit Description');
+            $this->assertEquals(1                                           , count($readWritePermitables));
+            $this->assertEquals(0                                           , count($readOnlyPermitables));
+            $this->assertEquals($account[0]->checkbox                       , '0');
+            $this->assertEquals($account[0]->currency->value                ,  40);
+            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($account[0]->date                           , $dateAssert);
+            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
+            $this->assertEquals($account[0]->decimal                        , '12');
+            $this->assertEquals($account[0]->picklist->value                , 'b');
+            $this->assertEquals($account[0]->integer                        ,  11);
+            $this->assertEquals($account[0]->phone                          , '259-784-2069');
+            $this->assertEquals($account[0]->radio->value                   , 'e');
+            $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
+            $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
+            $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($account[0]->statepicklist->value           , 'aaa1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'ab1');
+            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
+            $this->assertContains('hh'                                      , $account[0]->multiselect->values);
+            $this->assertContains('reading'                                 , $account[0]->tagcloud->values);
+            $this->assertContains('surfing'                                 , $account[0]->tagcloud->values);
+
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Account');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account[0]);
+            $this->assertEquals(472000630                                   , $testCalculatedValue);
         }
 
         /**
@@ -540,6 +723,354 @@
 
         /**
          * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterEditingTheAccountUser
+         */
+        public function testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleWithMultiSelectValueSetToNull()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a created account using the customfield.
+            $this->resetPostArray();
+            $this->setGetArray(array(
+                        'AccountsSearchForm' => AccountsDesignerWalkthroughHelperUtil::fetchAccountsSearchFormGetDataWithMultiSelectValueSetToNull(),
+                        'ajax'               => 'list-view')
+            );
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
+
+            //Assert that the edit account exits after the edit and is diaplayed on the search page.
+            $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
+            $this->assertTrue(strpos($content, "myEditAccount") > 0);
+        }
+
+        /**
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleWithMultiSelectValueSetToNull
+         */
+        public function testCreateSecondAccountForUserAfterTheCustomFieldsArePlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Create a new account based on the custom fields.
+            $this->resetGetArray();
+            $this->setPostArray(array('Account' => array(
+                                    'name'                              => 'mySecondAccount',
+                                    'officePhone'                       => '259-784-2169',
+                                    'industry'                          => array('value' => 'Automotive'),
+                                    'officeFax'                         => '299-845-7863',
+                                    'employees'                         => '930',
+                                    'annualRevenue'                     => '474000000',
+                                    'type'                              => array('value' => 'Prospect'),
+                                    'website'                           => 'http://www.Unnamed.com',
+                                    'primaryEmail'                      => array('emailAddress' => 'info@myNewAccount.com',
+                                                                                  'optOut' => '1',
+                                                                                  'isInvalid' => '0'),
+                                    'secondaryEmail'                    => array('emailAddress' => '',
+                                                                                  'optOut' => '0',
+                                                                                  'isInvalid' => '0'),
+                                    'billingAddress'                    => array('street1' => '6466 South Madison Creek',
+                                                                                  'street2' => '',
+                                                                                  'city' => 'Chicago',
+                                                                                  'state' => 'IL',
+                                                                                  'postalCode' => '60652',
+                                                                                  'country' => 'USA'),
+                                    'shippingAddress'                   => array('street1' => '27054 West Michigan Lane',
+                                                                                  'street2' => '',
+                                                                                  'city' => 'Austin',
+                                                                                  'state' => 'TX',
+                                                                                  'postalCode' => '78759',
+                                                                                  'country' => 'USA'),
+                                    'description'                       => 'This is a Description',
+                                    'explicitReadWriteModelPermissions' => array('type' => null),
+                                    'checkbox'                          => '1',
+                                    'currency'                          => array('value'    => 45,
+                                                                                 'currency' => array('id' =>
+                                                                                 $baseCurrency->id)),
+                                    'date'                              => $date,
+                                    'datetime'                          => $datetime,
+                                    'decimal'                           => '123',
+                                    'picklist'                          => array('value'  => 'a'),
+                                    'multiselect'                       => array('values' => array('gg', 'ff')),
+                                    'tagcloud'                          => array('values' => array('reading', 'writing')),
+                                    'countrypicklist'                   => array('value'  => 'bbbb'),
+                                    'statepicklist'                     => array('value'  => 'bbb1'),
+                                    'citypicklist'                      => array('value'  => 'bb1'),
+                                    'integer'                           => '12',
+                                    'phone'                             => '259-784-2169',
+                                    'radio'                             => array('value' => 'd'),
+                                    'text'                              => 'This is a test Text',
+                                    'textarea'                          => 'This is a test TextArea',
+                                    'url'                               => 'http://wwww.abc.com')));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
+
+            //Check the details if they are saved properly for the custom fields.
+            $account = Account::getByName('mySecondAccount');
+            //Retrieve the permission for the account.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name                           , 'mySecondAccount');
+            $this->assertEquals($account[0]->officePhone                    , '259-784-2169');
+            $this->assertEquals($account[0]->industry->value                , 'Automotive');
+            $this->assertEquals($account[0]->officeFax                      , '299-845-7863');
+            $this->assertEquals($account[0]->employees                      , '930');
+            $this->assertEquals($account[0]->annualRevenue                  , '474000000');
+            $this->assertEquals($account[0]->type->value                    , 'Prospect');
+            $this->assertEquals($account[0]->website                        , 'http://www.Unnamed.com');
+            $this->assertEquals($account[0]->primaryEmail->emailAddress     , 'info@myNewAccount.com');
+            $this->assertEquals($account[0]->primaryEmail->optOut           , '1');
+            $this->assertEquals($account[0]->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($account[0]->secondaryEmail->emailAddress   , '');
+            $this->assertEquals($account[0]->secondaryEmail->optOut         , '0');
+            $this->assertEquals($account[0]->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($account[0]->billingAddress->street1        , '6466 South Madison Creek');
+            $this->assertEquals($account[0]->billingAddress->street2        , '');
+            $this->assertEquals($account[0]->billingAddress->city           , 'Chicago');
+            $this->assertEquals($account[0]->billingAddress->state          , 'IL');
+            $this->assertEquals($account[0]->billingAddress->postalCode     , '60652');
+            $this->assertEquals($account[0]->billingAddress->country        , 'USA');
+            $this->assertEquals($account[0]->shippingAddress->street1       , '27054 West Michigan Lane');
+            $this->assertEquals($account[0]->shippingAddress->street2       , '');
+            $this->assertEquals($account[0]->shippingAddress->city          , 'Austin');
+            $this->assertEquals($account[0]->shippingAddress->state         , 'TX');
+            $this->assertEquals($account[0]->shippingAddress->postalCode    , '78759');
+            $this->assertEquals($account[0]->shippingAddress->country       , 'USA');
+            $this->assertEquals($account[0]->description                    , 'This is a Description');
+            $this->assertEquals(0                                           , count($readWritePermitables));
+            $this->assertEquals(0                                           , count($readOnlyPermitables));
+            $this->assertEquals($account[0]->checkbox                       , '1');
+            $this->assertEquals($account[0]->currency->value                , 45);
+            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($account[0]->date                           , $dateAssert);
+            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
+            $this->assertEquals($account[0]->decimal                        , '123');
+            $this->assertEquals($account[0]->picklist->value                , 'a');
+            $this->assertEquals($account[0]->integer                        , 12);
+            $this->assertEquals($account[0]->phone                          , '259-784-2169');
+            $this->assertEquals($account[0]->radio->value                   , 'd');
+            $this->assertEquals($account[0]->text                           , 'This is a test Text');
+            $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
+            $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
+            $this->assertEquals($account[0]->countrypicklist->value         , 'bbbb');
+            $this->assertEquals($account[0]->statepicklist->value           , 'bbb1');
+            $this->assertEquals($account[0]->citypicklist->value            , 'bb1');
+            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
+            $this->assertContains('ff'                                      , $account[0]->multiselect->values);
+            $this->assertContains('reading'                                 , $account[0]->tagcloud->values);
+            $this->assertContains('writing'                                 , $account[0]->tagcloud->values);
+        }
+
+        /**
+         * @depends testCreateSecondAccountForUserAfterTheCustomFieldsArePlacedForAccountsModule
+         */
+        public function testMultiValueCustomFieldContentAfterCreateAndEditPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+
+            //Create a new account based on the custom fields.
+            $this->resetGetArray();
+            $this->setPostArray(array('Account' => array(
+                            'name'                              => 'myThirdAccount',
+                            'officePhone'                       => '259-784-2169',
+                            'industry'                          => array('value' => 'Automotive'),
+                            'officeFax'                         => '299-845-7863',
+                            'employees'                         => '930',
+                            'annualRevenue'                     => '474000000',
+                            'type'                              => array('value' => 'Prospect'),
+                            'website'                           => 'http://www.Unnamed.com',
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewAccount.com',
+                                                                          'optOut' => '1',
+                                                                          'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => '',
+                                                                          'optOut' => '0',
+                                                                          'isInvalid' => '0'),
+                            'billingAddress'                    => array('street1' => '6466 South Madison Creek',
+                                                                          'street2' => '',
+                                                                          'city' => 'Chicago',
+                                                                          'state' => 'IL',
+                                                                          'postalCode' => '60652',
+                                                                          'country' => 'USA'),
+                            'shippingAddress'                   => array('street1' => '27054 West Michigan Lane',
+                                                                          'street2' => '',
+                                                                          'city' => 'Austin',
+                                                                          'state' => 'TX',
+                                                                          'postalCode' => '78759',
+                                                                          'country' => 'USA'),
+                            'description'                       => 'This is a Description',
+                            'explicitReadWriteModelPermissions' => array('type' => null),
+                            'checkbox'                          => '1',
+                            'currency'                          => array('value'    => 45,
+                                                                         'currency' => array('id' =>
+                                                                         $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '123',
+                            'picklist'                          => array('value'  => 'a'),
+                            'multiselect'                       => array('values' => array('gg', 'ff')),
+                            'tagcloud'                          => array('values' => array('reading', 'writing')),
+                            'countrypicklist'                   => array('value'  => 'bbbb'),
+                            'statepicklist'                     => array('value'  => 'bbb1'),
+                            'citypicklist'                      => array('value'  => 'bb1'),
+                            'integer'                           => '12',
+                            'phone'                             => '259-784-2169',
+                            'radio'                             => array('value' => 'd'),
+                            'text'                              => 'This is a test Text',
+                            'textarea'                          => 'This is a test TextArea',
+                            'url'                               => 'http://wwww.abc.com')));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
+
+            //Check the details if they are saved properly for the custom fields.
+            $account = Account::getByName('myThirdAccount');
+            //Retrieve the permission for the account.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name               , 'myThirdAccount');
+            $this->assertEquals(2                               , $account[0]->multiselect->values->count());
+            $this->assertEquals(2                               , $account[0]->tagcloud->values->count());
+            $this->assertContains('gg'                          , $account[0]->multiselect->values);
+            $this->assertContains('ff'                          , $account[0]->multiselect->values);
+            $this->assertContains('reading'                     , $account[0]->tagcloud->values);
+            $this->assertContains('writing'                     , $account[0]->tagcloud->values);
+            unset($account);
+
+            $account        = Account::getByName('myThirdAccount');
+            $accountId      = $account[0]->id;
+            //Edit and save the account.
+            $this->setGetArray(array('id' => $accountId));
+            $this->setPostArray(array('Account' => array(
+                            'name'                              => 'myThirdAccount',
+                            'multiselect'                       => array('values' =>  array('ff')),
+                            'tagcloud'                          => array('values' =>  array('writing')),
+                            ),
+                            'save' => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
+
+            //Check the details if they are saved properly for the custom fields.
+            $account = Account::getByName('myThirdAccount');
+            //Retrieve the permission for the account.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Account::getById($account[0]->id));
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+            $this->assertEquals(1, count($account));
+            $this->assertEquals(1                               , $account[0]->multiselect->values->count());
+            $this->assertContains('ff'                          , $account[0]->multiselect->values);
+            $this->assertNotContains('gg'                       , $account[0]->multiselect->values);
+            $this->assertNotContains('hh'                       , $account[0]->multiselect->values);
+            $this->assertNotContains('rr'                       , $account[0]->multiselect->values);
+
+            $this->assertEquals(1                               , $account[0]->tagcloud->values->count());
+            $this->assertContains('writing'                     , $account[0]->tagcloud->values);
+        }
+
+        /**
+         * @depends testMultiValueCustomFieldContentAfterCreateAndEditPlacedForAccountsModule
+         */
+        public function testMassUpdateForMultiSelectFieldPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('gg'           , $account[0]->multiselect->values);
+            $this->assertContains('hh'           , $account[0]->multiselect->values);
+            unset($account);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('gg'           , $secondAccount[0]->multiselect->values);
+            $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
+            unset($secondAccount);
+
+            $this->resetPostArray();
+            $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
+
+            $this->setPostArray(array('save'     => 'Save',
+                                      'MassEdit' => array('multiselect' => '1'),
+                                      'Account'  => array('multiselect' => array('values' => array('ff', 'rr')))
+                                     )
+                               );
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('ff'           , $account[0]->multiselect->values);
+            $this->assertContains('rr'           , $account[0]->multiselect->values);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
+            $this->assertContains('rr'           , $secondAccount[0]->multiselect->values);
+        }
+
+        /**
+         * @depends testMassUpdateForMultiSelectFieldPlacedForAccountsModule
+         */
+        public function testMassUpdateForTagCloudFieldPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('reading'      , $account[0]->tagcloud->values);
+            $this->assertContains('surfing'      , $account[0]->tagcloud->values);
+            unset($account);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('reading'      , $secondAccount[0]->tagcloud->values);
+            $this->assertContains('writing'      , $secondAccount[0]->tagcloud->values);
+            unset($secondAccount);
+
+            $this->resetPostArray();
+            $this->setGetArray(array('selectAll' => '1', 'Account_page' => '1', 'selectedIds' => null, 'ajax' => null));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
+
+            $this->setPostArray(array('save'     => 'Save',
+                                      'MassEdit' => array('tagcloud' => '1'),
+                                      'Account'  => array('tagcloud' => array('values' => array('writing', 'gardening')))
+                                     )
+                               );
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
+
+            $account = Account::getByName('myEditAccount');
+            $this->assertEquals(1, count($account));
+            $this->assertEquals($account[0]->name, 'myEditAccount');
+            $this->assertContains('writing'      , $account[0]->tagcloud->values);
+            $this->assertContains('gardening'    , $account[0]->tagcloud->values);
+
+            $secondAccount = Account::getByName('mySecondAccount');
+            $this->assertEquals(1, count($secondAccount));
+            $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
+            $this->assertContains('writing'      , $secondAccount[0]->tagcloud->values);
+            $this->assertContains('gardening'    , $secondAccount[0]->tagcloud->values);
+        }
+
+        /**
+         * @depends testMassUpdateForTagCloudFieldPlacedForAccountsModule
          */
         public function testDeleteOfTheAccountUserForTheCustomFieldsPlacedForAccountsModule()
         {
@@ -575,6 +1106,49 @@
             //Assert that the edit account does not exits after the search.
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
+        }
+
+        /**
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForAccountsModuleAfterDeletingTheAccount
+         */
+        public function testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'rea'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected vlaue
+            $this->assertTrue(strpos($content, "reading") > 0);
+        }
+
+        /**
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForAccountsModule
+         */
+        public function testLabelLocalizationForTheTagCloudFieldPlacedForAccountsModule()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $this->assertEquals('en', $languageHelper->getForCurrentUser());
+            Yii::app()->user->userModel->language = 'fr';
+            $this->assertTrue(Yii::app()->user->userModel->save());
+            $languageHelper->setActive('fr');
+            $this->assertEquals('fr', Yii::app()->user->getState('language'));
+
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'surf'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected vlaue
+            $this->assertTrue(strpos($content, "surfing fr") > 0);
         }
     }
 ?>

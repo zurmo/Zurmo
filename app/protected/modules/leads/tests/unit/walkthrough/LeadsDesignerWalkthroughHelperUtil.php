@@ -68,6 +68,11 @@
                             'checkbox'           => array('value'  => '0'),
                             'currency'           => array('value'  => 40),
                             'picklist'           => array('value'  => 'b'),
+                            'multiselect'        => array('values' => array('gg', 'hh')),
+                            'tagcloud'           => array('values' => array('reading', 'surfing')),
+                            'countrypicklist'    => array('value'  => 'aaaa'),
+                            'statepicklist'      => array('value'  => 'aaa1'),
+                            'citypicklist'       => array('value'  => 'ab1'),
                             'radio'              => array('value'  => 'e'),
                             'date__Date'         => array('type'   => 'Today'),
                             'datetime__DateTime' => array('type'   => 'Today'));

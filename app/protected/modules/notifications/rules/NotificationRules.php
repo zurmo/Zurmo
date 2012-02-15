@@ -99,7 +99,7 @@
          */
         public function getUsers()
         {
-            if (!$this->usersLoaded)
+            if(!$this->usersLoaded)
             {
                 $this->loadUsers();
                 $this->usersLoaded = true;
@@ -114,7 +114,7 @@
         public function addUser(User $user)
         {
             assert('$user->id > 0');
-            if (!isset($this->users[$user->id]))
+            if(!isset($this->users[$user->id]))
             {
                 $this->users[$user->id] = $user;
             }

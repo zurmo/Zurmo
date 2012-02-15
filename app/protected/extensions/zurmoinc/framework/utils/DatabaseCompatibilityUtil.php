@@ -212,10 +212,7 @@
             }
             if (is_string($value))
             {
-                return SQLOperatorUtil::getOperatorByType($operatorType) . " " .
-                       self::lower("'" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
-                       self::escape($value) .
-                       SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'");
+                return self::resolveToLowerForStringComparison($operatorType, self::escape($value));
             }
             elseif (is_array($value) && count($value) > 0)
             {
@@ -225,10 +222,25 @@
             {
                 return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
             }
-            elseif ($value === null)
+            elseif($value === null)
             {
                 return SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty($operatorType);
             }
+        }
+
+        public static function resolveToLowerForStringComparison($operatorType, $value)
+        {
+            assert('is_string($operatorType)');
+            assert('is_string($value)');
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                //todo: for pgsql, need to use lower or ILIKE to make sure evaluation is not case sensitive
+                throw new NotSupportedException();
+            }
+            return SQLOperatorUtil::getOperatorByType($operatorType) .
+            " '" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
+            $value .
+            SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'";
         }
 
         /**
@@ -254,7 +266,7 @@
             $counter = 0;
             foreach ($rowsOfColumnValues as $row)
             {
-                if (count($row) == count($columnNames))
+                if(count($row) == count($columnNames))
                 {
                     if ($counter == 0)
                     {
@@ -844,7 +856,7 @@
             $totalCount = 0;
             $rows       = R::getAll($sql);
             $columnName = 'Tables_in_' . $databaseName;
-            foreach ($rows as $row)
+            foreach($rows as $row)
             {
                 $tableName  = $row[$columnName];
                 $tableSql   = "select count(*) count from " . $tableName;

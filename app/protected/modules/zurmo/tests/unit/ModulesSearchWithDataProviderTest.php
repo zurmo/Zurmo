@@ -135,32 +135,38 @@
             $where = RedBeanModelDataProvider::makeWhere('Account', $searchAttributeData, $joinTablesAdapter);
             $compareWhere     = "({$quote}account{$quote}.{$quote}checkbox{$quote} = 1)"                               .
                                 " and ({$quote}account{$quote}.{$quote}currency_currencyvalue_id{$quote} = 108.45)"                       .
-                                " and ({$quote}account{$quote}.{$quote}date{$quote} = lower('2007-07-01'))"              .
-                                " and ({$quote}account{$quote}.{$quote}datetime{$quote} = lower('2007-07-01 06:12:45'))" .
+                                " and ({$quote}account{$quote}.{$quote}date{$quote} = '2007-07-01')"              .
+                                " and ({$quote}account{$quote}.{$quote}datetime{$quote} = '2007-07-01 06:12:45')" .
                                 " and ({$quote}account{$quote}.{$quote}decimal{$quote} = 45.6)" .
-                                " and ({$quote}customfield{$quote}.{$quote}value{$quote} = lower('3'))" .
+                                " and ({$quote}customfield{$quote}.{$quote}value{$quote} = '3')" .
                                 " and ({$quote}account{$quote}.{$quote}integer{$quote} = 67876)" .
-                                " and ({$quote}account{$quote}.{$quote}phone{$quote} like lower('123456%'))" .
-                                " and ({$quote}customfield1{$quote}.{$quote}value{$quote} = lower('2'))" .
-                                " and ({$quote}account{$quote}.{$quote}text{$quote} like lower('Some Text%'))" .
-                                " and ({$quote}account{$quote}.{$quote}textarea{$quote} like lower('%Some description%'))" .
-                                " and ({$quote}account{$quote}.{$quote}url{$quote} like lower('%somesite.com%'))" .
+                                " and ({$quote}account{$quote}.{$quote}phone{$quote} like '123456%')" .
+                                " and ({$quote}customfield1{$quote}.{$quote}value{$quote} = '2')" .
+                                " and ({$quote}account{$quote}.{$quote}text{$quote} like 'Some Text%')" .
+                                " and ({$quote}account{$quote}.{$quote}textarea{$quote} like '%Some description%')" .
+                                " and ({$quote}account{$quote}.{$quote}url{$quote} like '%somesite.com%')" .
                                 "";
             $this->assertEquals($compareWhere, $where);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
-            $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
+            $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
             $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
-            $this->assertEquals('customfield', $leftTables[0]['tableName']);
-            $this->assertEquals('customfield', $leftTables[1]['tableName']);
+            $this->assertEquals('ownedcustomfield', $leftTables[0]['tableName']);
+            $this->assertEquals('customfield',      $leftTables[1]['tableName']);
+            $this->assertEquals('ownedcustomfield', $leftTables[2]['tableName']);
+            $this->assertEquals('customfield',      $leftTables[3]['tableName']);
 
             //Now test that the subsetSQL query produced is correct.
             $subsetSql = Account::makeSubsetOrCountSqlQuery('account', $joinTablesAdapter, 1, 5, $where, null);
             $compareSubsetSql  = "select {$quote}account{$quote}.{$quote}id{$quote} id ";
             $compareSubsetSql .= "from {$quote}account{$quote} ";
+            $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}dropdown_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
-            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}dropdown_customfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield{$quote}.{$quote}customfield_id{$quote} ";
+            $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} ownedcustomfield1 on ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield1{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}radio_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} customfield1 on ";
-            $compareSubsetSql .= "{$quote}customfield1{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}radio_customfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}customfield1{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield1{$quote}.{$quote}customfield_id{$quote} ";
             $compareSubsetSql .= "where " . $compareWhere . ' ';
             $compareSubsetSql .= 'limit 5 offset 1';
             $this->assertEquals($compareSubsetSql, $subsetSql);
@@ -208,8 +214,8 @@
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Contact');
             $where        = RedBeanModelDataProvider::makeWhere('Contact', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}email{$quote}.{$quote}emailaddress{$quote} like lower('asearch@something.com%')) ";
-            $compareWhere .= "and ({$quote}email1{$quote}.{$quote}emailaddress{$quote} like lower('bsearch@something.com%'))";
+            $compareWhere = "({$quote}email{$quote}.{$quote}emailaddress{$quote} like 'asearch@something.com%') ";
+            $compareWhere .= "and ({$quote}email1{$quote}.{$quote}emailaddress{$quote} like 'bsearch@something.com%')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
@@ -297,7 +303,7 @@
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Contact');
             $where        = RedBeanModelDataProvider::makeWhere('Contact', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}account{$quote}.{$quote}name{$quote} like lower('abc%'))";
+            $compareWhere = "({$quote}account{$quote}.{$quote}name{$quote} like 'abc%')";
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());

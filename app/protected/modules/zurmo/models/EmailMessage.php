@@ -28,5 +28,6 @@
     //notifications and scheduler.
     class EmailMessage
     {
+
     }
 ?>

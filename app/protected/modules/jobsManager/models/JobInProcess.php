@@ -44,11 +44,11 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobInProcess');
             $where  = RedBeanModelDataProvider::makeWhere('JobInProcess', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
-            if (count($models) > 1)
+            if(count($models) > 1)
             {
                 throw new NotSupportedException();
             }
-            if (count($models) == 0)
+            if(count($models) == 0)
             {
                 throw new NotFoundException();
             }

@@ -184,6 +184,11 @@
             return false;
         }
 
+        public function requireOnlyUniqueFieldsInLayout()
+        {
+            return false;
+        }
+
         /**
          * Override if a rule requires that certain attributes
          * be made not available for placement using the layout tool

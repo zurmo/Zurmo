@@ -65,7 +65,7 @@
                 return $value;
             }
             $sanitizedValue = str_replace('$', '', $value);
-            $sanitizedValue = str_replace(',', '', $sanitizedValue); // Not Coding Standard
+            $sanitizedValue = str_replace(',', '', $sanitizedValue);
             $model          = new $modelClassName(false);
             $type           = ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
             $validator      = new RedBeanModelNumberValidator();

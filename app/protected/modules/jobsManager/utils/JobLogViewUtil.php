@@ -31,7 +31,7 @@
     {
         public static function renderStatusAndMessageListContent(JobLog $jobLog)
         {
-            if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
+            if($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
                 $content     = '<span id="active-nonmonitor-job-tooltip-' .
                                $jobLog->id . '" class="tooltip" title="' . CHtml::encode($jobLog->message) . '">';
@@ -49,17 +49,15 @@
                                             array('target' => 'bottomRight',
                                                   'tooltip' => 'topRight')),
                                      'style'  => array('width' => array('max' => 600)),
-                                     // Begin Not Coding Standard
                                      'api' => array('beforeHide' => 'js:function (event, api) {
                                                                      if (event.originalEvent.type !== "click")
                                                                         return false;}')
-                                    // End Not Coding Standard
                                );
                 $qtip        = new QTip();
                 $qtip->addQTip("#active-nonmonitor-job-tooltip-" . $jobLog->id, $options);
                 return $content;
             }
-            elseif ($jobLog->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
+            elseif($jobLog->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
             {
                 return Yii::t('Default', 'Completed');
             }

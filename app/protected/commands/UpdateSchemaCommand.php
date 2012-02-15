@@ -66,7 +66,7 @@ EOD;
             $this->usageError('The specified username does not exist.');
         }
         $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-        if (!$group->users->contains(Yii::app()->user->userModel))
+        if(!$group->users->contains(Yii::app()->user->userModel))
         {
             $this->usageError('The specified user is not a super administrator.');
         }

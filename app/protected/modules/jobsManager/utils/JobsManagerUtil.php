@@ -54,7 +54,7 @@
                                   array('{type}' => $type,
                                          '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
             $messageLogger = new $messageLoggerClassName($messageStreamer);
-            if ($type == 'Monitor')
+            if($type == 'Monitor')
             {
                 static::runMonitorJob($messageLogger);
             }
@@ -76,7 +76,7 @@
             {
                 $jobInProcess = JobInProcess::getByType('Monitor');
                 $messageLogger->addInfoMessage("Existing monitor job detected");
-                if (static::isJobInProcessOverThreashold($jobInProcess, 'Monitor'))
+                if(static::isJobInProcessOverThreashold($jobInProcess, 'Monitor'))
                 {
                     $messageLogger->addInfoMessage("Existing monitor job is stuck");
                     $message                    = new NotificationMessage();
@@ -85,7 +85,7 @@
                     NotificationsUtil::submit($message, $rules);
                 }
             }
-            catch (NotFoundException $e)
+            catch(NotFoundException $e)
             {
                 $jobInProcess          = new JobInProcess();
                 $jobInProcess->type    = 'Monitor';
@@ -99,7 +99,7 @@
                 $jobLog->type          = 'Monitor';
                 $jobLog->startDateTime = $startDateTime;
                 $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
-                if ($ranSuccessfully)
+                if($ranSuccessfully)
                 {
                     $messageLogger->addInfoMessage("Monitor Job completed successfully");
                     $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
@@ -126,7 +126,7 @@
                 $jobInProcess = JobInProcess::getByType($type);
                 $messageLogger->addInfoMessage("Existing job detected");
             }
-            catch (NotFoundException $e)
+            catch(NotFoundException $e)
             {
                 $jobInProcess            = new JobInProcess();
                 $jobInProcess->type    = $type;
@@ -142,7 +142,7 @@
                 $jobLog->type          = $type;
                 $jobLog->startDateTime = $startDateTime;
                 $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
-                if ($ranSuccessfully)
+                if($ranSuccessfully)
                 {
                     $messageLogger->addInfoMessage("Job completed successfully");
                     $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
@@ -154,7 +154,7 @@
                     $jobLog->message       = $errorMessage;
                 }
                 $jobLog->isProcessed = false;
-                $s = $jobLog->save();
+                $s =$jobLog->save();
             }
         }
 
@@ -173,7 +173,7 @@
             $nowTimeStamp      = time();
             $jobClassName      = $type . 'Job';
             $thresholdSeconds  = $jobClassName::getRunTimeThresholdInSeconds();
-            if (($nowTimeStamp - $createdTimeStamp) > $thresholdSeconds)
+            if(($nowTimeStamp - $createdTimeStamp) > $thresholdSeconds)
             {
                 return true;
             }

@@ -36,8 +36,43 @@
             assert('$loaded'); // Not Coding Standard
         }
 
+        public function testGetCustomFieldDataByPartialName()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $values = array(
+                'Automotive',
+                'Adult Entertainment',
+                'Financial Services',
+                'Mercenaries & Armaments',
+                'autam',
+            );
+            $industryFieldData = CustomFieldData::getByName('testData');
+            $industryFieldData->defaultValue = $values[0];
+            $industryFieldData->serializedData = serialize($values);
+            $this->assertTrue($industryFieldData->save());
+            $results = ModelAutoCompleteUtil::getCustomFieldDataByPartialName('testData', 'a');
+            $this->assertEquals(3, count($results));
+
+            $results = ModelAutoCompleteUtil::getCustomFieldDataByPartialName('testData', 'Au');
+            $this->assertEquals(2, count($results));
+
+            $results = ModelAutoCompleteUtil::getCustomFieldDataByPartialName('testData', 'Mer');
+            $this->assertEquals(1, count($results));
+
+            $results = ModelAutoCompleteUtil::getCustomFieldDataByPartialName('testData', 'sat');
+            $this->assertEquals(0, count($results));
+
+            $results = ModelAutoCompleteUtil::getCustomFieldDataByPartialName('testData', 'Aux');
+            $this->assertEquals(0, count($results));
+        }
+
+        /**
+         * @depends testGetCustomFieldDataByPartialName
+         */
         public function testGetByPartialName()
         {
+            Yii::app()->user->userModel = User::getByUsername('super');
             $userData = array(
                 'Billy',
                 'Jimmy',

@@ -80,6 +80,27 @@
         /**
          * @depends testSanitizePostByDesignerTypeForSavingModel
          */
+        public function testSanitizePostByDesignerTypeForSavingModelForTagCloud()
+        {
+            $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new TestCustomFieldsModel(),
+                                                                                    array('tagCloud' =>
+                                                                                    array('values' => 'abc,def')));
+            $this->assertEquals(array('abc', 'def'), $sanitizedPostData['tagCloud']['values']);
+
+            $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new TestCustomFieldsModel(),
+                                                                                    array('tagCloud' =>
+                                                                                    array('values' => '')));
+            $this->assertEquals(array(), $sanitizedPostData['tagCloud']['values']);
+
+            $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new TestCustomFieldsModel(),
+                                                                                    array('tagCloud' =>
+                                                                                    array('values' => array('gg', 'hh'))));
+            $this->assertEquals(array('gg', 'hh'), $sanitizedPostData['tagCloud']['values']);
+        }
+
+        /**
+         * @depends testSanitizePostByDesignerTypeForSavingModelForTagCloud
+         */
         public function testSanitizeSearchFormAttributes()
         {
             $super                      = User::getByUsername('super');

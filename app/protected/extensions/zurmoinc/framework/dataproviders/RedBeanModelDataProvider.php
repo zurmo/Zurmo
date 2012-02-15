@@ -119,8 +119,10 @@
                 $relationModelClassName = $model->getRelationModelClassName($sortAttribute);
                 $sortRelatedAttribute   = self::getSortAttributeName($relationModelClassName);
             }
-            return ModelDataProviderUtil::resolveSortAttributeColumnName($modelClassName, $joinTablesAdapter,
-                        $sortAttribute, $sortRelatedAttribute);
+            $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
+                                                       $modelClassName, $sortAttribute, $sortRelatedAttribute);
+            return ModelDataProviderUtil::resolveSortAttributeColumnName($modelAttributeToDataProviderAdapter,
+                                                                         $joinTablesAdapter);
         }
 
         /**

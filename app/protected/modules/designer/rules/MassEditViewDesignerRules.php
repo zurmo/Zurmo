@@ -87,6 +87,8 @@
                 'TextArea',
                 'EmailAddressInformation',
                 'Address',
+                'CalculatedNumber',
+                'DropDownDependency'
             );
         }
 
@@ -96,6 +98,11 @@
         }
 
         public function mergeRowAndAttributePlacement()
+        {
+            return true;
+        }
+
+        public function requireOnlyUniqueFieldsInLayout()
         {
             return true;
         }

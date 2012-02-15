@@ -1,0 +1,6 @@
+string,lastName,multiDropDown,tagCloud
+abc,def,"Multi 1, Multi 2","Cloud 1, Cloud 2"
+abc,def,"Multi 4, Multi 2","Cloud 1, Cloud 4"
+abc,def,,"Cloud 1, Cloud 2"
+abc,def,"Multi 1, Multi 2",
+abc,def,"Multi 1, Multi 5","Cloud 5, Cloud 2"

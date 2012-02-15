@@ -51,7 +51,6 @@
 
             $monitorJob->run();
             $this->assertEquals(1, count(Notification::getAll()));
-
             /** When the Email is available, we can test that the notification also sends
              *  a critical email.
             echo "<pre>";

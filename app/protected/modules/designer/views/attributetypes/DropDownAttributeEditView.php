@@ -107,7 +107,7 @@
 
         protected function renderAfterFormLayout($form)
         {
-            $titleBar = new TitleBarView (Yii::t('Default', 'Pick List Values'));
+            $titleBar = new TitleBarView ($this->getAfterFormLayoutTranslatedTitleContent());
             $content  = $titleBar->render();
             $content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";
@@ -119,6 +119,11 @@
             $content .= $element->render();
             $content .= '</div>' . "\n";
             return $content;
+        }
+
+        protected function getAfterFormLayoutTranslatedTitleContent()
+        {
+            return Yii::t('Default', 'Pick List Values');
         }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -45,12 +45,8 @@
             => 'Abgeschlossen mit Fehlern',
         'End Date Time'
             => 'Datum/Zeit durchgeführt',
-        'Error Log'
-            => 'Fehlerlog',
         'Every 5 minutes'
             => 'Jeder 5 Minuten',
-        'hostInfo or scriptUrl not set up'
-            => 'hostInfo oder ScriptUrl nicht eingerichtet',
         'How often should I run each Job?'
             => 'Häufigkeit der Aufgaben: Empfehlungen',
         'How to Setup the Jobs to Run Automatically'
@@ -89,8 +85,6 @@
             => 'Empfohlene Häufigkeit',
         'Reset'
             => 'Reset',
-        'Return to Job Manager'
-            => 'Zurück zu Job Manager',
         'Scheduled jobs are stuck'
             => 'Geplante Aufträge geklebt',
         'Script will run at most for {seconds} seconds.'

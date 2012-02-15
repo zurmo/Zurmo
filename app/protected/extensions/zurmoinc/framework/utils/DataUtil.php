@@ -60,16 +60,23 @@
                     }
                     else
                     {
-                        if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
+                        try
                         {
-                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
+                            $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
+                        }
+                        catch(NotImplementedException $e)
+                        {
+                            //In the event that a designer type does not exist.
+                            $designerType = null;
+                        }
+                        if ($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
+                        {
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
-                            $value['firstDate'] != null)
+                                $value['firstDate'] != null)
                             {
                                 $data[$attributeName]['firstDate'] = DateTimeUtil::
-                                                                     resolveValueForDateDBFormatted(
-                                                                     $value['firstDate']);
+                                                                         resolveValueForDateDBFormatted(
+                                                                         $value['firstDate']);
                             }
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['secondDate']) &&
                             $value['secondDate'] != null)
@@ -77,6 +84,17 @@
                                 $data[$attributeName]['secondDate'] = DateTimeUtil::
                                                                      resolveValueForDateDBFormatted(
                                                                      $value['secondDate']);
+                            }
+                        }
+                        elseif (isset($value['values']) && is_string($value['values']) && $designerType == 'TagCloud')
+                        {
+                            if ($data[$attributeName]['values'] == '')
+                            {
+                                $data[$attributeName]['values'] = array();
+                            }
+                            else
+                            {
+                                $data[$attributeName]['values'] = explode(',', $data[$attributeName]['values']);
                             }
                         }
                     }

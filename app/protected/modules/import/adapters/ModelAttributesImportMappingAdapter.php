@@ -58,10 +58,12 @@
             {
                 if (!$this->model->isRelation($attributeName) ||
                      $this->isAttributeAnOwnedCustomFieldRelation($attributeName) ||
+                     $this->isAttributeAnOwnedMultipleValuesCustomFieldRelation($attributeName) ||
                      $this->isAttributeAHasOneNotOwnedRelation($attributeName) ||
                      $this->isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation($attributeName))
                 {
                    $type         = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
+
                    $resolvedType = static::resolveAttributeImportTypeByAttributeName($type, $attributeName);
                     ModelAttributeImportMappingCollectionUtil::populateCollection(
                         $attributes,
@@ -140,6 +142,18 @@
             return false;
         }
 
+        protected function isAttributeAnOwnedMultipleValuesCustomFieldRelation($attributeName)
+        {
+            assert('is_string($attributeName)');
+            if ($this->model->isRelation($attributeName) &&
+                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
+                       $this->model->isOwnedRelation($attributeName) &&
+                       $this->model->{$attributeName} instanceof OwnedMultipleValuesCustomField)
+            {
+                return true;
+            }
+            return false;
+        }
         /**
          * There are some HAS_ONE owned relations that should be treated as non owned relations.
          * @param string $attributeName

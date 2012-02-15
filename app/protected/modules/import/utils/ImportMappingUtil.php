@@ -258,6 +258,36 @@
                          'importInstructionsData'      => $importInstructionsData);
         }
 
+        public static function makeMultiSelectDropDownColumnMappingData($attributeName, $defaultValue = null,
+                                                                        $importInstructionsData = null)
+        {
+            if ($importInstructionsData == null)
+            {
+                $importInstructionsData = array('MultiSelectDropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array()));
+            }
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn',
+                         'mappingRulesData'            => array(
+                             'DefaultValueMultiSelectDropDownModelAttributeMappingRuleForm' =>
+                             array('defaultValue'      => $defaultValue)),
+                         'importInstructionsData'      => $importInstructionsData);
+        }
+
+        public static function makeTagCloudColumnMappingData($attributeName, $defaultValue = null,
+                                                                             $importInstructionsData = null)
+        {
+            if ($importInstructionsData == null)
+            {
+                $importInstructionsData = array('MultiSelectDropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array()));
+            }
+            return array('attributeIndexOrDerivedType' => $attributeName,
+                         'type'                        => 'importColumn',
+                         'mappingRulesData'            => array(
+                             'DefaultValueMultiSelectDropDownModelAttributeMappingRuleForm' =>
+                             array('defaultValue'      => $defaultValue)),
+                         'importInstructionsData'      => $importInstructionsData);
+        }
+
         public static function makeEmailColumnMappingData($attributeName, $defaultValue = null)
         {
             return array('attributeIndexOrDerivedType' => $attributeName,

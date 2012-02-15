@@ -57,7 +57,7 @@
                 }
                 if ($model->$attributeName instanceof CustomField)
                 {
-                    if ($model->$attributeName->value === null)
+                    if ($model->$attributeName->value == null)
                     {
                         if ($this->message !== null)
                         {
@@ -65,7 +65,7 @@
                         }
                         else
                         {
-                            $message = Yii::t('yii', '{attribute} is a CustomField that cannot be blank, implying that {attribute}\'s Value cannot be blank.');
+                            $message = Yii::t('yii', '{attribute} cannot be blank.');
                         }
                         $this->addError($model, $attributeName, $message);
                     }

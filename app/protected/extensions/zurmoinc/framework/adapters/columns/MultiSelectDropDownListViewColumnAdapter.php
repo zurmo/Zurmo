@@ -26,5 +26,12 @@
 
     class MultiSelectDropDownListViewColumnAdapter extends DropDownListViewColumnAdapter
     {
+        public function renderGridViewData()
+        {
+            return array(
+                'sortable' => false,
+                'name'     => $this->attribute,
+            );
+        }
     }
 ?>
