@@ -89,6 +89,12 @@
             echo $view->render();
         }
 
+        public function actionAuditEventsModalList($id)
+        {
+            $this->resolveCanCurrentUserAccessAction(intval($id));
+            parent::actionAuditEventsModalList($id);
+        }
+
         public function actionCreate()
         {
             $user             = new User();

@@ -73,11 +73,27 @@
             $bUser = User::getByUsername('buser');
             $cUser = User::getByUsername('cuser');
             $dUser = User::getByUsername('duser');
-            $this->setGetArray(array('id' => $aUser->id));
+            $super = User::getByUsername('super');
 
+            $this->setGetArray(array('id' => $super->id));
             //Access to allowed to view Audit Trail.
             $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
 
+            $this->setGetArray(array('id' => $aUser->id));
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            $this->setGetArray(array('id' => $bUser->id));
+            //Access to allowed to view Audit Trail.
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/auditEventsModalList');
+
+            $this->setGetArray(array('id' => $super->id));
+            //Access to User Role edit link and control available.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+            $this->assertTrue(strpos($content, 'User_role_SelectLink') !== false);
+            $this->assertTrue(strpos($content, 'User_role_name') !== false);
+
+            $this->setGetArray(array('id' => $aUser->id));
             //Access to User Role edit link and control available.
             $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
             $this->assertTrue(strpos($content, 'User_role_SelectLink') !== false);
