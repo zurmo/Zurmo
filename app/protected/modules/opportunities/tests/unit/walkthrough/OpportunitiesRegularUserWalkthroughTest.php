@@ -404,5 +404,26 @@
             $childGroup->users->remove($userInChildGroup);
             $this->assertTrue($childGroup->save());
         }
+
+        /**
+         * @depends testRegularUserControllerActionsWithElevationToModels
+         */
+        public function testRegularUserOpportunityControllerActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $aUser   = UserTestHelper::createBasicUser('aUser');
+            $aUser->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+            $this->assertTrue($aUser->save());
+            ForgetAllCacheUtil::forgetAllCaches();
+            $account = AccountTestHelper::createAccountByNameForOwner('superTestAccount', $super);
+            $account->addPermissions($aUser, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
+            $this->assertTrue($account->save());
+            $opportunity = OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('opportunityOwnedByaUser', $aUser, $account);
+
+            ForgetAllCacheUtil::forgetAllCaches();
+            $aUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
+            $this->assertTrue(strpos($content, 'Fatal error: Method Account::__toString() must not throw an exception') > 0);
+        }
     }
 ?>
