@@ -132,7 +132,7 @@
                 'selectAll' => $this->selectAll,
                 'pager' => $this->getCGridViewPagerParams(),
                 'beforeAjaxUpdate' => $this->getCGridViewBeforeAjaxUpdate(),
-                'afterAjaxUpdate'  => 'js:function(id, data) {processAjaxSuccessError(id, data)}',
+                'afterAjaxUpdate'  => $this->getCGridViewAfterAjaxUpdate(),
                 'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
                 'columns' => $columns,
                 'nullDisplay' => '&#160;',
@@ -217,7 +217,12 @@
             {
                 return null;
             }
-         }
+        }
+
+        protected function getCGridViewAfterAjaxUpdate()
+        {
+            return 'js:function(id, data) {processAjaxSuccessError(id, data);}';
+        }
 
         /**
          * Returns meta data for use in automatically generating the view.
