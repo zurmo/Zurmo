@@ -1,10 +1,6 @@
 /*Imports*/
-//@import 'originals/mbmenu.css';
-//@import url('clearfix.css');
 @import 'mixins.less';
 @import 'widget-juiportlets.less';
-
-
 
 @font-face {
     font-family: 'ZurmoSymblyRegular';
@@ -25,12 +21,8 @@
 
 /*Variables*/
 //blue theme
-
 @themeColor : #262877;
 @themeColor2 : #7BB730;
-
-
-//@themeColorRGB : 38, 40, 179;
 
 
 /*Functions*/
@@ -93,6 +85,7 @@
 
 html, body{
 	background:#DDDEDE;
+	min-height:100%;
 }
 
 body{
@@ -1401,9 +1394,15 @@ table.items thead tr:hover{
 		}
 		table{
 			border-bottom:none;
+			td{
+				padding-left:0 !important;
+			}
 		}
 		.view-toolbar-container{
 			
+		}
+		#Note_description{
+			height:80px;
 		}
 		input[type="submit"]{
 			float:right;
@@ -1437,32 +1436,31 @@ table.items thead tr:hover{
 	width:90% !important;
 	margin-right:3% !important; 
 }
+
 /*Upcoming Meeting Pager*/
 .pager{
 	text-align:center;
+	
 	.clearfix();
-	margin:10px 0;
+	
+
 	.previous, .next{
-		.zButton();
-		width:50%;
+		padding: 10px 0px 10px 0px;
+		width:100%;
 		text-align:center;
+		background:#fff;
+		> a{
+			.zButton();
+		}
 	}
 	.previous{
 		
 	}
 	.next{
-		
+		border-top:1px solid #DFDFDF;
 	}
 }
 
-/*Inline Edit Form - Notes+Upload*/
-#inline-edit-form{
-	table{
-		td{
-			//
-		}
-	}
-}
 
 
 /*Latest Activity*/
