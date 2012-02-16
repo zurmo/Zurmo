@@ -53,6 +53,7 @@
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp4',     $super, $account);
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser                                  (Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
+            ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public function testRegularUserAllControllerActions()
@@ -408,22 +409,23 @@
         /**
          * @depends testRegularUserControllerActionsWithElevationToModels
          */
-        public function testRegularUserOpportunityControllerActions()
+        public function testRegularUserViewingOpportunityWithoutAccessToAccount()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $aUser   = UserTestHelper::createBasicUser('aUser');
+            $super       = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $aUser       = UserTestHelper::createBasicUser('aUser');
             $aUser->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+            $aUser->setRight('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS);
             $this->assertTrue($aUser->save());
-            ForgetAllCacheUtil::forgetAllCaches();
-            $account = AccountTestHelper::createAccountByNameForOwner('superTestAccount', $super);
-            $account->addPermissions($aUser, Permission::READ_WRITE_CHANGE_PERMISSIONS, Permission::DENY);
-            $this->assertTrue($account->save());
+            $aUser       = User::getByUsername('aUser');
+            $account     = AccountTestHelper::createAccountByNameForOwner('superTestAccount', $super);
             $opportunity = OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('opportunityOwnedByaUser', $aUser, $account);
-
-            ForgetAllCacheUtil::forgetAllCaches();
-            $aUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
+            $account->forget();
+            $id          = $opportunity->id;
+            $opportunity->forget();
+            unset($opportunity);
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
-            $this->assertTrue(strpos($content, 'Fatal error: Method Account::__toString() must not throw an exception') > 0);
+            $this->assertFalse(strpos($content, 'Fatal error: Method Account::__toString() must not throw an exception') > 0);
         }
     }
 ?>
