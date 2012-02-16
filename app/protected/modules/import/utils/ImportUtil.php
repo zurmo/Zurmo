@@ -384,7 +384,7 @@
                                                                                  $importSanitizeResultsUtil);
             foreach ($attributeValueData as $attributeName => $value)
             {
-                if( $model->$attributeName instanceof RedBeanManyToManyRelatedModels)
+                if ( $model->$attributeName instanceof RedBeanManyToManyRelatedModels)
                 {
                     static::resolveValueThatIsManyModelsRelationToAttribute($model, $attributeName, $value);
                 }

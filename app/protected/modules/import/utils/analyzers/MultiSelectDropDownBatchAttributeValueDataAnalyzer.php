@@ -39,12 +39,12 @@
             if ($value != null)
             {
                 $customFieldValues = MultiSelectDropDownSanitizerUtil::getCustomFieldValuesFromValueString($value);
-                foreach($customFieldValues as $aValue)
+                foreach ($customFieldValues as $aValue)
                 {
                     $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
                                                    $this->missingDropDownInstructions
                                                    [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-                    if(!in_array(strtolower($aValue), $this->dropDownValues) &&
+                    if (!in_array(strtolower($aValue), $this->dropDownValues) &&
                        !in_array(strtolower($aValue), $lowerCaseMissingValuesToMap))
                     {
                         $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $aValue;

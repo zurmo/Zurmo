@@ -59,7 +59,7 @@
                 }
                 else
                 {
-                    if($this->form->isAttributeSafe($attributeName))
+                    if ($this->form->isAttributeSafe($attributeName))
                     {
                         $metadata['global'][$attributeName] = $this->form->$attributeName;
                     }

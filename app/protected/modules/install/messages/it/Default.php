@@ -76,12 +76,12 @@
             => 'Il database è in modalità strict.',
         'Database is not in strict mode.'
             => 'Il database non è in modalità strict.',
-        'Database log_bin=off and therefore satisfies this requirement.'
-            => 'Nel database, il valore del parametro log_bin=off e soddisfa il requisito.',
-        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement'
-            => 'Nel database, i valori dei parametri log_bin=on e log_bin_trust_function_creators=on soddisfanno i requisiti.',
-        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.'
-            => 'Nel database, il valore del parametro log_bin=on. Preggo di modificare il valore a log_bin=off o log_bin_trust_function_creators=on.',
+        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard at the end of the line
+            => 'Nel database, il valore del parametro log_bin=off e soddisfa il requisito.', // Not Coding Standard at the end of the line
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard at the end of the line
+            => 'Nel database, i valori dei parametri log_bin=on e log_bin_trust_function_creators=on soddisfanno i requisiti.', // Not Coding Standard at the end of the line
+        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard at the end of the line
+            => 'Nel database, il valore del parametro log_bin=on. Preggo di modificare il valore a log_bin=off o log_bin_trust_function_creators=on.', // Not Coding Standard at the end of the line
         'Database max_allowed_packet size is:'
             => 'Il valore max_allowed_packet del database è:',
         'Database max_allowed_packet size meets minimum requirement.'

@@ -59,7 +59,7 @@
                 try
                 {
                     $customField = new OwnedMultipleValuesCustomField();
-                    foreach($mappingRuleData['defaultValue'] as $aDefaultValue)
+                    foreach ($mappingRuleData['defaultValue'] as $aDefaultValue)
                     {
                         $customFieldValue = new CustomFieldValue();
                         $customFieldValue->value = $aDefaultValue;

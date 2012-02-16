@@ -76,12 +76,12 @@
             => 'La base de données est au mode strict.',
         'Database is not in strict mode.'
             => 'La base de données n\'est pas au mode strict.',
-        'Database log_bin=off and therefore satisfies this requirement.'
-            => 'Dans la base de données, la valeur du paramètre log_bin=off et satisfait les conditions nécéssaires.',
-        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement'
-            => 'Dans la base de données, les valeurs des paramètres log_bin=on et log_bin_trust_function_creators=on et satisfont les conditions nécéssaires.',
-        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.'
-            => 'Dans la base de données, le paramètre log_bin=on. Vous devez modifier le paramètre pour que log_bin=off ou log_bin_trust_function_creators=on.',
+        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard at the end of the line
+            => 'Dans la base de données, la valeur du paramètre log_bin=off et satisfait les conditions nécéssaires.', // Not Coding Standard at the end of the line
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard at the end of the line
+            => 'Dans la base de données, les valeurs des paramètres log_bin=on et log_bin_trust_function_creators=on et satisfont les conditions nécéssaires.', // Not Coding Standard at the end of the line
+        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard at the end of the line
+            => 'Dans la base de données, le paramètre log_bin=on. Vous devez modifier le paramètre pour que log_bin=off ou log_bin_trust_function_creators=on.',  // Not Coding Standard at the end of the line
         'Database max_allowed_packet size is:'
             => 'La taille max_allowed_packet de la base de données est:',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -298,5 +298,5 @@
             => '{folderPath} est manquant.',
         '{folderPath} is not writable.'
             => '{folderPath} n\'est pas écrivable.',
-    );
+    ); // Not Coding Standard at the end of the line
 ?>

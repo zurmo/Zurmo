@@ -56,7 +56,7 @@
             //These need to eventually be fixed so they are properly removed, except currency which is ok.
             //activity_items (3), contact_Opportunity, (1) _group__user (1), currency (1)
             $this->assertEquals($beforeRowCount, ($afterRowCount - 6));
-            if($unfreezeWhenDone)
+            if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();
             }

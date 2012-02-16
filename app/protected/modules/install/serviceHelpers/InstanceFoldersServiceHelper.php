@@ -42,11 +42,11 @@
                 INSTANCE_ROOT . '/protected/data',
                 INSTANCE_ROOT . '/protected/runtime'
             );
-            foreach($pathsToTest as $pathToTest)
+            foreach ($pathsToTest as $pathToTest)
             {
                 if (!file_exists($pathToTest))
                 {
-                    if($this->message != null)
+                    if ($this->message != null)
                     {
                         $this->message .= "\n";
                     }
@@ -55,7 +55,7 @@
                 }
                 if (!is_writable($pathToTest))
                 {
-                    if($this->message != null)
+                    if ($this->message != null)
                     {
                         $this->message .= "\n";
                     }
@@ -64,7 +64,7 @@
                     $passed = false;
                 }
             }
-            if($passed)
+            if ($passed)
             {
                     $this->message .= Yii::t('Default', 'The instance folders are present and writable.');
             }

@@ -33,7 +33,7 @@
         }
 
         public function setup()
-        { 
+        {
             parent::setup();
             Yii::app()->user->userModel = User::getByUsername('super');
         }
@@ -897,7 +897,7 @@
                 $this->assertEquals(null,                $attributeForm->defaultValueOrder);
             }
 
-            //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
+            //Test that validation on completely new multi select picklists works correctly and is inline with the rules
             //from the CustomFieldData model.
             $attributeForm = new TagCloudAttributeForm();
             $attributeForm->attributeName    = 's';    //name to short. test that this fails.
@@ -1088,11 +1088,11 @@
                 'cb3',
                 'cc3',
             );
-            $city_labels = array('fr' => array('aa1 fr', 'ab1 fr', 'ac1 fr', 'aa2 fr', 'ab2 fr', 'ac2 fr', 'aa3 fr', 'ab3 fr', 'ac3 fr', 
-                                               'ba1 fr', 'bb1 fr', 'bc1 fr', 'ba2 fr', 'bb2 fr', 'bc2 fr', 'ba3 fr', 'bb3 fr', 'bc3 fr', 
-                                               'ca1 fr', 'cb1 fr', 'cc1 fr', 'ca2 fr', 'cb2 fr', 'cc2 fr', 'ca3 fr', 'cb3 fr', 'cc3 fr'), 
-                                 'de' => array('aa1 de', 'ab1 de', 'ac1 de', 'aa2 de', 'ab2 de', 'ac2 de', 'aa3 de', 'ab3 de', 'ac3 de', 
-                                               'ba1 de', 'bb1 de', 'bc1 de', 'ba2 de', 'bb2 de', 'bc2 de', 'ba3 de', 'bb3 de', 'bc3 de', 
+            $city_labels = array('fr' => array('aa1 fr', 'ab1 fr', 'ac1 fr', 'aa2 fr', 'ab2 fr', 'ac2 fr', 'aa3 fr', 'ab3 fr', 'ac3 fr',
+                                               'ba1 fr', 'bb1 fr', 'bc1 fr', 'ba2 fr', 'bb2 fr', 'bc2 fr', 'ba3 fr', 'bb3 fr', 'bc3 fr',
+                                               'ca1 fr', 'cb1 fr', 'cc1 fr', 'ca2 fr', 'cb2 fr', 'cc2 fr', 'ca3 fr', 'cb3 fr', 'cc3 fr'),
+                                 'de' => array('aa1 de', 'ab1 de', 'ac1 de', 'aa2 de', 'ab2 de', 'ac2 de', 'aa3 de', 'ab3 de', 'ac3 de',
+                                               'ba1 de', 'bb1 de', 'bc1 de', 'ba2 de', 'bb2 de', 'bc2 de', 'ba3 de', 'bb3 de', 'bc3 de',
                                                'ca1 de', 'cb1 de', 'cc1 de', 'ca2 de', 'cb2 de', 'cc2 de', 'ca3 de', 'cb3 de', 'cc3 de'),
             );
             $statesFieldData = CustomFieldData::getByName('Cities');
@@ -1342,11 +1342,11 @@
                 'it' => 'Test Stream 2 it',
             );
             $this->assertEquals($compareAttributeLabels, $attributeForm->attributeLabels);
-            $this->assertEquals(true,           $attributeForm->isAudited);
-            $this->assertEquals(true,           $attributeForm->isRequired);
-            $this->assertEquals('Stream',       $attributeForm->customFieldDataName);
-            $this->assertEquals($stream,        $attributeForm->customFieldDataData);
-            $this->assertEquals($stream_labels, $attributeForm->customFieldDataLabels);
+            $this->assertEquals(true,                    $attributeForm->isAudited);
+            $this->assertEquals(true,                    $attributeForm->isRequired);
+            $this->assertEquals('Stream',                $attributeForm->customFieldDataName);
+            $this->assertEquals($stream,                 $attributeForm->customFieldDataData);
+            $this->assertEquals($stream_labels,          $attributeForm->customFieldDataLabels);
 
             $attributeName = "testQualification";
             $attributeForm = new DropDownDependencyAttributeForm();
@@ -1938,9 +1938,9 @@
             $account->testTextArea2                     = 'some test text area stuff2';
             $account->testUrl2                          = 'http://www.zurmo.org';
             $account->playMyFavoriteSong->value         = 'song3';
-            $account->testCountry->value                = 'cccc'; 
-            $account->testState->value                  = 'ccc3'; 
-            $account->testCity->value                   = 'ca3'; 
+            $account->testCountry->value                = 'cccc';
+            $account->testState->value                  = 'ccc3';
+            $account->testCity->value                   = 'ca3';
             $account->testEducation->value              = 'aaaa';
             $account->testStream->value                 = 'aaa1';
 
