@@ -165,12 +165,11 @@
             $this->setGetArray(array(
                 'selectedIds'  => $aUser->id . ',' . $bUser->id, // Not Coding Standard
                 'selectAll'    => '',
-                'User_page' => 1));
+                'User_page'    => 1));
             $this->setPostArray(array(
                 'User'      => array('officePhone' => '7788'),
                 'MassEdit'     => array('officePhone' => 1)
             ));
-
             $this->runControllerWithRedirectExceptionAndGetContent('users/default/massEdit');
 
             //Test that the 2 contacts have the new office phone number and the other contacts do not.
