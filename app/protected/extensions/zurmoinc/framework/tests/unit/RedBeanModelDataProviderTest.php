@@ -87,7 +87,7 @@
             $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                             "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                             "{$quote}multiplevaluescustomfield{$quote}.id " .
-                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C') limit 1))";
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C') limit 1))"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -131,11 +131,11 @@
             $compareWhere = "(1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                             "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                             "{$quote}multiplevaluescustomfield{$quote}.id " .
-                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C') limit 1))";
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('A','B','C') limit 1))"; // Not Coding Standard
             $compareWhere .= " and (1 = (select 1 from {$quote}customfieldvalue{$quote} customfieldvalue " .
                             "where {$quote}customfieldvalue{$quote}.{$quote}multiplevaluescustomfield_id{$quote} = " .
                             "{$quote}multiplevaluescustomfield1{$quote}.id " .
-                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('D','E','F') limit 1))";
+                            "and {$quote}customfieldvalue{$quote}.{$quote}value{$quote} IN('D','E','F') limit 1))"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
             //Now test that the joinTablesAdapter has correct information.
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -190,7 +190,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NULL)";
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NULL)"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
             //Make sure the sql runs properly.
             $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);
@@ -210,7 +210,7 @@
 
             $quote        = DatabaseCompatibilityUtil::getQuote();
             $where        = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NOT NULL)";
+            $compareWhere = "({$quote}i{$quote}.{$quote}imember{$quote} IS NOT NULL)"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
             //Make sure the sql runs properly.
             $dataProvider = new RedBeanModelDataProvider('I', null, false, $searchAttributeData);

@@ -221,7 +221,7 @@
             $sql .= "{$quote}{$customFieldTableName}{$quote}.basecustomfield_id ";
             $sql .= "where {$quote}{$dataAttributeColumnName}{$quote} = {$id} ";
             $sql .= "and (select count(*) from {$quote}{$customFieldValueTableName}{$quote} ";
-            $sql .= "where {$quote}{$valueAttributeColumnName}{$quote} IN('B','C') ";
+            $sql .= "where {$quote}{$valueAttributeColumnName}{$quote} IN('B','C') "; // Not Coding Standard
             $sql .= "and {$quote}{$customFieldTableName}{$quote}.id = {$customFieldValueTableName}.{$customFieldTableName}_id)";
             $sql .= " = 2";
             $this->assertEquals(1, count(R::getCol($sql)));

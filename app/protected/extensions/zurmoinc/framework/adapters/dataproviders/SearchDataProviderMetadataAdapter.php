@@ -99,7 +99,6 @@
                 {
                     if ($operatorType == null)
                     {
-
                         $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType($this->model, $attributeName);
                     }
                     $value        = ModelAttributeToCastTypeUtil::resolveValueForCast(
@@ -174,7 +173,7 @@
                         {
                             $relatedValue = $relatedValue['value'];
                         }
-                        elseif($this->model->$attributeName->$relatedAttributeName instanceof RedBeanModels &&
+                        elseif ($this->model->$attributeName->$relatedAttributeName instanceof RedBeanModels &&
                                is_array($relatedValue) && count($relatedValue) > 0)
                         {
                             //Continue on using relatedValue as is.
@@ -195,7 +194,7 @@
                             }
                             $relatedValue  = ModelAttributeToCastTypeUtil::resolveValueForCast(
                                                 $this->model->$attributeName, $relatedAttributeName, $relatedValue);
-                            if($this->model->$attributeName instanceof RedBeanModel)
+                            if ($this->model->$attributeName instanceof RedBeanModel)
                             {
                                 $mixedType = ModelAttributeToMixedTypeUtil::getType(
                                                     $this->model->$attributeName, $relatedAttributeName);
@@ -382,7 +381,7 @@
         {
             assert('is_string($type)');
             assert('is_string($operatorType)');
-            if($type == 'CheckBox' && ($value == '0' || !$value))
+            if ($type == 'CheckBox' && ($value == '0' || !$value))
             {
                 $operatorType = 'doesNotEqual';
                 $value        = (bool)1;

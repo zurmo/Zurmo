@@ -76,12 +76,12 @@
             => 'Base de datos está en modo estricto.',
         'Database is not in strict mode.'
             => 'Base de datos no está en modo estricto.',
-        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard at the end of the line
-            => 'En la base de datos, el valor del parámetro log_bin=off y cumple con las condiciones necesarias.', // Not Coding Standard at the end of the line
-        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard at the end of the line
-            => 'En la base de datos, los valores de parámetros log_bin=on y log_bin_trust_function_creators=on y cumplen con las condiciones necesarias.', // Not Coding Standard at the end of the line
-        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard at the end of the line
-            => 'En la base de datos, los valores de parámetros log_bin=on. Debe cambiar la configuración de log_bin=off o log_bin_trust_function_creators=on.', // Not Coding Standard at the end of the line
+        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard
+            => 'En la base de datos, el valor del parámetro log_bin=off y cumple con las condiciones necesarias.', // Not Coding Standard
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard
+            => 'En la base de datos, los valores de parámetros log_bin=on y log_bin_trust_function_creators=on y cumplen con las condiciones necesarias.', // Not Coding Standard
+        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard
+            => 'En la base de datos, los valores de parámetros log_bin=on. Debe cambiar la configuración de log_bin=off o log_bin_trust_function_creators=on.', // Not Coding Standard
         'Database max_allowed_packet size is:'
             => 'Base de datos max_allowed_packet tamaño es:',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -298,5 +298,5 @@
             => '{folderPath} falta',
         '{folderPath} is not writable.'
             => '{folderPath} no se puede escribir.',
-    ); // Not Coding Standard at the end of the line
+    ); // Not Coding Standard
 ?>

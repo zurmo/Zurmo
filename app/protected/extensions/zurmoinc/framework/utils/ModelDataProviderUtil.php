@@ -35,9 +35,9 @@
                                                               RedBeanModelJoinTablesQueryAdapter
                                                               $joinTablesAdapter)
         {
-            if($modelAttributeToDataProviderAdapter->isRelation())
+            if ($modelAttributeToDataProviderAdapter->isRelation())
             {
-                if(!$modelAttributeToDataProviderAdapter->hasRelatedAttribute())
+                if (!$modelAttributeToDataProviderAdapter->hasRelatedAttribute())
                 {
                     throw new NotSupportedException();
                 }
@@ -85,7 +85,7 @@
             {
                 if (isset($clauseInformation['concatedAttributeNames']))
                 {
-                    if(isset($clauseInformation['relatedAttributeName']) &&
+                    if (isset($clauseInformation['relatedAttributeName']) &&
                        $clauseInformation['relatedAttributeName'] != null)
                     {
                         throw new NotSupportedException();
@@ -237,7 +237,7 @@
                                                                 $joinTablesAdapter,
                                                                 $onTableAliasName);
                 $relationWhere = array();
-                if($modelAttributeToDataProviderAdapter->isRelatedAttributeRelation() &&
+                if ($modelAttributeToDataProviderAdapter->isRelatedAttributeRelation() &&
                    $modelAttributeToDataProviderAdapter->getRelatedAttributeRelationType() == RedBeanModel::HAS_MANY)
                 {
                    static::
@@ -280,14 +280,14 @@
             assert('is_int($whereKey)');
             $relationAttributeName           = $modelAttributeToDataProviderAdapter->getRelatedAttribute();
             $relationAttributeModelClassName = $modelAttributeToDataProviderAdapter-> getRelatedAttributeRelationModelClassName();
-            if($relationAttributeModelClassName != 'CustomFieldValue')
+            if ($relationAttributeModelClassName != 'CustomFieldValue')
             {
                 //Until we can add a third parameter to the search adapter metadata, we have to assume we are only doing
                 //this for CustomFieldValue searches. Below we have $joinColumnName, since we don't have any other way
                 //of ascertaining this information for now.
                 throw new NotSupportedException();
             }
-            if($operatorType != 'oneOf')
+            if ($operatorType != 'oneOf')
             {
                 //only support oneOf for the moment.  Once we add allOf, need to have an alternative sub-query
                 //below that uses if/else logic to compare count against how many possibles. then return 1 or 0.

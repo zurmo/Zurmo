@@ -31,7 +31,7 @@
     {
         public function __toString()
         {
-            if($this->values->count() == 0)
+            if ($this->values->count() == 0)
             {
                 return Yii::t('Default', '(None)');
             }
@@ -40,9 +40,9 @@
             $dataAndLabels = CustomFieldDataUtil::
                              getDataIndexedByDataAndTranslatedLabelsByLanguage($this->data, Yii::app()->language);
             $s             = null;
-            foreach($this->values as $customFieldValue)
+            foreach ($this->values as $customFieldValue)
             {
-                if($s != null)
+                if ($s != null)
                 {
                     $s .= ', ';
                 }
@@ -78,7 +78,7 @@
             $sql  = "update {$quote}{$customFieldValueTableName}{$quote}, {$quote}{$customFieldTableName}{$quote}, ";
             $sql .= "{$quote}{$baseCustomFieldTableName}{$quote} ";
             $sql .= "set {$quote}{$customFieldValueTableName}{$quote}.{$valueAttributeColumnName} = '{$newValue}' ";
-            $sql .= "where {$quote}{$customFieldTableName}{$quote}.$baseCustomFieldJoinColumnName = ";
+            $sql .= "where {$quote}{$customFieldTableName}{$quote}.$baseCustomFieldJoinColumnName = "; // Not Coding Standard
             $sql .= "{$quote}{$baseCustomFieldTableName}{$quote}.id ";
             $sql .= "AND {$quote}{$dataAttributeColumnName}{$quote} = $customFieldDataId ";
             $sql .= "AND {$quote}{$customFieldTableName}{$quote}.id = {$quote}{$customFieldValueTableName}{$quote}.{$customFieldTableName}_id ";
@@ -89,17 +89,17 @@
         public function setValues($values)
         {
             $customFieldValueObject = array();
-            if(count($values) == 0)
+            if (count($values) == 0)
             {
                 $this->values->removeAll();
             }
             else
             {
-                if($this->values->count() > 0)
+                if ($this->values->count() > 0)
                 {
-                    foreach($this->values as $customFieldValue)
+                    foreach ($this->values as $customFieldValue)
                     {
-                        if(!in_array($customFieldValue->value, $values))
+                        if (!in_array($customFieldValue->value, $values))
                         {
                             $customFieldValueObject[] = $customFieldValue;
                         }
@@ -109,13 +109,13 @@
                             unset($values[$key]);
                         }
                     }
-                    foreach($customFieldValueObject as $customFieldValue)
+                    foreach ($customFieldValueObject as $customFieldValue)
                     {
                         $this->values->remove($customFieldValue);
                     }
                 }
 
-                foreach($values as $value)
+                foreach ($values as $value)
                 {
                     $customFieldValue = new CustomFieldValue();
                     $customFieldValue->value = $value;
@@ -135,9 +135,9 @@
             assert('is_array($values)');
             $dataAndLabels = CustomFieldDataUtil::
                              getDataIndexedByDataAndTranslatedLabelsByLanguage($this->data, Yii::app()->language);
-            foreach($values as $key => $value)
+            foreach ($values as $key => $value)
             {
-                if(ArrayUtil::getArrayValue($dataAndLabels, $value) != null)
+                if (ArrayUtil::getArrayValue($dataAndLabels, $value) != null)
                 {
                     $values[$key] = ArrayUtil::getArrayValue($dataAndLabels, $value);
                 }

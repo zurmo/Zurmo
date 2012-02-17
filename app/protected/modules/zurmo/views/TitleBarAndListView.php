@@ -48,7 +48,7 @@
             assert('is_bool($selectAll)');
             assert('is_string($description) || $description == null');
             parent::__construct(2, 1);
-            if($description == null)
+            if ($description == null)
             {
                 $description = Yii::t('Default', 'Home');
             }

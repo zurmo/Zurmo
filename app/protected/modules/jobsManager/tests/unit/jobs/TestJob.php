@@ -50,7 +50,7 @@
         public function run()
         {
             ZurmoConfigurationUtil::setByModuleName('JobsManagerModule', 'test', $this->testValue);
-            if($this->causeFailure)
+            if ($this->causeFailure)
             {
                 $this->errorMessage = 'The test job failed';
                 return false;
@@ -58,5 +58,4 @@
             return true;
         }
     }
-
 ?>

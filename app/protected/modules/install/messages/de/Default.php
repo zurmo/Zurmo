@@ -77,12 +77,12 @@
             => 'Datenbank ist ist in Strict-Modus',
         'Database is not in strict mode.'
             => 'Datenbank ist nicht im Strict-Modus',
-        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard at the end of the line
-            => 'In der Datenbank der Wert des Parameters log_bin=off und erfüllt die benötigte Voraussetzungen.', // Not Coding Standard at the end of the line
-        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard at the end of the line
-            => 'Datenbank Werte log_bin=on und _bin_trust_function_creators=on und erfüllt die benötigte Voraussetzungen.', // Not Coding Standard at the end of the line
-        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard at the end of the line
-            => 'Datenbank Werte log_bin=on. Sie müssen die Einstellung ändern für log_bin=off oder log_bin_trust_function_creators=on.', // Not Coding Standard at the end of the line
+        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard
+            => 'In der Datenbank der Wert des Parameters log_bin=off und erfüllt die benötigte Voraussetzungen.', // Not Coding Standard
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard
+            => 'Datenbank Werte log_bin=on und _bin_trust_function_creators=on und erfüllt die benötigte Voraussetzungen.', // Not Coding Standard
+        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard
+            => 'Datenbank Werte log_bin=on. Sie müssen die Einstellung ändern für log_bin=off oder log_bin_trust_function_creators=on.', // Not Coding Standard
         'Database max_allowed_packet size is:'
             => 'Datenbank max_allowed_packet Größe ist',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -298,5 +298,5 @@
             => '{folderPath} fehlt',
         '{folderPath} is not writable.'
             => '{folderPath} ist nicht beschreibbar.',
-    ); // Not Coding Standard at the end of the line
+    ); // Not Coding Standard
 ?>

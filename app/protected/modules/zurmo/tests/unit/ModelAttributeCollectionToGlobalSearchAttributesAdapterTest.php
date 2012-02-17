@@ -50,13 +50,13 @@
                 'anyCountry'      => 'Any Country',
                 'anyEmail'        => 'Any Email Address',
                 'anyPostalCode'   => 'Any Postal Code',
-                'anyState'		  => 'Any State',
+                'anyState'        => 'Any State',
                 'anyStreet'       => 'Any Street',
                 'description'     => 'Description',
                 'employees'       => 'Employees',
                 'name'            => 'Name',
-                'officeFax'		  => 'Office Fax',
-                'officePhone'	  => 'Office Phone'
+                'officeFax'       => 'Office Fax',
+                'officePhone'     => 'Office Phone'
             );
             $this->assertEquals($compareData, $adapter->getValuesAndLabelsData());
         }

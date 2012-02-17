@@ -79,56 +79,59 @@
          */
         public function run()
         {
-            if(is_array($this->focus))
+            if (is_array($this->focus))
             {
                 $this->focus="#" . CHtml::activeId($this->focus[0], $this->focus[1]);
             }
             echo CHtml::endForm();
             $cs = Yii::app()->clientScript;
-            if(!$this->enableAjaxValidation && !$this->enableClientValidation || empty($this->attributes))
+            if (!$this->enableAjaxValidation && !$this->enableClientValidation || empty($this->attributes))
             {
-                if($this->focus!==null)
+                if ($this->focus !== null)
                 {
                     $cs->registerCoreScript('jquery');
-                    $cs->registerScript('CActiveForm#focus',"
-                        if(!window.location.hash)
-                            $('".$this->focus."').focus();
+                    $cs->registerScript('CActiveForm#focus', "
+                        if (!window.location.hash)
+                            { $('" . $this->focus . "').focus(); }
                     ");
                 }
                 return;
             }
 
             $options = $this->clientOptions;
-            if(isset($this->clientOptions['validationUrl']) && is_array($this->clientOptions['validationUrl']))
+            if (isset($this->clientOptions['validationUrl']) && is_array($this->clientOptions['validationUrl']))
+            {
                 $options['validationUrl'] = CHtml::normalizeUrl($this->clientOptions['validationUrl']);
+            }
 
             $options['attributes'] = array_values($this->attributes);
 
-            if($this->summaryID !== null)
+            if ($this->summaryID !== null)
             {
                 $options['summaryID'] = $this->summaryID;
             }
-            if($this->focus !== null)
+            if ($this->focus !== null)
             {
-                $options['focus']=$this->focus;
+                $options['focus'] = $this->focus;
             }
 
             $options = CJavaScript::encode($options);
             $cs->registerCoreScript('yiiactiveform');
             $id = $this->id;
-            if($this->bindAsLive)
+            if ($this->bindAsLive)
             {
-                $cs->registerScript(__CLASS__.'#'.$id, "\$('#$id').live('focus', function(e){
-                    if($(this).data('settings') == undefined)
+                $cs->registerScript(__CLASS__. '#' . $id, "\$('#$id').live('focus', function(e)
+                {
+                    if ($(this).data('settings') == undefined)
                     {
                         $(this).yiiactiveform($options);
                     }
-                    });
+                });
                 ");
             }
             else
             {
-                $cs->registerScript(__CLASS__.'#'.$id,"\$('#$id').yiiactiveform($options);");
+                $cs->registerScript(__CLASS__. '#' . $id, "\$('#$id').yiiactiveform($options);");
             }
         }
     }

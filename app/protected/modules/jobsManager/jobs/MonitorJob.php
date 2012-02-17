@@ -61,9 +61,9 @@
         public function run()
         {
             $jobsInProcess = static::getNonMonitorJobsInProcessModels();
-            foreach($jobsInProcess as $jobInProcess)
+            foreach ($jobsInProcess as $jobInProcess)
             {
-                if(JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
+                if (JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
                 {
                     $message                    = new NotificationMessage();
                     $message->textContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
@@ -72,9 +72,9 @@
                 }
             }
             $jobLogs = static::getNonMonitorJobLogsUnprocessed();
-            foreach($jobLogs as $jobLog)
+            foreach ($jobLogs as $jobLog)
             {
-                if($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
+                if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
                 {
                     $message                      = new NotificationMessage();
                     $message->htmlContent         = Yii::t('Default', 'Job completed with errors.');
@@ -127,5 +127,4 @@
             return JobLog::getSubset($joinTablesAdapter, null, null, $where, null);
         }
     }
-
 ?>

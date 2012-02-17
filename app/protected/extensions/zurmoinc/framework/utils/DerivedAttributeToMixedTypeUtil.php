@@ -49,7 +49,7 @@
                     return 'CalculatedNumber';
                 }
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
             }
             try
@@ -61,7 +61,7 @@
                     return 'DropDownDependency';
                 }
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 throw new NotImplementedException($attributeName . 'M' . $modelClassName);
             }

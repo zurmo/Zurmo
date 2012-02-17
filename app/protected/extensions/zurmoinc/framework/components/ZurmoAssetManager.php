@@ -38,7 +38,7 @@
         */
         protected function hash($path)
         {
-            return sprintf('%x',crc32($path.Yii::getVersion().VERSION));
+            return sprintf('%x', crc32($path.Yii::getVersion().VERSION));
         }
     }
 ?>

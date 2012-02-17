@@ -113,7 +113,7 @@
             if ($this->$attribute != null)
             {
                 $unserializedData = unserialize($this->serializedMetadata);
-                if(!isset($unserializedData['attributeLabels']))
+                if (!isset($unserializedData['attributeLabels']))
                 {
                     $message = Yii::t('Default', 'Missing the attribute labels.');
                     $this->addError('name', $message);
@@ -130,7 +130,7 @@
                 $sql       = 'select id from ' . $tableName . " where name = '{$this->$attribute}' and ";
                 $sql      .= "modelclassname = '" . $this->modelClassName . "'";
                 $rows      = R::getAll($sql);
-                if(count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->getClassId('DerivedAttributeMetadata'))
+                if (count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->getClassId('DerivedAttributeMetadata'))
                 {
                     return;
                 }
@@ -144,7 +144,7 @@
         {
             assert('is_string($language)');
             $unserializedData = unserialize($this->serializedMetadata);
-            if(isset($unserializedData['attributeLabels']) && isset($unserializedData['attributeLabels'][$language]))
+            if (isset($unserializedData['attributeLabels']) && isset($unserializedData['attributeLabels'][$language]))
             {
                 return $unserializedData['attributeLabels'][$language];
             }

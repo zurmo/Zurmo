@@ -82,7 +82,7 @@
                 $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework');
                 $totalFilesToIncludeFromModules = count($filesToInclude);
 
-                foreach($filesToIncludeFromFramework as $key => $file)
+                foreach ($filesToIncludeFromFramework as $key => $file)
                 {
                     $filesToInclude[$totalFilesToIncludeFromModules + $key] = $file;
                 }
@@ -92,7 +92,6 @@
             {
                 Yii::import($file);
             }
-
         }
 
         /**

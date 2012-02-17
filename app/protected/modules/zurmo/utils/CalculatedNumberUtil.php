@@ -40,16 +40,16 @@
         {
             assert('is_string($formula)');
             $adapter = new ModelNumberOrCurrencyAttributesAdapter($model);
-            foreach($adapter->getAttributes() as $attribute => $data)
+            foreach ($adapter->getAttributes() as $attribute => $data)
             {
-                if(($model->{$attribute} instanceof CurrencyValue && $model->{$attribute}->value == null) ||
+                if (($model->{$attribute} instanceof CurrencyValue && $model->{$attribute}->value == null) ||
                    $model->{$attribute} == null)
                 {
                     $replacementValue = 0;
                 }
                 else
                 {
-                    if($model->{$attribute} instanceof CurrencyValue)
+                    if ($model->{$attribute} instanceof CurrencyValue)
                     {
                         $replacementValue = $model->{$attribute}->value;
                     }
@@ -61,7 +61,7 @@
                 $formula = str_replace($attribute, $replacementValue, $formula);
             }
             $result = static::matheval($formula);
-            if($result === false)
+            if ($result === false)
             {
                 return Yii::t('Default', 'Invalid');
             }
@@ -78,15 +78,15 @@
         public static function isFormulaValid($formula, ModelNumberOrCurrencyAttributesAdapter $adapter)
         {
             assert('is_string($formula)');
-            foreach($adapter->getAttributes() as $attribute => $data)
+            foreach ($adapter->getAttributes() as $attribute => $data)
             {
                 $formula = str_replace($attribute, 1, $formula);
             }
-            if($formula != strtoupper($formula) || $formula != strtolower($formula))
+            if ($formula != strtoupper($formula) || $formula != strtolower($formula))
             {
                 return false;
             }
-            if(static::matheval($formula) === false)
+            if (static::matheval($formula) === false)
             {
                 return false;
             }
@@ -95,18 +95,18 @@
 
         protected static function matheval($equation)
         {
-            $equation = preg_replace("/[^0-9+\-.*\/()%]/","",$equation);
-            $equation = preg_replace("/([+-])([0-9]{1})(%)/","*(1\$1.0\$2)",$equation);
-            $equation = preg_replace("/([+-])([0-9]+)(%)/","*(1\$1.\$2)",$equation);
-            $equation = preg_replace("/([0-9]+)(%)/",".\$1",$equation);
-            if ( $equation == "" )
+            $equation = preg_replace("/[^0-9+\-.*\/()%]/","",$equation); // Not Coding Standard
+            $equation = preg_replace("/([+-])([0-9]{1})(%)/","*(1\$1.0\$2)",$equation); // Not Coding Standard
+            $equation = preg_replace("/([+-])([0-9]+)(%)/","*(1\$1.\$2)",$equation); // Not Coding Standard
+            $equation = preg_replace("/([0-9]+)(%)/",".\$1",$equation); // Not Coding Standard
+            if ($equation == "")
             {
               $return = 0;
             }
             else
             {
-              $success = @eval("\$return=" . $equation . ";" );
-              if($success === false)
+              $success = @eval("\$return=" . $equation . ";" ); // Not Coding Standard
+              if ($success === false)
               {
                   return false;
               }
@@ -114,5 +114,4 @@
             return $return;
         }
     }
-
 ?>

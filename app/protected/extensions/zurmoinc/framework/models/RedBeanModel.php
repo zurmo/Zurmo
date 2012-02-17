@@ -372,7 +372,7 @@
                     {
                         $tableName = self::getTableName($modelClassName);
                         $lastBean = R::getBean($lastBean, $tableName);
-                        if($lastBean === null)
+                        if ($lastBean === null)
                         {
                             throw new MissingBeanException();
                         }
@@ -2513,7 +2513,7 @@
                             else
                             {
                                 $setAttributeMethodName = 'set' . ucfirst($attributeName);
-                                if($this->$attributeName instanceof RedBeanOneToManyRelatedModels &&
+                                if ($this->$attributeName instanceof RedBeanOneToManyRelatedModels &&
                                    method_exists($this, $setAttributeMethodName))
                                 {
                                     $this->$setAttributeMethodName($value);
@@ -2697,7 +2697,7 @@
                 {
                     $models[] = self::makeModel($bean, $modelClassName);
                 }
-                catch(MissingBeanException $e)
+                catch (MissingBeanException $e)
                 {
                 }
             }

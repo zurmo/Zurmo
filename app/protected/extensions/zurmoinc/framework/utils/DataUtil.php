@@ -64,7 +64,7 @@
                         {
                             $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType($model, $attributeName);
                         }
-                        catch(NotImplementedException $e)
+                        catch (NotImplementedException $e)
                         {
                             //In the event that a designer type does not exist.
                             $designerType = null;
@@ -94,7 +94,7 @@
                             }
                             else
                             {
-                                $data[$attributeName]['values'] = explode(',', $data[$attributeName]['values']);
+                                $data[$attributeName]['values'] = explode(',', $data[$attributeName]['values']); // Not Coding Standard
                             }
                         }
                     }

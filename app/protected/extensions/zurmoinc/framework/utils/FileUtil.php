@@ -45,10 +45,10 @@
                         }
                         elseif (substr(strrchr($file, '.'), 1) == 'php')
                         {
-                            $tmp = $dir.DIRECTORY_SEPARATOR.$file;
+                            $tmp = $dir . DIRECTORY_SEPARATOR . $file;
                             $tmp = str_replace($basePath, $beginAliasPath, $tmp);
                             $tmp = str_replace(DIRECTORY_SEPARATOR, '.', $tmp);
-                            $files[] = substr($tmp,0,-4);
+                            $files[] = substr($tmp, 0, -4);
                         }
                     }
                 }

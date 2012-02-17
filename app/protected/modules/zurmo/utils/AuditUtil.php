@@ -91,10 +91,9 @@
                     $processAuditEvent = true;
                     if (!$attributeModel->isRelation($attributeName))
                     {
-
                         $newValue = $attributeModel->$attributeName;
                     }
-                    elseif($attributeModel->$attributeName instanceof RedBeanOneToManyRelatedModels)
+                    elseif ($attributeModel->$attributeName instanceof RedBeanOneToManyRelatedModels)
                     {
                             $newValue = $attributeModel->$attributeName->getStringifiedData();
                             assert('$oldValue != $newValue');
@@ -182,7 +181,7 @@
                 }
                 $s = $value;
             }
-            elseif($attributeModel->$attributeName instanceof RedBeanOneToManyRelatedModels)
+            elseif ($attributeModel->$attributeName instanceof RedBeanOneToManyRelatedModels)
             {
                 $s = $attributeModel->stringifyOneToManyRelatedModelsValues($value);
             }

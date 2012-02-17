@@ -93,7 +93,6 @@
 
             $usedModelAttributeNames = $metadata->getUsedAttributeNames();
             $this->assertEquals(array('a', 'b', 'c'), $usedModelAttributeNames);
-
         }
     }
 ?>
