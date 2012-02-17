@@ -313,7 +313,7 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
-        public function testCheckThreadStackValue()
+        public function testCheckDatabaseOptimizerSearchDepthValue()
         {
             $threadStackValue                = null;
             $this->assertNotNull(InstallUtil::checkDatabaseOptimizerSearchDepthValue('mysql',
