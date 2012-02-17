@@ -49,11 +49,11 @@
             );
             $autoCompleteUrl = Yii::app()->createUrl('zurmo/default/autoCompleteCustomFieldData/',
                                                      array('name' => $this->model->{$this->attribute}->data->name));
-            $script = "$('#" . $idForInput . "').tagsInput({
-                autocomplete_url:'" . $autoCompleteUrl . "',
-                jsonLabels: '" . $dataLabels . "',
-                defaultText: '" . Yii::t('Default', 'Type to find a tag') . "'
-            });";
+            $script = "$('#" . $idForInput . "').tagsInput(
+                { autocomplete_url:'" . $autoCompleteUrl . "',
+                  jsonLabels: '" . $dataLabels . "',
+                  defaultText: '" . Yii::t('Default', 'Type to find a tag') . "'
+            });"; // Not Coding Standard
             Yii::app()->clientScript->registerScript(
                 'tagCloud' . $idForInput,
                 $script,
@@ -73,11 +73,11 @@
         protected static function getDataToValuesString(RedBeanOneToManyRelatedModels $customFieldValues)
         {
             $s = '';
-            foreach($customFieldValues as $customFieldValue)
+            foreach ($customFieldValues as $customFieldValue)
             {
-                if($customFieldValue->value != null)
+                if ($customFieldValue->value != null)
                 {
-                    if($s != null)
+                    if ($s != null)
                     {
                         $s .= ', ';
                     }
@@ -92,15 +92,14 @@
         {
             assert('is_array($dataAndLabels)');
             $labels = array();
-            foreach($customFieldValues as $customFieldValue)
+            foreach ($customFieldValues as $customFieldValue)
             {
-                if($customFieldValue->value != null)
+                if ($customFieldValue->value != null)
                 {
                     $labels[] = $dataAndLabels[$customFieldValue->value];
                 }
             }
             return CJSON::encode($labels);
         }
-
     }
 ?>

@@ -82,7 +82,7 @@
             }
             if (!$invalid && $addressModel->makeAddress() != '')
             {
-                $content .= '&#160;'.$this->renderMapLink($addressModel);
+                $content .= '&#160;' . $this->renderMapLink($addressModel);
             }
             return $content;
         }
@@ -133,14 +133,14 @@
                 CClientScript::POS_END
             );
             $mapRenderUrl = Yii::app()->mappingHelper->resolveMappingLinkUrl(array(
-                                                                         'addressString' =>$addressModel->makeAddress(),
-                                                                         'latitude'      =>$addressModel->latitude,
-                                                                         'longitude'     =>$addressModel->longitude));
+                                                                         'addressString' => $addressModel->makeAddress(),
+                                                                         'latitude'      => $addressModel->latitude,
+                                                                         'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
             $content      = '<span>';
-            $content     .= CHtml::ajaxLink(Yii::t('Default', 'map'),$mapRenderUrl, array(
-                                'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                                'update' => '#modalContainer',
+            $content     .= CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl, array(
+                                'onclick'    => '$("#modalContainer").dialog("open"); return false;',
+                                'update'     => '#modalContainer',
                                 'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
                                 'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
                                 ),

@@ -94,9 +94,9 @@
         public function getStringifiedData()
         {
             $data = null;
-            foreach($this as $containedModel)
+            foreach ($this as $containedModel)
             {
-                if($containedModel->id > 0)
+                if ($containedModel->id > 0)
                 {
                     $data[] = strval($containedModel);
                 }

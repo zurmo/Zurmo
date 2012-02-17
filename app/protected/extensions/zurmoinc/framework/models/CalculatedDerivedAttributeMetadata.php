@@ -42,7 +42,6 @@
             return $metadata;
         }
 
-
         /**
          * @return string content of the stored formula.
          */

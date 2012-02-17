@@ -53,7 +53,6 @@
         public static function getMonitorJobData()
         {
             return self::getJobDataByType('Monitor');
-
         }
 
         /**
@@ -89,8 +88,8 @@
             $jobData = array();
             $jobData['label']                       = $jobClassName::getDisplayName();
             $jobData['lastCompletedRunContent']     = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
-            $jobData['statusContent']			    = self::makeStatusContentByJobInProcess($jobInProcess);
-            $jobData['status']					    = self::resolveStatusByJobInProcess($jobInProcess);
+            $jobData['statusContent']               = self::makeStatusContentByJobInProcess($jobInProcess);
+            $jobData['status']                      = self::resolveStatusByJobInProcess($jobInProcess);
             $jobData['recommendedFrequencyContent'] = $jobClassName::getRecommendedRunFrequencyContent();
             return $jobData;
         }
@@ -102,7 +101,7 @@
             {
                 $jobInProcess = JobInProcess::getByType($type);
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 $jobInProcess = null;
             }
@@ -112,13 +111,13 @@
         protected static function makeLastCompletedRunContentByJobLog($jobLog)
         {
             assert('$jobLog instanceof JobLog || $jobLog == null');
-            if($jobLog == null)
+            if ($jobLog == null)
             {
                 return Yii::t('Default', 'Never');
             }
             $content = DateTimeUtil::
                            convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
-            if($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
+            if ($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
                 $content .= ' ' . Yii::t('Default', '[with errors]');
             }
@@ -128,11 +127,11 @@
         protected static function makeStatusContentByJobInProcess($jobInProcess)
         {
             assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
-            if($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
+            if ($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
             {
                 return Yii::t('Default', 'In Process (Stuck)');
             }
-            elseif($jobInProcess != null)
+            elseif ($jobInProcess != null)
             {
                 $startedDateTimeContent = DateTimeUtil::
                                           convertDbFormattedDateTimeToLocaleFormattedDisplay($jobInProcess->createdDateTime);
@@ -148,11 +147,11 @@
         protected static function resolveStatusByJobInProcess($jobInProcess)
         {
             assert('$jobInProcess instanceof JobInProcess || $jobInProcess == null');
-            if($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
+            if ($jobInProcess != null && JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
             {
                 return self::STATUS_IN_PROCESS_STUCK;
             }
-            elseif($jobInProcess != null)
+            elseif ($jobInProcess != null)
             {
                 return self::STATUS_IN_PROCESS;
             }
@@ -179,11 +178,11 @@
                       resolveSortAttributeColumnName('JobLog', $joinTablesAdapter, 'createdDateTime');
             $where  = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
             $models = JobLog::getSubset($joinTablesAdapter, null, 1, $where, $sort . ' desc');
-            if(count($models) > 1)
+            if (count($models) > 1)
             {
                 throw new NotSupportedException();
             }
-            if(count($models) == 0)
+            if (count($models) == 0)
             {
                 return null;
             }

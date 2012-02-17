@@ -55,7 +55,6 @@
             $this->assertEquals(1, count($contacts));
             $this->assertEquals($id, $contacts[0]->id);
             $this->assertEquals('Super Man', strval($contacts[0]));
-
         }
 
         /**

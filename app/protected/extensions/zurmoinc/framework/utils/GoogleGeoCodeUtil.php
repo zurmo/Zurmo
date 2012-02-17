@@ -42,8 +42,8 @@
             assert('is_string($addressString)');
             self::getGeoCoder($apiKey);
             $geoCodeGoogleCodeObj   = self::$geoCoder->query($addressString);
-            $latitude               = $geoCodeGoogleCodeObj->__get('latitude');
-            $longitude              = $geoCodeGoogleCodeObj->__get('longitude');
+            $latitude               = $geoCodeGoogleCodeObj->__get('latitude'); // Not Coding Standard
+            $longitude              = $geoCodeGoogleCodeObj->__get('longitude'); // Not Coding Standard
             return array('latitude' => $latitude, 'longitude' => $longitude);
         }
 

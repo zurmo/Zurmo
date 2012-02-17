@@ -507,7 +507,7 @@
             $allBrowsersStats = array();
             foreach ($data as $info)
             {
-                if(count($allBrowsersStats)==0 || !in_array($info['browser'], $allBrowsersStats))
+                if (count($allBrowsersStats) == 0 || !in_array($info['browser'], $allBrowsersStats))
                 {
                     $allBrowsersStats[$info['browser']] = array();
                     $allBrowsersStats[$info['browser']]['testsPassed'] = 0;
@@ -533,7 +533,7 @@
                 }
             }
 
-            foreach($allBrowsersStats as $browser => $browserStats)
+            foreach ($allBrowsersStats as $browser => $browserStats)
             {
                 if ($browserStats['testsFailed'] > 0 || $browserStats['testsPassed'] <= 0)
                 {

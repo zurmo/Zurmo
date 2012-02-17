@@ -49,7 +49,7 @@
             $tableName          = RedBeanModel::getTableName($modelClassName);
             $joinTablesAdapter  = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
             $selectQueryAdapter = new RedBeanModelSelectQueryAdapter();
-            if($model->isRelation($attributeName) && $model->getRelationType($attributeName) == RedBeanModel::HAS_MANY)
+            if ($model->isRelation($attributeName) && $model->getRelationType($attributeName) == RedBeanModel::HAS_MANY)
             {
                 assert('$attributeName == "values"'); //until we expand support on this method.
                 $relationModelClassName = $model->getRelationModelClassName($attributeName);
@@ -74,7 +74,7 @@
                $filterByAttributeTableName = RedBeanModel::getTableName($attributeModelClassName);
                $filterByColumnName         = $model->getColumnNameByAttribute($filterByAttributeName);
                $where = $filterByAttributeTableName . '.' . $filterByColumnName . '=' . $filterByAttributeValue;
-               if($filterByAttributeTableName != $tableName)
+               if ($filterByAttributeTableName != $tableName)
                {
                    $joinTablesAdapter->addFromTableAndGetAliasName($filterByAttributeTableName, $filterByAttributeTableName . '_id', $tableName);
                }

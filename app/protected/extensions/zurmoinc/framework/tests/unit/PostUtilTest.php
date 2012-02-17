@@ -84,7 +84,7 @@
         {
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new TestCustomFieldsModel(),
                                                                                     array('tagCloud' =>
-                                                                                    array('values' => 'abc,def')));
+                                                                                    array('values' => 'abc,def'))); // Not Coding Standard
             $this->assertEquals(array('abc', 'def'), $sanitizedPostData['tagCloud']['values']);
 
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new TestCustomFieldsModel(),

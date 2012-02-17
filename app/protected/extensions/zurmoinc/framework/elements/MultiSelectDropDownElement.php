@@ -59,7 +59,7 @@
         protected static function getSelectedValuesByModel(MultipleValuesCustomField $model)
         {
             $selectedValues = array();
-            foreach($model->values as $customFieldValue)
+            foreach ($model->values as $customFieldValue)
             {
                 $selectedValues[] = $customFieldValue->value;
             }

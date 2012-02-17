@@ -69,14 +69,13 @@
          */
         public function __get($attributeName)
         {
-
             $value = parent::__get($attributeName);
-            if($attributeName == 'values')
+            if ($attributeName == 'values')
             {
-                if(!$this->originalCustomFieldValuesDataProcessed)
+                if (!$this->originalCustomFieldValuesDataProcessed)
                 {
                     $data = $value->getStringifiedData();
-                    if(count($data) > 0)
+                    if (count($data) > 0)
                     {
                         $this->originalCustomFieldValuesData = $data;
                     }
@@ -101,11 +100,11 @@
          */
         protected function afterSave()
         {
-            if($this->originalCustomFieldValuesDataProcessed)
+            if ($this->originalCustomFieldValuesDataProcessed)
             {
                 $newData = $this->values->getStringifiedData();
                 $oldData = $this->originalCustomFieldValuesData;
-                if($oldData != $newData)
+                if ($oldData != $newData)
                 {
                     $this->originalAttributeValues['values'] = $oldData;
                 }

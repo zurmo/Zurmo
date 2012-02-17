@@ -55,7 +55,6 @@
             return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
         }
 
-
         /**
          * Given an array, stringify the array values into content seperated by commas and return the content.
          * @param array $data
@@ -64,9 +63,9 @@
         {
             assert('is_array($data)');
             $s             = null;
-            foreach($data as $value)
+            foreach ($data as $value)
             {
-                if($s != null)
+                if ($s != null)
                 {
                     $s .= ', ';
                 }
@@ -81,9 +80,9 @@
         public static function arrayFlat($array)
         {
             $flatternArray = array();
-            foreach($array as $element)
+            foreach ($array as $element)
             {
-                if(is_array($element))
+                if (is_array($element))
                 {
                     $flatternArray = array_merge($flatternArray, self::arrayFlat($element));
                 }

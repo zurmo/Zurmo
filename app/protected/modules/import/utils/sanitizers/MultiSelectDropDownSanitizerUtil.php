@@ -120,7 +120,7 @@
         public static function getCustomFieldValuesFromValueString($value)
         {
             assert('is_string($value)');
-            $customFieldValues = explode(',', $value);
+            $customFieldValues = explode(',', $value); // Not Coding Standard
             foreach ($customFieldValues as $key => $aValue)
             {
                 if ($aValue == null || trim($aValue) == '')

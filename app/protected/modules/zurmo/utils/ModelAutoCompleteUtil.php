@@ -180,9 +180,9 @@
             $dataAndLabels       = CustomFieldDataUtil::
                                    getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, Yii::app()->language);
             $autoCompleteResults = array();
-            foreach($dataAndLabels as $data => $label)
+            foreach ($dataAndLabels as $data => $label)
             {
-                if(stripos($label, $partialName) === 0)
+                if (stripos($label, $partialName) === 0)
                 {
                     $autoCompleteResults[] = array(
                         'id'    => $data,

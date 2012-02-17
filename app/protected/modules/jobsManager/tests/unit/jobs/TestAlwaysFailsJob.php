@@ -31,11 +31,9 @@
     {
         public $causeFailure = true;
 
-
         public static function getType()
         {
             return 'TestAlwaysFails';
         }
     }
-
 ?>

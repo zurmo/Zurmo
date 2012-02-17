@@ -43,7 +43,7 @@
                     'industry'           => 'Industries',
                     'multipleIndustries' => 'MultipleIndustries',
                     'multipleSomethings' => 'MultipleSomethings',
-                    'tagCloud'			 => 'TagCloud',
+                    'tagCloud'           => 'TagCloud',
                 ),
             );
             return $metadata;

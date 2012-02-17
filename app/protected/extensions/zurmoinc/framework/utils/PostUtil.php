@@ -49,7 +49,7 @@
                         else
                         {
                             $_POST[$postVariableName][$attributeName]['values'] =
-                                explode(',', $_POST[$postVariableName][$attributeName]['values']);
+                                explode(',', $_POST[$postVariableName][$attributeName]['values']); // Not Coding Standard
                         }
                     }
                 }

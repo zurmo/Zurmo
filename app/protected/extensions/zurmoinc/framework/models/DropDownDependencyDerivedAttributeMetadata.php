@@ -48,14 +48,14 @@
         public function getUsedAttributeNames()
         {
             $attributeNames = array();
-            if($this->serializedMetadata != null)
+            if ($this->serializedMetadata != null)
             {
                 $unserializedMetadata = unserialize($this->serializedMetadata);
-                if(isset($unserializedMetadata['mappingData']))
+                if (isset($unserializedMetadata['mappingData']))
                 {
-                    foreach($unserializedMetadata['mappingData'] as $data)
+                    foreach ($unserializedMetadata['mappingData'] as $data)
                     {
-                        if($data['attributeName'] != null)
+                        if ($data['attributeName'] != null)
                         {
                             $attributeNames[] = $data['attributeName'];
                         }

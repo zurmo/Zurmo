@@ -78,7 +78,6 @@
             $this->assertEquals('j',        $adapter->getRelatedAttributeTableName());
             $this->assertEquals('jmember',  $adapter-> getRelatedAttributeColumnName());
             $this->assertFalse(             $adapter->isRelatedAttributeRelation());
-
         }
     }
 ?>

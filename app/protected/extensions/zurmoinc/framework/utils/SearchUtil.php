@@ -138,13 +138,13 @@
          */
         private static function changeEmptyArrayValuesToNull(& $searchArray)
         {
-            foreach($searchArray as $key => $value)
+            foreach ($searchArray as $key => $value)
             {
                 if (is_array($value) && isset($value['values']) && is_array($value['values']))
                 {
-                    foreach($value['values'] as $subKey => $subValue)
+                    foreach ($value['values'] as $subKey => $subValue)
                     {
-                        if($subValue == null)
+                        if ($subValue == null)
                         {
                             unset($searchArray[$key]['values'][$subKey]);
                         }

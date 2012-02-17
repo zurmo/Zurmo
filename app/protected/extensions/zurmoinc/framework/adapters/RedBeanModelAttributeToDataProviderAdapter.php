@@ -118,7 +118,7 @@
 
         protected function getModel()
         {
-            if($this->model == null)
+            if ($this->model == null)
             {
                 $this->model = new $this->modelClassName(false);
             }
@@ -154,7 +154,7 @@
          */
         public function hasRelatedAttribute()
         {
-            if($this->relatedAttribute == null)
+            if ($this->relatedAttribute == null)
             {
                 return false;
             }
@@ -166,7 +166,7 @@
          */
         protected function getRelationModel()
         {
-            if($this->relatedModel == null)
+            if ($this->relatedModel == null)
             {
                 $relationModelClassName     = $this->getRelationModelClassName();
                 $this->relatedModel         = new $relationModelClassName(false);
@@ -235,7 +235,7 @@
          */
         public function getRelatedAttributeRelationType()
         {
-            if(!$this->isRelatedAttributeRelation())
+            if (!$this->isRelatedAttributeRelation())
             {
                 throw new NotSupportedException();
             }
@@ -244,7 +244,7 @@
 
         public function getRelatedAttributeRelationModelClassName()
         {
-            if(!$this->isRelatedAttributeRelation())
+            if (!$this->isRelatedAttributeRelation())
             {
                 throw new NotSupportedException();
             }

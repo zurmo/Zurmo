@@ -40,7 +40,6 @@
             $this->assertEquals('someName', $metadata->name);
             $this->assertEquals('Whatever', $metadata->modelClassName);
             $this->assertEquals('a:3:{i:0;s:5:"stuff";i:1;i:1;s:15:"attributeLabels";a:0:{}}', $metadata->serializedMetadata);
-
             $metadata->serializedMetadata = serialize(array('stuffx', 1, 'attributeLabels' => array()));
             $this->assertTrue($metadata->save());
         }

@@ -45,7 +45,7 @@
                     foreach ($classMetadata['customFields'] as $customFieldName => $customFieldDataName)
                     {
                         $relationModelClassName = $model->getRelationModelClassName($customFieldName);
-                        if( is_subclass_of($relationModelClassName, 'CustomField') ||
+                        if ( is_subclass_of($relationModelClassName, 'CustomField') ||
                             $relationModelClassName == 'CustomField')
                         {
                             $attributeNames[] = $customFieldName;

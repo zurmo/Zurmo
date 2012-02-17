@@ -766,7 +766,7 @@
                 $this->assertEquals(null,                $attributeForm->defaultValueOrder);
             }
 
-            //Test that validation on completely new multi select picklists works correctly and is inline with the rules 
+            //Test that validation on completely new multi select picklists works correctly and is inline with the rules
             //from the CustomFieldData model.
             $attributeForm = new MultiSelectDropDownAttributeForm();
             $attributeForm->attributeName    = 's';    //name to short. test that this fails.

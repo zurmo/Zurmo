@@ -61,7 +61,6 @@
          */
         protected function renderControlEditable()
         {
-
             $unserializedMetadata  = unserialize($this->dropDownDependencyDerivedAttributeMetadata->serializedMetadata);
             $onChangeScript        = null;
             $dependencyData        = array();
@@ -69,7 +68,7 @@
             $content               = "<table> \n";
             $parentInputId         = null;
             $parentAttributeLabel  = null;
-            foreach($attributes as $position => $attribute)
+            foreach ($attributes as $position => $attribute)
             {
                 $element                    = new DropDownElement($this->model,
                                                                   $attribute,
@@ -111,7 +110,7 @@
             $dependencyData['inputId']              = $inputId;
             $dependencyData['parentInputId']        = $parentInputId;
             $dependencyData['valueToAlwaysShow']    = $existingValue;
-            if($parentAttributeLabel != null)
+            if ($parentAttributeLabel != null)
             {
                 $dependencyData['notReadyToSelectText'] = Yii::t('Default', 'First select the {attributeLabel}',
                                                                  array('{attributeLabel}' => $parentAttributeLabel));
@@ -120,7 +119,7 @@
             {
                 $dependencyData['notReadyToSelectText'] = null;
             }
-            if(isset($mappingData[$position]['valuesToParentValues']))
+            if (isset($mappingData[$position]['valuesToParentValues']))
             {
                 $dependencyData['valuesToParentValues'] = $mappingData[$position]['valuesToParentValues'];
             }
@@ -191,7 +190,7 @@
         {
             $attributes = $this->dropDownDependencyDerivedAttributeMetadata->getUsedAttributeNames();
             $content    = "<table> \n";
-            foreach($attributes as $attribute)
+            foreach ($attributes as $attribute)
             {
                 $element                        = new DropDownElement($this->model,
                                                                   $attribute,

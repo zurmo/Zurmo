@@ -80,10 +80,10 @@
             assert('is_numeric($latitude) || $latitude == null');
             assert('is_numeric($longitude) || $longitude == null');
             $mapScript = "
-            function plotMap() 
+            function plotMap()
             {
                 var latlng = new google.maps.LatLng($latitude, $longitude);
-                var myOptions = 
+                var myOptions =
                 {
                     zoom: 14,
                     center: latlng,
@@ -101,8 +101,8 @@
             {
               var script = document.createElement('script');
               script.type = 'text/javascript';
-              script.src = 'http://maps.googleapis.com/maps/api/js?key=" . $apiKey . "&sensor=false&callback=plotMap';
-              document.body.appendChild(script);
+              script.src = 'http://maps.googleapis.com/maps/api/js?key=" . $apiKey . "&sensor=false&callback=plotMap';". // Not Coding Standard
+              "document.body.appendChild(script);
             }
             $(document).ready(loadGoogleMap);
             ";

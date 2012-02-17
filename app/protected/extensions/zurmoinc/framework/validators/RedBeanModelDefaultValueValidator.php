@@ -87,7 +87,7 @@
                 {
                     $model->$attributeName = $thisValue;
                 }
-                if($isEmptyMultipleValuesCustomField)
+                if ($isEmptyMultipleValuesCustomField)
                 {
                     $customFieldValue        = new CustomFieldValue();
                     $customFieldValue->value = $thisValue;

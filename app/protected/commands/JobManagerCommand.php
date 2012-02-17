@@ -68,7 +68,7 @@ EOD;
         {
             Yii::app()->user->userModel = User::getByUsername($args[0]);
             $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-            if(!$group->users->contains(Yii::app()->user->userModel))
+            if (!$group->users->contains(Yii::app()->user->userModel))
             {
                 $this->usageError('The username specified must be for a super administrator.');
             }
@@ -84,7 +84,7 @@ EOD;
         else
         {
             $jobClassName = $args[1] . 'Job';
-            if(!@class_exists($jobClassName))
+            if (!@class_exists($jobClassName))
             {
                 $this->usageError('The specified job type to run does not exist.');
             }
