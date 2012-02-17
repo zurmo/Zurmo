@@ -54,7 +54,7 @@
             }
             try
             {
-                $models = DropdownDependencyDerivedAttributeMetadata::
+                $models = DropDownDependencyDerivedAttributeMetadata::
                           getByNameAndModelClassName($attributeName, $modelClassName);
                 if (count($models) == 1)
                 {
