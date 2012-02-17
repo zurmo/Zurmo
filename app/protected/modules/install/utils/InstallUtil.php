@@ -357,6 +357,24 @@
         }
 
         /**
+        * Check database optimizer-search-depth value.
+        */
+        public static function checkDatabaseOptimizerSearchDepthValue($databaseType,
+        $databaseHostname,
+        $databaseUsername,
+        $databasePassword,
+        /* out */ & $optimizerSearchDepth)
+        {
+            assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
+            $optimizerSearchDepth = DatabaseCompatibilityUtil::getDatabaseOptimizerSearchDepthValue(
+                                        $databaseType,
+                                        $databaseHostname,
+                                        $databaseUsername,
+                                        $databasePassword);
+            return $optimizerSearchDepth == 0;
+        }
+
+        /**
         * Check database default collation.
         */
         public static function checkDatabaseDefaultCollation($databaseType,
