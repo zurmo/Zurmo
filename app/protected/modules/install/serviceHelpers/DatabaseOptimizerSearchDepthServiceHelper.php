@@ -25,33 +25,45 @@
      ********************************************************************************/
 
     /**
-     * Data analyzer for columns mapped to multi-select drop down type attributes.
-     * Values found in the import data but not in the zurmo CustomFieldData will be added to the instructionsData array.
+     * Check settings related to optimizer search depth global option.
+     * For more details: DatabaseOptimizerSearchDepthServiceHelper
      */
-    class MultiSelectDropDownBatchAttributeValueDataAnalyzer extends DropDownBatchAttributeValueDataAnalyzer
+    class DatabaseOptimizerSearchDepthServiceHelper extends ServiceHelper
     {
-        /**
-         * (non-PHPdoc)
-         * @see DropDownBatchAttributeValueDataAnalyzer::analyzeByValue()
-         */
-        protected function analyzeByValue($value)
+        protected $required = true;
+        protected $form;
+
+        public function __construct($form)
         {
-            if ($value != null)
+            assert('$form instanceof InstallSettingsForm');
+            $this->form = $form;
+        }
+
+        protected function checkService()
+        {
+            $passed = true;
+            $optimizerSearchDepth = null;
+            if (!InstallUtil::checkDatabaseOptimizerSearchDepthValue('mysql',
+                                                               $this->form->databaseHostname,
+                                                               $this->form->databaseUsername,
+                                                               $this->form->databasePassword,
+                                                               $optimizerSearchDepth))
             {
-                $customFieldValues = MultiSelectDropDownSanitizerUtil::getCustomFieldValuesFromValueString($value);
-                foreach ($customFieldValues as $aValue)
+                if ($optimizerSearchDepth == 0)
                 {
-                    $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
-                                                   $this->missingDropDownInstructions
-                                                   [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-                    if (!in_array(strtolower($aValue), $this->dropDownValues) &&
-                       !in_array(strtolower($aValue), $lowerCaseMissingValuesToMap))
-                    {
-                        $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $aValue;
-                        $this->messageCountData[static::INVALID] ++;
-                    }
                 }
+                else
+                {
+                    $this->message  = Yii::t('Default', 'Database optimizer_search_depth value is:') . $optimizerSearchDepth . ', ';
+                    $this->message .= Yii::t('Default', 'it is required to be set to 0') . '.';
+                }
+                $passed = false;
             }
+            else
+            {
+                $this->message = Yii::t('Default', 'Database optimizer-search-depth size meets requirement.');
+            }
+            return $passed;
         }
     }
 ?>

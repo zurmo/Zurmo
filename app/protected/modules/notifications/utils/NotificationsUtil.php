@@ -43,7 +43,7 @@
         public static function submit(NotificationMessage $message, NotificationRules $rules)
         {
             $users = $rules->getUsers();
-            if(count($users) == 0)
+            if (count($users) == 0)
             {
                 throw new NotSupportedException();
             }
@@ -62,10 +62,10 @@
             assert('is_bool($allowDuplicates)');
             assert('is_bool($isCritical)');
             $notifications = array();
-            foreach($users as $user)
+            foreach ($users as $user)
             {
                 //todo: !!!process duplication check
-                if($allowDuplicates || Notification::getUnreadCountByTypeAndUser($type, $user) == 0)
+                if ($allowDuplicates || Notification::getUnreadCountByTypeAndUser($type, $user) == 0)
                 {
                     $notification                      = new Notification();
                     $notification->owner               = $user;
@@ -73,16 +73,16 @@
                     $notification->isRead              = false;
                     $notification->notificationMessage = $message;
                     $saved                             = $notification->save();
-                    if(!$saved)
+                    if (!$saved)
                     {
                         throw new NotSupportedException();
                     }
                     $notifications[] = $notification;
                 }
             }
-            if(static::resolveShouldSendEmailIfCritical() && $isCritical)
+            if (static::resolveShouldSendEmailIfCritical() && $isCritical)
             {
-                foreach($notifications as $notification)
+                foreach ($notifications as $notification)
                 {
                     static::sendEmail($notification);
                 }

@@ -80,21 +80,25 @@
             assert('is_numeric($latitude) || $latitude == null');
             assert('is_numeric($longitude) || $longitude == null');
             $mapScript = "
-            function plotMap() {
+            function plotMap() 
+            {
                 var latlng = new google.maps.LatLng($latitude, $longitude);
-                var myOptions = {
+                var myOptions = 
+                {
                     zoom: 14,
                     center: latlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                   }
                 var map = new google.maps.Map(document.getElementById('$containerId'), myOptions);
 
-                var marker = new google.maps.Marker({
+                var marker = new google.maps.Marker(
+                {
                   position: latlng,
                   map: map
                 });
             }
-            function loadGoogleMap() {
+            function loadGoogleMap()
+            {
               var script = document.createElement('script');
               script.type = 'text/javascript';
               script.src = 'http://maps.googleapis.com/maps/api/js?key=" . $apiKey . "&sensor=false&callback=plotMap';

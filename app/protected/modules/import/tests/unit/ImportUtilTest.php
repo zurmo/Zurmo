@@ -101,7 +101,6 @@
 
             $this->assertEquals(6, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
 
-
             $multiDropDownInstructionsData    = array('MultiSelectDropDown' =>
                                                         array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
                                                               array('Multi 5', 'Multi 4'),

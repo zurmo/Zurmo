@@ -84,7 +84,7 @@
                 case 'H:mm':        //sk, fa_ir format
                     return 'h:mm';
                 case 'ah:mm':       //zh_cn format
-                    return 'tt h:mm';
+                    return 'th:mm';
                 default :
                     throw new NotImplementedException();
             }

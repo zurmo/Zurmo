@@ -69,7 +69,7 @@
                 $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
                                                $this->missingDropDownInstructions
                                                [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-                if(!in_array(strtolower($value), $this->dropDownValues) &&
+                if (!in_array(strtolower($value), $this->dropDownValues) &&
                    !in_array(strtolower($value), $lowerCaseMissingValuesToMap))
                 {
                     $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $value;

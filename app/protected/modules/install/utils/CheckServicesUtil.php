@@ -70,7 +70,8 @@
                          'DatabaseMaxSpRecursionDepth',
                          'DatabaseThreadStack',
                          'DatabaseDefaultCollation',
-                         'DatabaseLogBin'
+                         'DatabaseLogBin',
+                         'DatabaseOptimizerSearchDepth'
             );
         }
 

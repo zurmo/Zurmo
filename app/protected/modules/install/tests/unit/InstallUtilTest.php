@@ -313,6 +313,19 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
+        public function testCheckDatabaseOptimizerSearchDepthValue()
+        {
+            $threadStackValue                = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseOptimizerSearchDepthValue('mysql',
+                                                            $this->hostname,
+                                                            $this->rootUsername,
+                                                            $this->rootPassword,
+                                                            $optimizerSearchDepth));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
         public function testCheckDatabaseDefaultCollation()
         {
             $notAllowedDatabaseCollations = array('utf8_general_ci');

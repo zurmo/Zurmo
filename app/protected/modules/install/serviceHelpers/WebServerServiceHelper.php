@@ -34,10 +34,12 @@
         protected function checkService()
         {
             $serverName = $_SERVER['SERVER_SOFTWARE'];
-            if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
+            if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0)
+            {
                 return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Apache'));
             }
-            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
+            {
                 return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Microsoft-IIS'));
             }
         }
@@ -91,10 +93,12 @@
         {
             assert('is_array($this->minimumVersion)');
             $serverName = $_SERVER['SERVER_SOFTWARE'];
-            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0) {
+            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
+            {
                 return $this->minimumVersion['microsoft-iis'];
             }
-            else  if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0) {
+            elseif (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0)
+            {
                 return $this->minimumVersion['apache'];
             }
         }

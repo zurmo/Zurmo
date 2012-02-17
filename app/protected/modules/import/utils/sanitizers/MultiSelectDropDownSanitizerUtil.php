@@ -70,7 +70,7 @@
             $dropDownValues                      = unserialize($customFieldData->serializedData);
             $lowerCaseDropDownValues             = ArrayUtil::resolveArrayToLowerCase($dropDownValues);
             $resolvedValuesToUse                 = array();
-            foreach($customFieldValues as $aValue)
+            foreach ($customFieldValues as $aValue)
             {
                 $generateMissingPickListError = false;
                 //does the value already exist in the custom field data
@@ -121,10 +121,9 @@
         {
             assert('is_string($value)');
             $customFieldValues = explode(',', $value);
-            foreach($customFieldValues as $key => $aValue)
+            foreach ($customFieldValues as $key => $aValue)
             {
-
-                if($aValue == null || trim($aValue) == '')
+                if ($aValue == null || trim($aValue) == '')
                 {
                     unset($customFieldValues[$key]);
                 }
@@ -170,7 +169,7 @@
             assert('is_array($resolvedValuesToUse)');
             assert('$customFieldData instanceof CustomFieldData');
             $customField        = new OwnedMultipleValuesCustomField();
-            foreach($resolvedValuesToUse as $resolvedValueToUse)
+            foreach ($resolvedValuesToUse as $resolvedValueToUse)
             {
                 $customFieldValue = new CustomFieldValue();
                 $customFieldValue->value = $resolvedValueToUse;

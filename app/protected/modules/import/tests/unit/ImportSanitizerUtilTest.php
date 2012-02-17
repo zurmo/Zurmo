@@ -44,7 +44,6 @@
             $saved = $customFieldData->save();
             assert($saved); // Not Coding Standard
             Currency::getAll(); //forces base currency to be created.
-
         }
 
         public function testCurrencySanitizationUsingNumberSanitizerUtil()

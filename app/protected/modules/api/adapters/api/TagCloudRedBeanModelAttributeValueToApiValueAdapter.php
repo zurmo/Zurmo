@@ -24,34 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Data analyzer for columns mapped to multi-select drop down type attributes.
-     * Values found in the import data but not in the zurmo CustomFieldData will be added to the instructionsData array.
-     */
-    class MultiSelectDropDownBatchAttributeValueDataAnalyzer extends DropDownBatchAttributeValueDataAnalyzer
+    class TagCloudRedBeanModelAttributeValueToApiValueAdapter extends MultiSelectDropDownRedBeanModelAttributeValueToApiValueAdapter
     {
-        /**
-         * (non-PHPdoc)
-         * @see DropDownBatchAttributeValueDataAnalyzer::analyzeByValue()
-         */
-        protected function analyzeByValue($value)
-        {
-            if ($value != null)
-            {
-                $customFieldValues = MultiSelectDropDownSanitizerUtil::getCustomFieldValuesFromValueString($value);
-                foreach ($customFieldValues as $aValue)
-                {
-                    $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
-                                                   $this->missingDropDownInstructions
-                                                   [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
-                    if (!in_array(strtolower($aValue), $this->dropDownValues) &&
-                       !in_array(strtolower($aValue), $lowerCaseMissingValuesToMap))
-                    {
-                        $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $aValue;
-                        $this->messageCountData[static::INVALID] ++;
-                    }
-                }
-            }
-        }
     }
 ?>

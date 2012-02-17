@@ -97,7 +97,7 @@
                     'primaryAddress'      => 'Address',
                     'textArea'            => 'TextArea',
                     'radioDropDown'       => 'RadioDropDown',
-                    'multiDropDown'		  => 'MultiSelectDropDown',
+                    'multiDropDown'       => 'MultiSelectDropDown',
                     'tagCloud'            => 'TagCloud',
                 ),
                 'customFields' => array(
