@@ -44,11 +44,15 @@
                 'buttons' => array(
                     'update' => array(
                     'url' => $url,
+                    'imageUrl'	      => false,
                     'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                    'options'         => array('class' => 'pencil', 'title' => 'Update'),
+                    'label'           => '!'
                     ),
                 ),
             );
         }
+
 
         /**
          * Override to handle security/access resolution on links.

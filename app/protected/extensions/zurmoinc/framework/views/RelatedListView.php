@@ -97,15 +97,18 @@
         protected function getCGridViewParams()
         {
             $params = parent::getCGridViewParams();
-            return array_merge($params, array('template' => "{topPager}\n{items}\n{bottomPager}"));
+            return array_merge($params, array('template' => "\n{items}\n{pager}"));
         }
 
         protected function getCGridViewPagerParams()
         {
             return array(
                     'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'prevPageLabel'  => 'UP ARROW',
-                    'nextPageLabel'  => 'DOWN ARROW',
+                    'firstPageLabel' => '&lt;&lt;',
+                    'prevPageLabel' => '&lt;',
+                    'nextPageLabel' => '&gt;',
+                    'lastPageLabel' => '&gt;&gt;',
+                    'class'          => 'RelatedListLinkPager',
                     'paginationParams' => array_merge($_GET, array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/details',
                 );
