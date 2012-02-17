@@ -844,63 +844,76 @@ table.items thead tr:hover{
 }
 
 /*forms*/
-.form input[type="text"],
-.form input[type="password"],
-.form textarea{
-	border:1px solid #ccc;
-	.radius(3px);
-	font-size:12px;
-	color:#999;
-	text-indent:6px;
-	line-height: 24px;
-	.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
-	width:98%;
-	&:focus{
-		.b-shadow(0 0 1px 1px @themeColor);
+.form{
+	input[type="checkbox"]{
+		margin:0 0 10px 0 !important;
+		.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
+		&:focus{
+			.b-shadow(0 0 1px 1px @themeColor);
+		}
+	}
+	input[type="text"],
+	input[type="password"],
+	textarea{
+		border:1px solid #ccc;
+		.radius(3px);
+		font-size:12px;
+		color:#999;
+		text-indent:6px;
+		line-height: 24px;
+		.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
+		width:98%;
+		&:focus{
+			.b-shadow(0 0 1px 1px @themeColor);
+		}
+	}
+	
+	th{
+		vertical-align: text-top;	
+	}
+	
+	table{
+		table-layout:fixed;
+		width:100%;
+		border-bottom:1px solid #CCCCCC;	
+	}
+	
+	form{
+		thead tr th:first-child,
+		tbody tr td:first-child{
+			padding-left:15px;
+		}
+	}
+	
+	form{
+		padding:15px;
+		border:1px solid #CCC;
+		.b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
+		background: #ffffff;
+		background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#F5F5F5));
+		background: -webkit-linear-gradient(#ffffff, #F5F5F5);
+		background: -moz-linear-gradient(#ffffff, #F5F5F5);
+		background: -ms-linear-gradient(#ffffff, #F5F5F5);
+		background: -o-linear-gradient(#ffffff, #F5F5F5);
+		background: linear-gradient(#ffffff, #F5F5F5);
+		-pie-background: linear-gradient(#ffffff, #F5F5F5);
+		//behavior: url(/PIE.htc);
+	}
+	label{
+		/*padding-top:8px;*/
 	}
 }
+
 .AppContent label{
 	font-size:12px !important;
 	color:#666;
 	font-weight:400 !important;
-	padding-top:8px;
+	/*padding-top:8px;*/
 }
 
 /*Form Edit Account*/
-.form form{	
-}
-.form th{
-	vertical-align: text-top;
-}
-.form table{
-	table-layout:fixed;
-	width:100%;
-	border-bottom:1px solid #CCCCCC;
-	
-}
-.form form thead tr th:first-child,
-.form form tbody tr td:first-child{
-	padding-left:15px;
-}
-
-.form form{
-	padding:15px;
-	border:1px solid #CCC;
-	.b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
-	
-	background: #ffffff;
-	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#F5F5F5));
-	background: -webkit-linear-gradient(#ffffff, #F5F5F5);
-	background: -moz-linear-gradient(#ffffff, #F5F5F5);
-	background: -ms-linear-gradient(#ffffff, #F5F5F5);
-	background: -o-linear-gradient(#ffffff, #F5F5F5);
-	background: linear-gradient(#ffffff, #F5F5F5);
-	-pie-background: linear-gradient(#ffffff, #F5F5F5);
-	//behavior: url(/PIE.htc);
-}
-
-#col-0{
-	//width:50% !important;
+.col-0{
+	width:15% !important;
 }
 
 .form-toolbar{
@@ -962,7 +975,7 @@ table.items thead tr:hover{
 
 .portlet-toolbar{
 	position: absolute;
-	top:-45px;
+	top:-34px;
 	right:8px;
 	a {
 		padding:0 15px 0 25px;
@@ -1019,9 +1032,14 @@ table.items thead tr:hover{
 		width: 100%;
 		height: 40px;
 		line-height: 40px;
-		background: url(../images/portlet-header-gradient.png) left top repeat-x;
+		#gradient > .vertical(#f6f6f6, #ededed);
+		box-shadow:inset 0 1px 0 0 #ffffff;
+		//background: url(../images/portlet-header-gradient.png) left top repeat-x;
 		border-bottom:1px solid #dfdfdf;
 		text-indent:15px;
+		width: 100%;
+		height: 100%;
+		display: block;
 	}
 	.ui-dialog-titlebar {
 	 	padding:0 !important;
@@ -1029,12 +1047,12 @@ table.items thead tr:hover{
 		z-index:11000;
 	 }
 	 .ui-dialog-content {
-	 	padding:15px;
+	 	/*padding:15px;*/
 	 }
 	 .ui-dialog-titlebar-close {
 		position: absolute;
 		right: -15px;
-		top: -8px;
+		top: -15px;
 		width:30px !important;
 		height: 31px !important;
 		opacity:1;
@@ -1050,6 +1068,8 @@ table.items thead tr:hover{
 			margin:0 !important;
 			width:30px !important;
 			height: 31px !important;
+			text-indent: -9999px;
+			display: block;
 			&:hover{
 				background: transparent url(../images/widget-close-btn.png) left top no-repeat;
 			}
@@ -1079,7 +1099,7 @@ table.items thead tr:hover{
 	width:100%;
 	#search-form{
 		position: relative;
-		padding:10px 0 0 0;
+		padding:10px 0 10px 0;
 		border: 1px solid #DFDFDF;
 		border-bottom:none;
 		#gradient > .vertical(#f6f6f6, #ededed);
@@ -1136,6 +1156,7 @@ table.items thead tr:hover{
 .search-form-tools{
 	float:left;
 	margin-left:20px;
+	margin-top:3px;
 	color:@themeColor;
 	#more-search-link{
 		margin-left:10px;
@@ -1195,6 +1216,7 @@ table.items thead tr:hover{
 		float:left;
 		width: 70%;
 		border-bottom:none;
+		margin-bottom:15px;
 	}
 	.view-toolbar-container{
 		border-top:1px solid #CCCCCC;
@@ -1286,7 +1308,9 @@ table.items thead tr:hover{
 		font-size:15px;
 		height: 40px;
 		line-height: 40px;
-		background: url(../images/portlet-header-gradient.png) left 1px repeat-x;
+		#gradient > .vertical(#f6f6f6, #ededed);
+		box-shadow:inset 0 1px 0 0 #ffffff;
+		//background: url(../images/portlet-header-gradient.png) left 1px repeat-x;
 		border-bottom:1px solid #ccc;
 	}
 	p{
@@ -1309,8 +1333,31 @@ table.items thead tr:hover{
 		th, td{
 			padding:7px;
 			font-weight:600;
-			line-height:140%;
-			vertical-align:top;
+			//line-height:140%;
+			//vertical-align:top;
+		}
+	}
+	form{
+		tr{
+	
+		}
+		th{
+			line-height: 24px;
+		}
+		th, td{
+			padding:0 0 15px 0;
+		}
+		//for opt in email checkboxes
+		input[type="checkbox"] + label{
+			width:60px;
+			margin-top:0;
+		}
+		//for address fields
+		td > label{
+			&:first-child{
+				margin-top:5px;
+			}
+			margin-top:10px;
 		}
 	}
 }
@@ -1477,7 +1524,7 @@ table.items thead tr:hover{
 	}
 	.latest-activity-toolbar{
 		position: absolute;
-		top:-38px;
+		top:-27px;
 		right:10px;
 		width:65%;
 		> div{
@@ -1549,8 +1596,53 @@ table.items thead tr:hover{
 }
 
 
-
-
+/*Search User Modal*/
+#UsersModalSearchView{
+	.search-view-0{
+		.clearfix();
+		width:auto !important;
+		input[type="text"]{
+			float:left;
+			margin-right:10px;
+			border-left:1px solid #ccc;
+		}
+	}
+	.search-form-tools{
+		//display:none; //temp
+	}
+	#search-formmodal{
+		position: relative;
+		padding:10px 0 10px 0;
+		border: 1px solid #DFDFDF;
+		border-bottom:none;
+		#gradient > .vertical(#f6f6f6, #ededed);
+		.b-shadow(none);
+		box-shadow:inset 0 1px 0 0 #ffffff;
+		.clearfix();
+		table{
+			border-bottom:none;
+		}
+		label{
+			line-height: 25px;
+		}
+	}
+}
+#UsersModalListView{
+	.items{
+		tbody td:first-child,
+		thead th:first-child{
+			padding-left:20px;
+		}
+	}
+	.pager{
+		text-align:left;
+		li{
+			list-style:none;
+			float:left;
+			width: auto;
+		}
+	}
+}
 
 
 
