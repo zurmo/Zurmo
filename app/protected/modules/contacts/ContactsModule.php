@@ -56,6 +56,19 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'designerMenuItems' => array(
+                    'showFieldsLink' => true,
+                    'showGeneralLink' => true,
+                    'showLayoutsLink' => true,
+                    'showMenusLink' => true,
+                ),
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'officePhone',
+                    'mobilePhone',
+                ),
+                'startingState' => 1,
                 'tabMenuItems' => array(
                     array(
                         'label' => 'ContactsModulePluralLabel',
@@ -74,19 +87,6 @@
                             ),
                         ),
                     ),
-                ),
-                'designerMenuItems' => array(
-                    'showFieldsLink' => true,
-                    'showGeneralLink' => true,
-                    'showLayoutsLink' => true,
-                    'showMenusLink' => true,
-                ),
-                'startingState' => 1,
-                'globalSearchAttributeNames' => array(
-                    'fullName',
-                    'anyEmail',
-                    'officePhone',
-                    'mobilePhone',
                 )
             );
             return $metadata;

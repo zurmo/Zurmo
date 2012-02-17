@@ -111,29 +111,29 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'type',
                     'isRead',
+                    'type',
                 ),
                 'relations' => array(
-                    'owner' => array(RedBeanModel::HAS_ONE, 'User'),
                     'notificationMessage' => array(RedBeanModel::HAS_ONE,  'NotificationMessage'),
+                    'owner' => array(RedBeanModel::HAS_ONE, 'User'),
                 ),
                 'rules' => array(
-                    array('type',   'required'),
-                    array('type',   'type',    'type' => 'string'),
-                    array('type',   'length',  'min'  => 3, 'max' => 64),
                     array('isRead', 'boolean'),
                     array('isRead',   'validateIsReadIsSet'),
                     array('owner',  'required'),
+                    array('type',   'required'),
+                    array('type',   'type',    'type' => 'string'),
+                    array('type',   'length',  'min'  => 3, 'max' => 64),
                 ),
                 'elements' => array(
                     'owner' => 'User',
                 ),
                 'defaultSortAttribute' => null,
                 'noAudit' => array(
-                    'type',
                     'isRead',
-                    'owner'
+                    'owner',
+                    'type'
                 )
             );
             return $metadata;

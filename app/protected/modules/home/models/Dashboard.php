@@ -106,21 +106,21 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'name',
                     'layoutId',
                     'layoutType',
                     'isDefault',
+                    'name',
                 ),
                 'rules' => array(
-                    array('name',       'required'),
-                    array('name',       'type',   'type' => 'string'),
-                    array('name',       'length', 'min' => 3, 'max' => 64),
+                    array('isDefault',  'boolean'),
                     array('layoutId',   'required'),
                     array('layoutId',   'type',   'type' => 'number'),
                     array('layoutType', 'required'),
                     array('layoutType', 'type',   'type' => 'string'),
                     array('layoutType', 'length', 'max' => 10),
-                    array('isDefault',  'boolean'),
+                    array('name',       'required'),
+                    array('name',       'type',   'type' => 'string'),
+                    array('name',       'length', 'min' => 3, 'max' => 64),
                 ),
                 'defaultSortAttribute' => 'name'
             );

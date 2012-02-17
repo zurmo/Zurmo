@@ -64,6 +64,30 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'convertToAccountSetting' => LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED,
+                'convertToAccountAttributesMapping' => array(
+                    'industry'         => 'industry',
+                    'website'          => 'website',
+                    'primaryAddress'   => 'billingAddress',
+                    'secondaryAddress' => 'shippingAddress',
+                    'owner'            => 'owner',
+                    'officePhone'      => 'officePhone',
+                    'officeFax'        => 'officeFax',
+                    'companyName'      => 'name',
+                ),
+                'designerMenuItems' => array(
+                    'showFieldsLink'  => true,
+                    'showGeneralLink' => true,
+                    'showLayoutsLink' => true,
+                    'showMenusLink'   => true,
+                ),
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'officePhone',
+                    'mobilePhone',
+                    'companyName'
+                )
                 'tabMenuItems' => array(
                     array(
                         'label' => 'LeadsModulePluralLabel',
@@ -82,30 +106,6 @@
                             ),
                         )
                     ),
-                ),
-                'designerMenuItems' => array(
-                    'showFieldsLink'  => true,
-                    'showGeneralLink' => true,
-                    'showLayoutsLink' => true,
-                    'showMenusLink'   => true,
-                ),
-                'convertToAccountSetting' => LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED,
-                'convertToAccountAttributesMapping' => array(
-                    'industry'         => 'industry',
-                    'website'          => 'website',
-                    'primaryAddress'   => 'billingAddress',
-                    'secondaryAddress' => 'shippingAddress',
-                    'owner'            => 'owner',
-                    'officePhone'      => 'officePhone',
-                    'officeFax'        => 'officeFax',
-                    'companyName'      => 'name',
-                ),
-                'globalSearchAttributeNames' => array(
-                    'fullName',
-                    'anyEmail',
-                    'officePhone',
-                    'mobilePhone',
-                    'companyName'
                 )
             );
             return $metadata;

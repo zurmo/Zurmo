@@ -117,6 +117,12 @@
                         'right'            => self::RIGHT_ACCESS_USERS,
                     ),
                 ),
+                'designerMenuItems' => array(
+                    'showFieldsLink' => false,
+                    'showGeneralLink' => false,
+                    'showLayoutsLink' => true,
+                    'showMenusLink' => false,
+                ),
                 'shortcutsMenuItems' => array(
                     array(
                         'label' => 'Users',
@@ -135,12 +141,6 @@
                             ),
                         ),
                     ),
-                ),
-                'designerMenuItems' => array(
-                    'showFieldsLink' => false,
-                    'showGeneralLink' => false,
-                    'showLayoutsLink' => true,
-                    'showMenusLink' => false,
                 ),
             );
             return $metadata;

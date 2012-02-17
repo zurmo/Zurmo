@@ -56,6 +56,17 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'designerMenuItems' => array(
+                    'showFieldsLink' => true,
+                    'showGeneralLink' => true,
+                    'showLayoutsLink' => true,
+                    'showMenusLink' => true,
+                ),
+                'globalSearchAttributeNames' => array(
+                    'name',
+                    'anyEmail',
+                    'officePhone',
+                ),
                 'tabMenuItems' => array(
                     array(
                         'label' => 'AccountsModulePluralLabel',
@@ -74,17 +85,6 @@
                             ),
                         ),
                     ),
-                ),
-                'designerMenuItems' => array(
-                    'showFieldsLink' => true,
-                    'showGeneralLink' => true,
-                    'showLayoutsLink' => true,
-                    'showMenusLink' => true,
-                ),
-                'globalSearchAttributeNames' => array(
-                    'name',
-                    'anyEmail',
-                    'officePhone',
                 )
             );
             return $metadata;

@@ -55,40 +55,39 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'type',
-                    'startDateTime',
                     'endDateTime',
-                    'status',
+                    'isProcessed',
                     'message',
-                    'isProcessed'
+                    'startDateTime',
+                    'status',
+                    'type'
                 ),
                 'rules' => array(
-
-                    array('type',           'required'),
-                    array('startDateTime',  'required'),
                     array('endDateTime',    'required'),
-                    array('status',         'required'),
-                    array('type',           'type',   'type' => 'string'),
-                    array('type',           'length', 'min'  => 3, 'max' => 64),
-                    array('status',         'type',   'type' => 'integer'),
-                    array('message',        'type',   'type' => 'string'),
-                    array('startDateTime',  'type', 'type' => 'datetime'),
                     array('endDateTime',    'type', 'type' => 'datetime'),
                     array('isProcessed',    'boolean'),
                     array('isProcessed',    'validateIsProcessedIsSet'),
+                    array('message',        'type',   'type' => 'string'),
+                    array('startDateTime',  'required'),
+                    array('status',         'required'),
+                    array('status',         'type',   'type' => 'integer'),
+                    array('startDateTime',  'type', 'type' => 'datetime'),
+                    array('type',           'required'),
+                    array('type',           'type',   'type' => 'string'),
+                    array('type',           'length', 'min'  => 3, 'max' => 64),
                 ),
                 'defaultSortAttribute' => 'type',
                 'noAudit' => array(
-                    'type',
-                    'startDateTime',
                     'endDateTime',
+                    'message',
+                    'startDateTime',
                     'status',
-                    'message'
+                    'type'
                 ),
                 'elements' => array(
-                    'startDateTime'   => 'DateTime',
-                    'endDateTimex'    => 'DateTime',
                     'description'     => 'TextArea',
+                    'endDateTimex'    => 'DateTime',
+                    'startDateTime'   => 'DateTime',
                 ),
             );
             return $metadata;

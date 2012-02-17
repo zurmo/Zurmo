@@ -96,8 +96,8 @@
                     ),
                 'elements' => array(
                     'description'        => 'TextArea',
-                    'occurredOnDateTime' => 'DateTime',
-                    'files'              => 'Files'
+                    'files'              => 'Files',
+                    'occurredOnDateTime' => 'DateTime'
                 ),
                 'defaultSortAttribute' => 'occurredOnDateTime',
             );
