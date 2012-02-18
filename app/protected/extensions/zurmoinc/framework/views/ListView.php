@@ -67,6 +67,8 @@
          */
         protected $selectAll;
 
+        private $resolvedMetadata;
+
         /**
          * Constructs a list view specifying the controller as
          * well as the model that will have its details displayed.
@@ -105,7 +107,8 @@
         {
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ListView");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.ExtendedGridView', $this->getCGridViewParams());
+            ;
+            $cClipWidget->widget($this->getGridViewWidgetPath(), $this->getCGridViewParams());
             $cClipWidget->endClip();
             $content = $this->renderViewToolBar();
             $content .= $cClipWidget->getController()->clips['ListView'] . "\n";
@@ -115,6 +118,11 @@
                 $content .= CHtml::hiddenField($this->gridId . $this->gridIdSuffix . '-selectAll', $this->selectAll) . "\n";
             }
             return $content;
+        }
+
+        protected function getGridViewWidgetPath()
+        {
+            return 'ext.zurmoinc.framework.widgets.ExtendedGridView';
         }
 
         public function getRowsAreSelectable()
@@ -192,7 +200,7 @@
             {
                 array_push($columns, $lastColumn);
             }
-            $metadata = $this->resolveMetadata();
+            $metadata = $this->getResolvedMetadata();
             foreach ($metadata['global']['panels'] as $panel)
             {
                 foreach ($panel['rows'] as $row)
@@ -203,7 +211,12 @@
                         {
                             $columnClassName = $columnInformation['type'] . 'ListViewColumnAdapter';
                             $columnAdapter  = new $columnClassName($columnInformation['attributeName'], $this, array_slice($columnInformation, 1));
-                            array_push($columns, $columnAdapter->renderGridViewData());
+                            $column = $columnAdapter->renderGridViewData();
+                            if(!isset($column['class']))
+                            {
+                                $column['class'] = 'DataColumn';
+                            }
+                            array_push($columns, $column);
                         }
                     }
                 }
@@ -215,6 +228,16 @@
         protected function resolveMetadata()
         {
             return self::getMetadata();
+        }
+
+        protected function getResolvedMetadata()
+        {
+            if($this->resolvedMetadata != null)
+            {
+                return $this->resolvedMetadata;
+            }
+            $this->resolvedMetadata = $this->resolveMetadata();
+            return $this->resolvedMetadata;
         }
 
         protected function getCGridViewBeforeAjaxUpdate()
@@ -277,7 +300,7 @@
             $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
             $url .= '", array("id" => $data->id))';
             return array(
-                'class'           => 'CButtonColumn',
+                'class'           => 'ButtonColumn',
                 'template'        => '{update}',
                 'buttons' => array(
                     'update' => array(

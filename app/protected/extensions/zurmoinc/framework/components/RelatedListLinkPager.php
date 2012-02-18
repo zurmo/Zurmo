@@ -25,40 +25,40 @@
      ********************************************************************************/
 
     /**
-     * Zurmo specific view for my list view.
-     * Used to manipulate elements for a form layout
-     * based on rights/permissions of the current user
+     * Provides a pager used for displaying related lists
      */
-    abstract class SecuredMyListView extends MyListView
+    class RelatedListLinkPager extends LinkPager
     {
         /**
-         * Override to handle security/access resolution on links.
+         * Set the header to empty
+         * @var string
          */
-        protected function getCGridViewLastColumn()
-        {
-            $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
-            $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
-            return array(
-                'class'           => 'ButtonColumn',
-                'template'        => '{update}',
-                'buttons' => array(
-                    'update' => array(
-                    'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
-                    ),
-                ),
-            );
-        }
+        public $header = '';
 
         /**
-         * Override to handle security/access resolution on links.
+         * Creates the page buttons.
+         * @return array a list of page buttons (in HTML code).
          */
-        public function getLinkString($attributeString)
+        protected function createPageButtons()
         {
-            $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
-            $string .= '$data, "' . $this->getActionModuleClassName() . '", ';
-            $string .= '"' . $this->getGridViewActionRoute('details') . '")';
-            return $string;
+            if(($pageCount=$this->getPageCount())<=1)
+                return array();
+
+            list($beginPage,$endPage)=$this->getPageRange();
+            $currentPage=$this->getCurrentPage(false); // currentPage is calculated in getPageRange()
+            $buttons=array();
+
+            // prev page
+            if(($page=$currentPage-1)<0)
+                $page=0;
+            $buttons[]=$this->createPageButton($this->prevPageLabel,$page,self::CSS_PREVIOUS_PAGE,$currentPage<=0,false);
+
+            // next page
+            if(($page=$currentPage+1)>=$pageCount-1)
+                $page=$pageCount-1;
+            $buttons[]=$this->createPageButton($this->nextPageLabel,$page,self::CSS_NEXT_PAGE,$currentPage>=$pageCount-1,false);
+
+            return $buttons;
         }
     }
 ?>

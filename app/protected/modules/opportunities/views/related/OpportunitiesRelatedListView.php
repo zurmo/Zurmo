@@ -40,6 +40,7 @@
                                     'routeParameters' => 'eval:$this->getCreateLinkRouteParameters()'),
                         ),
                     ),
+                    'gridViewType' => RelatedListView::GRID_VIEW_TYPE_STACKED,
                     'panels' => array(
                         array(
                             'rows' => array(
@@ -57,6 +58,24 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'amount', 'type' => 'CurrencyValue'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'stage', 'type' => 'DropDown'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'closeDate', 'type' => 'Date'),
                                             ),
                                         ),
                                     )

@@ -69,6 +69,24 @@
                                 ),
                             )
                         ),
+                        array('cells' =>
+                            array(
+                                array(
+                                    'elements' => array(
+                                        array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                    ),
+                                ),
+                            )
+                        ),
+                        array('cells' =>
+                            array(
+                                array(
+                                    'elements' => array(
+                                        array('attributeName' => 'primaryEmail', 'type' => 'EmailAddressInformation'),
+                                    ),
+                                ),
+                            )
+                        ),
                     ),
                 ),
             );

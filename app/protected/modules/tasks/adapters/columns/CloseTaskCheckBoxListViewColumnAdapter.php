@@ -24,41 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Zurmo specific view for my list view.
-     * Used to manipulate elements for a form layout
-     * based on rights/permissions of the current user
-     */
-    abstract class SecuredMyListView extends MyListView
+    class CloseTaskCheckBoxListViewColumnAdapter extends CheckBoxListViewColumnAdapter
     {
-        /**
-         * Override to handle security/access resolution on links.
-         */
-        protected function getCGridViewLastColumn()
+        public function renderGridViewData()
         {
-            $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
-            $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
             return array(
-                'class'           => 'ButtonColumn',
-                'template'        => '{update}',
-                'buttons' => array(
-                    'update' => array(
-                    'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
-                    ),
-                ),
+                'name'  => $this->attribute,
+                'value' => 'CHtml::checkBox("closeTask" . $data->id)',
+                'type'  => 'raw', //could do Boolean and remove value line above. would render true/false instead.
             );
-        }
-
-        /**
-         * Override to handle security/access resolution on links.
-         */
-        public function getLinkString($attributeString)
-        {
-            $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
-            $string .= '$data, "' . $this->getActionModuleClassName() . '", ';
-            $string .= '"' . $this->getGridViewActionRoute('details') . '")';
-            return $string;
         }
     }
 ?>

@@ -39,7 +39,7 @@
             $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
             $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
             return array(
-                'class'           => 'CButtonColumn',
+                'class'           => 'ButtonColumn',
                 'template'        => '{update}',
                 'buttons' => array(
                     'update' => array(

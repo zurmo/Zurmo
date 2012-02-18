@@ -25,40 +25,14 @@
      ********************************************************************************/
 
     /**
-     * Zurmo specific view for my list view.
-     * Used to manipulate elements for a form layout
-     * based on rights/permissions of the current user
+     * Override class for CDataColumn in order to allow public access to renderDataCellContent
+     * @see CGridView class
      */
-    abstract class SecuredMyListView extends MyListView
+    class DataColumn extends CDataColumn
     {
-        /**
-         * Override to handle security/access resolution on links.
-         */
-        protected function getCGridViewLastColumn()
+        public function renderDataCellContentFromOutsideClass($row, $data)
         {
-            $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
-            $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
-            return array(
-                'class'           => 'ButtonColumn',
-                'template'        => '{update}',
-                'buttons' => array(
-                    'update' => array(
-                    'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
-                    ),
-                ),
-            );
-        }
-
-        /**
-         * Override to handle security/access resolution on links.
-         */
-        public function getLinkString($attributeString)
-        {
-            $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
-            $string .= '$data, "' . $this->getActionModuleClassName() . '", ';
-            $string .= '"' . $this->getGridViewActionRoute('details') . '")';
-            return $string;
+            $this->renderDataCellContent($row, $data);
         }
     }
 ?>

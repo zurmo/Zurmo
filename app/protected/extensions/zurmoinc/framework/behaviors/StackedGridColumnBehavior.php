@@ -24,41 +24,32 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Zurmo specific view for my list view.
-     * Used to manipulate elements for a form layout
-     * based on rights/permissions of the current user
-     */
-    abstract class SecuredMyListView extends MyListView
+    class StackedGridColumnBehavior extends CBehavior
     {
         /**
-         * Override to handle security/access resolution on links.
+         * Designed to render cells as divs instead of tds.
+         * @param integer $row the row number (zero-based)
          */
-        protected function getCGridViewLastColumn()
+        public function renderStackedDataCell($row)
         {
-            $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
-            $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
-            return array(
-                'class'           => 'ButtonColumn',
-                'template'        => '{update}',
-                'buttons' => array(
-                    'update' => array(
-                    'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
-                    ),
-                ),
-            );
-        }
-
-        /**
-         * Override to handle security/access resolution on links.
-         */
-        public function getLinkString($attributeString)
-        {
-            $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
-            $string .= '$data, "' . $this->getActionModuleClassName() . '", ';
-            $string .= '"' . $this->getGridViewActionRoute('details') . '")';
-            return $string;
+            $data    = $this->owner->grid->dataProvider->data[$row];
+            $options = $this->owner->htmlOptions;
+            if($this->owner->cssClassExpression !== null)
+            {
+                $class = $this->owner->evaluateExpression($this->owner->cssClassExpression,
+                         array('row' => $row, 'data' => $data));
+                if(isset($options['class']))
+                {
+                    $options['class'] .= ' ' . $class;
+                }
+                else
+                {
+                    $options['class'] = $class;
+                }
+            }
+            echo CHtml::openTag('div', $options);
+            $this->owner->renderDataCellContentFromOutsideClass($row, $data);
+            echo '</div>';
         }
     }
 ?>

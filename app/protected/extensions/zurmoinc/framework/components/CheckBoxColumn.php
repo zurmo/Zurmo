@@ -75,32 +75,37 @@ END;
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $js);
         }
 
-    /**
-     * Renders the header cell content.
-     * Override in order to allow for disabled and checked by default
-     * in the scenario where selectAll is selected.
-     */
-    protected function renderHeaderCellContent()
-    {
-        if ($this->grid->selectableRows>1)
+        /**
+         * Renders the header cell content.
+         * Override in order to allow for disabled and checked by default
+         * in the scenario where selectAll is selected.
+         */
+        protected function renderHeaderCellContent()
         {
-            if ($this->grid->selectAll)
+            if ($this->grid->selectableRows>1)
             {
-                $checked = true;
-                $disabled = 'disabled';
+                if ($this->grid->selectAll)
+                {
+                    $checked = true;
+                    $disabled = 'disabled';
+                }
+                else
+                {
+                    $checked = false;
+                    $disabled = '';
+                }
+                $htmlOptions = array('disabled' => $disabled);
+                echo CHtml::checkBox($this->id . '_all', $checked, $htmlOptions);
             }
             else
             {
-                $checked = false;
-                $disabled = '';
+                parent::renderHeaderCellContent();
             }
-            $htmlOptions = array('disabled' => $disabled);
-            echo CHtml::checkBox($this->id . '_all', $checked, $htmlOptions);
         }
-        else
+
+        public function renderDataCellContentFromOutsideClass($row, $data)
         {
-            parent::renderHeaderCellContent();
+            $this->renderDataCellContent($row, $data);
         }
-    }
     }
 ?>

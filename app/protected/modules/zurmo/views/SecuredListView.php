@@ -37,7 +37,7 @@
         protected function getCGridViewLastColumn()
         {
             return array(
-                'class'           => 'CButtonColumn',
+                'class'           => 'ButtonColumn',
                 'template'        => '{update}',
                 'buttons'         => array(
                     'update'      => array(

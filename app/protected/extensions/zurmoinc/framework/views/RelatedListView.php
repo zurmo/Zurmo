@@ -33,6 +33,18 @@
         protected $viewData;
         protected $uniqueLayoutId;
 
+        /**
+         * Signal to use ExtendedGridView
+         * @var integer
+         */
+        const GRID_VIEW_TYPE_NORMAL  = 1;
+
+        /**
+         * Signal to use StackedExtendedGridView
+         * @var integer
+         */
+        const GRID_VIEW_TYPE_STACKED = 2;
+
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
@@ -50,6 +62,19 @@
             $this->gridId            = 'list-view';
             $this->controllerId      = $this->resolveControllerId();
             $this->moduleId          = $this->resolveModuleId();
+        }
+
+        protected function getGridViewWidgetPath()
+        {
+            $resolvedMetadata = $this->getResolvedMetadata();
+            if(isset($resolvedMetadata['global']['gridViewType']) &&
+                     $resolvedMetadata['global']['gridViewType'] == RelatedListView::GRID_VIEW_TYPE_STACKED)
+             {
+                 return 'ext.zurmoinc.framework.widgets.StackedExtendedGridView';
+             }
+
+            return parent::getGridViewWidgetPath();
+
         }
 
         protected function makeSearchAttributeData()

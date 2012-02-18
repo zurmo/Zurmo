@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -25,40 +25,47 @@
      ********************************************************************************/
 
     /**
-     * Zurmo specific view for my list view.
-     * Used to manipulate elements for a form layout
-     * based on rights/permissions of the current user
+     * Element used to allow user to close a task by clicking the checkbox.
      */
-    abstract class SecuredMyListView extends MyListView
+    class CloseTaskCheckBoxElement extends Element implements DerivedElementInterface
     {
-        /**
-         * Override to handle security/access resolution on links.
-         */
-        protected function getCGridViewLastColumn()
+        protected function renderEditable()
         {
-            $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
-            $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
-            return array(
-                'class'           => 'ButtonColumn',
-                'template'        => '{update}',
-                'buttons' => array(
-                    'update' => array(
-                    'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
-                    ),
-                ),
-            );
+            throw NotSupportedException();
+        }
+
+        protected function renderControlEditable()
+        {
+            throw NotSupportedException();
         }
 
         /**
-         * Override to handle security/access resolution on links.
+         * Todo: implement.
+         * @return The element's content.
          */
-        public function getLinkString($attributeString)
+        protected function renderControlNonEditable()
         {
-            $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
-            $string .= '$data, "' . $this->getActionModuleClassName() . '", ';
-            $string .= '"' . $this->getGridViewActionRoute('details') . '")';
-            return $string;
+            throw NotImplementedException();
+        }
+
+        protected function renderLabel()
+        {
+            return Yii::t('Default', 'Close Task Check Box');
+        }
+
+        public static function getDisplayName()
+        {
+            return Yii::t('Default', 'Close Task Check Box');
+        }
+
+        /**
+         * Get the attributeNames of attributes used in
+         * the derived element.
+         * @return array of model attributeNames used.
+         */
+        public static function getModelAttributeNames()
+        {
+            return array();
         }
     }
 ?>
