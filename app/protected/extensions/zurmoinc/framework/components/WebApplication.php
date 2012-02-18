@@ -33,6 +33,26 @@
         protected $installed;
 
         /**
+         * Override to handle when debug is turned on and the checksum fails on cached models.
+         */
+        public function run()
+        {
+            try
+            {
+                parent::run();
+            }
+            catch (ChecksumMismatchException $e)
+            {
+                echo 'A checksum mismatch has occurred while retrieving a cached model. ' .
+                     'This is most likely caused by setting debug=true. The cache must be cleared.';
+                echo '<br/>';
+                $url = Yii::app()->createUrl('zurmo/default/index/', array('clearCache' => true));
+                echo CHtml::link('Click here to clear the cache', $url);
+                Yii::app()->end(0, false);
+            }
+        }
+
+        /**
          * Override so that the application looks at the controller class name differently.
          * Instead of having controllers with the same class name across the application,
          * each class name must be different.
