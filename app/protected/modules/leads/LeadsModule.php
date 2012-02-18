@@ -87,7 +87,7 @@
                     'officePhone',
                     'mobilePhone',
                     'companyName'
-                )
+                ),
                 'tabMenuItems' => array(
                     array(
                         'label' => 'LeadsModulePluralLabel',

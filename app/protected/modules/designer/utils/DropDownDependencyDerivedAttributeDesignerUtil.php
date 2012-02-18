@@ -123,8 +123,8 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
-            assert('is_array($customFieldDataData) && count($customFieldDataData) > 0');
-                    $attributesMetadata = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName($modelClassName);
+            assert('is_array($customFieldDataData)');
+            $attributesMetadata = DropDownDependencyDerivedAttributeMetadata::getAllByModelClassName($modelClassName);
             if (count($attributesMetadata) > 0)
             {
                 foreach ($attributesMetadata as $metadata)
