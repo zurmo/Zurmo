@@ -210,21 +210,21 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'type',
                     'permissions',
+                    'type',
                 ),
                 'relations' => array(
                     'permitable'     => array(RedBeanModel::HAS_ONE,             'Permitable'),
                     'securableItem'  => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'SecurableItem'),
                 ),
                 'rules' => array(
-                    array('type',        'required'),
-                    array('type',        'type', 'type' => 'integer'),
-                    array('type',        'numerical', 'min' => 1, 'max' => 2),
                     array('permissions', 'required'),
                     array('permissions', 'type', 'type' => 'integer'),
                     array('permissions', 'numerical', 'min' => 0, 'max' => 31),
                     array('permitable',  'required'),
+                    array('type',        'required'),
+                    array('type',        'type', 'type' => 'integer'),
+                    array('type',        'numerical', 'min' => 1, 'max' => 2),
                 ),
             );
             return $metadata;

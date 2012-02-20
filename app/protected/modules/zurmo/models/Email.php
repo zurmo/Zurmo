@@ -41,13 +41,13 @@
             $metadata[__CLASS__] = array(
                 'members' => array(
                     'emailAddress',
-                    'optOut',
                     'isInvalid',
+                    'optOut',
                 ),
                 'rules' => array(
                     array('emailAddress', 'email'),
-                    array('optOut',       'boolean'),
                     array('isInvalid',    'boolean'),
+                    array('optOut',       'boolean'),
                 ),
                 'defaultSortAttribute' => 'emailAddress'
             );
