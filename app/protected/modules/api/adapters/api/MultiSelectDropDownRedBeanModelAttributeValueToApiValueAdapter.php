@@ -26,5 +26,20 @@
 
     class MultiSelectDropDownRedBeanModelAttributeValueToApiValueAdapter extends DropDownRedBeanModelAttributeValueToApiValueAdapter
     {
+        public function resolveData(& $data)
+        {
+            $data[$this->attribute] = null;
+            return;
+            assert('$this->model->{$this->attribute} instanceof CustomFieldData');
+            if ($this->model->{$this->attribute}->id > 0)
+            {
+                $data[$this->attribute] = array('id'         => $this->model->{$this->attribute}->id,
+                                                'value'      => $this->model->{$this->attribute}->value);
+            }
+            else
+            {
+                $data[$this->attribute] = null;
+            }
+        }
     }
 ?>

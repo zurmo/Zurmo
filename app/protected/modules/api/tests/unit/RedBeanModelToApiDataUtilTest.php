@@ -106,19 +106,21 @@
                 'primaryAddress'    => null,
                 'secondaryEmail'    => null,
                 'owner' => array(
-                    'id' => $super->id,
+                    'id'       => $super->id,
                     'username' => 'super'
                 ),
                 'createdDateTime'  => $createStamp,
                 'modifiedDateTime' => $createStamp,
                 'createdByUser'    => array(
-                    'id' => $super->id,
+                    'id'       => $super->id,
                     'username' => 'super'
                 ),
                 'modifiedByUser' => array(
-                    'id' => $super->id,
+                    'id'       => $super->id,
                     'username' => 'super'
-                )
+                ),
+                'multiDropDown'    => null,
+                'tagCloud'         => null,
             );
             $this->assertEquals($compareData, $data);
         }
@@ -214,7 +216,9 @@
                 'modifiedByUser' => array(
                     'id' => $super->id,
                     'username' => 'super'
-                )
+                ),
+                'multiDropDown'    => null,
+                'tagCloud'         => null,
             );
             $this->assertEquals($compareData, $data);
         }
@@ -315,7 +319,9 @@
                         'modifiedByUser' => array(
                             'id' => $super->id,
                             'username' => 'super'
-                        )
+                        ),
+                        'multiDropDown'    => null,
+                        'tagCloud'         => null,
             );
             $this->assertEquals($compareData, $data);
         }
