@@ -38,10 +38,10 @@
         public function getDependencies()
         {
             return array(
-                'configuration',
-                'zurmo',
                 'accounts',
                 'contacts',
+                'configuration',
+                'zurmo',
             );
         }
 

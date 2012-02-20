@@ -346,9 +346,9 @@
                     'name',
                 ),
                 'relations' => array(
-                    'users'  => array(RedBeanModel::MANY_MANY,           'User'),
                     'group'  => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'Group'),
                     'groups' => array(RedBeanModel::HAS_MANY,            'Group'),
+                    'users'  => array(RedBeanModel::MANY_MANY,           'User'),
                 ),
                 'rules' => array(
                     array('name', 'required'),

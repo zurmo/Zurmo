@@ -31,9 +31,9 @@
             return array(
                 'accounts',
                 'contacts',
+                'configuration',
                 'leads',
                 'opportunities',
-                'configuration',
                 'zurmo');
         }
 
