@@ -913,7 +913,7 @@ table.items thead tr:hover{
 
 /*Form Edit Account*/
 .col-0{
-	width:15% !important;
+	/*width:15% !important;*/
 }
 
 .form-toolbar{
@@ -1207,7 +1207,7 @@ table.items thead tr:hover{
 
 /*Edit + Add Account View*/
 .buffer{
-	padding-left:30px;
+	padding-left:9px;
 }
 #edit-form{
 	.clearfix;
@@ -1217,6 +1217,9 @@ table.items thead tr:hover{
 		width: 70%;
 		border-bottom:none;
 		margin-bottom:15px;
+		br{
+			display:none;
+		}
 	}
 	.view-toolbar-container{
 		border-top:1px solid #CCCCCC;
@@ -1277,6 +1280,13 @@ table.items thead tr:hover{
 		}
 		input[type="text"], select{
 			margin-top:6px;
+		}
+	}
+	.hasCheckBox{
+		margin:8px 0 0 0;
+		display:block;
+		input[type="checkbox"]{
+			margin-bottom:0 !important;
 		}
 	}
 }
@@ -1412,6 +1422,13 @@ table.items thead tr:hover{
 			}
 		}
 	}	
+}
+.account-details{
+	table{
+		th{
+			vertical-align: top;
+		}
+	}
 }
 
 #AccountDetailsAndRelationsView{
