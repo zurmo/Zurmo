@@ -33,8 +33,9 @@
       'right' : 39,
       'down'  : 40,
       'enter' : 13,
-      'zero'	: 48,
-      'z'     : 90
+      'zero'  : 48,
+      'z'     : 90,
+      'esc'   : 27
     },
 
     // HTML template for the dropdowns
@@ -210,7 +211,7 @@
       options  = $dk.find('.dk_options'),
       letter   = String.fromCharCode(code),
       open     = $dk.hasClass('dk_open'),
-      lis	     = options.find('li'),
+      lis	   = options.find('li'),
       current  = $dk.find('.dk_option_current'),
       first    = lis.first(),
       last     = lis.last(),
@@ -225,6 +226,13 @@
           _closeDropdown($dk);
         } else {
           _openDropdown($dk);
+        }
+        e.preventDefault();
+      break;
+      
+      case keyMap.esc:
+        if (open) {
+          _closeDropdown($dk);
         }
         e.preventDefault();
       break;
