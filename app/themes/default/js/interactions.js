@@ -15,4 +15,15 @@ $(window).ready(function(){
 		}
 	);
 	
+	/*Resizes the app to fill the browser's window case smaller'*/
+	var viewportHeight = $(window).height();
+	var wrapperDivHeight = $('body > div').outerHeight(true)
+	var recentlyViewedHeight = $('#RecentlyViewedView').outerHeight(true);
+	var appChromeHeight = recentlyViewedHeight + $('#MenuView').outerHeight(true) + $('#HeaderView').outerHeight(true) + $('#FooterView').outerHeight(true);
+	var bufferHeight = 0;
+	if ( wrapperDivHeight < viewportHeight  ){
+		bufferHeight = viewportHeight - appChromeHeight;
+		$('#RecentlyViewedView').height( $('#RecentlyViewedView').height() + bufferHeight   );
+	}
+	
 });
