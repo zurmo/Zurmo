@@ -1114,7 +1114,7 @@
 
             $thing = TestBooleanAttributeModel::getById($id);
             $this->assertEquals   (1,    $thing->bool);
-            $this->assertNotEquals(true, $thing->bool);
+            $this->assertNotSame(true, $thing->bool);
 
             $thing->bool = 0;
             $this->assertTrue($thing->save());
@@ -1123,7 +1123,7 @@
 
             $thing = TestBooleanAttributeModel::getById($id);
             $this->assertEquals   (0,     $thing->bool);
-            $this->assertNotEquals(false, $thing->bool);
+            $this->assertNotSame(false, $thing->bool);
 
             $thing->bool = 3;
             $this->assertFalse($thing->save());
