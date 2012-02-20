@@ -26,4 +26,14 @@ $(window).ready(function(){
 		$('#RecentlyViewedView').height( $('#RecentlyViewedView').height() + bufferHeight   );
 	}
 	
+	/*Dropdowns - Dropkick*/
+	 
+	$('td > select').dropkick();
+	$('html').click(function(e) {
+		$.each($('td > select'), function(index, value) {
+			$(value).dropkick('close');
+		});
+	});
+
+
 });

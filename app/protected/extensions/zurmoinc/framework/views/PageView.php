@@ -209,6 +209,7 @@
             $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . $themeUrl . '/' . $theme . '/css/newui.less"/>';
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/less-1.2.0.min.js');
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/interactions.js');
+			Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/jquery.dropkick-1.0.0.js');
             return '<?xml version="1.0" encoding="utf-8"?>'.
                    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
                    '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . $specialCss;
