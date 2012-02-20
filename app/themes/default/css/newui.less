@@ -842,7 +842,9 @@ table.items thead tr:hover{
 	.symbly(24px);
 	visibility:hidden;
 }
-
+.empty{
+	padding-left:15px;
+}
 /*forms*/
 .form{
 	input[type="checkbox"]{
@@ -1501,6 +1503,33 @@ table.items thead tr:hover{
 	margin-right:3% !important; 
 }
 
+/*@TODO: this class should be changes to something more specific, like juiportlet-with-editing or similar*/
+.juiportlet-widget{
+	td{
+		.clearfix();
+		padding-left:0 !important;
+		div{
+			/*float:left;
+			display: block;
+			width:100%;*/
+			margin-left:25px;
+			line-height: 140%;
+		}
+		div.button-column{
+			float:left;
+			display:block;
+			margin-left:0px;
+			line-height: 100%;
+		}
+		input[type="checkbox"]{
+			margin-right:10px;
+			float:left;
+		}
+	}
+}
+
+
+
 /*Upcoming Meeting Pager*/
 .pager{
 	text-align:center;
@@ -1595,7 +1624,7 @@ table.items thead tr:hover{
 		}
 	}
 	tr td:first-child{
-		padding-left:15px;
+		padding-left:15px !important;
 		padding-right:15px;
 	}
 	.Note:after{
@@ -1612,7 +1641,13 @@ table.items thead tr:hover{
 	}
 }
 
-
+/*
+#AccountLatestActivtiesForPortletView-list-view{
+	td{
+		padding-left:15px;
+	}
+}
+*/
 /*Search User Modal*/
 #UsersModalSearchView{
 	.search-view-0{
