@@ -152,21 +152,29 @@ footer, header, hgroup, menu, nav, section {
 	min-width:900px;
 	height:100%;
 	margin:0 40px 0 40px;
-	background:#fff url(../images/content-gradient.png) left top repeat-x;
+	
+	#gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
+
 	-webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
 	-webkit-border-radius: 0 0 5px 5px;
-	padding:100px 0;
+	padding:0;
+	
 	#login-box{
+		float:left;
 		width:500px;
-		margin:0 auto;
+		margin:-100px auto 0 -250px;
+		height:200px;
+		position:relative;
+		top:50%;
+		left:50%;
 	}
 	#LoginLogo{
+		.box-sizing();
+		height:100%;
 		width:50%;
+		padding-right:10px;
 		float:left;
-		img{
-			float:right;
-			margin:30% 15px 0 0;
-		}
+		background: url(../images/ZurmoLogo.png) 56px 35px no-repeat;
 	}
 	.form{
 		width:50%;
@@ -178,7 +186,7 @@ footer, header, hgroup, menu, nav, section {
 			border-top:none !important;
 			border-right:none !important;
 			border-bottom:none !important;
-			//.b-shadow(none);
+			.b-shadow(~"none !important");
 			> div{
 				margin-bottom:15px;
 			}
@@ -195,23 +203,12 @@ footer, header, hgroup, menu, nav, section {
 			}
 			input[type="checkbox"]{
 				float:left;
-				margin-right:10px;
+				margin-right:10px !important;
+				margin-top:1px !important;
 				clear:both;
 			}
 			input[type="submit"]{
-				margin:0;
-				padding:0 30px;
-				line-height:23px;
-				font-size:12px;
-				font-weight:bold;
-				.radius( 4px );
-				.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
-				border-top:1px solid #e7e7e7;
-				border-left: 1px solid #d7d7d7;
-				border-right:1px solid #d7d7d7;
-				border-bottom:1px solid #bababa;
-				background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
-				display: inline-block;
+				.zButton();
 			}
 			.errorMessage{
 				font-size:11px;
@@ -1856,10 +1853,6 @@ table.items thead tr:hover{
   max-height: 250px;
 }
 
-/******  End Theme ******/
-
-/***** Critical to the continued enjoyment of working dropdowns ******/
-
 .dk_container {
   display: none;
   float: left;
@@ -1911,9 +1904,11 @@ table.items thead tr:hover{
   max-height: none;
   overflow: visible;
 }
-
-.dk_fouc select {
-  position: relative;
-  top: -99999em;
-  visibility: hidden;
-}
+/*
+.dk_fouc{
+	select {
+		  position: relative;
+		  top: -99999em;
+		  visibility: hidden;
+	}
+}*/
