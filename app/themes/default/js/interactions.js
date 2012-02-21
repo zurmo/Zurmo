@@ -43,8 +43,8 @@ $(window).ready(function(){
 	
 	/*Dropdowns - Dropkick*/
 	 
-	$('td > select').dropkick();
-	//$('select').dropkick();
+	$('#edit-form select, .search-view-1 select').dropkick();
+
 	$('html').click(function(e) {
 		$.each($('td > select'), function(index, value) {
 			$(value).dropkick('close');
