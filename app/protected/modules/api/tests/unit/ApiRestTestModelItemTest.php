@@ -29,6 +29,28 @@
     */
     class ApiRestTestModelItemTest extends ApiRestTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            $multiSelectValues = array(
+                'Multi 1',
+                'Multi 2',
+                'Multi 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
+            $customFieldData->serializedData = serialize($multiSelectValues);
+            assert($customFieldData->save());
+
+            $tagCloudValues = array(
+                'Cloud 1',
+                'Cloud 2',
+                'Cloud 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
+            $customFieldData->serializedData = serialize($tagCloudValues);
+            assert($customFieldData->save());
+        }
+
         public function testApiServerUrl()
         {
             $this->assertTrue(strlen($this->serverUrl) > 0);
@@ -57,26 +79,6 @@
         */
         public function testCreate()
         {
-            $values = array(
-                'Multi 1',
-                'Multi 2',
-                'Multi 3',
-            );
-            $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
-            $customFieldData->serializedData = serialize($values);
-            $saved = $customFieldData->save();
-            assert($saved);    // Not Coding Standard
-
-            $values = array(
-                'Cloud 1',
-                'Cloud 2',
-                'Cloud 3',
-            );
-            $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
-            $customFieldData->serializedData = serialize($values);
-            $saved = $customFieldData->save();
-            assert($saved);    // Not Coding Standard
-
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
 
@@ -112,6 +114,7 @@
             $this->assertTrue($testItem3_2->save());
 
             $testItem = new ApiTestModelItem();
+
             $testItem->firstName     = 'Bob5';
             $testItem->lastName      = 'Bob5';
             $testItem->boolean       = true;

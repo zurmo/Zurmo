@@ -39,10 +39,14 @@
                         $data[$this->attribute]['values'][] = $customFieldValue->value;
                     }
                 }
+                if (!isset($data[$this->attribute]['values']))
+                {
+                    $data[$this->attribute]['values'] = null;
+                }
             }
             else
             {
-                $data[$this->attribute] = null;
+                $data[$this->attribute]['values'] = null;
             }
         }
     }
