@@ -1,0 +1,64 @@
+.MetadataView{
+	table{
+		border: 1px solid #DFDFDF;
+		border-collapse: collapse;
+		border-spacing: 1px;
+		width:100%;
+	}
+	
+	table th,
+	table td{
+		border: 1px solid #DFDFDF;
+		vertical-align:middle;
+		padding:10px;
+	}
+	
+	
+	table tbody,
+	table tbody tr:last-child,
+	table tbody tr:last-child td{
+		border-bottom: none;
+	}
+	
+	table thead tr th:last-child,
+	table tbody tr td:last-child{
+		//padding-right:15px;
+	}
+	
+	table th{
+		font-weight:bold !important;
+		height:35px;
+		line-height: 35px;
+		background: url(../images/table-items-header.png) left top repeat-x;
+		padding:0 0 0 10px !important;
+	}
+	.checkbox-column{
+		width:35px;
+		text-align:center;
+	}
+	.button-column{
+		width:25px;
+		text-align:center;
+		vertical-align:top !important;
+	}
+	tr.odd{
+		
+	}
+	tr.even{
+		background:#fafafa;	
+	}
+	table tr:hover{
+		background-color:#D4E7BC;
+		color:@themeColor;
+		.pencil{
+			visibility:visible;
+			color:@themeColor;
+		}
+	}
+	table thead{
+		#gradient > .vertical(#f9f9f9, #f4f4f4);
+	}
+	table thead tr:hover{
+		#gradient > .vertical(#f9f9f9, #f4f4f4);
+	}
+}
