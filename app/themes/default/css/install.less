@@ -1,0 +1,85 @@
+#InstallLogo{
+	background: url(../images/ZurmoLogo.png) left top no-repeat;
+	width:170px;
+	height:54px;
+	margin-bottom:20px;
+}
+
+#InstallAccessFailurePageView, #ErrorPageView{
+	#gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
+	.b-shadow( ~"0 0 12px 5px rgba(153, 153, 153, 0.3)" );
+	.radius( 5px );
+	font-size:12px;
+	line-height:140%;
+	background:#fff;
+	width:960px;
+	padding:20px;
+	margin:40px auto;
+	a{
+		background:@themeColor;
+		padding:1px 4px;
+		.radius(2px);
+		color:#fff;
+		&:hover{
+			color:#fff !important;
+			text-decoration:underline;
+		}
+	}
+	div{
+		margin:10px 0;
+	}
+}
+
+#InstallPageView{
+	#gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
+	.b-shadow( ~"0 0 12px 5px rgba(153, 153, 153, 0.3)" );
+	.radius( 5px );
+	font-size:12px;
+	line-height:140%;
+	background:#fff;
+	width:960px;
+	padding:20px;
+	margin:40px auto;
+	ul{
+		list-style:inside;
+		margin-bottom:10px;
+		li{
+			margin-bottom:5px;
+		}
+	}
+	a{
+		.zButton();
+		margin:auto 10px;
+	}
+	table{
+		width:100%;
+		/*inside another table to prevent hover effect on the main table*/
+		table tr:hover{ 
+			background-color:#D4E7BC;
+			color:@themeColor;
+		}
+		td{
+			padding:8px 2px;
+		}
+	}
+	#install-form{
+		input[type="submit"]{
+			.zButton();
+		}
+	}
+}
+
+#logging-table, #progress-table{
+	width:100%;
+	img{
+		width:128px;
+		margin:10px auto;
+	}
+}
+#logging-table{
+	height:450px;
+	overflow-y: scroll;
+}
+.progress-bar{
+	text-align:center;	
+}

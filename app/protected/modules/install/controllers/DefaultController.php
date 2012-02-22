@@ -125,7 +125,7 @@
                 $view = new InstallPageView($nextView);
             echo $view->render();
 
-            $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
+            $template = CHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             InstallUtil::runInstallation($form, $messageStreamer);
             if ($form->installDemoData)
@@ -151,7 +151,7 @@
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($nextView);
             echo $view->render();
-            $template = CHtml::script("$('#logging-table').append('{message}<br/>');");
+            $template = CHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);
