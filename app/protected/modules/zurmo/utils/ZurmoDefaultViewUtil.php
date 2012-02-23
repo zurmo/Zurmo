@@ -93,7 +93,7 @@
             $moduleNamesAndLabels     = GlobalSearchUtil::
                                         getGlobalSearchScopingModuleNamesAndLabelsDataByUser(Yii::app()->user->userModel);
             $sourceUrl                = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
-                                        GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption(
+            GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption(
                                         $moduleNamesAndLabels);
             return new HeaderView($controller->getId(), $controller->getModule()->getId(), $settingsMenuItems,
                                   $userMenuItems, $shortcutsCreateMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);

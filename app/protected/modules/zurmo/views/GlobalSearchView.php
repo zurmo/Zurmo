@@ -100,7 +100,7 @@
             $content = $cClipWidget->getController()->clips['ScopedJuiMultiSelect'];
             // Begin Not Coding Standard
             $script = '$("#globalSearchInput").bind("focus", function(event, ui){
-                            $("#globalSearchInput").autocomplete("option", "source", "' . $this->sourceUrl . '&" + $.param($("#globalSearchScope").serializeArray()));
+                            $("#globalSearchInput").autocomplete("option", "source", "' . $this->sourceUrl . '?" + $.param($("#globalSearchScope").serializeArray()));
                         });
                        ';
             /// End Not Coding Standard
