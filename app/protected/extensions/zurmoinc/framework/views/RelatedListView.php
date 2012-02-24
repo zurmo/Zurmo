@@ -129,10 +129,8 @@
         {
             return array(
                     'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'firstPageLabel' => '&lt;&lt;',
-                    'prevPageLabel' => '&lt;',
-                    'nextPageLabel' => '&gt;',
-                    'lastPageLabel' => '&gt;&gt;',
+                    'prevPageLabel' => '<span>previous</span>',
+                    'nextPageLabel' => '<span>next</span>',
                     'class'          => 'RelatedListLinkPager',
                     'paginationParams' => array_merge($_GET, array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/details',
