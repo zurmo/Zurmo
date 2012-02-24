@@ -131,6 +131,8 @@
             => 'Modèle d\'autorisations',
         'Module To Import To'
             => 'Module à importer',
+        'Multi-Select Pick list value required, but missing.'
+            => 'La valeur de liste déroulante n\'est pas remplie. Une valeur est requise.',
         'Next'
             => 'Suivant',
         'Other Id'

@@ -118,6 +118,8 @@
             => 'Freezing la base de données.',
         'Host name where Zurmo will be installed.'
             => 'Le nom de l\'hôte où Zurmo va être installé.',
+        'If this website is in production mode, please remove the app/test.php file.'
+            => 'Si ce site web est en production, veuillez supprimer le fichier app/test.php.',
         'In all likelihood, these items were supplied to you by your Web Host. ' .
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -200,6 +202,8 @@
             => 'La valeur PHP upload_max_filesize est:',
         'PHP upload_max_filesize value meets minimum requirement.'
             => 'La valeur PHP upload_max_filesize répond aux exigences minimales.',
+        'Please delete all files from assets folder on server.'
+            => 'Veuillez supprimer touts les fichiers du dossier Assets.',
         'Rebuilding Permissions.'
             => 'Reconstruction des permissions.',
         'Recheck System'

@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A calculated number based on other field values'
+            => 'Una cifra calculada',
         'A check box'
             => 'Un check box',
         'A currency field'
@@ -53,26 +55,44 @@
             => 'Un pick list con valores específicos para seleccionar',
         'A radio button pick list'
             => 'Un botón de radio pick list',
+        'A set of dependent pick lists'
+            => 'Desplegables dependientes',
+        'A tag cloud'
+            => 'Una Nube de palabras',
         'A text field'
             => 'Un campo de texto',
         'Access Designer Tool'
             => 'Acceso a Designer',
         'Address fields'
             => 'Campos de dirección',
+        'All fields placed must be unique. Two of the placed fields: {field1Label} and {field2Label} contain the same fields.'
+            => 'Un campo se puede establecer una sola vez. Los siguientes campos contienen el mismo campo: {field1Label} y {field2Label}.',
         'All panels visible'
             => 'Todos los paneles visibles',
         'All required fields must be placed in this layout.'
             => 'Todos los campos requeridos deben colocarse en este diseño.',
         'An integer field'
             => 'Un campo de número entero',
+        'At least one pick-list value must be mapped for each used level.'
+            => 'Por lo menos un valor se debe asignar para cada nivel',
+        'Available Fields:'
+            => 'Campos disponibles:',
+        'Calculated Number'
+            => 'Campo calculado',
         'Check Box'
             => 'Check box',
+        'Create a math formula that is calculated from other fields. Use the Formula Name from the Available Fields grid below to create your formula. Example formula (field1 x field2) / field3'
+            => 'Crear una fórmula de cálculo de los valores de otros campos. Use el nombre de la columna en los Campos de fórmula disponibles para crear la fórmula. Por ejemplo: (campo1 x campo2) / campo3',
         'Create Field'
             => 'Crear campo',
         'Custom Fields'
             => 'campos personalizados',
         'Decimal'
             => 'Diseñador',
+        'Dependency Mapping'
+            => 'Mapping dependiente',
+        'Dependent Pick Lists'
+            => 'Listas desplegables dependientes',
         'Designer'
             => 'Diseñador',
         'Designer Home'
@@ -85,8 +105,12 @@
             => 'Vista de detalles',
         'Display Name'
             => 'Etiqueta del campo',
+        'Dropdown Dependency Mapping'
+            => 'Mapping de la dependencia de la lista desplegable',
         'Each item must be uniquely named'
             => 'Cada elemento debe tener un nombre exclusivo',
+        'Each value must not contain a comma.'
+            => 'El valor no puede contener una coma.',
         'Edit Field'
             => 'Editar campo',
         'Edit Layout'
@@ -107,18 +131,28 @@
             => 'Campos',
         'First character must be a lower case letter'
             => 'Primer carácter debe ser una letra minúscula',
+        'First select level {number}'
+            => 'Primero seleccionar el nivel {number}',
         'First panel visible, then `show more` link'
             => 'Primer panel visible, después `mostrar más` link',
+        'Formula'
+            => 'Fórmula',
+        'Formula Name'
+            => 'Nombre de fórmula',
         'General'
             => 'General',
         'General Edit'
             => 'Modificación general',
+        'How does this work?'
+            => '¿Cómo funciona?',
         'Invalid panel configuration type'
             => 'Tipo de configuración de panel inválido',
         'Layout saved successfully.'
             => 'Diseño guardado con éxito',
         'Layouts'
             => 'Presentaciones de página',
+        'Level: {number}'
+            => 'Nivel: {number}',
         'Manage module fields, layouts, and labels.'
             => 'Administrar campos de módulo, diseños y etiquetas',
         'Mass Edit View'
@@ -169,17 +203,33 @@
             => 'Publicar',
         'Search View'
             => 'Vista de búsqueda',
+        'Show If'
+            => 'Valor depende',
+        'Tag Cloud'
+            => 'Nube de palabras',
+        'Tag Cloud Values'
+            => 'Palabras para el nube de palabras',
         'Text'
             => 'Texto',
         'Text Area'
             => 'Área de texto',
+        'The formula is invalid.'
+            => 'La fórmula no es válida',
+        'There are no fields in this module to be used in a formula.'
+            => 'No hay campos para uso en la fórmula.',
         'There was an error processing your request.'
             => 'Hubo un error al procesar su pedido.',
         'Track Audit Log'
             => 'Auditar este campo',
         'URL'
             => 'URL',
+        'You can only have at most 4 pick-lists selected.'
+            => 'Puede tener hasta 4 listas desplegables.',
+        'You must have at least one field placed in order to save a layout.'
+            => 'El diseño debe contener al menos un campo.',
         'You must have at least one panel in order to save a layout.'
             => 'Debe tener al menos un panel para guardar un diseño.',
+        'You must select at least 2 pick-lists.'
+            => 'Debe elegir al menos 2 listas desplegables.',
     );
 ?>

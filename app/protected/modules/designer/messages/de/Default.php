@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A calculated number based on other field values'
+            => 'Eine Figur berechnet',
         'A check box'
             => 'Ein Ankreuzfeld',
         'A currency field'
@@ -53,26 +55,44 @@
             => 'Eine Auswahlliste mit bestimmten Werten zur Auswahl',
         'A radio button pick list'
             => 'Ein Radio-Button Auswahlliste',
+        'A set of dependent pick lists'
+            => 'Abhängige Dropdowns',
+        'A tag cloud'
+            => 'Eine Schlagwortwolke',
         'A text field'
             => 'Ein Textfeld',
         'Access Designer Tool'
             => 'zum Access-Designer-Tool',
         'Address fields'
             => 'Adressfelder',
+        'All fields placed must be unique. Two of the placed fields: {field1Label} and {field2Label} contain the same fields.'
+            => 'Ein Feld kann nur einmal festgelegt werden Die folgenden Felder enthalten das gleiche Feld: {field1Label} und {field2Label}.',
         'All panels visible'
             => 'Alle Panels sichtbar',
         'All required fields must be placed in this layout.'
             => 'Alle erforderlichen Felder müssen in diesem Layout platziert werden',
         'An integer field'
             => 'Ein Ganzzahlfeld',
+        'At least one pick-list value must be mapped for each used level.'
+            => 'Mindestens eine Auswahlliste Wert muss für jede verwendete Ebene abgebildet werden.',
+        'Available Fields:'
+            => 'Verfügbare Felder:',
+        'Calculated Number'
+            => 'Berechnetes Feld',
         'Check Box'
             => 'Ankreuzfeld',
+        'Create a math formula that is calculated from other fields. Use the Formula Name from the Available Fields grid below to create your formula. Example formula (field1 x field2) / field3'
+            => 'Erstellen Sie eine mathematische Formel, die aus anderen Bereichen berechnet wird. Verwenden Sie die Formel-Name aus dem Verfügbare Felder Gitter unten, um Ihre Formel zu erstellen. Beispiel Formel:(feld1 x feld2) / feld3',
         'Create Field'
             => 'Feld erstellen',
         'Custom Fields'
             => 'Benutzerdefinierte Felder',
         'Decimal'
             => 'Dezimal',
+        'Dependency Mapping'
+            => 'Mapping abhängig',
+        'Dependent Pick Lists'
+            => 'Auswahllisten abhängige ',
         'Designer'
             => 'Designer',
         'Designer Home'
@@ -85,8 +105,12 @@
             => 'Detailansicht',
         'Display Name'
             => 'Display Name',
+        'Dropdown Dependency Mapping'
+            => 'Mapping der Dropdown-Liste Abhängigkeit',
         'Each item must be uniquely named'
             => 'Jedes Element muss eindeutig benannt werden',
+        'Each value must not contain a comma.'
+            => 'Der Wert kann kein Komma enthalten.',
         'Edit Field'
             => 'Feld bearbeiten',
         'Edit Layout'
@@ -107,18 +131,28 @@
             => 'Felder',
         'First character must be a lower case letter'
             => 'Erste Zeichen muß ein Kleinbuchstabe sein',
+        'First select level {number}'
+            => 'Wählen Sie zuerst die Stufe {number}',
         'First panel visible, then `show more` link'
             => 'Erste Panel sichtbar, dann `show more` Link',
+        'Formula'
+            => 'Formel',
+        'Formula Name'
+            => 'Formel Name',
         'General'
             => 'Allgemein',
         'General Edit'
             => 'Allgemein bearbeiten',
+        'How does this work?'
+            => 'Wie funktioniert das?',
         'Invalid panel configuration type'
             => 'Ungültige Panel Konfigurationstyp',
         'Layout saved successfully.'
             => 'Layout wurde erfolgreich gespeichert',
         'Layouts'
             => 'Layouts',
+        'Level: {number}'
+            => 'Stufe: {number}',
         'Manage module fields, layouts, and labels.'
             => 'Verwalten von Modul Felder, Layouts und Beschriftungen.',
         'Mass Edit View'
@@ -169,17 +203,33 @@
             => 'Layout speichern',
         'Search View'
             => 'Suche anzeigen',
+        'Show If'
+            => 'Zeigen, ob',
+        'Tag Cloud'
+            => 'Schlagwortwolke',
+        'Tag Cloud Values'
+            => 'Schlagwortwolke Worte',
         'Text'
             => 'Text',
         'Text Area'
             => 'Textbereich',
         'There was an error processing your request.'
             => 'Es gab einen Fehler bei der Verarbeitung Ihrer Anfrage',
+        'The formula is invalid.'
+            => 'Die Formel ist nicht gültig',
+        'There are no fields in this module to be used in a formula.'
+            => 'Es gibt keine Felder zur Verwendung in der Formulierung.',
         'Track Audit Log'
             => 'Track-Prüfprotokoll',
         'URL'
             => 'URL',
+        'You can only have at most 4 pick-lists selected.'
+            => 'Sie können bis zu 4 Auswahllisten haben.',
+        'You must have at least one field placed in order to save a layout.'
+            => 'Das Layout muss mindestens 1 Feld haben.',
         'You must have at least one panel in order to save a layout.'
             => 'Sie müssen mindestens ein Panel um ein Layout zu speichern',
+        'You must select at least 2 pick-lists.'
+            => 'Sie müssen mindestens 2 Auswahllisten haben.',
     );
 ?>

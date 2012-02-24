@@ -131,6 +131,8 @@
             => 'Modelo de autorizacón',
         'Module To Import To'
             => 'Módulo para importar a',
+        'Multi-Select Pick list value required, but missing.'
+            => 'El valor de la lista de selección no es completa. El valor es requerida.',
         'Next'
             => 'Próximo',
         'Other Id'
