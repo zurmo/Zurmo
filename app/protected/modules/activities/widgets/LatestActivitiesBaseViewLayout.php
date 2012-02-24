@@ -80,11 +80,11 @@
                 $urlScript = 'js:$.param.querystring("' . $this->url . '", "' .
                              $this->dataProvider->getPagination()->pageVar . '=" + $(this).attr("href"))';
                 // Begin Not Coding Standard
-                return CHtml::ajaxLink(Yii::t('Default', 'Show more'), $urlScript,
+                return CHtml::ajaxLink(Yii::t('Default', '<span>Show more</span>'), $urlScript,
                     array('type' => 'GET',
                           'success' => 'js:function(data){
                             var id = "#' . $this->getViewContainerId() . '";
-                            $("#' . $showMoreLinkId . '").parent().parent().remove();
+                            $("#' . $showMoreLinkId . '").remove();
                             $(id).append($(id, data).html());
                           }'),
                     array('id' => $showMoreLinkId, 'href' => ($currentPage + 1)));

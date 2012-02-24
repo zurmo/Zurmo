@@ -71,13 +71,15 @@
                                                    'appendTo' => '#app-search')
             ));
             $cClipWidget->endClip();
-            $content .= '&#160;' . $cClipWidget->getController()->clips['GlobalSearchElement'];
+            $content .= $cClipWidget->getController()->clips['GlobalSearchElement'];
             // Begin Not Coding Standard
             $script = '$(".ui-autocomplete").position({
-                            my: "right top",
-                            at: "right bottom",
-                            of: $("#globalSearchInput"),
-                            collision: "flip flip"});';
+                            my: "left top",
+                            at: "left bottom",
+                            of: $("#app-search"),
+                            offset: "30 -30",
+                            collision: "fit"
+                            });';
             /// End Not Coding Standard
             Yii::app()->clientScript->registerScript('GlobalSearchElementPosition', $script);
             return $content;

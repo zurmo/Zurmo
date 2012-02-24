@@ -83,13 +83,14 @@
                     $content .= '</tr>';
                 }
                 $content .= '<tr>';
-                $content .= '<td colspan="2">'; //Set to 3 once avatar/icon column is re-enabled.
-                $content .= $this->renderPaginationContent();
-                $content .= '</td>';
+                //$content .= '<td colspan="2">'; //Set to 3 once avatar/icon column is re-enabled.
+                //$content .= $this->renderPaginationContent();
+                //$content .= '</td>';
                 $content .= '</tr>';
             }
             $content .= '</tbody>';
             $content .= '</table>';
+			$content .= $this->renderPaginationContent();
             $content .= '</div>';
             return $content;
         }

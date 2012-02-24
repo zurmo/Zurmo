@@ -42,8 +42,6 @@
 	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12); /*999*/
 }
 
-.juiportlet-columns .juiportlet-widget h3 {
-}
 
 .juiportlet-columns .juiportlet-widget .juiportlet-widget-head {
 	overflow: hidden;
@@ -52,10 +50,12 @@
 	line-height: 40px;
 	#gradient > .vertical(#f6f6f6, #ededed);
 	box-shadow:inset 0 1px 0 0 #ffffff;
+	position:relative;
 }
 
 .juiportlet-columns .juiportlet-widget .juiportlet-widget-head h3 {
 	float: left;
+	position: relative;
 }
 
 .juiportlet-columns .juiportlet-widget .juiportlet-widget-content {
@@ -135,3 +135,63 @@
 .juiportlet-widget-content table.items tbody tr:last-child td{
 	border-bottom:none;
 }
+
+
+/*ICONS..*/
+.juiportlet-header-icon{
+	.symbly(32px);
+	color:#7A7A7A;
+	
+	text-indent:-30px;
+	
+	line-height: 100%;
+	position:absolute;
+	top:6px;
+}
+.juiportlet-widget.OpportunitiesForAccountRelatedListView{
+	h3{
+		text-indent:30px;
+		&:before{
+			.juiportlet-header-icon();
+			content: '9';
+		}
+	}
+}
+.juiportlet-widget.ContactsForAccountRelatedListView{
+	h3{
+		text-indent:30px;
+		&:before{
+			.juiportlet-header-icon();
+			content: 'e';
+		}
+	}
+}
+/*
+.juiportlet-widget.OpenTasksForAccountRelatedListView{
+	h3:before{
+		.juiportlet-header-icon();
+		content: 'X';
+	}
+}
+
+.juiportlet-widget.UpcomingMeetingsForAccountRelatedListView{
+	h3:before{
+		.juiportlet-header-icon();
+		content: 'X';
+	}
+}
+
+.juiportlet-widget.NoteInlineEditForPortletView{
+	h3:before{
+		.juiportlet-header-icon();
+		content: 'X';
+	}
+}
+
+.juiportlet-widget.AccountLatestActivtiesForPortletView{
+	h3:before{
+		.juiportlet-header-icon();
+		content: 'X';
+	}
+}
+*/

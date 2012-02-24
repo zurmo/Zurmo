@@ -80,13 +80,14 @@
                     $content .= '</tr>';
                 }
                 $content .= '<tr>';
-                $content .= '<td colspan="2">';
-                $content .= $this->renderPaginationContent();
-                $content .= '</td>';
+                //$content .= '<td colspan="2">';
+                //$content .= $this->renderPaginationContent();
+                //$content .= '</td>';
                 $content .= '</tr>';
             }
             $content .= '</tbody>';
             $content .= '</table>';
+			$content .= $this->renderPaginationContent();
             $content .= '</div>';
             return $content;
         }
