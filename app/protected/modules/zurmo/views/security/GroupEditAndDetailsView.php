@@ -143,5 +143,10 @@
                     $elementInformation['type']          = 'Null'; // Not Coding Standard
             }
         }
+
+        protected function getNewModelTitleLabel()
+        {
+            return Yii::t('Default', 'Create a New Group');
+        }
     }
 ?>

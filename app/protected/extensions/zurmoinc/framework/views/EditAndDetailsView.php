@@ -63,7 +63,7 @@
             {
                 return parent::renderContent();
             }
-			$content  = '<div>';
+            $content  = '<div>';
             $content .= $this->renderTitleContent();
             $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
@@ -99,8 +99,6 @@
             }
             return '<h1>' . $this->getNewModelTitleLabel() . '</h1>';
         }
-
-        abstract protected function getNewModelTitleLabel();
 
         protected function renderRightSideContent($form)
         {
@@ -172,6 +170,11 @@
                 $data['enctype'] = 'multipart/form-data';
             }
             return $data;
+        }
+
+        protected function getNewModelTitleLabel()
+        {
+            throw new NotImplementedException();
         }
     }
 ?>

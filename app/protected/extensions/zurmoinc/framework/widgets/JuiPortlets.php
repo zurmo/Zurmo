@@ -263,7 +263,8 @@
                         }
                         else
                         {
-                            $content .= "<li class=\"juiportlet-widget\" id=\"" . $item['uniqueId'] . "\">\n";
+                            $content .= "<li class=\"juiportlet-widget " . $item['uniqueClass'] .
+                                        "\" id=\"" . $item['uniqueId'] . "\">\n";
                             $content .= JuiPortlets::renderPortlet($item, $this->uniqueLayoutId, $this->moduleId);
                             $content .= "</li>\n";
                         }
