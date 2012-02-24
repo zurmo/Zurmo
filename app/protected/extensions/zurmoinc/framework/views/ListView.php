@@ -148,8 +148,20 @@
                 'afterAjaxUpdate'  => 'js:function(id, data) {processAjaxSuccessError(id, data)}',
                 'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
                 'columns' => $columns,
-                'nullDisplay' => '&#160;'
+                'nullDisplay' => '&#160;',
+                'showTableOnEmpty' => $this->getShowTableOnEmpty(),
+                'emptyText'		   => $this->getEmptyText()
             );
+        }
+
+        protected function getShowTableOnEmpty()
+        {
+            return true;
+        }
+
+        protected function getEmptyText()
+        {
+            return null;
         }
 
         public function getGridViewId()

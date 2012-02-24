@@ -64,6 +64,18 @@
             $this->moduleId          = $this->resolveModuleId();
         }
 
+        protected function getShowTableOnEmpty()
+        {
+            return false;
+        }
+
+        protected function getEmptyText()
+        {
+            $moduleClassName = static::getModuleClassName();
+            $moduleLabel     = $moduleClassName::getModuleLabelByTypeAndLanguage('PluralLowerCase');
+            return Yii::t('Default', 'No {moduleLabel} found', array('{moduleLabel}' => $moduleLabel));
+        }
+
         protected function getGridViewWidgetPath()
         {
             $resolvedMetadata = $this->getResolvedMetadata();
