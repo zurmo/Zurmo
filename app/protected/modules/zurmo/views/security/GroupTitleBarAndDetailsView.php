@@ -26,6 +26,8 @@
 
     class GroupTitleBarAndDetailsView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct($controllerId, $moduleId, Group $group, $params)
         {
             assert('$controllerId != null');

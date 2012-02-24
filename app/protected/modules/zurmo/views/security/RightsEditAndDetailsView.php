@@ -95,5 +95,10 @@
         {
             return $this->metadata;
         }
+
+        protected function renderTitleContent()
+        {
+            return null;
+        }
     }
 ?>

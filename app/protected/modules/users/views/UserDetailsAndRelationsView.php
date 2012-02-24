@@ -26,6 +26,8 @@
 
     class UserDetailsAndRelationsView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct($controllerId, $moduleId, User $user, $params)
         {
             parent::__construct(2, 1);

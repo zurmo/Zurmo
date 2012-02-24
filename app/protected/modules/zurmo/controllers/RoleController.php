@@ -74,7 +74,7 @@
 
         public function actionEdit($id)
         {
-            $titleBarAndEditView = new TitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = new RoleTitleBarAndEditView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 $this->attemptToSaveModelFromPost(Role::getById(intval($id))),

@@ -50,7 +50,7 @@
             $horizontalGridView->setCssClasses(array('AppContainer', 'clearfix')); //teh conatiner for the floated items
             $horizontalGridView->setView($aVerticalGridView, 0, 0);
 
-            $containedView->setCssClasses(array('AppContent')); //the app itself to the right
+            $containedView->setCssClasses(array_merge($containedView->getCssClasses(), array('AppContent'))); //the app itself to the right
 
             $horizontalGridView->setView(static::makeFlashMessageView($controller),   0, 1); //TODO needs to move into $cotainedView
             $horizontalGridView->setView($containedView, 0, 2);

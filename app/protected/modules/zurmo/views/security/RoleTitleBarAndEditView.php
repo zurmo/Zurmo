@@ -26,6 +26,8 @@
 
     class RoleTitleBarAndEditView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct($controllerId, $moduleId, Role $role, $params)
         {
             assert('$controllerId != null');
@@ -35,7 +37,7 @@
             $titleBarView = new TitleBarView (  RolesModule::getModuleLabelByTypeAndLanguage('Plural'),
                                                 $role->name, 1);
             $this->setView($titleBarView, 0, 0);
-            $this->setView(new GroupEditAndDetailsView ('Details', $controllerId, $moduleId, $role), 1, 0);
+            $this->setView(new RoleEditAndDetailsView ('Edit', $controllerId, $moduleId, $role), 1, 0);
         }
     }
 ?>

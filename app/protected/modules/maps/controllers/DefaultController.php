@@ -70,7 +70,7 @@
                                     $this->getId(),
                                     $this->getModule()->getId(),
                                     $configurationForm,
-                                    'AdminConfigurationView',
+                                    'MapConfigurationView',
                                     'Edit',
                                     Yii::t('Default', 'Maps Configuration')
             );

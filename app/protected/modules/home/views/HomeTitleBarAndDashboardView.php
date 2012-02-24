@@ -31,16 +31,16 @@
             parent::__construct(2, 1);
             $this->setView(new TitleBarView (strval($model)), 0, 0);
 
-			$homeDashboradView = new HomeDashboardView(
+            $homeDashboardView = new HomeDashboardView(
                 $controllerId,
                 $moduleId,
                 $uniqueLayoutId,
                 $model,
                 $params);
-			
-			$homeDashboradView->setCssClasses( array( 'clearfix' ) );
-			
-            $this->setView( $homeDashboradView, 1, 0 );
+
+            $homeDashboardView->setCssClasses( array( 'clearfix' ) );
+
+            $this->setView( $homeDashboardView, 1, 0 );
         }
     }
 ?>

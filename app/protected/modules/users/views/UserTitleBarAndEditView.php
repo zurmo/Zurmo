@@ -24,20 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class JobsManagerTitleBarAndListView extends GridView
+    class UserTitleBarAndEditView extends TitleBarAndEditView
     {
         protected $cssClasses =  array( 'AdministrativeArea' );
-
-        public function __construct(
-            $controllerId,
-            $moduleId,
-            $monitorJobData,
-            $jobsData,
-            $messageBoxContent = null)
-        {
-            parent::__construct(2, 1);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Jobs Manager: Home')), 0, 0);
-            $this->setView(new JobsCollectionView($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent), 1, 0);
-        }
     }
 ?>

@@ -26,6 +26,8 @@
 
     class ConfigureModulesView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct()
         {
             parent::__construct(2, 1);

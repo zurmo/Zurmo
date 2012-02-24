@@ -68,6 +68,7 @@
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
+            $searchFilterListView->setCssClasses(array( 'AdministrativeArea' ));
             $view = new UsersPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
@@ -135,7 +136,7 @@
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($user, $redirectUrlParams),
-                                                    'TitleBarAndEditView')));
+                                                    'UserTitleBarAndEditView')));
             echo $view->render();
         }
 

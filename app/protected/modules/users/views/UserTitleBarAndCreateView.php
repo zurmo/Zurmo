@@ -26,6 +26,8 @@
 
     class UserTitleBarAndCreateView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct($controllerId, $moduleId, $user)
         {
             assert('$user instanceof User || $user instanceof UserPasswordForm');

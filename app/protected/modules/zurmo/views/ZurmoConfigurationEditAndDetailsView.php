@@ -93,5 +93,10 @@
             );
             return $metadata;
         }
+
+        protected function getNewModelTitleLabel()
+        {
+            return null;
+        }
     }
 ?>

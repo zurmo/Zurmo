@@ -63,6 +63,7 @@
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step2');
             }
             $importView = new GridView(2, 1);
+            $importView->setCssClasses(array( 'AdministrativeArea' ));
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 1 of 6')), 0, 0);
             $importView->setView(new ImportWizardImportRulesView($this->getId(),
                                                                        $this->getModule()->getId(),
@@ -116,6 +117,7 @@
                 }
             }
             $importView = new GridView(2, 1);
+            $importView->setCssClasses(array( 'AdministrativeArea' ));
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 2 of 6')), 0, 0);
             $importView->setView(new ImportWizardUploadFileView($this->getId(),
                                                                 $this->getModule()->getId(),
@@ -138,6 +140,7 @@
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step4');
             }
             $importView = new GridView(2, 1);
+            $importView->setCssClasses(array( 'AdministrativeArea' ));
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 3 of 6')), 0, 0);
             $importView->setView(new ImportWizardSetModelPermissionsView($this->getId(),
                                                                          $this->getModule()->getId(),
@@ -217,6 +220,7 @@
             $mappableAttributeIndicesAndDerivedTypes        = $importRulesClassName::
                                                               getMappableAttributeIndicesAndDerivedTypes();
             $importView                                     = new GridView(2, 1);
+            $importView->setCssClasses(array( 'AdministrativeArea' ));
             $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 4 of 6')), 0, 0);
             $importView->setView(new ImportWizardMappingView($this->getId(),
                                                              $this->getModule()->getId(),
@@ -282,6 +286,7 @@
             if ($step == null)
             {
                 $gridView     = new GridView(2, 1);
+                $gridView->setCssClasses(array( 'AdministrativeArea' ));
                 $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 5 of 6'));
                 $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
                 $gridView->setView($titleBarView, 0, 0);
@@ -346,6 +351,7 @@
             if ($step == null)
             {
                 $gridView     = new GridView(2, 1);
+                $gridView->setCssClasses(array( 'AdministrativeArea' ));
                 $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 6 of 6'));
                 $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
                 $gridView->setView($titleBarView, 0, 0);

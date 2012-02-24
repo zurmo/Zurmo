@@ -27,7 +27,7 @@
     /**
      * Edit and details view for the admin configuration view for maps.
      */
-    class AdminConfigurationView extends EditAndDetailsView
+    class MapConfigurationView extends EditAndDetailsView
     {
         public static function getDefaultMetadata()
         {
@@ -61,6 +61,11 @@
                 ),
             );
             return $metadata;
+        }
+
+        protected function getNewModelTitleLabel()
+        {
+            return null;
         }
     }
 ?>

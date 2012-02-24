@@ -26,6 +26,8 @@
 
     class GroupTitleBarAndUserMembershipEditView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct(
             $controllerId,
             $moduleId,

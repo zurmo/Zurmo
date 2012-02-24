@@ -26,6 +26,8 @@
 
     class RolesTitleBarAndTreeView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' );
+
         public function __construct($controllerId, $moduleId, $roles)
         {
             assert('$controllerId != null');
