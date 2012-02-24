@@ -67,7 +67,8 @@
                 'source'      => $this->sourceUrl,
                 'htmlOptions' => $htmlOptions,
                 'options'     => array('select' => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
-                                                   '{window.location = ui.item.href;} return false;}')
+                                                   '{window.location = ui.item.href;} return false;}',
+                                                   'appendTo' => '#app-search')
             ));
             $cClipWidget->endClip();
             $content .= '&#160;' . $cClipWidget->getController()->clips['GlobalSearchElement'];
