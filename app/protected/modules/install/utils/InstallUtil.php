@@ -357,7 +357,7 @@
         }
 
         /**
-        * Check database optimizer-search-depth value.
+        * Check database optimizer_search_depth value.
         */
         public static function checkDatabaseOptimizerSearchDepthValue($databaseType,
         $databaseHostname,

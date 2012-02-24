@@ -93,6 +93,10 @@
             => 'Datenbank max_sp_recursion_depth Größe erfüllt Mindestanforderung',
         'Database name'
             => 'Name der Datenbank',
+        'Database optimizer_search_depth size meets requirement.'
+            => 'Der Einstellwert optimizer_search_depth erfüllt die Anforderungen.',
+        'Database optimizer_search_depth value is {searchDepth}. It is required to be set to 0.'
+            => 'Der einstellwert optimizer_search_depth ist {searchDepth}. Der Wert muss 0 sein.',
         'Database password'
             => 'Datenbankkennwort',
         'Database schema creation complete.'

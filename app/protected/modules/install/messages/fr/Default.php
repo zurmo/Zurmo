@@ -92,6 +92,10 @@
             => 'La taille max_sp_recursion_depth répond aux exigences minimales.',
         'Database name'
             => 'Nom de la base de donées',
+        'Database optimizer_search_depth size meets requirement.'
+            => 'La valeur du paramètre optimizer_search_depth répond aux exigences.',
+        'Database optimizer_search_depth value is {searchDepth}. It is required to be set to 0.'
+            => 'La valeur du paramètre optimizer_search_depth est {searchDepth}. La valeur doit être 0.',
         'Database password'
             => 'Mot de passe de la base de données',
         'Database schema creation complete.'

@@ -62,7 +62,7 @@
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database optimizer-search-depth size meets requirement.');
+                $this->message = Yii::t('Default', 'Database optimizer_search_depth size meets requirement.');
             }
             return $passed;
         }
