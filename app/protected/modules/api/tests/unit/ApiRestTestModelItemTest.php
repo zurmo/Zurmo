@@ -29,6 +29,28 @@
     */
     class ApiRestTestModelItemTest extends ApiRestTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            $multiSelectValues = array(
+                'Multi 1',
+                'Multi 2',
+                'Multi 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
+            $customFieldData->serializedData = serialize($multiSelectValues);
+            assert($customFieldData->save());
+
+            $tagCloudValues = array(
+                'Cloud 1',
+                'Cloud 2',
+                'Cloud 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
+            $customFieldData->serializedData = serialize($tagCloudValues);
+            assert($customFieldData->save());
+        }
+
         public function testApiServerUrl()
         {
             $this->assertTrue(strlen($this->serverUrl) > 0);
@@ -57,26 +79,6 @@
         */
         public function testCreate()
         {
-            $values = array(
-                            'Multi 1',
-                            'Multi 2',
-                            'Multi 3',
-            );
-            $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
-            $customFieldData->serializedData = serialize($values);
-            $saved = $customFieldData->save();
-            assert($saved);    // Not Coding Standard
-
-            $values = array(
-                            'Cloud 1',
-                            'Cloud 2',
-                            'Cloud 3',
-            );
-            $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
-            $customFieldData->serializedData = serialize($values);
-            $saved = $customFieldData->save();
-            assert($saved);    // Not Coding Standard
-
             $super = User::getByUsername('super');
             Yii::app()->user->userModel        = $super;
 
@@ -112,6 +114,7 @@
             $this->assertTrue($testItem3_2->save());
 
             $testItem = new ApiTestModelItem();
+
             $testItem->firstName     = 'Bob5';
             $testItem->lastName      = 'Bob5';
             $testItem->boolean       = true;
@@ -128,6 +131,23 @@
             $testItem->hasMany->add($testItem3_1);
             $testItem->hasMany->add($testItem3_2);
             $testItem->hasOneAlso    = $testItem4;
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Multi 1';
+            $testItem->multiDropDown->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Multi 3';
+            $testItem->multiDropDown->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Cloud 2';
+            $testItem->tagCloud->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Cloud 3';
+            $testItem->tagCloud->values->add($customFieldValue);
+
             $testItem->save();
             $util  = new RedBeanModelToApiDataUtil($testItem);
             $data  = $util->getData();
@@ -148,13 +168,6 @@
             unset($testItem);
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/create/', 'POST', $headers, array('data' => $data));
-            /*
-            $res = print_r($response, true);
-            $fp = fopen('/home/ivica/data.html', 'w');
-            fwrite($fp, $res);
-            fclose($fp);
-            exit;
-            */
             $response = json_decode($response, true);
 
             $id = $response['data']['id'];

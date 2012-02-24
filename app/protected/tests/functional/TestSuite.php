@@ -25,6 +25,7 @@
      ********************************************************************************/
 
     $basePath = realpath(dirname(__FILE__) . '/../../../');
+    require_once 'File/Iterator.php';
 
     require_once('../PhpUnitServiceUtil.php');
 

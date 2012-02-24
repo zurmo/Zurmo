@@ -35,6 +35,23 @@
         {
             parent::setUpBeforeClass();
             $super = SecurityTestHelper::createSuperAdmin();
+            $multiSelectValues = array(
+                'Multi 1',
+                'Multi 2',
+                'Multi 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
+            $customFieldData->serializedData = serialize($multiSelectValues);
+            assert($customFieldData->save());
+
+            $tagCloudValues = array(
+                'Cloud 1',
+                'Cloud 2',
+                'Cloud 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
+            $customFieldData->serializedData = serialize($tagCloudValues);
+            assert($customFieldData->save());
         }
 
         public function setUp()
@@ -75,6 +92,23 @@
             $testItem->textArea  = 'Some Text Area';
             $testItem->url       = 'http://www.asite.com';
             $testItem->owner     = $super;
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Multi 1';
+            $testItem->multiDropDown->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Multi 3';
+            $testItem->multiDropDown->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Cloud 2';
+            $testItem->tagCloud->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Cloud 3';
+            $testItem->tagCloud->values->add($customFieldValue);
+
             $createStamp         = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
@@ -119,8 +153,8 @@
                     'id'       => $super->id,
                     'username' => 'super'
                 ),
-                'multiDropDown'    => null,
-                'tagCloud'         => null,
+                'multiDropDown'    => array('values' => array('Multi 1', 'Multi 3')),
+                'tagCloud'         => array('values' => array('Cloud 2', 'Cloud 3')),
             );
             $this->assertEquals($compareData, $data);
         }
@@ -217,8 +251,8 @@
                     'id' => $super->id,
                     'username' => 'super'
                 ),
-                'multiDropDown'    => null,
-                'tagCloud'         => null,
+                'multiDropDown'    => array('values' => null),
+                'tagCloud'         => array('values' => null),
             );
             $this->assertEquals($compareData, $data);
         }
@@ -320,8 +354,8 @@
                             'id' => $super->id,
                             'username' => 'super'
                         ),
-                        'multiDropDown'    => null,
-                        'tagCloud'         => null,
+                        'multiDropDown'    => array('values' => null),
+                        'tagCloud'         => array('values' => null),
             );
             $this->assertEquals($compareData, $data);
         }

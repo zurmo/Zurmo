@@ -28,17 +28,25 @@
     {
         public function resolveData(& $data)
         {
-            $data[$this->attribute] = null;
-            return;
-            assert('$this->model->{$this->attribute} instanceof CustomFieldData');
-            if ($this->model->{$this->attribute}->id > 0)
+            assert('$this->model->{$this->attribute} instanceof OwnedMultipleValuesCustomField');
+            $customFieldValues = $this->model->{$this->attribute}->values;
+            if (count($customFieldValues) > 0)
             {
-                $data[$this->attribute] = array('id'         => $this->model->{$this->attribute}->id,
-                                                'value'      => $this->model->{$this->attribute}->value);
+                foreach ($customFieldValues as $customFieldValue)
+                {
+                    if (isset($customFieldValue->value) && $customFieldValue->value != '')
+                    {
+                        $data[$this->attribute]['values'][] = $customFieldValue->value;
+                    }
+                }
+                if (!isset($data[$this->attribute]['values']))
+                {
+                    $data[$this->attribute]['values'] = null;
+                }
             }
             else
             {
-                $data[$this->attribute] = null;
+                $data[$this->attribute]['values'] = null;
             }
         }
     }

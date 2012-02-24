@@ -857,7 +857,7 @@
             if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
-                $unfreezeWhenDone = true;
+                $freezeWhenDone = true;
             }
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
@@ -867,16 +867,17 @@
             self::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
 
+            if ($freezeWhenDone)
+            {
+                RedBeanDatabase::freeze();
+            }
+
             // Send notification to super admin to clean assets folder(optional).
             $message                    = new NotificationMessage();
             $message->textContent       = Yii::t('Default', 'Please delete all files from assets folder on server.');
             $rules                      = new ClearAssetsFolderNotificationRules();
-            NotificationsUtil::submit($message, $rules);
-
-            if ($unfreezeWhenDone)
-            {
-                RedBeanDatabase::freeze();
-            }
+            //NotificationsUtil::submit($message, $rules); //running this causes stack overrun. Turn on once thread stack
+            //overrun issue is resolved.
         }
 
         public static function getDefaultHostInfo()
