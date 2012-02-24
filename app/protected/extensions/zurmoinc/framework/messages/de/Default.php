@@ -103,14 +103,14 @@
             => 'Fahrenheit',
         'Filtered Lists'
             => 'Gefilterte Listen',
-        'firstDateTime must occur after secondDateTime'
-            => 'firstDateTime muss nach secondDateTime kommen',
-        'firstDateTime must occur before secondDateTime'
-            => 'firstDateTime muss vor secondDateTime kommen',
         'First character must be a lower case letter'
             => 'Das erste Zeichen muss Kleinbuchstabe sein.',
         'First select the {attributeLabel}'
             => 'Wählen Sie zuerst das {attributeLabel}',
+        'firstDateTime must occur after secondDateTime'
+            => 'firstDateTime muss nach secondDateTime kommen',
+        'firstDateTime must occur before secondDateTime'
+            => 'firstDateTime muss vor secondDateTime kommen',
         'Float'
             => 'Float',
         'from'

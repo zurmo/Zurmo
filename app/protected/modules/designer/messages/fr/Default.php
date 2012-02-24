@@ -131,10 +131,10 @@
             => 'Champs',
         'First character must be a lower case letter'
             => 'Le premier caractère doit être une lettre minuscule',
-        'First select level {number}'
-            => 'Choisissez d\'abord niveau {number}',
         'First panel visible, then `show more` link'
             => 'Premier panneau visible, ensuite un lien "plus de détails"',
+        'First select level {number}'
+            => 'Choisissez d\'abord niveau {number}',
         'Formula'
             => 'Formule',
         'Formula Name'

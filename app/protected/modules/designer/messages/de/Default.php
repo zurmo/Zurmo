@@ -131,10 +131,10 @@
             => 'Felder',
         'First character must be a lower case letter'
             => 'Erste Zeichen muß ein Kleinbuchstabe sein',
-        'First select level {number}'
-            => 'Wählen Sie zuerst die Stufe {number}',
         'First panel visible, then `show more` link'
             => 'Erste Panel sichtbar, dann `show more` Link',
+        'First select level {number}'
+            => 'Wählen Sie zuerst die Stufe {number}',
         'Formula'
             => 'Formel',
         'Formula Name'
@@ -213,12 +213,12 @@
             => 'Text',
         'Text Area'
             => 'Textbereich',
-        'There was an error processing your request.'
-            => 'Es gab einen Fehler bei der Verarbeitung Ihrer Anfrage',
         'The formula is invalid.'
             => 'Die Formel ist nicht gültig',
         'There are no fields in this module to be used in a formula.'
             => 'Es gibt keine Felder zur Verwendung in der Formulierung.',
+        'There was an error processing your request.'
+            => 'Es gab einen Fehler bei der Verarbeitung Ihrer Anfrage',
         'Track Audit Log'
             => 'Track-Prüfprotokoll',
         'URL'

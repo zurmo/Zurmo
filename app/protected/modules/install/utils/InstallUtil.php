@@ -776,7 +776,7 @@
             // Send notification to super admin to delete test.php file in case if this
             // installation is used in production mode.
             $message                    = new NotificationMessage();
-            $message->textContent       = Yii::t('Default', 'If this website is in production mode, please remove the app/test.php file. ');
+            $message->textContent       = Yii::t('Default', 'If this website is in production mode, please remove the app/test.php file.');
             $rules                      = new RemoveApiTestEntryScriptFileNotificationRules();
             NotificationsUtil::submit($message, $rules);
 

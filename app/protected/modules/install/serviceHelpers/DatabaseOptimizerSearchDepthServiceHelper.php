@@ -54,8 +54,9 @@
                 }
                 else
                 {
-                    $this->message  = Yii::t('Default', 'Database optimizer_search_depth value is:') . $optimizerSearchDepth . ', ';
-                    $this->message .= Yii::t('Default', 'it is required to be set to 0') . '.';
+                    $this->message  = Yii::t('Default', 'Database optimizer_search_depth value is {searchDepth}. ' .
+                                                        'It is required to be set to 0.',
+                                                        array('{searchDepth}' => $optimizerSearchDepth));
                 }
                 $passed = false;
             }

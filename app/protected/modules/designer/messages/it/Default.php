@@ -131,10 +131,10 @@
             => 'Campi',
         'First character must be a lower case letter'
             => 'Il primo carattere deve essere una lettera minuscola',
-        'First select level {number}'
-            => 'Primo, scegliete livello {number}',
         'First panel visible, then `show more` link'
             => 'Primo pannello visible, dopo un link "visto di piu"',
+        'First select level {number}'
+            => 'Primo, scegliete livello {number}',
         'Formula'
             => 'Formula',
         'Formula Name'

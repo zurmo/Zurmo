@@ -42,7 +42,7 @@
             );
             $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
             $customFieldData->serializedData = serialize($multiSelectValues);
-            assert($customFieldData->save());
+            assert($customFieldData->save()); // Not Coding Standard
 
             $tagCloudValues = array(
                 'Cloud 1',
@@ -51,7 +51,7 @@
             );
             $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
             $customFieldData->serializedData = serialize($tagCloudValues);
-            assert($customFieldData->save());
+            assert($customFieldData->save()); // Not Coding Standard
         }
 
         public function setUp()

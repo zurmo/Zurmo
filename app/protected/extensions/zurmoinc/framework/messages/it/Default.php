@@ -103,14 +103,14 @@
             => 'Fahrenheit',
         'Filtered Lists'
             => 'Liste filtrate',
-        'firstDateTime must occur after secondDateTime'
-            => 'firstDateTime deve essere dopo secondDateTime',
-        'firstDateTime must occur before secondDateTime'
-            => 'firstDateTime deve essere avanti de secondDateTime',
         'First character must be a lower case letter'
             => 'Il primo carattere deve essere una lettere minuscola.',
         'First select the {attributeLabel}'
             => 'Primo, selezione il {attributeLabel}',
+        'firstDateTime must occur after secondDateTime'
+            => 'firstDateTime deve essere dopo secondDateTime',
+        'firstDateTime must occur before secondDateTime'
+            => 'firstDateTime deve essere avanti de secondDateTime',
         'Float'
             => 'Float',
         'from'

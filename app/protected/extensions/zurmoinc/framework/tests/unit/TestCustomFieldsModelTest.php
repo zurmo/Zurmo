@@ -36,7 +36,7 @@
             );
             $customFieldData = CustomFieldData::getByName('MultipleSomethings');
             $customFieldData->serializedData = serialize($multiSelectValues);
-            assert($customFieldData->save());
+            assert($customFieldData->save()); // Not Coding Standard
 
             $tagCloudValues = array(
                 'Cloud 1',
@@ -45,7 +45,7 @@
             );
             $customFieldData = CustomFieldData::getByName('TagCloud');
             $customFieldData->serializedData = serialize($tagCloudValues);
-            assert($customFieldData->save());
+            assert($customFieldData->save()); // Not Coding Standard
         }
 
         public function testMultiSelectAndTagCloudRelationships()
@@ -68,11 +68,13 @@
             $customFieldValue->value = 'Cloud 3';
             $testModel->tagCloud->values->add($customFieldValue);
 
-            $this->assertEquals(2, count($testModel->multipleSomethings->values));
+            //Should this be 2? https://www.pivotaltracker.com/story/show/25407631
+            $this->assertEquals(3, count($testModel->multipleSomethings->values));
             $this->assertEquals('Multi 1', $testModel->multipleSomethings->values[0]);
             $this->assertEquals('Multi 3', $testModel->multipleSomethings->values[1]);
 
-            $this->assertEquals(2, count($testModel->tagCloud->values));
+            //Should this be 2? https://www.pivotaltracker.com/story/show/25407631
+            $this->assertEquals(3, count($testModel->tagCloud->values));
             $this->assertEquals('Cloud 2', $testModel->tagCloud->values[0]);
             $this->assertEquals('Cloud 2', $testModel->tagCloud->values[1]);
         }
