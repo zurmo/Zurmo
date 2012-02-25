@@ -63,6 +63,8 @@
                     return 'dd.mm.yy';
                 case 'yy-M-d':      //zh_cn format
                     return 'yy-mm-dd';
+                case 'dd-MM-yy':    //nl format
+                        return 'dd-mm-yy';
                 default :
                     throw new NotImplementedException();
             }
