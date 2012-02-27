@@ -1166,22 +1166,22 @@ table.items thead tr:hover{
 		float:left;
 	}
 	input[type="text"]{
+		position:relative;
+		left:-1px;
 		width:179px;
 		float:right;
 		margin:0 0 0 0;
 		.radius(0);
 		.b-shadow(none);
 		border-left:none;
-	
 		font-style: italic;
 		color: #999;
 		text-indent: 10px;
-		line-height: 23px;
-		height: 23px;
+		line-height: 25px;
+		height: 25px;
 		border: 1px solid #d5d4d4;
 		border-left: none;
 		background: url(../images/search-bar-gradient.png) left top repeat-x;
-		
 		&:focus{
 			outline: none !important;
 			box-shadow:none !important;
@@ -1229,6 +1229,7 @@ table.items thead tr:hover{
 	padding:10px;
 	.flyout();
 	overflow: hidden;
+	min-width:150px;
 	label{
 		padding-top:0;
 	}
@@ -1515,6 +1516,7 @@ table.items thead tr:hover{
 			height:60px;
 			width:100%;
 			margin-bottom:10px;
+			line-height: 130%;
 		}
 		input[type="submit"]{
 			float:right;
@@ -1556,6 +1558,13 @@ table.items thead tr:hover{
 	margin-right:3% !important; 
 }
 #inline-edit-form{
+	table + table{
+		float:left;
+		width:50%;
+		background:red;
+		.box-sizing();
+		padding-right:8px;
+	}
 	> table{
 		td > a{
 			color:@themeColor;
@@ -1649,6 +1658,39 @@ table.items thead tr:hover{
 		margin-top:6px;
 	}
 }
+
+/*Upload Files Box (in selected account, in Note)*/
+.file-upload-box{
+	width:50%;
+	float:right;
+	.box-sizing();
+	padding-left:8px;
+	margin-top:-14px;
+	> div{
+		
+	}
+}
+.fileupload-content{
+	td{
+		padding-top:5px !important;
+		padding-bottom:5px !important;
+	}
+	.name{
+		color:@themeColor !important;
+		line-height: 120%;
+	}
+	.size{
+		padding-top:0 !important;
+	}
+	.ui-icon-trash:after{
+		content:"Z";
+		.symbly(22px);
+	}
+}
+
+
+
+
 
 /*@TODO: this class should be changes to something more specific, like juiportlet-with-editing or similar*/
 .juiportlet-widget{
