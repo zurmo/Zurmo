@@ -133,7 +133,15 @@
                         {
                             url : $.fn.yiiGridView.getUrl('" . $this->id . "')
                         }
-                        options.url = options.url +'/'+ $(this).val();
+                        if(options.url.split( '?' ).length == 2)
+                        {
+                            options.url.split( '?' )[0];
+                            options.url = options.url.split( '?' )[0] +'/'+ $(this).val() + '?' + options.url.split( '?' )[1];
+                        }
+                        else
+                        {
+                            options.url = options.url +'/'+ $(this).val();
+                        }
                         addListViewSelectedIdsAndSelectAllToUrl('" . $this->id . "', options);
                         var data = '' + $(this).val() + '&ajax=&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
                         "url = $.param.querystring(options.url, data);
