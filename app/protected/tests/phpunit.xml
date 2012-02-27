@@ -1,13 +1,20 @@
-<phpunit bootstrap="bootstrap.php"
-		colors="false"
-		convertErrorsToExceptions="true"
-		convertNoticesToExceptions="true"
-		convertWarningsToExceptions="true"
-		stopOnFailure="false">
+<phpunit
+    colors="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    stopOnFailure="false">
 
-	<selenium>
-		<browser name="Internet Explorer" browser="*iexplore" />
-		<browser name="Firefox" browser="*firefox" />
-	</selenium>
+  <filter>
+    <blacklist>
+      <directory suffix=".php">../../../yii</directory>
+      <directory suffix=".php">../../../redbean</directory>
+    </blacklist>
+  </filter>
+
+  <selenium>
+    <browser name="Internet Explorer" browser="*iexplore" />
+    <browser name="Firefox" browser="*firefox" />
+  </selenium>
 
 </phpunit>
