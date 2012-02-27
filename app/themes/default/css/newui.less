@@ -895,7 +895,8 @@ table.items thead tr:hover{
 		text-indent:6px;
 		line-height: 24px;
 		.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
-		width:98%;
+		width:100%;
+		.box-sizing();
 		&:focus{
 			.b-shadow(0 0 1px 1px @themeColor);
 		}
@@ -942,6 +943,7 @@ table.items thead tr:hover{
 	color:#666;
 	font-weight:400 !important;
 	/*padding-top:8px;*/
+	margin-bottom:4px;
 }
 
 /*Form Edit Account*/
@@ -1247,7 +1249,7 @@ table.items thead tr:hover{
 
 /*Edit + Add Account View*/
 .buffer{
-	padding-left:9px;
+	padding-left:15px;
 }
 #edit-form{
 	.clearfix;
@@ -1509,14 +1511,17 @@ table.items thead tr:hover{
 			
 		}
 		#Note_description{
-			height:80px;
+			.box-sizing();
+			height:60px;
+			width:100%;
+			margin-bottom:10px;
 		}
 		input[type="submit"]{
 			float:right;
 			cursor:pointer;
 			padding:0 15px;
 			line-height:23px;
-			margin:0 10px 0 0;
+			margin:0 0 0 0;
 			font-size:12px;
 			font-weight:bold;
 			.radius( 4px );
@@ -1536,12 +1541,113 @@ table.items thead tr:hover{
 				color:#656565;
 				box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
 			}
+			&:before{
+				content: "Y";
+				.view-toolbar-icons();
+				top:1px;
+				color:@themeColor2;
+				margin-left:2px;
+			}
 		}
 	}
 }
 .hasDatepicker{
-	width:90% !important;
+	width:92% !important;
 	margin-right:3% !important; 
+}
+#inline-edit-form{
+	> table{
+		td > a{
+			color:@themeColor;
+			&:after{
+				content: "▾";
+				margin-left: 5px;
+			}
+		}
+		label{
+			margin-top:10px !important;
+			margin-bottom:4px;
+		}
+		input.ui-autocomplete-input{
+			float:left;
+			width:100%;
+		}
+		input.ui-autocomplete-input + span{
+			float: left;
+			width: 80px;
+			margin-left: -90px;
+			text-align:right;
+			margin-top:6px;
+		}
+	}
+}
+#inline-edit-form .permissions-box{
+	margin-left:0 !important;
+	.clearfix();
+	width:50%;
+	> label{
+		margin-bottom:12px !important;
+		color:@themeColor;
+		font-size:13px;
+		font-weight:bold !important;
+	}
+	label{
+		width: 100%;
+		display: block;
+		line-height: 100%;
+		padding-top:0;
+	}
+	#owner-box{
+		margin-bottom:15px;
+		label, &+label{
+			font-size:12px;
+			font-weight:600;
+		}
+	}
+	input[type="text"]{
+		//width:200px;
+		margin-bottom: 4px;
+	}
+	
+	#owner-box + label{
+		margin-bottom:15px;
+	}	
+	div.radio-input{
+		margin-left:0 !important;
+		margin-bottom:10px;
+		width:100%;
+		float:left;
+		display: block;
+		input[type="radio"] + label{ /*for specifity*/
+			width:auto;
+			float:left;
+			vertical-align: middle;
+			margin:0 0 0 0 !important;
+		}
+		input[type="radio"]{
+			float:left;
+			margin:0 8px 0 10px;
+			vertical-align: middle;
+		}
+		select, .dk_container{
+			line-height: 24px !important;
+			margin-top:8px;
+			margin-left:30px;
+			margin-bottom:0;
+			width:80%;
+			background:#fff;
+			div{
+				line-height:inherit !important;
+			}
+			li{
+				padding:0 !important;
+				line-height:inherit !important;
+			}
+		}	
+	}
+	input[type="text"], select{
+		margin-top:6px;
+	}
 }
 
 /*@TODO: this class should be changes to something more specific, like juiportlet-with-editing or similar*/
@@ -1860,7 +1966,8 @@ table.items thead tr:hover{
 	text-indent:0;
 	line-height: 24px;
 	.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
-	width:98%;
+	width:100%;
+	.box-sizing();
 	&:focus{
 		.b-shadow(0 0 1px 1px @themeColor);
 	}
