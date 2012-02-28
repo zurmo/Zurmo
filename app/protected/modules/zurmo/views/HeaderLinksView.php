@@ -102,12 +102,15 @@
             $link     = $this->notificationsUrl;
             $content  = null;
             $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
+            
             if ($count > 0)
             {
-                $content  = ' <span class="notifications-link-unread"> ' . Yii::t('Default', '{count} unread', array('{count}' => $count)) . '</span>&#160;';
-            }
-            $content  .= "<a href=\"$link\"><span>g</span>$label</a>";
-            return '<span class="notifications-link">' . $content . '</span>';
+				$content  .= "<a href=\"$link\" class=\"notifications-link unread\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+			} else {
+				$content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+			}
+            
+            return $content;
         }
     }
 ?>

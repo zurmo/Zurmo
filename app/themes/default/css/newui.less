@@ -317,14 +317,27 @@ footer, header, hgroup, menu, nav, section {
 
 
 .notifications-link{
-	float:right;
+	margin-top:12px;
+	width:18px;
+	height:16px;
+	padding:0 10px 0 10px;
+	background:url(../images/notifications-bubble.png) center top no-repeat;
+	border-left:1px solid #fff;
+	border-right:1px solid #fff;
+	float:left;
 	display:inline-block;
-	line-height: 38px;
-	color:#fff;
-	a span{
-		.symbly(22px);
-		color:#d4d5e3;
-		margin-top:1px;
+	&.unread{
+		color:#ff0000;
+	}
+	&.all-read{
+		color:@themeColor;
+	}
+	span{
+		font-size:10px;
+		font-weight:bold;
+		display: block;
+		text-align:center;
+		margin-top:0px;
 	}
 }
 #user-toolbar{
@@ -346,12 +359,6 @@ footer, header, hgroup, menu, nav, section {
 		display:block;
 		width:110px;
 	}
-	/*
-	&:after{
-		content: "|";
-		color: #656565;
-		//padding:0 10px;
-	}*/
 }
 #user-header-menu{
 	ul{
@@ -362,6 +369,9 @@ footer, header, hgroup, menu, nav, section {
 
 
 #settings-header-menu{
+	> li{
+		position: relative;
+	}
 	> li > a span{
 		display:inline-block;
 		text-indent:-9999px;
@@ -373,7 +383,7 @@ footer, header, hgroup, menu, nav, section {
 		margin-top:1px;
 	}
 	ul{
-		
+		margin-left:-97px;
 	}
 }
 
@@ -1716,6 +1726,15 @@ table.items thead tr:hover{
 			margin-top:2px;
 			float:left;
 		}
+	}
+}
+
+
+
+.juiportlet-widget.OpportunitiesForAccountRelatedListView,
+.juiportlet-widget.ContactsForAccountRelatedListView{
+	div.button-column{
+		padding-top:4px;
 	}
 }
 
