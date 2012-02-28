@@ -252,12 +252,6 @@
                 return false;
             }
 
-            if(realpath($_SERVER["SCRIPT_FILENAME"]) !== realpath(__FILE__))
-            {
-                $error = Yii::t('Default','$_SERVER["SCRIPT_FILENAME"] must be the same as the entry script file path.');
-                return false;
-            }
-
             if(!isset($_SERVER["REQUEST_URI"]) && isset($_SERVER["QUERY_STRING"]))
             {
                 $error = Yii::t('Default','Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
