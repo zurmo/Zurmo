@@ -206,11 +206,70 @@
         }
 
         /**
-         * @returns true, or the Soap version if less than required, or false if not installed.
+         * @returns true if Soap extension is loaded, or false if not loaded.
          */
         public static function checkSoap()
         {
-            return in_array('soap', get_loaded_extensions());
+            return extension_loaded("soap");
+        }
+
+        /**
+        * @returns true if SPL extension is loaded, or false if not loaded.
+        * Required by Yii framework.
+        */
+        public static function checkSPL()
+        {
+            return extension_loaded("SPL");
+        }
+
+        /**
+        * @returns true if PCRE extension is loaded, or false if not loaded.
+        * Required by Yii framework.
+        */
+        public static function checkPCRE()
+        {
+            return extension_loaded("pcre");
+        }
+
+        /**
+        * @returns true if all $_SERVER variable are loaded correctly, otherwise return false.
+        * Required by Yii framework.
+        */
+        public static function checkServerVariable(&$error)
+        {
+            $vars=array('HTTP_HOST','SERVER_NAME','SERVER_PORT','SCRIPT_NAME','SCRIPT_FILENAME','PHP_SELF','HTTP_ACCEPT','HTTP_USER_AGENT');
+            $missing=array();
+            foreach($vars as $var)
+            {
+                if(!isset($_SERVER[$var]))
+                {
+                    $missing[]=$var;
+                }
+            }
+            if(!empty($missing))
+            {
+                $error = Yii::t('Default','$_SERVER does not have {vars}.',array('{vars}'=>implode(', ',$missing)));
+                return false;
+            }
+
+            if(realpath($_SERVER["SCRIPT_FILENAME"]) !== realpath(__FILE__))
+            {
+                $error = Yii::t('Default','$_SERVER["SCRIPT_FILENAME"] must be the same as the entry script file path.');
+                return false;
+            }
+
+            if(!isset($_SERVER["REQUEST_URI"]) && isset($_SERVER["QUERY_STRING"]))
+            {
+                $error = Yii::t('Default','Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
+                return false;
+            }
+
+            if(!isset($_SERVER["PATH_INFO"]) && strpos($_SERVER["PHP_SELF"],$_SERVER["SCRIPT_NAME"]) !== 0)
+            {
+                $error = Yii::t('Default','Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
+                return false;
+            }
+            return true;
         }
 
         /**
