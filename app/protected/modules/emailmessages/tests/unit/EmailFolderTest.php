@@ -34,14 +34,129 @@
             UserTestHelper::createBasicUser('jane');
         }
 
-        public function testStuff()
+
+        public function testGetByBoxAndTypeForNotificationsBox()
         {
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            //test that the everyone default folders are created on their own.
-            //new test method to test create/retrieve/delete email folder.
-            //test that you cant delete default folders that are for everyone
+            $boxes = EmailBox::getAll();
+            $this->assertEquals(0, count($boxes));
+            $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $this->assertEquals(EmailBox::NOTIFICATIONS_NAME, $box->name);
+            $this->assertEquals(2, $box->folders->count());
+            $this->assertTrue($box->id > 0);
+
+            $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
+            $this->assertEquals(EmailFolder::OUTBOX_NAME, $folder->name);
+            $this->assertEquals(EmailFolder::TYPE_OUTBOX, $folder->type);
+
+            $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_SENT);
+            $this->assertEquals(EmailFolder::SENT_NAME, $folder->name);
+            $this->assertEquals(EmailFolder::TYPE_SENT, $folder->type);
+        }
+
+
+        /**
+         * @expects NotSupportedException
+         * @depends testGetByBoxAndTypeForNotificationsBox
+         */
+        public function testCreatingAFolderWithAnInvalidType()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $folder = new EmailFolder();
+            $folder->name = 'Some Folder';
+            $folder->type = 'A folder type that does not exist';
+        }
+
+        /**
+         * @depends testCreatingAFolderWithAnInvalidType
+         */
+        public function testSetAndGetFolder()
+        {
+            $billy                      = User::getByUsername('billy');
+            Yii::app()->user->userModel = $billy;
+
+            $folders = EmailFolder::getAll();
+            $this->assertEquals(2, count($folders));
+
+            $box = new EmailBox();
+            $box->name = 'Some new mailbox';
+            $saved     = $box->save();
+            $this->assertTrue($saved);
+            $this->assertEquals(0, $box->folders->count());
+
+            $folder = new EmailFolder();
+            $folder->name = 'Billy\'s Inbox';
+            $folder->type = EmailFolder::INBOX_TYPE;
+            $folder->user = $billy;
+            $saved = $folder->save();
+            //Missing 'box', so it should not save
+            $this->assertFalse($saved);
+
+            $folder->box = $box;
+
+            $this->assertTrue($saved);
+            $folderId     = $folder->id;
+            $folder->forget();
+            unset($folder);
+            $folder       = EmailFolder::getById($folderId);
+            $this->assertEquals($box->id, $folder->box->id);
+
+            //Now check the box has the correct folder related to it
+            $boxId = $box->id;
+            $box->forget();
+            unset($box);
+            $box = Box::getById($boxId);
+            $this->assertEquals(1, $box->folders->count());
+            $this->assertEquals('Billy\'s Inbox', $box->folders[0]->name);
+            $this->assertEquals(EmailFolder::INBOX_TYPE, $box->folders[0]->type);
+
+            $folders = EmailFolder::getAll();
+            $this->assertEquals(3, count($folders));
+            //Now delete billy's inbox
+            $folder->delete();
+
+            $folders = EmailFolder::getAll();
+            $this->assertEquals(2, count($folders));
+
+            $box->forget();
+            unset($box);
+            $box = Box::getById($boxId);
+            $this->assertEquals(0, $box->folders->count());
+        }
+
+        /**
+         * @expects NotSupportedException
+         * @depends testSetAndGetFolder
+         */
+        public function testFailureDeletingASpecialFolder()
+        {
+            //Try deleting a folder that is in a reserved box like Notifications.
+            $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
+            $folder->delete();
+
+        }
+
+        /**
+         * @depends testFailureDeletingASpecialFolder
+         */
+        public function testCreatingABoxWithAllRequiredFoldersAutomaticallyCreated()
+        {
+            $this->assertFail();
+            //todo: what about creating a box with the automatic folders...
+        }
+
+        /**
+         * @depends testCreatingABoxWithAllRequiredFoldersAutomaticallyCreated
+         */
+        public function testAttemptingToDeleteFoldersWithEmailMessagesConnectedToThem()
+        {
+            $this->assertFail();
+            //todo: what happens if you try to delete a folder with a message in it? What should happen?
         }
     }
 ?>

@@ -27,14 +27,24 @@
     /**
      * Component for working with outbound and inbound email transport
      */
-    class ZurmoEmailHelper extends CApplicationComponent
+    class EmailHelper extends CApplicationComponent
     {
         /**
-         * Send an email message using outbound email transport
+         * Send an email message. This will queue up the email to be sent by the queue sending process. If you want to
+         * send immediately, consider using @sendImmediately
          * @param EmailMessage $email
          */
-        public function send(EmailMessage $email)
+        public function send(EmailMessage $emailMessage)
         {
+            //todo: note, build interactive command (or just taking the subject/message/to as params so we can test and send email via command line.
+        }
+
+        public function sendImmediately(EmailMessage $emailMessage)
+        {
+            //todo: move this into a getOutboundMailer, then you can use private to detect if this object is already created and populated.
+            //with smtp info etc.
+            Yii::import('ext.swiftmailer.SwiftMailer');
+            $swiftMailer = new SwiftMailer();
         }
     }
 ?>

@@ -32,6 +32,12 @@
             SecurityTestHelper::createSuperAdmin();
             UserTestHelper::createBasicUser('billy');
             UserTestHelper::createBasicUser('jane');
+            $someoneSuper = UserTestHelper::createBasicUser('someoneSuper');
+
+            $group = Group::getByName('Super Administrators');
+            $group->users->add($someoneSuper);
+            $saved = $group->save();
+            assert($saved); // Not Coding Standard
         }
 
         public function testSetAndGetUserToSendNotificationAs()
@@ -39,26 +45,82 @@
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            //test that it defaults to the first super admin available.
+            //It should default to the first super user available.
+            $user = Yii::app()->emailHelper->getUserToSendNotifiactionsAs();
+            $this->assertEqual($user, $super);
 
-            //test setting a new user that is a super admin, then retrieving it.
+            //Set a differnt super admin user, then make sure it correctly retrieves it.
+            $anotherSuper = User::getByUsername('someoneSuper');
+            Yii::app()->emailHelper->setUserToSendNotifiactionsAs($anotherSuper);
+            $user = Yii::app()->emailHelper->getUserToSendNotifiactionsAs();
+            $this->assertEqual($user, $anotherSuper);
         }
 
         /**
          * @depends testSetAndGetUserToSendNotificationAs
          * @expectedException SomeException
          */
+        public function testSetAndGetUserToSendNotificationAsLoggedInAsNonSuper()
+        {
+            $billy                      = User::getByUsername('billy');
+            Yii::app()->user->userModel = $billy;
+            $anotherSuper               = User::getByUsername('someoneSuper');
+            $user                       = Yii::app()->emailHelper->getUserToSendNotifiactionsAs();
+            $this->assertEqual($user, $anotherSuper);
+        }
+
+        /**
+         * @depends LoggedAsNonSupertestSetAndGetUserToSendNotificationAs
+         * @expectedException SomeException
+         */
         public function testSetUserToSendNotificationsAsWhoIsNotASuperAdmin()
         {
-            //todo:
+            $billy                      = User::getByUsername('billy');
+            Yii::app()->user->userModel = $billy;
+            Yii::app()->emailHelper->setUserToSendNotifiactionsAs($billy);
+
         }
 
         /**
          * @depends testSetUserToSendNotificationsAsWhoIsNotASuperAdmin
          */
+        public function testSend()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
+            //todo: make an email message helper to make a test email message
+            Yii::app()->emailHelper->send($emailMessage);
+            $this->assertEquals(1, Yii::app()->emailHelper->getQueueCount());
+        }
+
+        /**
+         * @depends testSend
+         */
         public function testSendQueued()
         {
-            //todo:
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $this->assertEquals(1, Yii::app()->emailHelper->getQueueCount());
+            Yii::app()->emailHelper->sendQueued();
+            //todo: in the test override for EmailHelper, need a way to show that the emails are sent? or maybe this
+            //can normally be in emailHelper. TBD
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
+        }
+
+        /**
+         * @depends testSendQueued
+         */
+        public function testSendImmediately()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
+            //todo: make an email message helper to make a test email message
+            Yii::app()->emailHelper->sendImmediately($emailMessage);
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
+            //todo: again, figure out how to show a signal that this was 'sent' and not just queued...
+            //maybe a getSentCount(), and a resetSent()?
         }
     }
 ?>

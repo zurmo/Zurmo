@@ -32,6 +32,8 @@
             SecurityTestHelper::createSuperAdmin();
             UserTestHelper::createBasicUser('billy');
             UserTestHelper::createBasicUser('jane');
+            UserTestHelper::createBasicUser('sally');
+            UserTestHelper::createBasicUser('jason');
         }
 
         /**
@@ -176,7 +178,58 @@
          */
         public function testCreateAndSendEmailMessageWithAttachment()
         {
-            //todo: testing with attachments...
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $billy                      = User::getByUsername('billy');
+            $jane                       = User::getByUsername('jane');
+
+            $emailMessage = new EmailMessage();
+            $emailMessage->owner   = $jane;
+            $emailMessage->subject = 'My Email with an Attachment';
+            $emailFileModel        = ZurmoTestHelper::createFileModel('testNote.txt', 'EmailFileModel');
+            $emailMessage->files->add($emailFileModel);
+
+            //Attempt to save without setting required information
+            $saved        = $email->save();
+            $this->assertFalse($saved);
+            $compareData = array('should be array of sender, recipient, content etc.');
+            $this->assertEquals($compareData, $email->getErrors());
+
+            //Set sender, and recipient, and content
+            $emailContent              = new EmailContent();
+            $emailContent->textContent = 'My Second Message';
+            $emailMessage->content     = $emailContent;
+
+            //Sending from jane
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = 'jane@fakeemail.com';
+            $sender->fromName          = 'Jane Smith';
+            $sender->person            = $jane;
+            $emailMessage->sender      = $sender;
+
+            //Recipient is billy.
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = 'billy@fakeemail.com';
+            $recipient->toName         = 'Billy James';
+            $recipient->type           = EmailMessageRecipient::TO;
+            $recipient->person         = $billy;
+            $emailMessage->recipients->add($recipient);
+
+            //At this point the message is not in a folder.
+            $this->assertNull($emailMessage->folder);
+
+            //Save, at this point the email should be in the draft folder
+            $saved = $emailMessage->save();
+            $this->assertTrue($saved);
+            $this->assertTrue($emailMessage->folder->id > 0);
+            $this->assertEquals(EmailFolder::getByName(EmailFolder::EVERYONE_DRAFT_NAME), $emailMessage->folder->id);
+
+            $id = $emailMessage->id;
+            unset($emailMessage);
+            $note = EmailMessage::getById($id);
+            $this->assertEquals('My Email with an Attachment', $emailMessage->subject);
+            $this->assertEquals(1, $emailMessage->files->count());
+            $this->assertEquals($emailFileModel, $note->files->offsetGet(0));
         }
 
         /**
@@ -184,7 +237,72 @@
          */
         public function testMultipleRecipientsAndTypes()
         {
-            //todo: testing adding multiple recipients. to, cc, bcc
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $billy                      = User::getByUsername('billy');
+            $jane                       = User::getByUsername('jane');
+            $sally                      = User::getByUsername('sally');
+            $jason                      = User::getByUsername('jason');
+
+            $this->assertEquals(1, count(EmailMessage::getAll()));
+
+            $emailMessage = new EmailMessage();
+            $emailMessage->owner   = $jane;
+            $emailMessage->subject = 'My Third Email';
+
+            //Attempt to save without setting required information
+            $saved        = $email->save();
+            $this->assertFalse($saved);
+            $compareData = array('should be array of sender, recipient, content etc.');
+            $this->assertEquals($compareData, $email->getErrors());
+
+            //Set sender, and recipient, and content
+            $emailContent              = new EmailContent();
+            $emailContent->textContent = 'My Third Message';
+            $emailMessage->content     = $emailContent;
+
+            //Sending from jane
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = 'jane@fakeemail.com';
+            $sender->fromName          = 'Jane Smith';
+            $sender->person            = $jane;
+            $emailMessage->sender      = $sender;
+
+            //Recipient is billy.
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = 'billy@fakeemail.com';
+            $recipient->toName         = 'Billy James';
+            $recipient->type           = EmailMessageRecipient::TO;
+            $recipient->person         = $billy;
+            $emailMessage->recipients->add($recipient);
+
+            //CC recipient is Sally
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = 'sally@fakeemail.com';
+            $recipient->toName         = 'Sally Pail';
+            $recipient->type           = EmailMessageRecipient::CC;
+            $recipient->person         = $sally;
+            $emailMessage->recipients->add($recipient);
+
+            //BCC recipient is Jason
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = 'jason@fakeemail.com';
+            $recipient->toName         = 'Jason Blue';
+            $recipient->type           = EmailMessageRecipient::CC;
+            $recipient->person         = $jason;
+            $emailMessage->recipients->add($recipient);
+
+            //At this point the message is not in a folder.
+            $this->assertNull($emailMessage->folder);
+
+            //Save, at this point the email should be in the draft folder
+            $saved = $emailMessage->save();
+            $this->assertTrue($saved);
+            $this->assertTrue($emailMessage->folder->id > 0);
+            $this->assertEquals(EmailFolder::getByName(EmailFolder::EVERYONE_DRAFT_NAME), $emailMessage->folder->id);
+
+            //Now send the message.
+            Yii::app()->emailHelper->send($emailMessages);
         }
     }
 ?>
