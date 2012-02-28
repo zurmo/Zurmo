@@ -267,11 +267,11 @@
 
             if (file_exists("$theme/ico/favicon.ico"))
             {
-                $cs->registerLinkTag('shortcut icon', null, $theme . '/ico/favicon.ico');
+                $cs->registerLinkTag('shortcut icon', null,  '/' . $theme . '/ico/favicon.ico');
             }
             else
             {
-                $cs->registerLinkTag('shortcut icon', null, $defaultTheme . '/ico/favicon.ico');
+                $cs->registerLinkTag('shortcut icon', null,  '/' . $defaultTheme . '/ico/favicon.ico');
             }
             return '<head>'                                                                 .
                    "<title>$title</title>"                                                  .
