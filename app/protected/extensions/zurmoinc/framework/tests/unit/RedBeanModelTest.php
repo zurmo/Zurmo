@@ -1436,7 +1436,8 @@
             unset($model);
             $model = TestDateTimeModel::getById($id);
             $this->assertEquals('2011-06-07', $model->myDate);
-            $this->assertEquals($now, DateTimeUtil::convertDbFormatDateTimeToTimestamp($model->myDateTime));
+            $this->assertGreaterThanOrEqual($now - 2, DateTimeUtil::convertDbFormatDateTimeToTimestamp($model->myDateTime));
+            $this->assertLessThanOrEqual($now + 2, DateTimeUtil::convertDbFormatDateTimeToTimestamp($model->myDateTime));
 
             $rows = R::getAll('desc testdatetimemodel');
             $this->assertEquals('mydate',     $rows[1]['Field']);
