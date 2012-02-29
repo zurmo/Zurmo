@@ -39,8 +39,8 @@
         public function __construct(RedBeanModel $model)
         {
             parent::__construct($model);
-            $this->addDttributeNamesThatCanBeSplitUsingDelimiter('dateDateTimeADate__Date');
-            $this->addDttributeNamesThatCanBeSplitUsingDelimiter('dateDateTimeADateTime__DateTime');
+            $this->addAttributeNamesThatCanBeSplitUsingDelimiter('dateDateTimeADate__Date');
+            $this->addAttributeNamesThatCanBeSplitUsingDelimiter('dateDateTimeADateTime__DateTime');
         }
 
         public function rules()

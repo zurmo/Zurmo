@@ -51,7 +51,7 @@
             }
         }
 
-        protected function addDttributeNamesThatCanBeSplitUsingDelimiter($value)
+        protected function addAttributeNamesThatCanBeSplitUsingDelimiter($value)
         {
             $this->attributeNamesThatCanBeSplitUsingDelimiter[] = $value;
         }
