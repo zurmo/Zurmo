@@ -141,6 +141,7 @@
             }
             $formLayout = new DetailsViewFormLayout($metadataWithRenderedElements, $maxCellsPerRow, $errorSummaryContent);
             $formLayout->setMorePanelsLinkLabel($this->getMorePanelsLinkLabel());
+            $formLayout->setLessPanelsLinkLabel($this->getLessPanelsLinkLabel());
             return $formLayout->render();
         }
 
@@ -330,6 +331,15 @@
         protected function getMorePanelsLinkLabel()
         {
             return Yii::t('Default', 'More Details');
+        }
+
+        /**
+         * For the given view, return the label used when a link is displayed to show less panels in the view.
+         * @return string label.
+         */
+        protected function getLessPanelsLinkLabel()
+        {
+            return Yii::t('Default', 'Less Details');
         }
     }
 ?>

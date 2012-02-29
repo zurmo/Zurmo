@@ -164,5 +164,10 @@
         {
             return Yii::t('Default', 'More Options');
         }
+
+        protected function getLessPanelsLinkLabel()
+        {
+            return Yii::t('Default', 'Less Options');
+        }
     }
 ?>

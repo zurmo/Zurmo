@@ -44,6 +44,7 @@
                     'derivedAttributeTypes' => array(
                         'NoteActivityItems',
                         'DerivedExplicitReadWriteModelPermissions',
+                        'FilesElement'
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',
@@ -65,6 +66,15 @@
                         ),
                         array(
                             'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'Files'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                                 array('cells' =>
                                     array(
                                         array(
@@ -116,17 +126,15 @@
                 $element->editableTemplate = '<td colspan="{colspan}">' .
                                              '<div class="permissions-box">{label}<br/>{content}{error}</div></td>';
             }
+            elseif($element instanceOf FilesElement)
+            {
+                $element->editableTemplate = '<td colspan="{colspan}">' .
+                                             '<div class="file-upload-box">{content}{error}</div></td>';
+            }
             else
             {
                 $element->editableTemplate = '<td colspan="{colspan}">{label}<br/>{content}{error}</td>';
             }
-        }
-
-        protected function renderAfterFormLayout($form)
-        {
-            $element                   = new FilesElement($this->getModel(), 'null', $form);
-            $element->editableTemplate = '<div class="file-upload-box">{content}{error}</div>';
-            return $element->render();
         }
     }
 ?>

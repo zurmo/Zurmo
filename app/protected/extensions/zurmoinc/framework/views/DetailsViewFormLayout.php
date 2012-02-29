@@ -40,6 +40,14 @@
         protected $morePanelsLinkLabel;
 
         /**
+         * Label to used for the link to show less panels.
+         * @see FormLayout::PANELS_DISPLAY_TYPE_FIRST
+         * @var string
+         */
+        protected $lessPanelsLinkLabel;
+
+
+        /**
          * Render a form layout.
          *  Gets appropriate meta data and loops through it. Builds form content
          *  as it loops through. For each element in the form it calls the appropriate
@@ -135,10 +143,14 @@
             $content = null;
             if ($panelNumber == 0 && $this->shouldHidePanelsAfterFirstPanel())
             {
-                $content .= '<tr id="show-more-panels-link-row-' . $this->uniqueId . '">';
+                $content .= '<tr>';
                 $content .= '<td  colspan = "' . $this->maxCellsPerRow . '">';
                 $content .= CHtml::link($this->getMorePanelsLinkLabel(),
                                         $this->uniqueId, array('id' => 'show-more-panels-link-' . $this->uniqueId . ''));
+                $content .= CHtml::link($this->getLessPanelsLinkLabel(),
+                                        $this->uniqueId,
+                                        array('id' => 'show-less-panels-link-' . $this->uniqueId . '',
+                                              'style' => 'display:none;'));
                 $content .= '</td>';
                 $content .= '</tr>';
             }
@@ -149,14 +161,23 @@
         {
             if ($this->shouldHidePanelsAfterFirstPanel())
             {
-            Yii::app()->clientScript->registerScript('showMorePanels', "
-                $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
-                    {
-                        $('.view-panel-' + $(this).attr('href')).show();
-                        $('#show-more-panels-link-row-' + $(this).attr('href')).hide();
-                        return false;
-                    }
-                );");
+                Yii::app()->clientScript->registerScript('showMorePanels', "
+                    $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
+                        {
+                            $('.view-panel-' + $(this).attr('href')).show();
+                            $('#show-more-panels-link-" . $this->uniqueId . "').hide();
+                            $('#show-less-panels-link-" . $this->uniqueId . "').show();
+                            return false;
+                        }
+                    );
+                    $('#show-less-panels-link-" . $this->uniqueId . "').click( function()
+                        {
+                            $('.view-panel-' + $(this).attr('href')).hide();
+                            $('#show-more-panels-link-" . $this->uniqueId . "').show();
+                            $('#show-less-panels-link-" . $this->uniqueId . "').hide();
+                            return false;
+                        }
+                    );");
             }
         }
 
@@ -211,6 +232,11 @@
             $this->morePanelsLinkLabel = $label;
         }
 
+        public function setLessPanelsLinkLabel($label)
+        {
+            $this->lessPanelsLinkLabel = $label;
+        }
+
         protected function getMorePanelsLinkLabel()
         {
             if ($this->morePanelsLinkLabel == null)
@@ -220,6 +246,18 @@
             else
             {
                 return $this->morePanelsLinkLabel;
+            }
+        }
+
+        protected function getLessPanelsLinkLabel()
+        {
+            if ($this->lessPanelsLinkLabel == null)
+            {
+                Yii::t('Default', 'Less Options');
+            }
+            else
+            {
+                return $this->lessPanelsLinkLabel;
             }
         }
     }
