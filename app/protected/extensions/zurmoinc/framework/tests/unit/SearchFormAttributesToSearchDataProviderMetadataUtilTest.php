@@ -341,5 +341,43 @@
                                               'appendStructureAsAnd' => true)));
             $this->assertEquals($compareData, $metadata);
         }
+
+        public function testGetMetadataForDynamicDateTimeAttributeThatIsOnManyRelatedModel()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+
+            //Make sure the timeZone is different than UTC for testing.
+            Yii::app()->user->userModel->timeZone = 'America/Chicago';
+
+            //TEST when no value present
+            $metadata = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                        getMetadata($searchForm, 'dateDateTimeADate__Date', null);
+            $compareData = array(array('manyMany' => array('value' => array('aDate' => null))));
+            $this->assertEquals($compareData, $metadata);
+
+            //Test Date = Today
+            $value              = array();
+            $value['type']      = MixedDateTypesSearchFormAttributeMappingRules::TYPE_TODAY;
+            $metadata           = SearchFormAttributesToSearchDataProviderMetadataUtil::
+                                  getMetadata($searchForm, 'dateDateTimeADateTime__DateTime', $value);
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $compareData        = array(
+                                    array('manyMany'  =>
+                                        array('value' => array(
+                                              'aDateTime' => DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($today)),
+                                              'operatorType'         => 'greaterThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)),
+                                    array('manyMany'  =>
+                                        array('value' => array(
+                                              'aDateTime' => DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($today)),
+                                              'operatorType'         => 'lessThanOrEqualTo',
+                                              'appendStructureAsAnd' => true)));
+            $this->assertEquals($compareData, $metadata);
+        }
     }
 ?>

@@ -76,10 +76,13 @@
                                  'ABName',
                                  'differentOperatorA',
                                  'differentOperatorB',
+                                 'dateDateTimeADate__Date',
+                                 'dateDateTimeADateTime__DateTime',
                                  'date__Date',
                                  'date2__Date',
                                  'dateTime__DateTime',
-                                 'dateTime2__DateTime');
+                                 'dateTime2__DateTime',
+            );
             $this->assertEquals($compareData, $searchForm->attributeNames());
 
             //Check some other methods to make sure they work ok.
@@ -100,6 +103,8 @@
                 array('ABName', 'safe'),
                 array('differentOperatorA', 'safe'),
                 array('differentOperatorB', 'boolean'),
+                array('dateDateTimeADate__Date', 'safe'),
+                array('dateDateTimeADateTime__DateTime', 'safe'),
             );
             $this->assertEquals($compareData, $searchForm->rules());
 

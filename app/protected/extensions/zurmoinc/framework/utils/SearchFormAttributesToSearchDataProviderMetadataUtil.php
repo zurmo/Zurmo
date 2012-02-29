@@ -37,7 +37,6 @@
         {
             assert('$model instanceof SearchForm');
             $metadata        = $model->getAttributesMappedToRealAttributesMetadata();
-
             $adaptedMetadata = array();
             if (isset($metadata[$attributeName]))
             {
@@ -91,7 +90,7 @@
             }
             else
             {
-                throw NotSupportedException();
+                throw new NotSupportedException();
             }
         }
 
@@ -114,6 +113,40 @@
                 else
                 {
                     throw new NotSupportedException();
+                }
+            }
+            else
+            {
+                //Special use-case where there is a Mixed Date or DateTime search form attribute that is from a related
+                //model. So for example if you are in Accounts and searching on Opportunity Date.
+                //Currently this requires the definition for this search attribute to be in AccountSearchForm.
+                //@see ASearchFormModel for an example.
+                foreach ($metadata[$attributeName] as $index => $attributesAndRelations)
+                {
+                    $attributesAndRelationsValue = $value;
+                    assert('count($attributesAndRelations) > 0 && count($attributesAndRelations) < 6');
+                    if (isset($attributesAndRelations[3]) && $attributesAndRelations[3] == 'resolveRelatedAttributeValueByRules')
+                    {
+                        $searchFormAttributeMappingRules = $model::getSearchFormAttributeMappingRulesTypeByAttribute(
+                                                           $attributeName);
+                        //Only supports Date and DateTime.  Could support more types, but would need additional testing
+                        //and research first before allowing for that.
+                        assert('$searchFormAttributeMappingRules == "MixedDateTimeTypes" ||
+                                $searchFormAttributeMappingRules == "MixedDateTypes"');
+                        $className                       = $searchFormAttributeMappingRules . 'SearchFormAttributeMappingRules';
+                        $attributesAndRelationsValue     = $className::resolveValueDataIntoUsableValue(
+                                                           $attributesAndRelationsValue);
+                        $newAttributesAndRelations = 'resolveEntireMappingByRules';
+                        $className::resolveAttributesAndRelations($attributeName, $newAttributesAndRelations, $value);
+
+                        unset($metadata[$attributeName][$index]);
+                        foreach($newAttributesAndRelations as $newAttributesAndRelationsItem)
+                        {
+                            $newAttributesAndRelationsItem[0] = $attributesAndRelations[0];
+                            $newAttributesAndRelationsItem[1] = $attributesAndRelations[1];
+                            $metadata[$attributeName][] = $newAttributesAndRelationsItem;
+                        }
+                    }
                 }
             }
         }
