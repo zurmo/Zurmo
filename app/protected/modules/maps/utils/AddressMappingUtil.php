@@ -56,7 +56,7 @@
                     $latitudeLongitudeCoordinates        = null;
                 }
 
-                if ($latitudeLongitudeCoordinates != null)
+                if ($latitudeLongitudeCoordinates != null && ($latitudeLongitudeCoordinates['latitude'] != 0 && $latitudeLongitudeCoordinates['longitude'] != 0))
                 {
                     assert('is_array($latitudeLongitudeCoordinates)');
                     $address->latitude     = (double)$latitudeLongitudeCoordinates['latitude'];
