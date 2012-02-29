@@ -149,7 +149,7 @@
         {
             if ($this->shouldHidePanelsAfterFirstPanel())
             {
-            Yii::app()->clientScript->registerScript('showMorePanels', "
+            Yii::app()->clientScript->registerScript('showMorePanels' . $this->uniqueId, "
                 $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
                     {
                         $('.view-panel-' + $(this).attr('href')).show();
