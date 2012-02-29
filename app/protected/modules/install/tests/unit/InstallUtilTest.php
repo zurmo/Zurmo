@@ -229,6 +229,14 @@
         /**
         * Simple test to confirm the check doesnt break.
         */
+        public function testCheckCtype()
+        {
+            $this->assertNotNull(InstallUtil::checkCtype());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
         public function testCheckPCRE()
         {
             $this->assertNotNull(InstallUtil::checkPCRE());

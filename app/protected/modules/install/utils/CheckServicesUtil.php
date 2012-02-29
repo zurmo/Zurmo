@@ -52,6 +52,7 @@
                          'ServerVariable',
                          'PCRE',
                          'SPL',
+                         'Ctype',
                          'FilePermissions',
                          'InstanceFolders',
                          'APC',

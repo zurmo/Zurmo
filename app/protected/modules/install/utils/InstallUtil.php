@@ -232,6 +232,14 @@
         }
 
         /**
+        * @returns true if Ctype extension is loaded, or false if not loaded.
+        */
+        public static function checkCtype()
+        {
+            return extension_loaded("ctype");
+        }
+
+        /**
         * @returns true if all $_SERVER variable are loaded correctly, otherwise return false.
         * Required by Yii framework.
         */
