@@ -28,6 +28,11 @@
     {
         public function attach($owner)
         {
+            if(Yii::app()->apiRequest->isApiRequest())
+            {
+                Yii::app()->detachEventHandler('onBeginRequest',array(Yii::app()->request,'validateCsrfToken'));
+            }
+
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
             if (Yii::app()->apiRequest->isApiRequest())
             {
