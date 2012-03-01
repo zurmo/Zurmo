@@ -30,7 +30,7 @@
         {
             assert('is_string($username)');
             assert('$username != ""');
-            $bean = R::findOne('_user', "username = '$username'");
+            $bean = R::findOne('_user', "username = '" . DatabaseCompatibilityUtil::escape($username) . "'");
             assert('$bean === false || $bean instanceof RedBean_OODBBean');
             if ($bean === false)
             {
