@@ -16,7 +16,7 @@
 
 .performance-info
 {
-    margin-top: -7px;
+    margin-top: 0px;
     font-size: 0.75em;
     text-align: center;
     color: #CCCCCC;
@@ -37,7 +37,7 @@
     margin-top: 5px;
 }
 
-#LoginLogo
+#LoginLogo, #ErrorLogo
 {
     margin-bottom: 20px;
     margin-left: 85px;

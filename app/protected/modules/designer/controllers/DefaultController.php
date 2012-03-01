@@ -26,6 +26,39 @@
 
     class DesignerDefaultController extends ZurmoBaseController
     {
+        public function filters()
+        {
+            $filters = array(
+                'moduleClassName - index'
+            );
+            return array_merge($filters, parent::filters());
+        }
+
+        /**
+         * Check if moduleClassName exist or not. If doesn't exist, throw exception.
+         * @throws DesignerModuleClassNameNotFoundException
+         */
+        public function filterModuleClassName($filterChain)
+        {
+            $moduleClassNames = array();
+            $modules = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                $moduleTreeMenuItems = $module->getDesignerMenuItems();
+                if ($module->isEnabled() && !empty($moduleTreeMenuItems))
+                {
+                    $moduleClassNames[] = get_class($module);
+                }
+            }
+            if (!in_array($_GET['moduleClassName'], $moduleClassNames))
+            {
+                $message = Yii::t('Default', "The requested {$_GET['moduleClassName']} module does not exist");
+                throw new DesignerModuleClassNameNotFoundException($message);
+            }
+
+            $filterChain->run();
+        }
+
         public function actionIndex()
         {
             $canvasView = new TitleBarAndDesignerPageMenuView(
