@@ -768,8 +768,11 @@ footer, header, hgroup, menu, nav, section {
 	margin:20px 40px;
 }
 .performance-info{
-	width: 900px;
-	margin:0 auto;
+	float: right;
+	margin-top: -38px;
+	margin-right: 50px;
+	font-style: italic;
+	color:@themeColor;
 }
 #credit-link{
 	background:url(../images/Zurmo.png) left top no-repeat;
@@ -1132,7 +1135,25 @@ table.items thead tr:hover{
 	background:none !important;
 }
 
-/*Search Scope box*/
+/*Search Scope box, and accoutn list*/
+/*Checkboxes*/
+
+	.ui-multiselect-checkboxes label {
+		padding-left: 25px;
+		background: url(../images/checkbox.png) left 4px no-repeat;
+	}
+	.ui-multiselect-checkboxes label.c_on {
+		background: url(../images/checkbox.png) left -21px no-repeat;
+	}
+
+	.ui-multiselect-checkboxes label input {
+		//position: absolute;
+		//left: -9999px;
+	}
+
+
+
+
 #FilteredListView, .select-all-options, .summary{
 	/*@TODO check what this component do - for now its hidden cause its not in design*/
 	display:none;

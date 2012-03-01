@@ -5,12 +5,12 @@ $(window).ready(function(){
 	$( '.nav > .parent' ).hover(
 		function(){
 			if ( $(this).find('ul') ){
-				$(this).find('ul').stop(true, true).fadeIn(100);
+				$(this).find('ul').stop(true, true).delay(0).fadeIn(250);
 			}
 		}, 
 		function(){
 			if ( $(this).find('ul') ){
-				$(this).find('ul').stop(true, true).fadeOut(250);
+				$(this).find('ul').stop(true, true).fadeOut(500);
 			}
 		}
 	);
@@ -50,6 +50,65 @@ $(window).ready(function(){
 			$(value).dropkick('close');
 		});
 	});
+	
+	
+	/*Checkboxes
+	 from: http://webdesign.maratz.com/lab/fancy-checkboxes-and-radio-buttons/jquery.html
+	 * */
 
 
+	function setupCheckboxes( $context ) {
+		
+		if ( $('input:checkbox', $context ).length ) {	
+			$('input:checkbox', $context ).each(function(){ 
+				$(this).parent().removeClass('c_on');
+			});
+			$('label input:checked', $context ).each(function(){ 
+				$(this).parent('label').addClass('c_on');
+		    });
+		}
+		
+		$('label', $context[0] ).
+		    live( 'click', { $inputContext:$(this).content  },
+				function( event ){
+			        if ( $('input:checkbox', event.data.$inputContext ).length ) {	
+						$('input:checkbox', event.data.$inputContext ).each(function(){ 
+							$(this).parent().removeClass('c_on');
+						});
+						$('label input:checked', event.data.$inputContext ).each(function(){ 
+							$(this).parent('label').addClass('c_on');
+					    });
+					}
+			});
+	}
+    
+    
+    
+    
+    
+    //we're doing that because the multiselect widget isn't generated yet..
+    window.setTimeout(
+    	function setCheckboxes(){
+    		setupCheckboxes( $('#search-form') );
+    		setupCheckboxes( $('#app-search') );
+    	},
+    1000 );
+    
 });
+
+
+
+
+
+
+
+
+
+
+// usage: log('inside coolFunc', this, arguments);
+// paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
+window.log = function f(){ log.history = log.history || []; log.history.push(arguments); if(this.console) { var args = arguments, newarr; args.callee = args.callee.caller; newarr = [].slice.call(args); if (typeof console.log === 'object') log.apply.call(console.log, console, newarr); else console.log.apply(console, newarr);}};
+
+// make it safe to use console.log always
+(function(a){function b(){}for(var c="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),d;!!(d=c.pop());){a[d]=a[d]||b;}})
+(function(){try{console.log();return window.console;}catch(a){return (window.console={});}}());
