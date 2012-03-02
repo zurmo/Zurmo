@@ -1,0 +1,126 @@
+/*Upload Files Box (in selected account, in Note)*/
+
+.file-upload-box{
+	.box-sizing();
+	padding-left:0;
+	margin:0 !important;
+	div{
+		margin-left:0 !important;	
+	}
+	
+	.fileinput-button{
+		width:100%;
+		.ui-button-text{}
+	}
+	
+	input[type="file"]{}
+	
+	.ui-icon-plusthick{	
+		.zButton();
+		padding:0 5px;
+		&:after{
+			content:"Y";
+			.symbly(20px);
+		}
+	}
+}
+
+
+.fileupload-content{
+	td{
+		padding-top:5px !important;
+		padding-bottom:5px !important;
+	}
+	.name{
+		color:@themeColor !important;
+		line-height: 120%;
+	}
+	.size{
+		padding-top:0 !important;
+	}
+	.ui-button {
+		background:none;
+		border:none;
+		margin-right:10px;
+		vertical-align:middle;
+	}
+	.ui-icon-trash:after{
+		content:"Z";
+		.symbly(22px);
+		color:#ff0000;
+	}
+	.ui-button-text{
+		margin-left:6px;
+		vertical-align:top;
+		position:relative;
+		top:2px;
+		color:#ff0000;
+	}
+	.template-download{
+		td{
+			padding-top:5px !important;
+			padding-bottom:5px !important;
+			font-size:11px;
+		}
+	}
+	td.delete{
+		button{
+			margin-top:-3px;
+		}
+	}
+}
+
+
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  margin-right: 4px;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  border: solid transparent;
+  border-width: 0 0 100px 200px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -moz-transform: translate(-300px, 0) scale(4);
+  direction: ltr;
+  cursor: pointer;
+}
+.fileupload-buttonbar .btn,
+.fileupload-buttonbar .toggle {
+  margin-bottom: 5px;
+}
+.files .progress {
+  width: 200px;
+}
+.progress-animated .bar {
+  background: url(../img/progressbar.gif) !important;
+  filter: none;
+}
+.fileupload-loading {
+  position: absolute;
+  left: 50%;
+  width: 128px;
+  height: 128px;
+  background: url(../img/loading.gif) center no-repeat;
+  display: none;
+}
+.fileupload-processing .fileupload-loading {
+  display: block;
+}
+
+/* Fix for IE 6: */
+*html .fileinput-button {
+  line-height: 22px;
+  margin: 1px -3px 0 0;
+}
+
+/* Fix for IE 7: */
+*+html .fileinput-button {
+  margin: 1px 0 0 0;
+}
