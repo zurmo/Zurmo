@@ -39,7 +39,7 @@
                         'viewClassName' => 'OpportunityEditAndDetailsView',
                     ),
                     'leftBottomView' => array(
-                        'showAsTabbed' => true,
+                        'showAsTabbed' => false,
                         'columns' => array(
                             array(
                                 'rows' => array(
