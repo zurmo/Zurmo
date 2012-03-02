@@ -586,14 +586,7 @@
         public function testRunAutoBuildFromUpdateSchemaCommand()
         {
             $this->runInstallation(true);
-            try
-            {
-                $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand();
-            }
-            catch (Exception $e)
-            {
-                $result = false;
-            }
+            $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand();
             $this->assertTrue($result);
         }
 
