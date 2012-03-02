@@ -25,29 +25,14 @@
      ********************************************************************************/
 
     /**
-     * Specific rules for the task model.
+     * Latest activities view used specifically for showing all latest activities
      */
-    class TaskMashableActivityRules extends ActivityMashableActivityRules
+    class AllLatestActivitiesView extends LatestActivitiesView
     {
         /**
-         * Only show tasks that are completed. Adds filter to remove any non-completed tasks from the query.
-         * @see ActivityMashableActivityRules::resolveSearchAttributeDataForLatestActivities()
+         * Rollup is not shown when showing all latest activities
+         * @var boolean
          */
-        public function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
-        {
-            assert('is_array($searchAttributeData)');
-            $clausesCount = count($searchAttributeData['clauses']);
-            $searchAttributeData['clauses'][$clausesCount + 1] = array(
-                    'attributeName'        => 'completed',
-                    'operatorType'         => 'equals',
-                    'value'                => (bool)1
-            );
-            if($searchAttributeData['structure'] != null)
-            {
-                $searchAttributeData['structure'] .= ' and ';
-            }
-            $searchAttributeData['structure'] .=  ($clausesCount + 1);
-            return $searchAttributeData;
-        }
+        protected $showRollUpToggle = false;
     }
 ?>

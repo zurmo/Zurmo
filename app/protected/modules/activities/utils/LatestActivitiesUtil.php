@@ -85,12 +85,21 @@
                     $searchAttributesData =     // Not Coding Standard
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemIds($relationItemIds);
                 }
-                else
+                elseif(count($relationItemIds) == 1)
                 {
                     $searchAttributesData =    // Not Coding Standard
                         $mashableActivityRules->resolveSearchAttributesDataByRelatedItemId($relationItemIds[0]);
                 }
+                else
+                {
+                    $searchAttributesData              = array();
+                    $searchAttributesData['clauses']   = array();
+                    $searchAttributesData['structure'] = null;
+                    $searchAttributesData =    // Not Coding Standard
+                        $mashableActivityRules->resolveSearchAttributeDataForLatestActivities($searchAttributesData);
+                }
                 static::resolveSearchAttributesDataByOwnedByFilter($searchAttributesData, $ownedByFilter);
+
                 $modelClassNamesAndSearchAttributeData[] = array($modelClassName => $searchAttributesData);
             }
             return $modelClassNamesAndSearchAttributeData;
@@ -111,7 +120,7 @@
                 );
                 if($clauseCount == 0)
                 {
-                    $searchAttributesData = '1';
+                    $searchAttributesData['structure'] = '0';
                 }
                 else
                 {

@@ -72,6 +72,12 @@
          */
         protected $uniquePageId;
 
+        /**
+         * True to show the roll up option.
+         * @var boolean
+         */
+        protected $showRollUpToggle = true;
+
         public function __construct(RedBeanModelsDataProvider $dataProvider,
                                     LatestActivitiesConfigurationForm $configurationForm,
                                     $controllerId,
@@ -131,10 +137,6 @@
         protected function renderConfigurationFormLayout($form)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $element                   = new LatestActivitiesRollUpCheckBoxElement($this->configurationForm, 'rollup',
-                                                                                 $form);
-            $element->editableTemplate = '{content}{label}';
-            $rollupElementContent      = $element->render();
             $element                   = new LatestActivitiesOwnedByFilterRadioElement($this->configurationForm,
                                                                                       'ownedByFilter',
                                                                                       $form);
@@ -143,7 +145,14 @@
 
             $content  = '<div class="horizontal-line latest-activity-toolbar">';
             $content .= $ownedByFilterContent;
-            $content .= '<div class="latest-activity-rollup">' . $rollupElementContent . '</div>';
+            if($this->showRollUpToggle)
+            {
+                $element                   = new LatestActivitiesRollUpCheckBoxElement($this->configurationForm,
+                                                                                       'rollup', $form);
+                $element->editableTemplate = '{content}{label}';
+                $rollupElementContent      = $element->render();
+                $content .= '<div class="latest-activity-rollup">' . $rollupElementContent . '</div>';
+            }
             $content .= '</div>' . "\n";
             return $content;
         }

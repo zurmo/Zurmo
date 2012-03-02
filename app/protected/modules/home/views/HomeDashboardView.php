@@ -38,11 +38,11 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'CreateDashboardLink',
-                            	'htmlOptions' => array('class' => 'icon-create')
-								),
+                                'htmlOptions' => array('class' => 'icon-create')
+                                ),
                             array('type' => 'EditDashboardLink',
-								'htmlOptions' => array('class' => 'icon-edit')
-								),
+                                'htmlOptions' => array('class' => 'icon-edit')
+                                ),
                             array('type' => 'AddPortletAjaxLink',
                                 'uniqueLayoutId' => 'eval:$this->uniqueLayoutId',
                                 'ajaxOptions' => array(
@@ -50,8 +50,8 @@
                                     'update' => '#modalContainer',
                                 ),
                                 'htmlOptions' => array('id' => 'AddPortletLink',
-									'class' => 'icon-add'
-								)
+                                    'class' => 'icon-add'
+                                )
                             ),
                         ),
                     ),
@@ -59,19 +59,10 @@
                         array(
                             'rows' => array(
                                 array(
-                                    'type' => 'MeetingsMyList',
+                                    'type' => 'AllLatestActivtiesForPortlet',
                                 ),
                                 array(
                                     'type' => 'TasksMyList',
-                                ),
-                                array(
-                                    'type' => 'OpportunitiesMyList',
-                                ),
-                                array(
-                                    'type' => 'LeadsMyList',
-                                ),
-                                array(
-                                    'type' => 'AccountsMyList',
                                 ),
                             )
                         ),

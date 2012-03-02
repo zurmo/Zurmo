@@ -25,111 +25,59 @@
      ********************************************************************************/
 
     /**
-     * Base class used for wrapping a latest activity view.
+     * Wrapper view for displaying a feed of all latest activities on a dashboard.
      */
-    abstract class LatestActivtiesForPortletView extends ConfigurableMetadataView
-                                                                  implements PortletViewInterface
+    class AllLatestActivtiesForPortletView extends LatestActivtiesForPortletView
     {
-        /**
-         * Portlet parameters passed in from the portlet.
-         * @var array
-         */
-        protected $params;
-
-        protected $controllerId;
-
-        protected $moduleId;
-
-        protected $model;
-
-        protected $uniqueLayoutId;
-
-        protected $viewData;
-
         /**
          * Some extra assertions are made to ensure this view is used in a way that it supports.
          */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('is_array($viewData) || $viewData == null');
-            assert('isset($params["relationModuleId"])');
-            assert('isset($params["relationModel"])');
             assert('isset($params["portletId"])');
             assert('is_string($uniqueLayoutId)');
-            $this->moduleId       = $params['relationModuleId'];
+            $this->moduleId       = 'home';
             $this->viewData       = $viewData;
             $this->params         = $params;
             $this->uniqueLayoutId = $uniqueLayoutId;
         }
 
-        public static function getDefaultMetadata()
-        {
-        }
-
-        public function getTitle()
-        {
-            $title  = Yii::t('Default', 'Latest Activities');
-            return $title;
-        }
-
-        public function renderContent()
-        {
-            return $this->renderLatestActivitiesContent();
-        }
-
-        protected function renderLatestActivitiesContent()
-        {
-            $mashableModelClassNamesAndDisplayLabels = LatestActivitiesUtil::getMashableModelDataForCurrentUser();
-            if (count($mashableModelClassNamesAndDisplayLabels) > 0)
-            {
-                $uniquePageId  = get_called_class();
-                $latestActivitiesConfigurationForm = $this->makeLatestActivitiesConfigurationForm();
-                $latestActivitiesConfigurationForm->mashableModelClassNamesAndDisplayLabels =
-                    $mashableModelClassNamesAndDisplayLabels;
-                if (isset($_GET[get_class($latestActivitiesConfigurationForm)]))
-                {
-                    $latestActivitiesConfigurationForm->setAttributes($_GET[get_class($latestActivitiesConfigurationForm)]);
-                }
-                $latestActivitiesViewClassName = $this->getLatestActivitiesViewClassName();
-                $dataProvider = $this->getDataProvider($uniquePageId, $latestActivitiesConfigurationForm);
-                $latestView = new $latestActivitiesViewClassName($dataProvider,
-                                                                 $latestActivitiesConfigurationForm,
-                                                                 'latestActivities', 'activities',
-                                                                 $this->getPortletDetailsUrl(),
-                                                                 $this->getNonAjaxRedirectUrl(),
-                                                                 $uniquePageId);
-                return $latestView->render();
-            }
-        }
-
+        /**
+         * Override to default to 'mine' instead of 'all' activities.
+         * (non-PHPdoc)
+         * @see LatestActivtiesForPortletView::makeLatestActivitiesConfigurationForm()
+         */
         protected function makeLatestActivitiesConfigurationForm()
         {
-            return new LatestActivitiesConfigurationForm();
+            $form                = new LatestActivitiesConfigurationForm();
+            $form->ownedByFilter = LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER;
+            return $form;
         }
 
         /**
-         * After a portlet action is completed, the portlet must be refreshed. This is the url to correctly
-         * refresh the portlet content.
+         * Override to properly use myListDetails instead of just details as the action.
+         * (non-PHPdoc)
+         * @see LatestActivtiesForPortletView::getPortletDetailsUrl()
          */
         protected function getPortletDetailsUrl()
         {
-            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/details',
+            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/myListDetails',
                                                         array_merge($_GET, array( 'portletId' =>
                                                                                     $this->params['portletId'],
                                                             'uniqueLayoutId' => $this->uniqueLayoutId)));
         }
 
-        /**
+       /**
          * Url to go to after an action is completed. Typically returns user to either a model's detail view or
          * the home page dashboard.
          */
         protected function getNonAjaxRedirectUrl()
         {
-            return Yii::app()->createUrl('/' . $this->moduleId . '/default/details',
-                                                        array( 'id' => $this->params['relationModel']->id));
+            return Yii::app()->createUrl('/' . $this->moduleId . '/default/index');
         }
 
-        protected function getDataProvider($uniquePageId, $form)
+            protected function getDataProvider($uniquePageId, $form)
         {
             assert('is_string($uniquePageId)');
             assert('$form instanceOf LatestActivitiesConfigurationForm');
@@ -137,20 +85,10 @@
             $filteredMashableModelClassNames = LatestActivitiesUtil::resolveMashableModelClassNamesByFilteredBy(
                                                     array_keys($form->mashableModelClassNamesAndDisplayLabels),
                                                     $form->filteredByModelName);
-            $relationItemId = (int)$this->params['relationModel']->getClassId('Item');
-            if ($form->rollup)
-            {
-                $relationItemsIds = ModelRollUpUtil::getItemIdsByModelAndUser($this->params['relationModel'],
-                                                                              Yii::app()->user->userModel);
-            }
-            else
-            {
-                $relationItemsIds = array($relationItemId);
-            }
             $modelClassNamesAndSearchAttributeData = // Not Coding Standard
                 LatestActivitiesUtil::
                     getSearchAttributesDataByModelClassNamesAndRelatedItemIds($filteredMashableModelClassNames,
-                                                                              $relationItemsIds, $form->ownedByFilter);
+                                                                              array(), $form->ownedByFilter);
             $modelClassNamesAndSortAttributes =      // Not Coding Standard
                 LatestActivitiesUtil::getSortAttributesByMashableModelClassNames($filteredMashableModelClassNames);
             return new RedBeanModelsDataProvider($uniquePageId, $modelClassNamesAndSortAttributes,
@@ -158,9 +96,9 @@
                                                           array('pagination' => array('pageSize' => $pageSize)));
         }
 
-        public static function canUserConfigure()
+        public function getLatestActivitiesViewClassName()
         {
-            return false;
+            return 'AllLatestActivitiesView';
         }
 
         /**
@@ -169,17 +107,7 @@
          */
         public static function getPortletRulesType()
         {
-            return 'ModelDetails';
+            return 'MyList';
         }
-
-        /**
-         * The view's module class name.
-         */
-        public static function getModuleClassName()
-        {
-            return 'ActivitiesModule';
-        }
-
-        abstract protected function getLatestActivitiesViewClassName();
     }
 ?>

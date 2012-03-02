@@ -87,7 +87,7 @@
             }
             $content .= '</tbody>';
             $content .= '</table>';
-			$content .= $this->renderPaginationContent();
+            $content .= $this->renderPaginationContent();
             $content .= '</div>';
             return $content;
         }

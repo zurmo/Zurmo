@@ -50,7 +50,7 @@
          * requirements for what should be shown in a mashable activity feed.
          * @param array $searchAttributeData
          */
-        abstract protected function resolveSearchAttributeDataForLatestActivities($searchAttributeData);
+        abstract public function resolveSearchAttributeDataForLatestActivities($searchAttributeData);
 
         /**
          * For a given model, what attribute is used for the ordering in a latest activity feed.
