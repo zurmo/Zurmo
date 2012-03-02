@@ -48,6 +48,9 @@
                         'DateTimeModifiedUser',
                         'DerivedExplicitReadWriteModelPermissions',
                     ),
+                    'nonPlaceableAttributeNames' => array(
+                        'owner',
+                    ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(
@@ -59,6 +62,10 @@
                                                 array('attributeName' => 'name', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'amount', 'type' => 'CurrencyValue'),
@@ -73,6 +80,10 @@
                                                 array('attributeName' => 'account', 'type' => 'Account'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'closeDate', 'type' => 'Date'),
@@ -82,11 +93,6 @@
                                 ),
                                 array('cells' =>
                                     array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
-                                            ),
-                                        ),
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'probability', 'type' => 'Integer'),
@@ -101,6 +107,10 @@
                                                 array('attributeName' => 'stage', 'type' => 'DropDown', 'addBlank' => true),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'source', 'type' => 'DropDown', 'addBlank' => true),
@@ -113,37 +123,6 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'description', 'type' => 'TextArea'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null',
-                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'detailViewOnly' => true,
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
-                                            ),
-                                        ),
-                                        array(
-                                            'detailViewOnly' => true,
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeModifiedUser'),
                                             ),
                                         ),
                                     )
