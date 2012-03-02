@@ -48,12 +48,12 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'timeZone', 'type' => 'TimeZoneStaticDropDown'),
+                                                array('attributeName' => 'applicationName', 'type' => 'Text'),
                                             ),
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'listPageSize', 'type' => 'Integer'),
+                                                array('attributeName' => 'timeZone', 'type' => 'TimeZoneStaticDropDown'),
                                             ),
                                         ),
                                     )
@@ -67,7 +67,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'modalListPageSize', 'type' => 'Integer'),
+                                                array('attributeName' => 'listPageSize', 'type' => 'Integer'),
                                             ),
                                         ),
                                     )
@@ -81,7 +81,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
+                                                array('attributeName' => 'modalListPageSize', 'type' => 'Integer'),
                                             ),
                                         ),
                                     )

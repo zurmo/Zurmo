@@ -30,7 +30,7 @@
 
         public function __construct($controllerId, $moduleId, $settingsMenuItems, $userMenuItems,
                                     $shortcutsCreateMenuItems,
-                                    $notificationsUrl, $moduleNamesAndLabels, $sourceUrl)
+                                    $notificationsUrl, $moduleNamesAndLabels, $sourceUrl, $applicationName)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -40,6 +40,7 @@
             assert('is_string($notificationsUrl)');
             assert('is_array($moduleNamesAndLabels)');
             assert('is_string($sourceUrl)');
+            assert('is_string($applicationName) || $applicationName == null');
 
             $shortcutsCreateMenuView = new ShortcutsCreateMenuView(
                 $controllerId,
@@ -48,7 +49,8 @@
             );
             $this->verticalGridView   = new GridView(2, 1);
             $this->verticalGridView->setView(
-                                        new HeaderLinksView($settingsMenuItems, $userMenuItems, $notificationsUrl), 0, 0);
+                                        new HeaderLinksView($settingsMenuItems, $userMenuItems, $notificationsUrl,
+                                                            $applicationName), 0, 0);
             $horizontalGridView = new GridView(1, 2);
             $horizontalGridView->setView(new GlobalSearchView($moduleNamesAndLabels, $sourceUrl), 0, 0);
             $horizontalGridView->setView($shortcutsCreateMenuView, 0, 1);

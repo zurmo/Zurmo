@@ -95,8 +95,10 @@
             $sourceUrl                = Yii::app()->createUrl('zurmo/default/globalSearchAutoComplete');
             GlobalSearchUtil::resolveModuleNamesAndLabelsDataWithAllOption(
                                         $moduleNamesAndLabels);
+            $applicationName          = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
             return new HeaderView($controller->getId(), $controller->getModule()->getId(), $settingsMenuItems,
-                                  $userMenuItems, $shortcutsCreateMenuItems, $notificationsUrl, $moduleNamesAndLabels, $sourceUrl);
+                                  $userMenuItems, $shortcutsCreateMenuItems, $notificationsUrl,
+                                  $moduleNamesAndLabels, $sourceUrl, $applicationName);
         }
 
         protected static function getAndResolveUserMenuItemsForHeader()

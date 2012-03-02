@@ -32,23 +32,32 @@
 
         protected $notificationsUrl;
 
-        public function __construct($settingsMenuItems, $userMenuItems, $notificationsUrl)
+        protected $applicationName;
+
+        public function __construct($settingsMenuItems, $userMenuItems, $notificationsUrl, $applicationName)
         {
             assert('is_array($settingsMenuItems)');
             assert('is_array($userMenuItems)');
             assert('is_string($notificationsUrl)');
+            assert('is_string($applicationName) || $applicationName == null');
             $this->settingsMenuItems     = $settingsMenuItems;
             $this->userMenuItems         = $userMenuItems;
             $this->notificationsUrl      = $notificationsUrl;
+            $this->applicationName       = $applicationName;
         }
 
         protected function renderContent()
         {
 
             $imagePath = Yii::app()->baseUrl . '/themes/default/images/';
-            $content   = '<div class="clearfix"><div id="corp-logo"><img src="' . $imagePath. 'Zurmo_logo.png"><span>Company Name</span></div>';
-            $content .= '<div id="user-toolbar" class="clearfix">';
-            $content .= static::renderHeaderMenuContent(
+            $content   = '<div class="clearfix"><div id="corp-logo"><img src="' . $imagePath. 'Zurmo_logo.png">';
+            if($this->applicationName != null)
+            {
+                $content  .= CHtml::tag('span', array(), $this->applicationName);
+            }
+            $content  .= '</div>';
+            $content  .= '<div id="user-toolbar" class="clearfix">';
+            $content  .= static::renderHeaderMenuContent(
                             static::resolveUserMenuItemsWithTopLevelItem($this->userMenuItems),
                             'user-header-menu');
             $content  .= static::renderNotificationsLinkContent();
@@ -102,14 +111,14 @@
             $link     = $this->notificationsUrl;
             $content  = null;
             $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
-            
+
             if ($count > 0)
             {
-				$content  .= "<a href=\"$link\" class=\"notifications-link unread\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
-			} else {
-				$content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
-			}
-            
+                $content  .= "<a href=\"$link\" class=\"notifications-link unread\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+            } else {
+                $content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+            }
+
             return $content;
         }
     }
