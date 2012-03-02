@@ -41,7 +41,7 @@
 
         protected function renderContent()
         {
-            $content = null;
+            $content = '<ul>';
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -65,16 +65,18 @@
                                     )
                                 );
                                 $onClick = 'window.location.href = "' . $url . '"';
-                                $content .= CHtml::button(Yii::t('Default', 'Select'), array('onClick' => $onClick));
+                                $content .= '<li>';
+                                $content .= CHtml::button(Yii::t('Default', 'Y'), array('onClick' => $onClick));
                                 $title    = $metadata['perUser']['title'];
                                 MetadataUtil::resolveEvaluateSubString($title);
                                 $content .= '&#160;' . $title;
-                                $content .= '<br/>';
+                                $content .= '</li>';
                             }
                         }
                     }
                 }
             }
+			$content .= '</ul>';
             return $content;
         }
     }

@@ -10,7 +10,7 @@ $(window).ready(function(){
 		}, 
 		function(){
 			if ( $(this).find('ul') ){
-				$(this).find('ul').stop(true, true).fadeOut(500);
+				$(this).find('ul').stop(true, true).fadeOut(250);
 			}
 		}
 	);

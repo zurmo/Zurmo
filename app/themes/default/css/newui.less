@@ -3,6 +3,10 @@
 @import 'widget-juiportlets.less';
 @import 'install.less';
 @import 'configuration.less';
+@import 'dashboard-portlets.less';
+
+
+
 
 @font-face {
     font-family: 'ZurmoSymblyRegular';
@@ -963,7 +967,7 @@ table.items thead tr:hover{
 .col-0{
 	/*width:15% !important;*/
 }
-
+.modal-view-toolbar,
 .form-toolbar{
 	padding-top:13px;
 	text-align:center;
@@ -1138,18 +1142,18 @@ table.items thead tr:hover{
 /*Search Scope box, and accoutn list*/
 /*Checkboxes*/
 
-	.ui-multiselect-checkboxes label {
-		padding-left: 25px;
-		background: url(../images/checkbox.png) left 4px no-repeat;
-	}
-	.ui-multiselect-checkboxes label.c_on {
-		background: url(../images/checkbox.png) left -21px no-repeat;
-	}
+.ui-multiselect-checkboxes label {
+	padding-left: 25px;
+	background: url(../images/checkbox.png) left 4px no-repeat;
+}
+.ui-multiselect-checkboxes label.c_on {
+	background: url(../images/checkbox.png) left -21px no-repeat;
+}
 
-	.ui-multiselect-checkboxes label input {
-		position: absolute;
-		left: -9999px;
-	}
+.ui-multiselect-checkboxes label input {
+	position: absolute;
+	left: -9999px;
+}
 
 
 
