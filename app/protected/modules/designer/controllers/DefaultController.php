@@ -40,22 +40,24 @@
          */
         public function filterModuleClassName($filterChain)
         {
-            $moduleClassNames = array();
-            $modules = Module::getModuleObjects();
-            foreach ($modules as $module)
+            if(isset($_GET['moduleClassName']))
             {
-                $moduleTreeMenuItems = $module->getDesignerMenuItems();
-                if ($module->isEnabled() && !empty($moduleTreeMenuItems))
+                $moduleClassNames = array();
+                $modules = Module::getModuleObjects();
+                foreach ($modules as $module)
                 {
-                    $moduleClassNames[] = get_class($module);
+                    $moduleTreeMenuItems = $module->getDesignerMenuItems();
+                    if ($module->isEnabled() && !empty($moduleTreeMenuItems))
+                    {
+                        $moduleClassNames[] = get_class($module);
+                    }
+                }
+                if (!in_array($_GET['moduleClassName'], $moduleClassNames))
+                {
+                    $message = Yii::t('Default', "The requested {moduleClassName} module does not exist", array('moduleClassName'=>$_GET['moduleClassName']));
+                    throw new DesignerModuleClassNameNotFoundException($message);
                 }
             }
-            if (!in_array($_GET['moduleClassName'], $moduleClassNames))
-            {
-                $message = Yii::t('Default', "The requested {$_GET['moduleClassName']} module does not exist");
-                throw new DesignerModuleClassNameNotFoundException($message);
-            }
-
             $filterChain->run();
         }
 
