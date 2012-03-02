@@ -81,19 +81,35 @@ $(window).ready(function(){
 					}
 			});
 	}
-    
+	
+	$('label.hasCheckBox', '.items' ).each(function(){
+		$(this).bind('click', { $inputContext:$(this).content  },
+			function( event ){
+		        if ( $('input:checkbox', event.data.$inputContext ).length ) {	
+					$('input:checkbox', event.data.$inputContext ).each(function(){ 
+						$(this).parent().removeClass('c_on');
+					});
+					$('label input:checked', event.data.$inputContext ).each(function(){ 
+						$(this).parent('label').addClass('c_on');
+				    });
+				}
+		});
+	});
+	
     
     //we're doing that because the multiselect widget isn't generated yet..
     window.setTimeout(
     	function setCheckboxes(){
     		setupCheckboxes( $('#search-form') );
     		setupCheckboxes( $('#app-search') );
-    		setupCheckboxes( $('label.hasCheckBox') );
+    		//setupCheckboxes( $('.checkbox-column') );
     	},
     1000 );
 	
+	
+	
+	/*Label overlays input, address fields*/
 	$(".overlay-label-field input").live('focus', function(){
-		
 		$(this).prev().fadeOut(100);
 	});
 	
