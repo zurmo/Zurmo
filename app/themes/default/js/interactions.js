@@ -88,6 +88,7 @@ $(window).ready(function(){
     	function setCheckboxes(){
     		setupCheckboxes( $('#search-form') );
     		setupCheckboxes( $('#app-search') );
+    		setupCheckboxes( $('label.hasCheckBox') );
     	},
     1000 );
 	
