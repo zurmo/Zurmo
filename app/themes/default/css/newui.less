@@ -1701,12 +1701,14 @@ table.items thead tr:hover{
 
 div.overlay-label-field{
     position:relative;
+    padding-bottom:15px;
+    .clearfix();
 }
 .overlay-label-field label {
-    position: absolute;
+    position: absolute !important;
     left: 4px;
     top: 6px;
-    color: #575757;
+    color: #999;
     font-size: 14px;
     font-weight: normal;
 }
@@ -1716,8 +1718,9 @@ div.overlay-label-field{
     box-sizing: border-box;
 }
 .half{
-    width:50%;
-    float:left;
+    width:48%;
+   display:block;
+   float:left;
     input{
 	    width:100%;
 	    -moz-box-sizing: border-box;
@@ -1725,7 +1728,12 @@ div.overlay-label-field{
 	    box-sizing: border-box;
 	}
 }
-
+div.hasHalfs{
+	.clearfix();
+	div:first-child{
+		margin-right:4%;
+	}
+}
 
 
 /*@TODO: this class should be changes to something more specific, like juiportlet-with-editing or similar*/

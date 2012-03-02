@@ -100,10 +100,12 @@
             $content  = $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'street1')          . "\n";
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'street2')          . "\n";
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'city')             . "\n";
+            $content .= '<div class="hasHalfs">';
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'state', true)      . "\n";
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'postalCode', true) . "\n";
+			$content .= '</div>';
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'country')          . "\n";
-            return $content;
+            return '<div class="address-fields">'.$content.'</div>';
         }
 
         protected function renderEditableAddressTextField($model, $form, $inputNameIdPrefix, $attribute,

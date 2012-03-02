@@ -5,7 +5,7 @@ $(window).ready(function(){
 	$( '.nav > .parent' ).hover(
 		function(){
 			if ( $(this).find('ul') ){
-				$(this).find('ul').stop(true, true).delay(0).fadeIn(250);
+				$(this).find('ul').stop(true, true).delay(0).fadeIn(100);
 			}
 		}, 
 		function(){
@@ -92,7 +92,8 @@ $(window).ready(function(){
     	},
     1000 );
 	
-	$(".overlay-label-field > input").live('focus', function(){
+	$(".overlay-label-field input").live('focus', function(){
+		
 		$(this).prev().fadeOut(100);
 	});
 	
@@ -101,6 +102,12 @@ $(window).ready(function(){
 			$(this).prev().fadeIn(250);
 		}
 	});
+	$(".overlay-label-field > input").each( function(){
+		if($(this).val() == "") {
+			$('label', $(this)).fadeIn(250);
+		}
+	});
+	
 
 
 });
