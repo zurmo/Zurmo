@@ -43,7 +43,7 @@
             {
                 $content .= '<tr>';
                 $content .= '<td colspan="2">';  //Set to 3 once avatar/icon column is re-enabled.
-                $content .= Yii::t('Default', 'No Activities found.');
+                $content .= CHtml::tag('span', array('class' => 'empty'), Yii::t('Default', 'No Activities found.'));
                 $content .= '</td>';
                 $content .= '</tr>';
             }
@@ -90,7 +90,7 @@
             }
             $content .= '</tbody>';
             $content .= '</table>';
-			$content .= $this->renderPaginationContent();
+            $content .= $this->renderPaginationContent();
             $content .= '</div>';
             return $content;
         }

@@ -42,7 +42,7 @@
             {
                 $content .= '<tr>';
                 $content .= '<td colspan="3"><span class="empty">';
-                $content .= Yii::t('Default', 'No Activities found.');
+                $content .= CHtml::tag('span', array('class' => 'empty'), Yii::t('Default', 'No Activities found.'));
                 $content .= '</span></td>';
                 $content .= '</tr>';
             }
