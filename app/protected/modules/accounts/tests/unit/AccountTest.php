@@ -85,9 +85,9 @@
 
             $account = Account::getById($id);
             $this->assertEquals   (1,     $account->primaryEmail->optOut);
-            $this->assertNotEquals(true,  $account->primaryEmail->optOut);
+            $this->assertNotSame(true,  $account->primaryEmail->optOut);
             $this->assertEquals   (0,     $account->secondaryEmail->optOut);
-            $this->assertNotEquals(false, $account->secondaryEmail->optOut);
+            $this->assertNotSame(false, $account->secondaryEmail->optOut);
 
             $account->primaryEmail->optOut = 0;
             $this->assertTrue($account->save());
@@ -95,7 +95,7 @@
 
             $account = Account::getById($id);
             $this->assertEquals   (0,     $account->primaryEmail->optOut);
-            $this->assertNotEquals(false, $account->primaryEmail->optOut);
+            $this->assertNotSame(false, $account->primaryEmail->optOut);
 
             $account->primaryEmail->optOut = 3;
             $this->assertFalse($account->save());

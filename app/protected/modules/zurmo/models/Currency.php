@@ -95,11 +95,13 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
+                    'active',
                     'code',
                     'rateToBase',
-                    'active',
                 ),
                 'rules' => array(
+                    array('active',     'boolean'),
+                    array('active',     'default', 'value' => true),
                     array('code',       'required'),
                     array('code',       'unique'),
                     array('code',       'type', 'type' => 'string'),
@@ -108,8 +110,6 @@
                                                   'message' => 'Code must be a valid currency code.'),
                     array('rateToBase', 'required'),
                     array('rateToBase', 'type', 'type' => 'float'),
-                    array('active',     'boolean'),
-                    array('active',     'default', 'value' => true),
                 ),
                 'lastAttemptedRateUpdateTimeStamp'      => null,
             );

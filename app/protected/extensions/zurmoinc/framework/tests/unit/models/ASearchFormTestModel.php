@@ -33,6 +33,15 @@
         public $ABName;
         public $differentOperatorA;
         public $differentOperatorB;
+        public $dateDateTimeADate__Date;
+        public $dateDateTimeADateTime__DateTime;
+
+        public function __construct(RedBeanModel $model)
+        {
+            parent::__construct($model);
+            $this->addAttributeNamesThatCanBeSplitUsingDelimiter('dateDateTimeADate__Date');
+            $this->addAttributeNamesThatCanBeSplitUsingDelimiter('dateDateTimeADateTime__DateTime');
+        }
 
         public function rules()
         {
@@ -41,16 +50,20 @@
                 array('ABName', 'safe'),
                 array('differentOperatorA', 'safe'),
                 array('differentOperatorB', 'boolean'),
+                array('dateDateTimeADate__Date', 'safe'),
+                array('dateDateTimeADateTime__DateTime', 'safe'),
             ));
         }
 
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'anyA'                => Yii::t('Default', 'Any A'),
-                'ABName'              => Yii::t('Default', 'ABName'),
-                'differentOperatorA'  => Yii::t('Default', 'differentOperatorA'),
-                'differentOperatorB'  => Yii::t('Default', 'differentOperatorB'),
+                'anyA'                             => Yii::t('Default', 'Any A'),
+                'ABName'                           => Yii::t('Default', 'ABName'),
+                'differentOperatorA'               => Yii::t('Default', 'differentOperatorA'),
+                'differentOperatorB'               => Yii::t('Default', 'differentOperatorB'),
+                'dateDateTimeADate__Date'          => Yii::t('Default', 'dateDateTimeADate Date'),
+                'dateDateTimeADateTime__DateTime'  => Yii::t('Default', 'dateDateTimeADateTime DateTime'),
             ));
         }
 
@@ -75,7 +88,13 @@
                 ),
                 'differentOperatorB' => array(
                     array('aName', null, 'endsWith')
-                )
+                ),
+                'dateDateTimeADate__Date' => array(
+                    array('manyMany',  'aDate',     null, 'resolveRelatedAttributeValueByRules'),
+                ),
+                'dateDateTimeADateTime__DateTime' => array(
+                    array('manyMany',  'aDateTime', null, 'resolveRelatedAttributeValueByRules'),
+                ),
             ));
         }
     }

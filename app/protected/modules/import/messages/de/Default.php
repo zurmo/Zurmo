@@ -131,6 +131,8 @@
             => 'Modell Berechtigungen',
         'Module To Import To'
             => 'Modul zum Import',
+        'Multi-Select Pick list value required, but missing.'
+            => 'Multi-Select-Auswahlliste Wert erforderlich, aber fehlt.',
         'Next'
             => 'Nächste',
         'Other Id'

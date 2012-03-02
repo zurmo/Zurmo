@@ -316,7 +316,7 @@
                             if (in_array($usedAttribute, $this->placedDirectAttributeNamesAsElements))
                             {
                                 $this->message =
-                                Yii::t('Default', 'All field placed must be unique. Two of the placed ' .
+                                Yii::t('Default', 'All fields placed must be unique. Two of the placed ' .
                                                   'fields: {field1Label} and {field2Label} contain the same fields.',
                                                    array('{field1Label}'   => $this->placeableLayoutAttributes
                                                                               [$attributeName]['attributeLabel'],

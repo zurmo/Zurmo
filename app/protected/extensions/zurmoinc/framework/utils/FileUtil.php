@@ -54,7 +54,7 @@
                 }
                 closedir($handle);
             }
-            return ArrayUtil::arrayFlat($files);
+            return ArrayUtil::flatten($files);
         }
     }
 ?>

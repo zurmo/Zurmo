@@ -24,39 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class Email extends OwnedModel
+    /**
+     * Checks if SPL extension is installed.
+     * Required by Yii framework.
+     */
+    class SPLServiceHelper extends ServiceHelper
     {
-        public function __toString()
+        protected function checkService()
         {
-            if (trim($this->emailAddress) == '')
+            $SPLInstalled =  InstallUtil::checkSPL();
+            if ($SPLInstalled)
             {
-                return Yii::t('Default', '(None)');
+                $this->message  = Yii::t('Default', 'SPL extension is loaded.');
+                return true;
             }
-            return $this->emailAddress;
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'emailAddress',
-                    'isInvalid',
-                    'optOut',
-                ),
-                'rules' => array(
-                    array('emailAddress', 'email'),
-                    array('isInvalid',    'boolean'),
-                    array('optOut',       'boolean'),
-                ),
-                'defaultSortAttribute' => 'emailAddress'
-            );
-            return $metadata;
-        }
-
-        public static function isTypeDeletable()
-        {
-            return true;
+            else
+            {
+                $this->message  = Yii::t('Default', 'SPL extension is not loaded.');
+                return false;
+            }
         }
     }
 ?>

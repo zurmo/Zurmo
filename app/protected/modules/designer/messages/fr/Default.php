@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A calculated number based on other field values'
+            => 'Un chiffre calculé',
         'A check box'
             => 'Un champ case à cocher',
         'A currency field'
@@ -53,26 +55,44 @@
             => 'Une liste déroulante à une option',
         'A radio button pick list'
             => 'Un champ bouton radio',
+        'A set of dependent pick lists'
+            => 'Listes déroulantes dépendantes',
+        'A tag cloud'
+            => 'Un nuage de mots-clefs',
         'A text field'
             => 'Un champ texte',
         'Access Designer Tool'
             => 'Accès au Designer',
         'Address fields'
             => 'Champs d\'adresse',
+        'All fields placed must be unique. Two of the placed fields: {field1Label} and {field2Label} contain the same fields.'
+            => 'Un champ ne peut être placé qu\'une fois.  Les champs suivant contiennent le même champ: {field1Label} et {field2Label}.',
         'All panels visible'
             => 'Tous visibles',
         'All required fields must be placed in this layout.'
             => 'Tous les champs obligatoires doivent être placés dans la vue.',
         'An integer field'
             => 'Un champ nombre entier',
+        'At least one pick-list value must be mapped for each used level.'
+            => 'Au moins une valeur de la liste déroulante doit être mappée pour chaque niveau.',
+        'Available Fields:'
+            => 'Champs disponibles:',
+        'Calculated Number'
+            => 'Champs disponibles:',
         'Check Box'
             => 'Case à cocher',
+        'Create a math formula that is calculated from other fields. Use the Formula Name from the Available Fields grid below to create your formula. Example formula (field1 x field2) / field3'
+            => 'Créer une formule calculée à partir d\'autres données.  Utilisez le Nom Formule ci-dessous de la colonne Champs Disponibles pour créer votre formule. Example: (champ1 x champ2) / champ3',
         'Create Field'
             => 'Ajouter un champ',
         'Custom Fields'
             => 'Champs personnalisés',
         'Decimal'
             => 'Décimal',
+        'Dependency Mapping'
+            => 'Mapping Dépendant',
+        'Dependent Pick Lists'
+            => 'Listes déroulantes dépendantes',
         'Designer'
             => 'Designer',
         'Designer Home'
@@ -85,8 +105,12 @@
             => 'Vue détaillée',
         'Display Name'
             => 'Étiquette du champ',
+        'Dropdown Dependency Mapping'
+            => 'Mapping de la liste déroulante dépendante',
         'Each item must be uniquely named'
             => 'Merci d\'ajouter une valeur qui n\'est pas dans la liste.',
+        'Each value must not contain a comma.'
+            => 'La valeur ne peut pas contenir une virgule.',
         'Edit Field'
             => 'Modification de champ',
         'Edit Layout'
@@ -109,16 +133,26 @@
             => 'Le premier caractère doit être une lettre minuscule',
         'First panel visible, then `show more` link'
             => 'Premier panneau visible, ensuite un lien "plus de détails"',
+        'First select level {number}'
+            => 'Choisissez d\'abord niveau {number}',
+        'Formula'
+            => 'Formule',
+        'Formula Name'
+            => 'Nom Formule',
         'General'
             => 'Général',
         'General Edit'
             => 'Modification Général',
+        'How does this work?'
+            => 'Comment ça marche?',
         'Invalid panel configuration type'
             => 'La configuration des panneaux choisie est invalide',
         'Layout saved successfully.'
             => 'Présentations de page sauvegardées.',
         'Layouts'
             => 'Présentations de page',
+        'Level: {number}'
+            => 'CNiveau: {number}',
         'Manage module fields, layouts, and labels.'
             => 'Personalisez vos champs, étiquettes, mises en pages etc.',
         'Mass Edit View'
@@ -169,17 +203,33 @@
             => 'Publier',
         'Search View'
             => 'Vue recherche',
+        'Show If'
+            => 'Valeur dépendante',
+        'Tag Cloud'
+            => 'Nuage de mots-clés',
+        'Tag Cloud Values'
+            => 'Valeurs du nuage de mots-clés',
         'Text'
             => 'Texte',
         'Text Area'
             => 'Zone de texte',
+        'The formula is invalid.'
+            => 'La formule est invalide.',
+        'There are no fields in this module to be used in a formula.'
+            => 'Aucun champ existe pour utiliser dans une formule.',
         'There was an error processing your request.'
             => 'Il y a une erreur.',
         'Track Audit Log'
             => 'Auditer ce champ',
         'URL'
             => 'URL',
+        'You can only have at most 4 pick-lists selected.'
+            => 'Vous pouvez avoir au maximum 4 listes déroulantes.',
+        'You must have at least one field placed in order to save a layout.'
+            => 'Le layout doit contenir au moins 1 champ.',
         'You must have at least one panel in order to save a layout.'
             => 'Vous devez avoir au moins un panneau pour publier la présentation de page.',
+        'You must select at least 2 pick-lists.'
+            => 'Vous devez choisir au minimum 2 listes déroulantes.',
     );
 ?>

@@ -210,6 +210,44 @@
             $this->assertEquals($expectedVersion, $actualVersion);
         }
 
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckSoap()
+        {
+            $this->assertNotNull(InstallUtil::checkSoap());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckSPL()
+        {
+            $this->assertNotNull(InstallUtil::checkSPL());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckCtype()
+        {
+            $this->assertNotNull(InstallUtil::checkCtype());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckPCRE()
+        {
+            $this->assertNotNull(InstallUtil::checkPCRE());
+        }
+
+        public function testCheckServerVariable()
+        {
+            $error = null;
+            $this->assertNotNull(InstallUtil::checkServerVariable($error));
+        }
+
         public function testCheckYii()
         {
             InstallUtil::checkYii('10.1.8', $expectedVersion);
@@ -540,6 +578,16 @@
         public function testRunInstallation()
         {
             $this->runInstallation(true);
+        }
+
+        /**
+        * @depends testRunInstallation
+        */
+        public function testRunAutoBuildFromUpdateSchemaCommand()
+        {
+            $this->runInstallation(true);
+            $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand();
+            $this->assertTrue($result);
         }
 
         public function testRunInstallationWithoutMemCacheOn()

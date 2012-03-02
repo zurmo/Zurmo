@@ -24,39 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class Email extends OwnedModel
+    /**
+     * Exception thrown when module classname  is missing.
+     */
+    class DesignerModuleClassNameNotFoundException extends CException
     {
-        public function __toString()
-        {
-            if (trim($this->emailAddress) == '')
-            {
-                return Yii::t('Default', '(None)');
-            }
-            return $this->emailAddress;
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'emailAddress',
-                    'isInvalid',
-                    'optOut',
-                ),
-                'rules' => array(
-                    array('emailAddress', 'email'),
-                    array('isInvalid',    'boolean'),
-                    array('optOut',       'boolean'),
-                ),
-                'defaultSortAttribute' => 'emailAddress'
-            );
-            return $metadata;
-        }
-
-        public static function isTypeDeletable()
-        {
-            return true;
-        }
     }
 ?>

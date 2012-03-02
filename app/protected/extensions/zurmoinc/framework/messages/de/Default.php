@@ -43,10 +43,14 @@
             => 'Nach',
         'All'
             => 'Alle',
+        'and'
+            => 'und',
         'Basic Search'
             => 'Einfache Suche',
         'Before'
             => 'Vor',
+        'Between'
+            => 'zwischen',
         'Bulk insert failed. There was a row with an incorrect column quantity'
             => 'Fehler bei der BULK INSERT-Operation. Eine Zeile enthält eine Reihe von schlechten Säulen',
         'by'
@@ -99,6 +103,10 @@
             => 'Fahrenheit',
         'Filtered Lists'
             => 'Gefilterte Listen',
+        'First character must be a lower case letter'
+            => 'Das erste Zeichen muss Kleinbuchstabe sein.',
+        'First select the {attributeLabel}'
+            => 'Wählen Sie zuerst das {attributeLabel}',
         'firstDateTime must occur after secondDateTime'
             => 'firstDateTime muss nach secondDateTime kommen',
         'firstDateTime must occur before secondDateTime'
@@ -139,6 +147,8 @@
             => 'Max Upload-Größe: {maxSize}',
         'Minute'
             => 'Minute',
+        'Missing the attribute labels.'
+            => 'Attribut-Tags fehlt',
         'Model Class Name'
             => 'Modell Klassenname',
         'Model Id'
@@ -157,6 +167,8 @@
             => 'Meine Liste Ansicht',
         'Name'
             => 'Name',
+        'Name must not contain spaces or special characters'
+            => 'Der Name darf keine Sonderzeichen oder Leerzeichen haben',
         'Next 7 Days'
             => 'Nächste 7 Tage',
         'No'
@@ -169,6 +181,8 @@
             => 'Jetzt',
         'of'
             => 'von',
+        'On'
+            => 'Am',
         'Opted Out'
             => 'Opted Out',
         'or'
@@ -239,6 +253,8 @@
             => 'gesamt',
         'Type'
             => 'Typ',
+        'Type to find a tag'
+            => 'Schreiben, um ein tab zu finden',
         'Unknown'
             => 'unbekannt',
         'Update Selected'

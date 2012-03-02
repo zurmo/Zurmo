@@ -70,6 +70,7 @@
                 'relations' => array(
                     'primaryA'     => array(RedBeanModel::HAS_ONE, 'A', RedBeanModel::OWNED),
                     'secondaryA'   => array(RedBeanModel::HAS_ONE, 'A', RedBeanModel::OWNED),
+                    'manyMany'     => array(RedBeanModel::MANY_MANY, 'DateDateTime', RedBeanModel::OWNED),
                 ),
             );
             return $metadata;

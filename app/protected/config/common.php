@@ -163,7 +163,7 @@
                 'timeZone'             => 'America/Chicago',
             ),
             'request' => array(
-                'enableCsrfValidation' => false,
+                'enableCsrfValidation' => true,
                 'enableCookieValidation' => false, //keep off until we can fix it on linux/windows servers.
             ),
             'urlManager' => array (

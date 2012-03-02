@@ -43,10 +43,14 @@
             => 'Después',
         'All'
             => 'Todo',
+        'and'
+            => 'y',
         'Basic Search'
             => 'Búsqueda básica',
         'Before'
             => 'Antes',
+        'Between'
+            => 'Entre',
         'Bulk insert failed. There was a row with an incorrect column quantity'
             => 'Error en la operación BULK INSERT. Una línea contiene una serie de columnas malas',
         'by'
@@ -99,6 +103,10 @@
             => 'Fahrenheit',
         'Filtered Lists'
             => 'Lista filtrada',
+        'First character must be a lower case letter'
+            => 'El primer carácter debe ser una letra minúscula.',
+        'First select the {attributeLabel}'
+            => 'Primero, seleccione el / la {attributeLabel}',
         'firstDateTime must occur after secondDateTime'
             => 'firstDateTime debe ocurrir después secondDateTime',
         'firstDateTime must occur before secondDateTime'
@@ -139,6 +147,8 @@
             => 'Max tamaño de subida: {maxSize}',
         'Minute'
             => 'Minuto',
+        'Missing the attribute labels.'
+            => 'Carece las etiquetas de los atributos.',
         'Model Class Name'
             => 'Nombre de la clase de modelo',
         'Model Id'
@@ -157,6 +167,8 @@
             => 'Mi vista de lista',
         'Name'
             => 'Nombre',
+        'Name must not contain spaces or special characters'
+            => 'El nombre no puede contener caracteres especiales ni espacios.',
         'Next 7 Days'
             => 'Próximos 7 días',
         'No'
@@ -169,6 +181,8 @@
             => 'Ahora',
         'of'
             => 'de',
+        'On'
+            => 'El',
         'Opted Out'
             => 'Excluido',
         'or'
@@ -239,6 +253,8 @@
             => 'total',
         'Type'
             => 'Tipo',
+        'Type to find a tag'
+            => 'Escriba para encontrar una etiqueta',
         'Unknown'
             => 'Desconocido',
         'Update Selected'

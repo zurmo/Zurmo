@@ -43,10 +43,14 @@
             => 'Après',
         'All'
             => 'Tous',
+        'and'
+            => 'et',
         'Basic Search'
             => 'Recherche simple',
         'Before'
             => 'Avant',
+        'Between'
+            => 'Entre',
         'Bulk insert failed. There was a row with an incorrect column quantity'
             => 'Erreur avec l\'opération BULK INSERT.  Une ligne contient une mauvaise quantité de colonnes',
         'by'
@@ -99,6 +103,10 @@
             => 'Fahrenheit',
         'Filtered Lists'
             => 'Liste Filtrée',
+        'First character must be a lower case letter'
+            => 'Le premier caractère doit être une lettre minuscule',
+        'First select the {attributeLabel}'
+            => 'Choisissez d\'abord le/la {attributeLabel}',
         'firstDateTime must occur after secondDateTime'
             => 'firstDateTime doit être après secondDateTime',
         'firstDateTime must occur before secondDateTime'
@@ -139,6 +147,8 @@
             => 'Taille max de téléchargement: {maxSize}',
         'Minute'
             => 'Minute',
+        'Missing the attribute labels.'
+            => 'Il manque les étiquettes d\'attribut.',
         'Model Class Name'
             => 'Nom de la classe du modèle',
         'Model Id'
@@ -157,6 +167,8 @@
             => 'Ma Vue Liste',
         'Name'
             => 'Nom',
+        'Name must not contain spaces or special characters'
+            => 'Le nom ne peut contenir ni caractères spéciaux, ni espace.',
         'Next 7 Days'
             => 'Prochains 7 jours',
         'No'
@@ -169,6 +181,8 @@
             => 'Maintenant',
         'of'
             => 'sur',
+        'On'
+            => 'Le',
         'Opted Out'
             => 'Opt out',
         'or'
@@ -239,6 +253,8 @@
             => 'total',
         'Type'
             => 'Type',
+        'Type to find a tag'
+            => 'Tapez pour retrouver un nuage de mots-clefs',
         'Unknown'
             => 'Inconnu',
         'Update Selected'

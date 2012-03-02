@@ -92,6 +92,10 @@
             => 'La taille max_sp_recursion_depth répond aux exigences minimales.',
         'Database name'
             => 'Nom de la base de donées',
+        'Database optimizer_search_depth size meets requirement.'
+            => 'La valeur du paramètre optimizer_search_depth répond aux exigences.',
+        'Database optimizer_search_depth value is {searchDepth}. It is required to be set to 0.'
+            => 'La valeur du paramètre optimizer_search_depth est {searchDepth}. La valeur doit être 0.',
         'Database password'
             => 'Mot de passe de la base de données',
         'Database schema creation complete.'
@@ -118,6 +122,8 @@
             => 'Freezing la base de données.',
         'Host name where Zurmo will be installed.'
             => 'Le nom de l\'hôte où Zurmo va être installé.',
+        'If this website is in production mode, please remove the app/test.php file.'
+            => 'Si ce site web est en production, veuillez supprimer le fichier app/test.php.',
         'In all likelihood, these items were supplied to you by your Web Host. ' .
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -200,6 +206,8 @@
             => 'La valeur PHP upload_max_filesize est:',
         'PHP upload_max_filesize value meets minimum requirement.'
             => 'La valeur PHP upload_max_filesize répond aux exigences minimales.',
+        'Please delete all files from assets folder on server.'
+            => 'Veuillez supprimer touts les fichiers du dossier Assets.',
         'Rebuilding Permissions.'
             => 'Reconstruction des permissions.',
         'Recheck System'

@@ -77,14 +77,14 @@
         /**
          * Convert multi-dimenision array into flat(one dimension) array
          */
-        public static function arrayFlat($array)
+        public static function flatten($array)
         {
             $flatternArray = array();
             foreach ($array as $element)
             {
                 if (is_array($element))
                 {
-                    $flatternArray = array_merge($flatternArray, self::arrayFlat($element));
+                    $flatternArray = array_merge($flatternArray, self::flatten($element));
                 }
                 else
                 {

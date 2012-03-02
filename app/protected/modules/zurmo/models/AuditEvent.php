@@ -150,8 +150,8 @@
             $metadata[__CLASS__] = array(
                 'members' => array(
                     'dateTime',
-                    'moduleName',
                     'eventName',
+                    'moduleName',
                     'modelClassName',
                     'modelId',
                     'serializedData',
@@ -162,12 +162,12 @@
                 'rules' => array(
                     array('dateTime',       'required'),
                     array('dateTime',       'type', 'type' => 'datetime'),
-                    array('moduleName',     'required'),
-                    array('moduleName',     'type',   'type' => 'string'),
-                    array('moduleName',     'length', 'min'  => 3, 'max' => 64),
                     array('eventName',      'required'),
                     array('eventName',      'type',   'type' => 'string'),
                     array('eventName',      'length', 'min'  => 3, 'max' => 64),
+                    array('moduleName',     'required'),
+                    array('moduleName',     'type',   'type' => 'string'),
+                    array('moduleName',     'length', 'min'  => 3, 'max' => 64),
                     array('modelClassName', 'type', 'type' => 'string'),
                     array('modelClassName', 'length', 'min'  => 3, 'max' => 64),
                     array('modelId',        'type', 'type' => 'integer'),

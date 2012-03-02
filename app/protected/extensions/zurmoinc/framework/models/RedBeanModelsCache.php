@@ -68,9 +68,9 @@
                     throw new NotFoundException();
                 }
                 assert('serialize($model) == $serializedModel');
-                if(YII_DEBUG)
+                if (YII_DEBUG)
                 {
-                    if(crc32(serialize($model)) != $checksum)
+                    if (crc32(serialize($model)) != $checksum)
                     {
                         throw new ChecksumMismatchException();
                     }

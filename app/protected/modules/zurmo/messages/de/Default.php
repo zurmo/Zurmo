@@ -227,6 +227,8 @@
             => 'Globale Konfiguration',
         'Global configuration saved successfully.'
             => 'Globale Konfiguration wurde erfolgreich gespeichert.',
+        'Global Search Fields'
+            => 'Die globale Suche Felder',
         'Go to Search'
             => 'Zugang Suche',
         'Group'
@@ -545,6 +547,8 @@
             => 'Benutzername',
         'Value'
             => 'Wert',
+        'Values'
+            => 'Werte',
         'Visit <b>Zurmo Inc.</b> at {url}.'
             => 'Besuchen Sie <b>Zurmo Inc.</ b> unter {url}',
         'Visit the <b>Zurmo Open Source Project</b> at {url}.'

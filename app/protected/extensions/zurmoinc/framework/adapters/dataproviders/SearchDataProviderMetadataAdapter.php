@@ -50,7 +50,6 @@
             $adaptedMetadata = array('clauses' => array(), 'structure' => '');
             $clauseCount = 1;
             $structure = '';
-
             foreach ($this->metadata as $attributeName => $value)
             {
                 //If attribute is a pseudo attribute on the SearchForm
@@ -173,6 +172,12 @@
                         {
                             $relatedValue = $relatedValue['value'];
                         }
+                        elseif (($this->model->$attributeName instanceof RedBeanManyToManyRelatedModels ||
+                                $this->model->$attributeName instanceof RedBeanOneToManyRelatedModels ) &&
+                               is_array($relatedValue) && count($relatedValue) > 0)
+                        {
+                            //Continue on using relatedValue as is.
+                        }
                         elseif ($this->model->$attributeName->$relatedAttributeName instanceof RedBeanModels &&
                                is_array($relatedValue) && count($relatedValue) > 0)
                         {
@@ -187,13 +192,23 @@
                     {
                         if ($this->model->isRelation($attributeName))
                         {
+                            if ($this->model->$attributeName instanceof RedBeanOneToManyRelatedModels ||
+                               $this->model->$attributeName instanceof RedBeanManyToManyRelatedModels)
+                            {
+                                $relationModelClassName = $this->model->getRelationModelClassName($attributeName);
+                                $modelForTypeOperations = new $relationModelClassName(false);
+                            }
+                            else
+                            {
+                                $modelForTypeOperations = $this->model->$attributeName;
+                            }
                             if ($operatorType == null)
                             {
                                 $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
-                                                $this->model->$attributeName, $relatedAttributeName);
+                                                $modelForTypeOperations, $relatedAttributeName);
                             }
                             $relatedValue  = ModelAttributeToCastTypeUtil::resolveValueForCast(
-                                                $this->model->$attributeName, $relatedAttributeName, $relatedValue);
+                                                $modelForTypeOperations, $relatedAttributeName, $relatedValue);
                             if ($this->model->$attributeName instanceof RedBeanModel)
                             {
                                 $mixedType = ModelAttributeToMixedTypeUtil::getType(

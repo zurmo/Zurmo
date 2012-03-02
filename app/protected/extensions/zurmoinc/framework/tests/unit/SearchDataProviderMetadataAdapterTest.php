@@ -34,6 +34,86 @@
             Yii::app()->user->userModel = $super;
         }
 
+        public function testGetAdaptedMetadataForhasManyRelationAttributes()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'ks' => array(
+                    'kMember'    => 'some Value',
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new I(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'ks',
+                    'relatedAttributeName' => 'kMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'some Value',
+                ),
+            );
+
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+        public function testSearchFormDynamicAttributesForRelatedManyManyDateTimeAttributes()
+        {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $searchAttributes = array(
+                'dateDateTimeADate__Date'          => array('type'         => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
+                                                         'firstDate'  => '1993-04-04'),
+                'dateDateTimeADateTime__DateTime'  => array('type'         => MixedDateTypesSearchFormAttributeMappingRules::TYPE_TODAY),
+            );
+            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $this->assertTrue($searchForm->isAttributeOnForm('dateDateTimeADate__Date'));
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchForm,
+                $super->id,
+                $searchAttributes
+            );
+            $todayDateTime      = new DateTime(null, new DateTimeZone(Yii::app()->timeZoneHelper->getForCurrentUser()));
+            $today              = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                                  $todayDateTime->getTimeStamp());
+            $todayPlus7Days     = MixedDateTypesSearchFormAttributeMappingRules::calculateNewDateByDaysFromNow(7);
+            $metadata           = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'manyMany',
+                    'relatedAttributeName' => 'aDate',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => '1993-04-04',
+                ),
+                2 => array(
+                    'attributeName'        => 'manyMany',
+                    'relatedAttributeName' => 'aDateTime',
+                    'operatorType'         => 'greaterThanOrEqualTo',
+                    'value'                => DateTimeUtil::
+                                              convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($today),
+                ),
+                3 => array(
+                    'attributeName'        => 'manyMany',
+                    'relatedAttributeName' => 'aDateTime',
+                    'operatorType'         => 'lessThanOrEqualTo',
+                    'value'                => DateTimeUtil::
+                                              convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($today),
+                ),
+            );
+
+            $compareStructure = '(1) and (2 and 3)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
         public function testAdaptingBooleanValues()
         {
             $super = User::getByUsername('super');

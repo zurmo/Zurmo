@@ -403,8 +403,8 @@
             $this->assertTrue($account->save());
             $account = Account::getById($account->id);
             $this->assertEmpty($account->officeFax);
-            $this->assertNotEquals(0, $account->officeFax);
-            $this->assertNotEquals(0, $account->billingAddress->street2);
+            $this->assertNotSame(0, $account->officeFax);
+            $this->assertNotSame(0, $account->billingAddress->street2);
         }
 
         public function testForgettingAModelWithAddingAManyToManyRelation()

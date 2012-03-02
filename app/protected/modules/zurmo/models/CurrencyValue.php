@@ -59,19 +59,19 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'value',
                     'rateToBase',
+                    'value',
                 ),
                 'relations' => array(
                     'currency' => array(RedBeanModel::HAS_ONE, 'Currency'),
                 ),
                 'rules' => array(
+                    array('currency',    'required'),
+                    array('rateToBase',  'required'),
+                    array('rateToBase',  'type', 'type' => 'float'),
                     array('value',       'required'),
                     array('value',       'type',    'type' => 'float'),
                     array('value',       'default', 'value' => 0),
-                    array('rateToBase',  'required'),
-                    array('rateToBase',  'type', 'type' => 'float'),
-                    array('currency',    'required'),
                 ),
                 'defaultSortAttribute' => 'value'
             );

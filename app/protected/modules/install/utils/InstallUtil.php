@@ -206,11 +206,72 @@
         }
 
         /**
-         * @returns true, or the Soap version if less than required, or false if not installed.
+         * @returns true if Soap extension is loaded, or false if not loaded.
          */
         public static function checkSoap()
         {
-            return in_array('soap', get_loaded_extensions());
+            return extension_loaded("soap");
+        }
+
+        /**
+        * @returns true if SPL extension is loaded, or false if not loaded.
+        * Required by Yii framework.
+        */
+        public static function checkSPL()
+        {
+            return extension_loaded("SPL");
+        }
+
+        /**
+        * @returns true if PCRE extension is loaded, or false if not loaded.
+        * Required by Yii framework.
+        */
+        public static function checkPCRE()
+        {
+            return extension_loaded("pcre");
+        }
+
+        /**
+        * @returns true if Ctype extension is loaded, or false if not loaded.
+        */
+        public static function checkCtype()
+        {
+            return extension_loaded("ctype");
+        }
+
+        /**
+        * @returns true if all $_SERVER variable are loaded correctly, otherwise return false.
+        * Required by Yii framework.
+        */
+        public static function checkServerVariable(&$error)
+        {
+            $vars = array('HTTP_HOST', 'SERVER_NAME', 'SERVER_PORT', 'SCRIPT_NAME', 'SCRIPT_FILENAME', 'PHP_SELF', 'HTTP_ACCEPT', 'HTTP_USER_AGENT');
+            $missing = array();
+            foreach ($vars as $var)
+            {
+                if (!isset($_SERVER[$var]))
+                {
+                    $missing[] = $var;
+                }
+            }
+            if (!empty($missing))
+            {
+                $error = Yii::t('Default', '$_SERVER does not have {vars}.', array('{vars}' => implode(', ', $missing)));
+                return false;
+            }
+
+            if (!isset($_SERVER["REQUEST_URI"]) && isset($_SERVER["QUERY_STRING"]))
+            {
+                $error = Yii::t('Default', 'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
+                return false;
+            }
+
+            if (!isset($_SERVER["PATH_INFO"]) && strpos($_SERVER["PHP_SELF"], $_SERVER["SCRIPT_NAME"]) !== 0)
+            {
+                $error = Yii::t('Default', 'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
+                return false;
+            }
+            return true;
         }
 
         /**
@@ -357,20 +418,19 @@
         }
 
         /**
-        * Check database optimizer-search-depth value.
+        * Check database optimizer_search_depth value.
         */
         public static function checkDatabaseOptimizerSearchDepthValue($databaseType,
-        $databaseHostname,
-        $databaseUsername,
-        $databasePassword,
-        /* out */ & $optimizerSearchDepth)
+                                                                      $databaseHostname,
+                                                                      $databaseUsername,
+                                                                      $databasePassword,
+                                                                      /* out */ & $optimizerSearchDepth)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            $optimizerSearchDepth = DatabaseCompatibilityUtil::getDatabaseOptimizerSearchDepthValue(
-                                        $databaseType,
-                                        $databaseHostname,
-                                        $databaseUsername,
-                                        $databasePassword);
+            $optimizerSearchDepth = DatabaseCompatibilityUtil::getDatabaseOptimizerSearchDepthValue($databaseType,
+                                                                                                    $databaseHostname,
+                                                                                                    $databaseUsername,
+                                                                                                    $databasePassword);
             return $optimizerSearchDepth == 0;
         }
 
@@ -378,12 +438,12 @@
         * Check database default collation.
         */
         public static function checkDatabaseDefaultCollation($databaseType,
-                                                           $databaseHostname,
-                                                           $databaseName,
-                                                           $databaseUsername,
-                                                           $databasePassword,
-                                                           $notAllowedDatabaseCollations,
-                                                           /* out */ & $databaseDefaultCollation)
+                                                             $databaseHostname,
+                                                             $databaseName,
+                                                             $databaseUsername,
+                                                             $databasePassword,
+                                                             $notAllowedDatabaseCollations,
+                                                             /* out */ & $databaseDefaultCollation)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             assert('is_array($notAllowedDatabaseCollations)');
@@ -558,10 +618,10 @@
             assert('is_string($scriptUrl)    || $scriptUrl    == ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
+            $debugConfigFileDist       = "$instanceRoot/protected/config/debugDIST.php";
 
             $perInstanceConfigFile     = "$instanceRoot/protected/config/$perInstanceFilename";
-            $debugConfigFile     = "$instanceRoot/protected/config/$debugFilename";
+            $debugConfigFile           = "$instanceRoot/protected/config/$debugFilename";
 
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);
@@ -776,7 +836,7 @@
             // Send notification to super admin to delete test.php file in case if this
             // installation is used in production mode.
             $message                    = new NotificationMessage();
-            $message->textContent       = Yii::t('Default', 'If this website is in production mode, please remove the app/test.php file. ');
+            $message->textContent       = Yii::t('Default', 'If this website is in production mode, please remove the app/test.php file.');
             $rules                      = new RemoveApiTestEntryScriptFileNotificationRules();
             NotificationsUtil::submit($message, $rules);
 
@@ -857,7 +917,7 @@
             if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();
-                $unfreezeWhenDone = true;
+                $freezeWhenDone = true;
             }
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
@@ -867,16 +927,18 @@
             self::autoBuildDatabase($messageLogger);
             $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
 
+            if ($freezeWhenDone)
+            {
+                RedBeanDatabase::freeze();
+            }
+
             // Send notification to super admin to clean assets folder(optional).
             $message                    = new NotificationMessage();
             $message->textContent       = Yii::t('Default', 'Please delete all files from assets folder on server.');
             $rules                      = new ClearAssetsFolderNotificationRules();
-            NotificationsUtil::submit($message, $rules);
-
-            if ($unfreezeWhenDone)
-            {
-                RedBeanDatabase::freeze();
-            }
+            //NotificationsUtil::submit($message, $rules); //running this causes stack overrun. Turn on once thread stack
+            //overrun issue is resolved.
+            return true;
         }
 
         public static function getDefaultHostInfo()

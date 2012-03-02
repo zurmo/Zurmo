@@ -65,7 +65,7 @@
                                                                         false,
                                                                         false,
                                                                         $metadata['global']['leftBottomView']['showAsTabbed']);
-            if(isset($metadata['global']['rightTopView']))
+            if (isset($metadata['global']['rightTopView']))
             {
                 $renderRightSide                         = true;
                 $rightTopMetadataForPortlets['global']   = $metadata['global']['rightTopView'];
@@ -85,12 +85,11 @@
             $leftVerticalGridView->setView($leftTopView, 0, 0);
             $leftVerticalGridView->setView($leftBottomView, 1, 0);
 
-
             $content  = '<table>' . "\n";
             $content .= '<tr><td>' . "\n";
             $content .= $leftVerticalGridView->render();
             $content .= '</td>'. "\n";
-            if($renderRightSide)
+            if ($renderRightSide)
             {
                 $content .= '<td width="300px">' . "\n";
                 $rightVerticalGridView  = new GridView(1, 1);

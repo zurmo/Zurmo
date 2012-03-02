@@ -136,7 +136,7 @@
             if ($panelNumber == 0 && $this->shouldHidePanelsAfterFirstPanel())
             {
                 $content .= '<tr id="show-more-panels-link-row-' . $this->uniqueId . '">';
-                $content .= '<td  colspan = "' . $this->maxCellsPerRow . '">';
+                $content .= '<td  colspan = "' . $this->maxCellsPerRow * 2 . '">';
                 $content .= CHtml::link($this->getMorePanelsLinkLabel(),
                                         $this->uniqueId, array('id' => 'show-more-panels-link-' . $this->uniqueId . ''));
                 $content .= '</td>';
@@ -149,7 +149,7 @@
         {
             if ($this->shouldHidePanelsAfterFirstPanel())
             {
-            Yii::app()->clientScript->registerScript('showMorePanels', "
+            Yii::app()->clientScript->registerScript('showMorePanels' . $this->uniqueId, "
                 $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
                     {
                         $('.view-panel-' + $(this).attr('href')).show();

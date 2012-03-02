@@ -220,7 +220,7 @@
             }
             elseif ($value !== null)
             {
-                return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
+                return SQLOperatorUtil::getOperatorByType($operatorType) . " " . DatabaseCompatibilityUtil::escape($value);
             }
             elseif ($value === null)
             {

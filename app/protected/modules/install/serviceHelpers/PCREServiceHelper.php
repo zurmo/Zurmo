@@ -24,39 +24,25 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class Email extends OwnedModel
+    /**
+     * Checks if PCRE extension is installed.
+     * Required by Yii framework.
+     */
+    class PCREServiceHelper extends ServiceHelper
     {
-        public function __toString()
+        protected function checkService()
         {
-            if (trim($this->emailAddress) == '')
+            $PCREInstalled =  InstallUtil::checkPCRE();
+            if ($PCREInstalled)
             {
-                return Yii::t('Default', '(None)');
+                $this->message  = Yii::t('Default', 'PCRE extension is loaded.');
+                return true;
             }
-            return $this->emailAddress;
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'members' => array(
-                    'emailAddress',
-                    'isInvalid',
-                    'optOut',
-                ),
-                'rules' => array(
-                    array('emailAddress', 'email'),
-                    array('isInvalid',    'boolean'),
-                    array('optOut',       'boolean'),
-                ),
-                'defaultSortAttribute' => 'emailAddress'
-            );
-            return $metadata;
-        }
-
-        public static function isTypeDeletable()
-        {
-            return true;
+            else
+            {
+                $this->message  = Yii::t('Default', 'PCRE extension is not loaded.');
+                return false;
+            }
         }
     }
 ?>
