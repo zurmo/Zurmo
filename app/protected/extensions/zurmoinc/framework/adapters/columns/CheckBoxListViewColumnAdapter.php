@@ -30,7 +30,7 @@
         {
             return array(
                 'name'  => $this->attribute,
-                'value' => 'CHtml::checkBox(null, $data->' . $this->attribute . ', array("disabled" => "disabled"))',
+                'value' => 'CHtml::tag("label", array("class" => "hasCheckBox"), CHtml::checkBox(null, $data->' . $this->attribute . ', array("disabled" => "disabled")))',
                 'type'  => 'raw', //could do Boolean and remove value line above. would render true/false instead.
             );
         }

@@ -95,7 +95,9 @@ END;
                     $disabled = '';
                 }
                 $htmlOptions = array('disabled' => $disabled);
-                echo CHtml::checkBox($this->id . '_all', $checked, $htmlOptions);
+                echo CHtml::tag("label",
+                                array("class" => "hasCheckBox"),
+                                CHtml::checkBox($this->id . '_all', $checked, $htmlOptions));
             }
             else
             {
@@ -106,6 +108,41 @@ END;
         public function renderDataCellContentFromOutsideClass($row, $data)
         {
             $this->renderDataCellContent($row, $data);
+        }
+
+        /**
+         * Override to support adding the label wrapper on the checkbox
+         * (non-PHPdoc)
+         * @see CCheckBoxColumn::renderDataCellContent()
+         */
+        protected function renderDataCellContent($row,$data)
+        {
+            if($this->value !== null)
+            {
+                $value = $this->evaluateExpression($this->value,array('data' => $data, 'row' => $row));
+            }
+            else if($this->name !== null)
+            {
+                $value = CHtml::value($data,$this->name);
+            }
+            else
+            {
+                $value = $this->grid->dataProvider->keys[$row];
+            }
+
+            $checked = false;
+            if($this->checked !== null)
+            {
+                $checked = $this->evaluateExpression($this->checked,array('data' => $data, 'row' => $row));
+            }
+            $options                  = $this->checkBoxHtmlOptions;
+            $name                     = $options['name'];
+            unset($options['name']);
+            $options['value']         = $value;
+            $options['id']            = $this->id.'_'.$row;
+            echo CHtml::tag("label",
+                            array("class" => "hasCheckBox"),
+                            CHtml::checkBox($name,$checked,$options));
         }
     }
 ?>
