@@ -245,30 +245,30 @@
         */
         public static function checkServerVariable(&$error)
         {
-            $vars=array('HTTP_HOST','SERVER_NAME','SERVER_PORT','SCRIPT_NAME','SCRIPT_FILENAME','PHP_SELF','HTTP_ACCEPT','HTTP_USER_AGENT');
-            $missing=array();
-            foreach($vars as $var)
+            $vars = array('HTTP_HOST', 'SERVER_NAME', 'SERVER_PORT', 'SCRIPT_NAME', 'SCRIPT_FILENAME', 'PHP_SELF', 'HTTP_ACCEPT', 'HTTP_USER_AGENT');
+            $missing = array();
+            foreach ($vars as $var)
             {
-                if(!isset($_SERVER[$var]))
+                if (!isset($_SERVER[$var]))
                 {
-                    $missing[]=$var;
+                    $missing[] = $var;
                 }
             }
-            if(!empty($missing))
+            if (!empty($missing))
             {
-                $error = Yii::t('Default','$_SERVER does not have {vars}.',array('{vars}'=>implode(', ',$missing)));
+                $error = Yii::t('Default', '$_SERVER does not have {vars}.', array('{vars}' => implode(', ', $missing)));
                 return false;
             }
 
-            if(!isset($_SERVER["REQUEST_URI"]) && isset($_SERVER["QUERY_STRING"]))
+            if (!isset($_SERVER["REQUEST_URI"]) && isset($_SERVER["QUERY_STRING"]))
             {
-                $error = Yii::t('Default','Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
+                $error = Yii::t('Default', 'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
                 return false;
             }
 
-            if(!isset($_SERVER["PATH_INFO"]) && strpos($_SERVER["PHP_SELF"],$_SERVER["SCRIPT_NAME"]) !== 0)
+            if (!isset($_SERVER["PATH_INFO"]) && strpos($_SERVER["PHP_SELF"], $_SERVER["SCRIPT_NAME"]) !== 0)
             {
-                $error = Yii::t('Default','Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
+                $error = Yii::t('Default', 'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
                 return false;
             }
             return true;
@@ -421,17 +421,16 @@
         * Check database optimizer_search_depth value.
         */
         public static function checkDatabaseOptimizerSearchDepthValue($databaseType,
-        $databaseHostname,
-        $databaseUsername,
-        $databasePassword,
-        /* out */ & $optimizerSearchDepth)
+                                                                      $databaseHostname,
+                                                                      $databaseUsername,
+                                                                      $databasePassword,
+                                                                      /* out */ & $optimizerSearchDepth)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
-            $optimizerSearchDepth = DatabaseCompatibilityUtil::getDatabaseOptimizerSearchDepthValue(
-                                        $databaseType,
-                                        $databaseHostname,
-                                        $databaseUsername,
-                                        $databasePassword);
+            $optimizerSearchDepth = DatabaseCompatibilityUtil::getDatabaseOptimizerSearchDepthValue($databaseType,
+                                                                                                    $databaseHostname,
+                                                                                                    $databaseUsername,
+                                                                                                    $databasePassword);
             return $optimizerSearchDepth == 0;
         }
 
@@ -439,12 +438,12 @@
         * Check database default collation.
         */
         public static function checkDatabaseDefaultCollation($databaseType,
-                                                           $databaseHostname,
-                                                           $databaseName,
-                                                           $databaseUsername,
-                                                           $databasePassword,
-                                                           $notAllowedDatabaseCollations,
-                                                           /* out */ & $databaseDefaultCollation)
+                                                             $databaseHostname,
+                                                             $databaseName,
+                                                             $databaseUsername,
+                                                             $databasePassword,
+                                                             $notAllowedDatabaseCollations,
+                                                             /* out */ & $databaseDefaultCollation)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             assert('is_array($notAllowedDatabaseCollations)');
@@ -619,10 +618,10 @@
             assert('is_string($scriptUrl)    || $scriptUrl    == ""');
 
             $perInstanceConfigFileDist = "$instanceRoot/protected/config/perInstanceDIST.php";
-            $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
+            $debugConfigFileDist       = "$instanceRoot/protected/config/debugDIST.php";
 
             $perInstanceConfigFile     = "$instanceRoot/protected/config/$perInstanceFilename";
-            $debugConfigFile     = "$instanceRoot/protected/config/$debugFilename";
+            $debugConfigFile           = "$instanceRoot/protected/config/$debugFilename";
 
             copy($perInstanceConfigFileDist, $perInstanceConfigFile);
             copy($debugConfigFileDist, $debugConfigFile);

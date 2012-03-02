@@ -97,8 +97,8 @@
             $this->assertEquals(0,             $account1->billingAddress->invalid);
 
             $account2 = Account::getById($accountId2);
-            $this->assertEquals('37.4211444',   $account2->billingAddress->latitude);
-            $this->assertEquals('-122.0853032', $account2->billingAddress->longitude);
+            $this->assertEquals('37.4220761',   $account2->billingAddress->latitude);
+            $this->assertEquals('-122.0845187', $account2->billingAddress->longitude);
             $this->assertEquals(0,              $account1->billingAddress->invalid);
 
             $account3 = Account::getById($accountId3);
@@ -140,8 +140,8 @@
 
             $this->assertEquals('42.1153153',   $geoCodeResultObj1->latitude);
             $this->assertEquals('-87.9763703',  $geoCodeResultObj1->longitude);
-            $this->assertEquals('37.4211444',   $geoCodeResultObj2->latitude);
-            $this->assertEquals('-122.0853032', $geoCodeResultObj2->longitude);
+            $this->assertEquals('37.4220761',   $geoCodeResultObj2->latitude);
+            $this->assertEquals('-122.0845187', $geoCodeResultObj2->longitude);
             $this->assertEquals('40.7274969',   $geoCodeResultObj3->latitude);
             $this->assertEquals('-73.9601597',  $geoCodeResultObj3->longitude);
             $this->assertEquals('43.06132',     $geoCodeResultObj4->latitude);

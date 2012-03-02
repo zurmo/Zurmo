@@ -140,7 +140,7 @@
                         $className::resolveAttributesAndRelations($attributeName, $newAttributesAndRelations, $value);
 
                         unset($metadata[$attributeName][$index]);
-                        foreach($newAttributesAndRelations as $newAttributesAndRelationsItem)
+                        foreach ($newAttributesAndRelations as $newAttributesAndRelationsItem)
                         {
                             $newAttributesAndRelationsItem[0] = $attributesAndRelations[0];
                             $newAttributesAndRelationsItem[1] = $attributesAndRelations[1];

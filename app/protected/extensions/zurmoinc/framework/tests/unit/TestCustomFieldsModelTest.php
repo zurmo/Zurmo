@@ -36,7 +36,8 @@
             );
             $customFieldData = CustomFieldData::getByName('MultipleSomethings');
             $customFieldData->serializedData = serialize($multiSelectValues);
-            assert($customFieldData->save()); // Not Coding Standard
+            $save = $customFieldData->save();
+            assert('$save'); // Not Coding Standard
 
             $tagCloudValues = array(
                 'Cloud 1',
@@ -45,7 +46,8 @@
             );
             $customFieldData = CustomFieldData::getByName('TagCloud');
             $customFieldData->serializedData = serialize($tagCloudValues);
-            assert($customFieldData->save()); // Not Coding Standard
+            $save = $customFieldData->save();
+            assert('$save'); // Not Coding Standard
         }
 
         public function testMultiSelectAndTagCloudRelationships()

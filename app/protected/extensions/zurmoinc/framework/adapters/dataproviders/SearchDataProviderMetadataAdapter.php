@@ -192,8 +192,7 @@
                     {
                         if ($this->model->isRelation($attributeName))
                         {
-
-                            if($this->model->$attributeName instanceof RedBeanOneToManyRelatedModels ||
+                            if ($this->model->$attributeName instanceof RedBeanOneToManyRelatedModels ||
                                $this->model->$attributeName instanceof RedBeanManyToManyRelatedModels)
                             {
                                 $relationModelClassName = $this->model->getRelationModelClassName($attributeName);

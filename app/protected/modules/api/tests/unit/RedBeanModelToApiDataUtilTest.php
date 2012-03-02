@@ -42,7 +42,8 @@
             );
             $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
             $customFieldData->serializedData = serialize($multiSelectValues);
-            assert($customFieldData->save()); // Not Coding Standard
+            $save = $customFieldData->save();
+            assert('$save'); // Not Coding Standard
 
             $tagCloudValues = array(
                 'Cloud 1',
@@ -51,7 +52,8 @@
             );
             $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
             $customFieldData->serializedData = serialize($tagCloudValues);
-            assert($customFieldData->save()); // Not Coding Standard
+            $save = $customFieldData->save();
+            assert('$save'); // Not Coding Standard
         }
 
         public function setUp()
@@ -232,6 +234,8 @@
                     'value'      => $values[1],
                 ),
                 'radioDropDown'     => null,
+                'multiDropDown'     => array('values' => null),
+                'tagCloud'          => array('values' => null),
                 'hasOne'            => null,
                 'hasOneAlso'        => null,
                 'primaryEmail'      => null,
@@ -251,8 +255,6 @@
                     'id' => $super->id,
                     'username' => 'super'
                 ),
-                'multiDropDown'    => array('values' => null),
-                'tagCloud'         => array('values' => null),
             );
             $this->assertEquals($compareData, $data);
         }

@@ -133,7 +133,7 @@
                         {
                             url : $.fn.yiiGridView.getUrl('" . $this->id . "')
                         }
-                        if(options.url.split( '?' ).length == 2)
+                        if (options.url.split( '?' ).length == 2)
                         {
                             options.url.split( '?' )[0];
                             options.url = options.url.split( '?' )[0] +'/'+ $(this).val() + '?' + options.url.split( '?' )[1];
