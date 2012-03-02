@@ -41,9 +41,9 @@
             if (count($data) == 0)
             {
                 $content .= '<tr>';
-                $content .= '<td colspan="3">';
+                $content .= '<td colspan="3"><span class="empty">';
                 $content .= Yii::t('Default', 'No Activities found.');
-                $content .= '</td>';
+                $content .= '</span></td>';
                 $content .= '</tr>';
             }
             else
@@ -80,14 +80,14 @@
                     $content .= '</tr>';
                 }
                 $content .= '<tr>';
-                //$content .= '<td colspan="2">';
-                //$content .= $this->renderPaginationContent();
-                //$content .= '</td>';
+                $content .= '<td colspan="2">';
+                $content .= $this->renderPaginationContent();
+                $content .= '</td>';
                 $content .= '</tr>';
             }
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= $this->renderPaginationContent();
+            //$content .= $this->renderPaginationContent();
             $content .= '</div>';
             return $content;
         }

@@ -84,10 +84,10 @@
                     array('type' => 'GET',
                           'success' => 'js:function(data){
                             var id = "#' . $this->getViewContainerId() . '";
-                            $("#' . $showMoreLinkId . '").remove();
+                            $("#' . $showMoreLinkId . '").parent().remove();
                             $(id).append($(id, data).html());
                           }'),
-                    array('id' => $showMoreLinkId, 'href' => ($currentPage + 1)));
+                    array('id' => $showMoreLinkId, 'class' => 'vertical-forward-pager', 'href' => ($currentPage + 1)));
                 // End Not Coding Standard
             }
         }
