@@ -104,7 +104,7 @@
 
         protected function actionCreateByModel(Opportunity $opportunity, $redirectUrl = null)
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($opportunity, $redirectUrl), 'Edit');
             $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
@@ -117,7 +117,7 @@
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($opportunity);
             $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndEditAndDetailsView(
+                                             $this->makeEditAndDetailsView(
                                                         $this->attemptToSaveModelFromPost($opportunity, $redirectUrl),
                                                         'Edit')));
             echo $view->render();

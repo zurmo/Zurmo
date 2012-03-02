@@ -49,7 +49,10 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'ContactNoteInlineEditAndLatestActivtiesForPortlet'
+                                        'type' => 'NoteInlineEditForPortlet'
+                                    ),
+                                    array(
+                                        'type' => 'ContactLatestActivtiesForPortlet'
                                     ),
                                 )
                             )

@@ -45,8 +45,6 @@
                         ),
                     ),
                     'derivedAttributeTypes' => array(
-                        'DateTimeCreatedUser',
-                        'DateTimeModifiedUser',
                         'TitleFullName',
                         'LeadStateDropDown',
                     ),

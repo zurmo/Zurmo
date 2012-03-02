@@ -62,7 +62,7 @@
 
         protected function actionCreateByModel(Activity $activity, $redirectUrl)
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit');
             $pageViewClassName = $this->getPageViewClassName();
             $view = new $pageViewClassName(ZurmoDefaultViewUtil::
@@ -79,7 +79,7 @@
             $pageViewClassName = $this->getPageViewClassName();
             $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndEditAndDetailsView($activity, 'Details')));
+                                             $this->makeEditAndDetailsView($activity, 'Details')));
             echo $view->render();
         }
 
@@ -91,7 +91,7 @@
             $pageViewClassName = $this->getPageViewClassName();
             $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndEditAndDetailsView(
+                                             $this->makeEditAndDetailsView(
                                                 $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit')));
             echo $view->render();
         }

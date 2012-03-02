@@ -44,8 +44,6 @@
                         ),
                     ),
                     'derivedAttributeTypes' => array(
-                        'DateTimeCreatedUser',
-                        'DateTimeModifiedUser',
                         'TitleFullName',
                         'ContactStateDropDown',
                     ),

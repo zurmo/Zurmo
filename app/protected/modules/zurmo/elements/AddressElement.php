@@ -117,16 +117,16 @@
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
             $textField   = $form->textField($model, $attribute, $htmlOptions);
             $error       = $form->error    ($model, $attribute);
-            if($model->$attribute == null)
+            if($model->$attribute != null)
             {
-                $halfClassString = null;
-                if($renderAsHalfSize)
-                {
-                    $halfClassString = ' half';
-                }
-                return CHtml::tag('div', array('class' => 'overlay-label-field' . $halfClassString), $label . $textField . $error);
+                 $label = null;
             }
-            return $textField . $error;
+            $halfClassString = null;
+            if($renderAsHalfSize)
+            {
+                $halfClassString = ' half';
+            }
+            return CHtml::tag('div', array('class' => 'overlay-label-field' . $halfClassString), $label . $textField . $error);
         }
 
          /**

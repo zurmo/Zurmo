@@ -94,7 +94,7 @@
 
         public function actionCreate()
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                     $this->attemptToSaveModelFromPost(new Contact()), 'Edit',
                     'LeadTitleBarAndEditAndDetailsView'
             );
@@ -116,7 +116,7 @@
             {
                 $view = new LeadsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndEditAndDetailsView(
+                                             $this->makeEditAndDetailsView(
                                                 $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
                                                             'LeadTitleBarAndEditAndDetailsView')));
                 echo $view->render();

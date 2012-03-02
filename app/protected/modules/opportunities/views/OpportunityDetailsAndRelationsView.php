@@ -44,11 +44,11 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'OpportunityNoteInlineEditAndLatestActivtiesForPortlet'
+                                        'type' => 'NoteInlineEditForPortlet'
                                     ),
                                     array(
-                                        'type' => 'ContactsForOpportunityRelatedList',
-                                    )
+                                        'type' => 'OpportunityLatestActivtiesForPortlet'
+                                    ),
                                 )
                             )
                         )
@@ -63,6 +63,9 @@
                                     array(
                                         'type' => 'OpenTasksForOpportunityRelatedList',
                                     ),
+                                    array(
+                                        'type' => 'ContactsForOpportunityRelatedList',
+                                    )
                                 )
                             )
                         )

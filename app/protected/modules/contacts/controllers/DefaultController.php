@@ -97,7 +97,7 @@
 
         protected function actionCreateByModel(Contact $contact, $redirectUrl = null)
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit');
             $view = new ContactsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
@@ -110,7 +110,7 @@
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
             $view    = new ContactsPageView(ZurmoDefaultViewUtil::
                                             makeStandardViewForCurrentUser($this,
-                                                $this->makeTitleBarAndEditAndDetailsView(
+                                                $this->makeEditAndDetailsView(
                                                     $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit')));
             echo $view->render();
         }

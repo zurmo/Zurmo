@@ -44,9 +44,6 @@
                         ),
                     ),
                     'derivedAttributeTypes' => array(
-                        'DateTimeCreatedUser',
-                        'DateTimeModifiedUser',
-                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'owner',
