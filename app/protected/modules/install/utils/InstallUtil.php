@@ -939,6 +939,7 @@
             $rules                      = new ClearAssetsFolderNotificationRules();
             //NotificationsUtil::submit($message, $rules); //running this causes stack overrun. Turn on once thread stack
             //overrun issue is resolved.
+            return true;
         }
 
         public static function getDefaultHostInfo()

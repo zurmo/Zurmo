@@ -580,6 +580,23 @@
             $this->runInstallation(true);
         }
 
+        /**
+        * @depends testRunInstallation
+        */
+        public function testRunAutoBuildFromUpdateSchemaCommand()
+        {
+            $this->runInstallation(true);
+            try
+            {
+                $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand();
+            }
+            catch (Exception $e)
+            {
+                $result = false;
+            }
+            $this->assertTrue($result);
+        }
+
         public function testRunInstallationWithoutMemCacheOn()
         {
             $this->runInstallation(false);
