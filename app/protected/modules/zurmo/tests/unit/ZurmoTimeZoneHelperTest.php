@@ -79,7 +79,7 @@
                 $timeZoneHelper->setTimeZone('AFakeTimeZone');
                 $this->assertFail();
             }
-            catch(Exception $e)
+            catch (Exception $e)
             {
                 //ok good, an Exception is expected to be thrown.
             }
@@ -98,7 +98,7 @@
                 $this->assertFalse($billy->save());
                 $this->assertFail();
             }
-            catch(Exception $e)
+            catch (Exception $e)
             {
                 //ok good, an Exception is expected to be thrown.
             }
