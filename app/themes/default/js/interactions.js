@@ -90,29 +90,19 @@ $(window).ready(function(){
     		setupCheckboxes( $('#app-search') );
     	},
     1000 );
-    
-    
-    /*Labels*/
-    
-    $(".overlay-label-field > input").live('focus', function(){
-	    $(this).prev().fadeOut(100);
+	
+	$(".overlay-label-field > input").live('focus', function(){
+		$(this).prev().fadeOut(100);
 	});
 	
 	$(".overlay-label-field > input").live('blur', function(){
-	    if($(this).val() == "") {
-	        $(this).prev().fadeIn(250);
-	    }
-	});​
-    
+		if($(this).val() == "") {
+			$(this).prev().fadeIn(250);
+		}
+	});
+
+
 });
-
-
-
-
-
-
-
-
 
 
 // usage: log('inside coolFunc', this, arguments);
