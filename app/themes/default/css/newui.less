@@ -1597,10 +1597,8 @@ table.items thead tr:hover{
 #inline-edit-form{
 	table + table{
 		float:left;
-		width:50%;
 		background:red;
 		.box-sizing();
-		padding-right:8px;
 	}
 	> table{
 		td > a{
@@ -1630,7 +1628,7 @@ table.items thead tr:hover{
 #inline-edit-form .permissions-box{
 	margin-left:0 !important;
 	.clearfix();
-	width:50%;
+	background: green;
 	> label{
 		margin-bottom:12px !important;
 		color:@themeColor;
@@ -1698,13 +1696,12 @@ table.items thead tr:hover{
 
 /*Upload Files Box (in selected account, in Note)*/
 .file-upload-box{
-	width:50%;
-	float:right;
+	background: pink;
 	.box-sizing();
-	padding-left:8px;
-	margin-top:-14px;
-	> div{
-		
+	padding-left:0;
+	margin:0 !important;
+	div{
+		margin-left:0 !important;	
 	}
 }
 .fileupload-content{
@@ -1726,6 +1723,37 @@ table.items thead tr:hover{
 }
 
 
+
+
+/*Temp Addreess Fields*/
+
+
+div.overlay-label-field{
+    position:relative;
+}
+.overlay-label-field. label {
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    color: #575757;
+    font-size: 14px;
+    font-weight: normal;
+}
+.overlay-label-field input{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.half{
+    width:50%;
+    float:left;
+    input{
+	    width:100%;
+	    -moz-box-sizing: border-box;
+	    -webkit-box-sizing: border-box;
+	    box-sizing: border-box;
+	}
+}
 
 
 
