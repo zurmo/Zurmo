@@ -41,9 +41,9 @@
             if (count($data) == 0)
             {
                 $content .= '<tr>';
-                $content .= '<td colspan="3">';
+                $content .= '<td colspan="3"><span class="empty">';
                 $content .= Yii::t('Default', 'No Activities found.');
-                $content .= '</td>';
+                $content .= '</span></td>';
                 $content .= '</tr>';
             }
             else
