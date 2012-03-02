@@ -295,7 +295,7 @@
                                         $skipCount, $modelClassName);
                             }
                             Yii::app()->user->setFlash('notification', $notificationContent);
-                            $this->redirect(array('default/index'));
+                            $this->redirect(array('default/'));
                             Yii::app()->end(0, false);
                         }
                     }
