@@ -42,6 +42,8 @@
         public function sendImmediately(EmailMessage $emailMessage)
         {
             //todo: move this into a getOutboundMailer, then you can use private to detect if this object is already created and populated.
+            //todo: override a method in EmailHelperForTesting, that doesnt return a swiftmailer? or maybe it doesnt but then interjects somehow
+            //the sending process.
             //with smtp info etc.
             Yii::import('ext.swiftmailer.SwiftMailer');
             $swiftMailer = new SwiftMailer();

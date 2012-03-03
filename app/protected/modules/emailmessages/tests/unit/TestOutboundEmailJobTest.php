@@ -24,27 +24,31 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Override class is used specifically by the
-     * testing framework to handle testing of inbound and outbound email.
-     */
-    class EmailHelperForTesting extends EmailHelper
+    class TestOutboundEmailJobTest extends ImportBaseTest
     {
-        protected $sentEmailMessages = array();
-
-        public function removeAllSent()
+        public static function setUpBeforeClass()
         {
-            $this->sentEmailMessages = array();
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+            UserTestHelper::createBasicUser('billy');
         }
 
-        public function getSentEmailMessages()
+        public function testRun()
         {
-            return $this->sentEmailMessages;
-        }
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $billy                      = User::getByUsername('billy');
 
-        public function getSentCount()
-        {
-            return count($this->sentEmailMessages);
+
+
+            $this->assertFail();
+            //todo: test that an email goes out only IF the smtp is configured.
+            //If smtp is not configured, then a notification should be created. Not sure how to actually test the
+            //smtp email beyond that.
+
+            $job = new TestOutboundEmailJob();
+            $this->assertTrue($job->run());
         }
     }
 ?>

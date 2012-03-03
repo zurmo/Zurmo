@@ -89,9 +89,10 @@
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
-            //todo: make an email message helper to make a test email message
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->send($emailMessage);
             $this->assertEquals(1, Yii::app()->emailHelper->getQueueCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
         }
 
         /**
@@ -102,10 +103,13 @@
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $this->assertEquals(1, Yii::app()->emailHelper->getQueueCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->sendQueued();
             //todo: in the test override for EmailHelper, need a way to show that the emails are sent? or maybe this
             //can normally be in emailHelper. TBD
             $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
+            $this->assertEquals(1, Yii::app()->emailHelper->getSentCount());
+            Yii::app()->emailHelper->removeAllSent();
         }
 
         /**
@@ -116,11 +120,11 @@
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
-            //todo: make an email message helper to make a test email message
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->sendImmediately($emailMessage);
             $this->assertEquals(0, Yii::app()->emailHelper->getQueueCount());
-            //todo: again, figure out how to show a signal that this was 'sent' and not just queued...
-            //maybe a getSentCount(), and a resetSent()?
+            $this->assertEquals(1, Yii::app()->emailHelper->getSentCount());
+            Yii::app()->emailHelper->removeAllSent();
         }
     }
 ?>
