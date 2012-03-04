@@ -2517,7 +2517,7 @@
                                 else
                                 {
                                     $relatedModelClassName = $this->relationNameToRelationTypeModelClassNameAndOwns[$attributeName][1];
-                                    $this->$attributeName = self::getById(intval($value['id']), $relatedModelClassName);
+                                    $this->$attributeName  = $relatedModelClassName::getById(intval($value['id']), $relatedModelClassName);
                                 }
                             }
                             else

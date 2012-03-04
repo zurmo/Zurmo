@@ -101,7 +101,12 @@
             }
             try
             {
-                $currency = Currency::getByCode($this->getBaseCode());
+                $code = $this->getBaseCode();
+                if($currency = Currency::getCachedCurrencyByCode($code))
+                {
+                    return $currency;
+                }
+                $currency = Currency::getByCode($code);
             }
             catch (NotFoundException $e)
             {
@@ -111,6 +116,7 @@
             {
                 throw new NotSupportedException();
             }
+            Currency::setCachedCurrency($currency);
             return $currency;
         }
 
@@ -188,7 +194,11 @@
         public function getActiveCurrenciesOrSelectedCurrenciesData($selectedCurrencyId)
         {
             assert('$selectedCurrencyId == null || (is_int($selectedCurrencyId) && $selectedCurrencyId > 0)');
-            $currencies = Currency::getAll();
+            if(null == $currencies = Currency::getAllCachedCurrencies())
+            {
+                $currencies = Currency::getAll();
+                Currency::setAllCachedCurrencies($currencies);
+            }
             $data       = array();
             foreach ($currencies as $currency)
             {

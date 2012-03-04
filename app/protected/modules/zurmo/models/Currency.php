@@ -29,7 +29,23 @@
      */
     class Currency extends RedBeanModel
     {
+        private static $currencyIdRowsByCode   = array();
+        private static $cachedCurrencyIdByCode = array();
+        private static $cachedCurrencyById     = array();
+        private static $allCachedCurrencies    = array();
         protected $isSavableFromRelation       = false;
+
+        public static function getById($id, $modelClassName = null)
+        {
+            assert('$modelClassName == "Currency"');
+            if(isset(self::$cachedCurrencyById[$id]))
+            {
+                return self::$cachedCurrencyById[$id];
+            }
+            $currency = parent::getById($id, $modelClassName);
+            self::$cachedCurrencyById[$id] = $currency;
+            return $currency;
+        }
 
         /**
          * Gets a currency by code.
@@ -121,6 +137,85 @@
         public static function isTypeDeletable()
         {
             return true;
+        }
+
+        public static function getCachedCurrencyByCode($code)
+        {
+            assert('is_string($code)');
+            if(isset(self::$cachedCurrencyIdByCode[$code]) &&
+               self::$cachedCurrencyById[self::$cachedCurrencyIdByCode[$code]])
+               {
+                    return self::$cachedCurrencyById[self::$cachedCurrencyIdByCode[$code]];
+               }
+               return null;
+        }
+
+        public static function setCachedCurrency(Currency $currency)
+        {
+            assert('$currency->id > 0');
+            self::$cachedCurrencyIdByCode[$currency->code]     = $currency->id;
+            self::$cachedCurrencyById[$currency->id]           = $currency;
+        }
+
+        public function isUniqueAttributeValue($attributeName, $value)
+        {
+            if($attributeName != 'code')
+            {
+                return parent::isUniqueAttributeValue($attributeName, $value);
+            }
+            assert('$value !== null');
+            if(isset(static::$currencyIdRowsByCode[$value]))
+            {
+                $rows = static::$currencyIdRowsByCode[$value];
+            }
+            else
+            {
+                $modelClassName = $this->attributeNameToBeanAndClassName[$attributeName][1];
+                $tableName = self::getTableName($modelClassName);
+                $rows = R::getAll('select id from ' . $tableName . " where $attributeName = ?", array($value));
+                static::$currencyIdRowsByCode[$value] = $rows;
+            }
+            return count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->id;
+        }
+
+        public function save($runValidation = true, array $attributeNames = null)
+        {
+            $backTrace = debug_backtrace();
+            for ($i = 0; $i < count($backTrace); $i++)
+            {
+                if (isset($backTrace[$i]['object']))
+                {
+                    if(get_class($backTrace[$i]['object']) == 'CurrencyValue')
+                    {
+                        return true;
+                    }
+                }
+            }
+            $saved = parent::save($runValidation, $attributeNames);
+            self::resetCaches();
+            return $saved;
+        }
+
+        public static function getAllCachedCurrencies()
+        {
+            if(empty(self::$allCachedCurrencies))
+            {
+                return null;
+            }
+            return self::$allCachedCurrencies;
+        }
+
+        public static function setAllCachedCurrencies($currencies)
+        {
+            self::$allCachedCurrencies = $currencies;
+        }
+
+        public static function resetCaches()
+        {
+            self::$currencyIdRowsByCode   = array();
+            self::$cachedCurrencyIdByCode = array();
+            self::$cachedCurrencyById     = array();
+            self::$allCachedCurrencies    = array();
         }
     }
 ?>
