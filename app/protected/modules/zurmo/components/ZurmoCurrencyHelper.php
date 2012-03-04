@@ -102,7 +102,7 @@
             try
             {
                 $code = $this->getBaseCode();
-                if($currency = Currency::getCachedCurrencyByCode($code))
+                if(null != $currency = Currency::getCachedCurrencyByCode($code))
                 {
                     return $currency;
                 }
