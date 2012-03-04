@@ -30,9 +30,13 @@
     class Currency extends RedBeanModel
     {
         private static $currencyIdRowsByCode   = array();
+
         private static $cachedCurrencyIdByCode = array();
+
         private static $cachedCurrencyById     = array();
+
         private static $allCachedCurrencies    = array();
+
         protected $isSavableFromRelation       = false;
 
         public static function getById($id, $modelClassName = null)
