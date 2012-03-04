@@ -96,6 +96,8 @@
         protected $isValidating   = false;
         protected $isSaving       = false;
 
+        protected $isSavableFromRelation = true;
+
         // Mapping of Yii validators to validators doing things that
         // are either required for RedBean, or that simply implement
         // The semantics that we want.
@@ -1706,6 +1708,26 @@
                         foreach ($this->relationNameToRelatedModel as $relationName => $relatedModel)
                         {
                             $relationType = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][0];
+                            if (!in_array($relationType, array(self::HAS_ONE_BELONGS_TO,
+                                                               self::HAS_MANY_BELONGS_TO)))
+                            {
+                                if ($relatedModel->isModified() ||
+                                    ($this->isAttributeRequired($relationName) ))
+                                {
+                                    if($this->isSavableFromRelation)
+                                    {
+                                        if (!$relatedModel->save(false))
+                                        {
+                                            $this->isSaving = false;
+                                            return false;
+                                        }
+                                    }
+                                    elseif ($relatedModel->isModified())
+                                    {
+                                        throw new NotSuportedException();
+                                    }
+                                }
+                            }
                             if ($relatedModel instanceof RedBeanModel)
                             {
                                 $bean                  = $this->attributeNameToBeanAndClassName                [$relationName][0];
@@ -1736,20 +1758,6 @@
                                         $tableName  = self::getTableName($this->getAttributeModelClassName($relationName));
                                         $columnName = self::getForeignKeyName(get_class($this), $relationName);
                                         RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
-                                    }
-                                }
-                            }
-                            if (!in_array($relationType, array(self::HAS_ONE_BELONGS_TO,
-                                                               self::HAS_MANY_BELONGS_TO)))
-                            {
-                                if ($relatedModel->isModified() ||
-                                    ($this->isAttributeRequired($relationName) ))
-                                {
-                                    // Validation of this model has already done.
-                                    if (!$relatedModel->save(false))
-                                    {
-                                        $this->isSaving = false;
-                                        return false;
                                     }
                                 }
                             }

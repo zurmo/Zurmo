@@ -29,6 +29,8 @@
      */
     class Currency extends RedBeanModel
     {
+        protected $isSavableFromRelation       = false;
+
         /**
          * Gets a currency by code.
          * @param $code String Code.
