@@ -33,6 +33,8 @@
      */
     class OwnedModel extends RedBeanModel
     {
+        protected static $lastClassInBeanHeirarchy = 'OwnedModel';
+
         // On changing a member value the original value
         // is saved (ie: on change it again the original
         // value is not overwritten) so that on save the

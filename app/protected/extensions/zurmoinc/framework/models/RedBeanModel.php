@@ -67,6 +67,8 @@
         // The id of an unsaved model.
         private $pseudoId;
 
+        protected static $lastClassInBeanHeirarchy = 'RedBeanModel';
+
         // A model maps to one or more beans. If Person extends RedBeanModel
         // there is one bean, but if User then extends Person a User model
         // has two beans, the one holding the person data and the one holding
@@ -341,7 +343,7 @@
             $this->pseudoId = self::$nextPseudoId--;
             if ($bean === null)
             {
-                foreach (array_reverse(RuntimeUtil::getClassHierarchy(get_class($this), 'RedBeanModel')) as $modelClassName)
+                foreach (array_reverse(RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy)) as $modelClassName)
                 {
                     $tableName = self::getTableName($modelClassName);
                     $newBean = R::dispense($tableName);
@@ -363,7 +365,7 @@
             {
                 assert('$bean->id > 0');
                 $first = true;
-                foreach (RuntimeUtil::getClassHierarchy(get_class($this), 'RedBeanModel') as $modelClassName)
+                foreach (RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy) as $modelClassName)
                 {
                     if ($first)
                     {
@@ -769,7 +771,7 @@
                 $className = get_called_Class();
                 $defaultMetadata = $className::getDefaultMetadata();
                 $metadata = array();
-                foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, 'RedBeanModel')) as $modelClassName)
+                foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy)) as $modelClassName)
                 {
                     if ($modelClassName::canSaveMetadata())
                     {
@@ -828,7 +830,7 @@
                 self::assertMetadataIsValid($metadata);
             }
             $className = get_called_class();
-            foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, 'RedBeanModel')) as $modelClassName)
+            foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy)) as $modelClassName)
             {
                 if ($modelClassName::canSaveMetadata())
                 {
@@ -869,7 +871,7 @@
         protected static function assertMetadataIsValid(array $metadata)
         {
             $className = get_called_Class();
-            foreach (RuntimeUtil::getClassHierarchy($className, 'RedBeanModel') as $modelClassName)
+            foreach (RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy) as $modelClassName)
             {
                 if (isset($metadata[$modelClassName]['members']))
                 {
@@ -1921,7 +1923,7 @@
             $this->forget();
             // RedBeanModel only supports cascaded deletes on associations,
             // not on links. So for now at least they are done the slow way.
-            foreach (RuntimeUtil::getClassHierarchy(get_class($this), 'RedBeanModel') as $modelClassName)
+            foreach (RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy) as $modelClassName)
             {
                 $this->deleteOwnedRelatedModels  ($modelClassName);
                 $this->deleteForeignRelatedModels($modelClassName);
