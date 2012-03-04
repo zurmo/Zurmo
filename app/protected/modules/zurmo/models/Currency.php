@@ -184,17 +184,6 @@
 
         public function save($runValidation = true, array $attributeNames = null)
         {
-            $backTrace = debug_backtrace();
-            for ($i = 0; $i < count($backTrace); $i++)
-            {
-                if (isset($backTrace[$i]['object']))
-                {
-                    if(get_class($backTrace[$i]['object']) == 'CurrencyValue')
-                    {
-                        return true;
-                    }
-                }
-            }
             $saved = parent::save($runValidation, $attributeNames);
             self::resetCaches();
             return $saved;
