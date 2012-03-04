@@ -68,8 +68,8 @@
             $box = EmailBox::getByName(EmailBox::NOTIFICATIONS_NAME);
             $this->assertEquals(2, $box->folders->count());
             $folder1 = $box->folders->getOffset(0);
-            $this->assertTrue($folder1->name == EmailFolder::SENT || $folder1->name == EmailFolder::OUTBOX);
-            $this->assertTrue($folder2->name == EmailFolder::SENT || $folder2->name == EmailFolder::OUTBOX);
+            $this->assertTrue($folder1->name == EmailFolder::getDefaultSentName() || $folder1->name == EmailFolder::getDefaultOutboxName());
+            $this->assertTrue($folder2->name == EmailFolder::getDefaultSentName() || $folder2->name == EmailFolder::getDefaultOutboxName());
             $this->assertTrue($folder1->name != $folder2->name);
 
             $boxes = EmailBox::getAll();

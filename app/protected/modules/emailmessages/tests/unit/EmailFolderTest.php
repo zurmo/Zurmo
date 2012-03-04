@@ -48,11 +48,11 @@
             $this->assertTrue($box->id > 0);
 
             $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
-            $this->assertEquals(EmailFolder::OUTBOX_NAME, $folder->name);
+            $this->assertEquals(EmailFolder::getDefaultOutboxName(), $folder->name);
             $this->assertEquals(EmailFolder::TYPE_OUTBOX, $folder->type);
 
             $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_SENT);
-            $this->assertEquals(EmailFolder::SENT_NAME, $folder->name);
+            $this->assertEquals(EmailFolder::getDefaultSentName(), $folder->name);
             $this->assertEquals(EmailFolder::TYPE_SENT, $folder->type);
         }
 
@@ -90,7 +90,7 @@
 
             $folder = new EmailFolder();
             $folder->name = 'Billy\'s Inbox';
-            $folder->type = EmailFolder::INBOX_TYPE;
+            $folder->type = EmailFolder::TYPE_INBOX;
             $folder->user = $billy;
             $saved = $folder->save();
             //Missing 'box', so it should not save
@@ -112,7 +112,7 @@
             $box = Box::getById($boxId);
             $this->assertEquals(1, $box->folders->count());
             $this->assertEquals('Billy\'s Inbox', $box->folders[0]->name);
-            $this->assertEquals(EmailFolder::INBOX_TYPE, $box->folders[0]->type);
+            $this->assertEquals(EmailFolder::TYPE_INBOX, $box->folders[0]->type);
 
             $folders = EmailFolder::getAll();
             $this->assertEquals(3, count($folders));
