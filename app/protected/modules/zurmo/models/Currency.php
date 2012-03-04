@@ -62,7 +62,7 @@
          */
         public static function getById($id, $modelClassName = null)
         {
-            assert('$modelClassName == "Currency"');
+            assert('$modelClassName == "Currency" || $modelClassName == null');
             if(isset(self::$cachedCurrencyById[$id]))
             {
                 return self::$cachedCurrencyById[$id];
