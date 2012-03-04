@@ -59,14 +59,28 @@
      */
     abstract class RedBeanModel extends CComponent implements Serializable
     {
-        // Models that have not been saved yet have no id as far
-        // as the database is concerned. Until they are saved they are
-        // assigned a negative id, so that they have identity.
+        /**
+         * Models that have not been saved yet have no id as far
+         * as the database is concerned. Until they are saved they are
+         * assigned a negative id, so that they have identity.
+         * @var integer
+         */
         private static $nextPseudoId = -1;
 
-        // The id of an unsaved model.
+        //
+        /**
+         * The id of an unsaved model.
+         * @var integer
+         */
         private $pseudoId;
 
+        /**
+         * When creating the class heirarchy for bean creation and maintenence, which class is the last class in the
+         * lineage to create a bean for?  Normally the RedBeanModel is the lastClass in the line, and therefore there
+         * will not be a table redbeanmodel.  Some classes that extend RedBeanModel might want the line to stop before
+         * RedBeanModel since creating a table with just an 'id' would be pointless.  @see OwnedModel
+         * @var string
+         */
         protected static $lastClassInBeanHeirarchy = 'RedBeanModel';
 
         // A model maps to one or more beans. If Person extends RedBeanModel
@@ -90,14 +104,20 @@
         // it can be saved explicitly but it wont be saved automatically
         // when it is a related model and will be redispensed next
         // time it is referenced.
-        protected $modified       = false;
-        protected $deleted        = false;
-        protected $isInIsModified = false;
-        protected $isInHasErrors  = false;
-        protected $isInGetErrors  = false;
-        protected $isValidating   = false;
-        protected $isSaving       = false;
+        protected $modified               = false;
+        protected $deleted                = false;
+        protected $isInIsModified         = false;
+        protected $isInHasErrors          = false;
+        protected $isInGetErrors          = false;
+        protected $isValidating           = false;
+        protected $isSaving               = false;
 
+        /**
+         * Can this model be saved when save is called from a related model?  True if it can, false if it cannot.
+         * Setting this value to false can reduce unnecessary queries to the database. If the models of a class do
+         * not change often then it can make sense to set this to false.  An example is @see Currency.
+         * @var boolean
+         */
         protected $isSavableFromRelation = true;
 
         // Mapping of Yii validators to validators doing things that
