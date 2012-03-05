@@ -114,7 +114,8 @@
                     'name',
                 ),
                 'relations' => array(
-                    'folders' => array(RedBeanModel::HAS_MANY, 'Contact'),
+                    'folders' => array(RedBeanModel::HAS_MANY, 'EmailFolder'),
+                    'user'    => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'User'),
                 ),
                 'rules' => array(
                     array('name',          'required'),

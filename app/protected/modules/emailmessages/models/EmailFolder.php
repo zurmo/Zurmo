@@ -93,14 +93,17 @@
             $metadata[__CLASS__] = array(
                 'members' => array(
                     'name',
+                    'type',
                 ),
                 'relations' => array(
-                    'folders' => array(RedBeanModel::HAS_MANY, 'Contact'),
+                    'box' => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'EmailBox'),
                 ),
                 'rules' => array(
                     array('name',          'required'),
                     array('name',          'type',    'type' => 'string'),
                     array('name',          'length',  'min'  => 3, 'max' => 64),
+                    array('type',          'type',    'type' => 'string'),
+                    array('type',          'length',  'min'  => 3, 'max' => 12),
                 )
             );
             return $metadata;

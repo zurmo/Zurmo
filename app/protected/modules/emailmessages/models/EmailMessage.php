@@ -24,8 +24,59 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class EmailMessage extends OwnedSecurableItem
+    class EmailMessage extends OwnedSecurableItem implements MashableActivityInterface
     {
+        public static function getMashableActivityRulesType()
+        {
+            return 'EmailMessage';
+        }
 
+        public function __toString()
+        {
+            if (trim($this->subject) == '')
+            {
+                return Yii::t('Default', '(Unnamed)');
+            }
+            return $this->subject;
+        }
+
+        public static function getModuleClassName()
+        {
+            return 'EmailMessagesModule';
+        }
+
+        public static function canSaveMetadata()
+        {
+            return false;
+        }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'subject',
+                    'type',
+                ),
+                'relations' => array(
+                    'folder'  => array(RedBeanModel::HAS_ONE, 'EmaiFolder'),
+                    'content' => array(RedBeanModel::HAS_ONE, 'EmaiContent' , RedBeanModel::OWNED)),
+                    'folder'  => array(RedBeanModel::HAS_ONE, 'EmaiFolder'),
+                    'folder'  => array(RedBeanModel::HAS_ONE, 'EmaiFolder'),
+                    'folder'  => array(RedBeanModel::HAS_ONE, 'EmaiFolder'),
+                ),
+                'rules' => array(
+                    array('subject',          'required'),
+                    array('subject',          'type',    'type' => 'string'),
+                    array('subject',          'length',  'min'  => 3, 'max' => 255),
+                )
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
+        }
     }
 ?>

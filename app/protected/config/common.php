@@ -233,6 +233,7 @@
             'configuration',
             'contacts',
             'designer',
+            'emailmessages',
             'home',
             'import',
             'install',
