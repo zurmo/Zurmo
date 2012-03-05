@@ -35,7 +35,7 @@
         }
 
         /**
-         * @expects NotFoundException
+         * @expectedException NotFoundException
          */
         public function testGetByNameNotificationsBoxDoesNotExist()
         {
@@ -48,7 +48,6 @@
         }
 
         /**
-         * @expects NotFoundException
          * @depends testGetByNameNotificationsBoxDoesNotExist
          */
         public function testNotificationsBoxResolvesCorrectly()
@@ -61,13 +60,14 @@
             $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $this->assertEquals(EmailBox::NOTIFICATIONS_NAME, $box->name);
             $this->assertEquals(2, $box->folders->count());
-            $this->assertFalse($box->canDelete());
+            $this->assertFalse($box->isDeletable());
             $this->assertTrue($box->id > 0);
 
             //After it saves, it should create a Sent folder and an Outbox folder
             $box = EmailBox::getByName(EmailBox::NOTIFICATIONS_NAME);
             $this->assertEquals(2, $box->folders->count());
-            $folder1 = $box->folders->getOffset(0);
+            $folder1 = $box->folders->offsetGet(0);
+            $folder2 = $box->folders->offsetGet(1);
             $this->assertTrue($folder1->name == EmailFolder::getDefaultSentName() || $folder1->name == EmailFolder::getDefaultOutboxName());
             $this->assertTrue($folder2->name == EmailFolder::getDefaultSentName() || $folder2->name == EmailFolder::getDefaultOutboxName());
             $this->assertTrue($folder1->name != $folder2->name);
@@ -107,7 +107,7 @@
             $saved     = $box->save();
             $this->assertTrue($saved);
             $this->assertEquals(0, $box->folders->count());
-            $this->assertTrue($box->canDelete());
+            $this->assertTrue($box->isDeletable());
 
             //Now try deleting the box
             $boxes = EmailBox::getAll();
@@ -118,11 +118,14 @@
         }
 
         /**
-         * @expects NotSupportedException
+         * @expectedException NotSupportedException
          * @depends testSetAndGetMailbox
          */
         public function testTryDeletingTheNotificationsBox()
         {
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
             $box = EmailBox::getByName(EmailBox::NOTIFICATIONS_NAME);
             $box->delete();
         }

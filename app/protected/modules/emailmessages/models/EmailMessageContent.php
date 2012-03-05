@@ -24,52 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class EmailMessage extends OwnedSecurableItem implements MashableActivityInterface
+    /**
+     * A class for creating email message content.
+     */
+    class EmailMessageContent extends OwnedModel
     {
-        public static function getMashableActivityRulesType()
-        {
-            return 'EmailMessage';
-        }
-
-        public function __toString()
-        {
-            if (trim($this->subject) == '')
-            {
-                return Yii::t('Default', '(Unnamed)');
-            }
-            return $this->subject;
-        }
-
-        public static function getModuleClassName()
-        {
-            return 'EmailMessagesModule';
-        }
-
-        public static function canSaveMetadata()
-        {
-            return false;
-        }
-
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'subject',
-                    'type',
-                ),
-                'relations' => array(
-                    'folder'      => array(RedBeanModel::HAS_ONE, 'EmailFolder'),
-                    'content'     => array(RedBeanModel::HAS_ONE, 'EmailMessageContent',    RedBeanModel::OWNED),
-                    'files'       => array(RedBeanModel::HAS_MANY, 'EmailFileModel',        RedBeanModel::OWNED),
-                    'sender'      => array(RedBeanModel::HAS_ONE, 'EmailMessageSender',     RedBeanModel::OWNED),
-                    'recipients'  => array(RedBeanModel::HAS_MANY, 'EmailMessageRecipient', RedBeanModel::OWNED),
+                    'htmlContent',
+                    'textContent',
                 ),
                 'rules' => array(
-                    array('subject', 'required'),
-                    array('subject', 'type',    'type' => 'string'),
-                    array('subject', 'length',  'min'  => 3, 'max' => 255),
-                )
+                    array('htmlContent',   'type',    'type' => 'string'),
+                    array('textContent',   'type',    'type' => 'string'),
+                ),
+                'elements' => array(
+                    'htmlContent'     => 'TextArea',
+                    'textContent'     => 'TextArea',
+                ),
             );
             return $metadata;
         }

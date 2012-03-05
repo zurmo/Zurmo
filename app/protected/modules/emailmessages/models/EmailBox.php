@@ -61,16 +61,18 @@
                 if($name == self::NOTIFICATIONS_NAME)
                 {
                     $box = new EmailBox();
-                    $box->name = self::NOTIFICATIONS_NAME;
-                    $folder    = new EmailFolder();
-                    $folder->name = EmailFolder::SENT_NAME;
-                    $folder->type = EmailFolder::TYPE_SENT;
+                    $box->name        = self::NOTIFICATIONS_NAME;
+                    $folder           = new EmailFolder();
+                    $folder->name     = EmailFolder::getDefaultSentName();
+                    $folder->type     = EmailFolder::TYPE_SENT;
+                    $folder->emailBox = $box;
                     $box->folders->add($folder);
-                    $folder    = new EmailFolder();
-                    $folder->name = EmailFolder::OUTBOX_NAME;
-                    $folder->type = EmailFolder::TYPE_OUTBOX;
-                    $box->folders->add();
-                    $saved     = $box->save();
+                    $folder           = new EmailFolder();
+                    $folder->name     = EmailFolder::getDefaultOutboxName();
+                    $folder->type     = EmailFolder::TYPE_OUTBOX;
+                    $folder->emailBox = $box;
+                    $box->folders->add($folder);
+                    $saved            = $box->save();
                     assert('$saved');
                 }
                 else
@@ -85,6 +87,11 @@
         protected function setSpecialBox()
         {
             $this->isNotifications = $this->name == self::NOTIFICATIONS_NAME;
+        }
+
+        public function isSpecialBox()
+        {
+            return $this->isNotifications;
         }
 
         public function __toString()
@@ -131,7 +138,7 @@
             return true;
         }
 
-        public function canDelete()
+        public function isDeletable()
         {
             return !$this->isNotifications;
         }

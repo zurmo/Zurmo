@@ -24,20 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class EmailMessage extends OwnedSecurableItem implements MashableActivityInterface
+    class EmailMessageSender extends OwnedModel
     {
-        public static function getMashableActivityRulesType()
-        {
-            return 'EmailMessage';
-        }
-
         public function __toString()
         {
-            if (trim($this->subject) == '')
+            if (trim($this->fromAddress) == '')
             {
                 return Yii::t('Default', '(Unnamed)');
             }
-            return $this->subject;
+            return $this->fromAddress;
         }
 
         public static function getModuleClassName()
@@ -55,20 +50,18 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'subject',
-                    'type',
+                    'fromAddress',
+                    'fromName',
                 ),
                 'relations' => array(
-                    'folder'      => array(RedBeanModel::HAS_ONE, 'EmailFolder'),
-                    'content'     => array(RedBeanModel::HAS_ONE, 'EmailMessageContent',    RedBeanModel::OWNED),
-                    'files'       => array(RedBeanModel::HAS_MANY, 'EmailFileModel',        RedBeanModel::OWNED),
-                    'sender'      => array(RedBeanModel::HAS_ONE, 'EmailMessageSender',     RedBeanModel::OWNED),
-                    'recipients'  => array(RedBeanModel::HAS_MANY, 'EmailMessageRecipient', RedBeanModel::OWNED),
+                    'person'      => array(RedBeanModel::HAS_ONE, 'Item'),
                 ),
                 'rules' => array(
-                    array('subject', 'required'),
-                    array('subject', 'type',    'type' => 'string'),
-                    array('subject', 'length',  'min'  => 3, 'max' => 255),
+                    array('fromAddress', 'required'),
+                    array('fromAddress', 'email'),
+                    array('fromName',    'required'),
+                    array('fromName',    'type',    'type' => 'string'),
+                    array('fromName',    'length',  'max' => 64),
                 )
             );
             return $metadata;

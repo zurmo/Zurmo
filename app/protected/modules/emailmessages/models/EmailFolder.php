@@ -45,27 +45,40 @@
             return Yii::t('Default', 'Outbox');
         }
 
-        public static function getByBoxAndType()
+        public static function getByBoxAndType(EmailBox $box, $type)
         {
-            assert('is_string($name)');
-            assert('$name != ""');
-            $bean = R::findOne(EmailBox::getTableName('EmailBox'), "name = '$name'");
-            assert('$bean === false || $bean instanceof RedBean_OODBBean');
-            if ($bean === false)
+            assert('$box->id > 0');
+            assert('is_string($type)');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => $type,
+                ),
+                2 => array(
+                    'attributeName'        => 'emailBox',
+                    'relatedAttributeName' => 'id',
+                    'operatorType'         => 'equals',
+                    'value'                => $box->id,
+                ),
+            );
+            $searchAttributeData['structure'] = '1 and 2';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('EmailFolder');
+            $where = RedBeanModelDataProvider::makeWhere('EmailFolder', $searchAttributeData, $joinTablesAdapter);
+            $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
+            if(count($models) == 0)
             {
                 throw new NotFoundException();
             }
+            elseif(count($models) > 1)
+            {
+                throw new NotSupportedException();
+            }
             else
             {
-                $box = self::makeModel($bean);
+                return $models[0];
             }
-            $box->setSpecialBox();
-            return $box;
-        }
-
-        protected function setSpecialBox()
-        {
-            $this->isNotifications = $this->name == self::NOTIFICATIONS_NAME;
         }
 
         public function __toString()
@@ -96,7 +109,7 @@
                     'type',
                 ),
                 'relations' => array(
-                    'box' => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'EmailBox'),
+                    'emailBox' => array(RedBeanModel::HAS_ONE, 'EmailBox'),
                 ),
                 'rules' => array(
                     array('name',          'required'),
@@ -104,6 +117,7 @@
                     array('name',          'length',  'min'  => 3, 'max' => 64),
                     array('type',          'type',    'type' => 'string'),
                     array('type',          'length',  'min'  => 3, 'max' => 12),
+                    array('emailBox',      'required'),
                 )
             );
             return $metadata;
@@ -116,7 +130,11 @@
 
         public function beforeDelete()
         {
-            //todo: check if part of reserved box?
+            if($this->emailBox->isSpecialBox())
+            {
+                throw new NotSupportedException();
+            }
+            parent::beforeDelete();
         }
     }
 ?>

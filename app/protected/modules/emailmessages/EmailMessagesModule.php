@@ -44,13 +44,14 @@
 
         public function getRootModelNames()
         {
-            return array('EmailMessage',
-                         'EmailMessageSender',
-                         'EmailMessageReecipient',
+            return array('EmailBox',
                          'EmailFileModel',
                          'EmailFolder',
-                         'EmailContent',
-                         'EmailBox');
+                         'EmailMessageContent',
+                         'EmailMessage',
+                         'EmailMessageSender',
+                         'EmailMessageRecipient',
+                         );
         }
 
         public static function getUntranslatedRightsLabels()

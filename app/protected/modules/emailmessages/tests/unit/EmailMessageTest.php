@@ -58,7 +58,7 @@
             $this->assertEquals($compareData, $email->getErrors());
 
             //Set sender, and recipient, and content
-            $emailContent              = new EmailContent();
+            $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My First Message';
             $emailMessage->content     = $emailContent;
 
@@ -144,7 +144,7 @@
             $this->assertEquals($compareData, $email->getErrors());
 
             //Set sender, and recipient, and content
-            $emailContent              = new EmailContent();
+            $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My Second Message';
             $emailMessage->content     = $emailContent;
 
@@ -159,7 +159,7 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = 'billy@fakeemail.com';
             $recipient->toName         = 'Billy James';
-            $recipient->type           = EmailMessageRecipient::TO;
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
             $recipient->person         = $billy;
             $emailMessage->recipients->add($recipient);
 
@@ -196,7 +196,7 @@
             $this->assertEquals($compareData, $email->getErrors());
 
             //Set sender, and recipient, and content
-            $emailContent              = new EmailContent();
+            $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My Second Message';
             $emailMessage->content     = $emailContent;
 
@@ -211,7 +211,7 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = 'billy@fakeemail.com';
             $recipient->toName         = 'Billy James';
-            $recipient->type           = EmailMessageRecipient::TO;
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
             $recipient->person         = $billy;
             $emailMessage->recipients->add($recipient);
 
@@ -257,7 +257,7 @@
             $this->assertEquals($compareData, $email->getErrors());
 
             //Set sender, and recipient, and content
-            $emailContent              = new EmailContent();
+            $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My Third Message';
             $emailMessage->content     = $emailContent;
 
@@ -272,7 +272,7 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = 'billy@fakeemail.com';
             $recipient->toName         = 'Billy James';
-            $recipient->type           = EmailMessageRecipient::TO;
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
             $recipient->person         = $billy;
             $emailMessage->recipients->add($recipient);
 
@@ -280,7 +280,7 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = 'sally@fakeemail.com';
             $recipient->toName         = 'Sally Pail';
-            $recipient->type           = EmailMessageRecipient::CC;
+            $recipient->type           = EmailMessageRecipient::TYPE_CC;
             $recipient->person         = $sally;
             $emailMessage->recipients->add($recipient);
 
@@ -288,7 +288,7 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = 'jason@fakeemail.com';
             $recipient->toName         = 'Jason Blue';
-            $recipient->type           = EmailMessageRecipient::CC;
+            $recipient->type           = EmailMessageRecipient::TYPE_BCC;
             $recipient->person         = $jason;
             $emailMessage->recipients->add($recipient);
 
