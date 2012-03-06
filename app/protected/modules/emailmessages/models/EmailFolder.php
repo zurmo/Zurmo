@@ -26,10 +26,11 @@
 
     class EmailFolder extends Item
     {
-        const TYPE_INBOX   = 'Inbox';
-        const TYPE_SENT    = 'Sent';
-        const TYPE_OUTBOX  = 'Outbox';
-        const TYPE_DRAFT   = 'Draft';
+        const TYPE_INBOX        = 'Inbox';
+        const TYPE_SENT         = 'Sent';
+        const TYPE_OUTBOX       = 'Outbox';
+        const TYPE_DRAFT        = 'Draft';
+        const TYPE_OUTBOX_ERROR = 'OutboxError';
 
         public static function getDefaultDraftName()
         {

@@ -29,6 +29,40 @@
      */
     class EmailHelper extends CApplicationComponent
     {
+        public $outboundType = 'smtp';
+
+        public $outboundHost;
+
+        public $outboundPort = 25;
+
+        public $outboundUsername;
+
+        public $outboundPassword;
+
+        protected $settingsToLoad = array(
+            'outboundType',
+            'outboundHost',
+            'outboundPort',
+            'outboundUsername',
+            'outboundPassword'
+        );
+
+        public function init()
+        {
+            $this->loadOutboundSettings();
+        }
+
+        protected function loadOutboundSettings()
+        {
+            foreach($this->settingsToLoad as $keyName)
+            {
+                if (null !== $keyValue = ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', $keyName))
+                {
+                    $this->$keyName = $keyValue;
+                }
+            }
+        }
+
         /**
          * Send an email message. This will queue up the email to be sent by the queue sending process. If you want to
          * send immediately, consider using @sendImmediately
@@ -37,7 +71,8 @@
         public function send(EmailMessage $emailMessage)
         {
             if($emailMessage->folder->type == EmailFolder::TYPE_OUTBOX ||
-               $emailMessage->folder->type == EmailFolder::TYPE_SENT)
+               $emailMessage->folder->type == EmailFolder::TYPE_SENT ||
+               $emailMessage->folder->type == EmailFolder::TYPE_OUTBOX_ERROR)
             {
                 throw new NotSupportedException();
             }
@@ -56,22 +91,14 @@
             {
                 throw new NotSupportedException();
             }
-
-            //todo: move this into a getOutboundMailer, then you can use private to detect if this object is already created and populated.
-            //todo: override a method in EmailHelperForTesting, that doesnt return a swiftmailer? or maybe it doesnt but then interjects somehow
-            //the sending process.
-            //with smtp info etc.
-            //Yii::import('ext.swiftmailer.SwiftMailer');
-            //$swiftMailer = new SwiftMailer();
-
-            $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
-            $saved                  = $emailMessage->save();
+            $mailer           = $this->getOutboundMailer();
+            $this->populateMailer($mailer, $emailMessage);
+            $this->sendEmail($mailer, $emailMessage);
+            $saved = $emailMessage->save();
             if(!$saved)
             {
                 throw new NotSupportedException();
             }
-            return true;
-
         }
 
         public function sendQueued()
@@ -82,6 +109,81 @@
                 $this->sendImmediately($emailMessage);
             }
             return true;
+        }
+
+        protected function populateMailer(Mailer $mailer, EmailMessage $emailMessage)
+        {
+            $mailer->mailer   = $this->outboundType;
+            $mailer->host     = $this->outboundHost;
+            $mailer->port     = $this->outboundPort;
+            $mailer->username = $this->outboundUsername;
+            $mailer->password = $this->outboundPassword;
+            $mailer->Subject  = $emailMessage->subject;
+            if($emailMessage->content->htmlContent == null && $emailMessage->content->textContent != null)
+            {
+                $mailer->body     = $emailMessage->content->textContent;
+                $mailer->altBody  = $emailMessage->content->textContent;
+            }
+            elseif($emailMessage->content->htmlContent != null && $emailMessage->content->textContent == null)
+            {
+                $mailer->body     = $emailMessage->content->htmlContent;
+            }
+            elseif($emailMessage->content->htmlContent != null && $emailMessage->content->textContent != null)
+            {
+                $mailer->body     = $emailMessage->content->htmlContent;
+                $mailer->altBody  = $emailMessage->content->textContent;
+            }
+            $mailer->From = array($emailMessage->sender->fromAddress => $emailMessage->sender->fromName);
+            foreach($emailMessage->recipients as $recipient)
+            {
+                $mailer->AddAddressByType($recipient->toAddress, $recipient->toName, $recipient->type);
+            }
+        }
+
+        protected function sendEmail(Mailer $mailer, EmailMessage $emailMessage)
+        {
+            try
+            {
+                $acceptedRecipients = $mailer->send();
+                if($acceptedRecipients != $emailMessage->recipients->count())
+                {
+                    $content = Yii::t('Default', 'Response from Server') . "\n";
+                    foreach($mailer->getSendResponseLog() as $logMessage)
+                    {
+                        $content .= $logMessage . "\n";
+                    }
+                    $emailMessageSendError = new EmailMessageSendError();
+                    $data                  = array();
+                    $data['message']                       = $content;
+                    $emailMessageSendError->serializedData = serialize($data);
+                    $emailMessage->folder                  = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox,
+                                                                                          EmailFolder::TYPE_OUTBOX_ERROR);
+                    $emailMessage->error                   = $emailMessageSendError;
+                }
+                else
+                {
+                    $emailMessage->error    = null;
+                    $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
+                }
+            }
+            catch (OutboundEmailSendException $e)
+            {
+                $emailMessageSendError = new EmailMessageSendError();
+                $data = array();
+                $data['code']                          = $e->getCode();
+                $data['message']                       = $e->getMessage();
+                $data['trace']                         = $e->getPrevious();
+                $emailMessageSendError->serializedData = serialize($data);
+                $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_OUTBOX_ERROR);
+                $emailMessage->error    = $emailMessageSendError;
+            }
+        }
+
+        protected function getOutboundMailer()
+        {
+            $mailer = new ZurmoSwiftMailer();
+            $mailer->init();
+            return $mailer;
         }
 
         public function getUserToSendNotificationsAs()
@@ -110,12 +212,21 @@
             return $superGroup->users->offsetGet(0);
         }
 
+        public function setUserToSendNotifiactionsAs(User $user)
+        {
+            assert('$user->id > 0');
+            $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+            if(!$user->groups->contains($superGroup))
+            {
+                throw new NotSupportedException();
+            }
+            $keyName      = 'UserIdToSendNotificationsAs';
+            ZurmoConfigurationUtil::setByModuleName('EmailMessagesModule', $keyName, $user->id);
+        }
+
         public function getQueuedCount()
         {
             return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX));
         }
-
-       //todo: note, build interactive command (or just taking the subject/message/to as params so we can test and send email via command line.
-       //make it interactive.
     }
 ?>

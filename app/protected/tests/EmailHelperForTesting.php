@@ -30,21 +30,21 @@
      */
     class EmailHelperForTesting extends EmailHelper
     {
-        protected $sentEmailMessages = array();
-
-        public function removeAllSent()
+        /**
+         * Override to avoid actually sending emails out through transport.
+         * (non-PHPdoc)
+         * @see EmailHelper::sendEmail()
+         */
+        protected function sendEmail(Mailer $mailer, EmailMessage $emailMessage)
         {
-            $this->sentEmailMessages = array();
+            $emailMessage->error    = null;
+            $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
         }
 
-        public function getSentEmailMessages()
-        {
-            return $this->sentEmailMessages;
-        }
-
+        //For testing only
         public function getSentCount()
         {
-            return count($this->sentEmailMessages);
+            return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_SENT));
         }
     }
 ?>

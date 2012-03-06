@@ -35,12 +35,6 @@
             UserTestHelper::createBasicUser('sally');
             UserTestHelper::createBasicUser('jason');
             $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
-            $emailFolder            = new EmailFolder();
-            $emailFolder->name      = EmailFolder::getDefaultDraftName();
-            $emailFolder->type      = EmailFolder::TYPE_DRAFT;
-            $emailFolder->emailBox  = $box;
-            $saved                  = $emailFolder->save();
-            assert($saved); // Not Coding Standard
             EmailBoxUtil::setBoxAndDefaultFoldersByUserAndName($jane, 'JaneBox');
         }
 

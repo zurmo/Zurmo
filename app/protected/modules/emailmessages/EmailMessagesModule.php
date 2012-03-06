@@ -51,6 +51,7 @@
                          'EmailMessage',
                          'EmailMessageSender',
                          'EmailMessageRecipient',
+                         'EmailMessageSendError'
                          );
         }
 

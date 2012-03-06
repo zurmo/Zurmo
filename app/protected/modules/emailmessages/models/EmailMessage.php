@@ -77,11 +77,12 @@
                     'type',
                 ),
                 'relations' => array(
-                    'folder'      => array(RedBeanModel::HAS_ONE, 'EmailFolder'),
-                    'content'     => array(RedBeanModel::HAS_ONE, 'EmailMessageContent',    RedBeanModel::OWNED),
-                    'files'       => array(RedBeanModel::HAS_MANY, 'EmailFileModel',        RedBeanModel::OWNED),
-                    'sender'      => array(RedBeanModel::HAS_ONE, 'EmailMessageSender',     RedBeanModel::OWNED),
-                    'recipients'  => array(RedBeanModel::HAS_MANY, 'EmailMessageRecipient', RedBeanModel::OWNED),
+                    'folder'      => array(RedBeanModel::HAS_ONE,  'EmailFolder'),
+                    'content'     => array(RedBeanModel::HAS_ONE,  'EmailMessageContent',    RedBeanModel::OWNED),
+                    'files'       => array(RedBeanModel::HAS_MANY, 'EmailFileModel',         RedBeanModel::OWNED),
+                    'sender'      => array(RedBeanModel::HAS_ONE,  'EmailMessageSender',     RedBeanModel::OWNED),
+                    'recipients'  => array(RedBeanModel::HAS_MANY, 'EmailMessageRecipient',  RedBeanModel::OWNED),
+                    'error'       => array(RedBeanModel::HAS_ONE,  'EmailMessageSendError' , RedBeanModel::OWNED),
                 ),
                 'rules' => array(
                     array('subject', 'required'),
@@ -97,6 +98,11 @@
         public static function isTypeDeletable()
         {
             return true;
+        }
+
+        public function hasSendError()
+        {
+            return !($this->error == null ||$this->error->id < 0);
         }
     }
 ?>
