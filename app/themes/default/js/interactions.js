@@ -16,7 +16,7 @@ $(window).ready(function(){
 	);
 	
 	
-	
+	//Main nav hover
 	$('#MenuView a span').hover(
 		function(){
 			$(this).stop(true, true).animate({ backgroundColor : '#7cb830', color: '#fff' }, 350);
@@ -136,6 +136,12 @@ $(window).ready(function(){
 		if($(this).val() == "") {
 			$('label', $(this)).fadeIn(250);
 		}
+	});
+	
+	
+	/*Form errors*/
+	$('.form .errorMessage').each(function(){
+		$(this).css({ right: -$(this).width() -20 });
 	});
 	
 
