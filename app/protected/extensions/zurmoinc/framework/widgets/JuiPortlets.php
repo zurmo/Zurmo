@@ -136,7 +136,7 @@
             $content = "<div class=\"juiportlet-widget-head\">\n";
             if (isset($item['removable']) && $item['removable'] == true)
             {
-                $content .= "<a href=\"#\" class=\"remove\">CLOSE</a>"; //must be CLOSE - do not translate
+                $content .= "<a href=\"#\" class=\"remove\">CLOSE<span class=\"icon\"></span></a>"; //must be CLOSE - do not translate
             }
             $content .= "<h3>" . $item['title'] . "</h3>";
             if (isset($item['editable']) && $item['editable'] == true)
@@ -167,7 +167,7 @@
             );
             if (!$renderOnClickEvent)
             {
-                return CHtml::link(Yii::t('Default', 'Edit'), '#', $htmlOptions);
+                return CHtml::link(Yii::t('Default', 'Edit<span class="icon"></span>'), '#', $htmlOptions);
             }
             else
             {
@@ -178,7 +178,7 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
                 'portletId'      => $portletId,
             ));
-            return CHtml::ajaxLink(Yii::t('Default', 'Edit'), $url,
+            return CHtml::ajaxLink(Yii::t('Default', 'Edit<span class="icon"></span>'), $url,
                 array(
                     'onclick'  => '$("#modalContainer").dialog("open"); return false;',
                     'update'   => '#modalContainer',

@@ -70,23 +70,39 @@
 .juiportlet-widget-head a.remove {
 	float: right;
 	display: inline;
-	background: url(../images/portlet-trash.png) 0 50% no-repeat;
 	width: 13px;
 	height: 40px;
 	margin-right:8px;
 	text-indent: -9999em;
 	outline: none;
+	position:relative;
+	.icon:after{
+		content:"_";
+		.symbly(24px);
+		text-indent:0;
+		display:block;
+		float:right;
+		color:#A7A7A7;
+	}
 }
 
 .juiportlet-widget-head a.edit {
 	float: right;
 	display: inline;
-	background: url(../images/portlet-gear.png) 0 50% no-repeat;
 	width: 14px;
 	height: 40px;
 	text-indent: -9999em;
 	margin-right:8px;
 	outline: none;
+	position:relative;
+	.icon:after{
+		content:"n";
+		.symbly(24px);
+		text-indent:0;
+		display:block;
+		float:right;
+		color:#A7A7A7;
+	}
 }
 
 .juiportlet-widget-head a.collapse {
