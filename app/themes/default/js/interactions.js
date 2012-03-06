@@ -15,6 +15,20 @@ $(window).ready(function(){
 		}
 	);
 	
+	
+	
+	$('#MenuView a span').hover(
+		function(){
+			$(this).stop(true, true).animate({ backgroundColor : '#7cb830', color: '#fff' }, 350);
+		},
+		function(){
+			$(this).stop(true, true).animate({ backgroundColor : 'transparent', color: '#555555' }, 250, null, 
+    			function() { this.style.backgroundColor='transparent'; });
+		}
+	);
+	
+	
+	
 	/*Resizes the app to fill the browser's window case smaller'*/
 	var viewportHeight = $(window).height();
 	var wrapperDivHeight = $('body > div').outerHeight(true)
