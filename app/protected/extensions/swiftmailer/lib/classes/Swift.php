@@ -10,23 +10,23 @@
 
 /**
  * General utility class in Swift Mailer, not to be instantiated.
- * 
+ *
  * @package Swift
- * 
+ *
  * @author Chris Corbyn
  */
 abstract class Swift
 {
-  
+
   static $initialized = false;
   static $initPath;
-  
+
   /** Swift Mailer Version number generated during dist release process */
   const VERSION = '4.1.5';
-  
+
   /**
    * Internal autoloader for spl_autoload_register().
-   * 
+   *
    * @param string $class
    */
   public static function autoload($class)
@@ -52,10 +52,10 @@ abstract class Swift
 
     require $path;
   }
-  
+
   /**
    * Configure autoloading using Swift Mailer.
-   * 
+   *
    * This is designed to play nicely with other autoloaders.
    *
    * @param string $initPath The init script to load when autoloading the first Swift class
@@ -63,7 +63,7 @@ abstract class Swift
   public static function registerAutoload($initPath = null)
   {
     self::$initPath = $initPath;
-    spl_autoload_register(array('Swift', 'autoload'));
+    spl_autoload_register(array('Swift', 'autoload'), false, true); //Zurmo edited to properly auto-load classes.
   }
-  
+
 }
