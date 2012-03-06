@@ -144,6 +144,14 @@ $(window).ready(function(){
 		$(this).css({ right: -$(this).width() -20 });
 	});
 	
+	
+	 window.setTimeout(
+    	function do1(){
+    		//$('.ui-datepicker-trigger').trigger('click');
+    	}, 10 );
+	
+	
+	
 
 
 });

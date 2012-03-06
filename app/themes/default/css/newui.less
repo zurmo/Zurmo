@@ -6,7 +6,7 @@
 @import 'dashboard-portlets.less';
 @import 'file-upload.less';
 @import 'form.less';
-
+@import 'datepicker.less';
 
 @font-face {
     font-family: 'ZurmoSymblyRegular';
@@ -883,21 +883,12 @@ tr.even{
 table.items tr:hover{
 	background-color:#D4E7BC;
 	color:@themeColor;
-	
 	.animateAll(0.35s);
-	
 	.pencil{
 		visibility:visible;
 		color:@themeColor;
 	}
 }
-
-
-
-table.items tr {
-	
-}
-
 
 table.items thead{
 	#gradient > .vertical(#f9f9f9, #f4f4f4);
