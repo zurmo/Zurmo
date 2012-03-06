@@ -76,6 +76,14 @@
 	box-sizing: border-box;
 }
 
+.animateAll(@time: 0.5s){
+	-webkit-transition: all @time ease-out;
+	   -moz-transition: all @time ease-out;
+	     -o-transition: all @time ease-out;
+	    -ms-transition: all @time ease-out;
+	        transition: all @time ease-out;
+}
+
 
 .clearfix() {
   *zoom: 1;
@@ -865,19 +873,32 @@ table.items th{
 	vertical-align:middle !important;
 }
 tr.odd{
-	
+	background:none;
+	.animateAll(0.2s);
 }
 tr.even{
 	background:#fafafa;	
+	.animateAll(0.2s);
 }
 table.items tr:hover{
 	background-color:#D4E7BC;
 	color:@themeColor;
+	
+	.animateAll(0.35s);
+	
 	.pencil{
 		visibility:visible;
 		color:@themeColor;
 	}
 }
+
+
+
+table.items tr {
+	
+}
+
+
 table.items thead{
 	#gradient > .vertical(#f9f9f9, #f4f4f4);
 }
