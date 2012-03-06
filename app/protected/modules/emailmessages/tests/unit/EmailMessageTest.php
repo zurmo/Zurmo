@@ -31,9 +31,17 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
             UserTestHelper::createBasicUser('billy');
-            UserTestHelper::createBasicUser('jane');
+            $jane = UserTestHelper::createBasicUser('jane');
             UserTestHelper::createBasicUser('sally');
             UserTestHelper::createBasicUser('jason');
+            $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailFolder            = new EmailFolder();
+            $emailFolder->name      = EmailFolder::getDefaultDraftName();
+            $emailFolder->type      = EmailFolder::TYPE_DRAFT;
+            $emailFolder->emailBox  = $box;
+            $saved                  = $emailFolder->save();
+            assert($saved); // Not Coding Standard
+            EmailBoxUtil::setBoxAndDefaultFoldersByUserAndName($jane, 'JaneBox');
         }
 
         /**
@@ -52,14 +60,18 @@
             $emailMessage->subject = 'My First Email';
 
             //Attempt to save without setting required information
-            $saved        = $email->save();
+            $saved        = $emailMessage->save();
             $this->assertFalse($saved);
-            $compareData = array('should be array of sender, recipient, content etc.');
-            $this->assertEquals($compareData, $email->getErrors());
+            $compareData = array('folder' => array('name'          => array('Name cannot be blank.'),
+                                                   'emailBox'      => array('name' => array('Name cannot be blank.'))),
+                                 'sender' => array('fromAddress'   => array('From Address cannot be blank.'),
+                                                   'fromName'      => array('From Name cannot be blank.')));
+            $this->assertEquals($compareData, $emailMessage->getErrors());
 
             //Set sender, and recipient, and content
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My First Message';
+            $emailContent->htmlContent = 'Some fake HTML content';
             $emailMessage->content     = $emailContent;
 
             //Sending from the system, does not have a 'person'.
@@ -72,35 +84,29 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = 'billy@fakeemail.com';
             $recipient->toName         = 'Billy James';
-            $recipient->type           = EmailMessageRecipient::TO;
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
             $recipient->person         = $billy;
             $emailMessage->recipients->add($recipient);
 
-            //At this point the message is not in a folder.
-            $this->assertNull($emailMessage->folder);
+            //At this point the message is in no folder
+            $this->assertTrue($emailMessage->folder->id < 0);
+
+            $box                  = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
 
             //Save, at this point the email should be in the draft folder
             $saved = $emailMessage->save();
             $this->assertTrue($saved);
             $this->assertTrue($emailMessage->folder->id > 0);
-            $this->assertEquals(EmailFolder::getByName(EmailFolder::EVERYONE_DRAFT_NAME), $emailMessage->folder->id);
+
+            //At this point the message should be in the draft folder by default.
+            $this->assertEquals(EmailFolder::getDefaultDraftName(), $emailMessage->folder->name);
+            $this->assertEquals(EmailFolder::TYPE_DRAFT, $emailMessage->folder->type);
         }
 
         /**
          * @depends testCreateEmailMessageThatIsANotification
          * @expectedException NotSupportedException
-         */
-        public function testAttemptingToSendEmailNotInOutbox()
-        {
-            $super                      = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-            $emailMessages              = EmailMessage::getAll();
-            $this->assertEquals(1, count($emailMessages));
-            Yii::app()->emailHelper->send($emailMessages[0]);
-        }
-
-        /**
-         * @depends testAttemptingToSendEmailNotInOutbox
          */
         public function testAttemptingToSendEmailInOutbox()
         {
@@ -108,23 +114,39 @@
             Yii::app()->user->userModel = $super;
             $emailMessages              = EmailMessage::getAll();
             $this->assertEquals(1, count($emailMessages));
-            $emailMessages[0]->folder   = EmailFolder::EVERYONE_OUTBOX_NAME;
+
+            //Now put the message in the outbox. Should not send.
+            $box                      = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessages[0]->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
+
             Yii::app()->emailHelper->send($emailMessages[0]);
-            //todo: should send() return errors? something?
-            $this->assertTrue($emailMessages[0]->wasSentOk()); //todo: i dont think this is how i want this to happen,
-            //i think having send() return something might be better, maybe not but we should think about this a bit more
-            //and decide how to do the error handling for sending email. I dont really want the error info to be properties
-            //on the emailMessage would be better to somehow be more decoupled... But think about sending 100 emails at one
-            //we probably have to store this error info related to the emailMessage.
-            $emailMessages[0]->folder   = EmailFolder::EVERYONE_SENT_NOTIFICATIONS_NAME;
-            $saved                      = $emailMessages[0]->save();
-            $this->assertTrue($saved);
         }
 
         /**
          * @depends testAttemptingToSendEmailInOutbox
          */
-        public function testCreateANormalEmailMessage()
+        public function testAttemptingToSendEmailNotOutbox()
+        {
+            $super                            = User::getByUsername('super');
+            Yii::app()->user->userModel       = $super;
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $emailMessages                    = EmailMessage::getAll();
+            $this->assertEquals(1, count($emailMessages));
+            //Because it was set to outbox from last test, stil at outbox.
+            $this->assertTrue($emailMessages[0]->folder->type   == EmailFolder::TYPE_OUTBOX);
+            $box                      = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessages[0]->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
+            $sentOrQueued = Yii::app()->emailHelper->send($emailMessages[0]);
+            $this->assertTrue($sentOrQueued);
+            $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
+            //The message, because it is queued, should still be in the outbox
+            $this->assertEquals(EmailFolder::TYPE_OUTBOX, $emailMessages[0]->folder->type);
+        }
+
+        /**
+         * @depends testAttemptingToSendEmailNotOutbox
+         */
+        public function testCreateNormalEmailMessage()
         {
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
@@ -138,10 +160,13 @@
             $emailMessage->subject = 'My Second Email';
 
             //Attempt to save without setting required information
-            $saved        = $email->save();
+            $saved        = $emailMessage->save();
             $this->assertFalse($saved);
-            $compareData = array('should be array of sender, recipient, content etc.');
-            $this->assertEquals($compareData, $email->getErrors());
+            $compareData = array('folder' => array('name'          => array('Name cannot be blank.'),
+                                                   'emailBox'      => array('name' => array('Name cannot be blank.'))),
+                                 'sender' => array('fromAddress'   => array('From Address cannot be blank.'),
+                                                   'fromName'      => array('From Name cannot be blank.')));
+            $this->assertEquals($compareData, $emailMessage->getErrors());
 
             //Set sender, and recipient, and content
             $emailContent              = new EmailMessageContent();
@@ -164,17 +189,19 @@
             $emailMessage->recipients->add($recipient);
 
             //At this point the message is not in a folder.
-            $this->assertNull($emailMessage->folder);
+            $this->assertTrue($emailMessage->folder->id < 0);
+
+            $box                  = EmailBox::resolveAndGetByName('JaneBox');
+            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
 
             //Save, at this point the email should be in the draft folder
             $saved = $emailMessage->save();
             $this->assertTrue($saved);
             $this->assertTrue($emailMessage->folder->id > 0);
-            $this->assertEquals(EmailFolder::getByName(EmailFolder::EVERYONE_DRAFT_NAME), $emailMessage->folder->id);
         }
 
         /**
-         * @depends testCreateANormalEmailMessage
+         * @depends testCreateNormalEmailMessage
          */
         public function testCreateAndSendEmailMessageWithAttachment()
         {
@@ -190,10 +217,13 @@
             $emailMessage->files->add($emailFileModel);
 
             //Attempt to save without setting required information
-            $saved        = $email->save();
+            $saved        = $emailMessage->save();
             $this->assertFalse($saved);
-            $compareData = array('should be array of sender, recipient, content etc.');
-            $this->assertEquals($compareData, $email->getErrors());
+            $compareData = array('folder' => array('name'          => array('Name cannot be blank.'),
+                                                   'emailBox'      => array('name' => array('Name cannot be blank.'))),
+                                 'sender' => array('fromAddress'   => array('From Address cannot be blank.'),
+                                                   'fromName'      => array('From Name cannot be blank.')));
+            $this->assertEquals($compareData, $emailMessage->getErrors());
 
             //Set sender, and recipient, and content
             $emailContent              = new EmailMessageContent();
@@ -216,20 +246,22 @@
             $emailMessage->recipients->add($recipient);
 
             //At this point the message is not in a folder.
-            $this->assertNull($emailMessage->folder);
+            $this->assertTrue($emailMessage->folder->id < 0);
+
+            $box                  = EmailBox::resolveAndGetByName('JaneBox');
+            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
 
             //Save, at this point the email should be in the draft folder
             $saved = $emailMessage->save();
             $this->assertTrue($saved);
             $this->assertTrue($emailMessage->folder->id > 0);
-            $this->assertEquals(EmailFolder::getByName(EmailFolder::EVERYONE_DRAFT_NAME), $emailMessage->folder->id);
 
             $id = $emailMessage->id;
             unset($emailMessage);
-            $note = EmailMessage::getById($id);
+            $emailMessage = EmailMessage::getById($id);
             $this->assertEquals('My Email with an Attachment', $emailMessage->subject);
             $this->assertEquals(1, $emailMessage->files->count());
-            $this->assertEquals($emailFileModel, $note->files->offsetGet(0));
+            $this->assertEquals($emailFileModel, $emailMessage->files->offsetGet(0));
         }
 
         /**
@@ -244,18 +276,20 @@
             $sally                      = User::getByUsername('sally');
             $jason                      = User::getByUsername('jason');
 
-            $this->assertEquals(1, count(EmailMessage::getAll()));
+            $this->assertEquals(3, count(EmailMessage::getAll()));
 
             $emailMessage = new EmailMessage();
             $emailMessage->owner   = $jane;
             $emailMessage->subject = 'My Third Email';
 
             //Attempt to save without setting required information
-            $saved        = $email->save();
+            $saved        = $emailMessage->save();
             $this->assertFalse($saved);
-            $compareData = array('should be array of sender, recipient, content etc.');
-            $this->assertEquals($compareData, $email->getErrors());
-
+            $compareData = array('folder' => array('name'          => array('Name cannot be blank.'),
+                                                   'emailBox'      => array('name' => array('Name cannot be blank.'))),
+                                 'sender' => array('fromAddress'   => array('From Address cannot be blank.'),
+                                                   'fromName'      => array('From Name cannot be blank.')));
+            $this->assertEquals($compareData, $emailMessage->getErrors());
             //Set sender, and recipient, and content
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My Third Message';
@@ -293,16 +327,41 @@
             $emailMessage->recipients->add($recipient);
 
             //At this point the message is not in a folder.
-            $this->assertNull($emailMessage->folder);
+            $this->assertTrue($emailMessage->folder->id < 0);
+            $box                  = EmailBox::resolveAndGetByName('JaneBox');
+            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
 
             //Save, at this point the email should be in the draft folder
             $saved = $emailMessage->save();
             $this->assertTrue($saved);
             $this->assertTrue($emailMessage->folder->id > 0);
-            $this->assertEquals(EmailFolder::getByName(EmailFolder::EVERYONE_DRAFT_NAME), $emailMessage->folder->id);
 
             //Now send the message.
-            Yii::app()->emailHelper->send($emailMessages);
+            Yii::app()->emailHelper->send($emailMessage);
+        }
+
+        /**
+         * @depends testMultipleRecipientsAndTypes
+         */
+        public function testQueuedEmailsWhenEmailMessageChangeToSentFolder()
+        {
+            $super                            = User::getByUsername('super');
+            Yii::app()->user->userModel       = $super;
+            $this->assertEquals(2, Yii::app()->emailHelper->getQueuedCount());
+            $emailMessages                    = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX);
+            $this->assertEquals(2, count($emailMessages));
+            $emailMessages[0]->folder->type = EmailFolder::TYPE_OUTBOX;
+            $emailMessages[1]->folder->type = EmailFolder::TYPE_OUTBOX;
+            $emailMessageId = $emailMessages[0]->id;
+
+            $sent = Yii::app()->emailHelper->sendQueued();
+            $this->assertTrue($sent);
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX)));
+
+            $emailMessages                    = EmailMessage::getAllByFolderType(EmailFolder::TYPE_SENT);
+            $this->assertEquals(2, count($emailMessages));
+            $this->assertEquals($emailMessageId, $emailMessages[0]->id);
         }
     }
 ?>

@@ -31,6 +31,24 @@
             return 'EmailMessage';
         }
 
+        public static function getAllByFolderType($type)
+        {
+            assert('is_string($type)');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'folder',
+                    'relatedAttributeName' => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => $type,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('EmailMessage');
+            $where = RedBeanModelDataProvider::makeWhere('EmailMessage', $searchAttributeData, $joinTablesAdapter);
+            return self::getSubset($joinTablesAdapter, null, null, $where, null);
+        }
+
         public function __toString()
         {
             if (trim($this->subject) == '')
@@ -69,6 +87,8 @@
                     array('subject', 'required'),
                     array('subject', 'type',    'type' => 'string'),
                     array('subject', 'length',  'min'  => 3, 'max' => 255),
+                    array('folder', 'required'),
+                    array('sender', 'required'),
                 )
             );
             return $metadata;

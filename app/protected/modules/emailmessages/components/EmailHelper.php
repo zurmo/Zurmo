@@ -36,17 +36,86 @@
          */
         public function send(EmailMessage $emailMessage)
         {
-            //todo: note, build interactive command (or just taking the subject/message/to as params so we can test and send email via command line.
+            if($emailMessage->folder->type == EmailFolder::TYPE_OUTBOX ||
+               $emailMessage->folder->type == EmailFolder::TYPE_SENT)
+            {
+                throw new NotSupportedException();
+            }
+            $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_OUTBOX);
+            $saved                  = $emailMessage->save();
+            if(!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            return true;
         }
 
         public function sendImmediately(EmailMessage $emailMessage)
         {
+            if($emailMessage->folder->type == EmailFolder::TYPE_SENT)
+            {
+                throw new NotSupportedException();
+            }
+
             //todo: move this into a getOutboundMailer, then you can use private to detect if this object is already created and populated.
             //todo: override a method in EmailHelperForTesting, that doesnt return a swiftmailer? or maybe it doesnt but then interjects somehow
             //the sending process.
             //with smtp info etc.
-            Yii::import('ext.swiftmailer.SwiftMailer');
-            $swiftMailer = new SwiftMailer();
+            //Yii::import('ext.swiftmailer.SwiftMailer');
+            //$swiftMailer = new SwiftMailer();
+
+            $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
+            $saved                  = $emailMessage->save();
+            if(!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            return true;
+
         }
+
+        public function sendQueued()
+        {
+            $queuedEmailMessages = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX);
+            foreach($queuedEmailMessages as $emailMessage)
+            {
+                $this->sendImmediately($emailMessage);
+            }
+            return true;
+        }
+
+        public function getUserToSendNotificationsAs()
+        {
+            $keyName      = 'UserIdToSendNotificationsAs';
+            $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+            if (null != $userId = ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', $keyName))
+            {
+                try
+                {
+                    $user  = User::getById($userId);
+
+                    if($user->groups->contains($superGroup))
+                    {
+                        return $user;
+                    }
+                }
+                catch(NotFoundException $e)
+                {
+                }
+            }
+            if($superGroup->users->count() == 0)
+            {
+                throw new NotSupportedException();
+            }
+            return $superGroup->users->offsetGet(0);
+        }
+
+        public function getQueuedCount()
+        {
+            return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX));
+        }
+
+       //todo: note, build interactive command (or just taking the subject/message/to as params so we can test and send email via command line.
+       //make it interactive.
     }
 ?>

@@ -29,6 +29,12 @@
         const TYPE_INBOX   = 'Inbox';
         const TYPE_SENT    = 'Sent';
         const TYPE_OUTBOX  = 'Outbox';
+        const TYPE_DRAFT   = 'Draft';
+
+        public static function getDefaultDraftName()
+        {
+            return Yii::t('Default', 'Draft');
+        }
 
         public static function getDefaultInboxName()
         {
