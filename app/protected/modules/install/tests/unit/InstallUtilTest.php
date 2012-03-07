@@ -586,7 +586,8 @@
         public function testRunAutoBuildFromUpdateSchemaCommand()
         {
             $this->runInstallation(true);
-            $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand();
+            $messageLogger = new MessageLogger();
+            $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
             $this->assertTrue($result);
         }
 
