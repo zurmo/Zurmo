@@ -52,6 +52,11 @@
             return Yii::t('Default', 'Outbox');
         }
 
+        public static function getDefaultOutboxErrorName()
+        {
+            return Yii::t('Default', 'Outbox Error');
+        }
+
         public static function getByBoxAndType(EmailBox $box, $type)
         {
             assert('$box->id > 0');

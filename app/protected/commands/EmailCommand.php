@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * JobManager command is used for testing and troubleshooting email connections. This can also be used to send
+     * Email command is used for testing and troubleshooting email connections. This can also be used to send
      * emails.
      */
     class EmailCommand extends CConsoleCommand
@@ -54,7 +54,14 @@
      * toAddress: the email address to send the email too
 
      Optional Parameters:
-     *
+     * subject: optional Subject
+     * textContent: optional textContent
+     * htmlContent: optional htmlContent
+     * host: optional host setting. Otherwise system setting will be used.
+     * port: optional port setting. Otherwise system setting will be used.
+     * outboundUsername: optional outbound username setting. Otherwise system setting will be used.
+     * outboundPassword: optional outbound password setting. Otherwise system setting will be used.
+
 EOD;
     }
 
@@ -76,7 +83,6 @@ EOD;
         {
             $this->usageError('A username must be specified.');
         }
-
         if (!isset($toAddress))
         {
             $this->usageError('You must specify a to address.');
@@ -89,8 +95,6 @@ EOD;
         {
             $this->usageError('The specified username does not exist.');
         }
-        echo "\n";
-
         if($host != null)
         {
             Yii::app()->emailHelper->outboundHost = $host;
@@ -107,7 +111,7 @@ EOD;
         {
             Yii::app()->emailHelper->outboundPassword = $outboundPassword;
         }
-
+        echo "\n";
         echo 'Using type:' . Yii::app()->emailHelper->outboundType . "\n";
         echo 'Using host:' . Yii::app()->emailHelper->outboundHost . "\n";
         echo 'Using port:' . Yii::app()->emailHelper->outboundPort . "\n";
@@ -118,15 +122,13 @@ EOD;
         $emailMessage = new EmailMessage();
         $emailMessage->owner   = Yii::app()->emailHelper->getUserToSendNotificationsAs();
         $emailMessage->subject = $subject;
-
-        //Set sender, and recipient, and content
         $emailContent              = new EmailMessageContent();
         $emailContent->textContent = $textContent;
         $emailContent->htmlContent = $htmlContent;
         $emailMessage->content     = $emailContent;
         $sender                    = new EmailMessageSender();
-        $sender->fromAddress       = 'system@somewhere.com';        //todo: resolve against yii user.
-        $sender->fromName          = 'Zurmo System';     //todo: resolve against yii user
+        $sender->fromAddress       = Yii::app()->emailHelper->resolveFromAddressByUser(Yii::app()->user->userModel);
+        $sender->fromName          = strval(Yii::app()->user->userModel);
         $sender->person            = Yii::app()->user->userModel;
         $emailMessage->sender      = $sender;
         $recipient                 = new EmailMessageRecipient();
@@ -152,15 +154,13 @@ EOD;
             echo 'Message failed to send' . "\n";
             echo $emailMessage->error     . "\n";
         }
-
         $saved = $emailMessage->save();
         if(!$saved)
         {
             throw new NotSupportedException();
         }
     }
-
-    public function addErrorsAsUsageErrors(array $errors)
+    protected function addErrorsAsUsageErrors(array $errors)
     {
         foreach ($errors as $errorData)
         {

@@ -47,6 +47,8 @@
             'outboundPassword'
         );
 
+        protected $defaultFromAddress = 'notification@zurmotest.com';
+
         public function init()
         {
             $this->loadOutboundSettings();
@@ -108,6 +110,11 @@
             {
                 $this->sendImmediately($emailMessage);
             }
+            $queuedEmailMessages = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX_ERROR);
+            foreach($queuedEmailMessages as $emailMessage)
+            {
+                $this->sendImmediately($emailMessage);
+            }
             return true;
         }
 
@@ -136,7 +143,7 @@
             $mailer->From = array($emailMessage->sender->fromAddress => $emailMessage->sender->fromName);
             foreach($emailMessage->recipients as $recipient)
             {
-                $mailer->AddAddressByType($recipient->toAddress, $recipient->toName, $recipient->type);
+                $mailer->addAddressByType($recipient->toAddress, $recipient->toName, $recipient->type);
             }
         }
 
@@ -227,6 +234,16 @@
         public function getQueuedCount()
         {
             return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX));
+        }
+
+        public function resolveFromAddressByUser(User$user)
+        {
+            assert('$user->id >0');
+            if($user->primaryEmail->emailAddress == null)
+            {
+                return $this->defaultFromAddress;
+            }
+            return $user->primaryEmail->emailAddress;
         }
     }
 ?>

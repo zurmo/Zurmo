@@ -63,7 +63,7 @@
                     $box = new EmailBox();
                     $box->name        = self::NOTIFICATIONS_NAME;
                     $folder           = new EmailFolder();
-                    $folder->name     = EmailFolder::getDefaultSentName();
+                    $folder->name     = EmailFolder::getDefaultDraftName();
                     $folder->type     = EmailFolder::TYPE_DRAFT;
                     $folder->emailBox = $box;
                     $box->folders->add($folder);
@@ -78,7 +78,7 @@
                     $folder->emailBox = $box;
                     $box->folders->add($folder);
                     $folder           = new EmailFolder();
-                    $folder->name     = EmailFolder::getDefaultOutboxName();
+                    $folder->name     = EmailFolder::getDefaultOutboxErrorName();
                     $folder->type     = EmailFolder::TYPE_OUTBOX_ERROR;
                     $folder->emailBox = $box;
                     $box->folders->add($folder);

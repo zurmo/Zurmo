@@ -25,8 +25,15 @@
      ********************************************************************************/
 
     Yii::import('ext.swiftmailer.SwiftMailer');
+    /**
+     * Class for Zurmo specific SwiftMailer functionality.
+     */
     class ZurmoSwiftMailer extends SwiftMailer
     {
+        /**
+         * Stores send response log from server as email is sending.
+         * @var array
+         */
         protected $sendResponseLog          = array();
 
         public function smtpTransport($host = null, $port = null)
@@ -38,6 +45,12 @@
         {
             return $this->sendResponseLog;
         }
+
+        /**
+         * Override to support adding sendResponseLog messages
+         * (non-PHPdoc)
+         * @see SwiftMailer::send()
+         */
         public function send()
         {
             $transport = $this->loadTransport();
@@ -65,7 +78,7 @@
                 $this->sendResponseLog = $transport->getResponseLog();
                 throw new OutboundEmailSendException($e->getMessage(), $e->getCode(), $e);
             }
-            $this->ClearAddresses();
+            $this->clearAddresses();
             return $result;
         }
     }

@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Adding support for responseLog.  This will allow further troubleshooting when there is a problem
+     * sending mail.
+     */
     class ZurmoSwiftSmtpTransport extends Swift_SmtpTransport
     {
         protected $responseLog = array();
