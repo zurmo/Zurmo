@@ -30,7 +30,7 @@
      * but also during an upgrade or manually  to update the database schema based on any detected
      * changes.
      */
-    class AutoBuildDatabaseTest extends BaseTest
+    class AutoBuildDatabaseTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
