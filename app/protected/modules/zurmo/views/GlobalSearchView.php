@@ -77,8 +77,8 @@
                             my: "left top",
                             at: "left bottom",
                             of: $("#app-search"),
-                            offset: "30 -30",
-                            collision: "fit"
+                            offset: "-30 0",
+                            collision: "none"
                             });';
             /// End Not Coding Standard
             Yii::app()->clientScript->registerScript('GlobalSearchElementPosition', $script);
