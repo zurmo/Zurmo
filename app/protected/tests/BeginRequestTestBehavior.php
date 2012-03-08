@@ -29,9 +29,37 @@
         public function attach($owner)
         {
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+            // We don't need this, db is already setup in TestSUite.php line 104!
+            //$owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
         }
 
+        /**
+        * Import all files that need to be included(for lazy loading)
+        * @param $event
+        */
+        public function handleImports($event)
+        {
+            try
+            {
+                $filesToInclude = GeneralCache::getEntry('filesToIncludeForTests3');
+            }
+            catch (NotFoundException $e)
+            {
+                $filesToInclude   = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules', true);
+                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework', true);
+                $totalFilesToIncludeFromModules = count($filesToInclude);
+
+                foreach ($filesToIncludeFromFramework as $key => $file)
+                {
+                    $filesToInclude[$totalFilesToIncludeFromModules + $key] = $file;
+                }
+                GeneralCache::cacheEntry('filesToIncludeForTests3', $filesToInclude);
+            }
+            foreach ($filesToInclude as $file)
+            {
+                Yii::import($file);
+            }
+        }
         public function handleSetupDatabaseConnection($event)
         {
             RedBeanDatabase::setup(Yii::app()->db->connectionString,

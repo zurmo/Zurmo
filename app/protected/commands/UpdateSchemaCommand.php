@@ -70,7 +70,14 @@ EOD;
         {
             $this->usageError('The specified user is not a super administrator.');
         }
-        InstallUtil::runAutoBuildFromUpdateSchemaCommand();
+
+        $template        = "{message}\n";
+        $messageStreamer = new MessageStreamer($template);
+        $messageStreamer->setExtraRenderBytes(0);
+        $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
+        $messageLogger = new MessageLogger($messageStreamer);
+        InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
+        $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
     }
 }
 ?>

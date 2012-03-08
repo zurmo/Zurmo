@@ -587,7 +587,9 @@
         {
             $this->runInstallation(true);
             $messageLogger = new MessageLogger();
+            $messageLogger->addInfoMessage(Yii::t('Default', 'Starting schema update process.'));
             $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
+            $messageLogger->addInfoMessage(Yii::t('Default', 'Schema update complete.'));
             $this->assertTrue($result);
         }
 
