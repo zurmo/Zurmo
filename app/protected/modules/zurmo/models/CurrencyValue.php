@@ -83,6 +83,11 @@
             return true;
         }
 
+        /**
+         * Given an id of a currency model, determine if any currency values are using this currency.
+         * @return true if at least one currency value model is using this currency.
+         * @param integer $currencyId
+         */
         public static function isCurrencyInUseById($currencyId)
         {
             assert('is_int($currencyId)');

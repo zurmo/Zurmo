@@ -29,19 +29,44 @@
      */
     class FileUtil
     {
-        public static function getFilesFromDir($dir, $basePath, $beginAliasPath)
+        /**
+         * Get files from directory, to be imported using Yii::import function
+         * For WebApplication, we don't want to include files from test folders.
+         * @param string $dir
+         * @param string $basePath
+         * @param string $beginAliasPath
+         * @param boolean $includeTests
+         * @return array
+         */
+        public static function getFilesFromDir($dir, $basePath, $beginAliasPath, $includeTests = false)
         {
             $files = array();
             if ($handle = opendir($dir))
             {
                 while (false !== ($file = readdir($handle)))
                 {
-                    if ($file != "." && $file != ".." && $file != 'tests')
+                    $includeFile = false;
+                    if ($file != 'tests')
+                    {
+                        $includeFile = true;
+                    }
+                    elseif ($file == 'tests')
+                    {
+                        if ($includeTests)
+                        {
+                            $includeFile = true;
+                        }
+                        else
+                        {
+                            $includeFile = false;
+                        }
+                    }
+                    if ($file != "." && $file != ".." && $includeFile)
                     {
                         if (is_dir($dir . DIRECTORY_SEPARATOR . $file))
                         {
                             $dir2 = $dir . DIRECTORY_SEPARATOR . $file;
-                            $files[] = self::getFilesFromDir($dir2, $basePath, $beginAliasPath);
+                            $files[] = self::getFilesFromDir($dir2, $basePath, $beginAliasPath, $includeTests);
                         }
                         elseif (substr(strrchr($file, '.'), 1) == 'php')
                         {

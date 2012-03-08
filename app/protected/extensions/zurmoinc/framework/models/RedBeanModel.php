@@ -59,13 +59,29 @@
      */
     abstract class RedBeanModel extends CComponent implements Serializable
     {
-        // Models that have not been saved yet have no id as far
-        // as the database is concerned. Until they are saved they are
-        // assigned a negative id, so that they have identity.
+        /**
+         * Models that have not been saved yet have no id as far
+         * as the database is concerned. Until they are saved they are
+         * assigned a negative id, so that they have identity.
+         * @var integer
+         */
         private static $nextPseudoId = -1;
 
-        // The id of an unsaved model.
+        //
+        /**
+         * The id of an unsaved model.
+         * @var integer
+         */
         private $pseudoId;
+
+        /**
+         * When creating the class heirarchy for bean creation and maintenence, which class is the last class in the
+         * lineage to create a bean for?  Normally the RedBeanModel is the lastClass in the line, and therefore there
+         * will not be a table redbeanmodel.  Some classes that extend RedBeanModel might want the line to stop before
+         * RedBeanModel since creating a table with just an 'id' would be pointless.  @see OwnedModel
+         * @var string
+         */
+        protected static $lastClassInBeanHeirarchy = 'RedBeanModel';
 
         // A model maps to one or more beans. If Person extends RedBeanModel
         // there is one bean, but if User then extends Person a User model
@@ -88,13 +104,21 @@
         // it can be saved explicitly but it wont be saved automatically
         // when it is a related model and will be redispensed next
         // time it is referenced.
-        protected $modified       = false;
-        protected $deleted        = false;
-        protected $isInIsModified = false;
-        protected $isInHasErrors  = false;
-        protected $isInGetErrors  = false;
-        protected $isValidating   = false;
-        protected $isSaving       = false;
+        protected $modified               = false;
+        protected $deleted                = false;
+        protected $isInIsModified         = false;
+        protected $isInHasErrors          = false;
+        protected $isInGetErrors          = false;
+        protected $isValidating           = false;
+        protected $isSaving               = false;
+
+        /**
+         * Can this model be saved when save is called from a related model?  True if it can, false if it cannot.
+         * Setting this value to false can reduce unnecessary queries to the database. If the models of a class do
+         * not change often then it can make sense to set this to false.  An example is @see Currency.
+         * @var boolean
+         */
+        protected $isSavableFromRelation = true;
 
         // Mapping of Yii validators to validators doing things that
         // are either required for RedBean, or that simply implement
@@ -339,7 +363,7 @@
             $this->pseudoId = self::$nextPseudoId--;
             if ($bean === null)
             {
-                foreach (array_reverse(RuntimeUtil::getClassHierarchy(get_class($this), 'RedBeanModel')) as $modelClassName)
+                foreach (array_reverse(RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy)) as $modelClassName)
                 {
                     $tableName = self::getTableName($modelClassName);
                     $newBean = R::dispense($tableName);
@@ -361,7 +385,7 @@
             {
                 assert('$bean->id > 0');
                 $first = true;
-                foreach (RuntimeUtil::getClassHierarchy(get_class($this), 'RedBeanModel') as $modelClassName)
+                foreach (RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy) as $modelClassName)
                 {
                     if ($first)
                     {
@@ -767,7 +791,7 @@
                 $className = get_called_Class();
                 $defaultMetadata = $className::getDefaultMetadata();
                 $metadata = array();
-                foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, 'RedBeanModel')) as $modelClassName)
+                foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy)) as $modelClassName)
                 {
                     if ($modelClassName::canSaveMetadata())
                     {
@@ -826,7 +850,7 @@
                 self::assertMetadataIsValid($metadata);
             }
             $className = get_called_class();
-            foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, 'RedBeanModel')) as $modelClassName)
+            foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy)) as $modelClassName)
             {
                 if ($modelClassName::canSaveMetadata())
                 {
@@ -867,7 +891,7 @@
         protected static function assertMetadataIsValid(array $metadata)
         {
             $className = get_called_Class();
-            foreach (RuntimeUtil::getClassHierarchy($className, 'RedBeanModel') as $modelClassName)
+            foreach (RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy) as $modelClassName)
             {
                 if (isset($metadata[$modelClassName]['members']))
                 {
@@ -1706,6 +1730,26 @@
                         foreach ($this->relationNameToRelatedModel as $relationName => $relatedModel)
                         {
                             $relationType = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][0];
+                            if (!in_array($relationType, array(self::HAS_ONE_BELONGS_TO,
+                                                               self::HAS_MANY_BELONGS_TO)))
+                            {
+                                if ($relatedModel->isModified() ||
+                                    ($this->isAttributeRequired($relationName) ))
+                                {
+                                    if($this->isSavableFromRelation)
+                                    {
+                                        if (!$relatedModel->save(false))
+                                        {
+                                            $this->isSaving = false;
+                                            return false;
+                                        }
+                                    }
+                                    elseif ($relatedModel->isModified())
+                                    {
+                                        throw new NotSuportedException();
+                                    }
+                                }
+                            }
                             if ($relatedModel instanceof RedBeanModel)
                             {
                                 $bean                  = $this->attributeNameToBeanAndClassName                [$relationName][0];
@@ -1736,20 +1780,6 @@
                                         $tableName  = self::getTableName($this->getAttributeModelClassName($relationName));
                                         $columnName = self::getForeignKeyName(get_class($this), $relationName);
                                         RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
-                                    }
-                                }
-                            }
-                            if (!in_array($relationType, array(self::HAS_ONE_BELONGS_TO,
-                                                               self::HAS_MANY_BELONGS_TO)))
-                            {
-                                if ($relatedModel->isModified() ||
-                                    ($this->isAttributeRequired($relationName) ))
-                                {
-                                    // Validation of this model has already done.
-                                    if (!$relatedModel->save(false))
-                                    {
-                                        $this->isSaving = false;
-                                        return false;
                                     }
                                 }
                             }
@@ -1913,7 +1943,7 @@
             $this->forget();
             // RedBeanModel only supports cascaded deletes on associations,
             // not on links. So for now at least they are done the slow way.
-            foreach (RuntimeUtil::getClassHierarchy(get_class($this), 'RedBeanModel') as $modelClassName)
+            foreach (RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy) as $modelClassName)
             {
                 $this->deleteOwnedRelatedModels  ($modelClassName);
                 $this->deleteForeignRelatedModels($modelClassName);
@@ -2507,7 +2537,7 @@
                                 else
                                 {
                                     $relatedModelClassName = $this->relationNameToRelationTypeModelClassNameAndOwns[$attributeName][1];
-                                    $this->$attributeName = self::getById(intval($value['id']), $relatedModelClassName);
+                                    $this->$attributeName  = $relatedModelClassName::getById(intval($value['id']), $relatedModelClassName);
                                 }
                             }
                             else

@@ -26,6 +26,8 @@
 
     class Import extends Item
     {
+        protected $tempTableName;
+
         public function __toString()
         {
             return Yii::t('Default', '(Unnamed)');
@@ -90,7 +92,18 @@
             {
                 throw new NotSupportedException();
             }
-            return 'importtable' . $this->id;
+            if($this->tempTableName != null)
+            {
+                return $this->tempTableName;
+            }
+            $this->tempTableName = 'importtable' . $this->id;
+            return $this->tempTableName;
+        }
+
+        public function setTempTableName($name)
+        {
+            assert('is_string($name)');
+            $this->tempTableName = $name;
         }
 
         protected function beforeDelete()

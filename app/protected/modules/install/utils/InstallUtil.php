@@ -910,8 +910,9 @@
          * From the command line, run the autobuild method which will effectively update
          * the database schema.
          */
-        public static function runAutoBuildFromUpdateSchemaCommand()
+        public static function runAutoBuildFromUpdateSchemaCommand($messageLogger)
         {
+            assert('$messageLogger instanceof MessageLogger');
             ForgetAllCacheUtil::forgetAllCaches();
             $unfreezeWhenDone     = false;
             if (RedBeanDatabase::isFrozen())
@@ -919,13 +920,8 @@
                 RedBeanDatabase::unfreeze();
                 $freezeWhenDone = true;
             }
-            $template        = "{message}\n";
-            $messageStreamer = new MessageStreamer($template);
-            $messageStreamer->setExtraRenderBytes(0);
-            $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
-            $messageLogger = new MessageLogger($messageStreamer);
+
             self::autoBuildDatabase($messageLogger);
-            $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
 
             if ($freezeWhenDone)
             {

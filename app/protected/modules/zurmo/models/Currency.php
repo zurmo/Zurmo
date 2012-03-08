@@ -30,6 +30,49 @@
     class Currency extends RedBeanModel
     {
         /**
+         * $currencyIdRowsByCode, @see $cachedCurrencyIdByCode, @see $cachedCurrencyById, and @see $allCachedCurrencies
+         * are all part of an effort to provide php level caching for currency.  Currency rarely changes, yet since it
+         * is attached to currencyValue as related model, it can get accessed quite a bit especially if you have many
+         * currencyValue models related to another model via custom attributes for example.  Eventually the caching
+         * mechanism here needs to be moved into something using memcache and combined so we don't have 4 different
+         * properties, but for now this was implemented to reduce save query hits to the database.
+         * @var array
+         */
+        private static $currencyIdRowsByCode   = array();
+
+        private static $cachedCurrencyIdByCode = array();
+
+        private static $cachedCurrencyById     = array();
+
+        private static $allCachedCurrencies    = array();
+
+        /**
+         * Since currency rarely changes, there is no reason to attempt to save it when a @see CurrencyValue is
+         * created or changed, for example.  Currency can only be saved on its own directly and not through a related
+         * model.
+         * @var boolean
+         */
+        protected $isSavableFromRelation       = false;
+
+        /**
+         * Override of getById in RedBeanModel in order to cache the result.  Currency rarely  changes, so caching
+         * the currency on this method provides a performance boost.
+         * @param integer $id
+         * @param string $modelClassName
+         */
+        public static function getById($id, $modelClassName = null)
+        {
+            assert('$modelClassName == "Currency" || $modelClassName == null');
+            if(isset(self::$cachedCurrencyById[$id]))
+            {
+                return self::$cachedCurrencyById[$id];
+            }
+            $currency = parent::getById($id, $modelClassName);
+            self::$cachedCurrencyById[$id] = $currency;
+            return $currency;
+        }
+
+        /**
          * Gets a currency by code.
          * @param $code String Code.
          * @return A model of type currency
@@ -119,6 +162,108 @@
         public static function isTypeDeletable()
         {
             return true;
+        }
+
+        /**
+         * Attempt to get the cached currency model by providing a currency code.
+         * @param string $code
+         * @return Currency model if found, otherwise returns null
+         */
+        public static function getCachedCurrencyByCode($code)
+        {
+            assert('is_string($code)');
+            if(isset(self::$cachedCurrencyIdByCode[$code]) &&
+               self::$cachedCurrencyById[self::$cachedCurrencyIdByCode[$code]])
+               {
+                    return self::$cachedCurrencyById[self::$cachedCurrencyIdByCode[$code]];
+               }
+               return null;
+        }
+
+        /**
+         * Given a currency model, set the currency model as cached.
+         * @param unknown_type $currency
+         */
+        public static function setCachedCurrency(Currency $currency)
+        {
+            assert('$currency->id > 0');
+            self::$cachedCurrencyIdByCode[$currency->code]     = $currency->id;
+            self::$cachedCurrencyById[$currency->id]           = $currency;
+        }
+
+        /**
+         * Override to provide a performance boost by relying on cached row data regarding uniqueness of a currency.
+         * This was required since the currency validator was running anytime a currencyValue is validated. Yet we don't
+         * need to check the validation of currency all the time since currency does not change often and not from a
+         * related model.
+         * (non-PHPdoc)
+         * @see RedBeanModel::isUniqueAttributeValue()
+         */
+        public function isUniqueAttributeValue($attributeName, $value)
+        {
+            if($attributeName != 'code')
+            {
+                return parent::isUniqueAttributeValue($attributeName, $value);
+            }
+            assert('$value !== null');
+            if(isset(static::$currencyIdRowsByCode[$value]))
+            {
+                $rows = static::$currencyIdRowsByCode[$value];
+            }
+            else
+            {
+                $modelClassName = $this->attributeNameToBeanAndClassName[$attributeName][1];
+                $tableName = self::getTableName($modelClassName);
+                $rows = R::getAll('select id from ' . $tableName . " where $attributeName = ?", array($value));
+                static::$currencyIdRowsByCode[$value] = $rows;
+            }
+            return count($rows) == 0 || count($rows) == 1 && $rows[0]['id'] == $this->id;
+        }
+
+        /**
+         * Override to resetCache after a currency is saved.
+         * (non-PHPdoc)
+         * @see RedBeanModel::save()
+         */
+        public function save($runValidation = true, array $attributeNames = null)
+        {
+            $saved = parent::save($runValidation, $attributeNames);
+            self::resetCaches();
+            return $saved;
+        }
+
+        /**
+         * Attempt to get the cached list of currency models.
+         * @return array of Currency models if found, otherwise returns null
+         */
+        public static function getAllCachedCurrencies()
+        {
+            if(empty(self::$allCachedCurrencies))
+            {
+                return null;
+            }
+            return self::$allCachedCurrencies;
+        }
+
+        /**
+         * Set a list of cached currency models
+         * @param $currencies
+         */
+        public static function setAllCachedCurrencies($currencies)
+        {
+            self::$allCachedCurrencies = $currencies;
+        }
+
+        /**
+         * The currency cache is a php only cache.  This resets the cache.  Useful during testing when the php
+         * is still running between requests and tests.
+         */
+        public static function resetCaches()
+        {
+            self::$currencyIdRowsByCode   = array();
+            self::$cachedCurrencyIdByCode = array();
+            self::$cachedCurrencyById     = array();
+            self::$allCachedCurrencies    = array();
         }
     }
 ?>

@@ -330,6 +330,7 @@
                         $modelClassName = basename(substr($fullEntryName, 0, -4));
                         $modelReflectionClass = new ReflectionClass($modelClassName);
                         if ($modelReflectionClass->isSubclassOf('RedBeanModel') &&
+                            $modelReflectionClass->isSubclassOf('OwnedModel') &&
                             !$modelReflectionClass->isAbstract())
                         {
                            $model              = new $modelClassName(false);

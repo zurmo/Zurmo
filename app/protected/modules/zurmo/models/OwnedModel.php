@@ -33,6 +33,13 @@
      */
     class OwnedModel extends RedBeanModel
     {
+        /**
+         * In the case of OwnedModels, there is no need to create a bean.  The class hierarchy can end here for
+         * bean creation.
+         * @var string
+         */
+        protected static $lastClassInBeanHeirarchy = 'OwnedModel';
+
         // On changing a member value the original value
         // is saved (ie: on change it again the original
         // value is not overwritten) so that on save the
