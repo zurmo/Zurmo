@@ -35,8 +35,60 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
+
+            $user = new User();
+            $user->username           = 'super2';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'Clark2';
+            $user->lastName           = 'Kent2';
+            $user->setPassword('super2');
+            $saved = $user->save();
+            assert($saved); //Not Coding Standard
+
+            $group = Group::getByName('Super Administrators');
+            $group->users->add($user);
+            $saved = $group->save();
+            assert($saved); //Not Coding Standard
         }
 
-        //todo: test views for configuring outbound email
+        public function testSuperUserAllDefaultControllerActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $this->runControllerWithNoExceptionsAndGetContent     ('emailmessages/default/configurationEdit');
+        }
+
+        public function testSuperUserModifyOutboundEmailConfiguration()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $super2 = User::getByUsername('super2');
+
+            $this->assertEquals('smtp', Yii::app()->emailHelper->outboundType);
+            $this->assertNull(Yii::app()->emailHelper->outboundHost);
+            $this->assertEquals(25, Yii::app()->emailHelper->outboundPort);
+            $this->assertNull(Yii::app()->emailHelper->outboundUsername);
+            $this->assertNull(Yii::app()->emailHelper->outboundPassword);
+            $this->assertEquals($super->id, Yii::app()->emailHelper->getUserToSendNotificationsAs()->id);
+
+
+            //Change email settings
+            $this->resetGetArray();
+            $this->setPostArray(array('OutboundEmailConfigurationForm' => array(
+                                    'host'                              => 'abc',
+                                    'port'                              => '565',
+                                    'username'	                        => 'myuser',
+                                    'password'                          => 'apassword',
+                                    'userIdOfUserToSendNotificationsAs' => $super2->id)));
+            $this->runControllerWithRedirectExceptionAndGetContent('emailmessages/default/configurationEdit');
+            $this->assertEquals('Outbound email configuration saved successfully.', Yii::app()->user->getFlash('notification'));
+
+            //Confirm the setting did in fact change correctly
+            $emailHelper = new EmailHelper;
+            $this->assertEquals('smtp',     Yii::app()->emailHelper->outboundType);
+            $this->assertEquals('abc',      Yii::app()->emailHelper->outboundHost);
+            $this->assertEquals('565',      Yii::app()->emailHelper->outboundPort);
+            $this->assertEquals('myuser',   Yii::app()->emailHelper->outboundUsername);
+            $this->assertEquals('apassword', Yii::app()->emailHelper->outboundPassword);
+            $this->assertEquals($super2->id,    Yii::app()->emailHelper->getUserToSendNotificationsAs()->id);
+        }
     }
 ?>

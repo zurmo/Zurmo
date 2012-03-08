@@ -96,16 +96,29 @@
 
         protected static function sendEmail(Notification $notification)
         {
-            return; //Remove once Email is implemented.
-            //Fix up MonitorJobTest since we can now test this properly.
-            //throw new NotImplementedException();
-            $adapter        = new NotificationMessageToEmailMessageAdapter($notification->message);
-            $emailMessage   = new EmailMessage();
-            $emailMessage->subject = static::getEmailSubject();
-            $adapter->copyMessageIntoEmail($emailMessage); //textBody and htmlBody
-            $emailMessage->setToByUsers(array($notification->owner));
-            //$email->setFromByWhat(???); //How do we know who this should show as coming from?
-            Yii::app()->emailHelper->send($emailMessage);
+            if($notification->owner->primaryEmail->emailAddress != null)
+            {
+                $emailMessage = new EmailMessage();
+                $emailMessage->owner       = Yii::app()->emailHelper->getUserToSendNotificationsAs();
+                $emailMessage->subject     = static::getEmailSubject();
+                $emailContent              = new EmailMessageContent();
+                $emailContent->textContent = $notification->message->textContent;
+                $emailContent->htmlContent = $notification->message->htmlContent;
+                $emailMessage->content     = $emailContent;
+                $sender                    = new EmailMessageSender();
+                $sender->fromAddress       = Yii::app()->emailHelper->resolveFromAddressByUser($emailMessage->owner);
+                $sender->fromName          = strval($emailMessage->owner);
+                $emailMessage->sender      = $sender;
+                $recipient                 = new EmailMessageRecipient();
+                $recipient->toAddress      = $notification->owner->primaryEmail->emailAddress;
+                $recipient->toName         = strval($notification->owner);
+                $recipient->type           = EmailMessageRecipient::TYPE_TO;
+                $recipient->person         = $notification->owner;
+                $emailMessage->recipients->add($recipient);
+                $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+                $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
+                Yii::app()->emailHelper->send($emailMessage);
+            }
         }
     }
 ?>

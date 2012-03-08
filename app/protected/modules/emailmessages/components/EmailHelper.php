@@ -47,7 +47,13 @@
             'outboundPassword'
         );
 
-        protected $defaultFromAddress = 'notification@zurmotest.com';
+        public $defaultFromAddress   = 'notifications@zurmoalerts.com';
+
+        /**
+         * Utilized when sending a test email nightly to check the status of the smtp server
+         * @var string
+         */
+        public $defaultTestToAddress = 'testJobEmail@zurmoalerts.com';
 
         public function init()
         {
@@ -62,6 +68,14 @@
                 {
                     $this->$keyName = $keyValue;
                 }
+            }
+        }
+
+        public function setOutboundSettings()
+        {
+            foreach($this->settingsToLoad as $keyName)
+            {
+                ZurmoConfigurationUtil::setByModuleName('EmailMessagesModule', $keyName, $this->$keyName);
             }
         }
 
@@ -219,7 +233,7 @@
             return $superGroup->users->offsetGet(0);
         }
 
-        public function setUserToSendNotifiactionsAs(User $user)
+        public function setUserToSendNotificationsAs(User $user)
         {
             assert('$user->id > 0');
             $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
@@ -233,7 +247,8 @@
 
         public function getQueuedCount()
         {
-            return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX));
+            return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX)) +
+                   count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX_ERROR));
         }
 
         public function resolveFromAddressByUser(User$user)

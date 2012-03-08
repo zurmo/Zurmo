@@ -27,7 +27,7 @@
     /**
      * A job for deleting old system notifications.
      */
-    class ClearSentNotificationsdEmailJob extends BaseJob
+    class ClearSentNotificationsEmailJob extends BaseJob
     {
         /**
          * @returns Translated label that describes this job type.
@@ -57,9 +57,7 @@
          */
         public function run()
         {
-            //todo:
-            echo 'todo';
-            exit;
+            $box                 = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $oneWeekAgoTimeStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
@@ -68,14 +66,27 @@
                     'operatorType'         => 'lessThan',
                     'value'                => $oneWeekAgoTimeStamp,
                 ),
+                2 => array(
+                    'attributeName'        => 'folder',
+                    'relatedAttributeName' => 'type',
+                    'operatorType'         => 'equals',
+                    'value'                => EmailFolder::TYPE_SENT,
+                ),
+                3 => array(
+                    'attributeName'        => 'folder',
+                    'relatedAttributeName' => 'emailBox',
+                    'operatorType'         => 'equals',
+                    'value'                => $box->id,
+                ),
             );
-            $searchAttributeData['structure'] = '1';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
-            $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
-            $importModels = Import::getSubset($joinTablesAdapter, null, 1000, $where, null);
-            foreach ($importModels as $import)
+            $searchAttributeData['structure'] = '1 and 2 and 3';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('EmailMessage');
+            $where = RedBeanModelDataProvider::makeWhere('EmailMessage', $searchAttributeData, $joinTablesAdapter);
+            $emailMessageModels = EmailMessage::getSubset($joinTablesAdapter, null, 1000, $where, null);
+
+            foreach ($emailMessageModels as $emailMessage)
             {
-                $import->delete();
+                $emailMessage->delete();
             }
             return true;
         }

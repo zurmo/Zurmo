@@ -38,13 +38,12 @@
             $quote = DatabaseCompatibilityUtil::getQuote();
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $billy                      = User::getByUsername('billy');
 
             $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_SENT);
 
             //Create 2 sent notifications, and set one with a date over a week ago (8 days ago) for the modifiedDateTime
-            $emailMessage = EmailMessageTestHelper::createEmailMessage('My Email Message', $super, $billy);
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('My Email Message');
 
             $emailMessage->folder       = $folder;
             $saved                      = $emailMessage->save();
@@ -55,7 +54,7 @@
                    $emailMessage->getClassId('Item');
             R::exec($sql);
 
-            $emailMessage2 = EmailMessageTestHelper::createEmailMessage('My Email Message', $super, $billy);
+            $emailMessage2 = EmailMessageTestHelper::createDraftSystemEmail('My Email Message 2');
             $emailMessage2->folder      = $folder;
             $saved                      = $emailMessage2->save();
             $this->assertTrue($saved);

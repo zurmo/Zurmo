@@ -38,17 +38,13 @@
             $quote = DatabaseCompatibilityUtil::getQuote();
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $billy                      = User::getByUsername('billy');
 
-
-
-            $this->assertFail();
-            //todo: test that an email goes out only IF the smtp is configured.
-            //If smtp is not configured, then a notification should be created. Not sure how to actually test the
-            //smtp email beyond that.
-
+            $this->assertEquals(0, count(EmailMessage::getAll()));
             $job = new TestOutboundEmailJob();
             $this->assertTrue($job->run());
+            $emailMessages = EmailMessage::getAll();
+            $this->assertEquals(1, count($emailMessages));
+            $this->assertEquals(EmailFolder::TYPE_SENT, $emailMessages[0]->folder->type);
         }
     }
 ?>

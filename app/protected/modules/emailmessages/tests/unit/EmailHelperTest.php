@@ -53,7 +53,7 @@
 
             //Set a differnt super admin user, then make sure it correctly retrieves it.
             $anotherSuper = User::getByUsername('someoneSuper');
-            Yii::app()->emailHelper->setUserToSendNotifiactionsAs($anotherSuper);
+            Yii::app()->emailHelper->setUserToSendNotificationsAs($anotherSuper);
             $user = Yii::app()->emailHelper->getUserToSendNotificationsAs();
             $this->assertEquals($user, $anotherSuper);
         }
@@ -78,7 +78,7 @@
         {
             $billy                      = User::getByUsername('billy');
             Yii::app()->user->userModel = $billy;
-            Yii::app()->emailHelper->setUserToSendNotifiactionsAs($billy);
+            Yii::app()->emailHelper->setUserToSendNotificationsAs($billy);
 
         }
 
@@ -104,11 +104,18 @@
         {
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
+
+            //add a message in the outbox_error folder.
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2');
+            $box                  = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_ERROR);
+            $emailMessage->save();
+
+            $this->assertEquals(2, Yii::app()->emailHelper->getQueuedCount());
             $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->sendQueued();
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(1, Yii::app()->emailHelper->getSentCount());
+            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
         }
 
         /**
@@ -120,10 +127,24 @@
             Yii::app()->user->userModel = $super;
             $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2');
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(1, Yii::app()->emailHelper->getSentCount());
+            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->sendImmediately($emailMessage);
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
+            $this->assertEquals(3, Yii::app()->emailHelper->getSentCount());
+        }
+
+        /**
+         * @depends testSendImmediately
+         */
+        public function testLoadOutboundSettings()
+        {
+            $emailHelper = new EmailHelper;
+            $emailHelper->outboundHost = null;
+
+            ZurmoConfigurationUtil::setByModuleName('EmailMessagesModule', 'outboundHost', 'xxx');
+
+            $emailHelper = new EmailHelper;
+            $emailHelper->outboundHost = 'xxx';
         }
     }
 ?>

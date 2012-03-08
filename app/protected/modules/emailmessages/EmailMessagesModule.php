@@ -68,6 +68,15 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'configureMenuItems' => array(
+                    array(
+                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Email Configuration',
+                        'descriptionLabel' => 'Manage Email Configuration',
+                        'route'            => '/emailmessages/default/configurationEdit',
+                        'right'            => self::RIGHT_ACCESS_CONFIGURATION,
+                    ),
+                ),
                 'designerMenuItems' => array(
                     'showFieldsLink' => false,
                     'showGeneralLink' => false,

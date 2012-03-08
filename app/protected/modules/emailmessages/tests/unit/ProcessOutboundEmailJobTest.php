@@ -44,9 +44,7 @@
             $outboxFolder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
             $sentFolder   = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_SENT);
 
-            //Create 2 sent notifications, and set one with a date over a week ago (8 days ago) for the modifiedDateTime
-            $emailMessage = EmailMessageTestHelper::createEmailMessage('My Email Message', $super, $billy);
-
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('My Email Message');
             $emailMessage->folder       = $outboxFolder;
             $saved                      = $emailMessage->save();
             $this->assertTrue($saved);
@@ -54,7 +52,7 @@
             $emailMessage->forget();
             unset($emailMessage);
 
-            $emailMessage2 = EmailMessageTestHelper::createEmailMessage('My Email Message', $super, $billy);
+            $emailMessage2 = EmailMessageTestHelper::createDraftSystemEmail('My Email Message');
             $emailMessage2->folder      = $outboxFolder;
             $saved                      = $emailMessage2->save();
             $this->assertTrue($saved);

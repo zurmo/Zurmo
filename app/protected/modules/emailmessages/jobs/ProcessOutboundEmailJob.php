@@ -57,27 +57,7 @@
          */
         public function run()
         {
-            //todo:
-            echo 'todo';
-            exit;
-            $oneWeekAgoTimeStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'modifiedDateTime',
-                    'operatorType'         => 'lessThan',
-                    'value'                => $oneWeekAgoTimeStamp,
-                ),
-            );
-            $searchAttributeData['structure'] = '1';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
-            $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
-            $importModels = Import::getSubset($joinTablesAdapter, null, 1000, $where, null);
-            foreach ($importModels as $import)
-            {
-                $import->delete();
-            }
-            return true;
+            return Yii::app()->emailHelper->sendQueued();
         }
     }
 ?>

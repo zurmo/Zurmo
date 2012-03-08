@@ -147,11 +147,11 @@ EOD;
 
         if(!$emailMessage->hasSendError())
         {
-            echo 'Message successfully sent' . "\n";
+            echo Yii::t('Default', 'Message successfully sent') . "\n";
         }
         else
         {
-            echo 'Message failed to send' . "\n";
+            echo Yii::t('Default', 'Message failed to send') . "\n";
             echo $emailMessage->error     . "\n";
         }
         $saved = $emailMessage->save();

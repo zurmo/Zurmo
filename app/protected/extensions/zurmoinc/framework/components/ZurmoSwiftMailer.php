@@ -59,7 +59,15 @@
             $message->setFrom($this->From);
             foreach($this->toAddressesAndNames as $address => $name)
             {
-                $message->addTo($address, $name);
+                try
+                {
+                    $message->addTo($address, $name);
+                }
+                catch(Swift_RfcComplianceException $e)
+                {
+                    throw new OutboundEmailSendException($e->getMessage(), $e->getCode(), $e);
+                }
+
             }
 
             if($this->body) {

@@ -57,27 +57,44 @@
          */
         public function run()
         {
-            //todo:
-            echo 'todo';
-            exit;
-            $oneWeekAgoTimeStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'modifiedDateTime',
-                    'operatorType'         => 'lessThan',
-                    'value'                => $oneWeekAgoTimeStamp,
-                ),
-            );
-            $searchAttributeData['structure'] = '1';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Import');
-            $where = RedBeanModelDataProvider::makeWhere('Import', $searchAttributeData, $joinTablesAdapter);
-            $importModels = Import::getSubset($joinTablesAdapter, null, 1000, $where, null);
-            foreach ($importModels as $import)
+            $messageContent            = null;
+            $userToSendMessagesFrom    = Yii::app()->emailHelper->getUserToSendNotificationsAs();
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = $userToSendMessagesFrom;
+            $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo');
+            $emailContent->htmlContent = Yii::t('Default', 'A test text message from Zurmo');
+            $emailMessage->content     = $emailContent;
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = Yii::app()->emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);
+            $sender->fromName          = strval($userToSendMessagesFrom);
+            $emailMessage->sender      = $sender;
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = Yii::app()->emailHelper->defaultTestToAddress;
+            $recipient->toName         = 'Test Recipient';
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
+            $emailMessage->recipients->add($recipient);
+            $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
+            $validated                 = $emailMessage->validate();
+            if(!$validated)
             {
-                $import->delete();
+                throw new NotSupportedException();
             }
-            return true;
+            Yii::app()->emailHelper->sendImmediately($emailMessage);
+            if(!$emailMessage->hasSendError())
+            {
+                $messageContent .= Yii::t('Default', 'Message successfully sent') . "\n";
+                return true;
+            }
+            else
+            {
+                $messageContent .= Yii::t('Default', 'Message failed to send') . "\n";
+                $messageContent .= $emailMessage->error     . "\n";
+                $this->errorMessage = $messageContent;
+                return false;
+            }
         }
     }
 ?>

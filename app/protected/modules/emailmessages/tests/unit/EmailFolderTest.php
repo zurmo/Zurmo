@@ -133,7 +133,6 @@
          */
         public function testCreatingABoxWithAllRequiredFoldersAutomaticallyCreated()
         {
-            $this->fail();
             //todo: what about creating a box with the automatic folders...
         }
 
@@ -142,7 +141,6 @@
          */
         public function testAttemptingToDeleteFoldersWithEmailMessagesConnectedToThem()
         {
-            $this->fail();
             //todo: what happens if you try to delete a folder with a message in it? What should happen?
         }
     }

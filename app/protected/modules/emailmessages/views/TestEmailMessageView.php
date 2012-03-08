@@ -25,18 +25,21 @@
      ********************************************************************************/
 
     /**
-     * Testing the views for the outbound email queue.
+     * View used to render message content as a result of sending a test email.  This is rendered in a modal window.
      */
-    class EmailQueueSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
+    class TestEmailMessageView extends View
     {
-        public static function setUpBeforeClass()
+        protected $message;
+
+        public function __construct($message)
         {
-            parent::setUpBeforeClass();
-            SecurityTestHelper::createSuperAdmin();
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
+            assert('is_string($message)');
+            $this->message = $message;
         }
 
-        //todo: test OutboundEmailQueueView
+        protected function renderContent()
+        {
+            return nl2br($this->message);
+        }
     }
 ?>
