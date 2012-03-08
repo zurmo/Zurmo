@@ -129,6 +129,8 @@
                     array('name',          'length',  'min'  => 3, 'max' => 64),
                     array('type',          'type',    'type' => 'string'),
                     array('type',          'length',  'min'  => 3, 'max' => 12),
+                    //If we didn't need emailBox required,
+                    //we could use HAS_MANY_BELONGS_TO as the emailBox relation
                     array('emailBox',      'required'),
                 )
             );
