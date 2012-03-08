@@ -4,12 +4,12 @@ $(window).ready(function(){
 	//$( '#MenuView .parent, #HeaderLinksView .parent, #ShortcutsMenu .parent' ).hover(
 	$( '.nav > .parent' ).hover(
 		function(){
-			if ( $(this).find('ul') ){
+			if ( $(this).find('ul').length > 0 ){
 				$(this).find('ul').stop(true, true).delay(0).fadeIn(100);
 			}
 		}, 
 		function(){
-			if ( $(this).find('ul') ){
+			if ( $(this).find('ul').length > 0 ){
 				$(this).find('ul').stop(true, true).fadeOut(250);
 			}
 		}
@@ -59,6 +59,8 @@ $(window).ready(function(){
 	 
 	$('#edit-form select, .search-view-1 select, #inline-edit-form select').dropkick();
 
+	//$('select:not(.no-style)').dropkick();
+
 	$('html').click(function(e) {
 		$.each($('td > select'), function(index, value) {
 			$(value).dropkick('close');
@@ -96,16 +98,25 @@ $(window).ready(function(){
 			});
 	}
 	
-	$('label.hasCheckBox', '.items' ).each(function(){
+	
+	//Still buggy...
+	var $tableItems = $('.items')[0];
+	
+	$('label.hasCheckBox', $tableItems ).each(function(){
+		
 		$(this).bind('click', { $inputContext:$(this).content  },
 			function( event ){
-		        if ( $('input:checkbox', event.data.$inputContext ).length ) {	
-					$('input:checkbox', event.data.$inputContext ).each(function(){ 
+				
+		        if ( $('input:checkbox', $tableItems ).length ) {	
+		        		
+					$('input:checkbox', $tableItems ).each(function(){ 
 						$(this).parent().removeClass('c_on');
 					});
-					$('label input:checked', event.data.$inputContext ).each(function(){ 
+					
+					$('label input:checked', $tableItems ).each(function(){ 
 						$(this).parent('label').addClass('c_on');
 				    });
+				    
 				}
 		});
 	});

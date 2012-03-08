@@ -680,6 +680,16 @@ footer, header, hgroup, menu, nav, section {
 			content: ".";
 		}
 	}
+	li.type-TasksModule{
+		em:before{
+			content: "a";
+		}
+	}
+	li.type-MeetingsModule{
+		em:before{
+			content: "U";
+		}
+	}
 }
 
 /*Content*/
@@ -1169,6 +1179,7 @@ label.hasCheckBox{
 	}
 	input {
 		position: absolute;
+		//margin-left:-50px;
 		left: -9999px;
 	}
 }
@@ -1408,6 +1419,14 @@ label.hasCheckBox{
 		font-size:15px;
 	}
 }
+/*For single meeting, contact etc..*/
+.AppContent.SecuredEditAndDetailsView{
+	padding-right:0;
+	.toolbar-mbmenu{
+		top:8px;
+	}
+}
+
 .SecuredEditAndDetailsView{
 	position: relative;
 	> div{
