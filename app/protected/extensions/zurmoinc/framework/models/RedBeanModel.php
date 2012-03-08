@@ -1083,16 +1083,23 @@
                         switch ($relationType)
                         {
                             case self::HAS_ONE_BELONGS_TO:
-                                $relatedIds = R::$linkManager->getKeys($bean, $relatedTableName);
-                                assert('in_array(count($relatedIds), array(0, 1))');
-                                if (count($relatedIds) != 1)
+                                $linkName          = strtolower(get_class($this));
+                                $columnName        = $linkName . '_id';
+                                $relatedBeans      = RedBean_Plugin_Finder::where($relatedTableName, $columnName . " = " . $bean->id);
+                                if (count($relatedBeans) > 1)
                                 {
-                                    return null;
+                                    throw new NotFoundException();
                                 }
-                                $relatedBean = R::load($relatedTableName, $relatedIds[0]);
-                                $this->relationNameToRelatedModel[$attributeName] = self::makeModel($relatedBean, $relatedModelClassName);
+                                elseif (count($relatedBeans) == 0)
+                                {
+                                    $relatedModel = new $relatedModelClassName();
+                                }
+                                else
+                                {
+                                    $relatedModel = self::makeModel(end($relatedBeans), $relatedModelClassName);
+                                }
+                                $this->relationNameToRelatedModel[$attributeName] = $relatedModel;
                                 break;
-
                             case self::HAS_ONE:
                             case self::HAS_MANY_BELONGS_TO:
                                 if ($relationType == self::HAS_ONE)
@@ -1759,18 +1766,21 @@
                                 {
                                     $linkName = null;
                                 }
-                                elseif ($relationType == RedBeanModel::HAS_MANY_BELONGS_TO)
+                                elseif ($relationType == RedBeanModel::HAS_MANY_BELONGS_TO ||
+                                        $relationType == RedBeanModel::HAS_ONE_BELONGS_TO)
                                 {
-                                    $label = 'Relations of type HAS_MANY_BELONGS_TO must have the relation name ' .
+                                    $label = 'Relations of type HAS_MANY_BELONGS_TO OR HAS_ONE_BELONGS_TO must have the relation name ' .
                                              'the same as the related model class name. Relation: {relationName} ' .
                                              'Relation model class name: {relationModelClassName}';
                                     throw new NotSupportedException(Yii::t('Default', $label,
                                               array('{relationName}' => $linkName,
                                                     '{relationModelClassName}' => $relatedModelClassName)));
                                 }
-                                if ($relatedModel->isModified() ||
+                                //Needed to exclude HAS_ONE_BELONGS_TO because an additional column was being created
+                                //on the wrong side.
+                                if ($relationType != RedBeanModel::HAS_ONE_BELONGS_TO && ($relatedModel->isModified() ||
                                     $relatedModel->id > 0       ||
-                                    $this->isAttributeRequired($relationName))
+                                    $this->isAttributeRequired($relationName)))
                                 {
                                     $relatedModel = $this->relationNameToRelatedModel[$relationName];
                                     $relatedBean  = $relatedModel->getClassBean($relatedModelClassName);
