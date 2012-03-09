@@ -268,7 +268,8 @@
 
             if (!isset($_SERVER["PATH_INFO"]) && strpos($_SERVER["PHP_SELF"], $_SERVER["SCRIPT_NAME"]) !== 0)
             {
-                $error = Yii::t('Default', 'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
+                $error = Yii::t('Default', 'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"]' .
+                                           ' (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
                 return false;
             }
             return true;

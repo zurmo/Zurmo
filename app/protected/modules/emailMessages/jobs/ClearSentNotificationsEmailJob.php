@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once per day');
+            return Yii::t('Default', 'Once a day, early in the morning.');
         }
 
         /**
