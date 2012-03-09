@@ -73,7 +73,7 @@
                 'charset'        => 'utf8',
             ),
             'emailHelper' => array(
-                'class'       => 'application.modules.emailmessages.components.EmailHelper',
+                'class'       => 'application.modules.emailMessages.components.EmailHelper',
             ),
             'errorHandler' => array(
                 'errorAction' => 'zurmo/default/error',
