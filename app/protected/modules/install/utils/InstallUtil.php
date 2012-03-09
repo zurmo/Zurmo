@@ -932,8 +932,7 @@
             $message                    = new NotificationMessage();
             $message->textContent       = Yii::t('Default', 'Please delete all files from assets folder on server.');
             $rules                      = new ClearAssetsFolderNotificationRules();
-            //NotificationsUtil::submit($message, $rules); //running this causes stack overrun. Turn on once thread stack
-            //overrun issue is resolved.
+            NotificationsUtil::submit($message, $rules);
             return true;
         }
 
