@@ -26,14 +26,14 @@
 
     class ZurmoTestHelper
     {
-        public static function createFileModel($fileName = 'testNote.txt')
+        public static function createFileModel($fileName = 'testNote.txt', $modelClassName = 'FileModel')
         {
             $pathToFiles          = Yii::getPathOfAlias('application.modules.zurmo.tests.unit.files');
             $filePath             = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
             $contents             = file_get_contents($pathToFiles . DIRECTORY_SEPARATOR . $fileName);
             $fileContent          = new FileContent();
             $fileContent->content = $contents;
-            $file                 = new FileModel();
+            $file                 = new $modelClassName();
             $file->fileContent    = $fileContent;
             $file->name           = $fileName;
             $file->type           = ZurmoFileHelper::getMimeType($pathToFiles . DIRECTORY_SEPARATOR . $fileName);

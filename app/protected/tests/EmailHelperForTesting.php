@@ -28,23 +28,23 @@
      * Override class is used specifically by the
      * testing framework to handle testing of inbound and outbound email.
      */
-    class EmailHelperForTesting extends ZurmoEmailHelper
+    class EmailHelperForTesting extends EmailHelper
     {
-        protected $sentEmailMessages = array();
-
-        public function send(EmailMessage $emailMessage)
+        /**
+         * Override to avoid actually sending emails out through transport.
+         * (non-PHPdoc)
+         * @see EmailHelper::sendEmail()
+         */
+        protected function sendEmail(Mailer $mailer, EmailMessage $emailMessage)
         {
-            $this->sentEmailMessages[] = $emailMessage;
+            $emailMessage->error    = null;
+            $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
         }
 
-        public function removeAllSent()
+        //For testing only
+        public function getSentCount()
         {
-            $this->sentEmailMessages = array();
-        }
-
-        public function getSentEmailMessages()
-        {
-            return $this->sentEmailMessages;
+            return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_SENT));
         }
     }
 ?>

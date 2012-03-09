@@ -136,8 +136,9 @@
 
         /**
          * Used in an extending class's getDefaultMetadata() method to specify
-         * that a relation is 1:1 and that the class on the 1 side of the
-         * relation.
+         * that a relation is 1:1 and that the class on the side of the relationship where this is not a column in that
+         * model's table.  Example: model X HAS_ONE Y.  There will be a y_id on the x table.  But in Y you would have
+         * HAS_ONE_BELONGS_TO X and there would be no column in the y table.
          */
         const HAS_ONE_BELONGS_TO = 0;
 

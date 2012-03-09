@@ -73,7 +73,7 @@
                 'charset'        => 'utf8',
             ),
             'emailHelper' => array(
-                'class'       => 'application.modules.zurmo.components.ZurmoEmailHelper',
+                'class'       => 'application.modules.emailmessages.components.EmailHelper',
             ),
             'errorHandler' => array(
                 'errorAction' => 'zurmo/default/error',
@@ -233,6 +233,7 @@
             'configuration',
             'contacts',
             'designer',
+            'emailmessages',
             'home',
             'import',
             'install',

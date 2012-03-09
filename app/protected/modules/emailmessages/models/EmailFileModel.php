@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -25,16 +25,13 @@
      ********************************************************************************/
 
     /**
-     * Component for working with outbound and inbound email transport
+     * Model for storing email attachments.
      */
-    class ZurmoEmailHelper extends CApplicationComponent
+    class EmailFileModel extends FileModel
     {
-        /**
-         * Send an email message using outbound email transport
-         * @param EmailMessage $email
-         */
-        public function send(EmailMessage $email)
+        public static function getModuleClassName()
         {
+            return 'EmailMessagesModule';
         }
     }
 ?>

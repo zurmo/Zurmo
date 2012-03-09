@@ -24,9 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    //Todo: finish class, and rework as needed.  Currently a stub as we complete
-    //notifications and scheduler.
-    class EmailMessage
+    /**
+     * Exception thrown when there is problem sending an email message
+     */
+    class OutboundEmailSendException extends CException
     {
     }
 ?>
