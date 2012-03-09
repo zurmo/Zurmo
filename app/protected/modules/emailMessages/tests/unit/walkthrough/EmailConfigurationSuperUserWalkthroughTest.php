@@ -54,7 +54,7 @@
         public function testSuperUserAllDefaultControllerActions()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $this->runControllerWithNoExceptionsAndGetContent     ('emailmessages/default/configurationEdit');
+            $this->runControllerWithNoExceptionsAndGetContent     ('emailMessages/default/configurationEdit');
         }
 
         public function testSuperUserModifyOutboundEmailConfiguration()
@@ -78,7 +78,7 @@
                                     'username'	                        => 'myuser',
                                     'password'                          => 'apassword',
                                     'userIdOfUserToSendNotificationsAs' => $super2->id)));
-            $this->runControllerWithRedirectExceptionAndGetContent('emailmessages/default/configurationEdit');
+            $this->runControllerWithRedirectExceptionAndGetContent('emailMessages/default/configurationEdit');
             $this->assertEquals('Outbound email configuration saved successfully.', Yii::app()->user->getFlash('notification'));
 
             //Confirm the setting did in fact change correctly

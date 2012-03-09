@@ -74,7 +74,7 @@
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
                         'titleLabel'       => 'Email Configuration',
                         'descriptionLabel' => 'Manage Email Configuration',
-                        'route'            => '/emailmessages/default/configurationEdit',
+                        'route'            => '/emailMessages/default/configurationEdit',
                         'right'            => self::RIGHT_ACCESS_CONFIGURATION,
                     ),
                 ),

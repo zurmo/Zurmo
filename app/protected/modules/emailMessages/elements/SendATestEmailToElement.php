@@ -67,7 +67,7 @@
             $id       = 'SendATestEmailToButton';
             $content  = '<span>';
             $content .= CHtml::ajaxButton(Yii::t('Default', 'Send Test Email'),
-                Yii::app()->createUrl('emailmessages/default/sendTestMessage/', array()),
+                Yii::app()->createUrl('emailMessages/default/sendTestMessage/', array()),
                     array(
                         'type' => 'POST',
                         'data' => 'js:$("#' . $this->form->getId() . '").serialize()',
