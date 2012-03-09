@@ -26,11 +26,11 @@
 
     class EmailMessageTestHelper
     {
-        public static function createDraftSystemEmail($subject)
+        public static function createDraftSystemEmail($subject, User $owner)
         {
-            $emailMessage = new EmailMessage();
-            $emailMessage->owner   = Yii::app()->emailHelper->getUserToSendNotificationsAs();
-            $emailMessage->subject = $subject;
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = $owner;
+            $emailMessage->subject     = $subject;
 
             //Set sender, and recipient, and content
             $emailContent              = new EmailMessageContent();

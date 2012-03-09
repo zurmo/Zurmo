@@ -24,9 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Helper class for working with email boxes.
+     */
     class EmailBoxUtil
     {
-        public static function setBoxAndDefaultFoldersByUserAndName(User $user, $name)
+        /**
+         * Given a box name and user, create an email box with the default folders.
+         * @param User $user
+         * @param string $name
+         */
+        public static function createBoxAndDefaultFoldersByUserAndName(User $user, $name)
         {
             assert('$user->id > 0');
             assert('is_string($name)');

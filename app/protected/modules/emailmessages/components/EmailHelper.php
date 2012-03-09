@@ -29,16 +29,41 @@
      */
     class EmailHelper extends CApplicationComponent
     {
+        /**
+         * Currently supports smtp.
+         * @var string
+         */
         public $outboundType = 'smtp';
 
+        /**
+         * Outbound mail server host name. Example mail.someplace.com
+         * @var string
+         */
         public $outboundHost;
 
+        /**
+         * Outbound mail server port number. Default to 25, but it can be set to something different.
+         * @var integer
+         */
         public $outboundPort = 25;
 
+        /**
+         * Outbound mail server username. Not always required, depends on the setup.
+         * @var string
+         */
         public $outboundUsername;
 
+        /**
+         * Outbound mail server password. Not always required, depends on the setup.
+         * @var string
+         */
         public $outboundPassword;
 
+        /**
+         * Contains array of settings to load during initialization from the configuration table.
+         * @see loadOutboundSettings
+         * @var array
+         */
         protected $settingsToLoad = array(
             'outboundType',
             'outboundHost',
@@ -47,6 +72,10 @@
             'outboundPassword'
         );
 
+        /**
+         * Fallback from address to use for sending out notifications.
+         * @var string
+         */
         public $defaultFromAddress   = 'notifications@zurmoalerts.com';
 
         /**
@@ -55,6 +84,11 @@
          */
         public $defaultTestToAddress = 'testJobEmail@zurmoalerts.com';
 
+        /**
+         * Called once per page load, will load up outbound settings from the database if available.
+         * (non-PHPdoc)
+         * @see CApplicationComponent::init()
+         */
         public function init()
         {
             $this->loadOutboundSettings();
@@ -71,6 +105,9 @@
             }
         }
 
+        /**
+         * Set outbound settings into the database.
+         */
         public function setOutboundSettings()
         {
             foreach($this->settingsToLoad as $keyName)
@@ -101,6 +138,13 @@
             return true;
         }
 
+        /**
+         * Use this method to send immediately, instead of putting an email in a queue to be processed by a scheduled
+         * job.
+         * @param EmailMessage $emailMessage
+         * @throws NotSupportedException - if the emailMessage does not properly save.
+         * @return null
+         */
         public function sendImmediately(EmailMessage $emailMessage)
         {
             if($emailMessage->folder->type == EmailFolder::TYPE_SENT)
@@ -117,6 +161,10 @@
             }
         }
 
+        /**
+         * Call this method to process all email Messages in the queue. This is typically called by a scheduled job
+         * or cron.  This will process all emails in a TYPE_OUTBOX folder or TYPE_OUTBOX_ERROR folder.
+         */
         public function sendQueued()
         {
             $queuedEmailMessages = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX);
@@ -207,6 +255,10 @@
             return $mailer;
         }
 
+        /**
+         * When sending system notifications, it is necessary to use a 'user' who is a super administrator to send
+         * the notifications from.  This will resolve that information and retrieve the best user to use.
+         */
         public function getUserToSendNotificationsAs()
         {
             $keyName      = 'UserIdToSendNotificationsAs';
@@ -233,6 +285,10 @@
             return $superGroup->users->offsetGet(0);
         }
 
+        /**
+         * @see getUserToSendNotificationsAs
+         * @param User $user
+         */
         public function setUserToSendNotificationsAs(User $user)
         {
             assert('$user->id > 0');
@@ -245,12 +301,21 @@
             ZurmoConfigurationUtil::setByModuleName('EmailMessagesModule', $keyName, $user->id);
         }
 
+        /**
+         * @return integer count of how many emails are queued to go.  This means they are in either the TYPE_OUTBOX
+         * folder or the TYPE_OUTBOX_ERROR folder.
+         */
         public function getQueuedCount()
         {
             return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX)) +
                    count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX_ERROR));
         }
 
+        /**
+         * Given a user, attempt to get the user's emal address, but if it is not available, then return the default
+         * address.  @see EmailHelper::defaultFromAddress
+         * @param User $user
+         */
         public function resolveFromAddressByUser(User$user)
         {
             assert('$user->id >0');

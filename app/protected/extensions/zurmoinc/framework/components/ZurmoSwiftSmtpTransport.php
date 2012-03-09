@@ -30,6 +30,10 @@
      */
     class ZurmoSwiftSmtpTransport extends Swift_SmtpTransport
     {
+        /**
+         * Stores send response log from server as email is sending.
+         * @var array
+         */
         protected $responseLog = array();
 
         public static function newInstance($host = 'localhost', $port = 25, $security = null)
@@ -37,6 +41,10 @@
             return new self($host, $port, $security);
         }
 
+        /**
+         * (non-PHPdoc)
+         * @see Swift_Transport_EsmtpTransport::_doRcptToCommand()
+         */
         protected function _doRcptToCommand($address)
         {
             try
@@ -49,12 +57,20 @@
             }
         }
 
+        /**
+         * Override to add the response to the log.
+         * (non-PHPdoc)
+         * @see Swift_Transport_AbstractSmtpTransport::_assertResponseCode()
+         */
         protected function _assertResponseCode($response, $wanted)
         {
             $this->responseLog[] = $response;
             parent::_assertResponseCode($response, $wanted);
         }
 
+        /**
+         * @return array of data.
+         */
         public function getResponseLog()
         {
             return $this->responseLog;

@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * A class for creating email message content.
+     * A class for storing email message content.
      */
     class EmailMessageContent extends OwnedModel
     {

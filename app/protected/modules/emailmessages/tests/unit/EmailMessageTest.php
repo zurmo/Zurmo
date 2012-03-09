@@ -35,7 +35,7 @@
             UserTestHelper::createBasicUser('sally');
             UserTestHelper::createBasicUser('jason');
             $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
-            EmailBoxUtil::setBoxAndDefaultFoldersByUserAndName($jane, 'JaneBox');
+            EmailBoxUtil::createBoxAndDefaultFoldersByUserAndName($jane, 'JaneBox');
         }
 
         /**
@@ -356,6 +356,21 @@
             $emailMessages                    = EmailMessage::getAllByFolderType(EmailFolder::TYPE_SENT);
             $this->assertEquals(2, count($emailMessages));
             $this->assertEquals($emailMessageId, $emailMessages[0]->id);
+        }
+
+        /**
+         * @depends testQueuedEmailsWhenEmailMessageChangeToSentFolder
+         */
+        public function testRegularUserCanCreateEmailMessageAndSend()
+        {
+            $billy                      = User::getByUsername('billy');
+            Yii::app()->user->userModel = $billy;
+            $emailMessage               = EmailMessageTestHelper::createDraftSystemEmail('billy test email', $billy);
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
+            Yii::app()->emailHelper->send($emailMessage);
+            $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
         }
     }
 ?>

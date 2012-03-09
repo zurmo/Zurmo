@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Model for storing an email message.
+     */
     class EmailMessage extends OwnedSecurableItem implements MashableActivityInterface
     {
         public static function getMashableActivityRulesType()

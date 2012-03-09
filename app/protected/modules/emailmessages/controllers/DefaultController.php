@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Controller for managing configuration actions for email messages
+     */
     class EmailMessagesDefaultController extends ZurmoBaseController
     {
         public function filters()
@@ -87,7 +90,7 @@
                     $userToSendMessagesFrom        = User::getById((int)$configurationForm->userIdOfUserToSendNotificationsAs);
 
                     $emailMessage              = new EmailMessage();
-                    $emailMessage->owner       = $userToSendMessagesFrom;
+                    $emailMessage->owner       = Yii::app()->user->userModel;
                     $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
                     $emailContent              = new EmailMessageContent();
                     $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo');

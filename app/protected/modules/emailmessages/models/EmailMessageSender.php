@@ -24,6 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Model for storing sender information about an email message.  Stores specific fromAddress and fromName
+     * in case there is no specific 'person' the email is coming from.  Also in case that 'person' changes their
+     * information, the integrity of what actual email address/name was used stays intact.
+     */
     class EmailMessageSender extends OwnedModel
     {
         public function __toString()

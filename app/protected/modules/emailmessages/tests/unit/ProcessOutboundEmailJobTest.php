@@ -44,7 +44,7 @@
             $outboxFolder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
             $sentFolder   = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_SENT);
 
-            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('My Email Message');
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('My Email Message', $super);
             $emailMessage->folder       = $outboxFolder;
             $saved                      = $emailMessage->save();
             $this->assertTrue($saved);
@@ -52,7 +52,7 @@
             $emailMessage->forget();
             unset($emailMessage);
 
-            $emailMessage2 = EmailMessageTestHelper::createDraftSystemEmail('My Email Message');
+            $emailMessage2 = EmailMessageTestHelper::createDraftSystemEmail('My Email Message', $super);
             $emailMessage2->folder      = $outboxFolder;
             $saved                      = $emailMessage2->save();
             $this->assertTrue($saved);

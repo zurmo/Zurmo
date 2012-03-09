@@ -89,7 +89,7 @@
         {
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email');
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email', $super);
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
             $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->send($emailMessage);
@@ -106,7 +106,7 @@
             Yii::app()->user->userModel = $super;
 
             //add a message in the outbox_error folder.
-            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2');
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2', $super);
             $box                  = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_ERROR);
             $emailMessage->save();
@@ -125,7 +125,7 @@
         {
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2');
+            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2', $super);
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
             $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->sendImmediately($emailMessage);

@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Model for storing email attachments.
+     */
     class EmailFileModel extends FileModel
     {
         public static function getModuleClassName()

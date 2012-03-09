@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * A model for storing error information about a problem with sending an email message.
+     */
     class EmailMessageSendError extends OwnedModel
     {
         public function __toString()

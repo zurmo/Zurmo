@@ -36,11 +36,18 @@
          */
         protected $sendResponseLog          = array();
 
+        /**
+         * (non-PHPdoc)
+         * @see SwiftMailer::smtpTransport()
+         */
         public function smtpTransport($host = null, $port = null)
         {
             return ZurmoSwiftSmtpTransport::newInstance($host, $port);
         }
 
+        /**
+         * @return array of data.
+         */
         public function getSendResponseLog()
         {
             return $this->sendResponseLog;

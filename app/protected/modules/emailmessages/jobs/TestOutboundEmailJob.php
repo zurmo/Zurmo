@@ -60,7 +60,7 @@
             $messageContent            = null;
             $userToSendMessagesFrom    = Yii::app()->emailHelper->getUserToSendNotificationsAs();
             $emailMessage              = new EmailMessage();
-            $emailMessage->owner       = $userToSendMessagesFrom;
+            $emailMessage->owner       = Yii::app()->user->userModel;
             $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo');

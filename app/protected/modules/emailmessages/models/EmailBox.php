@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Model for storing email boxes.
+     */
     class EmailBox extends Item
     {
         const NOTIFICATIONS_NAME   = 'System Notifications';
