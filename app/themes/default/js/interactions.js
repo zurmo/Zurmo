@@ -133,6 +133,28 @@ $(window).ready(function(){
 	
 	
 	
+	$('input:checkbox').live('change', function(event){
+		//log( $(this).attr('id') );
+		//log( $(this).is(':checked'));
+		//log('----');
+		
+		
+	    
+	    checkall();
+	});
+	
+	function checkall(){
+		$('input:checkbox', '.items').each(function(){
+			log( $(this).attr('id') );
+			log( $(this).is(':checked'));
+			log('----');
+		});
+	}
+	
+	
+	
+	
+	
 	/*Label overlays input, address fields*/
 	$(".overlay-label-field input").live('focus', function(){
 		$(this).prev().fadeOut(100);

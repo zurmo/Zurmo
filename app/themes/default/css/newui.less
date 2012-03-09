@@ -8,6 +8,7 @@
 @import 'form.less';
 @import 'datepicker.less';
 @import 'token-input.less';
+@import 'notifications.less';
 
 
 
@@ -1182,8 +1183,8 @@ label.hasCheckBox{
 	}
 	input {
 		position: absolute;
-		//margin-left:-50px;
-		left: -9999px;
+		margin-left:-50px;
+		//left: -9999px;
 	}
 }
 .ui-multiselect-checkboxes label {
@@ -1457,8 +1458,8 @@ label.hasCheckBox{
 		top:8px;
 	}
 }
-
-.SecuredEditAndDetailsView{
+.EditAndDetailsView{
+/*.SecuredEditAndDetailsView{*/
 	position: relative;
 	> div{
 		margin-right:20px;
@@ -1532,6 +1533,7 @@ label.hasCheckBox{
 		}
 	}
 }
+
 .SecuredEditAndDetailsView,
 #AccountEditAndDetailsView{
 	position: relative;
@@ -1936,6 +1938,7 @@ div.hasHalfs{
 			float:left;
 		}
 		#LatestActivitiesConfigurationForm_ownedByFilter{
+			margin-left:20px;
 			float:left;
 			label{
 				margin-right:6px;
