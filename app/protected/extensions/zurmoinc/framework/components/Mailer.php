@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Base class for any mailer component
+     * Base class for the mailer component.  Can be extended to provide inbound and outbound email functionality.
      */
     abstract class Mailer extends CComponent
     {

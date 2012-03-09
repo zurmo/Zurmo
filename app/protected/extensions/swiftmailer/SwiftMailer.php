@@ -3,6 +3,7 @@
  * Swift Mailer wrapper class.
  *
  * @author Sergii 'b3atb0x' hello@webkadabra.com
+ * @author Jason Green - http://www.zurmo.org - Cleaned up this class a bit.
  */
 class SwiftMailer extends Mailer
 {
