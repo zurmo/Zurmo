@@ -99,6 +99,32 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'EmailMessagesModule' => array(
+                    'RIGHT_CREATE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_CREATE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_DELETE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONFIGURATION'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'HomeModule' => array(
                     'RIGHT_CREATE_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_CREATE_DASHBOARDS,
@@ -415,6 +441,32 @@
                 'DesignerModule' => array(
                     'RIGHT_ACCESS_DESIGNER'   => array(
                         'displayName' => DesignerModule::RIGHT_ACCESS_DESIGNER,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'EmailMessagesModule' => array(
+                    'RIGHT_CREATE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_CREATE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_DELETE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONFIGURATION'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -737,6 +789,32 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'EmailMessagesModule' => array(
+                    'RIGHT_CREATE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_CREATE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_DELETE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONFIGURATION'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'HomeModule' => array(
                     'RIGHT_CREATE_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_CREATE_DASHBOARDS,
@@ -1048,6 +1126,32 @@
                 'DesignerModule' => array(
                     'RIGHT_ACCESS_DESIGNER'   => array(
                         'displayName' => DesignerModule::RIGHT_ACCESS_DESIGNER,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'EmailMessagesModule' => array(
+                    'RIGHT_CREATE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_CREATE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_DELETE_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_EMAIL_MESSAGES'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_EMAIL_MESSAGES,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONFIGURATION'   => array(
+                        'displayName' => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

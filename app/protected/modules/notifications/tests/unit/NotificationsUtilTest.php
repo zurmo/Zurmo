@@ -36,20 +36,27 @@
         public function setup()
         {
             parent::setup();
-            Yii::app()->emailHelper->removeAllSent();
         }
 
         public function teardown()
         {
             parent::setup();
-            Yii::app()->emailHelper->removeAllSent();
         }
 
         public function testSubmitNonCritical()
         {
-            $super                      = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-            $billy                      = User::getByUsername('billy');
+            $super                                    = User::getByUsername('super');
+            $emailAddress                             = new Email();
+            $emailAddress->emailAddress               = 'sometest@zurmoalerts.com';
+            $super->primaryEmail                      = $emailAddress;
+            $saved                                    = $super->save();
+            $this->assertTrue($saved);
+            $billy                                    = User::getByUsername('billy');
+            $emailAddress                             = new Email();
+            $emailAddress->emailAddress               = 'sometest2@zurmoalerts.com';
+            $billy->primaryEmail                      = $emailAddress;
+            $saved                                    = $billy->save();
+            $this->assertTrue($saved);
             $notifications              = Notification::getAll();
             $this->assertEquals(0, count($notifications));
             $message                    = new NotificationMessage();
@@ -59,10 +66,13 @@
             $rules->addUser($super);
             $rules->addUser($billy);
             NotificationsUtil::submit($message, $rules);
-            $messagesSent               = Yii::app()->emailHelper->getSentEmailMessages();
-            $this->assertEquals(0, count($messagesSent));
+
+            //It should not send an email because it is non-critical
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             $notifications              = Notification::getAll();
-            $this->assertEquals(2, count($notifications));
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
         }
 
         public function testSubmitCritical()

@@ -42,7 +42,7 @@
          */
         public static function getType()
         {
-            return 'ClearSentNotificationsdEmail';
+            return 'ClearSentNotificationsEmail';
         }
 
         public static function getRecommendedRunFrequencyContent()

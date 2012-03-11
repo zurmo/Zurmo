@@ -113,11 +113,6 @@
             return 'EmailMessagesDefaultDataMaker';
         }
 
-        public static function getDemoDataMakerClassName()
-        {
-            return 'EmailMessagesDemoDataMaker';
-        }
-
         public static function hasPermissions()
         {
             return true;
