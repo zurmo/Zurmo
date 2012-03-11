@@ -53,18 +53,26 @@
         {
             switch($dateFormat)
             {
-                case 'dd.MM.yy':    //de format
+                case 'dd.MM.yy':    //de, ru format
                     return 'dd.mm.y';
                 case 'M/d/yy':      //en, fa_ir format
                     return 'm/d/y';
                 case 'dd/MM/yy':    //es, fr, it, pt format
                     return 'dd/mm/y';
                 case 'd.M.yyyy':    //sk format
-                    return 'dd.mm.yy';
+                    return 'd.m.yy';
+                case 'd.M.yy.':     //sr_yu format
+                    return 'd.m.y.';
+                case 'd-M-yy':      //hi format
+                    return 'd-m-y';
+                case 'dd/MM/yyyy':  //vi format
+                    return 'dd/mm/yy';
                 case 'yy-M-d':      //zh_cn format
-                    return 'yy-mm-dd';
+                    return 'y-m-dd';
+                case 'yy/MM/dd':    //ja format
+                    return 'y/mm/dd';
                 case 'dd-MM-yy':    //nl format
-                        return 'dd-mm-yy';
+                        return 'dd-mm-y';
                 default :
                     throw new NotImplementedException();
             }
@@ -79,14 +87,14 @@
         {
             switch($timeFormat)
             {
-                case 'HH:mm':       //de, es, fr, it, pt format
+                case 'HH:mm':       //de, es, fr, it, pt, nl, sr_yu, vi format
                     return 'hh:mm';
-                case 'h:mm a':      //en format
-                    return 'h:mm TT';
-                case 'H:mm':        //sk, fa_ir format
+                case 'h:mm a':      //en, hi format
+                    return 'h:mm tt';
+                case 'H:mm':        //sk, fa_ir, ru, ja format
                     return 'h:mm';
                 case 'ah:mm':       //zh_cn format
-                    return 'th:mm';
+                    return 'tth:mm';
                 default :
                     throw new NotImplementedException();
             }
