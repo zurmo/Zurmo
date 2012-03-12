@@ -66,6 +66,7 @@
 
         public static function autoBuildModels(array $modelClassNames, & $messageLogger)
         {
+            AuditEvent::$isTableOptimized = false;
             assert('AssertUtil::all($modelClassNames, "is_string")');
             assert('$messageLogger instanceof MessageLogger');
             self::$modelClassNamesToSampleModels = array();
@@ -139,6 +140,7 @@
             {
                 $messageLogger->addErrorMessage('*** Deleting of the sample(s) ' . join(', ', array_keys(self::$modelClassNamesToSampleModels)) . " didn't happen.");
             }
+            AuditEvent::$isTableOptimized = false;
         }
 
         public static function autoBuildSampleModel($modelClassName, array $modelClassNames, & $messageLogger)

@@ -86,7 +86,7 @@
                     throw new NoCurrentUserSecurityException();
                 }
             }
-            if ((!AUDITING_OPTIMIZED || !RedBeanDatabase::isFrozen()) || !AuditEvent::$isTableOptimized)
+            if (!AUDITING_OPTIMIZED || !RedBeanDatabase::isFrozen() || !AuditEvent::$isTableOptimized)
             {
                 $tableName  = self::getTableName('AuditEvent');
                 RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, strtolower('modelId'));

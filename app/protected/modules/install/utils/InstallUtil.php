@@ -571,7 +571,6 @@
          */
         public static function autoBuildDatabase(& $messageLogger)
         {
-            AuditEvent::$isTableOptimized = false;
             $rootModels = array();
             foreach (Module::getModuleObjects() as $module)
             {
@@ -579,7 +578,6 @@
                 $rootModels = array_merge($rootModels, array_diff($moduleAndDependenciesRootModelNames, $rootModels));
             }
             RedBeanDatabaseBuilderUtil::autoBuildModels($rootModels, $messageLogger);
-            AuditEvent::$isTableOptimized = false;
         }
 
         /**
