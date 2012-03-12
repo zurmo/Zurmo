@@ -98,10 +98,10 @@
                 'disabled' => $this->getDisabledValue(),
                 'value'    => $this->getId(),
             );
-            $content  = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
-            $content .= $this->renderTextField($this->getIdForHiddenField());
-            $content .= '&#160;' . $this->renderSelectLink();
-            return $content;
+            $content       = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
+            $inputContent  = $this->renderTextField($this->getIdForHiddenField());
+            $inputContent .= '&#160;' . $this->renderSelectLink();
+            return $content . CHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
         }
 
         /**

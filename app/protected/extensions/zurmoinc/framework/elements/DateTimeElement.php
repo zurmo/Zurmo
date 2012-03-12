@@ -69,7 +69,8 @@
                 ),
             ));
             $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['EditableDateTimeElement'];
+            $content = $cClipWidget->getController()->clips['EditableDateTimeElement'];
+            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         /**
