@@ -43,7 +43,7 @@
 
         public function actionList()
         {
-            $treeView = new GroupsTreeListView(
+            $treeView = new GroupsActionBarAndTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 Group::getAll('name')

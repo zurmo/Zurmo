@@ -24,9 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class GroupsTitleBarAndTreeView extends GridView
+    class GroupsActionBarAndTreeListView extends GridView
     {
-        protected $cssClasses =  array( 'AdministrativeArea' );
+        protected $cssClasses =  array( 'AdministrativeArea');
 
         public function __construct($controllerId, $moduleId, $groups)
         {
@@ -34,8 +34,8 @@
             assert('$moduleId != null');
             assert('is_array($groups)');
             parent::__construct(2, 1);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Groups'), Yii::t('Default', 'Home'), 1), 0, 0);
-            $this->setView(new GroupsTreeView($controllerId, $moduleId, $groups), 1, 0);
+            $this->setView(new ActionBarForGroupsTreeListView ($controllerId, $moduleId), 0, 0);
+            $this->setView(new GroupsTreeListView($controllerId, $moduleId, $groups), 1, 0);
         }
 
         public function isUniqueToAPage()
