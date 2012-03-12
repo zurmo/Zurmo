@@ -1,3 +1,13 @@
+.back-to-app-menu-item span{
+	vertical-align:middle;
+	color:@themeColor !important;
+	&:before{
+		content:"z";
+		.symbly(21px);
+		margin-right:6px;
+	}
+}
+
 #ConfigurationPageView, #DesignerPageView{
 	.MetadataView{
 		table{
@@ -61,6 +71,21 @@
 		}
 		table thead tr:hover{
 			#gradient > .vertical(#f9f9f9, #f4f4f4);
+		}
+	}
+}
+
+#ConfigureModulesMenuView{
+	ul{
+		list-style:none;
+		padding:10px 15px;
+	}
+	li{
+		margin-bottom:10px;
+		font-size:11px;
+		a{
+			.zButton();
+			//width:150px;
 		}
 	}
 }
