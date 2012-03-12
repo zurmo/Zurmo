@@ -587,7 +587,7 @@ footer, header, hgroup, menu, nav, section {
 	}
 }
 /*#MenuView .parent >*/
-#MenuView li.active a span,
+#MenuView li.active > a span,
 #MenuView a:hover span{
 	text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
 	background-image: url(../images/main-nav-selected.png);
@@ -595,7 +595,7 @@ footer, header, hgroup, menu, nav, section {
 	background-position-x: 0;
 	background-position-y: 0;
 }
-#MenuView li.active a span{
+#MenuView li.active > a span{
 	background-color:@themeColor2;
 	color:#fff;
 }
@@ -1455,12 +1455,14 @@ label.hasCheckBox{
 	}
 }
 /*For single meeting, contact etc..*/
+.AppContent.TableOfContentsView,
 .AppContent.SecuredEditAndDetailsView{
 	padding-right:0;
 	.toolbar-mbmenu{
 		top:8px;
 	}
 }
+.TableOfContentsView,
 .EditAndDetailsView{
 /*.SecuredEditAndDetailsView{*/
 	position: relative;

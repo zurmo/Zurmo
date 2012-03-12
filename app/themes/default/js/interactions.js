@@ -22,8 +22,11 @@ $(window).ready(function(){
 			$(this).stop(true, true).animate({ backgroundColor : '#7cb830', color: '#fff' }, 350);
 		},
 		function(){
-			$(this).stop(true, true).animate({ backgroundColor : 'transparent', color: '#555555' }, 250, null, 
-    			function() { this.style.backgroundColor='transparent'; });
+			
+			if ( $(this).parent().parent().hasClass('active') == false ){
+				$(this).stop(true, true).animate({ backgroundColor : 'transparent', color: '#555555' }, 250, null, 
+	    			function() { this.style.backgroundColor='transparent'; });	
+			}
 		}
 	);
 	
@@ -57,9 +60,9 @@ $(window).ready(function(){
 	
 	/*Dropdowns - Dropkick*/
 	 
-	$('#edit-form select, .search-view-1 select, #inline-edit-form select').dropkick();
+	//$('#edit-form select, .search-view-1 select, #inline-edit-form select').dropkick();
 
-	//$('select:not(.no-style)').dropkick();
+	$('select:not(.ignore-style)').dropkick();
 
 	$('html').click(function(e) {
 		$.each($('td > select'), function(index, value) {
