@@ -22,8 +22,11 @@ $(window).ready(function(){
 			$(this).stop(true, true).animate({ backgroundColor : '#7cb830', color: '#fff' }, 350);
 		},
 		function(){
-			$(this).stop(true, true).animate({ backgroundColor : 'transparent', color: '#555555' }, 250, null, 
-    			function() { this.style.backgroundColor='transparent'; });
+			
+			if ( $(this).parent().parent().hasClass('active') == false ){
+				$(this).stop(true, true).animate({ backgroundColor : 'transparent', color: '#555555' }, 250, null, 
+	    			function() { this.style.backgroundColor='transparent'; });	
+			}
 		}
 	);
 	
