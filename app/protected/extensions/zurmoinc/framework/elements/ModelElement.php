@@ -86,6 +86,7 @@
         protected function renderEditableContent()
         {
             $cs = Yii::app()->getClientScript();
+            $cs->registerCoreScript('bbq');
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
