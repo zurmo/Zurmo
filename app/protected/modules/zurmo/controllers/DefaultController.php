@@ -124,16 +124,13 @@
                     $this->redirect(Yii::app()->createUrl('configuration/default/index'));
                 }
             }
-            $titleBarAndEditView = new TitleBarAndConfigurationEditAndDetailsView(
+            $editView = new ZurmoConfigurationEditAndDetailsView(
+                                    'Edit',
                                     $this->getId(),
                                     $this->getModule()->getId(),
-                                    $configurationForm,
-                                    'ZurmoConfigurationEditAndDetailsView',
-                                    'Edit',
-                                    Yii::t('Default', 'Global Configuration')
-            );
-            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                    $configurationForm);
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
+                                         makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
 

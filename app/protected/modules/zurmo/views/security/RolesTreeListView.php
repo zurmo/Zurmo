@@ -26,9 +26,9 @@
 
     /**
      * View that renders a list of roles in the form of a
-     * tree widget.
+     * tree or noded list view.
      */
-    class RolesTreeView extends SecurityTreeView
+    class RolesTreeListView extends SecurityTreeListView
     {
         protected function renderContent()
         {

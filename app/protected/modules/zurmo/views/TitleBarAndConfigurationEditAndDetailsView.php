@@ -36,9 +36,8 @@
             $renderType,
             $title)
         {
-            parent::__construct(2, 1);
-            $this->setView(new TitleBarView ($title), 0, 0);
-            $this->setView(new $viewClassName($renderType, $controllerId, $moduleId, $formModel), 1, 0);
+            parent::__construct(1, 1);
+            $this->setView(new $viewClassName($renderType, $controllerId, $moduleId, $formModel), 0, 0);
         }
     }
 ?>

@@ -43,13 +43,13 @@
 
         public function actionList()
         {
-            $titleAndTreeView = new GroupsTitleBarAndTreeView(
+            $treeView = new GroupsTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 Group::getAll('name')
             );
             $view             = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleAndTreeView));
+                                         makeStandardViewForCurrentUser($this, $treeView));
             echo $view->render();
         }
 

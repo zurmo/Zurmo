@@ -50,7 +50,9 @@
 
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -64,13 +66,20 @@
                 $content .= '<br/>';
             }
             $content .= $this->renderFormLayout($form);
-            $content .= $this->renderViewToolBar();
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderActionElementBar(true);
+            $content .= '</div></div>';
             $content .= $clipWidget->renderEndWidget();
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
-            /**
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Languages') . '</h1>';
+        }
+
+        /**
          * Render a form layout.
          * @param $form If the layout is editable, then pass a $form otherwise it can
          * be null.
@@ -110,8 +119,9 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
+                            array('type'  => 'ConfigurationLink',
+                                  'label' => "eval:Yii::t('Default', 'Cancel')",),
                             array('type'  => 'SaveButton',
-                                  'label' => "eval:Yii::t('Default', 'Save Changes')",
                                   'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
                         ),
                      ),

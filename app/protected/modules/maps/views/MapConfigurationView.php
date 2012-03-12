@@ -29,13 +29,19 @@
      */
     class MapConfigurationView extends EditAndDetailsView
     {
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Maps Configuration') . '</h1>';
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ConfigurationLink'),
+                            array('type' => 'ConfigurationLink',
+                                            'label' => "eval:Yii::t('Default', 'Cancel')"),
                             array('type' => 'SaveButton',    'renderType' => 'Edit'),
                             array('type' => 'EditLink',      'renderType' => 'Details'),
                         ),

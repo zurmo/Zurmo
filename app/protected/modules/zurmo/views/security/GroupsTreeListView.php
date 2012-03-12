@@ -26,9 +26,9 @@
 
     /**
      * View that renders a list of groups in the form of a
-     * tree widget.
+     * tree or noded list view.
      */
-    class GroupsTreeView extends SecurityTreeView
+    class GroupsTreeListView extends SecurityTreeListView
     {
         protected function renderContent()
         {

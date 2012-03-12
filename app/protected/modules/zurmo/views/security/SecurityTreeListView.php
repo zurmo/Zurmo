@@ -26,9 +26,9 @@
 
     /**
      * View that renders a a security component in the form of a
-     * tree widget.
+     * tree or noded list view.
      */
-    abstract class SecurityTreeView extends MetadataView
+    abstract class SecurityTreeListView extends MetadataView
     {
         protected $controllerId;
 
@@ -54,7 +54,7 @@
          */
         protected function renderTreeMenu($nodeRelationName, $nodesRelationName, $title)
         {
-            $parentNode = array('text' => $title, 'expanded' => true);
+            $parentNode = array('text' => $title);
             $itemNodes  = array();
             foreach ($this->items as $item)
             {
@@ -69,27 +69,39 @@
                     }
                     else
                     {
-                        $text = strval($item);
+                        throw new NotSupportedException();
                     }
-                    $node             = array('text' => $text, 'expanded' => true);
+                    $node             = array('link' => $text);
                     $node['children'] = $this->makeChildrenNodes($this->items, $item, $nodeRelationName);
                     $itemNodes[]      = $node;
                 }
             }
-            $parentNode['children'] = $itemNodes;
-            $dataTree[]             = $parentNode;
-            $cClipWidget            = new CClipWidget();
-            $cClipWidget->beginClip("TreeView");
-            $cClipWidget->widget('CTreeView', array(
-                'data'        => $dataTree,
-                'animated'    => 'fast',
-                'collapsed'   => true,
-                'htmlOptions' => array(
-                    'class'   => 'treeview-gray',
-                ),
-            ));
-            $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['TreeView'];
+            $dataTree               = $itemNodes;
+            return $this->renderTreeListView($dataTree);
+        }
+
+        protected function renderTreeListView($dataTree)
+        {
+            assert('is_array($dataTree)');
+            $content  = '<table>';
+            $content .= '<colgroup>';
+            $content .= '<col style="width:100%" />';
+            $content .= '</colgroup>';
+            $content .= '<tbody>';
+            $content .= '<tr><th>' . Yii::t('Default', 'Group Name') . '</th></tr>';
+
+            foreach ($dataTree as $node)
+            {
+                $content .= '<tr>';
+                $content .= '<td>';
+                $content .= $node['link'];
+                $content .= '</td>';
+                $content .= '</tr>';
+                //deal recursively with group children.
+            }
+            $content .= '</tbody>';
+            $content .= '</table>';
+            return $content;
         }
 
         /**
@@ -124,7 +136,7 @@
                     {
                         $text = strval($item);
                     }
-                    $node             = array('text' => $text, 'expanded' => true);
+                    $node             = array('link' => $text);
                     $node['children'] = $this->makeChildrenNodes($items, $item, $nodeRelationName, $isLink);
                     $itemNodes[]      = $node;
                 }
