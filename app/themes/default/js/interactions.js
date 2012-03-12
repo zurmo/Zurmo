@@ -101,6 +101,9 @@ $(window).ready(function(){
 			});
 	}
 	
+	function testme(){
+		log('hi');
+	}
 	
 	//Still buggy...
 	/*
