@@ -60,9 +60,9 @@ $(window).ready(function(){
 	
 	/*Dropdowns - Dropkick*/
 	 
-	$('#edit-form select, .search-view-1 select, #inline-edit-form select').dropkick();
+	//$('#edit-form select, .search-view-1 select, #inline-edit-form select').dropkick();
 
-	//$('select:not(.no-style)').dropkick();
+	$('select:not(.ignore-style)').dropkick();
 
 	$('html').click(function(e) {
 		$.each($('td > select'), function(index, value) {
