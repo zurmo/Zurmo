@@ -42,6 +42,13 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Import',
+                        'url'   => array('/import/default'),
+                        'right' => self::RIGHT_ACCESS_IMPORT,
+                    ),
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,

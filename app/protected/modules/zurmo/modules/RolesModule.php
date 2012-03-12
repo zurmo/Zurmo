@@ -49,6 +49,13 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Roles',
+                        'url'   => array('/zurmo/role'),
+                        'right' => self::RIGHT_ACCESS_ROLES,
+                    ),
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,

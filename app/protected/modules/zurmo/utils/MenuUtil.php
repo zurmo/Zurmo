@@ -43,6 +43,20 @@
             return $items;
         }
 
+        public static function resolveByCacheAndGetVisibleAndOrderedAdminTabMenuByCurrentUser()
+        {
+            try
+            {
+                $items = GeneralCache::getEntry(self::getAdminMenuViewItemsCacheIdentifier());
+            }
+            catch (NotFoundException $e)
+            {
+                $items = MenuUtil::getVisibleAndOrderedAdminTabMenuByCurrentUser();
+                GeneralCache::cacheEntry(self::getAdminMenuViewItemsCacheIdentifier(), $items);
+            }
+            return $items;
+        }
+
         /**
          * The menu view items cache identifier is a combination of the language and current user.
          * This ensures if the user or language changes, that it properly retrieves the cache.
@@ -50,6 +64,15 @@
         protected static function getMenuViewItemsCacheIdentifier()
         {
             return 'MenuViewItems' . Yii::app()->user->userModel->id . Yii::app()->language;
+        }
+
+        /**
+         * The admin menu view items cache identifier is a combination of the language and current user.
+         * This ensures if the user or language changes, that it properly retrieves the cache.
+         */
+        protected static function getAdminMenuViewItemsCacheIdentifier()
+        {
+            return 'AdminMenuViewItems' . Yii::app()->user->userModel->id . Yii::app()->language;
         }
 
         /**
@@ -69,6 +92,44 @@
             foreach ($modules as $module)
             {
                 $moduleMenuItems = MenuUtil::getAccessibleModuleTabMenuByUser(get_class($module), $user);
+                if ($module->isEnabled() && count($moduleMenuItems) > 0)
+                {
+                    if (($order = array_search($module->getName(), $orderedModules)) !== false)
+                    {
+                        $moduleMenuItemsInOrder[$order]             = self::resolveMenuItemsForLanguageLocalization(
+                                                                      $moduleMenuItems, get_class($module));
+                        $moduleMenuItemsInOrder[$order][0]['moduleId'] = $module->getId();
+                    }
+                }
+            }
+            ksort($moduleMenuItemsInOrder);
+            foreach ($moduleMenuItemsInOrder as $menuItems)
+            {
+                foreach ($menuItems as $itemKey => $item)
+                {
+                    $tabMenuItems[] = $item;
+                }
+            }
+            return $tabMenuItems;
+        }
+
+        /**
+         * Get the admin tab menu items ordered and only
+         * the visible tabs based on the effective user setting for tab
+         * menu items. A module can have more than one top level menu
+         * item.  Utilizes current user.
+         * @return array tab menu items
+         */
+        public static function getVisibleAndOrderedAdminTabMenuByCurrentUser()
+        {
+            $moduleMenuItemsInOrder = array();
+            $tabMenuItems           = array();
+            $user                   = Yii::app()->user->userModel;
+            $orderedModules         = self::getModuleOrderingForAdminTabMenuByUser($user);
+            $modules                = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                $moduleMenuItems = MenuUtil::getAccessibleModuleAdminTabMenuByUser(get_class($module), $user);
                 if ($module->isEnabled() && count($moduleMenuItems) > 0)
                 {
                     if (($order = array_search($module->getName(), $orderedModules)) !== false)
@@ -225,6 +286,26 @@
         }
 
         /**
+         * Public for testing purposes only.
+         * @return array of accessible admin tab menu items
+         */
+        public static function getAccessibleModuleAdminTabMenuByUser($moduleClassName, $user)
+        {
+            assert('$user instanceof User && $user != null');
+            assert('is_string($moduleClassName)');
+            $user = Yii::app()->user->userModel;
+            if (RightsUtil::canUserAccessModule($moduleClassName, $user))
+            {
+                $metadata = $moduleClassName::getAdminTabMenuItems($user);
+                if (!empty($metadata))
+                {
+                    return self::resolveModuleMenuForAccess($moduleClassName, $metadata, $user);
+                }
+            }
+            return array();
+        }
+
+        /**
          * Currently only supports one level of nesting.
          */
         protected static function resolveModuleMenuForAccess($moduleClassName, array $menu, $user = null)
@@ -283,6 +364,26 @@
             {
                 assert('is_array($metadata["global"]["tabMenuItemsModuleOrdering"])');
                 $orderedModules = $metadata['global']['tabMenuItemsModuleOrdering'];
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            return $orderedModules;
+        }
+
+        /**
+         * Temporarily statically defined until we implement
+         * module sorting/visibility for tab menu items.
+         */
+        protected static function getModuleOrderingForAdminTabMenuByUser($user)
+        {
+            assert('$user instanceof User');
+            $metadata = ZurmoModule::getMetadata();
+            if (isset($metadata['global']['adminTabMenuItemsModuleOrdering']))
+            {
+                assert('is_array($metadata["global"]["adminTabMenuItemsModuleOrdering"])');
+                $orderedModules = $metadata['global']['adminTabMenuItemsModuleOrdering'];
             }
             else
             {

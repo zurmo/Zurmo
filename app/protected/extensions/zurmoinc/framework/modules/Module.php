@@ -358,6 +358,20 @@
         /**
          * TODO
          */
+        public static function getAdminTabMenuItems($user = null)
+        {
+            assert('$user == null || $user instanceof User');
+            $metadata = self::getMetadata();
+            if (!empty($metadata['global']['adminTabMenuItems']))
+            {
+                return $metadata['global']['adminTabMenuItems'];
+            }
+            return array();
+        }
+
+        /**
+         * TODO
+         */
         public static function getConfigureMenuItems()
         {
             $metadata = self::getMetadata();

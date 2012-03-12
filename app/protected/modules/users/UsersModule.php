@@ -108,6 +108,13 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Users',
+                        'url'   => array('/users/default'),
+                        'right' => self::RIGHT_ACCESS_USERS,
+                    ),
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,

@@ -35,5 +35,19 @@
         {
             return 'Configuration';
         }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = array();
+            $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Settings',
+                        'url'   => array('/configuration/index'),
+                    ),
+                ),
+            );
+            return $metadata;
+        }
     }
 ?>

@@ -103,6 +103,15 @@
                         'order' => 8,
                     ),
                 ),
+                'adminTabMenuItemsModuleOrdering' => array(
+                    'home',
+                    'designer',
+                    'import',
+                    'groups',
+                    'users',
+                    'roles',
+                    'configuration'
+                ),
                 'tabMenuItemsModuleOrdering' => array(
                     'home',
                     'accounts',

@@ -49,6 +49,13 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Groups',
+                        'url'   => array('/zurmo/group'),
+                        'right' => self::RIGHT_ACCESS_GROUPS,
+                    ),
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,

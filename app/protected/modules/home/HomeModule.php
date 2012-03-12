@@ -94,6 +94,13 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label'       => 'Back to Application',
+                        'url'         => array('/home/default'),
+                        'itemOptions' => array('class' => 'back-to-app-menu-item')
+                    ),
+                ),
                 'tabMenuItems' => array(
                     array(
                         'label' => 'Home',
@@ -111,7 +118,6 @@
                             ),
                         ),
                     ),
-
                 ),
             );
             return $metadata;

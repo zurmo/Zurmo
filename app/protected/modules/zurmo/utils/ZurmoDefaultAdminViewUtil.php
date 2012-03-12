@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,26 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ConfigurationDefaultController extends ZurmoBaseController
+    /**
+     * Helper class for constructing the admin view used by the classes that extend the ZurmoPageView.
+     */
+    class ZurmoDefaultAdminViewUtil extends ZurmoDefaultViewUtil
     {
-        public function filters()
-        {
-            return array_merge(parent::filters(),
-                array(
-                    array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH,
-                        'moduleClassName' => 'ZurmoModule',
-                        'rightName' => ZurmoModule::RIGHT_ACCESS_ADMINISTRATION,
-                   ),
-               )
-            );
-        }
+        protected static $showRecentlyViewed = false;
 
-        public function actionIndex()
+        protected static function makeMenuView($controller = null)
         {
-            $view = new ConfigurationPageView(ZurmoDefaultAdminViewUtil::
-                                                  makeStandardViewForCurrentUser($this, new ConfigureModulesView()));
-            echo $view->render();
+            assert('$controller == null || $controller instanceof CController');
+            $items = MenuUtil::resolveByCacheAndGetVisibleAndOrderedAdminTabMenuByCurrentUser();
+            static::resolveForActiveMenuItem($items, $controller);
+            return new MenuView($items);
         }
     }
 ?>

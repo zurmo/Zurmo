@@ -29,6 +29,7 @@
      */
     class ZurmoDefaultViewUtil
     {
+        protected static $showRecentlyViewed = true;
 
         /**
          * Given a controller and contained view, construct the gridview
@@ -39,12 +40,22 @@
         public static function makeStandardViewForCurrentUser(CController $controller, View $containedView)
         {
 
-
-            $aVerticalGridView   = new GridView(2, 1);
+            if(static::$showRecentlyViewed)
+            {
+                $verticalColumns = 2;
+            }
+            else
+            {
+                $verticalColumns = 1;
+            }
+            $aVerticalGridView   = new GridView($verticalColumns, 1);
 
             $aVerticalGridView->setCssClasses( array('AppNavigation', 'clearfix')); //navigation left column
             $aVerticalGridView->setView(static::makeMenuView($controller), 0, 0);
-            $aVerticalGridView->setView(static::makeRecentlyViewedView(), 1, 0);
+            if(static::$showRecentlyViewed)
+            {
+                $aVerticalGridView->setView(static::makeRecentlyViewedView(), 1, 0);
+            }
 
             $horizontalGridView = new GridView(1, 3);
             $horizontalGridView->setCssClasses(array('AppContainer', 'clearfix')); //teh conatiner for the floated items
@@ -108,7 +119,14 @@
         {
             assert('$controller == null || $controller instanceof CController');
             $items = MenuUtil::resolveByCacheAndGetVisibleAndOrderedTabMenuByCurrentUser();
+            static::resolveForActiveMenuItem($items, $controller);
+            return new MenuView($items);
+        }
 
+        protected static function resolveForActiveMenuItem(&$items, $controller)
+        {
+            assert('$controller == null || $controller instanceof CController');
+            assert('is_array($items)');
             foreach($items as $key => $item)
             {
                 if($controller != null && isset($item['moduleId']) &&
@@ -117,7 +135,6 @@
                     $items[$key]['active'] = true;
                 }
             }
-            return new MenuView($items);
         }
 
         protected static function makeRecentlyViewedView()
