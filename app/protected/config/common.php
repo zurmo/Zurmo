@@ -257,7 +257,7 @@
 
         'params' => array(
             'redBeanVersion'    => '1.3',
-            'yiiVersion'        => '1.1.10',
+            'yiiVersion'        => '1.1.8',
             'supportedLanguages' => array(
                 'en' => 'English',
                 'es' => 'Spanish',
