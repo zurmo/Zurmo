@@ -39,7 +39,7 @@
         {
             try
             {
-                $filesToInclude = GeneralCache::getEntry('filesToIncludeForTests3');
+                $filesToInclude = GeneralCache::getEntry('filesToIncludeForTests');
             }
             catch (NotFoundException $e)
             {
@@ -51,7 +51,7 @@
                 {
                     $filesToInclude[$totalFilesToIncludeFromModules + $key] = $file;
                 }
-                GeneralCache::cacheEntry('filesToIncludeForTests3', $filesToInclude);
+                GeneralCache::cacheEntry('filesToIncludeForTests', $filesToInclude);
             }
             foreach ($filesToInclude as $file)
             {
