@@ -33,7 +33,6 @@
             $categoryLabels = $this->getCategoriesArray();
             foreach ($categoryData as $category => $categoryItems)
             {
-                $content .= $this->renderCategoryTitle($categoryLabels[$category]);
                 $content .= $this->renderMenu($categoryItems);
             }
             return $content;
@@ -72,27 +71,18 @@
             return $categories;
         }
 
-        protected function renderCategoryTitle($category)
-        {
-            return '<h2>' . $category . '</h2>';
-        }
-
         protected function renderMenu($items)
         {
-            $content = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:20%" /><col style="width:80%"/>';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
+            $content = '<ul>';
             foreach ($items as $item)
             {
-                $content .= '<tr>';
-                $content .= '<th>' . CHtml::link($item['titleLabel'], Yii::app()->createUrl($item['route'])) . '</th>';
-                $content .= '<td>' . $item['descriptionLabel'] . '</td>';
-                $content .= '</tr>';
+                $content .= '<li>';
+                $content .= CHtml::link(CHtml::tag('span', array(), $item['titleLabel']),
+                                        Yii::app()->createUrl($item['route']));
+                $content .= ' - ' . $item['descriptionLabel'];
+                $content .= '</li>';
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '</ul>';
             return $content;
         }
 
