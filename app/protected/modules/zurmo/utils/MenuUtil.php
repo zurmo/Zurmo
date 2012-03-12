@@ -73,7 +73,9 @@
                 {
                     if (($order = array_search($module->getName(), $orderedModules)) !== false)
                     {
-                        $moduleMenuItemsInOrder[$order] = self::resolveMenuItemsForLanguageLocalization($moduleMenuItems, get_class($module));
+                        $moduleMenuItemsInOrder[$order]             = self::resolveMenuItemsForLanguageLocalization(
+                                                                      $moduleMenuItems, get_class($module));
+                        $moduleMenuItemsInOrder[$order][0]['moduleId'] = $module->getId();
                     }
                 }
             }

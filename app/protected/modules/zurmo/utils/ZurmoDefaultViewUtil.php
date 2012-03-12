@@ -43,7 +43,7 @@
             $aVerticalGridView   = new GridView(2, 1);
 
             $aVerticalGridView->setCssClasses( array('AppNavigation', 'clearfix')); //navigation left column
-            $aVerticalGridView->setView(static::makeMenuView(), 0, 0); //TODO cuurent item/link shpuld have some class, like current-nav-item
+            $aVerticalGridView->setView(static::makeMenuView($controller), 0, 0);
             $aVerticalGridView->setView(static::makeRecentlyViewedView(), 1, 0);
 
             $horizontalGridView = new GridView(1, 3);
@@ -57,9 +57,6 @@
 
             $verticalGridView   = new GridView(4, 1);
             $verticalGridView->setView(static::makeHeaderView($controller),                    0, 0);
-
-            //$verticalGridView->setView(static::makeMenuView(),                      1, 0);
-
             $verticalGridView->setView($horizontalGridView,                         1, 0);
             $verticalGridView->setView(static::makeModalContainerView(),            2, 0);
             $verticalGridView->setView(static::makeFooterView(),                    3, 0);
@@ -107,9 +104,19 @@
             return $userMenuItems;
         }
 
-        protected static function makeMenuView()
+        protected static function makeMenuView($controller = null)
         {
+            assert('$controller == null || $controller instanceof CController');
             $items = MenuUtil::resolveByCacheAndGetVisibleAndOrderedTabMenuByCurrentUser();
+
+            foreach($items as $key => $item)
+            {
+                if($controller != null && isset($item['moduleId']) &&
+                   $controller->getModule()->getId() == $item['moduleId'])
+                {
+                    $items[$key]['active'] = true;
+                }
+            }
             return new MenuView($items);
         }
 
