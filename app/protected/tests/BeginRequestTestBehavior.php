@@ -29,8 +29,6 @@
         public function attach($owner)
         {
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
-            // We don't need this, db is already setup in TestSUite.php line 104!
-            //$owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
         }
 
         /**
@@ -59,12 +57,6 @@
             {
                 Yii::import($file);
             }
-        }
-        public function handleSetupDatabaseConnection($event)
-        {
-            RedBeanDatabase::setup(Yii::app()->db->connectionString,
-                                   Yii::app()->db->username,
-                                   Yii::app()->db->password);
         }
     }
 ?>
