@@ -28,7 +28,7 @@
     {
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line"></div>' . "\n";
+            $content  = $this->renderTitleContent();
             $categoryData = $this->getCategoryData();
             $categoryLabels = $this->getCategoriesArray();
             foreach ($categoryData as $category => $categoryItems)
@@ -37,6 +37,11 @@
                 $content .= $this->renderMenu($categoryItems);
             }
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Administration') . '</h1>';
         }
 
         protected function getCategoryData()

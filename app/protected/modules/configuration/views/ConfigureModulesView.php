@@ -26,13 +26,12 @@
 
     class ConfigureModulesView extends GridView
     {
-        protected $cssClasses =  array( 'AdministrativeArea' );
+        protected $cssClasses =  array( 'AdministrativeArea' , 'TableOfContentsView' );
 
         public function __construct()
         {
-            parent::__construct(2, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'Administration'), Yii::t('Default', 'Menu')), 0, 0);
-            $this->setView(new ConfigureModulesMenuView(), 1, 0);
+            parent::__construct(1, 1);
+            $this->setView(new ConfigureModulesMenuView(), 0, 0);
         }
 
         public function isUniqueToAPage()
