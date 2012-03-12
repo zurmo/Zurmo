@@ -103,6 +103,7 @@ $(window).ready(function(){
 	
 	
 	//Still buggy...
+	/*
 	var $tableItems = $('.items')[0];
 	
 	$('label.hasCheckBox', $tableItems ).each(function(){
@@ -123,7 +124,7 @@ $(window).ready(function(){
 				}
 		});
 	});
-	
+	*/
     
     //we're doing that because the multiselect widget isn't generated yet..
     window.setTimeout(
@@ -140,10 +141,7 @@ $(window).ready(function(){
 		//log( $(this).attr('id') );
 		//log( $(this).is(':checked'));
 		//log('----');
-		
-		
-	    
-	    checkall();
+	    //checkall();
 	});
 	
 	function checkall(){
