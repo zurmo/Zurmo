@@ -55,7 +55,7 @@
                             $this->getModule()->getId(),
                             LanguagesToLanguageCollectionViewUtil::getLanguagesData(),
                             $messageBoxContent);
-            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $view));
             echo $view->render();
         }

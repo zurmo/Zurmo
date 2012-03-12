@@ -68,7 +68,7 @@
             $importView->setView(new ImportWizardImportRulesView($this->getId(),
                                                                        $this->getModule()->getId(),
                                                                        $importWizardForm), 1, 0);
-            $view = new ImportPageView(ZurmoDefaultViewUtil::
+            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
                                        makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
@@ -122,7 +122,7 @@
             $importView->setView(new ImportWizardUploadFileView($this->getId(),
                                                                 $this->getModule()->getId(),
                                                                 $importWizardForm), 1, 0);
-            $view = new ImportPageView(ZurmoDefaultViewUtil::
+            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
                                        makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
@@ -145,7 +145,7 @@
             $importView->setView(new ImportWizardSetModelPermissionsView($this->getId(),
                                                                          $this->getModule()->getId(),
                                                                          $importWizardForm), 1, 0);
-            $view = new ImportPageView(ZurmoDefaultViewUtil::
+            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
                                        makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
@@ -231,7 +231,7 @@
                                                              $mappableAttributeIndicesAndDerivedTypes,
                                                              $importRulesClassName::getRequiredAttributesLabelsData()),
                                                              1, 0);
-            $view = new ImportPageView(ZurmoDefaultViewUtil::
+            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
                                        makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
@@ -291,7 +291,7 @@
                 $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
                 $gridView->setView($titleBarView, 0, 0);
                 $gridView->setView($wrapperView, 1, 0);
-                $view = new ImportPageView(ZurmoDefaultViewUtil::
+                $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
                                        makeStandardViewForCurrentUser($this, $gridView));
             }
             else
@@ -356,7 +356,7 @@
                 $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
                 $gridView->setView($titleBarView, 0, 0);
                 $gridView->setView($wrapperView, 1, 0);
-                $view = new ImportPageView(ZurmoDefaultViewUtil::
+                $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
                                        makeStandardViewForCurrentUser($this, $gridView));
             }
             else

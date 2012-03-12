@@ -43,7 +43,7 @@
                 'adminTabMenuItems' => array(
                     array(
                         'label' => 'Settings',
-                        'url'   => array('/configuration/index'),
+                        'url'   => array('/configuration/default'),
                     ),
                 ),
             );

@@ -69,7 +69,7 @@
                 Yii::app()->user->userModel->id
             );
             $searchFilterListView->setCssClasses(array( 'AdministrativeArea' ));
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $searchFilterListView));
             echo $view->render();
         }
@@ -101,7 +101,7 @@
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('createUser');
             $this->attemptToValidateAjaxFromPost($userPasswordForm, 'UserPasswordForm');
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($userPasswordForm),

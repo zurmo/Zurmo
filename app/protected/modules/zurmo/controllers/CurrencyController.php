@@ -58,7 +58,7 @@
                             $currency,
                             Currency::getAll(),
                             $messageBoxContent);
-            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $view));
             echo $view->render();
         }

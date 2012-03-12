@@ -74,7 +74,7 @@
                                     'Edit',
                                     Yii::t('Default', 'Maps Configuration')
             );
-            $view = new ZurmoConfigurationPageView(ZurmoDefaultViewUtil::
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }

@@ -39,10 +39,9 @@
         public static function makeStandardViewForCurrentUser(CController $controller, View $containedView, $activeNodeModuleClassName)
         {
             assert('is_string($activeNodeModuleClassName) || $activeNodeModuleClassName == null');
-            $gridView    = new GridView(1, 2);
+            $gridView    = new GridView(1, 1);
             $gridView->setCssClasses(array( 'AdministrativeArea' ));
-            $gridView->setView(new TreeMenuView($controller->getId(), $controller->getModule()->getId(), $activeNodeModuleClassName), 0, 0);
-            $gridView->setView($containedView, 0, 1);
-            return ZurmoDefaultViewUtil::makeStandardViewForCurrentUser($controller, $gridView);
+            $gridView->setView($containedView, 0, 0);
+            return ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($controller, $gridView);
         }
     }

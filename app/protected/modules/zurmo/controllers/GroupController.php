@@ -48,7 +48,7 @@
                 $this->getModule()->getId(),
                 Group::getAll('name')
             );
-            $view             = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view             = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleAndTreeView));
             echo $view->render();
         }
@@ -64,7 +64,7 @@
             );
             $detailsAndSubviewsView = new GroupTitleBarAndDetailsView($this->getId(), $this->getModule()->getId(),
                                                                       $group, $params);
-            $view                   = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view                   = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $detailsAndSubviewsView));
             echo $view->render();
         }
@@ -73,7 +73,7 @@
         {
             $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost(new Group()), 'Edit');
-            $view                = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
@@ -82,7 +82,7 @@
         {
             $group = Group::getById(intval($id));
             $this->resolveCanGroupBeEdited($group);
-            $view  = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view  = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeTitleBarAndEditAndDetailsView(
                                                 $this->attemptToSaveModelFromPost($group), 'Edit')));
@@ -142,7 +142,7 @@
                                             $membershipForm,
                                             $group,
                                             $this->getModule()->getPluralCamelCasedName());
-            $view                = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
@@ -181,7 +181,7 @@
                                             $metadata,
                                             Yii::t('Default', 'Group Module Permissions'),
                                             'ModulePermissionsEditAndDetailsView');
-            $view                = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
@@ -217,7 +217,7 @@
                                             $metadata,
                                             Yii::t('Default', 'Group Rights'),
                                             'RightsEditAndDetailsView');
-            $view                = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
@@ -257,7 +257,7 @@
                                         $metadata,
                                         Yii::t('Default', 'Group Policies'),
                                         'PoliciesEditAndDetailsView');
-            $view                = new GroupsPageView(ZurmoDefaultViewUtil::
+            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
