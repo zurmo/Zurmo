@@ -77,9 +77,10 @@
             foreach ($items as $item)
             {
                 $content .= '<li>';
-                $content .= CHtml::link(CHtml::tag('span', array(), $item['titleLabel']),
-                                        Yii::app()->createUrl($item['route']));
+				$content .= '<h4>'.$item['titleLabel'].'</h4>';
                 $content .= ' - ' . $item['descriptionLabel'];
+				$content .= CHtml::link(CHtml::tag('span', array(), 'Configure' ),
+                                        Yii::app()->createUrl($item['route']));
                 $content .= '</li>';
             }
             $content .= '</ul>';
