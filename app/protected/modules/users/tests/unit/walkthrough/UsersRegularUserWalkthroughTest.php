@@ -114,5 +114,33 @@
             $content = $this->runControllerWithExitExceptionAndGetContent('users/default/massEdit');
             $this->assertFalse(strpos($content, 'You have tried to access a page you do not have access to') === false);
         }
+
+        /**
+         * @depends testBulkWriteSecurityCheck
+         */
+        public function testRegularUserAfterChangeOfUserName()
+        {
+            $cUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('cUser');
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
+
+            $this->setGetArray(array('id' => $cUser->id));
+            //Access to User to change the username.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/edit');
+
+            $this->assertTrue(strpos($content, 'User_lastName') !== false);
+            $this->assertTrue(strpos($content, 'User_username') !== false);
+
+            $this->setGetArray(array('id' => $cUser->id));
+            $this->setPostArray(array(
+                'User'  => array('username' => 'zuser', 'firstName' => 'cUser', 'lastName' => 'cUserson'),
+                'save' => 'Save'
+            ));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
+
+            $kUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('kUser');
+            $this->setGetArray(array('id' => $kUser->id));
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/details');
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
+        }
     }
 ?>
