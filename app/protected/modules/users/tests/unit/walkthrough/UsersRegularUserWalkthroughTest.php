@@ -137,8 +137,8 @@
             ));
             $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
 
-            $kUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('kUser');
-            $this->setGetArray(array('id' => $kUser->id));
+            $zUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('zUser');
+            $this->setGetArray(array('id' => $zUser->id));
             $this->runControllerWithNoExceptionsAndGetContent('users/default/details');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');
         }
