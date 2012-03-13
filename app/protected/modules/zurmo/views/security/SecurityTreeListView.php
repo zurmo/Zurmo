@@ -80,28 +80,43 @@
             return $this->renderTreeListView($dataTree);
         }
 
-        protected function renderTreeListView($dataTree)
+        protected function renderTreeListView($data)
         {
-            assert('is_array($dataTree)');
+            assert('is_array($data)');
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:100%" />';
+            $content .= '<col style="width:50%" />';
+            $content .= '</colgroup>';
+            $content .= '<colgroup>';
+            $content .= '<col style="width:50%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Group Name') . '</th></tr>';
-
-            foreach ($dataTree as $node)
-            {
-                $content .= '<tr>';
-                $content .= '<td>';
-                $content .= $node['link'];
-                $content .= '</td>';
-                $content .= '</tr>';
-                //deal recursively with group children.
-            }
+            $content .= '<tr><th>' . Yii::t('Default', 'Group Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th></tr>';
+            static::renderTreeListViewNode($content, $data, 0);
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
+        }
+
+        protected static function renderTreeListViewNode(& $content, $data, $indent)
+        {
+            assert('is_string($content)');
+            assert('is_array($data)');
+            foreach ($data as $node)
+            {
+                $content .= '<tr>';
+                $content .= '<td class="level-' . $indent . '">';
+                $content .= $node['link'];
+                $content .= '</td>';
+                $content .= '<td>';
+                $content .= 'todouserscount';
+                $content .= '</td>';
+                $content .= '</tr>';
+                if(isset($node['children']))
+                {
+                    static::renderTreeListViewNode($content, $node['children'], $indent + 1);
+                }
+            }
         }
 
         /**

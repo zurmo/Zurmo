@@ -55,37 +55,26 @@
 
         public function actionDetails($id)
         {
-            $group = Group::getById(intval($id));
-            $params = array(
-                'controllerId'     => $this->getId(),
-                'relationModuleId' => $this->getModule()->getId(),
-                'relationModel'    => $group,
-                'redirectUrl'      => Yii::app()->request->getRequestUri(),
-            );
-            $detailsAndSubviewsView = new GroupTitleBarAndDetailsView($this->getId(), $this->getModule()->getId(),
-                                                                      $group, $params);
-            $view                   = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $detailsAndSubviewsView));
-            echo $view->render();
+            $this->actionEdit($id);
         }
 
         public function actionCreate()
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
-                                            $this->attemptToSaveModelFromPost(new Group()), 'Edit');
-            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+            $titleBarAndCreateView = new GroupActionBarAndEditView($this->getId(), $this->getModule()->getId(), new Group());
+            $view                  = new GroupsPageView(ZurmoDefaultAdminViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndCreateView));
             echo $view->render();
         }
 
         public function actionEdit($id)
         {
-            $group = Group::getById(intval($id));
+            $group               = Group::getById(intval($id));
             $this->resolveCanGroupBeEdited($group);
-            $view  = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndEditAndDetailsView(
-                                                $this->attemptToSaveModelFromPost($group), 'Edit')));
+            $titleBarAndEditView = new GroupActionBarAndEditView($this->getId(),
+                                                                 $this->getModule()->getId(),
+                                                                 $this->attemptToSaveModelFromPost($group));
+            $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
+                                       makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -136,7 +125,7 @@
                         Yii::app()->end(0, false);
                 }
             }
-            $titleBarAndEditView = new GroupTitleBarAndUserMembershipEditView(
+            $titleBarAndEditView = new GroupActionBarAndUserMembershipEditView(
                                             $this->getId(),
                                             $this->getModule()->getId(),
                                             $membershipForm,
@@ -172,14 +161,13 @@
             $metadata            = ModulePermissionsEditViewUtil::resolveMetadataFromData(
                                         $permissionsData,
                                         ModulePermissionsEditAndDetailsView::getMetadata());
-            $titleBarAndEditView = new GroupTitleBarAndSecurityEditView(
+            $titleBarAndEditView = new GroupActionBarAndSecurityEditView(
                                             $this->getId(),
                                             $this->getModule()->getId(),
                                             $permissionsForm,
                                             $group,
                                             $this->getModule()->getPluralCamelCasedName(),
                                             $metadata,
-                                            Yii::t('Default', 'Group Module Permissions'),
                                             'ModulePermissionsEditAndDetailsView');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
@@ -208,14 +196,13 @@
             $metadata            = RightsEditViewUtil::resolveMetadataFromData(
                                             $rightsForm->data,
                                             RightsEditAndDetailsView::getMetadata());
-            $titleBarAndEditView = new GroupTitleBarAndSecurityEditView(
+            $titleBarAndEditView = new GroupActionBarAndSecurityEditView(
                                             $this->getId(),
                                             $this->getModule()->getId(),
                                             $rightsForm,
                                             $group,
                                             $this->getModule()->getPluralCamelCasedName(),
                                             $metadata,
-                                            Yii::t('Default', 'Group Rights'),
                                             'RightsEditAndDetailsView');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
@@ -248,14 +235,13 @@
             $metadata            = PoliciesEditViewUtil::resolveMetadataFromData(
                                         $policiesForm->data,
                                         PoliciesEditAndDetailsView::getMetadata());
-            $titleBarAndEditView = new GroupTitleBarAndSecurityEditView(
+            $titleBarAndEditView = new GroupActionBarAndSecurityEditView(
                                         $this->getId(),
                                         $this->getModule()->getId(),
                                         $policiesForm,
                                         $group,
                                         $this->getModule()->getPluralCamelCasedName(),
                                         $metadata,
-                                        Yii::t('Default', 'Group Policies'),
                                         'PoliciesEditAndDetailsView');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));

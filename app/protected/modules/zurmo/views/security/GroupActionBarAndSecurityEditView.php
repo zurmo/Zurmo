@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class GroupTitleBarAndSecurityEditView extends GridView
+    class GroupActionBarAndSecurityEditView extends GridView
     {
         protected $cssClasses =  array( 'AdministrativeArea' );
 
@@ -35,14 +35,13 @@
             Group $model,
             $moduleName,
             $metadata,
-            $title,
             $editViewClassName)
         {
             assert('$form instanceof ModulePermissionsForm ||
                     $form instanceof RightsForm ||
                     $form instanceof PoliciesForm');
             parent::__construct(2, 1);
-            $this->setView(new TitleBarView($title, $model, 1), 0, 0);
+            $this->setView(new ActionBarForGroupsEditAndDetailsView ($controllerId, $moduleId, $model->id), 0, 0);
             $this->setView(new $editViewClassName('Edit', $controllerId, $moduleId, $form, $model->id, $metadata), 1, 0);
         }
     }

@@ -24,20 +24,33 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class GroupTitleBarAndDetailsView extends GridView
+    class GroupActionBarAndEditView extends GridView
     {
         protected $cssClasses =  array( 'AdministrativeArea' );
 
-        public function __construct($controllerId, $moduleId, Group $group, $params)
+        public function __construct($controllerId, $moduleId, Group $group)
         {
             assert('$controllerId != null');
             assert('$moduleId != null');
-            assert('is_array($params)');
-            parent::__construct(2, 1);
-            $titleBarView = new TitleBarView (  GroupsModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $group->name, 1);
-            $this->setView($titleBarView, 0, 0);
-            $this->setView(new GroupEditAndDetailsView ('Details', $controllerId, $moduleId, $group), 1, 0);
+            if($group->id > 0)
+            {
+                $rows = 2;
+            }
+            else
+            {
+                $rows = 1;
+            }
+            parent::__construct($rows, 1);
+            if($group->id > 0)
+            {
+                $this->setView(new ActionBarForGroupsEditAndDetailsView ($controllerId, $moduleId, $group->id), 0, 0);
+                $this->setView(new GroupEditAndDetailsView ('Edit', $controllerId, $moduleId, $group), 1, 0);
+            }
+            else
+            {
+                $this->setView(new GroupEditAndDetailsView ('Edit', $controllerId, $moduleId, $group), 0, 0);
+            }
+
         }
     }
 ?>

@@ -52,6 +52,12 @@
             $this->metadata       = $metadata;
         }
 
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Group Module Permissions') . '</h1>';
+        }
+
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
@@ -166,11 +172,6 @@
         protected function getFormLayoutMetadata()
         {
             return $this->metadata;
-        }
-
-        protected function renderTitleContent()
-        {
-            return null;
         }
     }
 ?>
