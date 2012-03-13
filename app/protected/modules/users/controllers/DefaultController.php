@@ -202,8 +202,8 @@
                             UserStatusUtil::resolveUserStatus($model, $userStatus);
                         }
                     }
-                    if($model->id == Yii::app()->user->userModel->id &&
-                       $model->username != $oldUsername)
+                    if ($model->id == Yii::app()->user->userModel->id &&
+                        $model->username != $oldUsername)
                     {
                         //If the logged in user changes their username, a logout must occur to properly to properly
                         //restart the session.

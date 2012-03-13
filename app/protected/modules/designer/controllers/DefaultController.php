@@ -40,7 +40,7 @@
          */
         public function filterModuleClassName($filterChain)
         {
-            if(isset($_GET['moduleClassName']))
+            if (isset($_GET['moduleClassName']))
             {
                 $moduleClassNames = array();
                 $modules = Module::getModuleObjects();

@@ -40,18 +40,18 @@
         {
             return array(
                 array('host',                              'required'),
-                array('host',                          	   'type',      'type' => 'string'),
-                array('host',   					   	   'length',  'min'  => 1, 'max' => 64),
+                array('host',                              'type',      'type' => 'string'),
+                array('host',                              'length',    'min'  => 1, 'max' => 64),
                 array('port',                              'required'),
                 array('port',                              'type',      'type' => 'integer'),
-                array('port',                              'numerical', 'min' => 1),
+                array('port',                              'numerical', 'min'  => 1),
                 array('username',                          'type',      'type' => 'string'),
-                array('username',   					   'length',  'min'  => 1, 'max' => 64),
-                array('password',       				   'type',      'type' => 'string'),
-                array('password',   					   'length',  'min'  => 1, 'max' => 64),
+                array('username',                          'length',    'min'  => 1, 'max' => 64),
+                array('password',                          'type',      'type' => 'string'),
+                array('password',                          'length',    'min'  => 1, 'max' => 64),
                 array('userIdOfUserToSendNotificationsAs', 'type',      'type' => 'integer'),
-                array('userIdOfUserToSendNotificationsAs', 'numerical', 'min' => 1),
-                array('aTestToAddress', 				   'email'),
+                array('userIdOfUserToSendNotificationsAs', 'numerical', 'min'  => 1),
+                array('aTestToAddress',                    'email'),
             );
         }
 

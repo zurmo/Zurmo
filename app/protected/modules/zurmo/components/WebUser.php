@@ -55,7 +55,7 @@
                     return parent::__get($attributeName);
                 }
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
                 //Perhaps the username has changed, clear session and logout user.
                 Yii::app()->getSession()->destroy();
@@ -63,7 +63,6 @@
             }
             catch (CException $e)
             {
-
             }
         }
 

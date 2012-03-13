@@ -78,12 +78,12 @@
             $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
             $validated                 = $emailMessage->validate();
-            if(!$validated)
+            if (!$validated)
             {
                 throw new NotSupportedException();
             }
             Yii::app()->emailHelper->sendImmediately($emailMessage);
-            if(!$emailMessage->hasSendError())
+            if (!$emailMessage->hasSendError())
             {
                 $messageContent .= Yii::t('Default', 'Message successfully sent') . "\n";
                 return true;

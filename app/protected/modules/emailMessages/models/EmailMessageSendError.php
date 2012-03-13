@@ -31,17 +31,17 @@
     {
         public function __toString()
         {
-            if($this->serializedData != null)
+            if ($this->serializedData != null)
             {
                 $data   = unserialize($this->serializedData);
                 $string = '';
-                if(isset($data['code']))
+                if (isset($data['code']))
                 {
                     $string .= Yii::t('Default', 'Error Code:') . ' ' . $data['code'];
                 }
-                if(isset($data['message']))
+                if (isset($data['message']))
                 {
-                    if($string != null)
+                    if ($string != null)
                     {
                         $string .= "\n";
                     }

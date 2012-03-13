@@ -25,7 +25,6 @@
      ********************************************************************************/
     class MappingFormLayoutUtilTest extends ImportBaseTest
     {
-
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -169,7 +168,5 @@
             $content                    = MappingFormLayoutUtil::getSampleColumnHeaderId();
             $this->assertEquals($content, 'sample-column-header');
         }
-
     }
-
 ?>

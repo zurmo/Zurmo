@@ -34,7 +34,6 @@
             UserTestHelper::createBasicUser('jane');
         }
 
-
         public function testGetByBoxAndTypeForNotificationsBox()
         {
             $super                      = User::getByUsername('super');
@@ -125,7 +124,6 @@
             $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
             $folder->delete();
-
         }
 
         /**

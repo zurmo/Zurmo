@@ -102,7 +102,7 @@
             try
             {
                 $code = $this->getBaseCode();
-                if(null != $currency = Currency::getCachedCurrencyByCode($code))
+                if (null != $currency = Currency::getCachedCurrencyByCode($code))
                 {
                     return $currency;
                 }
@@ -194,7 +194,7 @@
         public function getActiveCurrenciesOrSelectedCurrenciesData($selectedCurrencyId)
         {
             assert('$selectedCurrencyId == null || (is_int($selectedCurrencyId) && $selectedCurrencyId > 0)');
-            if(null == $currencies = Currency::getAllCachedCurrencies())
+            if (null == $currencies = Currency::getAllCachedCurrencies())
             {
                 $currencies = Currency::getAll();
                 Currency::setAllCachedCurrencies($currencies);

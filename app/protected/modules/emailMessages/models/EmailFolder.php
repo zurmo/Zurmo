@@ -82,11 +82,11 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('EmailFolder');
             $where = RedBeanModelDataProvider::makeWhere('EmailFolder', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
-            if(count($models) == 0)
+            if (count($models) == 0)
             {
                 throw new NotFoundException();
             }
-            elseif(count($models) > 1)
+            elseif (count($models) > 1)
             {
                 throw new NotSupportedException();
             }
@@ -147,7 +147,7 @@
 
         public function beforeDelete()
         {
-            if($this->emailBox->isSpecialBox())
+            if ($this->emailBox->isSpecialBox())
             {
                 throw new NotSupportedException();
             }

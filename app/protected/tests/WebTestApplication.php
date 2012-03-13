@@ -45,7 +45,7 @@
             // We need explicitly to raise this event, because CApplication::run() method
             // where OnBeginRequest event is raised is nvever called
             // For more informationn check: app/protected/tests/bootstrap.php
-            if($this->hasEventHandler('onBeginRequest'))
+            if ($this->hasEventHandler('onBeginRequest'))
             {
                 $this->onBeginRequest(new CEvent($this));
             }

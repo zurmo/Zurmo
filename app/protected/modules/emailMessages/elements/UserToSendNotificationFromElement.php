@@ -73,9 +73,9 @@
         {
             $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
             $data  = array();
-            foreach($group->users as $user)
+            foreach ($group->users as $user)
             {
-                $data[$user->id] =strval($user);
+                $data[$user->id] = strval($user);
             }
             return $data;
         }

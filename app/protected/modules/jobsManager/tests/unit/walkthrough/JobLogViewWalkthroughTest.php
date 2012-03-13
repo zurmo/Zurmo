@@ -27,7 +27,6 @@
 
 class JobLogViewWalkthroughTest extends ZurmoWalkthroughBaseTest
 {
-
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -59,7 +58,5 @@ class JobLogViewWalkthroughTest extends ZurmoWalkthroughBaseTest
         $jobLog->status         = null;
         $this->assertFalse($jobLog->save());
     }
-
 }
-
 ?>

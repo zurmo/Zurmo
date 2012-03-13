@@ -95,19 +95,19 @@ EOD;
         {
             $this->usageError('The specified username does not exist.');
         }
-        if($host != null)
+        if ($host != null)
         {
             Yii::app()->emailHelper->outboundHost = $host;
         }
-        if($port != null)
+        if ($port != null)
         {
             Yii::app()->emailHelper->outboundPort = $port;
         }
-        if($outboundUsername != null)
+        if ($outboundUsername != null)
         {
             Yii::app()->emailHelper->outboundUsername = $outboundUsername;
         }
-        if($outboundUsername != null)
+        if ($outboundUsername != null)
         {
             Yii::app()->emailHelper->outboundPassword = $outboundPassword;
         }
@@ -139,13 +139,13 @@ EOD;
         $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
         $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
         $validated                 = $emailMessage->validate();
-        if(!$validated)
+        if (!$validated)
         {
             $this->addErrorsAsUsageErrors($emailMessage->getErrors());
         }
         Yii::app()->emailHelper->sendImmediately($emailMessage);
 
-        if(!$emailMessage->hasSendError())
+        if (!$emailMessage->hasSendError())
         {
             echo Yii::t('Default', 'Message successfully sent') . "\n";
         }
@@ -155,11 +155,12 @@ EOD;
             echo $emailMessage->error     . "\n";
         }
         $saved = $emailMessage->save();
-        if(!$saved)
+        if (!$saved)
         {
             throw new NotSupportedException();
         }
     }
+
     protected function addErrorsAsUsageErrors(array $errors)
     {
         foreach ($errors as $errorData)

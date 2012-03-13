@@ -63,7 +63,7 @@
         public static function getById($id, $modelClassName = null)
         {
             assert('$modelClassName == "Currency" || $modelClassName == null');
-            if(isset(self::$cachedCurrencyById[$id]))
+            if (isset(self::$cachedCurrencyById[$id]))
             {
                 return self::$cachedCurrencyById[$id];
             }
@@ -172,7 +172,7 @@
         public static function getCachedCurrencyByCode($code)
         {
             assert('is_string($code)');
-            if(isset(self::$cachedCurrencyIdByCode[$code]) &&
+            if (isset(self::$cachedCurrencyIdByCode[$code]) &&
                self::$cachedCurrencyById[self::$cachedCurrencyIdByCode[$code]])
                {
                     return self::$cachedCurrencyById[self::$cachedCurrencyIdByCode[$code]];
@@ -201,12 +201,12 @@
          */
         public function isUniqueAttributeValue($attributeName, $value)
         {
-            if($attributeName != 'code')
+            if ($attributeName != 'code')
             {
                 return parent::isUniqueAttributeValue($attributeName, $value);
             }
             assert('$value !== null');
-            if(isset(static::$currencyIdRowsByCode[$value]))
+            if (isset(static::$currencyIdRowsByCode[$value]))
             {
                 $rows = static::$currencyIdRowsByCode[$value];
             }
@@ -238,7 +238,7 @@
          */
         public static function getAllCachedCurrencies()
         {
-            if(empty(self::$allCachedCurrencies))
+            if (empty(self::$allCachedCurrencies))
             {
                 return null;
             }

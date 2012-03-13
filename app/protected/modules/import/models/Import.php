@@ -92,7 +92,7 @@
             {
                 throw new NotSupportedException();
             }
-            if($this->tempTableName != null)
+            if ($this->tempTableName != null)
             {
                 return $this->tempTableName;
             }

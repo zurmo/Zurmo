@@ -1744,7 +1744,7 @@
                                 if ($relatedModel->isModified() ||
                                     ($this->isAttributeRequired($relationName) ))
                                 {
-                                    if($this->isSavableFromRelation)
+                                    if ($this->isSavableFromRelation)
                                     {
                                         if (!$relatedModel->save(false))
                                         {

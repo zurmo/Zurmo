@@ -96,7 +96,7 @@
 
         protected function loadOutboundSettings()
         {
-            foreach($this->settingsToLoad as $keyName)
+            foreach ($this->settingsToLoad as $keyName)
             {
                 if (null !== $keyValue = ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', $keyName))
                 {
@@ -110,7 +110,7 @@
          */
         public function setOutboundSettings()
         {
-            foreach($this->settingsToLoad as $keyName)
+            foreach ($this->settingsToLoad as $keyName)
             {
                 ZurmoConfigurationUtil::setByModuleName('EmailMessagesModule', $keyName, $this->$keyName);
             }
@@ -123,7 +123,7 @@
          */
         public function send(EmailMessage $emailMessage)
         {
-            if($emailMessage->folder->type == EmailFolder::TYPE_OUTBOX ||
+            if ($emailMessage->folder->type == EmailFolder::TYPE_OUTBOX ||
                $emailMessage->folder->type == EmailFolder::TYPE_SENT ||
                $emailMessage->folder->type == EmailFolder::TYPE_OUTBOX_ERROR)
             {
@@ -131,7 +131,7 @@
             }
             $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_OUTBOX);
             $saved                  = $emailMessage->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -147,7 +147,7 @@
          */
         public function sendImmediately(EmailMessage $emailMessage)
         {
-            if($emailMessage->folder->type == EmailFolder::TYPE_SENT)
+            if ($emailMessage->folder->type == EmailFolder::TYPE_SENT)
             {
                 throw new NotSupportedException();
             }
@@ -155,7 +155,7 @@
             $this->populateMailer($mailer, $emailMessage);
             $this->sendEmail($mailer, $emailMessage);
             $saved = $emailMessage->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -168,12 +168,12 @@
         public function sendQueued()
         {
             $queuedEmailMessages = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX);
-            foreach($queuedEmailMessages as $emailMessage)
+            foreach ($queuedEmailMessages as $emailMessage)
             {
                 $this->sendImmediately($emailMessage);
             }
             $queuedEmailMessages = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX_ERROR);
-            foreach($queuedEmailMessages as $emailMessage)
+            foreach ($queuedEmailMessages as $emailMessage)
             {
                 $this->sendImmediately($emailMessage);
             }
@@ -188,22 +188,22 @@
             $mailer->username = $this->outboundUsername;
             $mailer->password = $this->outboundPassword;
             $mailer->Subject  = $emailMessage->subject;
-            if($emailMessage->content->htmlContent == null && $emailMessage->content->textContent != null)
+            if ($emailMessage->content->htmlContent == null && $emailMessage->content->textContent != null)
             {
                 $mailer->body     = $emailMessage->content->textContent;
                 $mailer->altBody  = $emailMessage->content->textContent;
             }
-            elseif($emailMessage->content->htmlContent != null && $emailMessage->content->textContent == null)
+            elseif ($emailMessage->content->htmlContent != null && $emailMessage->content->textContent == null)
             {
                 $mailer->body     = $emailMessage->content->htmlContent;
             }
-            elseif($emailMessage->content->htmlContent != null && $emailMessage->content->textContent != null)
+            elseif ($emailMessage->content->htmlContent != null && $emailMessage->content->textContent != null)
             {
                 $mailer->body     = $emailMessage->content->htmlContent;
                 $mailer->altBody  = $emailMessage->content->textContent;
             }
             $mailer->From = array($emailMessage->sender->fromAddress => $emailMessage->sender->fromName);
-            foreach($emailMessage->recipients as $recipient)
+            foreach ($emailMessage->recipients as $recipient)
             {
                 $mailer->addAddressByType($recipient->toAddress, $recipient->toName, $recipient->type);
             }
@@ -214,10 +214,10 @@
             try
             {
                 $acceptedRecipients = $mailer->send();
-                if($acceptedRecipients != $emailMessage->recipients->count())
+                if ($acceptedRecipients != $emailMessage->recipients->count())
                 {
                     $content = Yii::t('Default', 'Response from Server') . "\n";
-                    foreach($mailer->getSendResponseLog() as $logMessage)
+                    foreach ($mailer->getSendResponseLog() as $logMessage)
                     {
                         $content .= $logMessage . "\n";
                     }
@@ -269,16 +269,16 @@
                 {
                     $user  = User::getById($userId);
 
-                    if($user->groups->contains($superGroup))
+                    if ($user->groups->contains($superGroup))
                     {
                         return $user;
                     }
                 }
-                catch(NotFoundException $e)
+                catch (NotFoundException $e)
                 {
                 }
             }
-            if($superGroup->users->count() == 0)
+            if ($superGroup->users->count() == 0)
             {
                 throw new NotSupportedException();
             }
@@ -293,7 +293,7 @@
         {
             assert('$user->id > 0');
             $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-            if(!$user->groups->contains($superGroup))
+            if (!$user->groups->contains($superGroup))
             {
                 throw new NotSupportedException();
             }
@@ -319,7 +319,7 @@
         public function resolveFromAddressByUser(User$user)
         {
             assert('$user->id >0');
-            if($user->primaryEmail->emailAddress == null)
+            if ($user->primaryEmail->emailAddress == null)
             {
                 return $this->defaultFromAddress;
             }

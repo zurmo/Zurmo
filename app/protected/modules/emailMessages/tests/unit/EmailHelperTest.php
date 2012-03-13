@@ -79,7 +79,6 @@
             $billy                      = User::getByUsername('billy');
             Yii::app()->user->userModel = $billy;
             Yii::app()->emailHelper->setUserToSendNotificationsAs($billy);
-
         }
 
         /**

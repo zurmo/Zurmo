@@ -61,7 +61,7 @@
             }
             catch (NotFoundException $e)
             {
-                if($name == self::NOTIFICATIONS_NAME)
+                if ($name == self::NOTIFICATIONS_NAME)
                 {
                     $box = new EmailBox();
                     $box->name        = self::NOTIFICATIONS_NAME;

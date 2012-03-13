@@ -62,7 +62,7 @@
             $folder->emailBox = $box;
             $box->folders->add($folder);
             $saved            = $box->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

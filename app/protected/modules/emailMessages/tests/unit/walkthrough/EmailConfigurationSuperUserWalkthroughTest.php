@@ -43,18 +43,18 @@
             $user->lastName           = 'Kent2';
             $user->setPassword('super2');
             $saved = $user->save();
-            assert($saved); //Not Coding Standard
+            assert($saved); // Not Coding Standard
 
             $group = Group::getByName('Super Administrators');
             $group->users->add($user);
             $saved = $group->save();
-            assert($saved); //Not Coding Standard
+            assert($saved); // Not Coding Standard
         }
 
         public function testSuperUserAllDefaultControllerActions()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $this->runControllerWithNoExceptionsAndGetContent     ('emailMessages/default/configurationEdit');
+            $this->runControllerWithNoExceptionsAndGetContent('emailMessages/default/configurationEdit');
         }
 
         public function testSuperUserModifyOutboundEmailConfiguration()
@@ -69,13 +69,12 @@
             $this->assertNull(Yii::app()->emailHelper->outboundPassword);
             $this->assertEquals($super->id, Yii::app()->emailHelper->getUserToSendNotificationsAs()->id);
 
-
             //Change email settings
             $this->resetGetArray();
             $this->setPostArray(array('OutboundEmailConfigurationForm' => array(
                                     'host'                              => 'abc',
                                     'port'                              => '565',
-                                    'username'	                        => 'myuser',
+                                    'username'                          => 'myuser',
                                     'password'                          => 'apassword',
                                     'userIdOfUserToSendNotificationsAs' => $super2->id)));
             $this->runControllerWithRedirectExceptionAndGetContent('emailMessages/default/configurationEdit');

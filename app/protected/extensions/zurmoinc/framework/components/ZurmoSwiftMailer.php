@@ -25,6 +25,7 @@
      ********************************************************************************/
 
     Yii::import('ext.swiftmailer.SwiftMailer');
+
     /**
      * Class for Zurmo specific SwiftMailer functionality.
      */
@@ -64,31 +65,32 @@
             $mailer    = Swift_Mailer::newInstance($transport);
             $message   = Swift_Message::newInstance($this->Subject);
             $message->setFrom($this->From);
-            foreach($this->toAddressesAndNames as $address => $name)
+            foreach ($this->toAddressesAndNames as $address => $name)
             {
                 try
                 {
                     $message->addTo($address, $name);
                 }
-                catch(Swift_RfcComplianceException $e)
+                catch (Swift_RfcComplianceException $e)
                 {
                     throw new OutboundEmailSendException($e->getMessage(), $e->getCode(), $e);
                 }
-
             }
 
-            if($this->body) {
+            if ($this->body)
+            {
                 $message->addPart($this->body, 'text/html');
             }
-            if($this->altBody) {
+            if ($this->altBody)
+            {
                 $message->setBody($this->altBody);
             }
             try
             {
-                $result            = $mailer->send($message);
+                $result                = $mailer->send($message);
                 $this->sendResponseLog = $transport->getResponseLog();
             }
-            catch(Swift_SwiftException $e)
+            catch (Swift_SwiftException $e)
             {
                 $this->sendResponseLog = $transport->getResponseLog();
                 throw new OutboundEmailSendException($e->getMessage(), $e->getCode(), $e);

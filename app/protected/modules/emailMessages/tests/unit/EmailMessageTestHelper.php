@@ -56,7 +56,7 @@
 
             //Save, at this point the email should be in the draft folder
             $saved = $emailMessage->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException($message, $code, $previous);
             }

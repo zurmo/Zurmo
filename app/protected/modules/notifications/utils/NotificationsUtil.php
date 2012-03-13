@@ -96,7 +96,7 @@
 
         protected static function sendEmail(Notification $notification)
         {
-            if($notification->owner->primaryEmail->emailAddress !== null)
+            if ($notification->owner->primaryEmail->emailAddress !== null)
             {
                 $userToSendMessagesFrom    = Yii::app()->emailHelper->getUserToSendNotificationsAs();
                 $emailMessage              = new EmailMessage();

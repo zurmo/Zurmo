@@ -80,7 +80,7 @@
             if (isset($_POST[$postVariableName]))
             {
                 $configurationForm->setAttributes($_POST[$postVariableName]);
-                if($configurationForm->aTestToAddress != null)
+                if ($configurationForm->aTestToAddress != null)
                 {
                     $emailHelper = new EmailHelper;
                     $emailHelper->outboundHost     = $configurationForm->host;
@@ -108,13 +108,13 @@
                     $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
                     $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
                     $validated                 = $emailMessage->validate();
-                    if(!$validated)
+                    if (!$validated)
                     {
                         throw new NotSupportedException();
                     }
                     $messageContent  = null;
                     $emailHelper->sendImmediately($emailMessage);
-                    if(!$emailMessage->hasSendError())
+                    if (!$emailMessage->hasSendError())
                     {
                         $messageContent .= Yii::t('Default', 'Message successfully sent') . "\n";
                     }
