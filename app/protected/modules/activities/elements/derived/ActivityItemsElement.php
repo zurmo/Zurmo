@@ -54,7 +54,7 @@
 
         protected function renderElementsForRelationsByRelationsData($relationModelClassNames)
         {
-            $content = "<table> \n";
+            $content = '';// "<table> \n";
             foreach ($relationModelClassNames as $relationModelClassName)
             {
                 $activityItemForm = null;
@@ -89,13 +89,13 @@
                     $content .= $element->render();
                 }
             }
-            $content     .= "</table> \n";
+           // $content     .= "</table> \n";
             return $content;
         }
 
         protected function renderNonEditableElementsForRelationsByRelationsData($relationModelClassNames)
         {
-            $content = "<table> \n";
+            $content = '';//"<table> \n";
             foreach ($relationModelClassNames as $relationModelClassName)
             {
                 $activityItemForm = null;
@@ -127,23 +127,24 @@
                     }
                 }
             }
-            $content     .= "</table> \n";
+           // $content     .= "</table> \n";
             return $content;
         }
 
         protected function getActivityItemEditableTemplate()
         {
-            $template  = "<tr><td style='border:0px;' nowrap='nowrap'>\n";
-            $template .= "{label}";
-            $template .= "</td><td width='100%' style='border:0px;'>\n";
-            $template .= '&#160;{content}{error}';
+            $template  = "<tr><th>\n";
+            $template .=  $this->renderLabel(); //we should put this INSIDE the label, not as another label
+			$template .=  "{label}";
+            $template .= "</th><td colspan=\"3\">\n";
+            $template .= '{content}{error}';
             $template .= "</td></tr>\n";
             return $template;
         }
 
         protected function getActivityItemNonEditableTemplate()
         {
-            $template  = "<tr><td width='100%' style='border:0px;'>\n";
+            $template  = "<tr><td colspan=\"3\">\n";
             $template .= '{content}';
             $template .= "</td></tr>\n";
             return $template;
