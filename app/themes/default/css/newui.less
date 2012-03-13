@@ -1186,8 +1186,8 @@ label.hasCheckBox{
 	}
 	input {
 		position: absolute;
-		margin-left:-50px;
-		//left: -9999px;
+		//margin-left:-50px;
+		left: -9999px;
 	}
 }
 .ui-multiselect-checkboxes label {
@@ -1346,6 +1346,9 @@ label.hasCheckBox{
 			display:none;
 		}
 	}
+	td table{
+		width:100%;
+	}
 	.view-toolbar-container{
 		border-top:1px solid #CCCCCC;
 	}
@@ -1377,6 +1380,10 @@ label.hasCheckBox{
 				position: relative;
 				z-index:0;
 			}
+			input + a{
+				top:23px;
+			}
+			/*
 			input + span{
 				background: url(../images/dropdown-general.png) left top no-repeat;
 				width:28px;
@@ -1388,10 +1395,9 @@ label.hasCheckBox{
 				right:0;
 				top:23px;
 				margin-right:1px;
-				
 				a{
 					display:block;
-					//text-indent:-9999px;
+					text-indent:-9999px;
 					&:before{
 						content:"Y";
 						.symbly(32px);
@@ -1399,7 +1405,7 @@ label.hasCheckBox{
 						margin-left:5px;
 					}
 				}
-			}
+			}*/
 		}
 		input[type="text"]{
 			//width:200px;
@@ -1443,6 +1449,78 @@ label.hasCheckBox{
 		display:block;
 		input[type="checkbox"]{
 			margin-bottom:0 !important;
+		}
+	}
+}
+.has-date-select, .has-model-select{
+	width:100%;
+	input{
+		width:100%;
+	}
+	
+}
+.has-model-select{
+	a{
+		background: url(../images/dropdown-general.png) left top no-repeat;
+		width:28px;
+		height:24px;
+		display:block;
+		float:right;
+		z-index:5000;
+		position: absolute;
+		right:0;
+		top:14px;
+		margin-right:1px;
+		&:before{
+			content:"Y";
+			.symbly(24px);
+			margin-left:7px;
+			position:relative;
+			top:2px;
+			color:#8b8b8b;
+		}
+		&:hover{
+			&:before{
+				color:#525252 !important;
+			}
+		}
+		span{
+			display:block;
+			text-indent:-9999px;
+		}
+	}
+}
+.has-date-select{
+	button{
+		background: url(../images/dropdown-general.png) left top no-repeat;
+		width:28px;
+		height:24px;
+		display:block;
+		float:right;
+		z-index:5000;
+		position: absolute;
+		right:0;
+		top:2px;
+		margin-right:1px;
+		border:none;
+		padding:0;
+		cursor:pointer;
+		&:before{
+			content:"U";
+			.symbly(24px);
+			margin-left:1px;
+			position:relative;
+			top:2px;
+			color:#8b8b8b;
+		}
+		&:hover{
+			&:before{
+				color:#525252 !important;
+			}
+		}
+		span{
+			display:block;
+			text-indent:-9999px;
 		}
 	}
 }
@@ -1677,10 +1755,12 @@ label.hasCheckBox{
 		}
 	}
 }
+/*
 .hasDatepicker{
 	width:92% !important;
 	margin-right:3% !important; 
 }
+*/
 #inline-edit-form{
 	table + table{
 		float:left;
