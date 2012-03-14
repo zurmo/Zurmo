@@ -31,7 +31,7 @@
      * that has the same modelId or is downstream
      * from that modelId in the group heirarchy.
      */
-    class SelectParentGroupModalTreeView extends GroupsModalTreeView
+    class SelectParentGroupModalTreeListView extends GroupsModalTreeListView
     {
         /**
          * Override to ensure that the modelId is not null

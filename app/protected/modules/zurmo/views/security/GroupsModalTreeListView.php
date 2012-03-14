@@ -28,7 +28,7 @@
      * View that renders a list in the form of a
      * tree widget.
      */
-    class GroupsModalTreeView extends GroupsTreeView
+    class GroupsModalTreeListView extends GroupsTreeListView
     {
         /**
          * Id of input field in display for saving back a selected

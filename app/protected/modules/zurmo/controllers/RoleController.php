@@ -43,13 +43,13 @@
 
         public function actionList()
         {
-            $titleAndTreeView = new RolesTitleBarAndTreeView(
+            $actionBarAndTreeView = new RolesActionBarAndTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 Role::getAll('name')
             );
             $view = new RolesPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleAndTreeView));
+                                         makeStandardViewForCurrentUser($this, $actionBarAndTreeView));
             echo $view->render();
         }
 
@@ -60,29 +60,21 @@
 
         public function actionCreate()
         {
-            $titleBarAndEditView = new TitleBarAndEditAndDetailsView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $this->attemptToSaveModelFromPost(new Role()),
-                RolesModule::getPluralCamelCasedName(),
-                'Edit'
-            );
-            $view = new RolesPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+            $editView = new RoleEditAndDetailsView('Edit',
+                                                   $this->getId(),
+                                                   $this->getModule()->getId(),
+                                                   $this->attemptToSaveModelFromPost(new Role()));
+            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
 
         public function actionEdit($id)
         {
-            $titleBarAndEditView = new RoleTitleBarAndEditView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $this->attemptToSaveModelFromPost(Role::getById(intval($id))),
-                RolesModule::getPluralCamelCasedName(),
-                'Edit'
-            );
-            $view = new RolesPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+            $editView = new RoleEditAndDetailsView('Edit',
+                                                   $this->getId(),
+                                                   $this->getModule()->getId(),
+                                                   $this->attemptToSaveModelFromPost(Role::getById(intval($id))));
+            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
 
@@ -104,13 +96,13 @@
         public function actionModalParentList()
         {
             echo $this->renderModalList(
-                'SelectParentRoleModalTreeView', Yii::t('Default', 'Select a Parent Role'));
+                'SelectParentRoleModalTreeListView', Yii::t('Default', 'Select a Parent Role'));
         }
 
         public function actionModalList()
         {
             echo $this->renderModalList(
-                'RolesModalTreeView', Yii::t('Default', 'Select a Role'));
+                'RolesModalTreeListView', Yii::t('Default', 'Select a Role'));
         }
 
         protected function renderModalList($modalViewName, $pageTitle)

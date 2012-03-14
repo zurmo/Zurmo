@@ -60,7 +60,8 @@
 
         public function actionCreate()
         {
-            $titleBarAndCreateView = new GroupActionBarAndEditView($this->getId(), $this->getModule()->getId(), new Group());
+            $titleBarAndCreateView = new GroupActionBarAndEditView($this->getId(), $this->getModule()->getId(),
+                                                                   $this->attemptToSaveModelFromPost(new Group()));
             $view                  = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndCreateView));
             echo $view->render();
@@ -80,7 +81,7 @@
 
         public function actionModalList()
         {
-            $groupsModalTreeView = new SelectParentGroupModalTreeView(
+            $groupsModalTreeView = new SelectParentGroupModalTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 $_GET['modalTransferInformation']['sourceModelId'],

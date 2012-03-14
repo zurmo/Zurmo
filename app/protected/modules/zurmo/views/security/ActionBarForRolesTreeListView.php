@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -25,37 +25,49 @@
      ********************************************************************************/
 
     /**
-     * View that renders a list of roles in the form of a
-     * tree or noded list view.
+     * Renders an action bar specifically for the search and listview.
      */
-    class RolesTreeListView extends SecurityTreeListView
+    class ActionBarForRolesTreeListView extends ConfigurableMetadataView
     {
+        protected $controllerId;
+
+        protected $moduleId;
+
+        public function __construct($controllerId, $moduleId)
+        {
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            $this->controllerId              = $controllerId;
+            $this->moduleId                  = $moduleId;
+        }
+
         protected function renderContent()
         {
-            $content  = $this->renderViewToolBar(false); //why do we need it if its empty?
-            $content .= '<div>';
-            $content .= '<h1>' . Yii::t('Default', 'Roles') . '</h1>';
-            $content .= $this->renderTreeMenu('role', 'roles', Yii::t('Default', 'Role'));
-            $content .= '</div>';
+            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            $content .= $this->renderActionElementBar(false);
+            $content .= '</div></div>';
             return $content;
         }
 
-        protected function renderTreeListView($data)
+        public function isUniqueToAPage()
         {
-            assert('is_array($data)');
-            $content  = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:50%" />';
-            $content .= '</colgroup>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:50%" />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Role Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th></tr>';
-            static::renderTreeListViewNode($content, $data, 0);
-            $content .= '</tbody>';
-            $content .= '</table>';
-            return $content;
+            return true;
+        }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = array(
+                'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'  => 'CreateLink',
+                                'htmlOptions' => array('class' => 'icon-create'),
+                            ),
+                        ),
+                    ),
+                ),
+            );
+            return $metadata;
         }
     }
 ?>

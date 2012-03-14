@@ -31,7 +31,7 @@
      * that has the same modelId or is downstream
      * from that modelId in the role heirarchy.
      */
-    class SelectParentRoleModalTreeView extends RolesModalTreeView
+    class SelectParentRoleModalTreeListView extends RolesModalTreeListView
     {
         /**
          * Override to ensure that the modelId is not null

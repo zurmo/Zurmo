@@ -28,7 +28,7 @@
      * View that renders a list in the form of a
      * tree widget.
      */
-    class RolesModalTreeView extends RolesTreeView
+    class RolesModalTreeListView extends RolesTreeListView
     {
         /**
          * Id of input field in display for saving back a selected

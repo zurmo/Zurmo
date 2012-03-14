@@ -69,7 +69,7 @@
                     }
                     else
                     {
-                        throw new NotSupportedException();
+                        $text = strval($item);
                     }
                     $node             = array('link' => $text);
                     $node['children'] = $this->makeChildrenNodes($this->items, $item, $nodeRelationName);
@@ -82,20 +82,7 @@
 
         protected function renderTreeListView($data)
         {
-            assert('is_array($data)');
-            $content  = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:50%" />';
-            $content .= '</colgroup>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:50%" />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Group Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th></tr>';
-            static::renderTreeListViewNode($content, $data, 0);
-            $content .= '</tbody>';
-            $content .= '</table>';
-            return $content;
+            throw new NotImplementedException();
         }
 
         protected static function renderTreeListViewNode(& $content, $data, $indent)

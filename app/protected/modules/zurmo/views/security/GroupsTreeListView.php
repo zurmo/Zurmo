@@ -33,10 +33,28 @@
         protected function renderContent()
         {
             $content  = $this->renderViewToolBar(false); //why do we need it if its empty?
-			$content .= '<div>';
-			$content .= '<h1>' . Yii::t('Default', 'Groups') . '</h1>';
+            $content .= '<div>';
+            $content .= '<h1>' . Yii::t('Default', 'Groups') . '</h1>';
             $content .= $this->renderTreeMenu('group', 'groups', Yii::t('Default', 'Group'));
-			$content .= '</div>';
+            $content .= '</div>';
+            return $content;
+        }
+
+        protected function renderTreeListView($data)
+        {
+            assert('is_array($data)');
+            $content  = '<table>';
+            $content .= '<colgroup>';
+            $content .= '<col style="width:50%" />';
+            $content .= '</colgroup>';
+            $content .= '<colgroup>';
+            $content .= '<col style="width:50%" />';
+            $content .= '</colgroup>';
+            $content .= '<tbody>';
+            $content .= '<tr><th>' . Yii::t('Default', 'Group Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th></tr>';
+            static::renderTreeListViewNode($content, $data, 0);
+            $content .= '</tbody>';
+            $content .= '</table>';
             return $content;
         }
     }
