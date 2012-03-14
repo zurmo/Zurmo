@@ -31,7 +31,7 @@
 }
 
 #InstallPageView{
-	#gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
+	/*#gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
 	.b-shadow( ~"0 0 12px 5px rgba(153, 153, 153, 0.3)" );
 	.radius( 5px );
 	font-size:12px;
@@ -40,6 +40,19 @@
 	width:960px;
 	padding:20px;
 	margin:40px auto;
+	*/
+	.AppContainer{
+		background-image:none;
+		font-size:12px;
+		line-height:140%;
+		padding:20px;
+		margin:40px 40px 0 40px;
+		.radius( 5px );
+		a{
+			.zButton();
+			margin:auto 10px;
+		}
+	}
 	ul{
 		list-style:inside;
 		margin-bottom:10px;
@@ -47,13 +60,9 @@
 			margin-bottom:5px;
 		}
 	}
-	a{
-		.zButton();
-		margin:auto 10px;
-	}
+	
 	table{
 		width:100%;
-		
 		
 		table{
 			border-color: #DDDEDE;
@@ -94,6 +103,21 @@
 	#install-form{
 		input[type="submit"]{
 			.zButton();
+		}
+		th{
+			width:26%;
+		}
+		td{
+			width:37%;
+		}
+		tr td:last-child{
+			padding-left:15px;
+		}
+		label{
+			font-size:12px !important;
+			color:#666;
+			font-weight:400 !important;
+			padding-top:12px;
 		}
 	}
 }
