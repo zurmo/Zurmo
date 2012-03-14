@@ -27,47 +27,7 @@
     /**
      * Renders an action bar specifically for the search and listview.
      */
-    class ActionBarForRolesTreeListView extends ConfigurableMetadataView
+    class ActionBarForRolesTreeListView extends ActionBarForSecurityTreeListView
     {
-        protected $controllerId;
-
-        protected $moduleId;
-
-        public function __construct($controllerId, $moduleId)
-        {
-            assert('is_string($controllerId)');
-            assert('is_string($moduleId)');
-            $this->controllerId              = $controllerId;
-            $this->moduleId                  = $moduleId;
-        }
-
-        protected function renderContent()
-        {
-            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div></div>';
-            return $content;
-        }
-
-        public function isUniqueToAPage()
-        {
-            return true;
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type'  => 'CreateLink',
-                                'htmlOptions' => array('class' => 'icon-create'),
-                            ),
-                        ),
-                    ),
-                ),
-            );
-            return $metadata;
-        }
     }
 ?>

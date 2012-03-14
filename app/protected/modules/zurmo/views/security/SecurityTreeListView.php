@@ -36,6 +36,8 @@
 
         protected $items;
 
+        abstract protected function getModelRelationNameForUserCount();
+
         public function __construct($controllerId, $moduleId, $items)
         {
             assert('$controllerId != null');
@@ -71,7 +73,8 @@
                     {
                         $text = strval($item);
                     }
-                    $node             = array('link' => $text);
+                    $node             = array('link' => $text,
+                                              'userCount' => $item->{$this->getModelRelationNameForUserCount()}->count());
                     $node['children'] = $this->makeChildrenNodes($this->items, $item, $nodeRelationName);
                     $itemNodes[]      = $node;
                 }
@@ -96,7 +99,7 @@
                 $content .= $node['link'];
                 $content .= '</td>';
                 $content .= '<td>';
-                $content .= 'todouserscount';
+                $content .= $node['userCount'];
                 $content .= '</td>';
                 $content .= '</tr>';
                 if(isset($node['children']))
@@ -138,7 +141,8 @@
                     {
                         $text = strval($item);
                     }
-                    $node             = array('link' => $text);
+                    $node             = array('link' => $text,
+                                              'userCount' => $item->{$this->getModelRelationNameForUserCount()}->count());
                     $node['children'] = $this->makeChildrenNodes($items, $item, $nodeRelationName, $isLink);
                     $itemNodes[]      = $node;
                 }

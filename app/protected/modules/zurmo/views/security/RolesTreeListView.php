@@ -30,6 +30,11 @@
      */
     class RolesTreeListView extends SecurityTreeListView
     {
+        protected function getModelRelationNameForUserCount()
+        {
+            return 'roles';
+        }
+
         protected function renderContent()
         {
             $content  = $this->renderViewToolBar(false); //why do we need it if its empty?
