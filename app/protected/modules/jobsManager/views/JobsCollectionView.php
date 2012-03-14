@@ -55,7 +55,9 @@
 
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -71,11 +73,16 @@
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderViewToolBar();
             $content .= $clipWidget->renderEndWidget();
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
-            /**
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Job Manager: Home') . '</h1>';
+        }
+
+        /**
          * Render a form layout.
          * @param $form If the layout is editable, then pass a $form otherwise it can
          * be null.

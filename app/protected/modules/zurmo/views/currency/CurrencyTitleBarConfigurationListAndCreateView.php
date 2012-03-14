@@ -26,7 +26,7 @@
 
     class CurrencyTitleBarConfigurationListAndCreateView extends GridView
     {
-        protected $cssClasses =  array( 'AdministrativeArea' );
+        protected $cssClasses =  array( 'AdministrativeArea', 'DetailsView');
 
         public function __construct(
             $controllerId,
@@ -35,11 +35,9 @@
             $currencies,
             $messageBoxContent = null)
         {
-            parent::__construct(4, 1);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Currencies: Create')), 0, 0);
-            $this->setView(new CurrencyCreateView($controllerId, $moduleId, $currency), 1, 0);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Currencies: List')), 2, 0);
-            $this->setView(new CurrenciesCollectionView($controllerId, $moduleId, $currencies, $messageBoxContent), 3, 0);
+            parent::__construct(2, 1);
+            $this->setView(new CurrencyCreateView($controllerId, $moduleId, $currency), 0, 0);
+            $this->setView(new CurrenciesCollectionView($controllerId, $moduleId, $currencies, $messageBoxContent), 1, 0);
         }
     }
 ?>

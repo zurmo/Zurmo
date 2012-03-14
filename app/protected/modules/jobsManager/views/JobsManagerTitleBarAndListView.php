@@ -26,7 +26,7 @@
 
     class JobsManagerTitleBarAndListView extends GridView
     {
-        protected $cssClasses =  array( 'AdministrativeArea' );
+        protected $cssClasses =  array( 'AdministrativeArea', 'TableOfContentsView' );
 
         public function __construct(
             $controllerId,
@@ -35,9 +35,8 @@
             $jobsData,
             $messageBoxContent = null)
         {
-            parent::__construct(2, 1);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Jobs Manager: Home')), 0, 0);
-            $this->setView(new JobsCollectionView($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent), 1, 0);
+            parent::__construct(1, 1);
+            $this->setView(new JobsCollectionView($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent), 0, 0);
         }
     }
 ?>
