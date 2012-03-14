@@ -34,6 +34,13 @@
             $this->modelId               = null;
         }
 
+        protected function renderAfterFormLayout($form)
+        {
+            $module = Yii::app()->getModule($this->moduleId);
+            return '<h1>' . $module::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'General Edit') . '</h1>';
+        }
+
+
         public function isUniqueToAPage()
         {
             return true;

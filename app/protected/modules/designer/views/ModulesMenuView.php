@@ -43,12 +43,12 @@
 
         protected function renderContent()
         {
-            $content  = '<table>';
+            $content  = $this->renderTitleContent();
+            $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:100%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Menu') . '</th></tr>';
 
             $moduleMenuItems = $this->module->getDesignerMenuItems();
             $menuMetaData = self::getMetadata();
@@ -73,6 +73,12 @@
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            $module = $this->module;
+            return '<h1>' . $module::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Menu') . '</h1>';
         }
 
         public function isUniqueToAPage()

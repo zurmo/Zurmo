@@ -31,6 +31,13 @@
             parent::__construct(new InstallView($view));
         }
 
+            protected function renderContent()
+        {
+            $content    = parent::renderContent();
+            $footerView = new FooterView();
+            return CHtml::tag('div', array('class' => 'appContainer'), $content) . $footerView->render();
+        }
+
         protected function getSubtitle()
         {
             return Yii::t('Default', 'Zurmo Installation');

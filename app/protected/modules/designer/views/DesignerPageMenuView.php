@@ -38,12 +38,12 @@
 
         protected function renderContent()
         {
-            $content  = '<table>';
+            $content  = $this->renderTitleContent();
+            $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:100%"/>';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Module') . '</th></tr>';
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -68,6 +68,11 @@
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Designer') . ': ' . Yii::t('Default', 'Modules') . '</h1>';
         }
 
         public function isUniqueToAPage()

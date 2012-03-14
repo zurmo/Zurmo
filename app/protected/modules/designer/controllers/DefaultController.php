@@ -39,20 +39,7 @@
 
         public function actionModulesMenu()
         {
-            assert('!empty($_GET["moduleClassName"])');
-            $module = new $_GET['moduleClassName'](null, null);
-            $breadcrumbLinks = array(
-                $module::getModuleLabelByTypeAndLanguage('Plural')
-            );
-            $canvasView = new TitleBarAndModulesMenuView(
-                        $this->getId(),
-                        $this->getModule()->getId(),
-                        $module,
-                        $breadcrumbLinks
-            );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
-            echo $view->render();
+            $this->actionModuleEdit();
         }
 
         public function actionAttributesList()
@@ -368,7 +355,7 @@
                     array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
                     Yii::t('Default', 'General Edit'),
             );
-            $canvasView = new TitleBarAndModuleEditView(
+            $canvasView = new ActionBarAndModuleEditView(
                         $this->getId(),
                         $this->getModule()->getId(),
                         $module,

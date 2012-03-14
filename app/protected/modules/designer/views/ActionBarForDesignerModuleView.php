@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,31 +24,50 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TitleBarAndModuleEditView extends GridView
+    /**
+     * Renders an action bar specifically for the various module views in designer
+     */
+    class ActionBarForDesignerModuleView extends ConfigurableMetadataView
     {
-        public function __construct(
-            $controllerId,
-            $moduleId,
-            $module,
-            ModuleForm $moduleForm,
-            $breadcrumbLinks
-        )
+        protected $controllerId;
+
+        protected $moduleId;
+
+        public function __construct($controllerId, $moduleId)
         {
-            parent::__construct(3, 1);
-            $tileBarView = new TitleBarView($module::getModuleLabelByTypeAndLanguage('Plural'), Yii::t('Default', 'General Edit'));
-            $this->setView($tileBarView, 0, 0);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
-            $moduleEditViewClassName = get_class($module) . 'EditView';
-            $this->setView(new $moduleEditViewClassName(
-                $controllerId,
-                $moduleId,
-                $moduleForm
-            ), 2, 0);
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            $this->controllerId              = $controllerId;
+            $this->moduleId                  = $moduleId;
+        }
+
+        protected function renderContent()
+        {
+            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            $content .= $this->renderActionElementBar(false);
+            $content .= '</div></div>';
+            return $content;
         }
 
         public function isUniqueToAPage()
         {
             return true;
+        }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = array(
+                'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'  => 'CreateLink',
+                                'htmlOptions' => array('class' => 'icon-create'),
+                            ),
+                        ),
+                    ),
+                ),
+            );
+            return $metadata;
         }
     }
 ?>

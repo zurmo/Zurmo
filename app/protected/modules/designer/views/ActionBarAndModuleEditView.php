@@ -24,14 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TitleBarAndModulesMenuView extends GridView
+    class ActionBarAndModuleEditView extends GridView
     {
-        public function __construct($controllerId, $moduleId, $module, $breadcrumbLinks)
+        protected $cssClasses =  array( 'AdministrativeArea');
+
+        public function __construct(
+            $controllerId,
+            $moduleId,
+            $module,
+            ModuleForm $moduleForm,
+            $breadcrumbLinks
+        )
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView($module::getModuleLabelByTypeAndLanguage('Plural'), Yii::t('Default', 'Menu')), 0, 0);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
-            $this->setView(new ModulesMenuView($controllerId, $moduleId, $module), 2, 0);
+            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId), 1, 0);
+            $moduleEditViewClassName = get_class($module) . 'EditView';
+            $this->setView(new $moduleEditViewClassName(
+                $controllerId,
+                $moduleId,
+                $moduleForm
+            ), 2, 0);
         }
 
         public function isUniqueToAPage()

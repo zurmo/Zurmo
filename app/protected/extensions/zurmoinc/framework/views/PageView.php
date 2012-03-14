@@ -206,13 +206,13 @@
         {
             $themeUrl = Yii::app()->baseUrl . '/themes';
             $theme    = Yii::app()->theme->name;
-            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . $themeUrl . '/' . $theme . '/css/newui.less"/>';
+
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/less-1.2.0.min.js');
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/interactions.js');
             Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/jquery.dropkick-1.0.0.js');
             return '<?xml version="1.0" encoding="utf-8"?>'.
                    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
-                   '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . $specialCss;
+                   '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';
         }
 
         /**
@@ -233,6 +233,8 @@
             $theme        = 'themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
+
+            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/newui.less"/>';
 
             if (MINIFY_SCRIPTS)
             {
@@ -273,8 +275,8 @@
             {
                 $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $defaultTheme . '/ico/favicon.ico');
             }
-            return '<head>'                                                                 .
-                   "<title>$title</title>"                                                  .
+            return '<head>' . $specialCss   .
+                   "<title>$title</title>"  .
                    '</head>';
         }
 

@@ -32,9 +32,8 @@
         {
             $horizontalGridView = new GridView(1, 1);
             $horizontalGridView->setView($view, 0, 0);
-            $this->verticalGridView  = new GridView(2, 1);
+            $this->verticalGridView  = new GridView(1, 1);
             $this->verticalGridView->setView($horizontalGridView, 0, 0);
-            $this->verticalGridView->setView( new FooterView(), 1, 0);
         }
 
         protected function renderContent()
