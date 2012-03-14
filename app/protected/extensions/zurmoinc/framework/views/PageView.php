@@ -60,7 +60,7 @@
                        $this->renderXHtmlEnd();
             Yii::app()->getClientScript()->render($content);
             $performanceMessage = null;
-            if (YII_DEBUG && SHOW_PERFORMANCE)
+            if (YII_DEBUG && SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
             {
                 $endTime = microtime(true);
                 $performanceMessage .= 'Page render time: ' . number_format(($endTime - $startTime), 3) . ' seconds.<br />';
@@ -76,7 +76,7 @@
                 {
                     echo '<span style="background-color: yellow; color: #c00000">Skipping tidy so that the line numbers in the error messages match the source, (if there are any).</span><br />';
                 }
-                if (SHOW_PERFORMANCE)
+                if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
@@ -86,14 +86,14 @@
             }
             else
             {
-                if (SHOW_PERFORMANCE)
+                if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
                     $performanceMessage .= 'Load time: ' . number_format(($endTotalTime), 3) . ' seconds.<br />';
                 }
             }
-            if (SHOW_PERFORMANCE)
+            if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
             {
                 if (SHOW_QUERY_DATA)
                 {
