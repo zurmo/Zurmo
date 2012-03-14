@@ -36,6 +36,11 @@
             );
         }
 
+        public function resolveAndGetModuleId()
+        {
+            return 'roles';
+        }
+
         public function actionIndex()
         {
             $this->actionList();

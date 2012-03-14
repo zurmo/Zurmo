@@ -130,7 +130,7 @@
             foreach($items as $key => $item)
             {
                 if($controller != null && isset($item['moduleId']) &&
-                   $controller->getModule()->getId() == $item['moduleId'])
+                   $controller->resolveAndGetModuleId() == $item['moduleId'])
                 {
                     $items[$key]['active'] = true;
                 }

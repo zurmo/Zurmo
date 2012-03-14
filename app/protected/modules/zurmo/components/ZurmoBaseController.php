@@ -65,6 +65,14 @@
             parent::__construct($id, $module);
         }
 
+        /**
+         * Override if the module is a nested module such as groups or roles.
+         */
+        public function resolveAndGetModuleId()
+        {
+            return $this->getModule()->getId();
+        }
+
         public static function getRightsFilterPath()
         {
             return static::RIGHTS_FILTER_PATH;

@@ -89,7 +89,7 @@
             $user                   = Yii::app()->user->userModel;
             $orderedModules         = self::getModuleOrderingForTabMenuByUser($user);
             $modules                = Module::getModuleObjects();
-            foreach ($modules as $module)
+            foreach ($modules as $moduleId => $module)
             {
                 $moduleMenuItems = MenuUtil::getAccessibleModuleTabMenuByUser(get_class($module), $user);
                 if ($module->isEnabled() && count($moduleMenuItems) > 0)
@@ -98,7 +98,7 @@
                     {
                         $moduleMenuItemsInOrder[$order]             = self::resolveMenuItemsForLanguageLocalization(
                                                                       $moduleMenuItems, get_class($module));
-                        $moduleMenuItemsInOrder[$order][0]['moduleId'] = $module->getId();
+                        $moduleMenuItemsInOrder[$order][0]['moduleId'] = $moduleId;
                     }
                 }
             }
@@ -127,7 +127,7 @@
             $user                   = Yii::app()->user->userModel;
             $orderedModules         = self::getModuleOrderingForAdminTabMenuByUser($user);
             $modules                = Module::getModuleObjects();
-            foreach ($modules as $module)
+            foreach ($modules as $moduleId => $module)
             {
                 $moduleMenuItems = MenuUtil::getAccessibleModuleAdminTabMenuByUser(get_class($module), $user);
                 if ($module->isEnabled() && count($moduleMenuItems) > 0)
@@ -136,7 +136,7 @@
                     {
                         $moduleMenuItemsInOrder[$order]             = self::resolveMenuItemsForLanguageLocalization(
                                                                       $moduleMenuItems, get_class($module));
-                        $moduleMenuItemsInOrder[$order][0]['moduleId'] = $module->getId();
+                        $moduleMenuItemsInOrder[$order][0]['moduleId'] = $moduleId;
                     }
                 }
             }

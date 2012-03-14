@@ -36,6 +36,11 @@
             );
         }
 
+        public function resolveAndGetModuleId()
+        {
+            return 'groups';
+        }
+
         public function actionIndex()
         {
             $this->actionList();
