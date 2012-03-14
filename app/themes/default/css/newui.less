@@ -764,8 +764,8 @@ footer, header, hgroup, menu, nav, section {
 	border-left:none;
 }
 
-.view-toolbar-icons{
-	.symbly(@recentlyViewedIconSize);
+.view-toolbar-icons(@size: @recentlyViewedIconSize){
+	.symbly(@size);
 	padding:0 0 0 0;
 	margin:0 10px 0 0;
 	line-height: 100%;
@@ -796,30 +796,42 @@ footer, header, hgroup, menu, nav, section {
 }
 
 .icon-memberships:before{
-	content: "z";
-	.view-toolbar-icons();
+	content: "y";
+	.view-toolbar-icons(24px);
 	top:3px;
 }
 .icon-permissions:before{
-	content: "z";
+	content: "E";
 	.view-toolbar-icons();
 	top:3px;
 }
 .icon-rights:before{
-	content: "z";
+	content: "u";
 	.view-toolbar-icons();
 	top:3px;
 }
 .icon-policies:before{
-	content: "z";
+	content: "x";
 	.view-toolbar-icons();
 	top:3px;
 }
 .icon-delete:before{
-	content: "z";
+	content: "_";
+	.view-toolbar-icons();
+	top:2px;
+}
+
+.icon-left-arrow:before{
+	content: "8";
 	.view-toolbar-icons();
 	top:3px;
 }
+.icon-right-arrow:before{
+	content: "7";
+	.view-toolbar-icons();
+	top:2px;
+}
+
 
 
 
@@ -968,6 +980,7 @@ table.items thead tr:hover{
 	}
 	input[type="text"],
 	input[type="password"],
+	select.multiple,
 	textarea{
 		border:1px solid #ccc;
 		.radius(3px);
@@ -1564,6 +1577,7 @@ label.hasCheckBox{
 	}
 }
 /*For single meeting, contact etc..*/
+
 .AppContent.TableOfContentsView,
 .AppContent.SecuredEditAndDetailsView{
 	padding-right:0;
