@@ -207,7 +207,9 @@ td.level-20{ padding-left:210px !important;}
 		font-weight: 400 !important;
 	}
 }
-
+.AdministrativeArea.AppContent{
+	padding-right:0;
+}
 .AdministrativeArea.AppContent .DetailsView > div{
 	margin-right:0;
 }
@@ -247,8 +249,9 @@ td.level-20{ padding-left:210px !important;}
 }
 
 /*TreeListView - usualy first page in each in admin*/
+#CurrenciesCollectionView,
+#JobsCollectionView,
 .SecurityTreeListView{
-//.DesignerPageMenuView{
 	.tableTreeView();
 	padding-bottom:0 !important;
 	
@@ -286,5 +289,40 @@ td.level-20{ padding-left:210px !important;}
 	td.level-18{ padding-left:190px !important;}
 	td.level-19{ padding-left:200px !important;}
 	td.level-20{ padding-left:210px !important;}
-	
+}
+
+/*Jobs*/
+#JobsCollectionView{
+	.form form{
+		padding: 0;
+	}
+	h3{
+		padding-left: 10px;
+		margin-top: 30px;
+	}
+	.jobs-help{
+		margin:10px 0 10px 10px;
+		display: block;
+		a{
+			background:@themeColor;
+			padding:1px 4px;
+			.radius(2px);
+			color:#fff;
+			&:hover{
+				color:#fff !important;
+				text-decoration:underline;
+			}
+		}
+	}
+	tr:last-child{
+		td{
+			border-bottom:1px solid #DFDFDF !important;
+		}	
+	}
+}
+/*Currencies*/
+#CurrenciesCollectionView{
+	.form form{
+		padding: 0;
+	}
 }

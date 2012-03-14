@@ -68,7 +68,7 @@
             if ($this->messageBoxContent != null)
             {
                 $content .= $this->messageBoxContent;
-                $content .= '<br/>';
+                //$content .= '<br/>';
             }
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderViewToolBar();
@@ -92,12 +92,12 @@
         {
             $content  = '<div class="horizontal-line"></div>' . "\n";
             $content .= $this->renderMonitorJobLayout();
-            $content .= '<br/>';
+            //$content .= '<br/>';
             $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
             $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
-            $content .= '<br/>';
+            //$content .= '<br/>';
             $content .= $this->renderSuggestedFrequencyContent();
-            $content .= '<br/>';
+            //$content .= '<br/>';
             $content .= $this->renderHelpContent();
             return $content;
         }
@@ -224,9 +224,10 @@
         {
             $clickHereLink = CHtml::link(Yii::t('Default', 'Click Here'), 'http://www.zurmo.org/links/jobsManagerHelp.php');
             $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
+            $content .= '<span class="jobs-help">';
             $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',
                                array('{ClickHereLink}' => $clickHereLink));
-            $content .= '<br/><br/>';
+            $content .= '</span>';
             return $content;
         }
     }
