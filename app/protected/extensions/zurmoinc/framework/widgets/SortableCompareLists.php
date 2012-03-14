@@ -62,7 +62,7 @@
         public function run()
         {
             $id = $this->getId();
-            $leftHtmlOptions = array('size' => '10', 'multiple' => true, 'style' => 'width: 200px;',
+            $leftHtmlOptions = array('size' => '10', 'multiple' => true, 'class' => 'ignore-style multiple',
             'id' => $this->leftSideId);
             $leftListContent = $this->form->dropDownList(
                 $this->model,
@@ -70,7 +70,7 @@
                 $this->model->{$this->leftSideAttributeName},
                 $leftHtmlOptions
             );
-            $rightHtmlOptions = array('size' => '10', 'multiple' => true, 'style' => 'width: 200px;',
+            $rightHtmlOptions = array('size' => '10', 'multiple' => true, 'class' => 'ignore-style multiple',
             'id' => $this->rightSideId);
             $rightListContent = $this->form->dropDownList(
                 $this->model,
@@ -78,15 +78,14 @@
                 $this->model->{$this->rightSideAttributeName},
                 $rightHtmlOptions
             );
-            $content  = '<td style="vertical-align:middle"><div style="float: left;">';
-            $content .= $this->leftSideDisplayLabel . '<br/>';
+            $content  = '<td><div class="multiselect-holder"><div class="multiselect-left">';
+            $content .= '<label>' . $this->leftSideDisplayLabel . '</label>';
             $content .= $leftListContent;
-            $content .= '</div><div style="float: left; text-align: center; margin-top:50px; width:50px;">';
-            $content .= CHtml::button('>', array('id' => $id . 'moveRight'));
-            $content .= '<br/>';
-            $content .= CHtml::button('<', array('id' => $id . 'moveLeft'));
-            $content .= '</div><div style="float: left;">';
-            $content .= $this->rightSideDisplayLabel . '<br/>';
+            $content .= '</div><div class="multiselect-nav">';
+            $content .= CHtml::button( '7', array( 'id' => $id . 'moveRight', 'class' => 'icon-right-arrow' ) ); //used 7,8 becuase those are rendered as icons with symbly, other option is to make it an A with a SPAN inside it
+            $content .= CHtml::button( '8', array( 'id' => $id . 'moveLeft', 'class' => 'icon-left-arrow' ) );
+            $content .= '</div><div class="multiselect-right">';
+            $content .= '<label>' . $this->rightSideDisplayLabel . '</label>';
             $content .= $rightListContent;
             $content .= '</div></td>';
             echo $content;

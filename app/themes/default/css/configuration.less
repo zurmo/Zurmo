@@ -141,6 +141,32 @@ td.level-18{ padding-left:190px !important;}
 td.level-19{ padding-left:200px !important;}
 td.level-20{ padding-left:210px !important;}
 
+#GroupsTreeListView{
+	table{
+		width: 100%;
+		border-bottom:none;
+		br{
+			display:none;
+		}
+		tr:last-child{
+			td{
+				border-bottom:none;
+			}	
+		}
+		
+	}
+	td, th{
+		border-bottom:1px solid #DFDFDF;
+		padding:10px;
+		text-align:left;
+	}
+	td{
+		font-weight:normal;
+	}
+	
+	
+}
+
 #ActionBarForGroupsEditAndDetailsView{
 	.view-toolbar{
 		margin-top:0;
@@ -156,8 +182,59 @@ td.level-20{ padding-left:210px !important;}
 }
 
 #ModulePermissionsEditAndDetailsView{
-	td, th{
-		text-align:left;
-		padding-right:15px;
+	table tr:first-child{
+		th{
+			padding-left:15px;
+			font-weight:bold !important;
+			color:@themeColor;
+		}
 	}
+	td{
+		text-align:left;
+		padding-left:15px;
+	}
+	th{
+		text-align:left;
+		font-size: 12px !important;
+		color: #666;
+		font-weight: 400 !important;
+	}
+}
+
+.AdministrativeArea.AppContent .DetailsView > div{
+	margin-right:0;
+}
+.multiselect-holder{
+	width:675px;
+	margin:0 auto;
+	.clearfix();
+	label{
+		display:block !important;
+		float:none !important;
+	}
+	select{
+		display:block;
+		width:100%;
+		.box-sizing();
+		line-height: 150%;
+	}
+	input[type="button"]{
+		display:block !important;
+		margin-bottom:15px !important;
+		.zButton();
+		.symbly(22px);
+	}
+}
+.multiselect-left, .multiselect-right{
+	float:left;
+	width: 300px;
+}
+.multiselect-nav{
+	float:left;
+	padding:0 15px;
+	.box-sizing();
+	width:75px;
+	text-align:center;
+	height:75px;
+	margin-top:60px;
 }
