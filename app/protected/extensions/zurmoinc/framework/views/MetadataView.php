@@ -58,10 +58,15 @@
          */
         protected function renderViewToolBar($renderInForm = true)
         {
-            $content = '<div class="view-toolbar-container clearfix"><div class="portlet-toolbar">';
-            $content .= $this->renderActionElementBar($renderInForm);
-            $content .= '</div></div>';
-            return $content;
+            if ( $renderInForm == true ){
+            	$content = '<div class="view-toolbar-container clearfix"><div class="portlet-toolbar">';
+	            $content .= $this->renderActionElementBar($renderInForm);
+	            $content .= '</div></div>';
+	            return $content;
+            } else {
+            	return null;
+            }
+            
         }
 
         /**

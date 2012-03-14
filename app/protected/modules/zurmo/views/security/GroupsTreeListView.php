@@ -32,8 +32,11 @@
     {
         protected function renderContent()
         {
-            $content  = $this->renderViewToolBar(false);
+            $content  = $this->renderViewToolBar(false); //why do we need it if its empty?
+			$content .= '<div>';
+			$content .= '<h1>' . Yii::t('Default', 'Groups') . '</h1>';
             $content .= $this->renderTreeMenu('group', 'groups', Yii::t('Default', 'Group'));
+			$content .= '</div>';
             return $content;
         }
     }

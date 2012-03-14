@@ -51,9 +51,9 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
+                    'buttonText'      => '<span>Date</span>',
                     'showButtonPanel' => true,
-                    'buttonImage'     => $themePath . '/images/jqueryui/calendar.gif',
-                    'buttonImageOnly' => true,
+                    'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                 ),

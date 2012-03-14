@@ -730,6 +730,7 @@ footer, header, hgroup, menu, nav, section {
 	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
 	background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
 }
+#ActionBarForGroupsTreeListView,
 #ActionBarSearchAndListView{
 	.view-toolbar{
 		margin-top:0;
@@ -793,6 +794,36 @@ footer, header, hgroup, menu, nav, section {
 	.view-toolbar-icons();	
 	padding-top: 1px;
 }
+
+.icon-memberships:before{
+	content: "z";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-permissions:before{
+	content: "z";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-rights:before{
+	content: "z";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-policies:before{
+	content: "z";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-delete:before{
+	content: "z";
+	.view-toolbar-icons();
+	top:3px;
+}
+
+
+
+
 
 
 
@@ -1541,6 +1572,7 @@ label.hasCheckBox{
 	}
 }
 .TableOfContentsView,
+.DetailsView,
 .EditAndDetailsView{
 /*.SecuredEditAndDetailsView{*/
 	position: relative;

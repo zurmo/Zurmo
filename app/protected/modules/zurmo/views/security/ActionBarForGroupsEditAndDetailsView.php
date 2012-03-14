@@ -66,27 +66,33 @@
                         'elements' => array(
                             array('type'           => 'EditLink',
                                 'resolveToDisplay' => 'canModifyName',
-                                'label'			   => "eval:Yii::t('Default', 'General')"
+                                'label'			   => "eval:Yii::t('Default', 'Edit')", //was GENERAL.. 
+                                'htmlOptions' => array('class' => 'icon-edit')
                             ),
                             array(
                                 'type'             => 'GroupUserMembershipEditLink',
-                                'resolveToDisplay' => 'canModifyMemberships'
+                                'resolveToDisplay' => 'canModifyMemberships',
+                                'htmlOptions' => array('class' => 'icon-memberships')
                                 ),
                             array(
                                 'type'             => 'GroupModulePermissionsEditLink',
-                                'resolveToDisplay' => 'canGivePermissions'
+                                'resolveToDisplay' => 'canGivePermissions',
+                                'htmlOptions' => array('class' => 'icon-permissions')
                                 ),
                             array(
                                 'type'             => 'GroupRightsEditLink',
-                                'resolveToDisplay' => 'canModifyRights'
+                                'resolveToDisplay' => 'canModifyRights',
+                                'htmlOptions' => array('class' => 'icon-rights')
                                 ),
                             array(
                                 'type'             => 'GroupPoliciesEditLink',
-                                'resolveToDisplay' => 'canModifyPolicies'
+                                'resolveToDisplay' => 'canModifyPolicies',
+                                'htmlOptions' => array('class' => 'icon-policies')
                                 ),
                             array(
                                 'type'             => 'GroupDeleteLink',
-                                'resolveToDisplay' => 'isDeletable'
+                                'resolveToDisplay' => 'isDeletable',
+                                'htmlOptions' => array('class' => 'icon-delete')
                             ),
                         ),
                     ),
