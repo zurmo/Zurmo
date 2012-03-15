@@ -88,10 +88,10 @@
 	        transition: all @time ease-out;
 }
 
-
+/*
 .clearfix() {
   *zoom: 1;
-  &:before,
+  //&:before,
   &:after {
     display: table;
     content: "";
@@ -101,6 +101,42 @@
     clear: both;
   }
 }
+CLEARFIX
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.clearfix {
+	height: 1%;
+}
+
+*:first-child + html .clearfix {
+	min-height: 1px;
+}
+*/
+
+/* For modern browsers */
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+
+.clearfix:after {
+    clear:both;
+}
+
+/* For IE 6/7 (trigger hasLayout) */
+.clearfix {
+    zoom:1;
+}
+
+
+
 
 
 *{
@@ -139,22 +175,6 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-/*CLEARFIX*/
-.clearfix:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
-
-.clearfix {
-	height: 1%;
-}
-
-*:first-child + html .clearfix {
-	min-height: 1px;
-}
 
 .ZurmoDefaultPageView,
 .ZurmoPageView,
@@ -1403,9 +1423,10 @@ label.hasCheckBox{
 			margin-bottom:8px;
 		}
 		.buffer > div{
+			float:left;
 			padding:8px 10px;
 			background:#F4F4F4;
-			.clearfix();
+			//.clearfix();
 		}
 		label{
 			width: 100%;
