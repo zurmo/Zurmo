@@ -207,9 +207,10 @@ td.level-20{ padding-left:210px !important;}
 		font-weight: 400 !important;
 	}
 }
+/*
 .AdministrativeArea.AppContent{
 	padding-right:0;
-}
+}*/
 .AdministrativeArea.AppContent .DetailsView > div{
 	margin-right:0;
 }
@@ -253,7 +254,7 @@ td.level-20{ padding-left:210px !important;}
 #JobsCollectionView,
 .SecurityTreeListView{
 	.tableTreeView();
-	padding-bottom:0 !important;
+	padding-bottom:10px !important;
 	
 	> div{
 		padding-bottom:0 !important;
@@ -303,26 +304,46 @@ td.level-20{ padding-left:210px !important;}
 	.jobs-help{
 		margin:10px 0 10px 10px;
 		display: block;
-		a{
-			background:@themeColor;
-			padding:1px 4px;
-			.radius(2px);
-			color:#fff;
-			&:hover{
-				color:#fff !important;
-				text-decoration:underline;
-			}
-		}
 	}
 	tr:last-child{
 		td{
 			border-bottom:1px solid #DFDFDF !important;
 		}	
 	}
+	a{
+		background:@themeColor;
+		padding:1px 4px;
+		.radius(2px);
+		color:#fff;
+		&:hover{
+			color:#fff !important;
+			text-decoration:underline;
+		}
+	}
 }
 /*Currencies*/
 #CurrenciesCollectionView{
 	.form form{
 		padding: 0;
+	}
+}
+/*Languages*/
+.AppContent.AdministrativeArea{
+	.wide.form{
+		form{
+			padding:0;
+		}
+		.tableTreeView();
+		//padding-bottom:0 !important;
+	}
+}
+#currency-collection-form{
+	padding-bottom: 10px;
+	.portlet-toolbar{
+		position: relative;
+		top:auto;
+		left:auto;
+		right:auto;
+		.form-toolbar();
 	}
 }
