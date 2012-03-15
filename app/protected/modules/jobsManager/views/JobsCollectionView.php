@@ -90,8 +90,8 @@
           */
         protected function renderFormLayout(ZurmoActiveForm $form)
         {
-            $content  = '<div class="horizontal-line"></div>' . "\n";
-            $content .= $this->renderMonitorJobLayout();
+            //$content  = '<div class="horizontal-line"></div>' . "\n";
+            $content = $this->renderMonitorJobLayout();
             //$content .= '<br/>';
             $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
             $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
