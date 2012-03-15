@@ -51,8 +51,7 @@
                 {
                     $tabMenuItems[0]['items'][] = array(
                         'label' => Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')),
-                        'url'   => array('/designer/default/modulesMenu/',
-                                         array('moduleClassName' => get_class($module))),
+                        'url'   => array('/designer/default/modulesMenu', 'moduleClassName' => get_class($module)),
                     );
                 }
             }

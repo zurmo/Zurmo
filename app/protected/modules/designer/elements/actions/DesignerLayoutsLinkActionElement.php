@@ -24,33 +24,27 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ActionBarAndModuleEditView extends GridView
+    class DesignerLayoutsLinkActionElement extends EditLinkActionElement
     {
-        protected $cssClasses =  array( 'AdministrativeArea');
-
-        public function __construct(
-            $controllerId,
-            $moduleId,
-            $module,
-            ModuleForm $moduleForm,
-            $breadcrumbLinks
-        )
+        protected function getDefaultLabel()
         {
-            parent::__construct(3, 1);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
-            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
-            $moduleEditViewClassName = get_class($module) . 'EditView';
-            $this->setView(new $moduleEditViewClassName(
-                $controllerId,
-                $moduleId,
-                $moduleForm,
-                $module
-            ), 2, 0);
+            return Yii::t('Default', 'Layouts');
         }
 
-        public function isUniqueToAPage()
+        protected function getDefaultRoute()
         {
-            return true;
+            return Yii::app()->createUrl(
+                $this->moduleId . '/' . $this->controllerId . '/moduleLayoutsList/',
+                array('moduleClassName' => $this->getModuleClassName()));
+        }
+
+        protected function getModuleClassName()
+        {
+            if (isset($this->params['moduleClassName']))
+            {
+                return $this->params['moduleClassName'];
+            }
+            return null;
         }
     }
 ?>

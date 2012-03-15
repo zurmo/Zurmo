@@ -39,7 +39,26 @@
 
         public function actionModulesMenu()
         {
-            $this->actionModuleEdit();
+            assert('!empty($_GET["moduleClassName"])');
+            $moduleClassName = $_GET['moduleClassName'];
+            $module          = new $moduleClassName(null, null);
+            $moduleMenuItems = $module->getDesignerMenuItems();
+            if(ArrayUtil::getArrayValue($moduleMenuItems, 'showGeneralLink'))
+            {
+                $this->actionModuleEdit();
+            }
+            elseif(ArrayUtil::getArrayValue($moduleMenuItems, 'showFieldsLink'))
+            {
+                $this->actionAttributesList();
+            }
+            elseif(ArrayUtil::getArrayValue($moduleMenuItems, 'showLayoutsLink'))
+            {
+                $this->actionModuleLayoutsList();
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         public function actionAttributesList()

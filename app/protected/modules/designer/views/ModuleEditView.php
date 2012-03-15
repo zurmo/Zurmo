@@ -26,20 +26,20 @@
 
     abstract class ModuleEditView extends EditView
     {
-        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model)
+        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model, Module $module)
         {
             $this->controllerId          = $controllerId;
             $this->moduleId              = $moduleId;
             $this->model                 = $model;
             $this->modelId               = null;
+            $this->module                = $module;
         }
 
-        protected function renderAfterFormLayout($form)
+        protected function renderTitleContent()
         {
-            $module = Yii::app()->getModule($this->moduleId);
-            return '<h1>' . $module::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'General Edit') . '</h1>';
+            $moduleClassName = $this->module;
+            return '<h1>' . $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'General Edit') . '</h1>';
         }
-
 
         public function isUniqueToAPage()
         {
@@ -67,6 +67,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
+                            array('type' => 'CancelLink'),
                             array('type' => 'SaveButton'),
                         ),
                     ),

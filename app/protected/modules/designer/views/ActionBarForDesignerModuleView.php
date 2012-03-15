@@ -33,12 +33,16 @@
 
         protected $moduleId;
 
-        public function __construct($controllerId, $moduleId)
+        protected $module;
+
+        public function __construct($controllerId, $moduleId, Module $module)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
+            assert('is_string($moduleClassName)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
+            $this->module                    = $module;
         }
 
         protected function renderContent()
@@ -60,14 +64,55 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type'  => 'CreateLink',
-                                'htmlOptions' => array('class' => 'icon-create'),
+                            array(
+                                'type'            => 'DesignerGeneralLink',
+                                'moduleClassName' => 'eval:get_class($this->module)',
+                            ),
+                            array(
+                                'type'            => 'DesignerFieldsLink',
+                                'moduleClassName' => 'eval:get_class($this->module)',
+                            ),
+                            array(
+                                'type'            => 'DesignerLayoutsLink',
+                                'moduleClassName' => 'eval:get_class($this->module)',
                             ),
                         ),
                     ),
                 ),
             );
             return $metadata;
+        }
+
+        /**
+         * Override to check if the General, Fields, and Layouts link should show for the given module
+         * @return boolean
+         */
+        protected function shouldRenderToolBarElement($element, $elementInformation)
+        {
+            assert('$element instanceof ActionElement');
+            assert('is_array($elementInformation)');
+
+            $moduleMenuItems = $this->module->getDesignerMenuItems();
+            if (!parent::shouldRenderToolBarElement($element, $elementInformation))
+            {
+                return false;
+            }
+            if($elementInformation['type'] == 'DesignerGeneralLink' &&
+               !ArrayUtil::getArrayValue($moduleMenuItems, 'showGeneralLink'))
+            {
+                return false;
+            }
+            if($elementInformation['type'] == 'DesignerFieldsLink' &&
+               !ArrayUtil::getArrayValue($moduleMenuItems, 'showFieldsLink'))
+            {
+                return false;
+            }
+            if($elementInformation['type'] == 'DesignerLayoutsLink' &&
+               !ArrayUtil::getArrayValue($moduleMenuItems, 'showLayoutsLink'))
+            {
+                return false;
+            }
+            return true;
         }
     }
 ?>
