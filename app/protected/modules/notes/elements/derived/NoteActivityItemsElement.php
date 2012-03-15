@@ -36,7 +36,7 @@
          */
         protected function getActivityItemEditableTemplate()
         {
-            $editableTemplate = "<tr><td width='100%' style='border:0px;'>\n";
+            $editableTemplate = "<tr><td colspan='3'>\n";
             $editableTemplate .= '{label}<br/>{content}{error}';
             $editableTemplate .= "</td></tr>\n";
             return $editableTemplate;

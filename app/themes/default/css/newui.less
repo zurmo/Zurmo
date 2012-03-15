@@ -1743,6 +1743,33 @@ label.hasCheckBox{
 }
 
 #NoteInlineEditView{
+	.wide.form{
+		padding:0;
+		margin:0;
+		border:none;
+		.b-shadow(none); 
+	}
+	.has-model-select{
+		position:relative;
+		a{
+			top: 16px;
+			&:before{
+				top:4px;
+			}
+		}
+	}
+	.has-date-select{
+		position:relative;
+		button{
+			top: 16px;
+			&:before{
+				top:1px;
+			}
+		}
+	}
+	td div{
+		margin-left:0;
+	}
 	form{
 		background:none;
 		border:none;
