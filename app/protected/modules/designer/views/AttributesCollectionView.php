@@ -55,28 +55,24 @@
             $content .= $this->renderBeforeTableContent();
             $content .= '<div>';
             $content .= $this->renderTitleContent();
-            $content .= '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:20%" /><col style="width:80%" />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Field Name') . '</th><th>' . Yii::t('Default', 'Field Type') . '</th></tr>';
+            $content .= '<ul class="configuration-list">';
             foreach ($this->attributesCollection as $attributeName => $information)
             {
                 $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
                 $content .= '<tr>';
                 $content .= '<td>';
+                $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
                 if ($information['elementType'] == 'EmailAddressInformation' ||
                     $information['elementType'] == 'Address' ||
                     $information['elementType'] == 'User' ||
                     $information['isReadOnly'])
                 {
                     //temporary until we figure out how to handle these types.
-                    $content .= $information['attributeLabel'];
+                    $linkContent = null;
                 }
                 else
                 {
-                    $content .= CHtml::link($information['attributeLabel'], Yii::app()->createUrl($route,
+                    $linkContent = CHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
                         array(
                             'moduleClassName' => $this->moduleClassName,
                             'attributeTypeName' => $information['elementType'],
@@ -84,13 +80,13 @@
                         )
                     ));
                 }
-                $content .= '</td>';
-                $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
-                $content .= '<td>' . $attributeFormClassName::getAttributeTypeDisplayName() . '</td>';
-                $content .= '</tr>';
+                $content .= '<li>';
+                $content .= '<h4>' . $information['attributeLabel'] . '</h4>';
+                $content .= ' - ' . $attributeFormClassName::getAttributeTypeDisplayName();
+                $content .= $linkContent;
+                $content .= '</li>';
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '</ul>';
             $content .= '</div>';
             return $content;
         }

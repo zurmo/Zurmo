@@ -30,7 +30,7 @@
         {
             $dropDownContent = CHtml::dropDownList('attributeTypeName', null, $this->getValueTypeDropDownArray());
 
-            $linkContent     = '&#160;' . CHtml::button(Yii::t('Default', 'Configure It...'),
+            $linkContent     = '&#160;' . CHtml::button(Yii::t('Default', 'Configure'),
                                                         array('id' => 'attributeTypeNameButton'));
             $url             = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/attributeEdit/',
                                                      array('moduleClassName' => $this->moduleClassName));

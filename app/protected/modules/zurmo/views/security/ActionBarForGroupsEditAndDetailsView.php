@@ -35,14 +35,15 @@
 
         protected $model;
 
-        public function __construct($controllerId, $moduleId, $modelId)
+        public function __construct($controllerId, $moduleId, Group $model)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_int($modelId)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
-            $this->modelId                   = $modelId;
+            $this->modelId                   = $model->id;
+            $this->model                     = $model;
         }
 
         protected function renderContent()
@@ -66,7 +67,7 @@
                         'elements' => array(
                             array('type'           => 'EditLink',
                                 'resolveToDisplay' => 'canModifyName',
-                                'label'			   => "eval:Yii::t('Default', 'Edit')", //was GENERAL.. 
+                                'label'			   => "eval:Yii::t('Default', 'Edit')", //was GENERAL..
                                 'htmlOptions' => array('class' => 'icon-edit')
                             ),
                             array(
@@ -99,6 +100,33 @@
                 ),
             );
             return $metadata;
+        }
+
+        /**
+         * Override to check for different scenarios depending on if the group is
+         * special or not. Everyone and SuperAdministrators are special groups
+         * for example.
+         * Checks for $elementInformation['resolveToDisplay'] to be present and if it is,
+         * will run the resolveName as a function on the group model.
+         * @return boolean
+         */
+        protected function shouldRenderToolBarElement($element, $elementInformation)
+        {
+            assert('$element instanceof ActionElement');
+            assert('is_array($elementInformation)');
+            if (!parent::shouldRenderToolBarElement($element, $elementInformation))
+            {
+                return false;
+            }
+            if (isset($elementInformation['resolveToDisplay']))
+            {
+                $resolveMethodName = $elementInformation['resolveToDisplay'];
+                if (!$this->model->{$resolveMethodName}())
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 ?>

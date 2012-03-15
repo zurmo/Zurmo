@@ -80,15 +80,15 @@
          * used by the zurmo page view for errors.
          * @param View $containedView
          */
-        public static function makeErrorViewForCurrentUser(View $containedView)
+        public static function makeErrorViewForCurrentUser(CController $controller, View $containedView)
         {
             $horizontalGridView = new GridView(1, 1);
             $horizontalGridView->setView($containedView, 0, 0);
             $verticalGridView   = new GridView(4, 1);
-            $verticalGridView->setView(static::makeHeaderView(),                    0, 0);
+            $verticalGridView->setView(static::makeHeaderView($controller),         0, 0);
             $verticalGridView->setView(static::makeMenuView(),                      1, 0);
-            $verticalGridView->setView($horizontalGridView,                         3, 0);
-            $verticalGridView->setView(static::makeFooterView(),                    5, 0);
+            $verticalGridView->setView($horizontalGridView,                         2, 0);
+            $verticalGridView->setView(static::makeFooterView(),                    3, 0);
             return $verticalGridView;
         }
 

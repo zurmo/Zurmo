@@ -60,7 +60,16 @@
 
         public function actionDetails($id)
         {
-            $this->actionEdit($id);
+            $group = Group::getById(intval($id));
+            if (!$group->isEveryone && !$group->isSuperAdministrators)
+            {
+                $this->redirect(array($this->getId() . '/edit', 'id' => $id));
+            }
+            else
+            {
+                $this->redirect(array($this->getId() . '/editPolicies', 'id' => $id));
+            }
+
         }
 
         public function actionCreate()

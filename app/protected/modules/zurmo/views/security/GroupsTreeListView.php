@@ -30,11 +30,6 @@
      */
     class GroupsTreeListView extends SecurityTreeListView
     {
-        protected function getModelRelationNameForUserCount()
-        {
-            return 'groups';
-        }
-
         protected function renderContent()
         {
             $content  = $this->renderViewToolBar(false); //why do we need it if its empty?
@@ -61,6 +56,15 @@
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;
+        }
+
+        protected function resolveUserCountForItem(Item $item)
+        {
+            if($item->name == Group::EVERYONE_GROUP_NAME)
+            {
+                return User::getCount();
+            }
+            return $item->{$this->getModelRelationNameForUserCount()}->count();
         }
     }
 ?>

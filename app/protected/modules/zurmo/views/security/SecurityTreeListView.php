@@ -36,8 +36,6 @@
 
         protected $items;
 
-        abstract protected function getModelRelationNameForUserCount();
-
         public function __construct($controllerId, $moduleId, $items)
         {
             assert('$controllerId != null');
@@ -73,14 +71,21 @@
                     {
                         $text = strval($item);
                     }
+
+                    $userCount        = $this->resolveUserCountForItem($item);
                     $node             = array('link' => $text,
-                                              'userCount' => $item->{$this->getModelRelationNameForUserCount()}->count());
+                                              'userCount' => $userCount);
                     $node['children'] = $this->makeChildrenNodes($this->items, $item, $nodeRelationName);
                     $itemNodes[]      = $node;
                 }
             }
             $dataTree               = $itemNodes;
             return $this->renderTreeListView($dataTree);
+        }
+
+        protected function getModelRelationNameForUserCount()
+        {
+            return 'users';
         }
 
         protected function renderTreeListView($data)
@@ -141,8 +146,9 @@
                     {
                         $text = strval($item);
                     }
+                    $userCount        = $this->resolveUserCountForItem($item);
                     $node             = array('link' => $text,
-                                              'userCount' => $item->{$this->getModelRelationNameForUserCount()}->count());
+                                              'userCount' => $userCount);
                     $node['children'] = $this->makeChildrenNodes($items, $item, $nodeRelationName, $isLink);
                     $itemNodes[]      = $node;
                 }
@@ -185,6 +191,11 @@
         protected function resolveIsNodeLinkableById($id, $name)
         {
             return true;
+        }
+
+        protected function resolveUserCountForItem(Item $item)
+        {
+            return $item->{$this->getModelRelationNameForUserCount()}->count();
         }
     }
 ?>
