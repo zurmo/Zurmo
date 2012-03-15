@@ -69,6 +69,7 @@
                                                    $this->getId(),
                                                    $this->getModule()->getId(),
                                                    $this->attemptToSaveModelFromPost(new Role()));
+			$editView->setCssClasses(array('AdministrativeArea'));
             $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
@@ -79,6 +80,7 @@
                                                    $this->getId(),
                                                    $this->getModule()->getId(),
                                                    $this->attemptToSaveModelFromPost(Role::getById(intval($id))));
+			$editView->setCssClasses(array('AdministrativeArea'));
             $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }

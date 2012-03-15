@@ -15,8 +15,10 @@
 			padding:10px !important;
 			text-align:left;
 		}
-		td{
+		tr td{
 			font-weight:normal !important;
+			padding-top:10px !important;
+			padding-bottom:10px !important;
 		}
 	}
 }
@@ -97,12 +99,12 @@
 		}
 }
 
-#ConfigureModulesMenuView{
-	ul{
+.configuration-list{
+	//ul{
 		list-style:none;
 		padding:0 0;
 		.clearfix();
-	}
+	//}
 	li{
 		padding:15px 0;
 		margin-bottom:0;
@@ -207,12 +209,12 @@ td.level-20{ padding-left:210px !important;}
 		font-weight: 400 !important;
 	}
 }
-/*
+
 .AdministrativeArea.AppContent{
 	padding-right:0;
-}*/
+}
 .AdministrativeArea.AppContent .DetailsView > div{
-	margin-right:0;
+	
 }
 .multiselect-holder{
 	width:675px;
@@ -250,6 +252,7 @@ td.level-20{ padding-left:210px !important;}
 }
 
 /*TreeListView - usualy first page in each in admin*/
+#LanguagesCollectionView,
 #CurrenciesCollectionView,
 #JobsCollectionView,
 .SecurityTreeListView{
@@ -260,12 +263,17 @@ td.level-20{ padding-left:210px !important;}
 		padding-bottom:0 !important;
 	}
 	
-	table tr:first-child{
-		th{
-			padding-left:15px;
-			font-weight:bold !important;
-			color:@themeColor;
-			text-align:left;
+	table{
+		tr:first-child{
+			th{
+				color:#545454;
+				text-align:left;
+				font-weight: bold !important;
+				height: 35px  !important;
+				line-height: 35px  !important;
+				background: url(../images/table-items-header.png) left top repeat-x;
+				padding: 0 0 0 10px !important;
+			}
 		}
 	}
 	
@@ -300,6 +308,7 @@ td.level-20{ padding-left:210px !important;}
 	h3{
 		padding-left: 10px;
 		margin-top: 30px;
+		margin-bottom:10px;
 	}
 	.jobs-help{
 		margin:10px 0 10px 10px;
@@ -320,23 +329,26 @@ td.level-20{ padding-left:210px !important;}
 			text-decoration:underline;
 		}
 	}
-}
-/*Currencies*/
-#CurrenciesCollectionView{
-	.form form{
-		padding: 0;
-	}
-}
-/*Languages*/
-.AppContent.AdministrativeArea{
-	.wide.form{
-		form{
-			padding:0;
+	table{
+		border-top:1px solid #DFDFDF;
+		&:first-child{
+			border-top:none;
 		}
-		.tableTreeView();
-		//padding-bottom:0 !important;
 	}
 }
+
+/*Languages*/
+#LanguagesCollectionView{
+	form{
+		padding:0;
+	}
+	.view-toolbar-container{
+		border-top:1px solid #CCCCCC;
+		margin-bottom:5px;
+	}
+}
+
+/*Currency*/
 #currency-collection-form{
 	padding-bottom: 10px;
 	.portlet-toolbar{
@@ -346,4 +358,20 @@ td.level-20{ padding-left:210px !important;}
 		right:auto;
 		.form-toolbar();
 	}
+	.view-toolbar-container{
+		border-top:1px solid #CCCCCC;
+		margin-bottom:5px;
+	}
+}
+#CurrenciesCollectionView{
+	.form form{
+		padding: 0;
+	}
+}
+#CurrencyCreateView{
+	margin:0;
+	padding:0;
+	border:none;
+	.b-shadow(none);
+	background:none;
 }
