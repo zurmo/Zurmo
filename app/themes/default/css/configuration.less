@@ -1,3 +1,27 @@
+.tableTreeView(){
+	table{
+		width: 100%;
+		border-bottom:none;
+		br{
+			display:none;
+		}
+		tr:last-child{
+			td{
+				border-bottom:none;
+			}	
+		}
+		td, th{
+			border-bottom:1px solid #DFDFDF;
+			padding:10px !important;
+			text-align:left;
+		}
+		td{
+			font-weight:normal !important;
+		}
+	}
+}
+
+
 .back-to-app-menu-item span{
 	vertical-align:middle;
 	color:@themeColor !important;
@@ -8,8 +32,7 @@
 	}
 }
 
-//.AdministrativeArea{
-#ConfigurationPageView, #DesignerPageView{
+#ConfigurationPageView{
 		table{
 			border: 1px solid #DFDFDF;
 			border-collapse: collapse;
@@ -119,6 +142,7 @@
 }
 
 /*Groups*/
+/*
 td.level-0{ padding-left:10px !important;}
 td.level-1{ padding-left:20px !important;}
 td.level-2{ padding-left:30px !important;}
@@ -142,31 +166,14 @@ td.level-19{ padding-left:200px !important;}
 td.level-20{ padding-left:210px !important;}
 
 #GroupsTreeListView{
-	table{
-		width: 100%;
-		border-bottom:none;
-		br{
-			display:none;
-		}
-		tr:last-child{
-			td{
-				border-bottom:none;
-			}	
-		}
-		
+	.tableTreeView();
+	> div{
+		padding-bottom:0 !important;
 	}
-	td, th{
-		border-bottom:1px solid #DFDFDF;
-		padding:10px;
-		text-align:left;
-	}
-	td{
-		font-weight:normal;
-	}
-	
-	
 }
+*/
 
+.ActionBarForSecurityTreeListView,
 #ActionBarForGroupsEditAndDetailsView{
 	.view-toolbar{
 		margin-top:0;
@@ -200,7 +207,10 @@ td.level-20{ padding-left:210px !important;}
 		font-weight: 400 !important;
 	}
 }
-
+/*
+.AdministrativeArea.AppContent{
+	padding-right:0;
+}*/
 .AdministrativeArea.AppContent .DetailsView > div{
 	margin-right:0;
 }
@@ -237,4 +247,103 @@ td.level-20{ padding-left:210px !important;}
 	text-align:center;
 	height:75px;
 	margin-top:60px;
+}
+
+/*TreeListView - usualy first page in each in admin*/
+#CurrenciesCollectionView,
+#JobsCollectionView,
+.SecurityTreeListView{
+	.tableTreeView();
+	padding-bottom:10px !important;
+	
+	> div{
+		padding-bottom:0 !important;
+	}
+	
+	table tr:first-child{
+		th{
+			padding-left:15px;
+			font-weight:bold !important;
+			color:@themeColor;
+			text-align:left;
+		}
+	}
+	
+	td.level-0{ padding-left:10px !important;}
+	td.level-1{ padding-left:20px !important;}
+	td.level-2{ padding-left:30px !important;}
+	td.level-3{ padding-left:40px !important;}
+	td.level-4{ padding-left:50px !important;}
+	td.level-5{ padding-left:60px !important;}
+	td.level-6{ padding-left:70px !important;}
+	td.level-7{ padding-left:80px !important;}
+	td.level-8{ padding-left:90px !important;}
+	td.level-9{ padding-left:100px !important;}
+	td.level-10{ padding-left:110px !important;}
+	td.level-11{ padding-left:120px !important;}
+	td.level-12{ padding-left:130px !important;}
+	td.level-13{ padding-left:140px !important;}
+	td.level-14{ padding-left:150px !important;}
+	td.level-15{ padding-left:160px !important;}
+	td.level-16{ padding-left:170px !important;}
+	td.level-17{ padding-left:180px !important;}
+	td.level-18{ padding-left:190px !important;}
+	td.level-19{ padding-left:200px !important;}
+	td.level-20{ padding-left:210px !important;}
+}
+
+/*Jobs*/
+#JobsCollectionView{
+	.form form{
+		padding: 0;
+	}
+	h3{
+		padding-left: 10px;
+		margin-top: 30px;
+	}
+	.jobs-help{
+		margin:10px 0 10px 10px;
+		display: block;
+	}
+	tr:last-child{
+		td{
+			border-bottom:1px solid #DFDFDF !important;
+		}	
+	}
+	a{
+		background:@themeColor;
+		padding:1px 4px;
+		.radius(2px);
+		color:#fff;
+		&:hover{
+			color:#fff !important;
+			text-decoration:underline;
+		}
+	}
+}
+/*Currencies*/
+#CurrenciesCollectionView{
+	.form form{
+		padding: 0;
+	}
+}
+/*Languages*/
+.AppContent.AdministrativeArea{
+	.wide.form{
+		form{
+			padding:0;
+		}
+		.tableTreeView();
+		//padding-bottom:0 !important;
+	}
+}
+#currency-collection-form{
+	padding-bottom: 10px;
+	.portlet-toolbar{
+		position: relative;
+		top:auto;
+		left:auto;
+		right:auto;
+		.form-toolbar();
+	}
 }

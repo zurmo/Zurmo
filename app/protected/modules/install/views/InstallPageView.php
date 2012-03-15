@@ -35,7 +35,7 @@
         {
             $content    = parent::renderContent();
             $footerView = new FooterView();
-            return CHtml::tag('div', array('class' => 'appContainer'), $content) . $footerView->render();
+            return CHtml::tag('div', array('class' => 'AppContainer'), $content) . $footerView->render();
         }
 
         protected function getSubtitle()
