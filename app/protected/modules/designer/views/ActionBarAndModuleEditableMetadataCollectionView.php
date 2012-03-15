@@ -24,25 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TitleBarAndModuleEditableMetadataCollectionView extends GridView
+    class ActionBarAndModuleEditableMetadataCollectionView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea');
+
         public function __construct(
             $controllerId,
             $moduleId,
-            $moduleClassName,
+            $module,
             $moduleDisplayName,
             $editableMetadataCollection,
             $breadcrumbLinks
         )
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Layouts')), 0, 0);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
+            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
             $this->setView(new ModuleEditableMetadataCollectionView(
                 $controllerId,
                 $moduleId,
                 $editableMetadataCollection,
-                $moduleClassName
+                get_class($module),
+                $module
             ), 2, 0);
         }
 

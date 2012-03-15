@@ -26,6 +26,8 @@
 
     class AttributesCollectionView extends MetadataView
     {
+        protected $cssClasses =  array( 'TableOfContentsView');
+
         protected $controllerId;
 
         protected $moduleId;
@@ -36,7 +38,7 @@
 
         protected $modelClassName;
 
-        public function __construct($controllerId, $moduleId, $attributesCollection, $moduleClassName, $modelClassName)
+        public function __construct($controllerId, $moduleId, $attributesCollection, $moduleClassName, $modelClassName, $title)
         {
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
@@ -44,13 +46,15 @@
             $this->moduleClassName        = $moduleClassName;
             $this->modelClassName         = $modelClassName;
             $this->modelId                = null;
+            $this->title                  = $title;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div>' . "\n";
+            $content  = null;
+            $content .= $this->renderBeforeTableContent();
+            $content .= '<div>';
+            $content .= $this->renderTitleContent();
             $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:20%" /><col style="width:80%" />';
@@ -87,12 +91,22 @@
             }
             $content .= '</tbody>';
             $content .= '</table>';
+            $content .= '</div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()
         {
             return false;
+        }
+
+        protected function renderBeforeTableContent()
+        {
         }
     }
 ?>

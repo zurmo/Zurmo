@@ -26,6 +26,8 @@
 
     class ModuleEditableMetadataCollectionView extends MetadataView
     {
+        protected $cssClasses =  array( 'TableOfContentsView');
+
         protected $controllerId;
 
         protected $moduleId;
@@ -36,20 +38,20 @@
 
         protected $modelClassName;
 
-        public function __construct($controllerId, $moduleId, $editableMetadataCollection, $moduleClassName)
+        public function __construct($controllerId, $moduleId, $editableMetadataCollection, $moduleClassName , Module $module)
         {
             $this->controllerId                 = $controllerId;
             $this->moduleId                     = $moduleId;
             $this->editableMetadataCollection   = $editableMetadataCollection;
             $this->moduleClassName              = $moduleClassName;
             $this->modelId                      = null;
+            $this->module                       = $module;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div>' . "\n";
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
             $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:100%" />';
@@ -69,7 +71,17 @@
             }
             $content .= '</tbody>';
             $content .= '</table>';
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderActionElementBar(false);
+            $content .= '</div></div>';
+            $content .= '</div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            $moduleClassName = $this->module;
+            return '<h1>' . $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Layouts') . '</h1>';
         }
 
         public function isUniqueToAPage()

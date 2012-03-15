@@ -31,7 +31,7 @@
         public function __construct(
             $controllerId,
             $moduleId,
-            ConfigurableMetadataModel $model,
+            AttributeForm $model,
             $moduleClassName
         )
         {
@@ -54,6 +54,13 @@
                 'attributeName'       => $this->model->attributeName,
                 'attributeTypeName'   => $this->model->getAttributeTypeName(),
             );
+        }
+
+        protected function renderTitleContent()
+        {
+            $model = $this->model;
+            $title = Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
+            return '<h1>' . $title . '</h1>';
         }
     }
 ?>

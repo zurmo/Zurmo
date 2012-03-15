@@ -24,12 +24,14 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TitleBarAndAttributeDetailsView extends GridView
+    class ActionBarAndAttributeEditView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea');
+
         public function __construct(
             $controllerId,
             $moduleId,
-            $moduleClassName,
+            $module,
             $attributeTypeName,
             $modelClassName,
             AttributeForm $attributeForm,
@@ -37,15 +39,10 @@
         )
         {
             parent::__construct(3, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'Field'), $attributeForm), 0, 0);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
-            $attributeTypeDetailsViewClassName = $attributeTypeName. 'AttributeDetailsView';
-            $this->setView(new $attributeTypeDetailsViewClassName(
-                $controllerId,
-                $moduleId,
-                $attributeForm,
-                $moduleClassName
-            ), 2, 0);
+            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
+            $attributeTypeEditViewClassName = $attributeTypeName. 'AttributeEditView';
+            $this->setView(new $attributeTypeEditViewClassName($controllerId, $moduleId, $attributeForm), 2, 0);
         }
 
         public function isUniqueToAPage()

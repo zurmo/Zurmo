@@ -26,22 +26,40 @@
 
     class CustomAttributesCollectionView extends AttributesCollectionView
     {
-        public static function getDefaultMetadata()
+        protected function renderBeforeTableContent()
         {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type' => 'AttributeCreateLink',
-                                'routeParameters' => array(
-                                    'moduleClassName' => 'eval:$this->moduleClassName',
-                                )
-                            ),
-                        ),
-                    ),
-                ),
-            );
-            return $metadata;
+            $dropDownContent = CHtml::dropDownList('attributeTypeName', null, $this->getValueTypeDropDownArray());
+
+            $linkContent     = '&#160;' . CHtml::button(Yii::t('Default', 'Configure It...'),
+                                                        array('id' => 'attributeTypeNameButton'));
+            $url             = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/attributeEdit/',
+                                                     array('moduleClassName' => $this->moduleClassName));
+            Yii::app()->clientScript->registerScript('attributeTypeCreateLink', "
+            $('#attributeTypeNameButton').click( function()
+                {
+                    if($('#attributeTypeName').val() == '')
+                    {
+                        alert('" . Yii::t('Default', 'You must first select a field type') . "');
+                    }
+                    else
+                    {
+                        window.location = '" . $url . "&attributeTypeName=' + $('#attributeTypeName').val();
+                    }
+                }
+            );");
+            return Yii::t('Default', 'Add a Custom Field') . ' ' . $dropDownContent . ' ' . $linkContent;
+        }
+
+        protected static function getValueTypeDropDownArray()
+        {
+            $data           = array('' => Yii::t('Default', 'Select a field type'));
+            $attributeTypes = ModelAttributeToDesignerTypeUtil::getAvailableCustomAttributeTypes();
+            foreach ($attributeTypes as $attributeType)
+            {
+                $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($attributeType);
+                $data[$attributeType] = $attributeFormClassName::getAttributeTypeDisplayName();
+            }
+            return $data;
         }
     }
 ?>

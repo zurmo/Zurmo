@@ -24,22 +24,30 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AttributeCreateLinkActionElement extends LinkActionElement
+    class ActionBarAndAttributeDetailsView extends GridView
     {
-        protected function getDefaultLabel()
+        public function __construct(
+            $controllerId,
+            $moduleId,
+            $module,
+            $attributeTypeName,
+            $modelClassName,
+            AttributeForm $attributeForm,
+            $breadcrumbLinks
+        )
         {
-            return Yii::t('Default', 'Create Field');
+            parent::__construct(3, 1);
+
+            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
+            $attributeTypeEditViewClassName = $attributeTypeName. 'AttributeDetailsView';
+            $this->setView(new $attributeTypeEditViewClassName($controllerId, $moduleId, $attributeForm,
+                                                               get_class($module)), 2, 0);
         }
 
-        protected function getDefaultRoute()
+        public function isUniqueToAPage()
         {
-            //need assertion
-            return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/attributeCreate/', $this->getRouteParameters());
-        }
-
-        public function getActionType()
-        {
-            return null;
+            return true;
         }
     }
 ?>

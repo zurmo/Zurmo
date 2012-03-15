@@ -65,6 +65,7 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
+            $module          = new $_GET['moduleClassName'](null, null);
             $breadcrumbLinks = array(
                 $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
@@ -87,7 +88,7 @@
                 $canvasView = new StandardAndCustomAttributesListView(
                             $this->getId(),
                             $this->getModule()->getId(),
-                            $_GET['moduleClassName'],
+                            $module,
                             $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                             $adapter->getStandardAttributes(),
                             $adapter->getCustomAttributes(),
@@ -100,37 +101,12 @@
             echo $view->render();
         }
 
-        public function actionAttributeCreate()
-        {
-            assert('!empty($_GET["moduleClassName"])');
-            $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $model = new $modelClassName();
-            $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',    'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Fields') =>
-                    array('default/attributesList', 'moduleClassName' => $_GET['moduleClassName']),
-                 Yii::t('Default', 'Create Field'),
-            );
-            $canvasView = new TitleBarAndAttributeCreateView(
-                        $this->getId(),
-                        $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
-                        $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
-                        $modelClassName,
-                        $breadcrumbLinks
-            );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
-            echo $view->render();
-        }
-
         public function actionAttributeEdit()
         {
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["attributeTypeName"])');
             $attributeFormClassName = $_GET['attributeTypeName'] . 'AttributeForm';
+            $module          = new $_GET['moduleClassName'](null, null);
             $moduleClassName = $_GET['moduleClassName'];
             $modelClassName  = $moduleClassName::getPrimaryModelName();
             $model = new $modelClassName();
@@ -159,10 +135,10 @@
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 strval($attributeForm),
             );
-            $canvasView = new TitleBarAndAttributeEditView(
+            $canvasView = new ActionBarAndAttributeEditView(
                         $this->getId(),
                         $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
+                        $module,
                         $_GET['attributeTypeName'],
                         $modelClassName,
                         $attributeForm,
@@ -185,6 +161,7 @@
             assert('!empty($_GET["attributeTypeName"])');
             assert('!empty($_GET["attributeName"])');
             $moduleClassName = $_GET['moduleClassName'];
+            $module          = new $_GET['moduleClassName'](null, null);
             $modelClassName  = $moduleClassName::getPrimaryModelName();
             $model           = new $modelClassName();
             $attributeForm   = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
@@ -195,10 +172,10 @@
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 $attributeForm,
             );
-            $canvasView = new TitleBarAndAttributeDetailsView(
+            $canvasView = new ActionBarAndAttributeDetailsView(
                         $this->getId(),
                         $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
+                        $module,
                         $_GET['attributeTypeName'],
                         $modelClassName,
                         $attributeForm,
@@ -240,9 +217,10 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $model = new $modelClassName();
-            $viewClassNames = $moduleClassName::getViewClassNames();
+            $module          = new $_GET['moduleClassName'](null, null);
+            $modelClassName  = $moduleClassName::getPrimaryModelName();
+            $model           = new $modelClassName();
+            $viewClassNames  = $moduleClassName::getViewClassNames();
             $editableViewsCollection = array();
             foreach ($viewClassNames as $className)
             {
@@ -268,10 +246,10 @@
                     array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
                  Yii::t('Default', 'Layouts'),
             );
-            $canvasView = new TitleBarAndModuleEditableMetadataCollectionView(
+            $canvasView = new ActionBarAndModuleEditableMetadataCollectionView(
                         $this->getId(),
                         $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
+                        $module,
                         $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                         $editableViewsCollection,
                         $breadcrumbLinks

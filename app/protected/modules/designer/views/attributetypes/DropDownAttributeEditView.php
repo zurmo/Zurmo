@@ -32,7 +32,8 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'SaveButton'),
+                            array('type'  => 'CancelLink'),
+                            array('type'  => 'SaveButton'),
                         ),
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,

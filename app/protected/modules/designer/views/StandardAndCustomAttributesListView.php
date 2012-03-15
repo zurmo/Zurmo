@@ -26,10 +26,12 @@
 
     class StandardAndCustomAttributesListView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea');
+
         public function __construct(
             $controllerId,
             $moduleId,
-            $moduleClassName,
+            $module,
             $moduleDisplayName,
             $standardAttributesCollection,
             $customAttributesCollection,
@@ -37,24 +39,28 @@
             $breadcrumbLinks
         )
         {
-            parent::__construct(5, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Standard Fields')), 0, 0);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
-            $this->setView(new AttributesCollectionView(
-                $controllerId,
-                $moduleId,
-                $standardAttributesCollection,
-                $moduleClassName,
-                $modelClassName
-            ), 2, 0);
-            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Custom Fields')), 3, 0);
+            parent::__construct(4, 1);
+            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
+            $title = Yii::t('Default', $moduleDisplayName) . ': ' .  Yii::t('Default', 'Custom Fields');
             $this->setView(new CustomAttributesCollectionView(
                 $controllerId,
                 $moduleId,
                 $customAttributesCollection,
-                $moduleClassName,
-                $modelClassName
-            ), 4, 0);
+                get_class($module),
+                $modelClassName,
+                $title
+            ), 2, 0);
+            $title = Yii::t('Default', $moduleDisplayName) . ': ' .  Yii::t('Default', 'Standard Fields');
+            $this->setView(new AttributesCollectionView(
+                $controllerId,
+                $moduleId,
+                $standardAttributesCollection,
+                get_class($module),
+                $modelClassName,
+                $title
+            ), 3, 0);
+
         }
 
         public function isUniqueToAPage()

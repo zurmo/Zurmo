@@ -64,5 +64,19 @@
                 $elementInformation['disabled'] = true;
             }
         }
+
+        protected function renderTitleContent()
+        {
+            $model = $this->model;
+            if (empty($this->model->attributeName))
+            {
+                $title = Yii::t('Default', 'Create Field') . ': ' . $model::getAttributeTypeDisplayName();
+            }
+            else
+            {
+                $title = Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
+            }
+            return '<h1>' . $title . '</h1>';
+        }
     }
 ?>

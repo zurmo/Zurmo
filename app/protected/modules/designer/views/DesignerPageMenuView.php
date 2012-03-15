@@ -39,11 +39,7 @@
         protected function renderContent()
         {
             $content  = $this->renderTitleContent();
-            $content .= '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:100%"/>';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
+            $content .= '<ul class="configuration-list">';
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -52,21 +48,18 @@
                     !empty($moduleTreeMenuItems))
                 {
                     $route = $this->moduleId . '/' . $this->controllerId . '/modulesMenu/';
-                    $content .= '<tr>';
-                    $content .= '<td>';
-                    $content .= CHtml::link(
-                        Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')),
-                        Yii::app()->createUrl($route,
+                    $content .= '<li>';
+                    $content .= '<h4>'. Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')) . '</h4>';
+                    $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                                        Yii::app()->createUrl($route,
                             array(
                                 'moduleClassName' => get_class($module),
                             )
                         ));
-                    $content .= '</td>';
-                    $content .= '</tr>';
+                    $content .= '</li>';
                 }
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '</ul>';
             return $content;
         }
 
