@@ -53,11 +53,10 @@
             $cClipWidget->widget('zii.widgets.CBreadcrumbs', array(
                 'homeLink'  => CHtml::link(Yii::t('Default', 'Designer Home'), $homeUrl),
                 'links'     => $this->breadcrumbLinks,
-                'separator' => ' &#187; ',
+                'separator' => ' &#47; ',
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['Breadcrumbs'];
-            $content .= '<div style="margin-bottom:5px"></div>';
             return $content;
         }
     }

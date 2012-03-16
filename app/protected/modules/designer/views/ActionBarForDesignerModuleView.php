@@ -67,14 +67,17 @@
                             array(
                                 'type'            => 'DesignerGeneralLink',
                                 'moduleClassName' => 'eval:get_class($this->module)',
+                                'htmlOptions'     => array( 'class' => 'icon-general' )
                             ),
                             array(
                                 'type'            => 'DesignerFieldsLink',
                                 'moduleClassName' => 'eval:get_class($this->module)',
+                                'htmlOptions'     => array( 'class' => 'icon-fields' )
                             ),
                             array(
                                 'type'            => 'DesignerLayoutsLink',
                                 'moduleClassName' => 'eval:get_class($this->module)',
+                                'htmlOptions'     => array( 'class' => 'icon-layout' )
                             ),
                         ),
                     ),
